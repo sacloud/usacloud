@@ -23,8 +23,8 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListGSLBParam is input parameters for the sacloud API
-type ListGSLBParam struct {
+// ListGslbParam is input parameters for the sacloud API
+type ListGslbParam struct {
 	Name              []string     `json:"name"`
 	Id                []sacloud.ID `json:"id"`
 	Tags              []string     `json:"tags"`
@@ -32,7 +32,9 @@ type ListGSLBParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -43,13 +45,13 @@ type ListGSLBParam struct {
 	QueryFile         string       `json:"query-file"`
 }
 
-// NewListGSLBParam return new ListGSLBParam
-func NewListGSLBParam() *ListGSLBParam {
-	return &ListGSLBParam{}
+// NewListGslbParam return new ListGslbParam
+func NewListGslbParam() *ListGslbParam {
+	return &ListGslbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListGSLBParam) FillValueToSkeleton() {
+func (p *ListGslbParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -71,8 +73,14 @@ func (p *ListGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -102,7 +110,7 @@ func (p *ListGSLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListGSLBParam) Validate() []error {
+func (p *ListGslbParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
@@ -160,148 +168,164 @@ func (p *ListGSLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ListGSLBParam) GetResourceDef() *schema.Resource {
+func (p *ListGslbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["GSLB"]
 }
 
-func (p *ListGSLBParam) GetCommandDef() *schema.Command {
+func (p *ListGslbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListGSLBParam) GetIncludeFields() []string {
+func (p *ListGslbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListGSLBParam) GetExcludeFields() []string {
+func (p *ListGslbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListGSLBParam) GetTableType() output.TableType {
+func (p *ListGslbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListGSLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListGslbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListGSLBParam) SetName(v []string) {
+func (p *ListGslbParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListGSLBParam) GetName() []string {
+func (p *ListGslbParam) GetName() []string {
 	return p.Name
 }
-func (p *ListGSLBParam) SetId(v []sacloud.ID) {
+func (p *ListGslbParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListGSLBParam) GetId() []sacloud.ID {
+func (p *ListGslbParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListGSLBParam) SetTags(v []string) {
+func (p *ListGslbParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *ListGSLBParam) GetTags() []string {
+func (p *ListGslbParam) GetTags() []string {
 	return p.Tags
 }
-func (p *ListGSLBParam) SetFrom(v int) {
+func (p *ListGslbParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListGSLBParam) GetFrom() int {
+func (p *ListGslbParam) GetFrom() int {
 	return p.From
 }
-func (p *ListGSLBParam) SetMax(v int) {
+func (p *ListGslbParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListGSLBParam) GetMax() int {
+func (p *ListGslbParam) GetMax() int {
 	return p.Max
 }
-func (p *ListGSLBParam) SetSort(v []string) {
+func (p *ListGslbParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListGSLBParam) GetSort() []string {
+func (p *ListGslbParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListGSLBParam) SetParamTemplate(v string) {
+func (p *ListGslbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListGSLBParam) GetParamTemplate() string {
+func (p *ListGslbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListGSLBParam) SetParamTemplateFile(v string) {
+func (p *ListGslbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListGslbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListGslbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListGSLBParam) GetParamTemplateFile() string {
+func (p *ListGslbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListGSLBParam) SetGenerateSkeleton(v bool) {
+func (p *ListGslbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListGslbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListGslbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListGSLBParam) GetGenerateSkeleton() bool {
+func (p *ListGslbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListGSLBParam) SetOutputType(v string) {
+func (p *ListGslbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListGSLBParam) GetOutputType() string {
+func (p *ListGslbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListGSLBParam) SetColumn(v []string) {
+func (p *ListGslbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListGSLBParam) GetColumn() []string {
+func (p *ListGslbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ListGSLBParam) SetQuiet(v bool) {
+func (p *ListGslbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListGSLBParam) GetQuiet() bool {
+func (p *ListGslbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListGSLBParam) SetFormat(v string) {
+func (p *ListGslbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListGSLBParam) GetFormat() string {
+func (p *ListGslbParam) GetFormat() string {
 	return p.Format
 }
-func (p *ListGSLBParam) SetFormatFile(v string) {
+func (p *ListGslbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListGSLBParam) GetFormatFile() string {
+func (p *ListGslbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListGSLBParam) SetQuery(v string) {
+func (p *ListGslbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListGSLBParam) GetQuery() string {
+func (p *ListGslbParam) GetQuery() string {
 	return p.Query
 }
-func (p *ListGSLBParam) SetQueryFile(v string) {
+func (p *ListGslbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListGSLBParam) GetQueryFile() string {
+func (p *ListGslbParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// ServerInfoGSLBParam is input parameters for the sacloud API
-type ServerInfoGSLBParam struct {
+// ServerInfoGslbParam is input parameters for the sacloud API
+type ServerInfoGslbParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -313,21 +337,27 @@ type ServerInfoGSLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewServerInfoGSLBParam return new ServerInfoGSLBParam
-func NewServerInfoGSLBParam() *ServerInfoGSLBParam {
-	return &ServerInfoGSLBParam{}
+// NewServerInfoGslbParam return new ServerInfoGslbParam
+func NewServerInfoGslbParam() *ServerInfoGslbParam {
+	return &ServerInfoGslbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ServerInfoGSLBParam) FillValueToSkeleton() {
+func (p *ServerInfoGslbParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -360,7 +390,7 @@ func (p *ServerInfoGSLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ServerInfoGSLBParam) Validate() []error {
+func (p *ServerInfoGslbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -393,117 +423,131 @@ func (p *ServerInfoGSLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ServerInfoGSLBParam) GetResourceDef() *schema.Resource {
+func (p *ServerInfoGslbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["GSLB"]
 }
 
-func (p *ServerInfoGSLBParam) GetCommandDef() *schema.Command {
+func (p *ServerInfoGslbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["server-info"]
 }
 
-func (p *ServerInfoGSLBParam) GetIncludeFields() []string {
+func (p *ServerInfoGslbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ServerInfoGSLBParam) GetExcludeFields() []string {
+func (p *ServerInfoGslbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ServerInfoGSLBParam) GetTableType() output.TableType {
+func (p *ServerInfoGslbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ServerInfoGSLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ServerInfoGslbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerInfoGSLBParam) SetSelector(v []string) {
+func (p *ServerInfoGslbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ServerInfoGSLBParam) GetSelector() []string {
+func (p *ServerInfoGslbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ServerInfoGSLBParam) SetParamTemplate(v string) {
+func (p *ServerInfoGslbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ServerInfoGSLBParam) GetParamTemplate() string {
+func (p *ServerInfoGslbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ServerInfoGSLBParam) SetParamTemplateFile(v string) {
+func (p *ServerInfoGslbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerInfoGslbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerInfoGslbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ServerInfoGSLBParam) GetParamTemplateFile() string {
+func (p *ServerInfoGslbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ServerInfoGSLBParam) SetGenerateSkeleton(v bool) {
+func (p *ServerInfoGslbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerInfoGslbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerInfoGslbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ServerInfoGSLBParam) GetGenerateSkeleton() bool {
+func (p *ServerInfoGslbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerInfoGSLBParam) SetOutputType(v string) {
+func (p *ServerInfoGslbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ServerInfoGSLBParam) GetOutputType() string {
+func (p *ServerInfoGslbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ServerInfoGSLBParam) SetColumn(v []string) {
+func (p *ServerInfoGslbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ServerInfoGSLBParam) GetColumn() []string {
+func (p *ServerInfoGslbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ServerInfoGSLBParam) SetQuiet(v bool) {
+func (p *ServerInfoGslbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ServerInfoGSLBParam) GetQuiet() bool {
+func (p *ServerInfoGslbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ServerInfoGSLBParam) SetFormat(v string) {
+func (p *ServerInfoGslbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ServerInfoGSLBParam) GetFormat() string {
+func (p *ServerInfoGslbParam) GetFormat() string {
 	return p.Format
 }
-func (p *ServerInfoGSLBParam) SetFormatFile(v string) {
+func (p *ServerInfoGslbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ServerInfoGSLBParam) GetFormatFile() string {
+func (p *ServerInfoGslbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ServerInfoGSLBParam) SetQuery(v string) {
+func (p *ServerInfoGslbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ServerInfoGSLBParam) GetQuery() string {
+func (p *ServerInfoGslbParam) GetQuery() string {
 	return p.Query
 }
-func (p *ServerInfoGSLBParam) SetQueryFile(v string) {
+func (p *ServerInfoGslbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ServerInfoGSLBParam) GetQueryFile() string {
+func (p *ServerInfoGslbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerInfoGSLBParam) SetId(v sacloud.ID) {
+func (p *ServerInfoGslbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerInfoGSLBParam) GetId() sacloud.ID {
+func (p *ServerInfoGslbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// CreateGSLBParam is input parameters for the sacloud API
-type CreateGSLBParam struct {
+// CreateGslbParam is input parameters for the sacloud API
+type CreateGslbParam struct {
 	Protocol          string     `json:"protocol"`
 	HostHeader        string     `json:"host-header"`
 	Path              string     `json:"path"`
@@ -518,7 +562,9 @@ type CreateGSLBParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -529,9 +575,9 @@ type CreateGSLBParam struct {
 	QueryFile         string     `json:"query-file"`
 }
 
-// NewCreateGSLBParam return new CreateGSLBParam
-func NewCreateGSLBParam() *CreateGSLBParam {
-	return &CreateGSLBParam{
+// NewCreateGslbParam return new CreateGslbParam
+func NewCreateGslbParam() *CreateGslbParam {
+	return &CreateGslbParam{
 
 		Protocol:     "ping",
 		Path:         "/",
@@ -542,7 +588,7 @@ func NewCreateGSLBParam() *CreateGSLBParam {
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CreateGSLBParam) FillValueToSkeleton() {
+func (p *CreateGslbParam) FillValueToSkeleton() {
 	if isEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
@@ -585,8 +631,14 @@ func (p *CreateGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -616,7 +668,7 @@ func (p *CreateGSLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CreateGSLBParam) Validate() []error {
+func (p *CreateGslbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -712,201 +764,217 @@ func (p *CreateGSLBParam) Validate() []error {
 	return errors
 }
 
-func (p *CreateGSLBParam) GetResourceDef() *schema.Resource {
+func (p *CreateGslbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["GSLB"]
 }
 
-func (p *CreateGSLBParam) GetCommandDef() *schema.Command {
+func (p *CreateGslbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["create"]
 }
 
-func (p *CreateGSLBParam) GetIncludeFields() []string {
+func (p *CreateGslbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CreateGSLBParam) GetExcludeFields() []string {
+func (p *CreateGslbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CreateGSLBParam) GetTableType() output.TableType {
+func (p *CreateGslbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CreateGSLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *CreateGslbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CreateGSLBParam) SetProtocol(v string) {
+func (p *CreateGslbParam) SetProtocol(v string) {
 	p.Protocol = v
 }
 
-func (p *CreateGSLBParam) GetProtocol() string {
+func (p *CreateGslbParam) GetProtocol() string {
 	return p.Protocol
 }
-func (p *CreateGSLBParam) SetHostHeader(v string) {
+func (p *CreateGslbParam) SetHostHeader(v string) {
 	p.HostHeader = v
 }
 
-func (p *CreateGSLBParam) GetHostHeader() string {
+func (p *CreateGslbParam) GetHostHeader() string {
 	return p.HostHeader
 }
-func (p *CreateGSLBParam) SetPath(v string) {
+func (p *CreateGslbParam) SetPath(v string) {
 	p.Path = v
 }
 
-func (p *CreateGSLBParam) GetPath() string {
+func (p *CreateGslbParam) GetPath() string {
 	return p.Path
 }
-func (p *CreateGSLBParam) SetResponseCode(v int) {
+func (p *CreateGslbParam) SetResponseCode(v int) {
 	p.ResponseCode = v
 }
 
-func (p *CreateGSLBParam) GetResponseCode() int {
+func (p *CreateGslbParam) GetResponseCode() int {
 	return p.ResponseCode
 }
-func (p *CreateGSLBParam) SetPort(v int) {
+func (p *CreateGslbParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *CreateGSLBParam) GetPort() int {
+func (p *CreateGslbParam) GetPort() int {
 	return p.Port
 }
-func (p *CreateGSLBParam) SetDelayLoop(v int) {
+func (p *CreateGslbParam) SetDelayLoop(v int) {
 	p.DelayLoop = v
 }
 
-func (p *CreateGSLBParam) GetDelayLoop() int {
+func (p *CreateGslbParam) GetDelayLoop() int {
 	return p.DelayLoop
 }
-func (p *CreateGSLBParam) SetWeighted(v bool) {
+func (p *CreateGslbParam) SetWeighted(v bool) {
 	p.Weighted = v
 }
 
-func (p *CreateGSLBParam) GetWeighted() bool {
+func (p *CreateGslbParam) GetWeighted() bool {
 	return p.Weighted
 }
-func (p *CreateGSLBParam) SetSorryServer(v string) {
+func (p *CreateGslbParam) SetSorryServer(v string) {
 	p.SorryServer = v
 }
 
-func (p *CreateGSLBParam) GetSorryServer() string {
+func (p *CreateGslbParam) GetSorryServer() string {
 	return p.SorryServer
 }
-func (p *CreateGSLBParam) SetName(v string) {
+func (p *CreateGslbParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *CreateGSLBParam) GetName() string {
+func (p *CreateGslbParam) GetName() string {
 	return p.Name
 }
-func (p *CreateGSLBParam) SetDescription(v string) {
+func (p *CreateGslbParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *CreateGSLBParam) GetDescription() string {
+func (p *CreateGslbParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateGSLBParam) SetTags(v []string) {
+func (p *CreateGslbParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreateGSLBParam) GetTags() []string {
+func (p *CreateGslbParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateGSLBParam) SetIconId(v sacloud.ID) {
+func (p *CreateGslbParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateGSLBParam) GetIconId() sacloud.ID {
+func (p *CreateGslbParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *CreateGSLBParam) SetAssumeyes(v bool) {
+func (p *CreateGslbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *CreateGSLBParam) GetAssumeyes() bool {
+func (p *CreateGslbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CreateGSLBParam) SetParamTemplate(v string) {
+func (p *CreateGslbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CreateGSLBParam) GetParamTemplate() string {
+func (p *CreateGslbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CreateGSLBParam) SetParamTemplateFile(v string) {
+func (p *CreateGslbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateGslbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateGslbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CreateGSLBParam) GetParamTemplateFile() string {
+func (p *CreateGslbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CreateGSLBParam) SetGenerateSkeleton(v bool) {
+func (p *CreateGslbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateGslbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateGslbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CreateGSLBParam) GetGenerateSkeleton() bool {
+func (p *CreateGslbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CreateGSLBParam) SetOutputType(v string) {
+func (p *CreateGslbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CreateGSLBParam) GetOutputType() string {
+func (p *CreateGslbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CreateGSLBParam) SetColumn(v []string) {
+func (p *CreateGslbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CreateGSLBParam) GetColumn() []string {
+func (p *CreateGslbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CreateGSLBParam) SetQuiet(v bool) {
+func (p *CreateGslbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CreateGSLBParam) GetQuiet() bool {
+func (p *CreateGslbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CreateGSLBParam) SetFormat(v string) {
+func (p *CreateGslbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CreateGSLBParam) GetFormat() string {
+func (p *CreateGslbParam) GetFormat() string {
 	return p.Format
 }
-func (p *CreateGSLBParam) SetFormatFile(v string) {
+func (p *CreateGslbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CreateGSLBParam) GetFormatFile() string {
+func (p *CreateGslbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CreateGSLBParam) SetQuery(v string) {
+func (p *CreateGslbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CreateGSLBParam) GetQuery() string {
+func (p *CreateGslbParam) GetQuery() string {
 	return p.Query
 }
-func (p *CreateGSLBParam) SetQueryFile(v string) {
+func (p *CreateGslbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CreateGSLBParam) GetQueryFile() string {
+func (p *CreateGslbParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// ServerAddGSLBParam is input parameters for the sacloud API
-type ServerAddGSLBParam struct {
+// ServerAddGslbParam is input parameters for the sacloud API
+type ServerAddGslbParam struct {
 	Ipaddress         string     `json:"ipaddress"`
 	Disabled          bool       `json:"disabled"`
 	Weight            int        `json:"weight"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -918,13 +986,13 @@ type ServerAddGSLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewServerAddGSLBParam return new ServerAddGSLBParam
-func NewServerAddGSLBParam() *ServerAddGSLBParam {
-	return &ServerAddGSLBParam{}
+// NewServerAddGslbParam return new ServerAddGslbParam
+func NewServerAddGslbParam() *ServerAddGslbParam {
+	return &ServerAddGslbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ServerAddGSLBParam) FillValueToSkeleton() {
+func (p *ServerAddGslbParam) FillValueToSkeleton() {
 	if isEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
@@ -943,8 +1011,14 @@ func (p *ServerAddGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -977,7 +1051,7 @@ func (p *ServerAddGSLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ServerAddGSLBParam) Validate() []error {
+func (p *ServerAddGslbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["GSLB"].Commands["server-add"].Params["ipaddress"].ValidateFunc
@@ -1024,148 +1098,164 @@ func (p *ServerAddGSLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ServerAddGSLBParam) GetResourceDef() *schema.Resource {
+func (p *ServerAddGslbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["GSLB"]
 }
 
-func (p *ServerAddGSLBParam) GetCommandDef() *schema.Command {
+func (p *ServerAddGslbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["server-add"]
 }
 
-func (p *ServerAddGSLBParam) GetIncludeFields() []string {
+func (p *ServerAddGslbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ServerAddGSLBParam) GetExcludeFields() []string {
+func (p *ServerAddGslbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ServerAddGSLBParam) GetTableType() output.TableType {
+func (p *ServerAddGslbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ServerAddGSLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ServerAddGslbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerAddGSLBParam) SetIpaddress(v string) {
+func (p *ServerAddGslbParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
 
-func (p *ServerAddGSLBParam) GetIpaddress() string {
+func (p *ServerAddGslbParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *ServerAddGSLBParam) SetDisabled(v bool) {
+func (p *ServerAddGslbParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
 
-func (p *ServerAddGSLBParam) GetDisabled() bool {
+func (p *ServerAddGslbParam) GetDisabled() bool {
 	return p.Disabled
 }
-func (p *ServerAddGSLBParam) SetWeight(v int) {
+func (p *ServerAddGslbParam) SetWeight(v int) {
 	p.Weight = v
 }
 
-func (p *ServerAddGSLBParam) GetWeight() int {
+func (p *ServerAddGslbParam) GetWeight() int {
 	return p.Weight
 }
-func (p *ServerAddGSLBParam) SetSelector(v []string) {
+func (p *ServerAddGslbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ServerAddGSLBParam) GetSelector() []string {
+func (p *ServerAddGslbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ServerAddGSLBParam) SetAssumeyes(v bool) {
+func (p *ServerAddGslbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ServerAddGSLBParam) GetAssumeyes() bool {
+func (p *ServerAddGslbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ServerAddGSLBParam) SetParamTemplate(v string) {
+func (p *ServerAddGslbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ServerAddGSLBParam) GetParamTemplate() string {
+func (p *ServerAddGslbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ServerAddGSLBParam) SetParamTemplateFile(v string) {
+func (p *ServerAddGslbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerAddGslbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerAddGslbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ServerAddGSLBParam) GetParamTemplateFile() string {
+func (p *ServerAddGslbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ServerAddGSLBParam) SetGenerateSkeleton(v bool) {
+func (p *ServerAddGslbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerAddGslbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerAddGslbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ServerAddGSLBParam) GetGenerateSkeleton() bool {
+func (p *ServerAddGslbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerAddGSLBParam) SetOutputType(v string) {
+func (p *ServerAddGslbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ServerAddGSLBParam) GetOutputType() string {
+func (p *ServerAddGslbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ServerAddGSLBParam) SetColumn(v []string) {
+func (p *ServerAddGslbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ServerAddGSLBParam) GetColumn() []string {
+func (p *ServerAddGslbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ServerAddGSLBParam) SetQuiet(v bool) {
+func (p *ServerAddGslbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ServerAddGSLBParam) GetQuiet() bool {
+func (p *ServerAddGslbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ServerAddGSLBParam) SetFormat(v string) {
+func (p *ServerAddGslbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ServerAddGSLBParam) GetFormat() string {
+func (p *ServerAddGslbParam) GetFormat() string {
 	return p.Format
 }
-func (p *ServerAddGSLBParam) SetFormatFile(v string) {
+func (p *ServerAddGslbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ServerAddGSLBParam) GetFormatFile() string {
+func (p *ServerAddGslbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ServerAddGSLBParam) SetQuery(v string) {
+func (p *ServerAddGslbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ServerAddGSLBParam) GetQuery() string {
+func (p *ServerAddGslbParam) GetQuery() string {
 	return p.Query
 }
-func (p *ServerAddGSLBParam) SetQueryFile(v string) {
+func (p *ServerAddGslbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ServerAddGSLBParam) GetQueryFile() string {
+func (p *ServerAddGslbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerAddGSLBParam) SetId(v sacloud.ID) {
+func (p *ServerAddGslbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerAddGSLBParam) GetId() sacloud.ID {
+func (p *ServerAddGslbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ReadGSLBParam is input parameters for the sacloud API
-type ReadGSLBParam struct {
+// ReadGslbParam is input parameters for the sacloud API
+type ReadGslbParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1177,21 +1267,27 @@ type ReadGSLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewReadGSLBParam return new ReadGSLBParam
-func NewReadGSLBParam() *ReadGSLBParam {
-	return &ReadGSLBParam{}
+// NewReadGslbParam return new ReadGslbParam
+func NewReadGslbParam() *ReadGslbParam {
+	return &ReadGslbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ReadGSLBParam) FillValueToSkeleton() {
+func (p *ReadGslbParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1224,7 +1320,7 @@ func (p *ReadGSLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ReadGSLBParam) Validate() []error {
+func (p *ReadGslbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1257,117 +1353,131 @@ func (p *ReadGSLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ReadGSLBParam) GetResourceDef() *schema.Resource {
+func (p *ReadGslbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["GSLB"]
 }
 
-func (p *ReadGSLBParam) GetCommandDef() *schema.Command {
+func (p *ReadGslbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["read"]
 }
 
-func (p *ReadGSLBParam) GetIncludeFields() []string {
+func (p *ReadGslbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ReadGSLBParam) GetExcludeFields() []string {
+func (p *ReadGslbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ReadGSLBParam) GetTableType() output.TableType {
+func (p *ReadGslbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ReadGSLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ReadGslbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReadGSLBParam) SetSelector(v []string) {
+func (p *ReadGslbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ReadGSLBParam) GetSelector() []string {
+func (p *ReadGslbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ReadGSLBParam) SetParamTemplate(v string) {
+func (p *ReadGslbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ReadGSLBParam) GetParamTemplate() string {
+func (p *ReadGslbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ReadGSLBParam) SetParamTemplateFile(v string) {
+func (p *ReadGslbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadGslbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadGslbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ReadGSLBParam) GetParamTemplateFile() string {
+func (p *ReadGslbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ReadGSLBParam) SetGenerateSkeleton(v bool) {
+func (p *ReadGslbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadGslbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadGslbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ReadGSLBParam) GetGenerateSkeleton() bool {
+func (p *ReadGslbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReadGSLBParam) SetOutputType(v string) {
+func (p *ReadGslbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ReadGSLBParam) GetOutputType() string {
+func (p *ReadGslbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ReadGSLBParam) SetColumn(v []string) {
+func (p *ReadGslbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ReadGSLBParam) GetColumn() []string {
+func (p *ReadGslbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ReadGSLBParam) SetQuiet(v bool) {
+func (p *ReadGslbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ReadGSLBParam) GetQuiet() bool {
+func (p *ReadGslbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ReadGSLBParam) SetFormat(v string) {
+func (p *ReadGslbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ReadGSLBParam) GetFormat() string {
+func (p *ReadGslbParam) GetFormat() string {
 	return p.Format
 }
-func (p *ReadGSLBParam) SetFormatFile(v string) {
+func (p *ReadGslbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ReadGSLBParam) GetFormatFile() string {
+func (p *ReadGslbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ReadGSLBParam) SetQuery(v string) {
+func (p *ReadGslbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ReadGSLBParam) GetQuery() string {
+func (p *ReadGslbParam) GetQuery() string {
 	return p.Query
 }
-func (p *ReadGSLBParam) SetQueryFile(v string) {
+func (p *ReadGslbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ReadGSLBParam) GetQueryFile() string {
+func (p *ReadGslbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadGSLBParam) SetId(v sacloud.ID) {
+func (p *ReadGslbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadGSLBParam) GetId() sacloud.ID {
+func (p *ReadGslbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ServerUpdateGSLBParam is input parameters for the sacloud API
-type ServerUpdateGSLBParam struct {
+// ServerUpdateGslbParam is input parameters for the sacloud API
+type ServerUpdateGslbParam struct {
 	Index             int        `json:"index"`
 	Ipaddress         string     `json:"ipaddress"`
 	Disabled          bool       `json:"disabled"`
@@ -1375,7 +1485,9 @@ type ServerUpdateGSLBParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1387,13 +1499,13 @@ type ServerUpdateGSLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewServerUpdateGSLBParam return new ServerUpdateGSLBParam
-func NewServerUpdateGSLBParam() *ServerUpdateGSLBParam {
-	return &ServerUpdateGSLBParam{}
+// NewServerUpdateGslbParam return new ServerUpdateGslbParam
+func NewServerUpdateGslbParam() *ServerUpdateGslbParam {
+	return &ServerUpdateGslbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ServerUpdateGSLBParam) FillValueToSkeleton() {
+func (p *ServerUpdateGslbParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -1415,8 +1527,14 @@ func (p *ServerUpdateGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1449,7 +1567,7 @@ func (p *ServerUpdateGSLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ServerUpdateGSLBParam) Validate() []error {
+func (p *ServerUpdateGslbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -1503,157 +1621,173 @@ func (p *ServerUpdateGSLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ServerUpdateGSLBParam) GetResourceDef() *schema.Resource {
+func (p *ServerUpdateGslbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["GSLB"]
 }
 
-func (p *ServerUpdateGSLBParam) GetCommandDef() *schema.Command {
+func (p *ServerUpdateGslbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["server-update"]
 }
 
-func (p *ServerUpdateGSLBParam) GetIncludeFields() []string {
+func (p *ServerUpdateGslbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ServerUpdateGSLBParam) GetExcludeFields() []string {
+func (p *ServerUpdateGslbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ServerUpdateGSLBParam) GetTableType() output.TableType {
+func (p *ServerUpdateGslbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ServerUpdateGSLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ServerUpdateGslbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerUpdateGSLBParam) SetIndex(v int) {
+func (p *ServerUpdateGslbParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *ServerUpdateGSLBParam) GetIndex() int {
+func (p *ServerUpdateGslbParam) GetIndex() int {
 	return p.Index
 }
-func (p *ServerUpdateGSLBParam) SetIpaddress(v string) {
+func (p *ServerUpdateGslbParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
 
-func (p *ServerUpdateGSLBParam) GetIpaddress() string {
+func (p *ServerUpdateGslbParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *ServerUpdateGSLBParam) SetDisabled(v bool) {
+func (p *ServerUpdateGslbParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
 
-func (p *ServerUpdateGSLBParam) GetDisabled() bool {
+func (p *ServerUpdateGslbParam) GetDisabled() bool {
 	return p.Disabled
 }
-func (p *ServerUpdateGSLBParam) SetWeight(v int) {
+func (p *ServerUpdateGslbParam) SetWeight(v int) {
 	p.Weight = v
 }
 
-func (p *ServerUpdateGSLBParam) GetWeight() int {
+func (p *ServerUpdateGslbParam) GetWeight() int {
 	return p.Weight
 }
-func (p *ServerUpdateGSLBParam) SetSelector(v []string) {
+func (p *ServerUpdateGslbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ServerUpdateGSLBParam) GetSelector() []string {
+func (p *ServerUpdateGslbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ServerUpdateGSLBParam) SetAssumeyes(v bool) {
+func (p *ServerUpdateGslbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ServerUpdateGSLBParam) GetAssumeyes() bool {
+func (p *ServerUpdateGslbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ServerUpdateGSLBParam) SetParamTemplate(v string) {
+func (p *ServerUpdateGslbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ServerUpdateGSLBParam) GetParamTemplate() string {
+func (p *ServerUpdateGslbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ServerUpdateGSLBParam) SetParamTemplateFile(v string) {
+func (p *ServerUpdateGslbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerUpdateGslbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerUpdateGslbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ServerUpdateGSLBParam) GetParamTemplateFile() string {
+func (p *ServerUpdateGslbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ServerUpdateGSLBParam) SetGenerateSkeleton(v bool) {
+func (p *ServerUpdateGslbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerUpdateGslbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerUpdateGslbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ServerUpdateGSLBParam) GetGenerateSkeleton() bool {
+func (p *ServerUpdateGslbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerUpdateGSLBParam) SetOutputType(v string) {
+func (p *ServerUpdateGslbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ServerUpdateGSLBParam) GetOutputType() string {
+func (p *ServerUpdateGslbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ServerUpdateGSLBParam) SetColumn(v []string) {
+func (p *ServerUpdateGslbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ServerUpdateGSLBParam) GetColumn() []string {
+func (p *ServerUpdateGslbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ServerUpdateGSLBParam) SetQuiet(v bool) {
+func (p *ServerUpdateGslbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ServerUpdateGSLBParam) GetQuiet() bool {
+func (p *ServerUpdateGslbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ServerUpdateGSLBParam) SetFormat(v string) {
+func (p *ServerUpdateGslbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ServerUpdateGSLBParam) GetFormat() string {
+func (p *ServerUpdateGslbParam) GetFormat() string {
 	return p.Format
 }
-func (p *ServerUpdateGSLBParam) SetFormatFile(v string) {
+func (p *ServerUpdateGslbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ServerUpdateGSLBParam) GetFormatFile() string {
+func (p *ServerUpdateGslbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ServerUpdateGSLBParam) SetQuery(v string) {
+func (p *ServerUpdateGslbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ServerUpdateGSLBParam) GetQuery() string {
+func (p *ServerUpdateGslbParam) GetQuery() string {
 	return p.Query
 }
-func (p *ServerUpdateGSLBParam) SetQueryFile(v string) {
+func (p *ServerUpdateGslbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ServerUpdateGSLBParam) GetQueryFile() string {
+func (p *ServerUpdateGslbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerUpdateGSLBParam) SetId(v sacloud.ID) {
+func (p *ServerUpdateGslbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerUpdateGSLBParam) GetId() sacloud.ID {
+func (p *ServerUpdateGslbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ServerDeleteGSLBParam is input parameters for the sacloud API
-type ServerDeleteGSLBParam struct {
+// ServerDeleteGslbParam is input parameters for the sacloud API
+type ServerDeleteGslbParam struct {
 	Index             int        `json:"index"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1665,13 +1799,13 @@ type ServerDeleteGSLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewServerDeleteGSLBParam return new ServerDeleteGSLBParam
-func NewServerDeleteGSLBParam() *ServerDeleteGSLBParam {
-	return &ServerDeleteGSLBParam{}
+// NewServerDeleteGslbParam return new ServerDeleteGslbParam
+func NewServerDeleteGslbParam() *ServerDeleteGslbParam {
+	return &ServerDeleteGslbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ServerDeleteGSLBParam) FillValueToSkeleton() {
+func (p *ServerDeleteGslbParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -1684,8 +1818,14 @@ func (p *ServerDeleteGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1718,7 +1858,7 @@ func (p *ServerDeleteGSLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ServerDeleteGSLBParam) Validate() []error {
+func (p *ServerDeleteGslbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -1758,131 +1898,145 @@ func (p *ServerDeleteGSLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ServerDeleteGSLBParam) GetResourceDef() *schema.Resource {
+func (p *ServerDeleteGslbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["GSLB"]
 }
 
-func (p *ServerDeleteGSLBParam) GetCommandDef() *schema.Command {
+func (p *ServerDeleteGslbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["server-delete"]
 }
 
-func (p *ServerDeleteGSLBParam) GetIncludeFields() []string {
+func (p *ServerDeleteGslbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ServerDeleteGSLBParam) GetExcludeFields() []string {
+func (p *ServerDeleteGslbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ServerDeleteGSLBParam) GetTableType() output.TableType {
+func (p *ServerDeleteGslbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ServerDeleteGSLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ServerDeleteGslbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerDeleteGSLBParam) SetIndex(v int) {
+func (p *ServerDeleteGslbParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *ServerDeleteGSLBParam) GetIndex() int {
+func (p *ServerDeleteGslbParam) GetIndex() int {
 	return p.Index
 }
-func (p *ServerDeleteGSLBParam) SetSelector(v []string) {
+func (p *ServerDeleteGslbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ServerDeleteGSLBParam) GetSelector() []string {
+func (p *ServerDeleteGslbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ServerDeleteGSLBParam) SetAssumeyes(v bool) {
+func (p *ServerDeleteGslbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ServerDeleteGSLBParam) GetAssumeyes() bool {
+func (p *ServerDeleteGslbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ServerDeleteGSLBParam) SetParamTemplate(v string) {
+func (p *ServerDeleteGslbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ServerDeleteGSLBParam) GetParamTemplate() string {
+func (p *ServerDeleteGslbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ServerDeleteGSLBParam) SetParamTemplateFile(v string) {
+func (p *ServerDeleteGslbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerDeleteGslbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerDeleteGslbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ServerDeleteGSLBParam) GetParamTemplateFile() string {
+func (p *ServerDeleteGslbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ServerDeleteGSLBParam) SetGenerateSkeleton(v bool) {
+func (p *ServerDeleteGslbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerDeleteGslbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerDeleteGslbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ServerDeleteGSLBParam) GetGenerateSkeleton() bool {
+func (p *ServerDeleteGslbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerDeleteGSLBParam) SetOutputType(v string) {
+func (p *ServerDeleteGslbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ServerDeleteGSLBParam) GetOutputType() string {
+func (p *ServerDeleteGslbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ServerDeleteGSLBParam) SetColumn(v []string) {
+func (p *ServerDeleteGslbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ServerDeleteGSLBParam) GetColumn() []string {
+func (p *ServerDeleteGslbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ServerDeleteGSLBParam) SetQuiet(v bool) {
+func (p *ServerDeleteGslbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ServerDeleteGSLBParam) GetQuiet() bool {
+func (p *ServerDeleteGslbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ServerDeleteGSLBParam) SetFormat(v string) {
+func (p *ServerDeleteGslbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ServerDeleteGSLBParam) GetFormat() string {
+func (p *ServerDeleteGslbParam) GetFormat() string {
 	return p.Format
 }
-func (p *ServerDeleteGSLBParam) SetFormatFile(v string) {
+func (p *ServerDeleteGslbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ServerDeleteGSLBParam) GetFormatFile() string {
+func (p *ServerDeleteGslbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ServerDeleteGSLBParam) SetQuery(v string) {
+func (p *ServerDeleteGslbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ServerDeleteGSLBParam) GetQuery() string {
+func (p *ServerDeleteGslbParam) GetQuery() string {
 	return p.Query
 }
-func (p *ServerDeleteGSLBParam) SetQueryFile(v string) {
+func (p *ServerDeleteGslbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ServerDeleteGSLBParam) GetQueryFile() string {
+func (p *ServerDeleteGslbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerDeleteGSLBParam) SetId(v sacloud.ID) {
+func (p *ServerDeleteGslbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerDeleteGSLBParam) GetId() sacloud.ID {
+func (p *ServerDeleteGslbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// UpdateGSLBParam is input parameters for the sacloud API
-type UpdateGSLBParam struct {
+// UpdateGslbParam is input parameters for the sacloud API
+type UpdateGslbParam struct {
 	Protocol          string     `json:"protocol"`
 	HostHeader        string     `json:"host-header"`
 	Path              string     `json:"path"`
@@ -1898,7 +2052,9 @@ type UpdateGSLBParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1910,13 +2066,13 @@ type UpdateGSLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewUpdateGSLBParam return new UpdateGSLBParam
-func NewUpdateGSLBParam() *UpdateGSLBParam {
-	return &UpdateGSLBParam{}
+// NewUpdateGslbParam return new UpdateGslbParam
+func NewUpdateGslbParam() *UpdateGslbParam {
+	return &UpdateGslbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *UpdateGSLBParam) FillValueToSkeleton() {
+func (p *UpdateGslbParam) FillValueToSkeleton() {
 	if isEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
@@ -1962,8 +2118,14 @@ func (p *UpdateGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1996,7 +2158,7 @@ func (p *UpdateGSLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *UpdateGSLBParam) Validate() []error {
+func (p *UpdateGslbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["GSLB"].Commands["update"].Params["protocol"].ValidateFunc
@@ -2078,212 +2240,228 @@ func (p *UpdateGSLBParam) Validate() []error {
 	return errors
 }
 
-func (p *UpdateGSLBParam) GetResourceDef() *schema.Resource {
+func (p *UpdateGslbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["GSLB"]
 }
 
-func (p *UpdateGSLBParam) GetCommandDef() *schema.Command {
+func (p *UpdateGslbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["update"]
 }
 
-func (p *UpdateGSLBParam) GetIncludeFields() []string {
+func (p *UpdateGslbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *UpdateGSLBParam) GetExcludeFields() []string {
+func (p *UpdateGslbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *UpdateGSLBParam) GetTableType() output.TableType {
+func (p *UpdateGslbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *UpdateGSLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *UpdateGslbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *UpdateGSLBParam) SetProtocol(v string) {
+func (p *UpdateGslbParam) SetProtocol(v string) {
 	p.Protocol = v
 }
 
-func (p *UpdateGSLBParam) GetProtocol() string {
+func (p *UpdateGslbParam) GetProtocol() string {
 	return p.Protocol
 }
-func (p *UpdateGSLBParam) SetHostHeader(v string) {
+func (p *UpdateGslbParam) SetHostHeader(v string) {
 	p.HostHeader = v
 }
 
-func (p *UpdateGSLBParam) GetHostHeader() string {
+func (p *UpdateGslbParam) GetHostHeader() string {
 	return p.HostHeader
 }
-func (p *UpdateGSLBParam) SetPath(v string) {
+func (p *UpdateGslbParam) SetPath(v string) {
 	p.Path = v
 }
 
-func (p *UpdateGSLBParam) GetPath() string {
+func (p *UpdateGslbParam) GetPath() string {
 	return p.Path
 }
-func (p *UpdateGSLBParam) SetResponseCode(v int) {
+func (p *UpdateGslbParam) SetResponseCode(v int) {
 	p.ResponseCode = v
 }
 
-func (p *UpdateGSLBParam) GetResponseCode() int {
+func (p *UpdateGslbParam) GetResponseCode() int {
 	return p.ResponseCode
 }
-func (p *UpdateGSLBParam) SetPort(v int) {
+func (p *UpdateGslbParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *UpdateGSLBParam) GetPort() int {
+func (p *UpdateGslbParam) GetPort() int {
 	return p.Port
 }
-func (p *UpdateGSLBParam) SetDelayLoop(v int) {
+func (p *UpdateGslbParam) SetDelayLoop(v int) {
 	p.DelayLoop = v
 }
 
-func (p *UpdateGSLBParam) GetDelayLoop() int {
+func (p *UpdateGslbParam) GetDelayLoop() int {
 	return p.DelayLoop
 }
-func (p *UpdateGSLBParam) SetWeighted(v bool) {
+func (p *UpdateGslbParam) SetWeighted(v bool) {
 	p.Weighted = v
 }
 
-func (p *UpdateGSLBParam) GetWeighted() bool {
+func (p *UpdateGslbParam) GetWeighted() bool {
 	return p.Weighted
 }
-func (p *UpdateGSLBParam) SetSorryServer(v string) {
+func (p *UpdateGslbParam) SetSorryServer(v string) {
 	p.SorryServer = v
 }
 
-func (p *UpdateGSLBParam) GetSorryServer() string {
+func (p *UpdateGslbParam) GetSorryServer() string {
 	return p.SorryServer
 }
-func (p *UpdateGSLBParam) SetSelector(v []string) {
+func (p *UpdateGslbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *UpdateGSLBParam) GetSelector() []string {
+func (p *UpdateGslbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *UpdateGSLBParam) SetName(v string) {
+func (p *UpdateGslbParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *UpdateGSLBParam) GetName() string {
+func (p *UpdateGslbParam) GetName() string {
 	return p.Name
 }
-func (p *UpdateGSLBParam) SetDescription(v string) {
+func (p *UpdateGslbParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdateGSLBParam) GetDescription() string {
+func (p *UpdateGslbParam) GetDescription() string {
 	return p.Description
 }
-func (p *UpdateGSLBParam) SetTags(v []string) {
+func (p *UpdateGslbParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *UpdateGSLBParam) GetTags() []string {
+func (p *UpdateGslbParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateGSLBParam) SetIconId(v sacloud.ID) {
+func (p *UpdateGslbParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateGSLBParam) GetIconId() sacloud.ID {
+func (p *UpdateGslbParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *UpdateGSLBParam) SetAssumeyes(v bool) {
+func (p *UpdateGslbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *UpdateGSLBParam) GetAssumeyes() bool {
+func (p *UpdateGslbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *UpdateGSLBParam) SetParamTemplate(v string) {
+func (p *UpdateGslbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *UpdateGSLBParam) GetParamTemplate() string {
+func (p *UpdateGslbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *UpdateGSLBParam) SetParamTemplateFile(v string) {
+func (p *UpdateGslbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateGslbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateGslbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *UpdateGSLBParam) GetParamTemplateFile() string {
+func (p *UpdateGslbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *UpdateGSLBParam) SetGenerateSkeleton(v bool) {
+func (p *UpdateGslbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateGslbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateGslbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *UpdateGSLBParam) GetGenerateSkeleton() bool {
+func (p *UpdateGslbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *UpdateGSLBParam) SetOutputType(v string) {
+func (p *UpdateGslbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *UpdateGSLBParam) GetOutputType() string {
+func (p *UpdateGslbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *UpdateGSLBParam) SetColumn(v []string) {
+func (p *UpdateGslbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *UpdateGSLBParam) GetColumn() []string {
+func (p *UpdateGslbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *UpdateGSLBParam) SetQuiet(v bool) {
+func (p *UpdateGslbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *UpdateGSLBParam) GetQuiet() bool {
+func (p *UpdateGslbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *UpdateGSLBParam) SetFormat(v string) {
+func (p *UpdateGslbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *UpdateGSLBParam) GetFormat() string {
+func (p *UpdateGslbParam) GetFormat() string {
 	return p.Format
 }
-func (p *UpdateGSLBParam) SetFormatFile(v string) {
+func (p *UpdateGslbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *UpdateGSLBParam) GetFormatFile() string {
+func (p *UpdateGslbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *UpdateGSLBParam) SetQuery(v string) {
+func (p *UpdateGslbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *UpdateGSLBParam) GetQuery() string {
+func (p *UpdateGslbParam) GetQuery() string {
 	return p.Query
 }
-func (p *UpdateGSLBParam) SetQueryFile(v string) {
+func (p *UpdateGslbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *UpdateGSLBParam) GetQueryFile() string {
+func (p *UpdateGslbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateGSLBParam) SetId(v sacloud.ID) {
+func (p *UpdateGslbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateGSLBParam) GetId() sacloud.ID {
+func (p *UpdateGslbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// DeleteGSLBParam is input parameters for the sacloud API
-type DeleteGSLBParam struct {
+// DeleteGslbParam is input parameters for the sacloud API
+type DeleteGslbParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2295,13 +2473,13 @@ type DeleteGSLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewDeleteGSLBParam return new DeleteGSLBParam
-func NewDeleteGSLBParam() *DeleteGSLBParam {
-	return &DeleteGSLBParam{}
+// NewDeleteGslbParam return new DeleteGslbParam
+func NewDeleteGslbParam() *DeleteGslbParam {
+	return &DeleteGslbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *DeleteGSLBParam) FillValueToSkeleton() {
+func (p *DeleteGslbParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2311,8 +2489,14 @@ func (p *DeleteGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2345,7 +2529,7 @@ func (p *DeleteGSLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *DeleteGSLBParam) Validate() []error {
+func (p *DeleteGslbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -2378,118 +2562,132 @@ func (p *DeleteGSLBParam) Validate() []error {
 	return errors
 }
 
-func (p *DeleteGSLBParam) GetResourceDef() *schema.Resource {
+func (p *DeleteGslbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["GSLB"]
 }
 
-func (p *DeleteGSLBParam) GetCommandDef() *schema.Command {
+func (p *DeleteGslbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["delete"]
 }
 
-func (p *DeleteGSLBParam) GetIncludeFields() []string {
+func (p *DeleteGslbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *DeleteGSLBParam) GetExcludeFields() []string {
+func (p *DeleteGslbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *DeleteGSLBParam) GetTableType() output.TableType {
+func (p *DeleteGslbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *DeleteGSLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *DeleteGslbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DeleteGSLBParam) SetSelector(v []string) {
+func (p *DeleteGslbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *DeleteGSLBParam) GetSelector() []string {
+func (p *DeleteGslbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *DeleteGSLBParam) SetAssumeyes(v bool) {
+func (p *DeleteGslbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *DeleteGSLBParam) GetAssumeyes() bool {
+func (p *DeleteGslbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeleteGSLBParam) SetParamTemplate(v string) {
+func (p *DeleteGslbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *DeleteGSLBParam) GetParamTemplate() string {
+func (p *DeleteGslbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *DeleteGSLBParam) SetParamTemplateFile(v string) {
+func (p *DeleteGslbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteGslbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteGslbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *DeleteGSLBParam) GetParamTemplateFile() string {
+func (p *DeleteGslbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *DeleteGSLBParam) SetGenerateSkeleton(v bool) {
+func (p *DeleteGslbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteGslbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteGslbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *DeleteGSLBParam) GetGenerateSkeleton() bool {
+func (p *DeleteGslbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DeleteGSLBParam) SetOutputType(v string) {
+func (p *DeleteGslbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *DeleteGSLBParam) GetOutputType() string {
+func (p *DeleteGslbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *DeleteGSLBParam) SetColumn(v []string) {
+func (p *DeleteGslbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *DeleteGSLBParam) GetColumn() []string {
+func (p *DeleteGslbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *DeleteGSLBParam) SetQuiet(v bool) {
+func (p *DeleteGslbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *DeleteGSLBParam) GetQuiet() bool {
+func (p *DeleteGslbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *DeleteGSLBParam) SetFormat(v string) {
+func (p *DeleteGslbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *DeleteGSLBParam) GetFormat() string {
+func (p *DeleteGslbParam) GetFormat() string {
 	return p.Format
 }
-func (p *DeleteGSLBParam) SetFormatFile(v string) {
+func (p *DeleteGslbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *DeleteGSLBParam) GetFormatFile() string {
+func (p *DeleteGslbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *DeleteGSLBParam) SetQuery(v string) {
+func (p *DeleteGslbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *DeleteGSLBParam) GetQuery() string {
+func (p *DeleteGslbParam) GetQuery() string {
 	return p.Query
 }
-func (p *DeleteGSLBParam) SetQueryFile(v string) {
+func (p *DeleteGslbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *DeleteGSLBParam) GetQueryFile() string {
+func (p *DeleteGslbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteGSLBParam) SetId(v sacloud.ID) {
+func (p *DeleteGslbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteGSLBParam) GetId() sacloud.ID {
+func (p *DeleteGslbParam) GetId() sacloud.ID {
 	return p.Id
 }

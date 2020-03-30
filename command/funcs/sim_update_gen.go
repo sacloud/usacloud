@@ -23,13 +23,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func SIMUpdate(ctx command.Context, params *params.UpdateSIMParam) error {
+func SimUpdate(ctx command.Context, params *params.UpdateSimParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetSIMAPI()
+	api := client.GetSimAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("SIMUpdate is failed: %s", e)
+		return fmt.Errorf("SimUpdate is failed: %s", e)
 	}
 
 	// set params
@@ -50,7 +50,7 @@ func SIMUpdate(ctx command.Context, params *params.UpdateSIMParam) error {
 	// call Update(id)
 	res, err := api.Update(params.Id, p)
 	if err != nil {
-		return fmt.Errorf("SIMUpdate is failed: %s", err)
+		return fmt.Errorf("SimUpdate is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

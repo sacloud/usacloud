@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func MobileGatewayRead(ctx command.Context, params *params.ReadMobileGatewayParam) error {
+func MobilegatewayRead(ctx command.Context, params *params.ReadMobilegatewayParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetMobileGatewayAPI()
+	api := client.GetMobilegatewayAPI()
 
 	// set params
 
 	// call Read(id)
 	res, err := api.Read(params.Id)
 	if err != nil {
-		return fmt.Errorf("MobileGatewayRead is failed: %s", err)
+		return fmt.Errorf("MobilegatewayRead is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

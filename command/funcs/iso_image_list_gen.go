@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ISOImageList(ctx command.Context, params *params.ListISOImageParam) error {
+func IsoimageList(ctx command.Context, params *params.ListIsoimageParam) error {
 
 	client := ctx.GetAPIClient()
 	finder := client.GetCDROMAPI()
@@ -58,7 +58,7 @@ func ISOImageList(ctx command.Context, params *params.ListISOImageParam) error {
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("ISOImageList is failed: %s", err)
+		return fmt.Errorf("IsoimageList is failed: %s", err)
 	}
 
 	list := []interface{}{}

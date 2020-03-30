@@ -23,8 +23,8 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListNFSParam is input parameters for the sacloud API
-type ListNFSParam struct {
+// ListNfsParam is input parameters for the sacloud API
+type ListNfsParam struct {
 	Name              []string     `json:"name"`
 	Id                []sacloud.ID `json:"id"`
 	Tags              []string     `json:"tags"`
@@ -32,7 +32,9 @@ type ListNFSParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -43,13 +45,13 @@ type ListNFSParam struct {
 	QueryFile         string       `json:"query-file"`
 }
 
-// NewListNFSParam return new ListNFSParam
-func NewListNFSParam() *ListNFSParam {
-	return &ListNFSParam{}
+// NewListNfsParam return new ListNfsParam
+func NewListNfsParam() *ListNfsParam {
+	return &ListNfsParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListNFSParam) FillValueToSkeleton() {
+func (p *ListNfsParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -71,8 +73,14 @@ func (p *ListNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -102,7 +110,7 @@ func (p *ListNFSParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListNFSParam) Validate() []error {
+func (p *ListNfsParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
@@ -160,145 +168,159 @@ func (p *ListNFSParam) Validate() []error {
 	return errors
 }
 
-func (p *ListNFSParam) GetResourceDef() *schema.Resource {
+func (p *ListNfsParam) GetResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *ListNFSParam) GetCommandDef() *schema.Command {
+func (p *ListNfsParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListNFSParam) GetIncludeFields() []string {
+func (p *ListNfsParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListNFSParam) GetExcludeFields() []string {
+func (p *ListNfsParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListNFSParam) GetTableType() output.TableType {
+func (p *ListNfsParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListNFSParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListNfsParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListNFSParam) SetName(v []string) {
+func (p *ListNfsParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListNFSParam) GetName() []string {
+func (p *ListNfsParam) GetName() []string {
 	return p.Name
 }
-func (p *ListNFSParam) SetId(v []sacloud.ID) {
+func (p *ListNfsParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListNFSParam) GetId() []sacloud.ID {
+func (p *ListNfsParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListNFSParam) SetTags(v []string) {
+func (p *ListNfsParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *ListNFSParam) GetTags() []string {
+func (p *ListNfsParam) GetTags() []string {
 	return p.Tags
 }
-func (p *ListNFSParam) SetFrom(v int) {
+func (p *ListNfsParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListNFSParam) GetFrom() int {
+func (p *ListNfsParam) GetFrom() int {
 	return p.From
 }
-func (p *ListNFSParam) SetMax(v int) {
+func (p *ListNfsParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListNFSParam) GetMax() int {
+func (p *ListNfsParam) GetMax() int {
 	return p.Max
 }
-func (p *ListNFSParam) SetSort(v []string) {
+func (p *ListNfsParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListNFSParam) GetSort() []string {
+func (p *ListNfsParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListNFSParam) SetParamTemplate(v string) {
+func (p *ListNfsParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListNFSParam) GetParamTemplate() string {
+func (p *ListNfsParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListNFSParam) SetParamTemplateFile(v string) {
+func (p *ListNfsParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListNfsParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListNfsParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListNFSParam) GetParamTemplateFile() string {
+func (p *ListNfsParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListNFSParam) SetGenerateSkeleton(v bool) {
+func (p *ListNfsParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListNfsParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListNfsParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListNFSParam) GetGenerateSkeleton() bool {
+func (p *ListNfsParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListNFSParam) SetOutputType(v string) {
+func (p *ListNfsParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListNFSParam) GetOutputType() string {
+func (p *ListNfsParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListNFSParam) SetColumn(v []string) {
+func (p *ListNfsParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListNFSParam) GetColumn() []string {
+func (p *ListNfsParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ListNFSParam) SetQuiet(v bool) {
+func (p *ListNfsParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListNFSParam) GetQuiet() bool {
+func (p *ListNfsParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListNFSParam) SetFormat(v string) {
+func (p *ListNfsParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListNFSParam) GetFormat() string {
+func (p *ListNfsParam) GetFormat() string {
 	return p.Format
 }
-func (p *ListNFSParam) SetFormatFile(v string) {
+func (p *ListNfsParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListNFSParam) GetFormatFile() string {
+func (p *ListNfsParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListNFSParam) SetQuery(v string) {
+func (p *ListNfsParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListNFSParam) GetQuery() string {
+func (p *ListNfsParam) GetQuery() string {
 	return p.Query
 }
-func (p *ListNFSParam) SetQueryFile(v string) {
+func (p *ListNfsParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListNFSParam) GetQueryFile() string {
+func (p *ListNfsParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// CreateNFSParam is input parameters for the sacloud API
-type CreateNFSParam struct {
+// CreateNfsParam is input parameters for the sacloud API
+type CreateNfsParam struct {
 	SwitchId          sacloud.ID `json:"switch-id"`
 	Plan              string     `json:"plan"`
 	Size              int        `json:"size"`
@@ -311,7 +333,9 @@ type CreateNFSParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -322,9 +346,9 @@ type CreateNFSParam struct {
 	QueryFile         string     `json:"query-file"`
 }
 
-// NewCreateNFSParam return new CreateNFSParam
-func NewCreateNFSParam() *CreateNFSParam {
-	return &CreateNFSParam{
+// NewCreateNfsParam return new CreateNfsParam
+func NewCreateNfsParam() *CreateNfsParam {
+	return &CreateNfsParam{
 
 		Plan: "hdd",
 		Size: 100,
@@ -332,7 +356,7 @@ func NewCreateNFSParam() *CreateNFSParam {
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CreateNFSParam) FillValueToSkeleton() {
+func (p *CreateNfsParam) FillValueToSkeleton() {
 	if isEmpty(p.SwitchId) {
 		p.SwitchId = sacloud.ID(0)
 	}
@@ -369,8 +393,14 @@ func (p *CreateNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -400,7 +430,7 @@ func (p *CreateNFSParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CreateNFSParam) Validate() []error {
+func (p *CreateNfsParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -538,183 +568,199 @@ func (p *CreateNFSParam) Validate() []error {
 	return errors
 }
 
-func (p *CreateNFSParam) GetResourceDef() *schema.Resource {
+func (p *CreateNfsParam) GetResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *CreateNFSParam) GetCommandDef() *schema.Command {
+func (p *CreateNfsParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["create"]
 }
 
-func (p *CreateNFSParam) GetIncludeFields() []string {
+func (p *CreateNfsParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CreateNFSParam) GetExcludeFields() []string {
+func (p *CreateNfsParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CreateNFSParam) GetTableType() output.TableType {
+func (p *CreateNfsParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CreateNFSParam) GetColumnDefs() []output.ColumnDef {
+func (p *CreateNfsParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CreateNFSParam) SetSwitchId(v sacloud.ID) {
+func (p *CreateNfsParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
 
-func (p *CreateNFSParam) GetSwitchId() sacloud.ID {
+func (p *CreateNfsParam) GetSwitchId() sacloud.ID {
 	return p.SwitchId
 }
-func (p *CreateNFSParam) SetPlan(v string) {
+func (p *CreateNfsParam) SetPlan(v string) {
 	p.Plan = v
 }
 
-func (p *CreateNFSParam) GetPlan() string {
+func (p *CreateNfsParam) GetPlan() string {
 	return p.Plan
 }
-func (p *CreateNFSParam) SetSize(v int) {
+func (p *CreateNfsParam) SetSize(v int) {
 	p.Size = v
 }
 
-func (p *CreateNFSParam) GetSize() int {
+func (p *CreateNfsParam) GetSize() int {
 	return p.Size
 }
-func (p *CreateNFSParam) SetIpaddress(v string) {
+func (p *CreateNfsParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
 
-func (p *CreateNFSParam) GetIpaddress() string {
+func (p *CreateNfsParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *CreateNFSParam) SetNwMaskLen(v int) {
+func (p *CreateNfsParam) SetNwMaskLen(v int) {
 	p.NwMaskLen = v
 }
 
-func (p *CreateNFSParam) GetNwMaskLen() int {
+func (p *CreateNfsParam) GetNwMaskLen() int {
 	return p.NwMaskLen
 }
-func (p *CreateNFSParam) SetDefaultRoute(v string) {
+func (p *CreateNfsParam) SetDefaultRoute(v string) {
 	p.DefaultRoute = v
 }
 
-func (p *CreateNFSParam) GetDefaultRoute() string {
+func (p *CreateNfsParam) GetDefaultRoute() string {
 	return p.DefaultRoute
 }
-func (p *CreateNFSParam) SetName(v string) {
+func (p *CreateNfsParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *CreateNFSParam) GetName() string {
+func (p *CreateNfsParam) GetName() string {
 	return p.Name
 }
-func (p *CreateNFSParam) SetDescription(v string) {
+func (p *CreateNfsParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *CreateNFSParam) GetDescription() string {
+func (p *CreateNfsParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateNFSParam) SetTags(v []string) {
+func (p *CreateNfsParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreateNFSParam) GetTags() []string {
+func (p *CreateNfsParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateNFSParam) SetIconId(v sacloud.ID) {
+func (p *CreateNfsParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateNFSParam) GetIconId() sacloud.ID {
+func (p *CreateNfsParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *CreateNFSParam) SetAssumeyes(v bool) {
+func (p *CreateNfsParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *CreateNFSParam) GetAssumeyes() bool {
+func (p *CreateNfsParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CreateNFSParam) SetParamTemplate(v string) {
+func (p *CreateNfsParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CreateNFSParam) GetParamTemplate() string {
+func (p *CreateNfsParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CreateNFSParam) SetParamTemplateFile(v string) {
+func (p *CreateNfsParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateNfsParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateNfsParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CreateNFSParam) GetParamTemplateFile() string {
+func (p *CreateNfsParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CreateNFSParam) SetGenerateSkeleton(v bool) {
+func (p *CreateNfsParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateNfsParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateNfsParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CreateNFSParam) GetGenerateSkeleton() bool {
+func (p *CreateNfsParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CreateNFSParam) SetOutputType(v string) {
+func (p *CreateNfsParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CreateNFSParam) GetOutputType() string {
+func (p *CreateNfsParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CreateNFSParam) SetColumn(v []string) {
+func (p *CreateNfsParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CreateNFSParam) GetColumn() []string {
+func (p *CreateNfsParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CreateNFSParam) SetQuiet(v bool) {
+func (p *CreateNfsParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CreateNFSParam) GetQuiet() bool {
+func (p *CreateNfsParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CreateNFSParam) SetFormat(v string) {
+func (p *CreateNfsParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CreateNFSParam) GetFormat() string {
+func (p *CreateNfsParam) GetFormat() string {
 	return p.Format
 }
-func (p *CreateNFSParam) SetFormatFile(v string) {
+func (p *CreateNfsParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CreateNFSParam) GetFormatFile() string {
+func (p *CreateNfsParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CreateNFSParam) SetQuery(v string) {
+func (p *CreateNfsParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CreateNFSParam) GetQuery() string {
+func (p *CreateNfsParam) GetQuery() string {
 	return p.Query
 }
-func (p *CreateNFSParam) SetQueryFile(v string) {
+func (p *CreateNfsParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CreateNFSParam) GetQueryFile() string {
+func (p *CreateNfsParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// ReadNFSParam is input parameters for the sacloud API
-type ReadNFSParam struct {
+// ReadNfsParam is input parameters for the sacloud API
+type ReadNfsParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -726,21 +772,27 @@ type ReadNFSParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewReadNFSParam return new ReadNFSParam
-func NewReadNFSParam() *ReadNFSParam {
-	return &ReadNFSParam{}
+// NewReadNfsParam return new ReadNfsParam
+func NewReadNfsParam() *ReadNfsParam {
+	return &ReadNfsParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ReadNFSParam) FillValueToSkeleton() {
+func (p *ReadNfsParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -773,7 +825,7 @@ func (p *ReadNFSParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ReadNFSParam) Validate() []error {
+func (p *ReadNfsParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -806,117 +858,131 @@ func (p *ReadNFSParam) Validate() []error {
 	return errors
 }
 
-func (p *ReadNFSParam) GetResourceDef() *schema.Resource {
+func (p *ReadNfsParam) GetResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *ReadNFSParam) GetCommandDef() *schema.Command {
+func (p *ReadNfsParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["read"]
 }
 
-func (p *ReadNFSParam) GetIncludeFields() []string {
+func (p *ReadNfsParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ReadNFSParam) GetExcludeFields() []string {
+func (p *ReadNfsParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ReadNFSParam) GetTableType() output.TableType {
+func (p *ReadNfsParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ReadNFSParam) GetColumnDefs() []output.ColumnDef {
+func (p *ReadNfsParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReadNFSParam) SetSelector(v []string) {
+func (p *ReadNfsParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ReadNFSParam) GetSelector() []string {
+func (p *ReadNfsParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ReadNFSParam) SetParamTemplate(v string) {
+func (p *ReadNfsParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ReadNFSParam) GetParamTemplate() string {
+func (p *ReadNfsParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ReadNFSParam) SetParamTemplateFile(v string) {
+func (p *ReadNfsParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadNfsParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadNfsParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ReadNFSParam) GetParamTemplateFile() string {
+func (p *ReadNfsParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ReadNFSParam) SetGenerateSkeleton(v bool) {
+func (p *ReadNfsParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadNfsParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadNfsParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ReadNFSParam) GetGenerateSkeleton() bool {
+func (p *ReadNfsParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReadNFSParam) SetOutputType(v string) {
+func (p *ReadNfsParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ReadNFSParam) GetOutputType() string {
+func (p *ReadNfsParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ReadNFSParam) SetColumn(v []string) {
+func (p *ReadNfsParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ReadNFSParam) GetColumn() []string {
+func (p *ReadNfsParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ReadNFSParam) SetQuiet(v bool) {
+func (p *ReadNfsParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ReadNFSParam) GetQuiet() bool {
+func (p *ReadNfsParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ReadNFSParam) SetFormat(v string) {
+func (p *ReadNfsParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ReadNFSParam) GetFormat() string {
+func (p *ReadNfsParam) GetFormat() string {
 	return p.Format
 }
-func (p *ReadNFSParam) SetFormatFile(v string) {
+func (p *ReadNfsParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ReadNFSParam) GetFormatFile() string {
+func (p *ReadNfsParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ReadNFSParam) SetQuery(v string) {
+func (p *ReadNfsParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ReadNFSParam) GetQuery() string {
+func (p *ReadNfsParam) GetQuery() string {
 	return p.Query
 }
-func (p *ReadNFSParam) SetQueryFile(v string) {
+func (p *ReadNfsParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ReadNFSParam) GetQueryFile() string {
+func (p *ReadNfsParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadNFSParam) SetId(v sacloud.ID) {
+func (p *ReadNfsParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadNFSParam) GetId() sacloud.ID {
+func (p *ReadNfsParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// UpdateNFSParam is input parameters for the sacloud API
-type UpdateNFSParam struct {
+// UpdateNfsParam is input parameters for the sacloud API
+type UpdateNfsParam struct {
 	Selector          []string   `json:"selector"`
 	Name              string     `json:"name"`
 	Description       string     `json:"description"`
@@ -924,7 +990,9 @@ type UpdateNFSParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -936,13 +1004,13 @@ type UpdateNFSParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewUpdateNFSParam return new UpdateNFSParam
-func NewUpdateNFSParam() *UpdateNFSParam {
-	return &UpdateNFSParam{}
+// NewUpdateNfsParam return new UpdateNfsParam
+func NewUpdateNfsParam() *UpdateNfsParam {
+	return &UpdateNfsParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *UpdateNFSParam) FillValueToSkeleton() {
+func (p *UpdateNfsParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -964,8 +1032,14 @@ func (p *UpdateNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -998,7 +1072,7 @@ func (p *UpdateNFSParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *UpdateNFSParam) Validate() []error {
+func (p *UpdateNfsParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["NFS"].Commands["update"].Params["name"].ValidateFunc
@@ -1059,157 +1133,173 @@ func (p *UpdateNFSParam) Validate() []error {
 	return errors
 }
 
-func (p *UpdateNFSParam) GetResourceDef() *schema.Resource {
+func (p *UpdateNfsParam) GetResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *UpdateNFSParam) GetCommandDef() *schema.Command {
+func (p *UpdateNfsParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["update"]
 }
 
-func (p *UpdateNFSParam) GetIncludeFields() []string {
+func (p *UpdateNfsParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *UpdateNFSParam) GetExcludeFields() []string {
+func (p *UpdateNfsParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *UpdateNFSParam) GetTableType() output.TableType {
+func (p *UpdateNfsParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *UpdateNFSParam) GetColumnDefs() []output.ColumnDef {
+func (p *UpdateNfsParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *UpdateNFSParam) SetSelector(v []string) {
+func (p *UpdateNfsParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *UpdateNFSParam) GetSelector() []string {
+func (p *UpdateNfsParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *UpdateNFSParam) SetName(v string) {
+func (p *UpdateNfsParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *UpdateNFSParam) GetName() string {
+func (p *UpdateNfsParam) GetName() string {
 	return p.Name
 }
-func (p *UpdateNFSParam) SetDescription(v string) {
+func (p *UpdateNfsParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdateNFSParam) GetDescription() string {
+func (p *UpdateNfsParam) GetDescription() string {
 	return p.Description
 }
-func (p *UpdateNFSParam) SetTags(v []string) {
+func (p *UpdateNfsParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *UpdateNFSParam) GetTags() []string {
+func (p *UpdateNfsParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateNFSParam) SetIconId(v sacloud.ID) {
+func (p *UpdateNfsParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateNFSParam) GetIconId() sacloud.ID {
+func (p *UpdateNfsParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *UpdateNFSParam) SetAssumeyes(v bool) {
+func (p *UpdateNfsParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *UpdateNFSParam) GetAssumeyes() bool {
+func (p *UpdateNfsParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *UpdateNFSParam) SetParamTemplate(v string) {
+func (p *UpdateNfsParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *UpdateNFSParam) GetParamTemplate() string {
+func (p *UpdateNfsParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *UpdateNFSParam) SetParamTemplateFile(v string) {
+func (p *UpdateNfsParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateNfsParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateNfsParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *UpdateNFSParam) GetParamTemplateFile() string {
+func (p *UpdateNfsParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *UpdateNFSParam) SetGenerateSkeleton(v bool) {
+func (p *UpdateNfsParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateNfsParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateNfsParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *UpdateNFSParam) GetGenerateSkeleton() bool {
+func (p *UpdateNfsParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *UpdateNFSParam) SetOutputType(v string) {
+func (p *UpdateNfsParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *UpdateNFSParam) GetOutputType() string {
+func (p *UpdateNfsParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *UpdateNFSParam) SetColumn(v []string) {
+func (p *UpdateNfsParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *UpdateNFSParam) GetColumn() []string {
+func (p *UpdateNfsParam) GetColumn() []string {
 	return p.Column
 }
-func (p *UpdateNFSParam) SetQuiet(v bool) {
+func (p *UpdateNfsParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *UpdateNFSParam) GetQuiet() bool {
+func (p *UpdateNfsParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *UpdateNFSParam) SetFormat(v string) {
+func (p *UpdateNfsParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *UpdateNFSParam) GetFormat() string {
+func (p *UpdateNfsParam) GetFormat() string {
 	return p.Format
 }
-func (p *UpdateNFSParam) SetFormatFile(v string) {
+func (p *UpdateNfsParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *UpdateNFSParam) GetFormatFile() string {
+func (p *UpdateNfsParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *UpdateNFSParam) SetQuery(v string) {
+func (p *UpdateNfsParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *UpdateNFSParam) GetQuery() string {
+func (p *UpdateNfsParam) GetQuery() string {
 	return p.Query
 }
-func (p *UpdateNFSParam) SetQueryFile(v string) {
+func (p *UpdateNfsParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *UpdateNFSParam) GetQueryFile() string {
+func (p *UpdateNfsParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateNFSParam) SetId(v sacloud.ID) {
+func (p *UpdateNfsParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateNFSParam) GetId() sacloud.ID {
+func (p *UpdateNfsParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// DeleteNFSParam is input parameters for the sacloud API
-type DeleteNFSParam struct {
+// DeleteNfsParam is input parameters for the sacloud API
+type DeleteNfsParam struct {
 	Force             bool       `json:"force"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1221,13 +1311,13 @@ type DeleteNFSParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewDeleteNFSParam return new DeleteNFSParam
-func NewDeleteNFSParam() *DeleteNFSParam {
-	return &DeleteNFSParam{}
+// NewDeleteNfsParam return new DeleteNfsParam
+func NewDeleteNfsParam() *DeleteNfsParam {
+	return &DeleteNfsParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *DeleteNFSParam) FillValueToSkeleton() {
+func (p *DeleteNfsParam) FillValueToSkeleton() {
 	if isEmpty(p.Force) {
 		p.Force = false
 	}
@@ -1240,8 +1330,14 @@ func (p *DeleteNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1274,7 +1370,7 @@ func (p *DeleteNFSParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *DeleteNFSParam) Validate() []error {
+func (p *DeleteNfsParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1307,146 +1403,162 @@ func (p *DeleteNFSParam) Validate() []error {
 	return errors
 }
 
-func (p *DeleteNFSParam) GetResourceDef() *schema.Resource {
+func (p *DeleteNfsParam) GetResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *DeleteNFSParam) GetCommandDef() *schema.Command {
+func (p *DeleteNfsParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["delete"]
 }
 
-func (p *DeleteNFSParam) GetIncludeFields() []string {
+func (p *DeleteNfsParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *DeleteNFSParam) GetExcludeFields() []string {
+func (p *DeleteNfsParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *DeleteNFSParam) GetTableType() output.TableType {
+func (p *DeleteNfsParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *DeleteNFSParam) GetColumnDefs() []output.ColumnDef {
+func (p *DeleteNfsParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DeleteNFSParam) SetForce(v bool) {
+func (p *DeleteNfsParam) SetForce(v bool) {
 	p.Force = v
 }
 
-func (p *DeleteNFSParam) GetForce() bool {
+func (p *DeleteNfsParam) GetForce() bool {
 	return p.Force
 }
-func (p *DeleteNFSParam) SetSelector(v []string) {
+func (p *DeleteNfsParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *DeleteNFSParam) GetSelector() []string {
+func (p *DeleteNfsParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *DeleteNFSParam) SetAssumeyes(v bool) {
+func (p *DeleteNfsParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *DeleteNFSParam) GetAssumeyes() bool {
+func (p *DeleteNfsParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeleteNFSParam) SetParamTemplate(v string) {
+func (p *DeleteNfsParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *DeleteNFSParam) GetParamTemplate() string {
+func (p *DeleteNfsParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *DeleteNFSParam) SetParamTemplateFile(v string) {
+func (p *DeleteNfsParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteNfsParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteNfsParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *DeleteNFSParam) GetParamTemplateFile() string {
+func (p *DeleteNfsParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *DeleteNFSParam) SetGenerateSkeleton(v bool) {
+func (p *DeleteNfsParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteNfsParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteNfsParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *DeleteNFSParam) GetGenerateSkeleton() bool {
+func (p *DeleteNfsParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DeleteNFSParam) SetOutputType(v string) {
+func (p *DeleteNfsParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *DeleteNFSParam) GetOutputType() string {
+func (p *DeleteNfsParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *DeleteNFSParam) SetColumn(v []string) {
+func (p *DeleteNfsParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *DeleteNFSParam) GetColumn() []string {
+func (p *DeleteNfsParam) GetColumn() []string {
 	return p.Column
 }
-func (p *DeleteNFSParam) SetQuiet(v bool) {
+func (p *DeleteNfsParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *DeleteNFSParam) GetQuiet() bool {
+func (p *DeleteNfsParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *DeleteNFSParam) SetFormat(v string) {
+func (p *DeleteNfsParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *DeleteNFSParam) GetFormat() string {
+func (p *DeleteNfsParam) GetFormat() string {
 	return p.Format
 }
-func (p *DeleteNFSParam) SetFormatFile(v string) {
+func (p *DeleteNfsParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *DeleteNFSParam) GetFormatFile() string {
+func (p *DeleteNfsParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *DeleteNFSParam) SetQuery(v string) {
+func (p *DeleteNfsParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *DeleteNFSParam) GetQuery() string {
+func (p *DeleteNfsParam) GetQuery() string {
 	return p.Query
 }
-func (p *DeleteNFSParam) SetQueryFile(v string) {
+func (p *DeleteNfsParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *DeleteNFSParam) GetQueryFile() string {
+func (p *DeleteNfsParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteNFSParam) SetId(v sacloud.ID) {
+func (p *DeleteNfsParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteNFSParam) GetId() sacloud.ID {
+func (p *DeleteNfsParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// BootNFSParam is input parameters for the sacloud API
-type BootNFSParam struct {
+// BootNfsParam is input parameters for the sacloud API
+type BootNfsParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewBootNFSParam return new BootNFSParam
-func NewBootNFSParam() *BootNFSParam {
-	return &BootNFSParam{}
+// NewBootNfsParam return new BootNfsParam
+func NewBootNfsParam() *BootNfsParam {
+	return &BootNfsParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *BootNFSParam) FillValueToSkeleton() {
+func (p *BootNfsParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1456,8 +1568,14 @@ func (p *BootNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1469,7 +1587,7 @@ func (p *BootNFSParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *BootNFSParam) Validate() []error {
+func (p *BootNfsParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1482,90 +1600,106 @@ func (p *BootNFSParam) Validate() []error {
 	return errors
 }
 
-func (p *BootNFSParam) GetResourceDef() *schema.Resource {
+func (p *BootNfsParam) GetResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *BootNFSParam) GetCommandDef() *schema.Command {
+func (p *BootNfsParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["boot"]
 }
 
-func (p *BootNFSParam) GetIncludeFields() []string {
+func (p *BootNfsParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *BootNFSParam) GetExcludeFields() []string {
+func (p *BootNfsParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *BootNFSParam) GetTableType() output.TableType {
+func (p *BootNfsParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *BootNFSParam) GetColumnDefs() []output.ColumnDef {
+func (p *BootNfsParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *BootNFSParam) SetSelector(v []string) {
+func (p *BootNfsParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *BootNFSParam) GetSelector() []string {
+func (p *BootNfsParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *BootNFSParam) SetAssumeyes(v bool) {
+func (p *BootNfsParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *BootNFSParam) GetAssumeyes() bool {
+func (p *BootNfsParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *BootNFSParam) SetParamTemplate(v string) {
+func (p *BootNfsParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *BootNFSParam) GetParamTemplate() string {
+func (p *BootNfsParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *BootNFSParam) SetParamTemplateFile(v string) {
+func (p *BootNfsParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BootNfsParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BootNfsParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *BootNFSParam) GetParamTemplateFile() string {
+func (p *BootNfsParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *BootNFSParam) SetGenerateSkeleton(v bool) {
+func (p *BootNfsParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BootNfsParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BootNfsParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *BootNFSParam) GetGenerateSkeleton() bool {
+func (p *BootNfsParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *BootNFSParam) SetId(v sacloud.ID) {
+func (p *BootNfsParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *BootNFSParam) GetId() sacloud.ID {
+func (p *BootNfsParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ShutdownNFSParam is input parameters for the sacloud API
-type ShutdownNFSParam struct {
+// ShutdownNfsParam is input parameters for the sacloud API
+type ShutdownNfsParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewShutdownNFSParam return new ShutdownNFSParam
-func NewShutdownNFSParam() *ShutdownNFSParam {
-	return &ShutdownNFSParam{}
+// NewShutdownNfsParam return new ShutdownNfsParam
+func NewShutdownNfsParam() *ShutdownNfsParam {
+	return &ShutdownNfsParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ShutdownNFSParam) FillValueToSkeleton() {
+func (p *ShutdownNfsParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1575,8 +1709,14 @@ func (p *ShutdownNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1588,7 +1728,7 @@ func (p *ShutdownNFSParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ShutdownNFSParam) Validate() []error {
+func (p *ShutdownNfsParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1601,90 +1741,106 @@ func (p *ShutdownNFSParam) Validate() []error {
 	return errors
 }
 
-func (p *ShutdownNFSParam) GetResourceDef() *schema.Resource {
+func (p *ShutdownNfsParam) GetResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *ShutdownNFSParam) GetCommandDef() *schema.Command {
+func (p *ShutdownNfsParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["shutdown"]
 }
 
-func (p *ShutdownNFSParam) GetIncludeFields() []string {
+func (p *ShutdownNfsParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ShutdownNFSParam) GetExcludeFields() []string {
+func (p *ShutdownNfsParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ShutdownNFSParam) GetTableType() output.TableType {
+func (p *ShutdownNfsParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ShutdownNFSParam) GetColumnDefs() []output.ColumnDef {
+func (p *ShutdownNfsParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ShutdownNFSParam) SetSelector(v []string) {
+func (p *ShutdownNfsParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ShutdownNFSParam) GetSelector() []string {
+func (p *ShutdownNfsParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ShutdownNFSParam) SetAssumeyes(v bool) {
+func (p *ShutdownNfsParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ShutdownNFSParam) GetAssumeyes() bool {
+func (p *ShutdownNfsParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ShutdownNFSParam) SetParamTemplate(v string) {
+func (p *ShutdownNfsParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ShutdownNFSParam) GetParamTemplate() string {
+func (p *ShutdownNfsParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ShutdownNFSParam) SetParamTemplateFile(v string) {
+func (p *ShutdownNfsParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownNfsParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ShutdownNfsParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ShutdownNFSParam) GetParamTemplateFile() string {
+func (p *ShutdownNfsParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ShutdownNFSParam) SetGenerateSkeleton(v bool) {
+func (p *ShutdownNfsParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownNfsParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ShutdownNfsParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ShutdownNFSParam) GetGenerateSkeleton() bool {
+func (p *ShutdownNfsParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ShutdownNFSParam) SetId(v sacloud.ID) {
+func (p *ShutdownNfsParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ShutdownNFSParam) GetId() sacloud.ID {
+func (p *ShutdownNfsParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ShutdownForceNFSParam is input parameters for the sacloud API
-type ShutdownForceNFSParam struct {
+// ShutdownForceNfsParam is input parameters for the sacloud API
+type ShutdownForceNfsParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewShutdownForceNFSParam return new ShutdownForceNFSParam
-func NewShutdownForceNFSParam() *ShutdownForceNFSParam {
-	return &ShutdownForceNFSParam{}
+// NewShutdownForceNfsParam return new ShutdownForceNfsParam
+func NewShutdownForceNfsParam() *ShutdownForceNfsParam {
+	return &ShutdownForceNfsParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ShutdownForceNFSParam) FillValueToSkeleton() {
+func (p *ShutdownForceNfsParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1694,8 +1850,14 @@ func (p *ShutdownForceNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1707,7 +1869,7 @@ func (p *ShutdownForceNFSParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ShutdownForceNFSParam) Validate() []error {
+func (p *ShutdownForceNfsParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1720,90 +1882,106 @@ func (p *ShutdownForceNFSParam) Validate() []error {
 	return errors
 }
 
-func (p *ShutdownForceNFSParam) GetResourceDef() *schema.Resource {
+func (p *ShutdownForceNfsParam) GetResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *ShutdownForceNFSParam) GetCommandDef() *schema.Command {
+func (p *ShutdownForceNfsParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["shutdown-force"]
 }
 
-func (p *ShutdownForceNFSParam) GetIncludeFields() []string {
+func (p *ShutdownForceNfsParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ShutdownForceNFSParam) GetExcludeFields() []string {
+func (p *ShutdownForceNfsParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ShutdownForceNFSParam) GetTableType() output.TableType {
+func (p *ShutdownForceNfsParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ShutdownForceNFSParam) GetColumnDefs() []output.ColumnDef {
+func (p *ShutdownForceNfsParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ShutdownForceNFSParam) SetSelector(v []string) {
+func (p *ShutdownForceNfsParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ShutdownForceNFSParam) GetSelector() []string {
+func (p *ShutdownForceNfsParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ShutdownForceNFSParam) SetAssumeyes(v bool) {
+func (p *ShutdownForceNfsParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ShutdownForceNFSParam) GetAssumeyes() bool {
+func (p *ShutdownForceNfsParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ShutdownForceNFSParam) SetParamTemplate(v string) {
+func (p *ShutdownForceNfsParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ShutdownForceNFSParam) GetParamTemplate() string {
+func (p *ShutdownForceNfsParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ShutdownForceNFSParam) SetParamTemplateFile(v string) {
+func (p *ShutdownForceNfsParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownForceNfsParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ShutdownForceNfsParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ShutdownForceNFSParam) GetParamTemplateFile() string {
+func (p *ShutdownForceNfsParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ShutdownForceNFSParam) SetGenerateSkeleton(v bool) {
+func (p *ShutdownForceNfsParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownForceNfsParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ShutdownForceNfsParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ShutdownForceNFSParam) GetGenerateSkeleton() bool {
+func (p *ShutdownForceNfsParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ShutdownForceNFSParam) SetId(v sacloud.ID) {
+func (p *ShutdownForceNfsParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ShutdownForceNFSParam) GetId() sacloud.ID {
+func (p *ShutdownForceNfsParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ResetNFSParam is input parameters for the sacloud API
-type ResetNFSParam struct {
+// ResetNfsParam is input parameters for the sacloud API
+type ResetNfsParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewResetNFSParam return new ResetNFSParam
-func NewResetNFSParam() *ResetNFSParam {
-	return &ResetNFSParam{}
+// NewResetNfsParam return new ResetNfsParam
+func NewResetNfsParam() *ResetNfsParam {
+	return &ResetNfsParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ResetNFSParam) FillValueToSkeleton() {
+func (p *ResetNfsParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1813,8 +1991,14 @@ func (p *ResetNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1826,7 +2010,7 @@ func (p *ResetNFSParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ResetNFSParam) Validate() []error {
+func (p *ResetNfsParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1839,97 +2023,119 @@ func (p *ResetNFSParam) Validate() []error {
 	return errors
 }
 
-func (p *ResetNFSParam) GetResourceDef() *schema.Resource {
+func (p *ResetNfsParam) GetResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *ResetNFSParam) GetCommandDef() *schema.Command {
+func (p *ResetNfsParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["reset"]
 }
 
-func (p *ResetNFSParam) GetIncludeFields() []string {
+func (p *ResetNfsParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ResetNFSParam) GetExcludeFields() []string {
+func (p *ResetNfsParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ResetNFSParam) GetTableType() output.TableType {
+func (p *ResetNfsParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ResetNFSParam) GetColumnDefs() []output.ColumnDef {
+func (p *ResetNfsParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ResetNFSParam) SetSelector(v []string) {
+func (p *ResetNfsParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ResetNFSParam) GetSelector() []string {
+func (p *ResetNfsParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ResetNFSParam) SetAssumeyes(v bool) {
+func (p *ResetNfsParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ResetNFSParam) GetAssumeyes() bool {
+func (p *ResetNfsParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ResetNFSParam) SetParamTemplate(v string) {
+func (p *ResetNfsParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ResetNFSParam) GetParamTemplate() string {
+func (p *ResetNfsParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ResetNFSParam) SetParamTemplateFile(v string) {
+func (p *ResetNfsParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ResetNfsParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ResetNfsParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ResetNFSParam) GetParamTemplateFile() string {
+func (p *ResetNfsParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ResetNFSParam) SetGenerateSkeleton(v bool) {
+func (p *ResetNfsParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ResetNfsParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ResetNfsParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ResetNFSParam) GetGenerateSkeleton() bool {
+func (p *ResetNfsParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ResetNFSParam) SetId(v sacloud.ID) {
+func (p *ResetNfsParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ResetNFSParam) GetId() sacloud.ID {
+func (p *ResetNfsParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// WaitForBootNFSParam is input parameters for the sacloud API
-type WaitForBootNFSParam struct {
+// WaitForBootNfsParam is input parameters for the sacloud API
+type WaitForBootNfsParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewWaitForBootNFSParam return new WaitForBootNFSParam
-func NewWaitForBootNFSParam() *WaitForBootNFSParam {
-	return &WaitForBootNFSParam{}
+// NewWaitForBootNfsParam return new WaitForBootNfsParam
+func NewWaitForBootNfsParam() *WaitForBootNfsParam {
+	return &WaitForBootNfsParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *WaitForBootNFSParam) FillValueToSkeleton() {
+func (p *WaitForBootNfsParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1941,7 +2147,7 @@ func (p *WaitForBootNFSParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *WaitForBootNFSParam) Validate() []error {
+func (p *WaitForBootNfsParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1954,90 +2160,112 @@ func (p *WaitForBootNFSParam) Validate() []error {
 	return errors
 }
 
-func (p *WaitForBootNFSParam) GetResourceDef() *schema.Resource {
+func (p *WaitForBootNfsParam) GetResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *WaitForBootNFSParam) GetCommandDef() *schema.Command {
+func (p *WaitForBootNfsParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["wait-for-boot"]
 }
 
-func (p *WaitForBootNFSParam) GetIncludeFields() []string {
+func (p *WaitForBootNfsParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *WaitForBootNFSParam) GetExcludeFields() []string {
+func (p *WaitForBootNfsParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *WaitForBootNFSParam) GetTableType() output.TableType {
+func (p *WaitForBootNfsParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *WaitForBootNFSParam) GetColumnDefs() []output.ColumnDef {
+func (p *WaitForBootNfsParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *WaitForBootNFSParam) SetSelector(v []string) {
+func (p *WaitForBootNfsParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *WaitForBootNFSParam) GetSelector() []string {
+func (p *WaitForBootNfsParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *WaitForBootNFSParam) SetParamTemplate(v string) {
+func (p *WaitForBootNfsParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *WaitForBootNFSParam) GetParamTemplate() string {
+func (p *WaitForBootNfsParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *WaitForBootNFSParam) SetParamTemplateFile(v string) {
+func (p *WaitForBootNfsParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForBootNfsParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *WaitForBootNfsParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *WaitForBootNFSParam) GetParamTemplateFile() string {
+func (p *WaitForBootNfsParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *WaitForBootNFSParam) SetGenerateSkeleton(v bool) {
+func (p *WaitForBootNfsParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForBootNfsParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *WaitForBootNfsParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *WaitForBootNFSParam) GetGenerateSkeleton() bool {
+func (p *WaitForBootNfsParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *WaitForBootNFSParam) SetId(v sacloud.ID) {
+func (p *WaitForBootNfsParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *WaitForBootNFSParam) GetId() sacloud.ID {
+func (p *WaitForBootNfsParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// WaitForDownNFSParam is input parameters for the sacloud API
-type WaitForDownNFSParam struct {
+// WaitForDownNfsParam is input parameters for the sacloud API
+type WaitForDownNfsParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewWaitForDownNFSParam return new WaitForDownNFSParam
-func NewWaitForDownNFSParam() *WaitForDownNFSParam {
-	return &WaitForDownNFSParam{}
+// NewWaitForDownNfsParam return new WaitForDownNfsParam
+func NewWaitForDownNfsParam() *WaitForDownNfsParam {
+	return &WaitForDownNfsParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *WaitForDownNFSParam) FillValueToSkeleton() {
+func (p *WaitForDownNfsParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2049,7 +2277,7 @@ func (p *WaitForDownNFSParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *WaitForDownNFSParam) Validate() []error {
+func (p *WaitForDownNfsParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -2062,74 +2290,90 @@ func (p *WaitForDownNFSParam) Validate() []error {
 	return errors
 }
 
-func (p *WaitForDownNFSParam) GetResourceDef() *schema.Resource {
+func (p *WaitForDownNfsParam) GetResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *WaitForDownNFSParam) GetCommandDef() *schema.Command {
+func (p *WaitForDownNfsParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["wait-for-down"]
 }
 
-func (p *WaitForDownNFSParam) GetIncludeFields() []string {
+func (p *WaitForDownNfsParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *WaitForDownNFSParam) GetExcludeFields() []string {
+func (p *WaitForDownNfsParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *WaitForDownNFSParam) GetTableType() output.TableType {
+func (p *WaitForDownNfsParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *WaitForDownNFSParam) GetColumnDefs() []output.ColumnDef {
+func (p *WaitForDownNfsParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *WaitForDownNFSParam) SetSelector(v []string) {
+func (p *WaitForDownNfsParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *WaitForDownNFSParam) GetSelector() []string {
+func (p *WaitForDownNfsParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *WaitForDownNFSParam) SetParamTemplate(v string) {
+func (p *WaitForDownNfsParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *WaitForDownNFSParam) GetParamTemplate() string {
+func (p *WaitForDownNfsParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *WaitForDownNFSParam) SetParamTemplateFile(v string) {
+func (p *WaitForDownNfsParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForDownNfsParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *WaitForDownNfsParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *WaitForDownNFSParam) GetParamTemplateFile() string {
+func (p *WaitForDownNfsParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *WaitForDownNFSParam) SetGenerateSkeleton(v bool) {
+func (p *WaitForDownNfsParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForDownNfsParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *WaitForDownNfsParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *WaitForDownNFSParam) GetGenerateSkeleton() bool {
+func (p *WaitForDownNfsParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *WaitForDownNFSParam) SetId(v sacloud.ID) {
+func (p *WaitForDownNfsParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *WaitForDownNFSParam) GetId() sacloud.ID {
+func (p *WaitForDownNfsParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// MonitorNicNFSParam is input parameters for the sacloud API
-type MonitorNicNFSParam struct {
+// MonitorNicNfsParam is input parameters for the sacloud API
+type MonitorNicNfsParam struct {
 	Start             string     `json:"start"`
 	End               string     `json:"end"`
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2141,16 +2385,16 @@ type MonitorNicNFSParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewMonitorNicNFSParam return new MonitorNicNFSParam
-func NewMonitorNicNFSParam() *MonitorNicNFSParam {
-	return &MonitorNicNFSParam{
+// NewMonitorNicNfsParam return new MonitorNicNfsParam
+func NewMonitorNicNfsParam() *MonitorNicNfsParam {
+	return &MonitorNicNfsParam{
 
 		KeyFormat: "sakuracloud.disk.{{.ID}}.nic",
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *MonitorNicNFSParam) FillValueToSkeleton() {
+func (p *MonitorNicNfsParam) FillValueToSkeleton() {
 	if isEmpty(p.Start) {
 		p.Start = ""
 	}
@@ -2166,8 +2410,14 @@ func (p *MonitorNicNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2200,7 +2450,7 @@ func (p *MonitorNicNFSParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *MonitorNicNFSParam) Validate() []error {
+func (p *MonitorNicNfsParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["NFS"].Commands["monitor-nic"].Params["start"].ValidateFunc
@@ -2254,144 +2504,160 @@ func (p *MonitorNicNFSParam) Validate() []error {
 	return errors
 }
 
-func (p *MonitorNicNFSParam) GetResourceDef() *schema.Resource {
+func (p *MonitorNicNfsParam) GetResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *MonitorNicNFSParam) GetCommandDef() *schema.Command {
+func (p *MonitorNicNfsParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["monitor-nic"]
 }
 
-func (p *MonitorNicNFSParam) GetIncludeFields() []string {
+func (p *MonitorNicNfsParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *MonitorNicNFSParam) GetExcludeFields() []string {
+func (p *MonitorNicNfsParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *MonitorNicNFSParam) GetTableType() output.TableType {
+func (p *MonitorNicNfsParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *MonitorNicNFSParam) GetColumnDefs() []output.ColumnDef {
+func (p *MonitorNicNfsParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *MonitorNicNFSParam) SetStart(v string) {
+func (p *MonitorNicNfsParam) SetStart(v string) {
 	p.Start = v
 }
 
-func (p *MonitorNicNFSParam) GetStart() string {
+func (p *MonitorNicNfsParam) GetStart() string {
 	return p.Start
 }
-func (p *MonitorNicNFSParam) SetEnd(v string) {
+func (p *MonitorNicNfsParam) SetEnd(v string) {
 	p.End = v
 }
 
-func (p *MonitorNicNFSParam) GetEnd() string {
+func (p *MonitorNicNfsParam) GetEnd() string {
 	return p.End
 }
-func (p *MonitorNicNFSParam) SetKeyFormat(v string) {
+func (p *MonitorNicNfsParam) SetKeyFormat(v string) {
 	p.KeyFormat = v
 }
 
-func (p *MonitorNicNFSParam) GetKeyFormat() string {
+func (p *MonitorNicNfsParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
-func (p *MonitorNicNFSParam) SetSelector(v []string) {
+func (p *MonitorNicNfsParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *MonitorNicNFSParam) GetSelector() []string {
+func (p *MonitorNicNfsParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *MonitorNicNFSParam) SetParamTemplate(v string) {
+func (p *MonitorNicNfsParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *MonitorNicNFSParam) GetParamTemplate() string {
+func (p *MonitorNicNfsParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *MonitorNicNFSParam) SetParamTemplateFile(v string) {
+func (p *MonitorNicNfsParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorNicNfsParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorNicNfsParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *MonitorNicNFSParam) GetParamTemplateFile() string {
+func (p *MonitorNicNfsParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *MonitorNicNFSParam) SetGenerateSkeleton(v bool) {
+func (p *MonitorNicNfsParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorNicNfsParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorNicNfsParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *MonitorNicNFSParam) GetGenerateSkeleton() bool {
+func (p *MonitorNicNfsParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *MonitorNicNFSParam) SetOutputType(v string) {
+func (p *MonitorNicNfsParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *MonitorNicNFSParam) GetOutputType() string {
+func (p *MonitorNicNfsParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *MonitorNicNFSParam) SetColumn(v []string) {
+func (p *MonitorNicNfsParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *MonitorNicNFSParam) GetColumn() []string {
+func (p *MonitorNicNfsParam) GetColumn() []string {
 	return p.Column
 }
-func (p *MonitorNicNFSParam) SetQuiet(v bool) {
+func (p *MonitorNicNfsParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *MonitorNicNFSParam) GetQuiet() bool {
+func (p *MonitorNicNfsParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *MonitorNicNFSParam) SetFormat(v string) {
+func (p *MonitorNicNfsParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *MonitorNicNFSParam) GetFormat() string {
+func (p *MonitorNicNfsParam) GetFormat() string {
 	return p.Format
 }
-func (p *MonitorNicNFSParam) SetFormatFile(v string) {
+func (p *MonitorNicNfsParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *MonitorNicNFSParam) GetFormatFile() string {
+func (p *MonitorNicNfsParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *MonitorNicNFSParam) SetQuery(v string) {
+func (p *MonitorNicNfsParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *MonitorNicNFSParam) GetQuery() string {
+func (p *MonitorNicNfsParam) GetQuery() string {
 	return p.Query
 }
-func (p *MonitorNicNFSParam) SetQueryFile(v string) {
+func (p *MonitorNicNfsParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *MonitorNicNFSParam) GetQueryFile() string {
+func (p *MonitorNicNfsParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *MonitorNicNFSParam) SetId(v sacloud.ID) {
+func (p *MonitorNicNfsParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorNicNFSParam) GetId() sacloud.ID {
+func (p *MonitorNicNfsParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// MonitorFreeDiskSizeNFSParam is input parameters for the sacloud API
-type MonitorFreeDiskSizeNFSParam struct {
+// MonitorFreeDiskSizeNfsParam is input parameters for the sacloud API
+type MonitorFreeDiskSizeNfsParam struct {
 	Start             string     `json:"start"`
 	End               string     `json:"end"`
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2403,16 +2669,16 @@ type MonitorFreeDiskSizeNFSParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewMonitorFreeDiskSizeNFSParam return new MonitorFreeDiskSizeNFSParam
-func NewMonitorFreeDiskSizeNFSParam() *MonitorFreeDiskSizeNFSParam {
-	return &MonitorFreeDiskSizeNFSParam{
+// NewMonitorFreeDiskSizeNfsParam return new MonitorFreeDiskSizeNfsParam
+func NewMonitorFreeDiskSizeNfsParam() *MonitorFreeDiskSizeNfsParam {
+	return &MonitorFreeDiskSizeNfsParam{
 
 		KeyFormat: "sakuracloud.disk.{{.ID}}.free-disk-size",
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *MonitorFreeDiskSizeNFSParam) FillValueToSkeleton() {
+func (p *MonitorFreeDiskSizeNfsParam) FillValueToSkeleton() {
 	if isEmpty(p.Start) {
 		p.Start = ""
 	}
@@ -2428,8 +2694,14 @@ func (p *MonitorFreeDiskSizeNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2462,7 +2734,7 @@ func (p *MonitorFreeDiskSizeNFSParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *MonitorFreeDiskSizeNFSParam) Validate() []error {
+func (p *MonitorFreeDiskSizeNfsParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["NFS"].Commands["monitor-free-disk-size"].Params["start"].ValidateFunc
@@ -2516,132 +2788,146 @@ func (p *MonitorFreeDiskSizeNFSParam) Validate() []error {
 	return errors
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetResourceDef() *schema.Resource {
+func (p *MonitorFreeDiskSizeNfsParam) GetResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetCommandDef() *schema.Command {
+func (p *MonitorFreeDiskSizeNfsParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["monitor-free-disk-size"]
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetIncludeFields() []string {
+func (p *MonitorFreeDiskSizeNfsParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetExcludeFields() []string {
+func (p *MonitorFreeDiskSizeNfsParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetTableType() output.TableType {
+func (p *MonitorFreeDiskSizeNfsParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetColumnDefs() []output.ColumnDef {
+func (p *MonitorFreeDiskSizeNfsParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) SetStart(v string) {
+func (p *MonitorFreeDiskSizeNfsParam) SetStart(v string) {
 	p.Start = v
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetStart() string {
+func (p *MonitorFreeDiskSizeNfsParam) GetStart() string {
 	return p.Start
 }
-func (p *MonitorFreeDiskSizeNFSParam) SetEnd(v string) {
+func (p *MonitorFreeDiskSizeNfsParam) SetEnd(v string) {
 	p.End = v
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetEnd() string {
+func (p *MonitorFreeDiskSizeNfsParam) GetEnd() string {
 	return p.End
 }
-func (p *MonitorFreeDiskSizeNFSParam) SetKeyFormat(v string) {
+func (p *MonitorFreeDiskSizeNfsParam) SetKeyFormat(v string) {
 	p.KeyFormat = v
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetKeyFormat() string {
+func (p *MonitorFreeDiskSizeNfsParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
-func (p *MonitorFreeDiskSizeNFSParam) SetSelector(v []string) {
+func (p *MonitorFreeDiskSizeNfsParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetSelector() []string {
+func (p *MonitorFreeDiskSizeNfsParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *MonitorFreeDiskSizeNFSParam) SetParamTemplate(v string) {
+func (p *MonitorFreeDiskSizeNfsParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetParamTemplate() string {
+func (p *MonitorFreeDiskSizeNfsParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *MonitorFreeDiskSizeNFSParam) SetParamTemplateFile(v string) {
+func (p *MonitorFreeDiskSizeNfsParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorFreeDiskSizeNfsParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorFreeDiskSizeNfsParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetParamTemplateFile() string {
+func (p *MonitorFreeDiskSizeNfsParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *MonitorFreeDiskSizeNFSParam) SetGenerateSkeleton(v bool) {
+func (p *MonitorFreeDiskSizeNfsParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorFreeDiskSizeNfsParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorFreeDiskSizeNfsParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetGenerateSkeleton() bool {
+func (p *MonitorFreeDiskSizeNfsParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *MonitorFreeDiskSizeNFSParam) SetOutputType(v string) {
+func (p *MonitorFreeDiskSizeNfsParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetOutputType() string {
+func (p *MonitorFreeDiskSizeNfsParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *MonitorFreeDiskSizeNFSParam) SetColumn(v []string) {
+func (p *MonitorFreeDiskSizeNfsParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetColumn() []string {
+func (p *MonitorFreeDiskSizeNfsParam) GetColumn() []string {
 	return p.Column
 }
-func (p *MonitorFreeDiskSizeNFSParam) SetQuiet(v bool) {
+func (p *MonitorFreeDiskSizeNfsParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetQuiet() bool {
+func (p *MonitorFreeDiskSizeNfsParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *MonitorFreeDiskSizeNFSParam) SetFormat(v string) {
+func (p *MonitorFreeDiskSizeNfsParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetFormat() string {
+func (p *MonitorFreeDiskSizeNfsParam) GetFormat() string {
 	return p.Format
 }
-func (p *MonitorFreeDiskSizeNFSParam) SetFormatFile(v string) {
+func (p *MonitorFreeDiskSizeNfsParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetFormatFile() string {
+func (p *MonitorFreeDiskSizeNfsParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *MonitorFreeDiskSizeNFSParam) SetQuery(v string) {
+func (p *MonitorFreeDiskSizeNfsParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetQuery() string {
+func (p *MonitorFreeDiskSizeNfsParam) GetQuery() string {
 	return p.Query
 }
-func (p *MonitorFreeDiskSizeNFSParam) SetQueryFile(v string) {
+func (p *MonitorFreeDiskSizeNfsParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetQueryFile() string {
+func (p *MonitorFreeDiskSizeNfsParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *MonitorFreeDiskSizeNFSParam) SetId(v sacloud.ID) {
+func (p *MonitorFreeDiskSizeNfsParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetId() sacloud.ID {
+func (p *MonitorFreeDiskSizeNfsParam) GetId() sacloud.ID {
 	return p.Id
 }

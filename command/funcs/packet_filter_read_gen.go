@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func PacketFilterRead(ctx command.Context, params *params.ReadPacketFilterParam) error {
+func PacketfilterRead(ctx command.Context, params *params.ReadPacketfilterParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetPacketFilterAPI()
+	api := client.GetPacketfilterAPI()
 
 	// set params
 
 	// call Read(id)
 	res, err := api.Read(params.Id)
 	if err != nil {
-		return fmt.Errorf("PacketFilterRead is failed: %s", err)
+		return fmt.Errorf("PacketfilterRead is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

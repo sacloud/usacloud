@@ -36,7 +36,9 @@ type ListDiskParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -87,8 +89,14 @@ func (p *ListDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -298,12 +306,26 @@ func (p *ListDiskParam) SetParamTemplate(v string) {
 func (p *ListDiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListDiskParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListDiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListDiskParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListDiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -376,7 +398,9 @@ type CreateDiskParam struct {
 	IconId            sacloud.ID   `json:"icon-id"`
 	Assumeyes         bool         `json:"assumeyes"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -435,8 +459,14 @@ func (p *CreateDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -716,12 +746,26 @@ func (p *CreateDiskParam) SetParamTemplate(v string) {
 func (p *CreateDiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateDiskParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateDiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateDiskParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateDiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -784,7 +828,9 @@ func (p *CreateDiskParam) GetQueryFile() string {
 type ReadDiskParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -809,8 +855,14 @@ func (p *ReadDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -914,12 +966,26 @@ func (p *ReadDiskParam) SetParamTemplate(v string) {
 func (p *ReadDiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadDiskParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadDiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadDiskParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadDiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -995,7 +1061,9 @@ type UpdateDiskParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1038,8 +1106,14 @@ func (p *UpdateDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1220,12 +1294,26 @@ func (p *UpdateDiskParam) SetParamTemplate(v string) {
 func (p *UpdateDiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateDiskParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateDiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateDiskParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateDiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1296,7 +1384,9 @@ type DeleteDiskParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1324,8 +1414,14 @@ func (p *DeleteDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1436,12 +1532,26 @@ func (p *DeleteDiskParam) SetParamTemplate(v string) {
 func (p *DeleteDiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteDiskParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteDiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteDiskParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteDiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1520,7 +1630,9 @@ type EditDiskParam struct {
 	Selector            []string     `json:"selector"`
 	Assumeyes           bool         `json:"assumeyes"`
 	ParamTemplate       string       `json:"param-template"`
+	Parameters          string       `json:"parameters"`
 	ParamTemplateFile   string       `json:"param-template-file"`
+	ParameterFile       string       `json:"parameter-file"`
 	GenerateSkeleton    bool         `json:"generate-skeleton"`
 	OutputType          string       `json:"output-type"`
 	Column              []string     `json:"column"`
@@ -1575,8 +1687,14 @@ func (p *EditDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1764,12 +1882,26 @@ func (p *EditDiskParam) SetParamTemplate(v string) {
 func (p *EditDiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *EditDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *EditDiskParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *EditDiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *EditDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *EditDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *EditDiskParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *EditDiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1840,7 +1972,9 @@ type ResizePartitionDiskParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1868,8 +2002,14 @@ func (p *ResizePartitionDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1980,12 +2120,26 @@ func (p *ResizePartitionDiskParam) SetParamTemplate(v string) {
 func (p *ResizePartitionDiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ResizePartitionDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ResizePartitionDiskParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ResizePartitionDiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ResizePartitionDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ResizePartitionDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ResizePartitionDiskParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ResizePartitionDiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2058,7 +2212,9 @@ type ReinstallFromArchiveDiskParam struct {
 	Selector          []string     `json:"selector"`
 	Assumeyes         bool         `json:"assumeyes"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	Id                sacloud.ID   `json:"id"`
 }
@@ -2085,8 +2241,14 @@ func (p *ReinstallFromArchiveDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2191,12 +2353,26 @@ func (p *ReinstallFromArchiveDiskParam) SetParamTemplate(v string) {
 func (p *ReinstallFromArchiveDiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReinstallFromArchiveDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReinstallFromArchiveDiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReinstallFromArchiveDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReinstallFromArchiveDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReinstallFromArchiveDiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2220,7 +2396,9 @@ type ReinstallFromDiskDiskParam struct {
 	Selector          []string     `json:"selector"`
 	Assumeyes         bool         `json:"assumeyes"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	Id                sacloud.ID   `json:"id"`
 }
@@ -2247,8 +2425,14 @@ func (p *ReinstallFromDiskDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2353,12 +2537,26 @@ func (p *ReinstallFromDiskDiskParam) SetParamTemplate(v string) {
 func (p *ReinstallFromDiskDiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReinstallFromDiskDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReinstallFromDiskDiskParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReinstallFromDiskDiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReinstallFromDiskDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReinstallFromDiskDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReinstallFromDiskDiskParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReinstallFromDiskDiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2381,7 +2579,9 @@ type ReinstallToBlankDiskParam struct {
 	Selector          []string     `json:"selector"`
 	Assumeyes         bool         `json:"assumeyes"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	Id                sacloud.ID   `json:"id"`
 }
@@ -2405,8 +2605,14 @@ func (p *ReinstallToBlankDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2490,12 +2696,26 @@ func (p *ReinstallToBlankDiskParam) SetParamTemplate(v string) {
 func (p *ReinstallToBlankDiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReinstallToBlankDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReinstallToBlankDiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReinstallToBlankDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReinstallToBlankDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReinstallToBlankDiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2518,7 +2738,9 @@ type ServerConnectDiskParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2542,8 +2764,14 @@ func (p *ServerConnectDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2634,12 +2862,26 @@ func (p *ServerConnectDiskParam) SetParamTemplate(v string) {
 func (p *ServerConnectDiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ServerConnectDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerConnectDiskParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ServerConnectDiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ServerConnectDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ServerConnectDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerConnectDiskParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ServerConnectDiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2661,7 +2903,9 @@ type ServerDisconnectDiskParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2682,8 +2926,14 @@ func (p *ServerDisconnectDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2753,12 +3003,26 @@ func (p *ServerDisconnectDiskParam) SetParamTemplate(v string) {
 func (p *ServerDisconnectDiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ServerDisconnectDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerDisconnectDiskParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ServerDisconnectDiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ServerDisconnectDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ServerDisconnectDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerDisconnectDiskParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ServerDisconnectDiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2779,7 +3043,9 @@ func (p *ServerDisconnectDiskParam) GetId() sacloud.ID {
 type MonitorDiskParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2810,8 +3076,14 @@ func (p *MonitorDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2945,12 +3217,26 @@ func (p *MonitorDiskParam) SetParamTemplate(v string) {
 func (p *MonitorDiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MonitorDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorDiskParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MonitorDiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MonitorDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorDiskParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MonitorDiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -3041,7 +3327,9 @@ func (p *MonitorDiskParam) GetStart() string {
 type WaitForCopyDiskParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -3059,8 +3347,14 @@ func (p *WaitForCopyDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3123,12 +3417,26 @@ func (p *WaitForCopyDiskParam) SetParamTemplate(v string) {
 func (p *WaitForCopyDiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *WaitForCopyDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForCopyDiskParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *WaitForCopyDiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *WaitForCopyDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *WaitForCopyDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForCopyDiskParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *WaitForCopyDiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

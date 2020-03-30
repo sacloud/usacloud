@@ -25,7 +25,9 @@ import (
 // ListCouponParam is input parameters for the sacloud API
 type ListCouponParam struct {
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Usable            bool     `json:"usable"`
@@ -47,8 +49,14 @@ func (p *ListCouponParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -138,12 +146,26 @@ func (p *ListCouponParam) SetParamTemplate(v string) {
 func (p *ListCouponParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListCouponParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListCouponParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListCouponParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListCouponParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListCouponParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListCouponParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListCouponParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

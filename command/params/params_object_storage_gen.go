@@ -22,13 +22,15 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListObjectStorageParam is input parameters for the sacloud API
-type ListObjectStorageParam struct {
+// ListObjectstorageParam is input parameters for the sacloud API
+type ListObjectstorageParam struct {
 	AccessKey         string   `json:"access-key"`
 	SecretKey         string   `json:"secret-key"`
 	Bucket            string   `json:"bucket"`
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Column            []string `json:"column"`
@@ -39,13 +41,13 @@ type ListObjectStorageParam struct {
 	QueryFile         string   `json:"query-file"`
 }
 
-// NewListObjectStorageParam return new ListObjectStorageParam
-func NewListObjectStorageParam() *ListObjectStorageParam {
-	return &ListObjectStorageParam{}
+// NewListObjectstorageParam return new ListObjectstorageParam
+func NewListObjectstorageParam() *ListObjectstorageParam {
+	return &ListObjectstorageParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListObjectStorageParam) FillValueToSkeleton() {
+func (p *ListObjectstorageParam) FillValueToSkeleton() {
 	if isEmpty(p.AccessKey) {
 		p.AccessKey = ""
 	}
@@ -58,8 +60,14 @@ func (p *ListObjectStorageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -89,7 +97,7 @@ func (p *ListObjectStorageParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListObjectStorageParam) Validate() []error {
+func (p *ListObjectstorageParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -129,124 +137,138 @@ func (p *ListObjectStorageParam) Validate() []error {
 	return errors
 }
 
-func (p *ListObjectStorageParam) GetResourceDef() *schema.Resource {
+func (p *ListObjectstorageParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ObjectStorage"]
 }
 
-func (p *ListObjectStorageParam) GetCommandDef() *schema.Command {
+func (p *ListObjectstorageParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListObjectStorageParam) GetIncludeFields() []string {
+func (p *ListObjectstorageParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListObjectStorageParam) GetExcludeFields() []string {
+func (p *ListObjectstorageParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListObjectStorageParam) GetTableType() output.TableType {
+func (p *ListObjectstorageParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListObjectStorageParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListObjectstorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListObjectStorageParam) SetAccessKey(v string) {
+func (p *ListObjectstorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
 
-func (p *ListObjectStorageParam) GetAccessKey() string {
+func (p *ListObjectstorageParam) GetAccessKey() string {
 	return p.AccessKey
 }
-func (p *ListObjectStorageParam) SetSecretKey(v string) {
+func (p *ListObjectstorageParam) SetSecretKey(v string) {
 	p.SecretKey = v
 }
 
-func (p *ListObjectStorageParam) GetSecretKey() string {
+func (p *ListObjectstorageParam) GetSecretKey() string {
 	return p.SecretKey
 }
-func (p *ListObjectStorageParam) SetBucket(v string) {
+func (p *ListObjectstorageParam) SetBucket(v string) {
 	p.Bucket = v
 }
 
-func (p *ListObjectStorageParam) GetBucket() string {
+func (p *ListObjectstorageParam) GetBucket() string {
 	return p.Bucket
 }
-func (p *ListObjectStorageParam) SetParamTemplate(v string) {
+func (p *ListObjectstorageParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListObjectStorageParam) GetParamTemplate() string {
+func (p *ListObjectstorageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListObjectStorageParam) SetParamTemplateFile(v string) {
+func (p *ListObjectstorageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListObjectstorageParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListObjectstorageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListObjectStorageParam) GetParamTemplateFile() string {
+func (p *ListObjectstorageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListObjectStorageParam) SetGenerateSkeleton(v bool) {
+func (p *ListObjectstorageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListObjectstorageParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListObjectstorageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListObjectStorageParam) GetGenerateSkeleton() bool {
+func (p *ListObjectstorageParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListObjectStorageParam) SetOutputType(v string) {
+func (p *ListObjectstorageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListObjectStorageParam) GetOutputType() string {
+func (p *ListObjectstorageParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListObjectStorageParam) SetColumn(v []string) {
+func (p *ListObjectstorageParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListObjectStorageParam) GetColumn() []string {
+func (p *ListObjectstorageParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ListObjectStorageParam) SetQuiet(v bool) {
+func (p *ListObjectstorageParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListObjectStorageParam) GetQuiet() bool {
+func (p *ListObjectstorageParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListObjectStorageParam) SetFormat(v string) {
+func (p *ListObjectstorageParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListObjectStorageParam) GetFormat() string {
+func (p *ListObjectstorageParam) GetFormat() string {
 	return p.Format
 }
-func (p *ListObjectStorageParam) SetFormatFile(v string) {
+func (p *ListObjectstorageParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListObjectStorageParam) GetFormatFile() string {
+func (p *ListObjectstorageParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListObjectStorageParam) SetQuery(v string) {
+func (p *ListObjectstorageParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListObjectStorageParam) GetQuery() string {
+func (p *ListObjectstorageParam) GetQuery() string {
 	return p.Query
 }
-func (p *ListObjectStorageParam) SetQueryFile(v string) {
+func (p *ListObjectstorageParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListObjectStorageParam) GetQueryFile() string {
+func (p *ListObjectstorageParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// PutObjectStorageParam is input parameters for the sacloud API
-type PutObjectStorageParam struct {
+// PutObjectstorageParam is input parameters for the sacloud API
+type PutObjectstorageParam struct {
 	AccessKey         string `json:"access-key"`
 	ContentType       string `json:"content-type"`
 	Recursive         bool   `json:"recursive"`
@@ -254,20 +276,22 @@ type PutObjectStorageParam struct {
 	Bucket            string `json:"bucket"`
 	Assumeyes         bool   `json:"assumeyes"`
 	ParamTemplate     string `json:"param-template"`
+	Parameters        string `json:"parameters"`
 	ParamTemplateFile string `json:"param-template-file"`
+	ParameterFile     string `json:"parameter-file"`
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
 }
 
-// NewPutObjectStorageParam return new PutObjectStorageParam
-func NewPutObjectStorageParam() *PutObjectStorageParam {
-	return &PutObjectStorageParam{
+// NewPutObjectstorageParam return new PutObjectstorageParam
+func NewPutObjectstorageParam() *PutObjectstorageParam {
+	return &PutObjectstorageParam{
 
 		ContentType: "application/octet-stream",
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *PutObjectStorageParam) FillValueToSkeleton() {
+func (p *PutObjectstorageParam) FillValueToSkeleton() {
 	if isEmpty(p.AccessKey) {
 		p.AccessKey = ""
 	}
@@ -289,8 +313,14 @@ func (p *PutObjectStorageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -299,7 +329,7 @@ func (p *PutObjectStorageParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *PutObjectStorageParam) Validate() []error {
+func (p *PutObjectstorageParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -319,112 +349,128 @@ func (p *PutObjectStorageParam) Validate() []error {
 	return errors
 }
 
-func (p *PutObjectStorageParam) GetResourceDef() *schema.Resource {
+func (p *PutObjectstorageParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ObjectStorage"]
 }
 
-func (p *PutObjectStorageParam) GetCommandDef() *schema.Command {
+func (p *PutObjectstorageParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["put"]
 }
 
-func (p *PutObjectStorageParam) GetIncludeFields() []string {
+func (p *PutObjectstorageParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *PutObjectStorageParam) GetExcludeFields() []string {
+func (p *PutObjectstorageParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *PutObjectStorageParam) GetTableType() output.TableType {
+func (p *PutObjectstorageParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *PutObjectStorageParam) GetColumnDefs() []output.ColumnDef {
+func (p *PutObjectstorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *PutObjectStorageParam) SetAccessKey(v string) {
+func (p *PutObjectstorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
 
-func (p *PutObjectStorageParam) GetAccessKey() string {
+func (p *PutObjectstorageParam) GetAccessKey() string {
 	return p.AccessKey
 }
-func (p *PutObjectStorageParam) SetContentType(v string) {
+func (p *PutObjectstorageParam) SetContentType(v string) {
 	p.ContentType = v
 }
 
-func (p *PutObjectStorageParam) GetContentType() string {
+func (p *PutObjectstorageParam) GetContentType() string {
 	return p.ContentType
 }
-func (p *PutObjectStorageParam) SetRecursive(v bool) {
+func (p *PutObjectstorageParam) SetRecursive(v bool) {
 	p.Recursive = v
 }
 
-func (p *PutObjectStorageParam) GetRecursive() bool {
+func (p *PutObjectstorageParam) GetRecursive() bool {
 	return p.Recursive
 }
-func (p *PutObjectStorageParam) SetSecretKey(v string) {
+func (p *PutObjectstorageParam) SetSecretKey(v string) {
 	p.SecretKey = v
 }
 
-func (p *PutObjectStorageParam) GetSecretKey() string {
+func (p *PutObjectstorageParam) GetSecretKey() string {
 	return p.SecretKey
 }
-func (p *PutObjectStorageParam) SetBucket(v string) {
+func (p *PutObjectstorageParam) SetBucket(v string) {
 	p.Bucket = v
 }
 
-func (p *PutObjectStorageParam) GetBucket() string {
+func (p *PutObjectstorageParam) GetBucket() string {
 	return p.Bucket
 }
-func (p *PutObjectStorageParam) SetAssumeyes(v bool) {
+func (p *PutObjectstorageParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *PutObjectStorageParam) GetAssumeyes() bool {
+func (p *PutObjectstorageParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *PutObjectStorageParam) SetParamTemplate(v string) {
+func (p *PutObjectstorageParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *PutObjectStorageParam) GetParamTemplate() string {
+func (p *PutObjectstorageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *PutObjectStorageParam) SetParamTemplateFile(v string) {
+func (p *PutObjectstorageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PutObjectstorageParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *PutObjectstorageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *PutObjectStorageParam) GetParamTemplateFile() string {
+func (p *PutObjectstorageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *PutObjectStorageParam) SetGenerateSkeleton(v bool) {
+func (p *PutObjectstorageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PutObjectstorageParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PutObjectstorageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *PutObjectStorageParam) GetGenerateSkeleton() bool {
+func (p *PutObjectstorageParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
 
-// GetObjectStorageParam is input parameters for the sacloud API
-type GetObjectStorageParam struct {
+// GetObjectstorageParam is input parameters for the sacloud API
+type GetObjectstorageParam struct {
 	AccessKey         string `json:"access-key"`
 	Recursive         bool   `json:"recursive"`
 	SecretKey         string `json:"secret-key"`
 	Bucket            string `json:"bucket"`
 	ParamTemplate     string `json:"param-template"`
+	Parameters        string `json:"parameters"`
 	ParamTemplateFile string `json:"param-template-file"`
+	ParameterFile     string `json:"parameter-file"`
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
 }
 
-// NewGetObjectStorageParam return new GetObjectStorageParam
-func NewGetObjectStorageParam() *GetObjectStorageParam {
-	return &GetObjectStorageParam{}
+// NewGetObjectstorageParam return new GetObjectstorageParam
+func NewGetObjectstorageParam() *GetObjectstorageParam {
+	return &GetObjectstorageParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *GetObjectStorageParam) FillValueToSkeleton() {
+func (p *GetObjectstorageParam) FillValueToSkeleton() {
 	if isEmpty(p.AccessKey) {
 		p.AccessKey = ""
 	}
@@ -440,8 +486,14 @@ func (p *GetObjectStorageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -450,7 +502,7 @@ func (p *GetObjectStorageParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *GetObjectStorageParam) Validate() []error {
+func (p *GetObjectstorageParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -470,99 +522,115 @@ func (p *GetObjectStorageParam) Validate() []error {
 	return errors
 }
 
-func (p *GetObjectStorageParam) GetResourceDef() *schema.Resource {
+func (p *GetObjectstorageParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ObjectStorage"]
 }
 
-func (p *GetObjectStorageParam) GetCommandDef() *schema.Command {
+func (p *GetObjectstorageParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["get"]
 }
 
-func (p *GetObjectStorageParam) GetIncludeFields() []string {
+func (p *GetObjectstorageParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *GetObjectStorageParam) GetExcludeFields() []string {
+func (p *GetObjectstorageParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *GetObjectStorageParam) GetTableType() output.TableType {
+func (p *GetObjectstorageParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *GetObjectStorageParam) GetColumnDefs() []output.ColumnDef {
+func (p *GetObjectstorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *GetObjectStorageParam) SetAccessKey(v string) {
+func (p *GetObjectstorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
 
-func (p *GetObjectStorageParam) GetAccessKey() string {
+func (p *GetObjectstorageParam) GetAccessKey() string {
 	return p.AccessKey
 }
-func (p *GetObjectStorageParam) SetRecursive(v bool) {
+func (p *GetObjectstorageParam) SetRecursive(v bool) {
 	p.Recursive = v
 }
 
-func (p *GetObjectStorageParam) GetRecursive() bool {
+func (p *GetObjectstorageParam) GetRecursive() bool {
 	return p.Recursive
 }
-func (p *GetObjectStorageParam) SetSecretKey(v string) {
+func (p *GetObjectstorageParam) SetSecretKey(v string) {
 	p.SecretKey = v
 }
 
-func (p *GetObjectStorageParam) GetSecretKey() string {
+func (p *GetObjectstorageParam) GetSecretKey() string {
 	return p.SecretKey
 }
-func (p *GetObjectStorageParam) SetBucket(v string) {
+func (p *GetObjectstorageParam) SetBucket(v string) {
 	p.Bucket = v
 }
 
-func (p *GetObjectStorageParam) GetBucket() string {
+func (p *GetObjectstorageParam) GetBucket() string {
 	return p.Bucket
 }
-func (p *GetObjectStorageParam) SetParamTemplate(v string) {
+func (p *GetObjectstorageParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *GetObjectStorageParam) GetParamTemplate() string {
+func (p *GetObjectstorageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *GetObjectStorageParam) SetParamTemplateFile(v string) {
+func (p *GetObjectstorageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *GetObjectstorageParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *GetObjectstorageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *GetObjectStorageParam) GetParamTemplateFile() string {
+func (p *GetObjectstorageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *GetObjectStorageParam) SetGenerateSkeleton(v bool) {
+func (p *GetObjectstorageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *GetObjectstorageParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *GetObjectstorageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *GetObjectStorageParam) GetGenerateSkeleton() bool {
+func (p *GetObjectstorageParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
 
-// DeleteObjectStorageParam is input parameters for the sacloud API
-type DeleteObjectStorageParam struct {
+// DeleteObjectstorageParam is input parameters for the sacloud API
+type DeleteObjectstorageParam struct {
 	AccessKey         string `json:"access-key"`
 	Recursive         bool   `json:"recursive"`
 	SecretKey         string `json:"secret-key"`
 	Bucket            string `json:"bucket"`
 	Assumeyes         bool   `json:"assumeyes"`
 	ParamTemplate     string `json:"param-template"`
+	Parameters        string `json:"parameters"`
 	ParamTemplateFile string `json:"param-template-file"`
+	ParameterFile     string `json:"parameter-file"`
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
 }
 
-// NewDeleteObjectStorageParam return new DeleteObjectStorageParam
-func NewDeleteObjectStorageParam() *DeleteObjectStorageParam {
-	return &DeleteObjectStorageParam{}
+// NewDeleteObjectstorageParam return new DeleteObjectstorageParam
+func NewDeleteObjectstorageParam() *DeleteObjectstorageParam {
+	return &DeleteObjectstorageParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *DeleteObjectStorageParam) FillValueToSkeleton() {
+func (p *DeleteObjectstorageParam) FillValueToSkeleton() {
 	if isEmpty(p.AccessKey) {
 		p.AccessKey = ""
 	}
@@ -581,8 +649,14 @@ func (p *DeleteObjectStorageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -591,7 +665,7 @@ func (p *DeleteObjectStorageParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *DeleteObjectStorageParam) Validate() []error {
+func (p *DeleteObjectstorageParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -611,83 +685,97 @@ func (p *DeleteObjectStorageParam) Validate() []error {
 	return errors
 }
 
-func (p *DeleteObjectStorageParam) GetResourceDef() *schema.Resource {
+func (p *DeleteObjectstorageParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ObjectStorage"]
 }
 
-func (p *DeleteObjectStorageParam) GetCommandDef() *schema.Command {
+func (p *DeleteObjectstorageParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["delete"]
 }
 
-func (p *DeleteObjectStorageParam) GetIncludeFields() []string {
+func (p *DeleteObjectstorageParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *DeleteObjectStorageParam) GetExcludeFields() []string {
+func (p *DeleteObjectstorageParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *DeleteObjectStorageParam) GetTableType() output.TableType {
+func (p *DeleteObjectstorageParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *DeleteObjectStorageParam) GetColumnDefs() []output.ColumnDef {
+func (p *DeleteObjectstorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DeleteObjectStorageParam) SetAccessKey(v string) {
+func (p *DeleteObjectstorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
 
-func (p *DeleteObjectStorageParam) GetAccessKey() string {
+func (p *DeleteObjectstorageParam) GetAccessKey() string {
 	return p.AccessKey
 }
-func (p *DeleteObjectStorageParam) SetRecursive(v bool) {
+func (p *DeleteObjectstorageParam) SetRecursive(v bool) {
 	p.Recursive = v
 }
 
-func (p *DeleteObjectStorageParam) GetRecursive() bool {
+func (p *DeleteObjectstorageParam) GetRecursive() bool {
 	return p.Recursive
 }
-func (p *DeleteObjectStorageParam) SetSecretKey(v string) {
+func (p *DeleteObjectstorageParam) SetSecretKey(v string) {
 	p.SecretKey = v
 }
 
-func (p *DeleteObjectStorageParam) GetSecretKey() string {
+func (p *DeleteObjectstorageParam) GetSecretKey() string {
 	return p.SecretKey
 }
-func (p *DeleteObjectStorageParam) SetBucket(v string) {
+func (p *DeleteObjectstorageParam) SetBucket(v string) {
 	p.Bucket = v
 }
 
-func (p *DeleteObjectStorageParam) GetBucket() string {
+func (p *DeleteObjectstorageParam) GetBucket() string {
 	return p.Bucket
 }
-func (p *DeleteObjectStorageParam) SetAssumeyes(v bool) {
+func (p *DeleteObjectstorageParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *DeleteObjectStorageParam) GetAssumeyes() bool {
+func (p *DeleteObjectstorageParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeleteObjectStorageParam) SetParamTemplate(v string) {
+func (p *DeleteObjectstorageParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *DeleteObjectStorageParam) GetParamTemplate() string {
+func (p *DeleteObjectstorageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *DeleteObjectStorageParam) SetParamTemplateFile(v string) {
+func (p *DeleteObjectstorageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteObjectstorageParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteObjectstorageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *DeleteObjectStorageParam) GetParamTemplateFile() string {
+func (p *DeleteObjectstorageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *DeleteObjectStorageParam) SetGenerateSkeleton(v bool) {
+func (p *DeleteObjectstorageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteObjectstorageParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteObjectstorageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *DeleteObjectStorageParam) GetGenerateSkeleton() bool {
+func (p *DeleteObjectstorageParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }

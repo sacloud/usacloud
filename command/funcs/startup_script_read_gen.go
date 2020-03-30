@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func StartupScriptRead(ctx command.Context, params *params.ReadStartupScriptParam) error {
+func StartupscriptRead(ctx command.Context, params *params.ReadStartupscriptParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetNoteAPI()
@@ -33,7 +33,7 @@ func StartupScriptRead(ctx command.Context, params *params.ReadStartupScriptPara
 	// call Read(id)
 	res, err := api.Read(params.Id)
 	if err != nil {
-		return fmt.Errorf("StartupScriptRead is failed: %s", err)
+		return fmt.Errorf("StartupscriptRead is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

@@ -31,7 +31,9 @@ type ListRegionParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -67,8 +69,14 @@ func (p *ListRegionParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -215,12 +223,26 @@ func (p *ListRegionParam) SetParamTemplate(v string) {
 func (p *ListRegionParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListRegionParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListRegionParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListRegionParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListRegionParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListRegionParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListRegionParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListRegionParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -283,7 +305,9 @@ func (p *ListRegionParam) GetQueryFile() string {
 type ReadRegionParam struct {
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -308,8 +332,14 @@ func (p *ReadRegionParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -420,12 +450,26 @@ func (p *ReadRegionParam) SetParamTemplate(v string) {
 func (p *ReadRegionParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadRegionParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadRegionParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadRegionParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadRegionParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadRegionParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadRegionParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadRegionParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

@@ -23,13 +23,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func SSHKeyUpdate(ctx command.Context, params *params.UpdateSSHKeyParam) error {
+func SshkeyUpdate(ctx command.Context, params *params.UpdateSshkeyParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetSSHKeyAPI()
+	api := client.GetSshkeyAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("SSHKeyUpdate is failed: %s", e)
+		return fmt.Errorf("SshkeyUpdate is failed: %s", e)
 	}
 
 	// set params
@@ -44,7 +44,7 @@ func SSHKeyUpdate(ctx command.Context, params *params.UpdateSSHKeyParam) error {
 	// call Update(id)
 	res, err := api.Update(params.Id, p)
 	if err != nil {
-		return fmt.Errorf("SSHKeyUpdate is failed: %s", err)
+		return fmt.Errorf("SshkeyUpdate is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

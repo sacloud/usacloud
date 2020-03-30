@@ -38,6 +38,10 @@ default: test build
 run:
 	go run $(CURDIR)/main.go $(ARGS)
 
+.PHONY: run-v1
+run-v1:
+	go run $(CURDIR)/cmdv2/main.go $(ARGS)
+
 .PHONY: clean
 clean:
 	rm -Rf bin/*
@@ -48,6 +52,8 @@ clean-all:
 	rm -f command/cli/*_gen.go \
 	rm -f command/funcs/*_gen.go \
 	rm -f command/params/*_gen.go \
+	rm -f cmdv2/commands/*_gen.go \
+	rm -f cmdv2/params/*_gen.go \
 
 
 .PHONY: tools
@@ -61,9 +67,9 @@ tools:
 gen: command/cli/*_gen.go command/funcs/*_gen.go command/params/*_gen.go
 
 .PHONY: gen-force
-gen-force: clean-all _gen-force set-license
+gen-force: clean-all _gen-force set-license fmt goimports
 _gen-force: 
-	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES); goimports -l -w $(GOFMT_FILES)
+	go generate $(GOGEN_FILES);
 
 command/*_gen.go: define/*.go tools/gen-cli-commands/*.go tools/gen-command-funcs/*.go tools/gen-input-models/*.go
 	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES)
@@ -136,11 +142,11 @@ golint: goimports
 
 .PHONY: goimports
 goimports:
-	goimports -l -w $(GOFMT_FILES)
+	find . -name '*.go' | grep -v vendor | xargs goimports -l -w
 
 .PHONY: fmt
 fmt:
-	gofmt -s -l -w $(GOFMT_FILES)
+	find . -name '*.go' | grep -v vendor | xargs gofmt -s -w
 
 .PHONY: build-docs serve-docs lint-docs
 build-docs:

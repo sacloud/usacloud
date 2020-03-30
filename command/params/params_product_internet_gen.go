@@ -23,15 +23,17 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListProductInternetParam is input parameters for the sacloud API
-type ListProductInternetParam struct {
+// ListProductinternetParam is input parameters for the sacloud API
+type ListProductinternetParam struct {
 	Name              []string     `json:"name"`
 	Id                []sacloud.ID `json:"id"`
 	From              int          `json:"from"`
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -42,13 +44,13 @@ type ListProductInternetParam struct {
 	QueryFile         string       `json:"query-file"`
 }
 
-// NewListProductInternetParam return new ListProductInternetParam
-func NewListProductInternetParam() *ListProductInternetParam {
-	return &ListProductInternetParam{}
+// NewListProductinternetParam return new ListProductinternetParam
+func NewListProductinternetParam() *ListProductinternetParam {
+	return &ListProductinternetParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListProductInternetParam) FillValueToSkeleton() {
+func (p *ListProductinternetParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -67,8 +69,14 @@ func (p *ListProductInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -98,7 +106,7 @@ func (p *ListProductInternetParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListProductInternetParam) Validate() []error {
+func (p *ListProductinternetParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
@@ -149,141 +157,157 @@ func (p *ListProductInternetParam) Validate() []error {
 	return errors
 }
 
-func (p *ListProductInternetParam) GetResourceDef() *schema.Resource {
+func (p *ListProductinternetParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProductInternet"]
 }
 
-func (p *ListProductInternetParam) GetCommandDef() *schema.Command {
+func (p *ListProductinternetParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListProductInternetParam) GetIncludeFields() []string {
+func (p *ListProductinternetParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListProductInternetParam) GetExcludeFields() []string {
+func (p *ListProductinternetParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListProductInternetParam) GetTableType() output.TableType {
+func (p *ListProductinternetParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListProductInternetParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListProductinternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListProductInternetParam) SetName(v []string) {
+func (p *ListProductinternetParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListProductInternetParam) GetName() []string {
+func (p *ListProductinternetParam) GetName() []string {
 	return p.Name
 }
-func (p *ListProductInternetParam) SetId(v []sacloud.ID) {
+func (p *ListProductinternetParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListProductInternetParam) GetId() []sacloud.ID {
+func (p *ListProductinternetParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListProductInternetParam) SetFrom(v int) {
+func (p *ListProductinternetParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListProductInternetParam) GetFrom() int {
+func (p *ListProductinternetParam) GetFrom() int {
 	return p.From
 }
-func (p *ListProductInternetParam) SetMax(v int) {
+func (p *ListProductinternetParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListProductInternetParam) GetMax() int {
+func (p *ListProductinternetParam) GetMax() int {
 	return p.Max
 }
-func (p *ListProductInternetParam) SetSort(v []string) {
+func (p *ListProductinternetParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListProductInternetParam) GetSort() []string {
+func (p *ListProductinternetParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListProductInternetParam) SetParamTemplate(v string) {
+func (p *ListProductinternetParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListProductInternetParam) GetParamTemplate() string {
+func (p *ListProductinternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListProductInternetParam) SetParamTemplateFile(v string) {
+func (p *ListProductinternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListProductinternetParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListProductinternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListProductInternetParam) GetParamTemplateFile() string {
+func (p *ListProductinternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListProductInternetParam) SetGenerateSkeleton(v bool) {
+func (p *ListProductinternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListProductinternetParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListProductinternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListProductInternetParam) GetGenerateSkeleton() bool {
+func (p *ListProductinternetParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListProductInternetParam) SetOutputType(v string) {
+func (p *ListProductinternetParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListProductInternetParam) GetOutputType() string {
+func (p *ListProductinternetParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListProductInternetParam) SetColumn(v []string) {
+func (p *ListProductinternetParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListProductInternetParam) GetColumn() []string {
+func (p *ListProductinternetParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ListProductInternetParam) SetQuiet(v bool) {
+func (p *ListProductinternetParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListProductInternetParam) GetQuiet() bool {
+func (p *ListProductinternetParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListProductInternetParam) SetFormat(v string) {
+func (p *ListProductinternetParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListProductInternetParam) GetFormat() string {
+func (p *ListProductinternetParam) GetFormat() string {
 	return p.Format
 }
-func (p *ListProductInternetParam) SetFormatFile(v string) {
+func (p *ListProductinternetParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListProductInternetParam) GetFormatFile() string {
+func (p *ListProductinternetParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListProductInternetParam) SetQuery(v string) {
+func (p *ListProductinternetParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListProductInternetParam) GetQuery() string {
+func (p *ListProductinternetParam) GetQuery() string {
 	return p.Query
 }
-func (p *ListProductInternetParam) SetQueryFile(v string) {
+func (p *ListProductinternetParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListProductInternetParam) GetQueryFile() string {
+func (p *ListProductinternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// ReadProductInternetParam is input parameters for the sacloud API
-type ReadProductInternetParam struct {
+// ReadProductinternetParam is input parameters for the sacloud API
+type ReadProductinternetParam struct {
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -295,21 +319,27 @@ type ReadProductInternetParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewReadProductInternetParam return new ReadProductInternetParam
-func NewReadProductInternetParam() *ReadProductInternetParam {
-	return &ReadProductInternetParam{}
+// NewReadProductinternetParam return new ReadProductinternetParam
+func NewReadProductinternetParam() *ReadProductinternetParam {
+	return &ReadProductinternetParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ReadProductInternetParam) FillValueToSkeleton() {
+func (p *ReadProductinternetParam) FillValueToSkeleton() {
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -342,7 +372,7 @@ func (p *ReadProductInternetParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ReadProductInternetParam) Validate() []error {
+func (p *ReadProductinternetParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -382,111 +412,125 @@ func (p *ReadProductInternetParam) Validate() []error {
 	return errors
 }
 
-func (p *ReadProductInternetParam) GetResourceDef() *schema.Resource {
+func (p *ReadProductinternetParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProductInternet"]
 }
 
-func (p *ReadProductInternetParam) GetCommandDef() *schema.Command {
+func (p *ReadProductinternetParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["read"]
 }
 
-func (p *ReadProductInternetParam) GetIncludeFields() []string {
+func (p *ReadProductinternetParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ReadProductInternetParam) GetExcludeFields() []string {
+func (p *ReadProductinternetParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ReadProductInternetParam) GetTableType() output.TableType {
+func (p *ReadProductinternetParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ReadProductInternetParam) GetColumnDefs() []output.ColumnDef {
+func (p *ReadProductinternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReadProductInternetParam) SetAssumeyes(v bool) {
+func (p *ReadProductinternetParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ReadProductInternetParam) GetAssumeyes() bool {
+func (p *ReadProductinternetParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ReadProductInternetParam) SetParamTemplate(v string) {
+func (p *ReadProductinternetParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ReadProductInternetParam) GetParamTemplate() string {
+func (p *ReadProductinternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ReadProductInternetParam) SetParamTemplateFile(v string) {
+func (p *ReadProductinternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadProductinternetParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadProductinternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ReadProductInternetParam) GetParamTemplateFile() string {
+func (p *ReadProductinternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ReadProductInternetParam) SetGenerateSkeleton(v bool) {
+func (p *ReadProductinternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadProductinternetParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadProductinternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ReadProductInternetParam) GetGenerateSkeleton() bool {
+func (p *ReadProductinternetParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReadProductInternetParam) SetOutputType(v string) {
+func (p *ReadProductinternetParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ReadProductInternetParam) GetOutputType() string {
+func (p *ReadProductinternetParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ReadProductInternetParam) SetColumn(v []string) {
+func (p *ReadProductinternetParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ReadProductInternetParam) GetColumn() []string {
+func (p *ReadProductinternetParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ReadProductInternetParam) SetQuiet(v bool) {
+func (p *ReadProductinternetParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ReadProductInternetParam) GetQuiet() bool {
+func (p *ReadProductinternetParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ReadProductInternetParam) SetFormat(v string) {
+func (p *ReadProductinternetParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ReadProductInternetParam) GetFormat() string {
+func (p *ReadProductinternetParam) GetFormat() string {
 	return p.Format
 }
-func (p *ReadProductInternetParam) SetFormatFile(v string) {
+func (p *ReadProductinternetParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ReadProductInternetParam) GetFormatFile() string {
+func (p *ReadProductinternetParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ReadProductInternetParam) SetQuery(v string) {
+func (p *ReadProductinternetParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ReadProductInternetParam) GetQuery() string {
+func (p *ReadProductinternetParam) GetQuery() string {
 	return p.Query
 }
-func (p *ReadProductInternetParam) SetQueryFile(v string) {
+func (p *ReadProductinternetParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ReadProductInternetParam) GetQueryFile() string {
+func (p *ReadProductinternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadProductInternetParam) SetId(v sacloud.ID) {
+func (p *ReadProductinternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadProductInternetParam) GetId() sacloud.ID {
+func (p *ReadProductinternetParam) GetId() sacloud.ID {
 	return p.Id
 }

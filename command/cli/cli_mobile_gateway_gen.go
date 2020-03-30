@@ -32,39 +32,39 @@ import (
 )
 
 func init() {
-	listParam := params.NewListMobileGatewayParam()
-	createParam := params.NewCreateMobileGatewayParam()
-	readParam := params.NewReadMobileGatewayParam()
-	updateParam := params.NewUpdateMobileGatewayParam()
-	deleteParam := params.NewDeleteMobileGatewayParam()
-	bootParam := params.NewBootMobileGatewayParam()
-	shutdownParam := params.NewShutdownMobileGatewayParam()
-	shutdownForceParam := params.NewShutdownForceMobileGatewayParam()
-	resetParam := params.NewResetMobileGatewayParam()
-	waitForBootParam := params.NewWaitForBootMobileGatewayParam()
-	waitForDownParam := params.NewWaitForDownMobileGatewayParam()
-	interfaceInfoParam := params.NewInterfaceInfoMobileGatewayParam()
-	interfaceConnectParam := params.NewInterfaceConnectMobileGatewayParam()
-	interfaceUpdateParam := params.NewInterfaceUpdateMobileGatewayParam()
-	interfaceDisconnectParam := params.NewInterfaceDisconnectMobileGatewayParam()
-	trafficControlInfoParam := params.NewTrafficControlInfoMobileGatewayParam()
-	trafficControlEnableParam := params.NewTrafficControlEnableMobileGatewayParam()
-	trafficControlUpdateParam := params.NewTrafficControlUpdateMobileGatewayParam()
-	trafficControlDisableParam := params.NewTrafficControlDisableMobileGatewayParam()
-	staticRouteInfoParam := params.NewStaticRouteInfoMobileGatewayParam()
-	staticRouteAddParam := params.NewStaticRouteAddMobileGatewayParam()
-	staticRouteUpdateParam := params.NewStaticRouteUpdateMobileGatewayParam()
-	staticRouteDeleteParam := params.NewStaticRouteDeleteMobileGatewayParam()
-	simInfoParam := params.NewSimInfoMobileGatewayParam()
-	simAddParam := params.NewSimAddMobileGatewayParam()
-	simUpdateParam := params.NewSimUpdateMobileGatewayParam()
-	simDeleteParam := params.NewSimDeleteMobileGatewayParam()
-	simRouteInfoParam := params.NewSimRouteInfoMobileGatewayParam()
-	simRouteAddParam := params.NewSimRouteAddMobileGatewayParam()
-	simRouteUpdateParam := params.NewSimRouteUpdateMobileGatewayParam()
-	simRouteDeleteParam := params.NewSimRouteDeleteMobileGatewayParam()
-	dnsUpdateParam := params.NewDnsUpdateMobileGatewayParam()
-	logsParam := params.NewLogsMobileGatewayParam()
+	mobilegatewayListParam := params.NewListMobilegatewayParam()
+	mobilegatewayCreateParam := params.NewCreateMobilegatewayParam()
+	mobilegatewayReadParam := params.NewReadMobilegatewayParam()
+	mobilegatewayUpdateParam := params.NewUpdateMobilegatewayParam()
+	mobilegatewayDeleteParam := params.NewDeleteMobilegatewayParam()
+	mobilegatewayBootParam := params.NewBootMobilegatewayParam()
+	mobilegatewayShutdownParam := params.NewShutdownMobilegatewayParam()
+	mobilegatewayShutdownForceParam := params.NewShutdownForceMobilegatewayParam()
+	mobilegatewayResetParam := params.NewResetMobilegatewayParam()
+	mobilegatewayWaitForBootParam := params.NewWaitForBootMobilegatewayParam()
+	mobilegatewayWaitForDownParam := params.NewWaitForDownMobilegatewayParam()
+	mobilegatewayInterfaceInfoParam := params.NewInterfaceInfoMobilegatewayParam()
+	mobilegatewayInterfaceConnectParam := params.NewInterfaceConnectMobilegatewayParam()
+	mobilegatewayInterfaceUpdateParam := params.NewInterfaceUpdateMobilegatewayParam()
+	mobilegatewayInterfaceDisconnectParam := params.NewInterfaceDisconnectMobilegatewayParam()
+	mobilegatewayTrafficControlInfoParam := params.NewTrafficControlInfoMobilegatewayParam()
+	mobilegatewayTrafficControlEnableParam := params.NewTrafficControlEnableMobilegatewayParam()
+	mobilegatewayTrafficControlUpdateParam := params.NewTrafficControlUpdateMobilegatewayParam()
+	mobilegatewayTrafficControlDisableParam := params.NewTrafficControlDisableMobilegatewayParam()
+	mobilegatewayStaticRouteInfoParam := params.NewStaticRouteInfoMobilegatewayParam()
+	mobilegatewayStaticRouteAddParam := params.NewStaticRouteAddMobilegatewayParam()
+	mobilegatewayStaticRouteUpdateParam := params.NewStaticRouteUpdateMobilegatewayParam()
+	mobilegatewayStaticRouteDeleteParam := params.NewStaticRouteDeleteMobilegatewayParam()
+	mobilegatewaySimInfoParam := params.NewSimInfoMobilegatewayParam()
+	mobilegatewaySimAddParam := params.NewSimAddMobilegatewayParam()
+	mobilegatewaySimUpdateParam := params.NewSimUpdateMobilegatewayParam()
+	mobilegatewaySimDeleteParam := params.NewSimDeleteMobilegatewayParam()
+	mobilegatewaySimRouteInfoParam := params.NewSimRouteInfoMobilegatewayParam()
+	mobilegatewaySimRouteAddParam := params.NewSimRouteAddMobilegatewayParam()
+	mobilegatewaySimRouteUpdateParam := params.NewSimRouteUpdateMobilegatewayParam()
+	mobilegatewaySimRouteDeleteParam := params.NewSimRouteDeleteMobilegatewayParam()
+	mobilegatewayDnsUpdateParam := params.NewDnsUpdateMobilegatewayParam()
+	mobilegatewayLogsParam := params.NewLogsMobilegatewayParam()
 
 	cliCommand := &cli.Command{
 		Name:    "mobile-gateway",
@@ -74,7 +74,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find", "selector"},
-				Usage:   "List MobileGateway",
+				Usage:   "List Mobilegateway",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -108,8 +108,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -157,69 +165,75 @@ func init() {
 						return err
 					}
 
-					listParam.ParamTemplate = c.String("param-template")
-					listParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(listParam)
+					mobilegatewayListParam.ParamTemplate = c.String("param-template")
+					mobilegatewayListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListMobileGatewayParam()
+						p := params.NewListMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(listParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						listParam.Name = c.StringSlice("name")
+						mobilegatewayListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						mobilegatewayListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
-						listParam.Tags = c.StringSlice("tags")
+						mobilegatewayListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("from") {
-						listParam.From = c.Int("from")
+						mobilegatewayListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						listParam.Max = c.Int("max")
+						mobilegatewayListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						listParam.Sort = c.StringSlice("sort")
+						mobilegatewayListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						listParam.ParamTemplate = c.String("param-template")
+						mobilegatewayListParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						listParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayListParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						listParam.OutputType = c.String("output-type")
+						mobilegatewayListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						listParam.Column = c.StringSlice("column")
+						mobilegatewayListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						listParam.Quiet = c.Bool("quiet")
+						mobilegatewayListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						listParam.Format = c.String("format")
+						mobilegatewayListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						listParam.FormatFile = c.String("format-file")
+						mobilegatewayListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						listParam.Query = c.String("query")
+						mobilegatewayListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						listParam.QueryFile = c.String("query-file")
+						mobilegatewayListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -227,7 +241,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = listParam
+					var outputTypeHolder interface{} = mobilegatewayListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -238,10 +252,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if listParam.GenerateSkeleton {
-						listParam.GenerateSkeleton = false
-						listParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(listParam, "", "\t")
+					if mobilegatewayListParam.GenerateSkeleton {
+						mobilegatewayListParam.GenerateSkeleton = false
+						mobilegatewayListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -250,21 +264,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), listParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayListParam)
 
 					// Run command with params
-					return funcs.MobileGatewayList(ctx, listParam)
+					return funcs.MobilegatewayList(ctx, mobilegatewayListParam)
 
 				},
 			},
 			{
 				Name:  "create",
-				Usage: "Create MobileGateway",
+				Usage: "Create Mobilegateway",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
 						Name:  "internet-connection",
@@ -297,8 +311,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -346,69 +368,75 @@ func init() {
 						return err
 					}
 
-					createParam.ParamTemplate = c.String("param-template")
-					createParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(createParam)
+					mobilegatewayCreateParam.ParamTemplate = c.String("param-template")
+					mobilegatewayCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayCreateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCreateMobileGatewayParam()
+						p := params.NewCreateMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(createParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("internet-connection") {
-						createParam.InternetConnection = c.Bool("internet-connection")
+						mobilegatewayCreateParam.InternetConnection = c.Bool("internet-connection")
 					}
 					if c.IsSet("name") {
-						createParam.Name = c.String("name")
+						mobilegatewayCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						createParam.Description = c.String("description")
+						mobilegatewayCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						createParam.Tags = c.StringSlice("tags")
+						mobilegatewayCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						createParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						mobilegatewayCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						createParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						createParam.ParamTemplate = c.String("param-template")
+						mobilegatewayCreateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						createParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayCreateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						createParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						createParam.OutputType = c.String("output-type")
+						mobilegatewayCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						createParam.Column = c.StringSlice("column")
+						mobilegatewayCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						createParam.Quiet = c.Bool("quiet")
+						mobilegatewayCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						createParam.Format = c.String("format")
+						mobilegatewayCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						createParam.FormatFile = c.String("format-file")
+						mobilegatewayCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						createParam.Query = c.String("query")
+						mobilegatewayCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						createParam.QueryFile = c.String("query-file")
+						mobilegatewayCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -416,7 +444,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = createParam
+					var outputTypeHolder interface{} = mobilegatewayCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -427,10 +455,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if createParam.GenerateSkeleton {
-						createParam.GenerateSkeleton = false
-						createParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(createParam, "", "\t")
+					if mobilegatewayCreateParam.GenerateSkeleton {
+						mobilegatewayCreateParam.GenerateSkeleton = false
+						mobilegatewayCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -439,15 +467,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := createParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), createParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayCreateParam)
 
 					// confirm
-					if !createParam.Assumeyes {
+					if !mobilegatewayCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -457,13 +485,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.MobileGatewayCreate(ctx, createParam)
+					return funcs.MobilegatewayCreate(ctx, mobilegatewayCreateParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read MobileGateway",
+				Usage:     "Read Mobilegateway",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -475,8 +503,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -529,57 +565,63 @@ func init() {
 						return err
 					}
 
-					readParam.ParamTemplate = c.String("param-template")
-					readParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(readParam)
+					mobilegatewayReadParam.ParamTemplate = c.String("param-template")
+					mobilegatewayReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadMobileGatewayParam()
+						p := params.NewReadMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(readParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						readParam.Selector = c.StringSlice("selector")
+						mobilegatewayReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						readParam.ParamTemplate = c.String("param-template")
+						mobilegatewayReadParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						readParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayReadParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						readParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						readParam.OutputType = c.String("output-type")
+						mobilegatewayReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						readParam.Column = c.StringSlice("column")
+						mobilegatewayReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						readParam.Quiet = c.Bool("quiet")
+						mobilegatewayReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						readParam.Format = c.String("format")
+						mobilegatewayReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						readParam.FormatFile = c.String("format-file")
+						mobilegatewayReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						readParam.Query = c.String("query")
+						mobilegatewayReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						readParam.QueryFile = c.String("query-file")
+						mobilegatewayReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -587,7 +629,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = readParam
+					var outputTypeHolder interface{} = mobilegatewayReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -598,10 +640,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if readParam.GenerateSkeleton {
-						readParam.GenerateSkeleton = false
-						readParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(readParam, "", "\t")
+					if mobilegatewayReadParam.GenerateSkeleton {
+						mobilegatewayReadParam.GenerateSkeleton = false
+						mobilegatewayReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -610,19 +652,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), readParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayReadParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(readParam.Selector) == 0 {
+						if len(mobilegatewayReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -630,13 +672,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, readParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", readParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayReadParam.Selector)
 						}
 
 					} else {
@@ -657,8 +699,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(readParam.Selector) == 0 || hasTags(&v, readParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayReadParam.Selector) == 0 || hasTags(&v, mobilegatewayReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -683,11 +725,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						readParam.SetId(id)
-						p := *readParam // copy struct value
-						readParam := &p
+						mobilegatewayReadParam.SetId(id)
+						p := *mobilegatewayReadParam // copy struct value
+						mobilegatewayReadParam := &p
 						go func() {
-							err := funcs.MobileGatewayRead(ctx, readParam)
+							err := funcs.MobilegatewayRead(ctx, mobilegatewayReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -701,7 +743,7 @@ func init() {
 			},
 			{
 				Name:      "update",
-				Usage:     "Update MobileGateway",
+				Usage:     "Update Mobilegateway",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -739,8 +781,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -793,75 +843,81 @@ func init() {
 						return err
 					}
 
-					updateParam.ParamTemplate = c.String("param-template")
-					updateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(updateParam)
+					mobilegatewayUpdateParam.ParamTemplate = c.String("param-template")
+					mobilegatewayUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUpdateMobileGatewayParam()
+						p := params.NewUpdateMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(updateParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("internet-connection") {
-						updateParam.InternetConnection = c.Bool("internet-connection")
+						mobilegatewayUpdateParam.InternetConnection = c.Bool("internet-connection")
 					}
 					if c.IsSet("selector") {
-						updateParam.Selector = c.StringSlice("selector")
+						mobilegatewayUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
-						updateParam.Name = c.String("name")
+						mobilegatewayUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						updateParam.Description = c.String("description")
+						mobilegatewayUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						updateParam.Tags = c.StringSlice("tags")
+						mobilegatewayUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						mobilegatewayUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						updateParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						updateParam.ParamTemplate = c.String("param-template")
+						mobilegatewayUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						updateParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						updateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						updateParam.OutputType = c.String("output-type")
+						mobilegatewayUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						updateParam.Column = c.StringSlice("column")
+						mobilegatewayUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						updateParam.Quiet = c.Bool("quiet")
+						mobilegatewayUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						updateParam.Format = c.String("format")
+						mobilegatewayUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						updateParam.FormatFile = c.String("format-file")
+						mobilegatewayUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						updateParam.Query = c.String("query")
+						mobilegatewayUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						updateParam.QueryFile = c.String("query-file")
+						mobilegatewayUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -869,7 +925,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = updateParam
+					var outputTypeHolder interface{} = mobilegatewayUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -880,10 +936,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if updateParam.GenerateSkeleton {
-						updateParam.GenerateSkeleton = false
-						updateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(updateParam, "", "\t")
+					if mobilegatewayUpdateParam.GenerateSkeleton {
+						mobilegatewayUpdateParam.GenerateSkeleton = false
+						mobilegatewayUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -892,19 +948,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayUpdateParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(updateParam.Selector) == 0 {
+						if len(mobilegatewayUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -912,13 +968,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, updateParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayUpdateParam.Selector)
 						}
 
 					} else {
@@ -939,8 +995,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(updateParam.Selector) == 0 || hasTags(&v, updateParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayUpdateParam.Selector) == 0 || hasTags(&v, mobilegatewayUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -957,7 +1013,7 @@ func init() {
 					}
 
 					// confirm
-					if !updateParam.Assumeyes {
+					if !mobilegatewayUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -971,11 +1027,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						updateParam.SetId(id)
-						p := *updateParam // copy struct value
-						updateParam := &p
+						mobilegatewayUpdateParam.SetId(id)
+						p := *mobilegatewayUpdateParam // copy struct value
+						mobilegatewayUpdateParam := &p
 						go func() {
-							err := funcs.MobileGatewayUpdate(ctx, updateParam)
+							err := funcs.MobilegatewayUpdate(ctx, mobilegatewayUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -990,7 +1046,7 @@ func init() {
 			{
 				Name:      "delete",
 				Aliases:   []string{"rm"},
-				Usage:     "Delete MobileGateway",
+				Usage:     "Delete Mobilegateway",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -1012,8 +1068,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1066,63 +1130,69 @@ func init() {
 						return err
 					}
 
-					deleteParam.ParamTemplate = c.String("param-template")
-					deleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(deleteParam)
+					mobilegatewayDeleteParam.ParamTemplate = c.String("param-template")
+					mobilegatewayDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeleteMobileGatewayParam()
+						p := params.NewDeleteMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(deleteParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("force") {
-						deleteParam.Force = c.Bool("force")
+						mobilegatewayDeleteParam.Force = c.Bool("force")
 					}
 					if c.IsSet("selector") {
-						deleteParam.Selector = c.StringSlice("selector")
+						mobilegatewayDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						deleteParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						deleteParam.ParamTemplate = c.String("param-template")
+						mobilegatewayDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						deleteParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						deleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						deleteParam.OutputType = c.String("output-type")
+						mobilegatewayDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						deleteParam.Column = c.StringSlice("column")
+						mobilegatewayDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						deleteParam.Quiet = c.Bool("quiet")
+						mobilegatewayDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						deleteParam.Format = c.String("format")
+						mobilegatewayDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						deleteParam.FormatFile = c.String("format-file")
+						mobilegatewayDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						deleteParam.Query = c.String("query")
+						mobilegatewayDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						deleteParam.QueryFile = c.String("query-file")
+						mobilegatewayDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1130,7 +1200,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = deleteParam
+					var outputTypeHolder interface{} = mobilegatewayDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1141,10 +1211,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if deleteParam.GenerateSkeleton {
-						deleteParam.GenerateSkeleton = false
-						deleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(deleteParam, "", "\t")
+					if mobilegatewayDeleteParam.GenerateSkeleton {
+						mobilegatewayDeleteParam.GenerateSkeleton = false
+						mobilegatewayDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1153,19 +1223,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayDeleteParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(deleteParam.Selector) == 0 {
+						if len(mobilegatewayDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1173,13 +1243,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, deleteParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", deleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayDeleteParam.Selector)
 						}
 
 					} else {
@@ -1200,8 +1270,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(deleteParam.Selector) == 0 || hasTags(&v, deleteParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayDeleteParam.Selector) == 0 || hasTags(&v, mobilegatewayDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1218,7 +1288,7 @@ func init() {
 					}
 
 					// confirm
-					if !deleteParam.Assumeyes {
+					if !mobilegatewayDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1232,11 +1302,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						deleteParam.SetId(id)
-						p := *deleteParam // copy struct value
-						deleteParam := &p
+						mobilegatewayDeleteParam.SetId(id)
+						p := *mobilegatewayDeleteParam // copy struct value
+						mobilegatewayDeleteParam := &p
 						go func() {
-							err := funcs.MobileGatewayDelete(ctx, deleteParam)
+							err := funcs.MobilegatewayDelete(ctx, mobilegatewayDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1251,7 +1321,7 @@ func init() {
 			{
 				Name:      "boot",
 				Aliases:   []string{"power-on"},
-				Usage:     "Boot MobileGateway",
+				Usage:     "Boot Mobilegateway",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1268,8 +1338,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1290,39 +1368,45 @@ func init() {
 						return err
 					}
 
-					bootParam.ParamTemplate = c.String("param-template")
-					bootParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(bootParam)
+					mobilegatewayBootParam.ParamTemplate = c.String("param-template")
+					mobilegatewayBootParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayBootParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewBootMobileGatewayParam()
+						p := params.NewBootMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(bootParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayBootParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						bootParam.Selector = c.StringSlice("selector")
+						mobilegatewayBootParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						bootParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayBootParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						bootParam.ParamTemplate = c.String("param-template")
+						mobilegatewayBootParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayBootParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						bootParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayBootParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayBootParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						bootParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						bootParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayBootParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1330,7 +1414,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = bootParam
+					var outputTypeHolder interface{} = mobilegatewayBootParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1341,10 +1425,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if bootParam.GenerateSkeleton {
-						bootParam.GenerateSkeleton = false
-						bootParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(bootParam, "", "\t")
+					if mobilegatewayBootParam.GenerateSkeleton {
+						mobilegatewayBootParam.GenerateSkeleton = false
+						mobilegatewayBootParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayBootParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1353,19 +1437,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := bootParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayBootParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), bootParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayBootParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(bootParam.Selector) == 0 {
+						if len(mobilegatewayBootParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1373,13 +1457,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, bootParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayBootParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", bootParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayBootParam.Selector)
 						}
 
 					} else {
@@ -1400,8 +1484,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(bootParam.Selector) == 0 || hasTags(&v, bootParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayBootParam.Selector) == 0 || hasTags(&v, mobilegatewayBootParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1418,7 +1502,7 @@ func init() {
 					}
 
 					// confirm
-					if !bootParam.Assumeyes {
+					if !mobilegatewayBootParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1432,11 +1516,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						bootParam.SetId(id)
-						p := *bootParam // copy struct value
-						bootParam := &p
+						mobilegatewayBootParam.SetId(id)
+						p := *mobilegatewayBootParam // copy struct value
+						mobilegatewayBootParam := &p
 						go func() {
-							err := funcs.MobileGatewayBoot(ctx, bootParam)
+							err := funcs.MobilegatewayBoot(ctx, mobilegatewayBootParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1451,7 +1535,7 @@ func init() {
 			{
 				Name:      "shutdown",
 				Aliases:   []string{"power-off"},
-				Usage:     "Shutdown MobileGateway",
+				Usage:     "Shutdown Mobilegateway",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1468,8 +1552,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1490,39 +1582,45 @@ func init() {
 						return err
 					}
 
-					shutdownParam.ParamTemplate = c.String("param-template")
-					shutdownParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(shutdownParam)
+					mobilegatewayShutdownParam.ParamTemplate = c.String("param-template")
+					mobilegatewayShutdownParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayShutdownParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewShutdownMobileGatewayParam()
+						p := params.NewShutdownMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(shutdownParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayShutdownParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						shutdownParam.Selector = c.StringSlice("selector")
+						mobilegatewayShutdownParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						shutdownParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayShutdownParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						shutdownParam.ParamTemplate = c.String("param-template")
+						mobilegatewayShutdownParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayShutdownParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						shutdownParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayShutdownParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayShutdownParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						shutdownParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayShutdownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						shutdownParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayShutdownParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1530,7 +1628,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = shutdownParam
+					var outputTypeHolder interface{} = mobilegatewayShutdownParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1541,10 +1639,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if shutdownParam.GenerateSkeleton {
-						shutdownParam.GenerateSkeleton = false
-						shutdownParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(shutdownParam, "", "\t")
+					if mobilegatewayShutdownParam.GenerateSkeleton {
+						mobilegatewayShutdownParam.GenerateSkeleton = false
+						mobilegatewayShutdownParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayShutdownParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1553,19 +1651,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := shutdownParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayShutdownParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), shutdownParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayShutdownParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(shutdownParam.Selector) == 0 {
+						if len(mobilegatewayShutdownParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1573,13 +1671,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, shutdownParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayShutdownParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", shutdownParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayShutdownParam.Selector)
 						}
 
 					} else {
@@ -1600,8 +1698,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(shutdownParam.Selector) == 0 || hasTags(&v, shutdownParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayShutdownParam.Selector) == 0 || hasTags(&v, mobilegatewayShutdownParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1618,7 +1716,7 @@ func init() {
 					}
 
 					// confirm
-					if !shutdownParam.Assumeyes {
+					if !mobilegatewayShutdownParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1632,11 +1730,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						shutdownParam.SetId(id)
-						p := *shutdownParam // copy struct value
-						shutdownParam := &p
+						mobilegatewayShutdownParam.SetId(id)
+						p := *mobilegatewayShutdownParam // copy struct value
+						mobilegatewayShutdownParam := &p
 						go func() {
-							err := funcs.MobileGatewayShutdown(ctx, shutdownParam)
+							err := funcs.MobilegatewayShutdown(ctx, mobilegatewayShutdownParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1651,7 +1749,7 @@ func init() {
 			{
 				Name:      "shutdown-force",
 				Aliases:   []string{"stop"},
-				Usage:     "ShutdownForce MobileGateway",
+				Usage:     "ShutdownForce Mobilegateway",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1668,8 +1766,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1690,39 +1796,45 @@ func init() {
 						return err
 					}
 
-					shutdownForceParam.ParamTemplate = c.String("param-template")
-					shutdownForceParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(shutdownForceParam)
+					mobilegatewayShutdownForceParam.ParamTemplate = c.String("param-template")
+					mobilegatewayShutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayShutdownForceParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewShutdownForceMobileGatewayParam()
+						p := params.NewShutdownForceMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(shutdownForceParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayShutdownForceParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						shutdownForceParam.Selector = c.StringSlice("selector")
+						mobilegatewayShutdownForceParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						shutdownForceParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayShutdownForceParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						shutdownForceParam.ParamTemplate = c.String("param-template")
+						mobilegatewayShutdownForceParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayShutdownForceParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						shutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayShutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayShutdownForceParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						shutdownForceParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayShutdownForceParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						shutdownForceParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayShutdownForceParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1730,7 +1842,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = shutdownForceParam
+					var outputTypeHolder interface{} = mobilegatewayShutdownForceParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1741,10 +1853,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if shutdownForceParam.GenerateSkeleton {
-						shutdownForceParam.GenerateSkeleton = false
-						shutdownForceParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(shutdownForceParam, "", "\t")
+					if mobilegatewayShutdownForceParam.GenerateSkeleton {
+						mobilegatewayShutdownForceParam.GenerateSkeleton = false
+						mobilegatewayShutdownForceParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayShutdownForceParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1753,19 +1865,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := shutdownForceParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayShutdownForceParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), shutdownForceParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayShutdownForceParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(shutdownForceParam.Selector) == 0 {
+						if len(mobilegatewayShutdownForceParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1773,13 +1885,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, shutdownForceParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayShutdownForceParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", shutdownForceParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayShutdownForceParam.Selector)
 						}
 
 					} else {
@@ -1800,8 +1912,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(shutdownForceParam.Selector) == 0 || hasTags(&v, shutdownForceParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayShutdownForceParam.Selector) == 0 || hasTags(&v, mobilegatewayShutdownForceParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1818,7 +1930,7 @@ func init() {
 					}
 
 					// confirm
-					if !shutdownForceParam.Assumeyes {
+					if !mobilegatewayShutdownForceParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1832,11 +1944,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						shutdownForceParam.SetId(id)
-						p := *shutdownForceParam // copy struct value
-						shutdownForceParam := &p
+						mobilegatewayShutdownForceParam.SetId(id)
+						p := *mobilegatewayShutdownForceParam // copy struct value
+						mobilegatewayShutdownForceParam := &p
 						go func() {
-							err := funcs.MobileGatewayShutdownForce(ctx, shutdownForceParam)
+							err := funcs.MobilegatewayShutdownForce(ctx, mobilegatewayShutdownForceParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1850,7 +1962,7 @@ func init() {
 			},
 			{
 				Name:      "reset",
-				Usage:     "Reset MobileGateway",
+				Usage:     "Reset Mobilegateway",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1867,8 +1979,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1889,39 +2009,45 @@ func init() {
 						return err
 					}
 
-					resetParam.ParamTemplate = c.String("param-template")
-					resetParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(resetParam)
+					mobilegatewayResetParam.ParamTemplate = c.String("param-template")
+					mobilegatewayResetParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayResetParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewResetMobileGatewayParam()
+						p := params.NewResetMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(resetParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayResetParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						resetParam.Selector = c.StringSlice("selector")
+						mobilegatewayResetParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						resetParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayResetParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						resetParam.ParamTemplate = c.String("param-template")
+						mobilegatewayResetParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayResetParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						resetParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayResetParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayResetParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						resetParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayResetParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						resetParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayResetParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1929,7 +2055,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = resetParam
+					var outputTypeHolder interface{} = mobilegatewayResetParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1940,10 +2066,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if resetParam.GenerateSkeleton {
-						resetParam.GenerateSkeleton = false
-						resetParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(resetParam, "", "\t")
+					if mobilegatewayResetParam.GenerateSkeleton {
+						mobilegatewayResetParam.GenerateSkeleton = false
+						mobilegatewayResetParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayResetParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1952,19 +2078,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := resetParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayResetParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), resetParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayResetParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(resetParam.Selector) == 0 {
+						if len(mobilegatewayResetParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1972,13 +2098,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, resetParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayResetParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", resetParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayResetParam.Selector)
 						}
 
 					} else {
@@ -1999,8 +2125,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(resetParam.Selector) == 0 || hasTags(&v, resetParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayResetParam.Selector) == 0 || hasTags(&v, mobilegatewayResetParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2017,7 +2143,7 @@ func init() {
 					}
 
 					// confirm
-					if !resetParam.Assumeyes {
+					if !mobilegatewayResetParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2031,11 +2157,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						resetParam.SetId(id)
-						p := *resetParam // copy struct value
-						resetParam := &p
+						mobilegatewayResetParam.SetId(id)
+						p := *mobilegatewayResetParam // copy struct value
+						mobilegatewayResetParam := &p
 						go func() {
-							err := funcs.MobileGatewayReset(ctx, resetParam)
+							err := funcs.MobilegatewayReset(ctx, mobilegatewayResetParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2061,8 +2187,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2083,36 +2217,42 @@ func init() {
 						return err
 					}
 
-					waitForBootParam.ParamTemplate = c.String("param-template")
-					waitForBootParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(waitForBootParam)
+					mobilegatewayWaitForBootParam.ParamTemplate = c.String("param-template")
+					mobilegatewayWaitForBootParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayWaitForBootParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewWaitForBootMobileGatewayParam()
+						p := params.NewWaitForBootMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(waitForBootParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayWaitForBootParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						waitForBootParam.Selector = c.StringSlice("selector")
+						mobilegatewayWaitForBootParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						waitForBootParam.ParamTemplate = c.String("param-template")
+						mobilegatewayWaitForBootParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayWaitForBootParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						waitForBootParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayWaitForBootParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayWaitForBootParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						waitForBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayWaitForBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForBootParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayWaitForBootParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2120,7 +2260,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = waitForBootParam
+					var outputTypeHolder interface{} = mobilegatewayWaitForBootParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2131,10 +2271,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if waitForBootParam.GenerateSkeleton {
-						waitForBootParam.GenerateSkeleton = false
-						waitForBootParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(waitForBootParam, "", "\t")
+					if mobilegatewayWaitForBootParam.GenerateSkeleton {
+						mobilegatewayWaitForBootParam.GenerateSkeleton = false
+						mobilegatewayWaitForBootParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayWaitForBootParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2143,19 +2283,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := waitForBootParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayWaitForBootParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), waitForBootParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayWaitForBootParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(waitForBootParam.Selector) == 0 {
+						if len(mobilegatewayWaitForBootParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2163,13 +2303,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, waitForBootParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayWaitForBootParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", waitForBootParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayWaitForBootParam.Selector)
 						}
 
 					} else {
@@ -2190,8 +2330,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(waitForBootParam.Selector) == 0 || hasTags(&v, waitForBootParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayWaitForBootParam.Selector) == 0 || hasTags(&v, mobilegatewayWaitForBootParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2212,11 +2352,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						waitForBootParam.SetId(id)
-						p := *waitForBootParam // copy struct value
-						waitForBootParam := &p
+						mobilegatewayWaitForBootParam.SetId(id)
+						p := *mobilegatewayWaitForBootParam // copy struct value
+						mobilegatewayWaitForBootParam := &p
 						go func() {
-							err := funcs.MobileGatewayWaitForBoot(ctx, waitForBootParam)
+							err := funcs.MobilegatewayWaitForBoot(ctx, mobilegatewayWaitForBootParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2242,8 +2382,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2264,36 +2412,42 @@ func init() {
 						return err
 					}
 
-					waitForDownParam.ParamTemplate = c.String("param-template")
-					waitForDownParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(waitForDownParam)
+					mobilegatewayWaitForDownParam.ParamTemplate = c.String("param-template")
+					mobilegatewayWaitForDownParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayWaitForDownParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewWaitForDownMobileGatewayParam()
+						p := params.NewWaitForDownMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(waitForDownParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayWaitForDownParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						waitForDownParam.Selector = c.StringSlice("selector")
+						mobilegatewayWaitForDownParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						waitForDownParam.ParamTemplate = c.String("param-template")
+						mobilegatewayWaitForDownParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayWaitForDownParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						waitForDownParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayWaitForDownParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayWaitForDownParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						waitForDownParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayWaitForDownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForDownParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayWaitForDownParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2301,7 +2455,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = waitForDownParam
+					var outputTypeHolder interface{} = mobilegatewayWaitForDownParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2312,10 +2466,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if waitForDownParam.GenerateSkeleton {
-						waitForDownParam.GenerateSkeleton = false
-						waitForDownParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(waitForDownParam, "", "\t")
+					if mobilegatewayWaitForDownParam.GenerateSkeleton {
+						mobilegatewayWaitForDownParam.GenerateSkeleton = false
+						mobilegatewayWaitForDownParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayWaitForDownParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2324,19 +2478,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := waitForDownParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayWaitForDownParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), waitForDownParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayWaitForDownParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(waitForDownParam.Selector) == 0 {
+						if len(mobilegatewayWaitForDownParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2344,13 +2498,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, waitForDownParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayWaitForDownParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", waitForDownParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayWaitForDownParam.Selector)
 						}
 
 					} else {
@@ -2371,8 +2525,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(waitForDownParam.Selector) == 0 || hasTags(&v, waitForDownParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayWaitForDownParam.Selector) == 0 || hasTags(&v, mobilegatewayWaitForDownParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2393,11 +2547,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						waitForDownParam.SetId(id)
-						p := *waitForDownParam // copy struct value
-						waitForDownParam := &p
+						mobilegatewayWaitForDownParam.SetId(id)
+						p := *mobilegatewayWaitForDownParam // copy struct value
+						mobilegatewayWaitForDownParam := &p
 						go func() {
-							err := funcs.MobileGatewayWaitForDown(ctx, waitForDownParam)
+							err := funcs.MobilegatewayWaitForDown(ctx, mobilegatewayWaitForDownParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2424,8 +2578,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2478,57 +2640,63 @@ func init() {
 						return err
 					}
 
-					interfaceInfoParam.ParamTemplate = c.String("param-template")
-					interfaceInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(interfaceInfoParam)
+					mobilegatewayInterfaceInfoParam.ParamTemplate = c.String("param-template")
+					mobilegatewayInterfaceInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayInterfaceInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewInterfaceInfoMobileGatewayParam()
+						p := params.NewInterfaceInfoMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(interfaceInfoParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayInterfaceInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						interfaceInfoParam.Selector = c.StringSlice("selector")
+						mobilegatewayInterfaceInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						interfaceInfoParam.ParamTemplate = c.String("param-template")
+						mobilegatewayInterfaceInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayInterfaceInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						interfaceInfoParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayInterfaceInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayInterfaceInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						interfaceInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayInterfaceInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						interfaceInfoParam.OutputType = c.String("output-type")
+						mobilegatewayInterfaceInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						interfaceInfoParam.Column = c.StringSlice("column")
+						mobilegatewayInterfaceInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						interfaceInfoParam.Quiet = c.Bool("quiet")
+						mobilegatewayInterfaceInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						interfaceInfoParam.Format = c.String("format")
+						mobilegatewayInterfaceInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						interfaceInfoParam.FormatFile = c.String("format-file")
+						mobilegatewayInterfaceInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						interfaceInfoParam.Query = c.String("query")
+						mobilegatewayInterfaceInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						interfaceInfoParam.QueryFile = c.String("query-file")
+						mobilegatewayInterfaceInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						interfaceInfoParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayInterfaceInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2536,7 +2704,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = interfaceInfoParam
+					var outputTypeHolder interface{} = mobilegatewayInterfaceInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2547,10 +2715,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if interfaceInfoParam.GenerateSkeleton {
-						interfaceInfoParam.GenerateSkeleton = false
-						interfaceInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(interfaceInfoParam, "", "\t")
+					if mobilegatewayInterfaceInfoParam.GenerateSkeleton {
+						mobilegatewayInterfaceInfoParam.GenerateSkeleton = false
+						mobilegatewayInterfaceInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayInterfaceInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2559,19 +2727,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := interfaceInfoParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayInterfaceInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), interfaceInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayInterfaceInfoParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(interfaceInfoParam.Selector) == 0 {
+						if len(mobilegatewayInterfaceInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2579,13 +2747,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, interfaceInfoParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayInterfaceInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayInterfaceInfoParam.Selector)
 						}
 
 					} else {
@@ -2606,8 +2774,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(interfaceInfoParam.Selector) == 0 || hasTags(&v, interfaceInfoParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayInterfaceInfoParam.Selector) == 0 || hasTags(&v, mobilegatewayInterfaceInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2632,11 +2800,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						interfaceInfoParam.SetId(id)
-						p := *interfaceInfoParam // copy struct value
-						interfaceInfoParam := &p
+						mobilegatewayInterfaceInfoParam.SetId(id)
+						p := *mobilegatewayInterfaceInfoParam // copy struct value
+						mobilegatewayInterfaceInfoParam := &p
 						go func() {
-							err := funcs.MobileGatewayInterfaceInfo(ctx, interfaceInfoParam)
+							err := funcs.MobilegatewayInterfaceInfo(ctx, mobilegatewayInterfaceInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2682,8 +2850,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2704,48 +2880,54 @@ func init() {
 						return err
 					}
 
-					interfaceConnectParam.ParamTemplate = c.String("param-template")
-					interfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(interfaceConnectParam)
+					mobilegatewayInterfaceConnectParam.ParamTemplate = c.String("param-template")
+					mobilegatewayInterfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayInterfaceConnectParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewInterfaceConnectMobileGatewayParam()
+						p := params.NewInterfaceConnectMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(interfaceConnectParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayInterfaceConnectParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("ipaddress") {
-						interfaceConnectParam.Ipaddress = c.String("ipaddress")
+						mobilegatewayInterfaceConnectParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("switch-id") {
-						interfaceConnectParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
+						mobilegatewayInterfaceConnectParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
 					}
 					if c.IsSet("nw-masklen") {
-						interfaceConnectParam.NwMasklen = c.Int("nw-masklen")
+						mobilegatewayInterfaceConnectParam.NwMasklen = c.Int("nw-masklen")
 					}
 					if c.IsSet("selector") {
-						interfaceConnectParam.Selector = c.StringSlice("selector")
+						mobilegatewayInterfaceConnectParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						interfaceConnectParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayInterfaceConnectParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						interfaceConnectParam.ParamTemplate = c.String("param-template")
+						mobilegatewayInterfaceConnectParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayInterfaceConnectParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						interfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayInterfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayInterfaceConnectParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						interfaceConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayInterfaceConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						interfaceConnectParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayInterfaceConnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2753,7 +2935,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = interfaceConnectParam
+					var outputTypeHolder interface{} = mobilegatewayInterfaceConnectParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2764,10 +2946,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if interfaceConnectParam.GenerateSkeleton {
-						interfaceConnectParam.GenerateSkeleton = false
-						interfaceConnectParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(interfaceConnectParam, "", "\t")
+					if mobilegatewayInterfaceConnectParam.GenerateSkeleton {
+						mobilegatewayInterfaceConnectParam.GenerateSkeleton = false
+						mobilegatewayInterfaceConnectParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayInterfaceConnectParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2776,19 +2958,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := interfaceConnectParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayInterfaceConnectParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), interfaceConnectParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayInterfaceConnectParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(interfaceConnectParam.Selector) == 0 {
+						if len(mobilegatewayInterfaceConnectParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2796,13 +2978,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, interfaceConnectParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayInterfaceConnectParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceConnectParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayInterfaceConnectParam.Selector)
 						}
 
 					} else {
@@ -2823,8 +3005,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(interfaceConnectParam.Selector) == 0 || hasTags(&v, interfaceConnectParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayInterfaceConnectParam.Selector) == 0 || hasTags(&v, mobilegatewayInterfaceConnectParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2845,7 +3027,7 @@ func init() {
 					}
 
 					// confirm
-					if !interfaceConnectParam.Assumeyes {
+					if !mobilegatewayInterfaceConnectParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2859,11 +3041,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						interfaceConnectParam.SetId(id)
-						p := *interfaceConnectParam // copy struct value
-						interfaceConnectParam := &p
+						mobilegatewayInterfaceConnectParam.SetId(id)
+						p := *mobilegatewayInterfaceConnectParam // copy struct value
+						mobilegatewayInterfaceConnectParam := &p
 						go func() {
-							err := funcs.MobileGatewayInterfaceConnect(ctx, interfaceConnectParam)
+							err := funcs.MobilegatewayInterfaceConnect(ctx, mobilegatewayInterfaceConnectParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2905,8 +3087,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2927,45 +3117,51 @@ func init() {
 						return err
 					}
 
-					interfaceUpdateParam.ParamTemplate = c.String("param-template")
-					interfaceUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(interfaceUpdateParam)
+					mobilegatewayInterfaceUpdateParam.ParamTemplate = c.String("param-template")
+					mobilegatewayInterfaceUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayInterfaceUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewInterfaceUpdateMobileGatewayParam()
+						p := params.NewInterfaceUpdateMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(interfaceUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayInterfaceUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("ipaddress") {
-						interfaceUpdateParam.Ipaddress = c.String("ipaddress")
+						mobilegatewayInterfaceUpdateParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("nw-masklen") {
-						interfaceUpdateParam.NwMasklen = c.Int("nw-masklen")
+						mobilegatewayInterfaceUpdateParam.NwMasklen = c.Int("nw-masklen")
 					}
 					if c.IsSet("selector") {
-						interfaceUpdateParam.Selector = c.StringSlice("selector")
+						mobilegatewayInterfaceUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						interfaceUpdateParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayInterfaceUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						interfaceUpdateParam.ParamTemplate = c.String("param-template")
+						mobilegatewayInterfaceUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayInterfaceUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						interfaceUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayInterfaceUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayInterfaceUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						interfaceUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayInterfaceUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						interfaceUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayInterfaceUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2973,7 +3169,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = interfaceUpdateParam
+					var outputTypeHolder interface{} = mobilegatewayInterfaceUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2984,10 +3180,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if interfaceUpdateParam.GenerateSkeleton {
-						interfaceUpdateParam.GenerateSkeleton = false
-						interfaceUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(interfaceUpdateParam, "", "\t")
+					if mobilegatewayInterfaceUpdateParam.GenerateSkeleton {
+						mobilegatewayInterfaceUpdateParam.GenerateSkeleton = false
+						mobilegatewayInterfaceUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayInterfaceUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2996,19 +3192,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := interfaceUpdateParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayInterfaceUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), interfaceUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayInterfaceUpdateParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(interfaceUpdateParam.Selector) == 0 {
+						if len(mobilegatewayInterfaceUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3016,13 +3212,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, interfaceUpdateParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayInterfaceUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayInterfaceUpdateParam.Selector)
 						}
 
 					} else {
@@ -3043,8 +3239,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(interfaceUpdateParam.Selector) == 0 || hasTags(&v, interfaceUpdateParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayInterfaceUpdateParam.Selector) == 0 || hasTags(&v, mobilegatewayInterfaceUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3065,7 +3261,7 @@ func init() {
 					}
 
 					// confirm
-					if !interfaceUpdateParam.Assumeyes {
+					if !mobilegatewayInterfaceUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3079,11 +3275,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						interfaceUpdateParam.SetId(id)
-						p := *interfaceUpdateParam // copy struct value
-						interfaceUpdateParam := &p
+						mobilegatewayInterfaceUpdateParam.SetId(id)
+						p := *mobilegatewayInterfaceUpdateParam // copy struct value
+						mobilegatewayInterfaceUpdateParam := &p
 						go func() {
-							err := funcs.MobileGatewayInterfaceUpdate(ctx, interfaceUpdateParam)
+							err := funcs.MobilegatewayInterfaceUpdate(ctx, mobilegatewayInterfaceUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3114,8 +3310,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -3136,39 +3340,45 @@ func init() {
 						return err
 					}
 
-					interfaceDisconnectParam.ParamTemplate = c.String("param-template")
-					interfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(interfaceDisconnectParam)
+					mobilegatewayInterfaceDisconnectParam.ParamTemplate = c.String("param-template")
+					mobilegatewayInterfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayInterfaceDisconnectParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewInterfaceDisconnectMobileGatewayParam()
+						p := params.NewInterfaceDisconnectMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(interfaceDisconnectParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayInterfaceDisconnectParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						interfaceDisconnectParam.Selector = c.StringSlice("selector")
+						mobilegatewayInterfaceDisconnectParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						interfaceDisconnectParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayInterfaceDisconnectParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						interfaceDisconnectParam.ParamTemplate = c.String("param-template")
+						mobilegatewayInterfaceDisconnectParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayInterfaceDisconnectParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						interfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayInterfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayInterfaceDisconnectParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						interfaceDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayInterfaceDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						interfaceDisconnectParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayInterfaceDisconnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3176,7 +3386,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = interfaceDisconnectParam
+					var outputTypeHolder interface{} = mobilegatewayInterfaceDisconnectParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3187,10 +3397,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if interfaceDisconnectParam.GenerateSkeleton {
-						interfaceDisconnectParam.GenerateSkeleton = false
-						interfaceDisconnectParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(interfaceDisconnectParam, "", "\t")
+					if mobilegatewayInterfaceDisconnectParam.GenerateSkeleton {
+						mobilegatewayInterfaceDisconnectParam.GenerateSkeleton = false
+						mobilegatewayInterfaceDisconnectParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayInterfaceDisconnectParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3199,19 +3409,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := interfaceDisconnectParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayInterfaceDisconnectParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), interfaceDisconnectParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayInterfaceDisconnectParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(interfaceDisconnectParam.Selector) == 0 {
+						if len(mobilegatewayInterfaceDisconnectParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3219,13 +3429,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, interfaceDisconnectParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayInterfaceDisconnectParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceDisconnectParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayInterfaceDisconnectParam.Selector)
 						}
 
 					} else {
@@ -3246,8 +3456,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(interfaceDisconnectParam.Selector) == 0 || hasTags(&v, interfaceDisconnectParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayInterfaceDisconnectParam.Selector) == 0 || hasTags(&v, mobilegatewayInterfaceDisconnectParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3268,7 +3478,7 @@ func init() {
 					}
 
 					// confirm
-					if !interfaceDisconnectParam.Assumeyes {
+					if !mobilegatewayInterfaceDisconnectParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3282,11 +3492,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						interfaceDisconnectParam.SetId(id)
-						p := *interfaceDisconnectParam // copy struct value
-						interfaceDisconnectParam := &p
+						mobilegatewayInterfaceDisconnectParam.SetId(id)
+						p := *mobilegatewayInterfaceDisconnectParam // copy struct value
+						mobilegatewayInterfaceDisconnectParam := &p
 						go func() {
-							err := funcs.MobileGatewayInterfaceDisconnect(ctx, interfaceDisconnectParam)
+							err := funcs.MobilegatewayInterfaceDisconnect(ctx, mobilegatewayInterfaceDisconnectParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3312,8 +3522,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -3366,57 +3584,63 @@ func init() {
 						return err
 					}
 
-					trafficControlInfoParam.ParamTemplate = c.String("param-template")
-					trafficControlInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(trafficControlInfoParam)
+					mobilegatewayTrafficControlInfoParam.ParamTemplate = c.String("param-template")
+					mobilegatewayTrafficControlInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayTrafficControlInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewTrafficControlInfoMobileGatewayParam()
+						p := params.NewTrafficControlInfoMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(trafficControlInfoParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayTrafficControlInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						trafficControlInfoParam.Selector = c.StringSlice("selector")
+						mobilegatewayTrafficControlInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						trafficControlInfoParam.ParamTemplate = c.String("param-template")
+						mobilegatewayTrafficControlInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayTrafficControlInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						trafficControlInfoParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayTrafficControlInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayTrafficControlInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						trafficControlInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayTrafficControlInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						trafficControlInfoParam.OutputType = c.String("output-type")
+						mobilegatewayTrafficControlInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						trafficControlInfoParam.Column = c.StringSlice("column")
+						mobilegatewayTrafficControlInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						trafficControlInfoParam.Quiet = c.Bool("quiet")
+						mobilegatewayTrafficControlInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						trafficControlInfoParam.Format = c.String("format")
+						mobilegatewayTrafficControlInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						trafficControlInfoParam.FormatFile = c.String("format-file")
+						mobilegatewayTrafficControlInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						trafficControlInfoParam.Query = c.String("query")
+						mobilegatewayTrafficControlInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						trafficControlInfoParam.QueryFile = c.String("query-file")
+						mobilegatewayTrafficControlInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						trafficControlInfoParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayTrafficControlInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3424,7 +3648,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = trafficControlInfoParam
+					var outputTypeHolder interface{} = mobilegatewayTrafficControlInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3435,10 +3659,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if trafficControlInfoParam.GenerateSkeleton {
-						trafficControlInfoParam.GenerateSkeleton = false
-						trafficControlInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(trafficControlInfoParam, "", "\t")
+					if mobilegatewayTrafficControlInfoParam.GenerateSkeleton {
+						mobilegatewayTrafficControlInfoParam.GenerateSkeleton = false
+						mobilegatewayTrafficControlInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayTrafficControlInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3447,19 +3671,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := trafficControlInfoParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayTrafficControlInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), trafficControlInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayTrafficControlInfoParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(trafficControlInfoParam.Selector) == 0 {
+						if len(mobilegatewayTrafficControlInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3467,13 +3691,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, trafficControlInfoParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayTrafficControlInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", trafficControlInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayTrafficControlInfoParam.Selector)
 						}
 
 					} else {
@@ -3494,8 +3718,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(trafficControlInfoParam.Selector) == 0 || hasTags(&v, trafficControlInfoParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayTrafficControlInfoParam.Selector) == 0 || hasTags(&v, mobilegatewayTrafficControlInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3520,11 +3744,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						trafficControlInfoParam.SetId(id)
-						p := *trafficControlInfoParam // copy struct value
-						trafficControlInfoParam := &p
+						mobilegatewayTrafficControlInfoParam.SetId(id)
+						p := *mobilegatewayTrafficControlInfoParam // copy struct value
+						mobilegatewayTrafficControlInfoParam := &p
 						go func() {
-							err := funcs.MobileGatewayTrafficControlInfo(ctx, trafficControlInfoParam)
+							err := funcs.MobilegatewayTrafficControlInfo(ctx, mobilegatewayTrafficControlInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3572,8 +3796,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -3594,54 +3826,60 @@ func init() {
 						return err
 					}
 
-					trafficControlEnableParam.ParamTemplate = c.String("param-template")
-					trafficControlEnableParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(trafficControlEnableParam)
+					mobilegatewayTrafficControlEnableParam.ParamTemplate = c.String("param-template")
+					mobilegatewayTrafficControlEnableParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayTrafficControlEnableParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewTrafficControlEnableMobileGatewayParam()
+						p := params.NewTrafficControlEnableMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(trafficControlEnableParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayTrafficControlEnableParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("quota") {
-						trafficControlEnableParam.Quota = c.Int("quota")
+						mobilegatewayTrafficControlEnableParam.Quota = c.Int("quota")
 					}
 					if c.IsSet("band-width-limit") {
-						trafficControlEnableParam.BandWidthLimit = c.Int("band-width-limit")
+						mobilegatewayTrafficControlEnableParam.BandWidthLimit = c.Int("band-width-limit")
 					}
 					if c.IsSet("enable-email") {
-						trafficControlEnableParam.EnableEmail = c.Bool("enable-email")
+						mobilegatewayTrafficControlEnableParam.EnableEmail = c.Bool("enable-email")
 					}
 					if c.IsSet("slack-webhook-url") {
-						trafficControlEnableParam.SlackWebhookUrl = c.String("slack-webhook-url")
+						mobilegatewayTrafficControlEnableParam.SlackWebhookUrl = c.String("slack-webhook-url")
 					}
 					if c.IsSet("auto-traffic-shaping") {
-						trafficControlEnableParam.AutoTrafficShaping = c.Bool("auto-traffic-shaping")
+						mobilegatewayTrafficControlEnableParam.AutoTrafficShaping = c.Bool("auto-traffic-shaping")
 					}
 					if c.IsSet("selector") {
-						trafficControlEnableParam.Selector = c.StringSlice("selector")
+						mobilegatewayTrafficControlEnableParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						trafficControlEnableParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayTrafficControlEnableParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						trafficControlEnableParam.ParamTemplate = c.String("param-template")
+						mobilegatewayTrafficControlEnableParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayTrafficControlEnableParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						trafficControlEnableParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayTrafficControlEnableParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayTrafficControlEnableParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						trafficControlEnableParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayTrafficControlEnableParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						trafficControlEnableParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayTrafficControlEnableParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3649,7 +3887,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = trafficControlEnableParam
+					var outputTypeHolder interface{} = mobilegatewayTrafficControlEnableParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3660,10 +3898,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if trafficControlEnableParam.GenerateSkeleton {
-						trafficControlEnableParam.GenerateSkeleton = false
-						trafficControlEnableParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(trafficControlEnableParam, "", "\t")
+					if mobilegatewayTrafficControlEnableParam.GenerateSkeleton {
+						mobilegatewayTrafficControlEnableParam.GenerateSkeleton = false
+						mobilegatewayTrafficControlEnableParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayTrafficControlEnableParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3672,19 +3910,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := trafficControlEnableParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayTrafficControlEnableParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), trafficControlEnableParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayTrafficControlEnableParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(trafficControlEnableParam.Selector) == 0 {
+						if len(mobilegatewayTrafficControlEnableParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3692,13 +3930,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, trafficControlEnableParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayTrafficControlEnableParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", trafficControlEnableParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayTrafficControlEnableParam.Selector)
 						}
 
 					} else {
@@ -3719,8 +3957,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(trafficControlEnableParam.Selector) == 0 || hasTags(&v, trafficControlEnableParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayTrafficControlEnableParam.Selector) == 0 || hasTags(&v, mobilegatewayTrafficControlEnableParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3737,7 +3975,7 @@ func init() {
 					}
 
 					// confirm
-					if !trafficControlEnableParam.Assumeyes {
+					if !mobilegatewayTrafficControlEnableParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3751,11 +3989,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						trafficControlEnableParam.SetId(id)
-						p := *trafficControlEnableParam // copy struct value
-						trafficControlEnableParam := &p
+						mobilegatewayTrafficControlEnableParam.SetId(id)
+						p := *mobilegatewayTrafficControlEnableParam // copy struct value
+						mobilegatewayTrafficControlEnableParam := &p
 						go func() {
-							err := funcs.MobileGatewayTrafficControlEnable(ctx, trafficControlEnableParam)
+							err := funcs.MobilegatewayTrafficControlEnable(ctx, mobilegatewayTrafficControlEnableParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3801,8 +4039,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -3823,54 +4069,60 @@ func init() {
 						return err
 					}
 
-					trafficControlUpdateParam.ParamTemplate = c.String("param-template")
-					trafficControlUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(trafficControlUpdateParam)
+					mobilegatewayTrafficControlUpdateParam.ParamTemplate = c.String("param-template")
+					mobilegatewayTrafficControlUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayTrafficControlUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewTrafficControlUpdateMobileGatewayParam()
+						p := params.NewTrafficControlUpdateMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(trafficControlUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayTrafficControlUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("quota") {
-						trafficControlUpdateParam.Quota = c.Int("quota")
+						mobilegatewayTrafficControlUpdateParam.Quota = c.Int("quota")
 					}
 					if c.IsSet("band-width-limit") {
-						trafficControlUpdateParam.BandWidthLimit = c.Int("band-width-limit")
+						mobilegatewayTrafficControlUpdateParam.BandWidthLimit = c.Int("band-width-limit")
 					}
 					if c.IsSet("enable-email") {
-						trafficControlUpdateParam.EnableEmail = c.Bool("enable-email")
+						mobilegatewayTrafficControlUpdateParam.EnableEmail = c.Bool("enable-email")
 					}
 					if c.IsSet("slack-webhook-url") {
-						trafficControlUpdateParam.SlackWebhookUrl = c.String("slack-webhook-url")
+						mobilegatewayTrafficControlUpdateParam.SlackWebhookUrl = c.String("slack-webhook-url")
 					}
 					if c.IsSet("auto-traffic-shaping") {
-						trafficControlUpdateParam.AutoTrafficShaping = c.Bool("auto-traffic-shaping")
+						mobilegatewayTrafficControlUpdateParam.AutoTrafficShaping = c.Bool("auto-traffic-shaping")
 					}
 					if c.IsSet("selector") {
-						trafficControlUpdateParam.Selector = c.StringSlice("selector")
+						mobilegatewayTrafficControlUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						trafficControlUpdateParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayTrafficControlUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						trafficControlUpdateParam.ParamTemplate = c.String("param-template")
+						mobilegatewayTrafficControlUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayTrafficControlUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						trafficControlUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayTrafficControlUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayTrafficControlUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						trafficControlUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayTrafficControlUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						trafficControlUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayTrafficControlUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3878,7 +4130,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = trafficControlUpdateParam
+					var outputTypeHolder interface{} = mobilegatewayTrafficControlUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3889,10 +4141,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if trafficControlUpdateParam.GenerateSkeleton {
-						trafficControlUpdateParam.GenerateSkeleton = false
-						trafficControlUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(trafficControlUpdateParam, "", "\t")
+					if mobilegatewayTrafficControlUpdateParam.GenerateSkeleton {
+						mobilegatewayTrafficControlUpdateParam.GenerateSkeleton = false
+						mobilegatewayTrafficControlUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayTrafficControlUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3901,19 +4153,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := trafficControlUpdateParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayTrafficControlUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), trafficControlUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayTrafficControlUpdateParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(trafficControlUpdateParam.Selector) == 0 {
+						if len(mobilegatewayTrafficControlUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3921,13 +4173,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, trafficControlUpdateParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayTrafficControlUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", trafficControlUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayTrafficControlUpdateParam.Selector)
 						}
 
 					} else {
@@ -3948,8 +4200,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(trafficControlUpdateParam.Selector) == 0 || hasTags(&v, trafficControlUpdateParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayTrafficControlUpdateParam.Selector) == 0 || hasTags(&v, mobilegatewayTrafficControlUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3966,7 +4218,7 @@ func init() {
 					}
 
 					// confirm
-					if !trafficControlUpdateParam.Assumeyes {
+					if !mobilegatewayTrafficControlUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3980,11 +4232,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						trafficControlUpdateParam.SetId(id)
-						p := *trafficControlUpdateParam // copy struct value
-						trafficControlUpdateParam := &p
+						mobilegatewayTrafficControlUpdateParam.SetId(id)
+						p := *mobilegatewayTrafficControlUpdateParam // copy struct value
+						mobilegatewayTrafficControlUpdateParam := &p
 						go func() {
-							err := funcs.MobileGatewayTrafficControlUpdate(ctx, trafficControlUpdateParam)
+							err := funcs.MobilegatewayTrafficControlUpdate(ctx, mobilegatewayTrafficControlUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4016,8 +4268,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -4038,39 +4298,45 @@ func init() {
 						return err
 					}
 
-					trafficControlDisableParam.ParamTemplate = c.String("param-template")
-					trafficControlDisableParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(trafficControlDisableParam)
+					mobilegatewayTrafficControlDisableParam.ParamTemplate = c.String("param-template")
+					mobilegatewayTrafficControlDisableParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayTrafficControlDisableParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewTrafficControlDisableMobileGatewayParam()
+						p := params.NewTrafficControlDisableMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(trafficControlDisableParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayTrafficControlDisableParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						trafficControlDisableParam.Selector = c.StringSlice("selector")
+						mobilegatewayTrafficControlDisableParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						trafficControlDisableParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayTrafficControlDisableParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						trafficControlDisableParam.ParamTemplate = c.String("param-template")
+						mobilegatewayTrafficControlDisableParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayTrafficControlDisableParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						trafficControlDisableParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayTrafficControlDisableParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayTrafficControlDisableParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						trafficControlDisableParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayTrafficControlDisableParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						trafficControlDisableParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayTrafficControlDisableParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4078,7 +4344,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = trafficControlDisableParam
+					var outputTypeHolder interface{} = mobilegatewayTrafficControlDisableParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4089,10 +4355,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if trafficControlDisableParam.GenerateSkeleton {
-						trafficControlDisableParam.GenerateSkeleton = false
-						trafficControlDisableParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(trafficControlDisableParam, "", "\t")
+					if mobilegatewayTrafficControlDisableParam.GenerateSkeleton {
+						mobilegatewayTrafficControlDisableParam.GenerateSkeleton = false
+						mobilegatewayTrafficControlDisableParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayTrafficControlDisableParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4101,19 +4367,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := trafficControlDisableParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayTrafficControlDisableParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), trafficControlDisableParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayTrafficControlDisableParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(trafficControlDisableParam.Selector) == 0 {
+						if len(mobilegatewayTrafficControlDisableParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4121,13 +4387,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, trafficControlDisableParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayTrafficControlDisableParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", trafficControlDisableParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayTrafficControlDisableParam.Selector)
 						}
 
 					} else {
@@ -4148,8 +4414,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(trafficControlDisableParam.Selector) == 0 || hasTags(&v, trafficControlDisableParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayTrafficControlDisableParam.Selector) == 0 || hasTags(&v, mobilegatewayTrafficControlDisableParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4166,7 +4432,7 @@ func init() {
 					}
 
 					// confirm
-					if !trafficControlDisableParam.Assumeyes {
+					if !mobilegatewayTrafficControlDisableParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -4180,11 +4446,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						trafficControlDisableParam.SetId(id)
-						p := *trafficControlDisableParam // copy struct value
-						trafficControlDisableParam := &p
+						mobilegatewayTrafficControlDisableParam.SetId(id)
+						p := *mobilegatewayTrafficControlDisableParam // copy struct value
+						mobilegatewayTrafficControlDisableParam := &p
 						go func() {
-							err := funcs.MobileGatewayTrafficControlDisable(ctx, trafficControlDisableParam)
+							err := funcs.MobilegatewayTrafficControlDisable(ctx, mobilegatewayTrafficControlDisableParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4211,8 +4477,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -4265,57 +4539,63 @@ func init() {
 						return err
 					}
 
-					staticRouteInfoParam.ParamTemplate = c.String("param-template")
-					staticRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(staticRouteInfoParam)
+					mobilegatewayStaticRouteInfoParam.ParamTemplate = c.String("param-template")
+					mobilegatewayStaticRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayStaticRouteInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewStaticRouteInfoMobileGatewayParam()
+						p := params.NewStaticRouteInfoMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(staticRouteInfoParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayStaticRouteInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						staticRouteInfoParam.Selector = c.StringSlice("selector")
+						mobilegatewayStaticRouteInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						staticRouteInfoParam.ParamTemplate = c.String("param-template")
+						mobilegatewayStaticRouteInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayStaticRouteInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						staticRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayStaticRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayStaticRouteInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						staticRouteInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayStaticRouteInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						staticRouteInfoParam.OutputType = c.String("output-type")
+						mobilegatewayStaticRouteInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						staticRouteInfoParam.Column = c.StringSlice("column")
+						mobilegatewayStaticRouteInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						staticRouteInfoParam.Quiet = c.Bool("quiet")
+						mobilegatewayStaticRouteInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						staticRouteInfoParam.Format = c.String("format")
+						mobilegatewayStaticRouteInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						staticRouteInfoParam.FormatFile = c.String("format-file")
+						mobilegatewayStaticRouteInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						staticRouteInfoParam.Query = c.String("query")
+						mobilegatewayStaticRouteInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						staticRouteInfoParam.QueryFile = c.String("query-file")
+						mobilegatewayStaticRouteInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						staticRouteInfoParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayStaticRouteInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4323,7 +4603,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = staticRouteInfoParam
+					var outputTypeHolder interface{} = mobilegatewayStaticRouteInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4334,10 +4614,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if staticRouteInfoParam.GenerateSkeleton {
-						staticRouteInfoParam.GenerateSkeleton = false
-						staticRouteInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(staticRouteInfoParam, "", "\t")
+					if mobilegatewayStaticRouteInfoParam.GenerateSkeleton {
+						mobilegatewayStaticRouteInfoParam.GenerateSkeleton = false
+						mobilegatewayStaticRouteInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayStaticRouteInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4346,19 +4626,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := staticRouteInfoParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayStaticRouteInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), staticRouteInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayStaticRouteInfoParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(staticRouteInfoParam.Selector) == 0 {
+						if len(mobilegatewayStaticRouteInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4366,13 +4646,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, staticRouteInfoParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayStaticRouteInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", staticRouteInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayStaticRouteInfoParam.Selector)
 						}
 
 					} else {
@@ -4393,8 +4673,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(staticRouteInfoParam.Selector) == 0 || hasTags(&v, staticRouteInfoParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayStaticRouteInfoParam.Selector) == 0 || hasTags(&v, mobilegatewayStaticRouteInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4419,11 +4699,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						staticRouteInfoParam.SetId(id)
-						p := *staticRouteInfoParam // copy struct value
-						staticRouteInfoParam := &p
+						mobilegatewayStaticRouteInfoParam.SetId(id)
+						p := *mobilegatewayStaticRouteInfoParam // copy struct value
+						mobilegatewayStaticRouteInfoParam := &p
 						go func() {
-							err := funcs.MobileGatewayStaticRouteInfo(ctx, staticRouteInfoParam)
+							err := funcs.MobilegatewayStaticRouteInfo(ctx, mobilegatewayStaticRouteInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4462,8 +4742,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -4484,45 +4772,51 @@ func init() {
 						return err
 					}
 
-					staticRouteAddParam.ParamTemplate = c.String("param-template")
-					staticRouteAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(staticRouteAddParam)
+					mobilegatewayStaticRouteAddParam.ParamTemplate = c.String("param-template")
+					mobilegatewayStaticRouteAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayStaticRouteAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewStaticRouteAddMobileGatewayParam()
+						p := params.NewStaticRouteAddMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(staticRouteAddParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayStaticRouteAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("prefix") {
-						staticRouteAddParam.Prefix = c.String("prefix")
+						mobilegatewayStaticRouteAddParam.Prefix = c.String("prefix")
 					}
 					if c.IsSet("next-hop") {
-						staticRouteAddParam.NextHop = c.String("next-hop")
+						mobilegatewayStaticRouteAddParam.NextHop = c.String("next-hop")
 					}
 					if c.IsSet("selector") {
-						staticRouteAddParam.Selector = c.StringSlice("selector")
+						mobilegatewayStaticRouteAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						staticRouteAddParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayStaticRouteAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						staticRouteAddParam.ParamTemplate = c.String("param-template")
+						mobilegatewayStaticRouteAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayStaticRouteAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						staticRouteAddParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayStaticRouteAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayStaticRouteAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						staticRouteAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayStaticRouteAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						staticRouteAddParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayStaticRouteAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4530,7 +4824,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = staticRouteAddParam
+					var outputTypeHolder interface{} = mobilegatewayStaticRouteAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4541,10 +4835,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if staticRouteAddParam.GenerateSkeleton {
-						staticRouteAddParam.GenerateSkeleton = false
-						staticRouteAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(staticRouteAddParam, "", "\t")
+					if mobilegatewayStaticRouteAddParam.GenerateSkeleton {
+						mobilegatewayStaticRouteAddParam.GenerateSkeleton = false
+						mobilegatewayStaticRouteAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayStaticRouteAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4553,19 +4847,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := staticRouteAddParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayStaticRouteAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), staticRouteAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayStaticRouteAddParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(staticRouteAddParam.Selector) == 0 {
+						if len(mobilegatewayStaticRouteAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4573,13 +4867,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, staticRouteAddParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayStaticRouteAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", staticRouteAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayStaticRouteAddParam.Selector)
 						}
 
 					} else {
@@ -4600,8 +4894,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(staticRouteAddParam.Selector) == 0 || hasTags(&v, staticRouteAddParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayStaticRouteAddParam.Selector) == 0 || hasTags(&v, mobilegatewayStaticRouteAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4622,7 +4916,7 @@ func init() {
 					}
 
 					// confirm
-					if !staticRouteAddParam.Assumeyes {
+					if !mobilegatewayStaticRouteAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -4636,11 +4930,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						staticRouteAddParam.SetId(id)
-						p := *staticRouteAddParam // copy struct value
-						staticRouteAddParam := &p
+						mobilegatewayStaticRouteAddParam.SetId(id)
+						p := *mobilegatewayStaticRouteAddParam // copy struct value
+						mobilegatewayStaticRouteAddParam := &p
 						go func() {
-							err := funcs.MobileGatewayStaticRouteAdd(ctx, staticRouteAddParam)
+							err := funcs.MobilegatewayStaticRouteAdd(ctx, mobilegatewayStaticRouteAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4683,8 +4977,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -4705,48 +5007,54 @@ func init() {
 						return err
 					}
 
-					staticRouteUpdateParam.ParamTemplate = c.String("param-template")
-					staticRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(staticRouteUpdateParam)
+					mobilegatewayStaticRouteUpdateParam.ParamTemplate = c.String("param-template")
+					mobilegatewayStaticRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayStaticRouteUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewStaticRouteUpdateMobileGatewayParam()
+						p := params.NewStaticRouteUpdateMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(staticRouteUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayStaticRouteUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						staticRouteUpdateParam.Index = c.Int("index")
+						mobilegatewayStaticRouteUpdateParam.Index = c.Int("index")
 					}
 					if c.IsSet("prefix") {
-						staticRouteUpdateParam.Prefix = c.String("prefix")
+						mobilegatewayStaticRouteUpdateParam.Prefix = c.String("prefix")
 					}
 					if c.IsSet("next-hop") {
-						staticRouteUpdateParam.NextHop = c.String("next-hop")
+						mobilegatewayStaticRouteUpdateParam.NextHop = c.String("next-hop")
 					}
 					if c.IsSet("selector") {
-						staticRouteUpdateParam.Selector = c.StringSlice("selector")
+						mobilegatewayStaticRouteUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						staticRouteUpdateParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayStaticRouteUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						staticRouteUpdateParam.ParamTemplate = c.String("param-template")
+						mobilegatewayStaticRouteUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayStaticRouteUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						staticRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayStaticRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayStaticRouteUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						staticRouteUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayStaticRouteUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						staticRouteUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayStaticRouteUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4754,7 +5062,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = staticRouteUpdateParam
+					var outputTypeHolder interface{} = mobilegatewayStaticRouteUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4765,10 +5073,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if staticRouteUpdateParam.GenerateSkeleton {
-						staticRouteUpdateParam.GenerateSkeleton = false
-						staticRouteUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(staticRouteUpdateParam, "", "\t")
+					if mobilegatewayStaticRouteUpdateParam.GenerateSkeleton {
+						mobilegatewayStaticRouteUpdateParam.GenerateSkeleton = false
+						mobilegatewayStaticRouteUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayStaticRouteUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4777,19 +5085,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := staticRouteUpdateParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayStaticRouteUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), staticRouteUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayStaticRouteUpdateParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(staticRouteUpdateParam.Selector) == 0 {
+						if len(mobilegatewayStaticRouteUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4797,13 +5105,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, staticRouteUpdateParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayStaticRouteUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", staticRouteUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayStaticRouteUpdateParam.Selector)
 						}
 
 					} else {
@@ -4824,8 +5132,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(staticRouteUpdateParam.Selector) == 0 || hasTags(&v, staticRouteUpdateParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayStaticRouteUpdateParam.Selector) == 0 || hasTags(&v, mobilegatewayStaticRouteUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4846,7 +5154,7 @@ func init() {
 					}
 
 					// confirm
-					if !staticRouteUpdateParam.Assumeyes {
+					if !mobilegatewayStaticRouteUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -4860,11 +5168,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						staticRouteUpdateParam.SetId(id)
-						p := *staticRouteUpdateParam // copy struct value
-						staticRouteUpdateParam := &p
+						mobilegatewayStaticRouteUpdateParam.SetId(id)
+						p := *mobilegatewayStaticRouteUpdateParam // copy struct value
+						mobilegatewayStaticRouteUpdateParam := &p
 						go func() {
-							err := funcs.MobileGatewayStaticRouteUpdate(ctx, staticRouteUpdateParam)
+							err := funcs.MobilegatewayStaticRouteUpdate(ctx, mobilegatewayStaticRouteUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4899,8 +5207,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -4921,42 +5237,48 @@ func init() {
 						return err
 					}
 
-					staticRouteDeleteParam.ParamTemplate = c.String("param-template")
-					staticRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(staticRouteDeleteParam)
+					mobilegatewayStaticRouteDeleteParam.ParamTemplate = c.String("param-template")
+					mobilegatewayStaticRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayStaticRouteDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewStaticRouteDeleteMobileGatewayParam()
+						p := params.NewStaticRouteDeleteMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(staticRouteDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayStaticRouteDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						staticRouteDeleteParam.Index = c.Int("index")
+						mobilegatewayStaticRouteDeleteParam.Index = c.Int("index")
 					}
 					if c.IsSet("selector") {
-						staticRouteDeleteParam.Selector = c.StringSlice("selector")
+						mobilegatewayStaticRouteDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						staticRouteDeleteParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayStaticRouteDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						staticRouteDeleteParam.ParamTemplate = c.String("param-template")
+						mobilegatewayStaticRouteDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayStaticRouteDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						staticRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayStaticRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayStaticRouteDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						staticRouteDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayStaticRouteDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						staticRouteDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayStaticRouteDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4964,7 +5286,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = staticRouteDeleteParam
+					var outputTypeHolder interface{} = mobilegatewayStaticRouteDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4975,10 +5297,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if staticRouteDeleteParam.GenerateSkeleton {
-						staticRouteDeleteParam.GenerateSkeleton = false
-						staticRouteDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(staticRouteDeleteParam, "", "\t")
+					if mobilegatewayStaticRouteDeleteParam.GenerateSkeleton {
+						mobilegatewayStaticRouteDeleteParam.GenerateSkeleton = false
+						mobilegatewayStaticRouteDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayStaticRouteDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4987,19 +5309,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := staticRouteDeleteParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayStaticRouteDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), staticRouteDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayStaticRouteDeleteParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(staticRouteDeleteParam.Selector) == 0 {
+						if len(mobilegatewayStaticRouteDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5007,13 +5329,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, staticRouteDeleteParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayStaticRouteDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", staticRouteDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayStaticRouteDeleteParam.Selector)
 						}
 
 					} else {
@@ -5034,8 +5356,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(staticRouteDeleteParam.Selector) == 0 || hasTags(&v, staticRouteDeleteParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayStaticRouteDeleteParam.Selector) == 0 || hasTags(&v, mobilegatewayStaticRouteDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5056,7 +5378,7 @@ func init() {
 					}
 
 					// confirm
-					if !staticRouteDeleteParam.Assumeyes {
+					if !mobilegatewayStaticRouteDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -5070,11 +5392,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						staticRouteDeleteParam.SetId(id)
-						p := *staticRouteDeleteParam // copy struct value
-						staticRouteDeleteParam := &p
+						mobilegatewayStaticRouteDeleteParam.SetId(id)
+						p := *mobilegatewayStaticRouteDeleteParam // copy struct value
+						mobilegatewayStaticRouteDeleteParam := &p
 						go func() {
-							err := funcs.MobileGatewayStaticRouteDelete(ctx, staticRouteDeleteParam)
+							err := funcs.MobilegatewayStaticRouteDelete(ctx, mobilegatewayStaticRouteDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5101,8 +5423,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -5155,57 +5485,63 @@ func init() {
 						return err
 					}
 
-					simInfoParam.ParamTemplate = c.String("param-template")
-					simInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(simInfoParam)
+					mobilegatewaySimInfoParam.ParamTemplate = c.String("param-template")
+					mobilegatewaySimInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewaySimInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewSimInfoMobileGatewayParam()
+						p := params.NewSimInfoMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(simInfoParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewaySimInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						simInfoParam.Selector = c.StringSlice("selector")
+						mobilegatewaySimInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						simInfoParam.ParamTemplate = c.String("param-template")
+						mobilegatewaySimInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewaySimInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						simInfoParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewaySimInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewaySimInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						simInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewaySimInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						simInfoParam.OutputType = c.String("output-type")
+						mobilegatewaySimInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						simInfoParam.Column = c.StringSlice("column")
+						mobilegatewaySimInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						simInfoParam.Quiet = c.Bool("quiet")
+						mobilegatewaySimInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						simInfoParam.Format = c.String("format")
+						mobilegatewaySimInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						simInfoParam.FormatFile = c.String("format-file")
+						mobilegatewaySimInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						simInfoParam.Query = c.String("query")
+						mobilegatewaySimInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						simInfoParam.QueryFile = c.String("query-file")
+						mobilegatewaySimInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						simInfoParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewaySimInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5213,7 +5549,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = simInfoParam
+					var outputTypeHolder interface{} = mobilegatewaySimInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5224,10 +5560,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if simInfoParam.GenerateSkeleton {
-						simInfoParam.GenerateSkeleton = false
-						simInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(simInfoParam, "", "\t")
+					if mobilegatewaySimInfoParam.GenerateSkeleton {
+						mobilegatewaySimInfoParam.GenerateSkeleton = false
+						mobilegatewaySimInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewaySimInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5236,19 +5572,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := simInfoParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewaySimInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), simInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewaySimInfoParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(simInfoParam.Selector) == 0 {
+						if len(mobilegatewaySimInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5256,13 +5592,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, simInfoParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewaySimInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewaySimInfoParam.Selector)
 						}
 
 					} else {
@@ -5283,8 +5619,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(simInfoParam.Selector) == 0 || hasTags(&v, simInfoParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewaySimInfoParam.Selector) == 0 || hasTags(&v, mobilegatewaySimInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5309,11 +5645,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						simInfoParam.SetId(id)
-						p := *simInfoParam // copy struct value
-						simInfoParam := &p
+						mobilegatewaySimInfoParam.SetId(id)
+						p := *mobilegatewaySimInfoParam // copy struct value
+						mobilegatewaySimInfoParam := &p
 						go func() {
-							err := funcs.MobileGatewaySimInfo(ctx, simInfoParam)
+							err := funcs.MobilegatewaySimInfo(ctx, mobilegatewaySimInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5353,8 +5689,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -5375,45 +5719,51 @@ func init() {
 						return err
 					}
 
-					simAddParam.ParamTemplate = c.String("param-template")
-					simAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(simAddParam)
+					mobilegatewaySimAddParam.ParamTemplate = c.String("param-template")
+					mobilegatewaySimAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewaySimAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewSimAddMobileGatewayParam()
+						p := params.NewSimAddMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(simAddParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewaySimAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("ipaddress") {
-						simAddParam.Ipaddress = c.String("ipaddress")
+						mobilegatewaySimAddParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("sim-id") {
-						simAddParam.SimId = sacloud.ID(c.Int64("sim-id"))
+						mobilegatewaySimAddParam.SimId = sacloud.ID(c.Int64("sim-id"))
 					}
 					if c.IsSet("selector") {
-						simAddParam.Selector = c.StringSlice("selector")
+						mobilegatewaySimAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						simAddParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewaySimAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						simAddParam.ParamTemplate = c.String("param-template")
+						mobilegatewaySimAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewaySimAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						simAddParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewaySimAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewaySimAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						simAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewaySimAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simAddParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewaySimAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5421,7 +5771,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = simAddParam
+					var outputTypeHolder interface{} = mobilegatewaySimAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5432,10 +5782,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if simAddParam.GenerateSkeleton {
-						simAddParam.GenerateSkeleton = false
-						simAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(simAddParam, "", "\t")
+					if mobilegatewaySimAddParam.GenerateSkeleton {
+						mobilegatewaySimAddParam.GenerateSkeleton = false
+						mobilegatewaySimAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewaySimAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5444,19 +5794,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := simAddParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewaySimAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), simAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewaySimAddParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(simAddParam.Selector) == 0 {
+						if len(mobilegatewaySimAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5464,13 +5814,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, simAddParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewaySimAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewaySimAddParam.Selector)
 						}
 
 					} else {
@@ -5491,8 +5841,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(simAddParam.Selector) == 0 || hasTags(&v, simAddParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewaySimAddParam.Selector) == 0 || hasTags(&v, mobilegatewaySimAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5513,7 +5863,7 @@ func init() {
 					}
 
 					// confirm
-					if !simAddParam.Assumeyes {
+					if !mobilegatewaySimAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -5527,11 +5877,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						simAddParam.SetId(id)
-						p := *simAddParam // copy struct value
-						simAddParam := &p
+						mobilegatewaySimAddParam.SetId(id)
+						p := *mobilegatewaySimAddParam // copy struct value
+						mobilegatewaySimAddParam := &p
 						go func() {
-							err := funcs.MobileGatewaySimAdd(ctx, simAddParam)
+							err := funcs.MobilegatewaySimAdd(ctx, mobilegatewaySimAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5571,8 +5921,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -5593,45 +5951,51 @@ func init() {
 						return err
 					}
 
-					simUpdateParam.ParamTemplate = c.String("param-template")
-					simUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(simUpdateParam)
+					mobilegatewaySimUpdateParam.ParamTemplate = c.String("param-template")
+					mobilegatewaySimUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewaySimUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewSimUpdateMobileGatewayParam()
+						p := params.NewSimUpdateMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(simUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewaySimUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("ipaddress") {
-						simUpdateParam.Ipaddress = c.String("ipaddress")
+						mobilegatewaySimUpdateParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("sim-id") {
-						simUpdateParam.SimId = sacloud.ID(c.Int64("sim-id"))
+						mobilegatewaySimUpdateParam.SimId = sacloud.ID(c.Int64("sim-id"))
 					}
 					if c.IsSet("selector") {
-						simUpdateParam.Selector = c.StringSlice("selector")
+						mobilegatewaySimUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						simUpdateParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewaySimUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						simUpdateParam.ParamTemplate = c.String("param-template")
+						mobilegatewaySimUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewaySimUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						simUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewaySimUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewaySimUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						simUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewaySimUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewaySimUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5639,7 +6003,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = simUpdateParam
+					var outputTypeHolder interface{} = mobilegatewaySimUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5650,10 +6014,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if simUpdateParam.GenerateSkeleton {
-						simUpdateParam.GenerateSkeleton = false
-						simUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(simUpdateParam, "", "\t")
+					if mobilegatewaySimUpdateParam.GenerateSkeleton {
+						mobilegatewaySimUpdateParam.GenerateSkeleton = false
+						mobilegatewaySimUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewaySimUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5662,19 +6026,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := simUpdateParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewaySimUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), simUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewaySimUpdateParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(simUpdateParam.Selector) == 0 {
+						if len(mobilegatewaySimUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5682,13 +6046,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, simUpdateParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewaySimUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewaySimUpdateParam.Selector)
 						}
 
 					} else {
@@ -5709,8 +6073,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(simUpdateParam.Selector) == 0 || hasTags(&v, simUpdateParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewaySimUpdateParam.Selector) == 0 || hasTags(&v, mobilegatewaySimUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5731,7 +6095,7 @@ func init() {
 					}
 
 					// confirm
-					if !simUpdateParam.Assumeyes {
+					if !mobilegatewaySimUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -5745,11 +6109,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						simUpdateParam.SetId(id)
-						p := *simUpdateParam // copy struct value
-						simUpdateParam := &p
+						mobilegatewaySimUpdateParam.SetId(id)
+						p := *mobilegatewaySimUpdateParam // copy struct value
+						mobilegatewaySimUpdateParam := &p
 						go func() {
-							err := funcs.MobileGatewaySimUpdate(ctx, simUpdateParam)
+							err := funcs.MobilegatewaySimUpdate(ctx, mobilegatewaySimUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5784,8 +6148,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -5806,42 +6178,48 @@ func init() {
 						return err
 					}
 
-					simDeleteParam.ParamTemplate = c.String("param-template")
-					simDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(simDeleteParam)
+					mobilegatewaySimDeleteParam.ParamTemplate = c.String("param-template")
+					mobilegatewaySimDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewaySimDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewSimDeleteMobileGatewayParam()
+						p := params.NewSimDeleteMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(simDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewaySimDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("sim-id") {
-						simDeleteParam.SimId = sacloud.ID(c.Int64("sim-id"))
+						mobilegatewaySimDeleteParam.SimId = sacloud.ID(c.Int64("sim-id"))
 					}
 					if c.IsSet("selector") {
-						simDeleteParam.Selector = c.StringSlice("selector")
+						mobilegatewaySimDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						simDeleteParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewaySimDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						simDeleteParam.ParamTemplate = c.String("param-template")
+						mobilegatewaySimDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewaySimDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						simDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewaySimDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewaySimDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						simDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewaySimDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewaySimDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5849,7 +6227,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = simDeleteParam
+					var outputTypeHolder interface{} = mobilegatewaySimDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5860,10 +6238,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if simDeleteParam.GenerateSkeleton {
-						simDeleteParam.GenerateSkeleton = false
-						simDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(simDeleteParam, "", "\t")
+					if mobilegatewaySimDeleteParam.GenerateSkeleton {
+						mobilegatewaySimDeleteParam.GenerateSkeleton = false
+						mobilegatewaySimDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewaySimDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5872,19 +6250,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := simDeleteParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewaySimDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), simDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewaySimDeleteParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(simDeleteParam.Selector) == 0 {
+						if len(mobilegatewaySimDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5892,13 +6270,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, simDeleteParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewaySimDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewaySimDeleteParam.Selector)
 						}
 
 					} else {
@@ -5919,8 +6297,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(simDeleteParam.Selector) == 0 || hasTags(&v, simDeleteParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewaySimDeleteParam.Selector) == 0 || hasTags(&v, mobilegatewaySimDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5941,7 +6319,7 @@ func init() {
 					}
 
 					// confirm
-					if !simDeleteParam.Assumeyes {
+					if !mobilegatewaySimDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -5955,11 +6333,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						simDeleteParam.SetId(id)
-						p := *simDeleteParam // copy struct value
-						simDeleteParam := &p
+						mobilegatewaySimDeleteParam.SetId(id)
+						p := *mobilegatewaySimDeleteParam // copy struct value
+						mobilegatewaySimDeleteParam := &p
 						go func() {
-							err := funcs.MobileGatewaySimDelete(ctx, simDeleteParam)
+							err := funcs.MobilegatewaySimDelete(ctx, mobilegatewaySimDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5986,8 +6364,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -6040,57 +6426,63 @@ func init() {
 						return err
 					}
 
-					simRouteInfoParam.ParamTemplate = c.String("param-template")
-					simRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(simRouteInfoParam)
+					mobilegatewaySimRouteInfoParam.ParamTemplate = c.String("param-template")
+					mobilegatewaySimRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewaySimRouteInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewSimRouteInfoMobileGatewayParam()
+						p := params.NewSimRouteInfoMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(simRouteInfoParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewaySimRouteInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						simRouteInfoParam.Selector = c.StringSlice("selector")
+						mobilegatewaySimRouteInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						simRouteInfoParam.ParamTemplate = c.String("param-template")
+						mobilegatewaySimRouteInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewaySimRouteInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						simRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewaySimRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewaySimRouteInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						simRouteInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewaySimRouteInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						simRouteInfoParam.OutputType = c.String("output-type")
+						mobilegatewaySimRouteInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						simRouteInfoParam.Column = c.StringSlice("column")
+						mobilegatewaySimRouteInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						simRouteInfoParam.Quiet = c.Bool("quiet")
+						mobilegatewaySimRouteInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						simRouteInfoParam.Format = c.String("format")
+						mobilegatewaySimRouteInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						simRouteInfoParam.FormatFile = c.String("format-file")
+						mobilegatewaySimRouteInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						simRouteInfoParam.Query = c.String("query")
+						mobilegatewaySimRouteInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						simRouteInfoParam.QueryFile = c.String("query-file")
+						mobilegatewaySimRouteInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						simRouteInfoParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewaySimRouteInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6098,7 +6490,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = simRouteInfoParam
+					var outputTypeHolder interface{} = mobilegatewaySimRouteInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6109,10 +6501,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if simRouteInfoParam.GenerateSkeleton {
-						simRouteInfoParam.GenerateSkeleton = false
-						simRouteInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(simRouteInfoParam, "", "\t")
+					if mobilegatewaySimRouteInfoParam.GenerateSkeleton {
+						mobilegatewaySimRouteInfoParam.GenerateSkeleton = false
+						mobilegatewaySimRouteInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewaySimRouteInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6121,19 +6513,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := simRouteInfoParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewaySimRouteInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), simRouteInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewaySimRouteInfoParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(simRouteInfoParam.Selector) == 0 {
+						if len(mobilegatewaySimRouteInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6141,13 +6533,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, simRouteInfoParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewaySimRouteInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simRouteInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewaySimRouteInfoParam.Selector)
 						}
 
 					} else {
@@ -6168,8 +6560,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(simRouteInfoParam.Selector) == 0 || hasTags(&v, simRouteInfoParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewaySimRouteInfoParam.Selector) == 0 || hasTags(&v, mobilegatewaySimRouteInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6194,11 +6586,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						simRouteInfoParam.SetId(id)
-						p := *simRouteInfoParam // copy struct value
-						simRouteInfoParam := &p
+						mobilegatewaySimRouteInfoParam.SetId(id)
+						p := *mobilegatewaySimRouteInfoParam // copy struct value
+						mobilegatewaySimRouteInfoParam := &p
 						go func() {
-							err := funcs.MobileGatewaySimRouteInfo(ctx, simRouteInfoParam)
+							err := funcs.MobilegatewaySimRouteInfo(ctx, mobilegatewaySimRouteInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6237,8 +6629,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -6259,45 +6659,51 @@ func init() {
 						return err
 					}
 
-					simRouteAddParam.ParamTemplate = c.String("param-template")
-					simRouteAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(simRouteAddParam)
+					mobilegatewaySimRouteAddParam.ParamTemplate = c.String("param-template")
+					mobilegatewaySimRouteAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewaySimRouteAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewSimRouteAddMobileGatewayParam()
+						p := params.NewSimRouteAddMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(simRouteAddParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewaySimRouteAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("prefix") {
-						simRouteAddParam.Prefix = c.String("prefix")
+						mobilegatewaySimRouteAddParam.Prefix = c.String("prefix")
 					}
 					if c.IsSet("sim") {
-						simRouteAddParam.Sim = sacloud.ID(c.Int64("sim"))
+						mobilegatewaySimRouteAddParam.Sim = sacloud.ID(c.Int64("sim"))
 					}
 					if c.IsSet("selector") {
-						simRouteAddParam.Selector = c.StringSlice("selector")
+						mobilegatewaySimRouteAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						simRouteAddParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewaySimRouteAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						simRouteAddParam.ParamTemplate = c.String("param-template")
+						mobilegatewaySimRouteAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewaySimRouteAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						simRouteAddParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewaySimRouteAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewaySimRouteAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						simRouteAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewaySimRouteAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simRouteAddParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewaySimRouteAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6305,7 +6711,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = simRouteAddParam
+					var outputTypeHolder interface{} = mobilegatewaySimRouteAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6316,10 +6722,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if simRouteAddParam.GenerateSkeleton {
-						simRouteAddParam.GenerateSkeleton = false
-						simRouteAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(simRouteAddParam, "", "\t")
+					if mobilegatewaySimRouteAddParam.GenerateSkeleton {
+						mobilegatewaySimRouteAddParam.GenerateSkeleton = false
+						mobilegatewaySimRouteAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewaySimRouteAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6328,19 +6734,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := simRouteAddParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewaySimRouteAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), simRouteAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewaySimRouteAddParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(simRouteAddParam.Selector) == 0 {
+						if len(mobilegatewaySimRouteAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6348,13 +6754,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, simRouteAddParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewaySimRouteAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simRouteAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewaySimRouteAddParam.Selector)
 						}
 
 					} else {
@@ -6375,8 +6781,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(simRouteAddParam.Selector) == 0 || hasTags(&v, simRouteAddParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewaySimRouteAddParam.Selector) == 0 || hasTags(&v, mobilegatewaySimRouteAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6397,7 +6803,7 @@ func init() {
 					}
 
 					// confirm
-					if !simRouteAddParam.Assumeyes {
+					if !mobilegatewaySimRouteAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -6411,11 +6817,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						simRouteAddParam.SetId(id)
-						p := *simRouteAddParam // copy struct value
-						simRouteAddParam := &p
+						mobilegatewaySimRouteAddParam.SetId(id)
+						p := *mobilegatewaySimRouteAddParam // copy struct value
+						mobilegatewaySimRouteAddParam := &p
 						go func() {
-							err := funcs.MobileGatewaySimRouteAdd(ctx, simRouteAddParam)
+							err := funcs.MobilegatewaySimRouteAdd(ctx, mobilegatewaySimRouteAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6458,8 +6864,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -6480,48 +6894,54 @@ func init() {
 						return err
 					}
 
-					simRouteUpdateParam.ParamTemplate = c.String("param-template")
-					simRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(simRouteUpdateParam)
+					mobilegatewaySimRouteUpdateParam.ParamTemplate = c.String("param-template")
+					mobilegatewaySimRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewaySimRouteUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewSimRouteUpdateMobileGatewayParam()
+						p := params.NewSimRouteUpdateMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(simRouteUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewaySimRouteUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						simRouteUpdateParam.Index = c.Int("index")
+						mobilegatewaySimRouteUpdateParam.Index = c.Int("index")
 					}
 					if c.IsSet("prefix") {
-						simRouteUpdateParam.Prefix = c.String("prefix")
+						mobilegatewaySimRouteUpdateParam.Prefix = c.String("prefix")
 					}
 					if c.IsSet("sim") {
-						simRouteUpdateParam.Sim = sacloud.ID(c.Int64("sim"))
+						mobilegatewaySimRouteUpdateParam.Sim = sacloud.ID(c.Int64("sim"))
 					}
 					if c.IsSet("selector") {
-						simRouteUpdateParam.Selector = c.StringSlice("selector")
+						mobilegatewaySimRouteUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						simRouteUpdateParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewaySimRouteUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						simRouteUpdateParam.ParamTemplate = c.String("param-template")
+						mobilegatewaySimRouteUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewaySimRouteUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						simRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewaySimRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewaySimRouteUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						simRouteUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewaySimRouteUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simRouteUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewaySimRouteUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6529,7 +6949,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = simRouteUpdateParam
+					var outputTypeHolder interface{} = mobilegatewaySimRouteUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6540,10 +6960,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if simRouteUpdateParam.GenerateSkeleton {
-						simRouteUpdateParam.GenerateSkeleton = false
-						simRouteUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(simRouteUpdateParam, "", "\t")
+					if mobilegatewaySimRouteUpdateParam.GenerateSkeleton {
+						mobilegatewaySimRouteUpdateParam.GenerateSkeleton = false
+						mobilegatewaySimRouteUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewaySimRouteUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6552,19 +6972,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := simRouteUpdateParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewaySimRouteUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), simRouteUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewaySimRouteUpdateParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(simRouteUpdateParam.Selector) == 0 {
+						if len(mobilegatewaySimRouteUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6572,13 +6992,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, simRouteUpdateParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewaySimRouteUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simRouteUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewaySimRouteUpdateParam.Selector)
 						}
 
 					} else {
@@ -6599,8 +7019,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(simRouteUpdateParam.Selector) == 0 || hasTags(&v, simRouteUpdateParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewaySimRouteUpdateParam.Selector) == 0 || hasTags(&v, mobilegatewaySimRouteUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6621,7 +7041,7 @@ func init() {
 					}
 
 					// confirm
-					if !simRouteUpdateParam.Assumeyes {
+					if !mobilegatewaySimRouteUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -6635,11 +7055,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						simRouteUpdateParam.SetId(id)
-						p := *simRouteUpdateParam // copy struct value
-						simRouteUpdateParam := &p
+						mobilegatewaySimRouteUpdateParam.SetId(id)
+						p := *mobilegatewaySimRouteUpdateParam // copy struct value
+						mobilegatewaySimRouteUpdateParam := &p
 						go func() {
-							err := funcs.MobileGatewaySimRouteUpdate(ctx, simRouteUpdateParam)
+							err := funcs.MobilegatewaySimRouteUpdate(ctx, mobilegatewaySimRouteUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6674,8 +7094,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -6696,42 +7124,48 @@ func init() {
 						return err
 					}
 
-					simRouteDeleteParam.ParamTemplate = c.String("param-template")
-					simRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(simRouteDeleteParam)
+					mobilegatewaySimRouteDeleteParam.ParamTemplate = c.String("param-template")
+					mobilegatewaySimRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewaySimRouteDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewSimRouteDeleteMobileGatewayParam()
+						p := params.NewSimRouteDeleteMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(simRouteDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewaySimRouteDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						simRouteDeleteParam.Index = c.Int("index")
+						mobilegatewaySimRouteDeleteParam.Index = c.Int("index")
 					}
 					if c.IsSet("selector") {
-						simRouteDeleteParam.Selector = c.StringSlice("selector")
+						mobilegatewaySimRouteDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						simRouteDeleteParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewaySimRouteDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						simRouteDeleteParam.ParamTemplate = c.String("param-template")
+						mobilegatewaySimRouteDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewaySimRouteDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						simRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewaySimRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewaySimRouteDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						simRouteDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewaySimRouteDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simRouteDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewaySimRouteDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6739,7 +7173,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = simRouteDeleteParam
+					var outputTypeHolder interface{} = mobilegatewaySimRouteDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6750,10 +7184,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if simRouteDeleteParam.GenerateSkeleton {
-						simRouteDeleteParam.GenerateSkeleton = false
-						simRouteDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(simRouteDeleteParam, "", "\t")
+					if mobilegatewaySimRouteDeleteParam.GenerateSkeleton {
+						mobilegatewaySimRouteDeleteParam.GenerateSkeleton = false
+						mobilegatewaySimRouteDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewaySimRouteDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6762,19 +7196,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := simRouteDeleteParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewaySimRouteDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), simRouteDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewaySimRouteDeleteParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(simRouteDeleteParam.Selector) == 0 {
+						if len(mobilegatewaySimRouteDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6782,13 +7216,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, simRouteDeleteParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewaySimRouteDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simRouteDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewaySimRouteDeleteParam.Selector)
 						}
 
 					} else {
@@ -6809,8 +7243,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(simRouteDeleteParam.Selector) == 0 || hasTags(&v, simRouteDeleteParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewaySimRouteDeleteParam.Selector) == 0 || hasTags(&v, mobilegatewaySimRouteDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6831,7 +7265,7 @@ func init() {
 					}
 
 					// confirm
-					if !simRouteDeleteParam.Assumeyes {
+					if !mobilegatewaySimRouteDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -6845,11 +7279,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						simRouteDeleteParam.SetId(id)
-						p := *simRouteDeleteParam // copy struct value
-						simRouteDeleteParam := &p
+						mobilegatewaySimRouteDeleteParam.SetId(id)
+						p := *mobilegatewaySimRouteDeleteParam // copy struct value
+						mobilegatewaySimRouteDeleteParam := &p
 						go func() {
-							err := funcs.MobileGatewaySimRouteDelete(ctx, simRouteDeleteParam)
+							err := funcs.MobilegatewaySimRouteDelete(ctx, mobilegatewaySimRouteDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6867,11 +7301,11 @@ func init() {
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:  "dns1",
+						Name:  "dns-1",
 						Usage: "[Required] set DNS server address",
 					},
 					&cli.StringFlag{
-						Name:  "dns2",
+						Name:  "dns-2",
 						Usage: "[Required] set DNS server address",
 					},
 					&cli.StringSliceFlag{
@@ -6888,8 +7322,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -6910,45 +7352,51 @@ func init() {
 						return err
 					}
 
-					dnsUpdateParam.ParamTemplate = c.String("param-template")
-					dnsUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(dnsUpdateParam)
+					mobilegatewayDnsUpdateParam.ParamTemplate = c.String("param-template")
+					mobilegatewayDnsUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayDnsUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDnsUpdateMobileGatewayParam()
+						p := params.NewDnsUpdateMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(dnsUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayDnsUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
-					if c.IsSet("dns1") {
-						dnsUpdateParam.Dns1 = c.String("dns1")
+					if c.IsSet("dns-1") {
+						mobilegatewayDnsUpdateParam.Dns1 = c.String("dns-1")
 					}
-					if c.IsSet("dns2") {
-						dnsUpdateParam.Dns2 = c.String("dns2")
+					if c.IsSet("dns-2") {
+						mobilegatewayDnsUpdateParam.Dns2 = c.String("dns-2")
 					}
 					if c.IsSet("selector") {
-						dnsUpdateParam.Selector = c.StringSlice("selector")
+						mobilegatewayDnsUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						dnsUpdateParam.Assumeyes = c.Bool("assumeyes")
+						mobilegatewayDnsUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						dnsUpdateParam.ParamTemplate = c.String("param-template")
+						mobilegatewayDnsUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayDnsUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						dnsUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayDnsUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayDnsUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						dnsUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayDnsUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						dnsUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayDnsUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6956,7 +7404,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = dnsUpdateParam
+					var outputTypeHolder interface{} = mobilegatewayDnsUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6967,10 +7415,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if dnsUpdateParam.GenerateSkeleton {
-						dnsUpdateParam.GenerateSkeleton = false
-						dnsUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(dnsUpdateParam, "", "\t")
+					if mobilegatewayDnsUpdateParam.GenerateSkeleton {
+						mobilegatewayDnsUpdateParam.GenerateSkeleton = false
+						mobilegatewayDnsUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayDnsUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6979,19 +7427,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := dnsUpdateParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayDnsUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), dnsUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayDnsUpdateParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(dnsUpdateParam.Selector) == 0 {
+						if len(mobilegatewayDnsUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6999,13 +7447,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, dnsUpdateParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayDnsUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dnsUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayDnsUpdateParam.Selector)
 						}
 
 					} else {
@@ -7026,8 +7474,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(dnsUpdateParam.Selector) == 0 || hasTags(&v, dnsUpdateParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayDnsUpdateParam.Selector) == 0 || hasTags(&v, mobilegatewayDnsUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -7048,7 +7496,7 @@ func init() {
 					}
 
 					// confirm
-					if !dnsUpdateParam.Assumeyes {
+					if !mobilegatewayDnsUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -7062,11 +7510,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						dnsUpdateParam.SetId(id)
-						p := *dnsUpdateParam // copy struct value
-						dnsUpdateParam := &p
+						mobilegatewayDnsUpdateParam.SetId(id)
+						p := *mobilegatewayDnsUpdateParam // copy struct value
+						mobilegatewayDnsUpdateParam := &p
 						go func() {
-							err := funcs.MobileGatewayDnsUpdate(ctx, dnsUpdateParam)
+							err := funcs.MobilegatewayDnsUpdate(ctx, mobilegatewayDnsUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -7080,7 +7528,7 @@ func init() {
 			},
 			{
 				Name:      "logs",
-				Usage:     "Logs MobileGateway",
+				Usage:     "Logs Mobilegateway",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -7102,8 +7550,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -7124,42 +7580,48 @@ func init() {
 						return err
 					}
 
-					logsParam.ParamTemplate = c.String("param-template")
-					logsParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(logsParam)
+					mobilegatewayLogsParam.ParamTemplate = c.String("param-template")
+					mobilegatewayLogsParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(mobilegatewayLogsParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewLogsMobileGatewayParam()
+						p := params.NewLogsMobilegatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(logsParam, p, mergo.WithOverride)
+						mergo.Merge(mobilegatewayLogsParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("follow") {
-						logsParam.Follow = c.Bool("follow")
+						mobilegatewayLogsParam.Follow = c.Bool("follow")
 					}
 					if c.IsSet("refresh-interval") {
-						logsParam.RefreshInterval = c.Int64("refresh-interval")
+						mobilegatewayLogsParam.RefreshInterval = c.Int64("refresh-interval")
 					}
 					if c.IsSet("selector") {
-						logsParam.Selector = c.StringSlice("selector")
+						mobilegatewayLogsParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						logsParam.ParamTemplate = c.String("param-template")
+						mobilegatewayLogsParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						mobilegatewayLogsParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						logsParam.ParamTemplateFile = c.String("param-template-file")
+						mobilegatewayLogsParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						mobilegatewayLogsParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						logsParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						mobilegatewayLogsParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						logsParam.Id = sacloud.ID(c.Int64("id"))
+						mobilegatewayLogsParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -7167,7 +7629,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = logsParam
+					var outputTypeHolder interface{} = mobilegatewayLogsParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -7178,10 +7640,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if logsParam.GenerateSkeleton {
-						logsParam.GenerateSkeleton = false
-						logsParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(logsParam, "", "\t")
+					if mobilegatewayLogsParam.GenerateSkeleton {
+						mobilegatewayLogsParam.GenerateSkeleton = false
+						mobilegatewayLogsParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(mobilegatewayLogsParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -7190,19 +7652,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := logsParam.Validate(); len(errors) > 0 {
+					if errors := mobilegatewayLogsParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), logsParam)
+					ctx := command.NewContext(c, c.Args().Slice(), mobilegatewayLogsParam)
 
-					apiClient := ctx.GetAPIClient().MobileGateway
+					apiClient := ctx.GetAPIClient().Mobilegateway
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(logsParam.Selector) == 0 {
+						if len(mobilegatewayLogsParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -7210,13 +7672,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.MobileGateways {
-							if hasTags(&v, logsParam.Selector) {
+						for _, v := range res.Mobilegateways {
+							if hasTags(&v, mobilegatewayLogsParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", logsParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", mobilegatewayLogsParam.Selector)
 						}
 
 					} else {
@@ -7237,8 +7699,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.MobileGateways {
-										if len(logsParam.Selector) == 0 || hasTags(&v, logsParam.Selector) {
+									for _, v := range res.Mobilegateways {
+										if len(mobilegatewayLogsParam.Selector) == 0 || hasTags(&v, mobilegatewayLogsParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -7263,11 +7725,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						logsParam.SetId(id)
-						p := *logsParam // copy struct value
-						logsParam := &p
+						mobilegatewayLogsParam.SetId(id)
+						p := *mobilegatewayLogsParam // copy struct value
+						mobilegatewayLogsParam := &p
 						go func() {
-							err := funcs.MobileGatewayLogs(ctx, logsParam)
+							err := funcs.MobilegatewayLogs(ctx, mobilegatewayLogsParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -7484,6 +7946,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "boot", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "boot", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "boot", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -7545,6 +8017,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "create", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "create", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "create", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -7619,6 +8101,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "delete", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "delete", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -7674,6 +8166,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "dns-update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "dns-update", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "dns-update", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -7714,6 +8216,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "interface-connect", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "interface-connect", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "interface-connect", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -7745,6 +8257,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "interface-disconnect", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "interface-disconnect", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "interface-disconnect", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -7790,6 +8312,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "interface-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "interface-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "interface-info", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -7845,6 +8377,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "interface-update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "interface-update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "interface-update", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -7909,6 +8451,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "list", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "list", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "list", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -7955,6 +8507,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "logs", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "logs", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "logs", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -8009,6 +8571,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "read", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "read", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "read", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -8054,6 +8626,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "reset", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "reset", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "reset", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -8084,6 +8666,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "shutdown", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "shutdown", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "shutdown", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -8110,6 +8702,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "shutdown-force", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "shutdown-force", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "shutdown-force", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -8149,6 +8751,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-add", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-add", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "sim-add", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -8180,6 +8792,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "sim-delete", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-delete", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -8234,6 +8856,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-info", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "sim-info", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -8275,6 +8907,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "sim-route-add", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-add", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-add", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -8324,6 +8966,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-delete", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "sim-route-delete", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -8365,6 +9017,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "sim-route-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-info", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -8419,6 +9081,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-update", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "sim-route-update", "prefix", &schema.Category{
 		Key:         "SIM-Route",
 		DisplayName: "SIM-Route options",
@@ -8464,6 +9136,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-update", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "sim-update", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -8504,6 +9186,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-add", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-add", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "static-route-add", "prefix", &schema.Category{
 		Key:         "Static-Route",
 		DisplayName: "Static-Route options",
@@ -8540,6 +9232,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "static-route-delete", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-delete", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -8585,6 +9287,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "static-route-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-info", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -8644,6 +9356,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-update", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "static-route-update", "prefix", &schema.Category{
 		Key:         "Static-Route",
 		DisplayName: "Static-Route options",
@@ -8675,6 +9397,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "traffic-control-disable", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-disable", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-disable", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -8720,6 +9452,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "traffic-control-enable", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-enable", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-enable", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -8775,6 +9517,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "traffic-control-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-info", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -8835,6 +9587,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "traffic-control-update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-update", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -8919,6 +9681,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "update", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "update", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -8964,6 +9736,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "wait-for-boot", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "wait-for-boot", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "wait-for-boot", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -8985,6 +9767,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "wait-for-down", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "wait-for-down", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "wait-for-down", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

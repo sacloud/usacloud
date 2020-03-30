@@ -23,10 +23,10 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func SSHKeyList(ctx command.Context, params *params.ListSSHKeyParam) error {
+func SshkeyList(ctx command.Context, params *params.ListSshkeyParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetSSHKeyAPI()
+	finder := client.GetSshkeyAPI()
 
 	finder.SetEmpty()
 
@@ -55,7 +55,7 @@ func SSHKeyList(ctx command.Context, params *params.ListSSHKeyParam) error {
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("SSHKeyList is failed: %s", err)
+		return fmt.Errorf("SshkeyList is failed: %s", err)
 	}
 
 	list := []interface{}{}

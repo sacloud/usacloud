@@ -33,7 +33,9 @@ type ListIconParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -75,8 +77,14 @@ func (p *ListIconParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -251,12 +259,26 @@ func (p *ListIconParam) SetParamTemplate(v string) {
 func (p *ListIconParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListIconParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListIconParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListIconParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListIconParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListIconParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListIconParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListIconParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -322,7 +344,9 @@ type CreateIconParam struct {
 	Tags              []string `json:"tags"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Column            []string `json:"column"`
@@ -355,8 +379,14 @@ func (p *CreateIconParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -506,12 +536,26 @@ func (p *CreateIconParam) SetParamTemplate(v string) {
 func (p *CreateIconParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateIconParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateIconParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateIconParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateIconParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateIconParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateIconParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateIconParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -574,7 +618,9 @@ func (p *CreateIconParam) GetQueryFile() string {
 type ReadIconParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -599,8 +645,14 @@ func (p *ReadIconParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -704,12 +756,26 @@ func (p *ReadIconParam) SetParamTemplate(v string) {
 func (p *ReadIconParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadIconParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadIconParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadIconParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadIconParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadIconParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadIconParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadIconParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -782,7 +848,9 @@ type UpdateIconParam struct {
 	Tags              []string   `json:"tags"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -816,8 +884,14 @@ func (p *UpdateIconParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -956,12 +1030,26 @@ func (p *UpdateIconParam) SetParamTemplate(v string) {
 func (p *UpdateIconParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateIconParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateIconParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateIconParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateIconParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateIconParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateIconParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateIconParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1032,7 +1120,9 @@ type DeleteIconParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1060,8 +1150,14 @@ func (p *DeleteIconParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1172,12 +1268,26 @@ func (p *DeleteIconParam) SetParamTemplate(v string) {
 func (p *DeleteIconParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteIconParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteIconParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteIconParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteIconParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteIconParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteIconParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteIconParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

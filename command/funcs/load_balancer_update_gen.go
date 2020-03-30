@@ -23,13 +23,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func LoadBalancerUpdate(ctx command.Context, params *params.UpdateLoadBalancerParam) error {
+func LoadbalancerUpdate(ctx command.Context, params *params.UpdateLoadbalancerParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetLoadBalancerAPI()
+	api := client.GetLoadbalancerAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("LoadBalancerUpdate is failed: %s", e)
+		return fmt.Errorf("LoadbalancerUpdate is failed: %s", e)
 	}
 
 	// set params
@@ -50,7 +50,7 @@ func LoadBalancerUpdate(ctx command.Context, params *params.UpdateLoadBalancerPa
 	// call Update(id)
 	res, err := api.Update(params.Id, p)
 	if err != nil {
-		return fmt.Errorf("LoadBalancerUpdate is failed: %s", err)
+		return fmt.Errorf("LoadbalancerUpdate is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

@@ -29,7 +29,7 @@ import (
 )
 
 func init() {
-	showParam := params.NewShowAuthStatusParam()
+	authstatusShowParam := params.NewShowAuthstatusParam()
 
 	cliCommand := &cli.Command{
 		Name:  "auth-status",
@@ -47,8 +47,16 @@ func init() {
 				Usage: "Set input parameter from string(JSON)",
 			},
 			&cli.StringFlag{
+				Name:  "parameters",
+				Usage: "Set input parameters from JSON string",
+			},
+			&cli.StringFlag{
 				Name:  "param-template-file",
 				Usage: "Set input parameter from file",
+			},
+			&cli.StringFlag{
+				Name:  "parameter-file",
+				Usage: "Set input parameters from file",
 			},
 			&cli.BoolFlag{
 				Name:  "generate-skeleton",
@@ -90,15 +98,23 @@ func init() {
 		Subcommands: []*cli.Command{
 			{
 				Name:  "show",
-				Usage: "Show AuthStatus (default)",
+				Usage: "Show Authstatus (default)",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -146,51 +162,57 @@ func init() {
 						return err
 					}
 
-					showParam.ParamTemplate = c.String("param-template")
-					showParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(showParam)
+					authstatusShowParam.ParamTemplate = c.String("param-template")
+					authstatusShowParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(authstatusShowParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewShowAuthStatusParam()
+						p := params.NewShowAuthstatusParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(showParam, p, mergo.WithOverride)
+						mergo.Merge(authstatusShowParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						showParam.ParamTemplate = c.String("param-template")
+						authstatusShowParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						authstatusShowParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						showParam.ParamTemplateFile = c.String("param-template-file")
+						authstatusShowParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						authstatusShowParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						showParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						authstatusShowParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						showParam.OutputType = c.String("output-type")
+						authstatusShowParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						showParam.Column = c.StringSlice("column")
+						authstatusShowParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						showParam.Quiet = c.Bool("quiet")
+						authstatusShowParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						showParam.Format = c.String("format")
+						authstatusShowParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						showParam.FormatFile = c.String("format-file")
+						authstatusShowParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						showParam.Query = c.String("query")
+						authstatusShowParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						showParam.QueryFile = c.String("query-file")
+						authstatusShowParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -198,7 +220,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = showParam
+					var outputTypeHolder interface{} = authstatusShowParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -209,10 +231,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if showParam.GenerateSkeleton {
-						showParam.GenerateSkeleton = false
-						showParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(showParam, "", "\t")
+					if authstatusShowParam.GenerateSkeleton {
+						authstatusShowParam.GenerateSkeleton = false
+						authstatusShowParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(authstatusShowParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -221,15 +243,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := showParam.Validate(); len(errors) > 0 {
+					if errors := authstatusShowParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), showParam)
+					ctx := command.NewContext(c, c.Args().Slice(), authstatusShowParam)
 
 					// Run command with params
-					return funcs.AuthStatusShow(ctx, showParam)
+					return funcs.AuthstatusShow(ctx, authstatusShowParam)
 
 				},
 			},
@@ -284,6 +306,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("auth-status", "show", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("auth-status", "show", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("auth-status", "show", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

@@ -23,15 +23,17 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListProductServerParam is input parameters for the sacloud API
-type ListProductServerParam struct {
+// ListProductserverParam is input parameters for the sacloud API
+type ListProductserverParam struct {
 	Name              []string     `json:"name"`
 	Id                []sacloud.ID `json:"id"`
 	From              int          `json:"from"`
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -42,13 +44,13 @@ type ListProductServerParam struct {
 	QueryFile         string       `json:"query-file"`
 }
 
-// NewListProductServerParam return new ListProductServerParam
-func NewListProductServerParam() *ListProductServerParam {
-	return &ListProductServerParam{}
+// NewListProductserverParam return new ListProductserverParam
+func NewListProductserverParam() *ListProductserverParam {
+	return &ListProductserverParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListProductServerParam) FillValueToSkeleton() {
+func (p *ListProductserverParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -67,8 +69,14 @@ func (p *ListProductServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -98,7 +106,7 @@ func (p *ListProductServerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListProductServerParam) Validate() []error {
+func (p *ListProductserverParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
@@ -149,141 +157,157 @@ func (p *ListProductServerParam) Validate() []error {
 	return errors
 }
 
-func (p *ListProductServerParam) GetResourceDef() *schema.Resource {
+func (p *ListProductserverParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProductServer"]
 }
 
-func (p *ListProductServerParam) GetCommandDef() *schema.Command {
+func (p *ListProductserverParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListProductServerParam) GetIncludeFields() []string {
+func (p *ListProductserverParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListProductServerParam) GetExcludeFields() []string {
+func (p *ListProductserverParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListProductServerParam) GetTableType() output.TableType {
+func (p *ListProductserverParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListProductServerParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListProductserverParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListProductServerParam) SetName(v []string) {
+func (p *ListProductserverParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListProductServerParam) GetName() []string {
+func (p *ListProductserverParam) GetName() []string {
 	return p.Name
 }
-func (p *ListProductServerParam) SetId(v []sacloud.ID) {
+func (p *ListProductserverParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListProductServerParam) GetId() []sacloud.ID {
+func (p *ListProductserverParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListProductServerParam) SetFrom(v int) {
+func (p *ListProductserverParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListProductServerParam) GetFrom() int {
+func (p *ListProductserverParam) GetFrom() int {
 	return p.From
 }
-func (p *ListProductServerParam) SetMax(v int) {
+func (p *ListProductserverParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListProductServerParam) GetMax() int {
+func (p *ListProductserverParam) GetMax() int {
 	return p.Max
 }
-func (p *ListProductServerParam) SetSort(v []string) {
+func (p *ListProductserverParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListProductServerParam) GetSort() []string {
+func (p *ListProductserverParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListProductServerParam) SetParamTemplate(v string) {
+func (p *ListProductserverParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListProductServerParam) GetParamTemplate() string {
+func (p *ListProductserverParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListProductServerParam) SetParamTemplateFile(v string) {
+func (p *ListProductserverParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListProductserverParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListProductserverParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListProductServerParam) GetParamTemplateFile() string {
+func (p *ListProductserverParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListProductServerParam) SetGenerateSkeleton(v bool) {
+func (p *ListProductserverParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListProductserverParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListProductserverParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListProductServerParam) GetGenerateSkeleton() bool {
+func (p *ListProductserverParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListProductServerParam) SetOutputType(v string) {
+func (p *ListProductserverParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListProductServerParam) GetOutputType() string {
+func (p *ListProductserverParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListProductServerParam) SetColumn(v []string) {
+func (p *ListProductserverParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListProductServerParam) GetColumn() []string {
+func (p *ListProductserverParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ListProductServerParam) SetQuiet(v bool) {
+func (p *ListProductserverParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListProductServerParam) GetQuiet() bool {
+func (p *ListProductserverParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListProductServerParam) SetFormat(v string) {
+func (p *ListProductserverParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListProductServerParam) GetFormat() string {
+func (p *ListProductserverParam) GetFormat() string {
 	return p.Format
 }
-func (p *ListProductServerParam) SetFormatFile(v string) {
+func (p *ListProductserverParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListProductServerParam) GetFormatFile() string {
+func (p *ListProductserverParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListProductServerParam) SetQuery(v string) {
+func (p *ListProductserverParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListProductServerParam) GetQuery() string {
+func (p *ListProductserverParam) GetQuery() string {
 	return p.Query
 }
-func (p *ListProductServerParam) SetQueryFile(v string) {
+func (p *ListProductserverParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListProductServerParam) GetQueryFile() string {
+func (p *ListProductserverParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// ReadProductServerParam is input parameters for the sacloud API
-type ReadProductServerParam struct {
+// ReadProductserverParam is input parameters for the sacloud API
+type ReadProductserverParam struct {
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -295,21 +319,27 @@ type ReadProductServerParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewReadProductServerParam return new ReadProductServerParam
-func NewReadProductServerParam() *ReadProductServerParam {
-	return &ReadProductServerParam{}
+// NewReadProductserverParam return new ReadProductserverParam
+func NewReadProductserverParam() *ReadProductserverParam {
+	return &ReadProductserverParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ReadProductServerParam) FillValueToSkeleton() {
+func (p *ReadProductserverParam) FillValueToSkeleton() {
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -342,7 +372,7 @@ func (p *ReadProductServerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ReadProductServerParam) Validate() []error {
+func (p *ReadProductserverParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -382,111 +412,125 @@ func (p *ReadProductServerParam) Validate() []error {
 	return errors
 }
 
-func (p *ReadProductServerParam) GetResourceDef() *schema.Resource {
+func (p *ReadProductserverParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProductServer"]
 }
 
-func (p *ReadProductServerParam) GetCommandDef() *schema.Command {
+func (p *ReadProductserverParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["read"]
 }
 
-func (p *ReadProductServerParam) GetIncludeFields() []string {
+func (p *ReadProductserverParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ReadProductServerParam) GetExcludeFields() []string {
+func (p *ReadProductserverParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ReadProductServerParam) GetTableType() output.TableType {
+func (p *ReadProductserverParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ReadProductServerParam) GetColumnDefs() []output.ColumnDef {
+func (p *ReadProductserverParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReadProductServerParam) SetAssumeyes(v bool) {
+func (p *ReadProductserverParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ReadProductServerParam) GetAssumeyes() bool {
+func (p *ReadProductserverParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ReadProductServerParam) SetParamTemplate(v string) {
+func (p *ReadProductserverParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ReadProductServerParam) GetParamTemplate() string {
+func (p *ReadProductserverParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ReadProductServerParam) SetParamTemplateFile(v string) {
+func (p *ReadProductserverParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadProductserverParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadProductserverParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ReadProductServerParam) GetParamTemplateFile() string {
+func (p *ReadProductserverParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ReadProductServerParam) SetGenerateSkeleton(v bool) {
+func (p *ReadProductserverParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadProductserverParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadProductserverParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ReadProductServerParam) GetGenerateSkeleton() bool {
+func (p *ReadProductserverParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReadProductServerParam) SetOutputType(v string) {
+func (p *ReadProductserverParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ReadProductServerParam) GetOutputType() string {
+func (p *ReadProductserverParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ReadProductServerParam) SetColumn(v []string) {
+func (p *ReadProductserverParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ReadProductServerParam) GetColumn() []string {
+func (p *ReadProductserverParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ReadProductServerParam) SetQuiet(v bool) {
+func (p *ReadProductserverParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ReadProductServerParam) GetQuiet() bool {
+func (p *ReadProductserverParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ReadProductServerParam) SetFormat(v string) {
+func (p *ReadProductserverParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ReadProductServerParam) GetFormat() string {
+func (p *ReadProductserverParam) GetFormat() string {
 	return p.Format
 }
-func (p *ReadProductServerParam) SetFormatFile(v string) {
+func (p *ReadProductserverParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ReadProductServerParam) GetFormatFile() string {
+func (p *ReadProductserverParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ReadProductServerParam) SetQuery(v string) {
+func (p *ReadProductserverParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ReadProductServerParam) GetQuery() string {
+func (p *ReadProductserverParam) GetQuery() string {
 	return p.Query
 }
-func (p *ReadProductServerParam) SetQueryFile(v string) {
+func (p *ReadProductserverParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ReadProductServerParam) GetQueryFile() string {
+func (p *ReadProductserverParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadProductServerParam) SetId(v sacloud.ID) {
+func (p *ReadProductserverParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadProductServerParam) GetId() sacloud.ID {
+func (p *ReadProductserverParam) GetId() sacloud.ID {
 	return p.Id
 }

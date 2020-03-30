@@ -25,7 +25,9 @@ import (
 // CurrentConfigParam is input parameters for the sacloud API
 type CurrentConfigParam struct {
 	ParamTemplate     string `json:"param-template"`
+	Parameters        string `json:"parameters"`
 	ParamTemplateFile string `json:"param-template-file"`
+	ParameterFile     string `json:"parameter-file"`
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
 }
 
@@ -39,8 +41,14 @@ func (p *CurrentConfigParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -86,12 +94,26 @@ func (p *CurrentConfigParam) SetParamTemplate(v string) {
 func (p *CurrentConfigParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CurrentConfigParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CurrentConfigParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CurrentConfigParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CurrentConfigParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CurrentConfigParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CurrentConfigParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CurrentConfigParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -105,7 +127,9 @@ func (p *CurrentConfigParam) GetGenerateSkeleton() bool {
 type DeleteConfigParam struct {
 	Assumeyes         bool   `json:"assumeyes"`
 	ParamTemplate     string `json:"param-template"`
+	Parameters        string `json:"parameters"`
 	ParamTemplateFile string `json:"param-template-file"`
+	ParameterFile     string `json:"parameter-file"`
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
 }
 
@@ -122,8 +146,14 @@ func (p *DeleteConfigParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -176,12 +206,26 @@ func (p *DeleteConfigParam) SetParamTemplate(v string) {
 func (p *DeleteConfigParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteConfigParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteConfigParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteConfigParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteConfigParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteConfigParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteConfigParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteConfigParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -198,7 +242,9 @@ type EditConfigParam struct {
 	Zone              string `json:"zone"`
 	DefaultOutputType string `json:"default-output-type"`
 	ParamTemplate     string `json:"param-template"`
+	Parameters        string `json:"parameters"`
 	ParamTemplateFile string `json:"param-template-file"`
+	ParameterFile     string `json:"parameter-file"`
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
 }
 
@@ -224,8 +270,14 @@ func (p *EditConfigParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -313,12 +365,26 @@ func (p *EditConfigParam) SetParamTemplate(v string) {
 func (p *EditConfigParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *EditConfigParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *EditConfigParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *EditConfigParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *EditConfigParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *EditConfigParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *EditConfigParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *EditConfigParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -331,7 +397,9 @@ func (p *EditConfigParam) GetGenerateSkeleton() bool {
 // ListConfigParam is input parameters for the sacloud API
 type ListConfigParam struct {
 	ParamTemplate     string `json:"param-template"`
+	Parameters        string `json:"parameters"`
 	ParamTemplateFile string `json:"param-template-file"`
+	ParameterFile     string `json:"parameter-file"`
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
 }
 
@@ -345,8 +413,14 @@ func (p *ListConfigParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -392,12 +466,26 @@ func (p *ListConfigParam) SetParamTemplate(v string) {
 func (p *ListConfigParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListConfigParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListConfigParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListConfigParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListConfigParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListConfigParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListConfigParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListConfigParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -410,7 +498,9 @@ func (p *ListConfigParam) GetGenerateSkeleton() bool {
 // MigrateConfigParam is input parameters for the sacloud API
 type MigrateConfigParam struct {
 	ParamTemplate     string `json:"param-template"`
+	Parameters        string `json:"parameters"`
 	ParamTemplateFile string `json:"param-template-file"`
+	ParameterFile     string `json:"parameter-file"`
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
 }
 
@@ -424,8 +514,14 @@ func (p *MigrateConfigParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -471,12 +567,26 @@ func (p *MigrateConfigParam) SetParamTemplate(v string) {
 func (p *MigrateConfigParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MigrateConfigParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MigrateConfigParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MigrateConfigParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MigrateConfigParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MigrateConfigParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MigrateConfigParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MigrateConfigParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -489,7 +599,9 @@ func (p *MigrateConfigParam) GetGenerateSkeleton() bool {
 // ShowConfigParam is input parameters for the sacloud API
 type ShowConfigParam struct {
 	ParamTemplate     string `json:"param-template"`
+	Parameters        string `json:"parameters"`
 	ParamTemplateFile string `json:"param-template-file"`
+	ParameterFile     string `json:"parameter-file"`
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
 }
 
@@ -503,8 +615,14 @@ func (p *ShowConfigParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -550,12 +668,26 @@ func (p *ShowConfigParam) SetParamTemplate(v string) {
 func (p *ShowConfigParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ShowConfigParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShowConfigParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ShowConfigParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ShowConfigParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ShowConfigParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShowConfigParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ShowConfigParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -568,7 +700,9 @@ func (p *ShowConfigParam) GetGenerateSkeleton() bool {
 // UseConfigParam is input parameters for the sacloud API
 type UseConfigParam struct {
 	ParamTemplate     string `json:"param-template"`
+	Parameters        string `json:"parameters"`
 	ParamTemplateFile string `json:"param-template-file"`
+	ParameterFile     string `json:"parameter-file"`
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
 }
 
@@ -582,8 +716,14 @@ func (p *UseConfigParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -629,12 +769,26 @@ func (p *UseConfigParam) SetParamTemplate(v string) {
 func (p *UseConfigParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UseConfigParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UseConfigParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UseConfigParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UseConfigParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UseConfigParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UseConfigParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UseConfigParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

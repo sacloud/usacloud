@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func AutoBackupDelete(ctx command.Context, params *params.DeleteAutoBackupParam) error {
+func AutobackupDelete(ctx command.Context, params *params.DeleteAutobackupParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetAutoBackupAPI()
+	api := client.GetAutobackupAPI()
 
 	// set params
 
 	// call Delete(id)
 	res, err := api.Delete(params.Id)
 	if err != nil {
-		return fmt.Errorf("AutoBackupDelete is failed: %s", err)
+		return fmt.Errorf("AutobackupDelete is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

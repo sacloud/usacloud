@@ -23,8 +23,8 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListLoadBalancerParam is input parameters for the sacloud API
-type ListLoadBalancerParam struct {
+// ListLoadbalancerParam is input parameters for the sacloud API
+type ListLoadbalancerParam struct {
 	Name              []string     `json:"name"`
 	Id                []sacloud.ID `json:"id"`
 	Tags              []string     `json:"tags"`
@@ -32,7 +32,9 @@ type ListLoadBalancerParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -43,13 +45,13 @@ type ListLoadBalancerParam struct {
 	QueryFile         string       `json:"query-file"`
 }
 
-// NewListLoadBalancerParam return new ListLoadBalancerParam
-func NewListLoadBalancerParam() *ListLoadBalancerParam {
-	return &ListLoadBalancerParam{}
+// NewListLoadbalancerParam return new ListLoadbalancerParam
+func NewListLoadbalancerParam() *ListLoadbalancerParam {
+	return &ListLoadbalancerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListLoadBalancerParam) FillValueToSkeleton() {
+func (p *ListLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -71,8 +73,14 @@ func (p *ListLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -102,7 +110,7 @@ func (p *ListLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListLoadBalancerParam) Validate() []error {
+func (p *ListLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
@@ -160,151 +168,165 @@ func (p *ListLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *ListLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *ListLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ListLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *ListLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListLoadBalancerParam) GetIncludeFields() []string {
+func (p *ListLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListLoadBalancerParam) GetExcludeFields() []string {
+func (p *ListLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListLoadBalancerParam) GetTableType() output.TableType {
+func (p *ListLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListLoadBalancerParam) SetName(v []string) {
+func (p *ListLoadbalancerParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListLoadBalancerParam) GetName() []string {
+func (p *ListLoadbalancerParam) GetName() []string {
 	return p.Name
 }
-func (p *ListLoadBalancerParam) SetId(v []sacloud.ID) {
+func (p *ListLoadbalancerParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListLoadBalancerParam) GetId() []sacloud.ID {
+func (p *ListLoadbalancerParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListLoadBalancerParam) SetTags(v []string) {
+func (p *ListLoadbalancerParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *ListLoadBalancerParam) GetTags() []string {
+func (p *ListLoadbalancerParam) GetTags() []string {
 	return p.Tags
 }
-func (p *ListLoadBalancerParam) SetFrom(v int) {
+func (p *ListLoadbalancerParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListLoadBalancerParam) GetFrom() int {
+func (p *ListLoadbalancerParam) GetFrom() int {
 	return p.From
 }
-func (p *ListLoadBalancerParam) SetMax(v int) {
+func (p *ListLoadbalancerParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListLoadBalancerParam) GetMax() int {
+func (p *ListLoadbalancerParam) GetMax() int {
 	return p.Max
 }
-func (p *ListLoadBalancerParam) SetSort(v []string) {
+func (p *ListLoadbalancerParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListLoadBalancerParam) GetSort() []string {
+func (p *ListLoadbalancerParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListLoadBalancerParam) SetParamTemplate(v string) {
+func (p *ListLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListLoadBalancerParam) GetParamTemplate() string {
+func (p *ListLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *ListLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListLoadBalancerParam) GetParamTemplateFile() string {
+func (p *ListLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *ListLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *ListLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListLoadBalancerParam) SetOutputType(v string) {
+func (p *ListLoadbalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListLoadBalancerParam) GetOutputType() string {
+func (p *ListLoadbalancerParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListLoadBalancerParam) SetColumn(v []string) {
+func (p *ListLoadbalancerParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListLoadBalancerParam) GetColumn() []string {
+func (p *ListLoadbalancerParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ListLoadBalancerParam) SetQuiet(v bool) {
+func (p *ListLoadbalancerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListLoadBalancerParam) GetQuiet() bool {
+func (p *ListLoadbalancerParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListLoadBalancerParam) SetFormat(v string) {
+func (p *ListLoadbalancerParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListLoadBalancerParam) GetFormat() string {
+func (p *ListLoadbalancerParam) GetFormat() string {
 	return p.Format
 }
-func (p *ListLoadBalancerParam) SetFormatFile(v string) {
+func (p *ListLoadbalancerParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListLoadBalancerParam) GetFormatFile() string {
+func (p *ListLoadbalancerParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListLoadBalancerParam) SetQuery(v string) {
+func (p *ListLoadbalancerParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListLoadBalancerParam) GetQuery() string {
+func (p *ListLoadbalancerParam) GetQuery() string {
 	return p.Query
 }
-func (p *ListLoadBalancerParam) SetQueryFile(v string) {
+func (p *ListLoadbalancerParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListLoadBalancerParam) GetQueryFile() string {
+func (p *ListLoadbalancerParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// CreateLoadBalancerParam is input parameters for the sacloud API
-type CreateLoadBalancerParam struct {
+// CreateLoadbalancerParam is input parameters for the sacloud API
+type CreateLoadbalancerParam struct {
 	SwitchId          sacloud.ID `json:"switch-id"`
 	Vrid              int        `json:"vrid"`
 	HighAvailability  bool       `json:"high-availability"`
 	Plan              string     `json:"plan"`
-	Ipaddress1        string     `json:"ipaddress1"`
-	Ipaddress2        string     `json:"ipaddress2"`
+	Ipaddress1        string     `json:"ipaddress-1"`
+	Ipaddress2        string     `json:"ipaddress-2"`
 	NwMaskLen         int        `json:"nw-mask-len"`
 	DefaultRoute      string     `json:"default-route"`
 	Name              string     `json:"name"`
@@ -313,7 +335,9 @@ type CreateLoadBalancerParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -324,9 +348,9 @@ type CreateLoadBalancerParam struct {
 	QueryFile         string     `json:"query-file"`
 }
 
-// NewCreateLoadBalancerParam return new CreateLoadBalancerParam
-func NewCreateLoadBalancerParam() *CreateLoadBalancerParam {
-	return &CreateLoadBalancerParam{
+// NewCreateLoadbalancerParam return new CreateLoadbalancerParam
+func NewCreateLoadbalancerParam() *CreateLoadbalancerParam {
+	return &CreateLoadbalancerParam{
 
 		Vrid: 1,
 		Plan: "standard",
@@ -334,7 +358,7 @@ func NewCreateLoadBalancerParam() *CreateLoadBalancerParam {
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CreateLoadBalancerParam) FillValueToSkeleton() {
+func (p *CreateLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.SwitchId) {
 		p.SwitchId = sacloud.ID(0)
 	}
@@ -377,8 +401,14 @@ func (p *CreateLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -408,7 +438,7 @@ func (p *CreateLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CreateLoadBalancerParam) Validate() []error {
+func (p *CreateLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["LoadBalancer"].Commands["create"].Params["switch-id"].ValidateFunc
@@ -440,21 +470,21 @@ func (p *CreateLoadBalancerParam) Validate() []error {
 	}
 	{
 		validator := validateRequired
-		errs := validator("--ipaddress1", p.Ipaddress1)
+		errs := validator("--ipaddress-1", p.Ipaddress1)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
 		validator := define.Resources["LoadBalancer"].Commands["create"].Params["ipaddress1"].ValidateFunc
-		errs := validator("--ipaddress1", p.Ipaddress1)
+		errs := validator("--ipaddress-1", p.Ipaddress1)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
 		validator := define.Resources["LoadBalancer"].Commands["create"].Params["ipaddress2"].ValidateFunc
-		errs := validator("--ipaddress2", p.Ipaddress2)
+		errs := validator("--ipaddress-2", p.Ipaddress2)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -539,197 +569,213 @@ func (p *CreateLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *CreateLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *CreateLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *CreateLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *CreateLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["create"]
 }
 
-func (p *CreateLoadBalancerParam) GetIncludeFields() []string {
+func (p *CreateLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CreateLoadBalancerParam) GetExcludeFields() []string {
+func (p *CreateLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CreateLoadBalancerParam) GetTableType() output.TableType {
+func (p *CreateLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CreateLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *CreateLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CreateLoadBalancerParam) SetSwitchId(v sacloud.ID) {
+func (p *CreateLoadbalancerParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
 
-func (p *CreateLoadBalancerParam) GetSwitchId() sacloud.ID {
+func (p *CreateLoadbalancerParam) GetSwitchId() sacloud.ID {
 	return p.SwitchId
 }
-func (p *CreateLoadBalancerParam) SetVrid(v int) {
+func (p *CreateLoadbalancerParam) SetVrid(v int) {
 	p.Vrid = v
 }
 
-func (p *CreateLoadBalancerParam) GetVrid() int {
+func (p *CreateLoadbalancerParam) GetVrid() int {
 	return p.Vrid
 }
-func (p *CreateLoadBalancerParam) SetHighAvailability(v bool) {
+func (p *CreateLoadbalancerParam) SetHighAvailability(v bool) {
 	p.HighAvailability = v
 }
 
-func (p *CreateLoadBalancerParam) GetHighAvailability() bool {
+func (p *CreateLoadbalancerParam) GetHighAvailability() bool {
 	return p.HighAvailability
 }
-func (p *CreateLoadBalancerParam) SetPlan(v string) {
+func (p *CreateLoadbalancerParam) SetPlan(v string) {
 	p.Plan = v
 }
 
-func (p *CreateLoadBalancerParam) GetPlan() string {
+func (p *CreateLoadbalancerParam) GetPlan() string {
 	return p.Plan
 }
-func (p *CreateLoadBalancerParam) SetIpaddress1(v string) {
+func (p *CreateLoadbalancerParam) SetIpaddress1(v string) {
 	p.Ipaddress1 = v
 }
 
-func (p *CreateLoadBalancerParam) GetIpaddress1() string {
+func (p *CreateLoadbalancerParam) GetIpaddress1() string {
 	return p.Ipaddress1
 }
-func (p *CreateLoadBalancerParam) SetIpaddress2(v string) {
+func (p *CreateLoadbalancerParam) SetIpaddress2(v string) {
 	p.Ipaddress2 = v
 }
 
-func (p *CreateLoadBalancerParam) GetIpaddress2() string {
+func (p *CreateLoadbalancerParam) GetIpaddress2() string {
 	return p.Ipaddress2
 }
-func (p *CreateLoadBalancerParam) SetNwMaskLen(v int) {
+func (p *CreateLoadbalancerParam) SetNwMaskLen(v int) {
 	p.NwMaskLen = v
 }
 
-func (p *CreateLoadBalancerParam) GetNwMaskLen() int {
+func (p *CreateLoadbalancerParam) GetNwMaskLen() int {
 	return p.NwMaskLen
 }
-func (p *CreateLoadBalancerParam) SetDefaultRoute(v string) {
+func (p *CreateLoadbalancerParam) SetDefaultRoute(v string) {
 	p.DefaultRoute = v
 }
 
-func (p *CreateLoadBalancerParam) GetDefaultRoute() string {
+func (p *CreateLoadbalancerParam) GetDefaultRoute() string {
 	return p.DefaultRoute
 }
-func (p *CreateLoadBalancerParam) SetName(v string) {
+func (p *CreateLoadbalancerParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *CreateLoadBalancerParam) GetName() string {
+func (p *CreateLoadbalancerParam) GetName() string {
 	return p.Name
 }
-func (p *CreateLoadBalancerParam) SetDescription(v string) {
+func (p *CreateLoadbalancerParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *CreateLoadBalancerParam) GetDescription() string {
+func (p *CreateLoadbalancerParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateLoadBalancerParam) SetTags(v []string) {
+func (p *CreateLoadbalancerParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreateLoadBalancerParam) GetTags() []string {
+func (p *CreateLoadbalancerParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateLoadBalancerParam) SetIconId(v sacloud.ID) {
+func (p *CreateLoadbalancerParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateLoadBalancerParam) GetIconId() sacloud.ID {
+func (p *CreateLoadbalancerParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *CreateLoadBalancerParam) SetAssumeyes(v bool) {
+func (p *CreateLoadbalancerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *CreateLoadBalancerParam) GetAssumeyes() bool {
+func (p *CreateLoadbalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CreateLoadBalancerParam) SetParamTemplate(v string) {
+func (p *CreateLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CreateLoadBalancerParam) GetParamTemplate() string {
+func (p *CreateLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CreateLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *CreateLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CreateLoadBalancerParam) GetParamTemplateFile() string {
+func (p *CreateLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CreateLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *CreateLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CreateLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *CreateLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CreateLoadBalancerParam) SetOutputType(v string) {
+func (p *CreateLoadbalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CreateLoadBalancerParam) GetOutputType() string {
+func (p *CreateLoadbalancerParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CreateLoadBalancerParam) SetColumn(v []string) {
+func (p *CreateLoadbalancerParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CreateLoadBalancerParam) GetColumn() []string {
+func (p *CreateLoadbalancerParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CreateLoadBalancerParam) SetQuiet(v bool) {
+func (p *CreateLoadbalancerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CreateLoadBalancerParam) GetQuiet() bool {
+func (p *CreateLoadbalancerParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CreateLoadBalancerParam) SetFormat(v string) {
+func (p *CreateLoadbalancerParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CreateLoadBalancerParam) GetFormat() string {
+func (p *CreateLoadbalancerParam) GetFormat() string {
 	return p.Format
 }
-func (p *CreateLoadBalancerParam) SetFormatFile(v string) {
+func (p *CreateLoadbalancerParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CreateLoadBalancerParam) GetFormatFile() string {
+func (p *CreateLoadbalancerParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CreateLoadBalancerParam) SetQuery(v string) {
+func (p *CreateLoadbalancerParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CreateLoadBalancerParam) GetQuery() string {
+func (p *CreateLoadbalancerParam) GetQuery() string {
 	return p.Query
 }
-func (p *CreateLoadBalancerParam) SetQueryFile(v string) {
+func (p *CreateLoadbalancerParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CreateLoadBalancerParam) GetQueryFile() string {
+func (p *CreateLoadbalancerParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// ReadLoadBalancerParam is input parameters for the sacloud API
-type ReadLoadBalancerParam struct {
+// ReadLoadbalancerParam is input parameters for the sacloud API
+type ReadLoadbalancerParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -741,21 +787,27 @@ type ReadLoadBalancerParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewReadLoadBalancerParam return new ReadLoadBalancerParam
-func NewReadLoadBalancerParam() *ReadLoadBalancerParam {
-	return &ReadLoadBalancerParam{}
+// NewReadLoadbalancerParam return new ReadLoadbalancerParam
+func NewReadLoadbalancerParam() *ReadLoadbalancerParam {
+	return &ReadLoadbalancerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ReadLoadBalancerParam) FillValueToSkeleton() {
+func (p *ReadLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -788,7 +840,7 @@ func (p *ReadLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ReadLoadBalancerParam) Validate() []error {
+func (p *ReadLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -821,117 +873,131 @@ func (p *ReadLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *ReadLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *ReadLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ReadLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *ReadLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["read"]
 }
 
-func (p *ReadLoadBalancerParam) GetIncludeFields() []string {
+func (p *ReadLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ReadLoadBalancerParam) GetExcludeFields() []string {
+func (p *ReadLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ReadLoadBalancerParam) GetTableType() output.TableType {
+func (p *ReadLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ReadLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *ReadLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReadLoadBalancerParam) SetSelector(v []string) {
+func (p *ReadLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ReadLoadBalancerParam) GetSelector() []string {
+func (p *ReadLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ReadLoadBalancerParam) SetParamTemplate(v string) {
+func (p *ReadLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ReadLoadBalancerParam) GetParamTemplate() string {
+func (p *ReadLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ReadLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *ReadLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ReadLoadBalancerParam) GetParamTemplateFile() string {
+func (p *ReadLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ReadLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *ReadLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ReadLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *ReadLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReadLoadBalancerParam) SetOutputType(v string) {
+func (p *ReadLoadbalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ReadLoadBalancerParam) GetOutputType() string {
+func (p *ReadLoadbalancerParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ReadLoadBalancerParam) SetColumn(v []string) {
+func (p *ReadLoadbalancerParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ReadLoadBalancerParam) GetColumn() []string {
+func (p *ReadLoadbalancerParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ReadLoadBalancerParam) SetQuiet(v bool) {
+func (p *ReadLoadbalancerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ReadLoadBalancerParam) GetQuiet() bool {
+func (p *ReadLoadbalancerParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ReadLoadBalancerParam) SetFormat(v string) {
+func (p *ReadLoadbalancerParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ReadLoadBalancerParam) GetFormat() string {
+func (p *ReadLoadbalancerParam) GetFormat() string {
 	return p.Format
 }
-func (p *ReadLoadBalancerParam) SetFormatFile(v string) {
+func (p *ReadLoadbalancerParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ReadLoadBalancerParam) GetFormatFile() string {
+func (p *ReadLoadbalancerParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ReadLoadBalancerParam) SetQuery(v string) {
+func (p *ReadLoadbalancerParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ReadLoadBalancerParam) GetQuery() string {
+func (p *ReadLoadbalancerParam) GetQuery() string {
 	return p.Query
 }
-func (p *ReadLoadBalancerParam) SetQueryFile(v string) {
+func (p *ReadLoadbalancerParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ReadLoadBalancerParam) GetQueryFile() string {
+func (p *ReadLoadbalancerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *ReadLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadLoadBalancerParam) GetId() sacloud.ID {
+func (p *ReadLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// UpdateLoadBalancerParam is input parameters for the sacloud API
-type UpdateLoadBalancerParam struct {
+// UpdateLoadbalancerParam is input parameters for the sacloud API
+type UpdateLoadbalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Name              string     `json:"name"`
 	Description       string     `json:"description"`
@@ -939,7 +1005,9 @@ type UpdateLoadBalancerParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -951,13 +1019,13 @@ type UpdateLoadBalancerParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewUpdateLoadBalancerParam return new UpdateLoadBalancerParam
-func NewUpdateLoadBalancerParam() *UpdateLoadBalancerParam {
-	return &UpdateLoadBalancerParam{}
+// NewUpdateLoadbalancerParam return new UpdateLoadbalancerParam
+func NewUpdateLoadbalancerParam() *UpdateLoadbalancerParam {
+	return &UpdateLoadbalancerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *UpdateLoadBalancerParam) FillValueToSkeleton() {
+func (p *UpdateLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -979,8 +1047,14 @@ func (p *UpdateLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1013,7 +1087,7 @@ func (p *UpdateLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *UpdateLoadBalancerParam) Validate() []error {
+func (p *UpdateLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["LoadBalancer"].Commands["update"].Params["name"].ValidateFunc
@@ -1074,157 +1148,173 @@ func (p *UpdateLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *UpdateLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *UpdateLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *UpdateLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *UpdateLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["update"]
 }
 
-func (p *UpdateLoadBalancerParam) GetIncludeFields() []string {
+func (p *UpdateLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *UpdateLoadBalancerParam) GetExcludeFields() []string {
+func (p *UpdateLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *UpdateLoadBalancerParam) GetTableType() output.TableType {
+func (p *UpdateLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *UpdateLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *UpdateLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *UpdateLoadBalancerParam) SetSelector(v []string) {
+func (p *UpdateLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *UpdateLoadBalancerParam) GetSelector() []string {
+func (p *UpdateLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *UpdateLoadBalancerParam) SetName(v string) {
+func (p *UpdateLoadbalancerParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *UpdateLoadBalancerParam) GetName() string {
+func (p *UpdateLoadbalancerParam) GetName() string {
 	return p.Name
 }
-func (p *UpdateLoadBalancerParam) SetDescription(v string) {
+func (p *UpdateLoadbalancerParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdateLoadBalancerParam) GetDescription() string {
+func (p *UpdateLoadbalancerParam) GetDescription() string {
 	return p.Description
 }
-func (p *UpdateLoadBalancerParam) SetTags(v []string) {
+func (p *UpdateLoadbalancerParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *UpdateLoadBalancerParam) GetTags() []string {
+func (p *UpdateLoadbalancerParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateLoadBalancerParam) SetIconId(v sacloud.ID) {
+func (p *UpdateLoadbalancerParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateLoadBalancerParam) GetIconId() sacloud.ID {
+func (p *UpdateLoadbalancerParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *UpdateLoadBalancerParam) SetAssumeyes(v bool) {
+func (p *UpdateLoadbalancerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *UpdateLoadBalancerParam) GetAssumeyes() bool {
+func (p *UpdateLoadbalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *UpdateLoadBalancerParam) SetParamTemplate(v string) {
+func (p *UpdateLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *UpdateLoadBalancerParam) GetParamTemplate() string {
+func (p *UpdateLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *UpdateLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *UpdateLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *UpdateLoadBalancerParam) GetParamTemplateFile() string {
+func (p *UpdateLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *UpdateLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *UpdateLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *UpdateLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *UpdateLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *UpdateLoadBalancerParam) SetOutputType(v string) {
+func (p *UpdateLoadbalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *UpdateLoadBalancerParam) GetOutputType() string {
+func (p *UpdateLoadbalancerParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *UpdateLoadBalancerParam) SetColumn(v []string) {
+func (p *UpdateLoadbalancerParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *UpdateLoadBalancerParam) GetColumn() []string {
+func (p *UpdateLoadbalancerParam) GetColumn() []string {
 	return p.Column
 }
-func (p *UpdateLoadBalancerParam) SetQuiet(v bool) {
+func (p *UpdateLoadbalancerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *UpdateLoadBalancerParam) GetQuiet() bool {
+func (p *UpdateLoadbalancerParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *UpdateLoadBalancerParam) SetFormat(v string) {
+func (p *UpdateLoadbalancerParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *UpdateLoadBalancerParam) GetFormat() string {
+func (p *UpdateLoadbalancerParam) GetFormat() string {
 	return p.Format
 }
-func (p *UpdateLoadBalancerParam) SetFormatFile(v string) {
+func (p *UpdateLoadbalancerParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *UpdateLoadBalancerParam) GetFormatFile() string {
+func (p *UpdateLoadbalancerParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *UpdateLoadBalancerParam) SetQuery(v string) {
+func (p *UpdateLoadbalancerParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *UpdateLoadBalancerParam) GetQuery() string {
+func (p *UpdateLoadbalancerParam) GetQuery() string {
 	return p.Query
 }
-func (p *UpdateLoadBalancerParam) SetQueryFile(v string) {
+func (p *UpdateLoadbalancerParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *UpdateLoadBalancerParam) GetQueryFile() string {
+func (p *UpdateLoadbalancerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *UpdateLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateLoadBalancerParam) GetId() sacloud.ID {
+func (p *UpdateLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// DeleteLoadBalancerParam is input parameters for the sacloud API
-type DeleteLoadBalancerParam struct {
+// DeleteLoadbalancerParam is input parameters for the sacloud API
+type DeleteLoadbalancerParam struct {
 	Force             bool       `json:"force"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1236,13 +1326,13 @@ type DeleteLoadBalancerParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewDeleteLoadBalancerParam return new DeleteLoadBalancerParam
-func NewDeleteLoadBalancerParam() *DeleteLoadBalancerParam {
-	return &DeleteLoadBalancerParam{}
+// NewDeleteLoadbalancerParam return new DeleteLoadbalancerParam
+func NewDeleteLoadbalancerParam() *DeleteLoadbalancerParam {
+	return &DeleteLoadbalancerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *DeleteLoadBalancerParam) FillValueToSkeleton() {
+func (p *DeleteLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.Force) {
 		p.Force = false
 	}
@@ -1255,8 +1345,14 @@ func (p *DeleteLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1289,7 +1385,7 @@ func (p *DeleteLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *DeleteLoadBalancerParam) Validate() []error {
+func (p *DeleteLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1322,146 +1418,162 @@ func (p *DeleteLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *DeleteLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *DeleteLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *DeleteLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *DeleteLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["delete"]
 }
 
-func (p *DeleteLoadBalancerParam) GetIncludeFields() []string {
+func (p *DeleteLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *DeleteLoadBalancerParam) GetExcludeFields() []string {
+func (p *DeleteLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *DeleteLoadBalancerParam) GetTableType() output.TableType {
+func (p *DeleteLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *DeleteLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *DeleteLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DeleteLoadBalancerParam) SetForce(v bool) {
+func (p *DeleteLoadbalancerParam) SetForce(v bool) {
 	p.Force = v
 }
 
-func (p *DeleteLoadBalancerParam) GetForce() bool {
+func (p *DeleteLoadbalancerParam) GetForce() bool {
 	return p.Force
 }
-func (p *DeleteLoadBalancerParam) SetSelector(v []string) {
+func (p *DeleteLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *DeleteLoadBalancerParam) GetSelector() []string {
+func (p *DeleteLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *DeleteLoadBalancerParam) SetAssumeyes(v bool) {
+func (p *DeleteLoadbalancerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *DeleteLoadBalancerParam) GetAssumeyes() bool {
+func (p *DeleteLoadbalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeleteLoadBalancerParam) SetParamTemplate(v string) {
+func (p *DeleteLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *DeleteLoadBalancerParam) GetParamTemplate() string {
+func (p *DeleteLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *DeleteLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *DeleteLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *DeleteLoadBalancerParam) GetParamTemplateFile() string {
+func (p *DeleteLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *DeleteLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *DeleteLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *DeleteLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *DeleteLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DeleteLoadBalancerParam) SetOutputType(v string) {
+func (p *DeleteLoadbalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *DeleteLoadBalancerParam) GetOutputType() string {
+func (p *DeleteLoadbalancerParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *DeleteLoadBalancerParam) SetColumn(v []string) {
+func (p *DeleteLoadbalancerParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *DeleteLoadBalancerParam) GetColumn() []string {
+func (p *DeleteLoadbalancerParam) GetColumn() []string {
 	return p.Column
 }
-func (p *DeleteLoadBalancerParam) SetQuiet(v bool) {
+func (p *DeleteLoadbalancerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *DeleteLoadBalancerParam) GetQuiet() bool {
+func (p *DeleteLoadbalancerParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *DeleteLoadBalancerParam) SetFormat(v string) {
+func (p *DeleteLoadbalancerParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *DeleteLoadBalancerParam) GetFormat() string {
+func (p *DeleteLoadbalancerParam) GetFormat() string {
 	return p.Format
 }
-func (p *DeleteLoadBalancerParam) SetFormatFile(v string) {
+func (p *DeleteLoadbalancerParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *DeleteLoadBalancerParam) GetFormatFile() string {
+func (p *DeleteLoadbalancerParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *DeleteLoadBalancerParam) SetQuery(v string) {
+func (p *DeleteLoadbalancerParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *DeleteLoadBalancerParam) GetQuery() string {
+func (p *DeleteLoadbalancerParam) GetQuery() string {
 	return p.Query
 }
-func (p *DeleteLoadBalancerParam) SetQueryFile(v string) {
+func (p *DeleteLoadbalancerParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *DeleteLoadBalancerParam) GetQueryFile() string {
+func (p *DeleteLoadbalancerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *DeleteLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteLoadBalancerParam) GetId() sacloud.ID {
+func (p *DeleteLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// BootLoadBalancerParam is input parameters for the sacloud API
-type BootLoadBalancerParam struct {
+// BootLoadbalancerParam is input parameters for the sacloud API
+type BootLoadbalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewBootLoadBalancerParam return new BootLoadBalancerParam
-func NewBootLoadBalancerParam() *BootLoadBalancerParam {
-	return &BootLoadBalancerParam{}
+// NewBootLoadbalancerParam return new BootLoadbalancerParam
+func NewBootLoadbalancerParam() *BootLoadbalancerParam {
+	return &BootLoadbalancerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *BootLoadBalancerParam) FillValueToSkeleton() {
+func (p *BootLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1471,8 +1583,14 @@ func (p *BootLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1484,7 +1602,7 @@ func (p *BootLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *BootLoadBalancerParam) Validate() []error {
+func (p *BootLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1497,90 +1615,106 @@ func (p *BootLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *BootLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *BootLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *BootLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *BootLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["boot"]
 }
 
-func (p *BootLoadBalancerParam) GetIncludeFields() []string {
+func (p *BootLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *BootLoadBalancerParam) GetExcludeFields() []string {
+func (p *BootLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *BootLoadBalancerParam) GetTableType() output.TableType {
+func (p *BootLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *BootLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *BootLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *BootLoadBalancerParam) SetSelector(v []string) {
+func (p *BootLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *BootLoadBalancerParam) GetSelector() []string {
+func (p *BootLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *BootLoadBalancerParam) SetAssumeyes(v bool) {
+func (p *BootLoadbalancerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *BootLoadBalancerParam) GetAssumeyes() bool {
+func (p *BootLoadbalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *BootLoadBalancerParam) SetParamTemplate(v string) {
+func (p *BootLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *BootLoadBalancerParam) GetParamTemplate() string {
+func (p *BootLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *BootLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *BootLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BootLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BootLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *BootLoadBalancerParam) GetParamTemplateFile() string {
+func (p *BootLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *BootLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *BootLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BootLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BootLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *BootLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *BootLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *BootLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *BootLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *BootLoadBalancerParam) GetId() sacloud.ID {
+func (p *BootLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ShutdownLoadBalancerParam is input parameters for the sacloud API
-type ShutdownLoadBalancerParam struct {
+// ShutdownLoadbalancerParam is input parameters for the sacloud API
+type ShutdownLoadbalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewShutdownLoadBalancerParam return new ShutdownLoadBalancerParam
-func NewShutdownLoadBalancerParam() *ShutdownLoadBalancerParam {
-	return &ShutdownLoadBalancerParam{}
+// NewShutdownLoadbalancerParam return new ShutdownLoadbalancerParam
+func NewShutdownLoadbalancerParam() *ShutdownLoadbalancerParam {
+	return &ShutdownLoadbalancerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ShutdownLoadBalancerParam) FillValueToSkeleton() {
+func (p *ShutdownLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1590,8 +1724,14 @@ func (p *ShutdownLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1603,7 +1743,7 @@ func (p *ShutdownLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ShutdownLoadBalancerParam) Validate() []error {
+func (p *ShutdownLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1616,90 +1756,106 @@ func (p *ShutdownLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *ShutdownLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *ShutdownLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ShutdownLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *ShutdownLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["shutdown"]
 }
 
-func (p *ShutdownLoadBalancerParam) GetIncludeFields() []string {
+func (p *ShutdownLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ShutdownLoadBalancerParam) GetExcludeFields() []string {
+func (p *ShutdownLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ShutdownLoadBalancerParam) GetTableType() output.TableType {
+func (p *ShutdownLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ShutdownLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *ShutdownLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ShutdownLoadBalancerParam) SetSelector(v []string) {
+func (p *ShutdownLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ShutdownLoadBalancerParam) GetSelector() []string {
+func (p *ShutdownLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ShutdownLoadBalancerParam) SetAssumeyes(v bool) {
+func (p *ShutdownLoadbalancerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ShutdownLoadBalancerParam) GetAssumeyes() bool {
+func (p *ShutdownLoadbalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ShutdownLoadBalancerParam) SetParamTemplate(v string) {
+func (p *ShutdownLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ShutdownLoadBalancerParam) GetParamTemplate() string {
+func (p *ShutdownLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ShutdownLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *ShutdownLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ShutdownLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ShutdownLoadBalancerParam) GetParamTemplateFile() string {
+func (p *ShutdownLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ShutdownLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *ShutdownLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ShutdownLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ShutdownLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *ShutdownLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ShutdownLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *ShutdownLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ShutdownLoadBalancerParam) GetId() sacloud.ID {
+func (p *ShutdownLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ShutdownForceLoadBalancerParam is input parameters for the sacloud API
-type ShutdownForceLoadBalancerParam struct {
+// ShutdownForceLoadbalancerParam is input parameters for the sacloud API
+type ShutdownForceLoadbalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewShutdownForceLoadBalancerParam return new ShutdownForceLoadBalancerParam
-func NewShutdownForceLoadBalancerParam() *ShutdownForceLoadBalancerParam {
-	return &ShutdownForceLoadBalancerParam{}
+// NewShutdownForceLoadbalancerParam return new ShutdownForceLoadbalancerParam
+func NewShutdownForceLoadbalancerParam() *ShutdownForceLoadbalancerParam {
+	return &ShutdownForceLoadbalancerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ShutdownForceLoadBalancerParam) FillValueToSkeleton() {
+func (p *ShutdownForceLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1709,8 +1865,14 @@ func (p *ShutdownForceLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1722,7 +1884,7 @@ func (p *ShutdownForceLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ShutdownForceLoadBalancerParam) Validate() []error {
+func (p *ShutdownForceLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1735,90 +1897,106 @@ func (p *ShutdownForceLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *ShutdownForceLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *ShutdownForceLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ShutdownForceLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *ShutdownForceLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["shutdown-force"]
 }
 
-func (p *ShutdownForceLoadBalancerParam) GetIncludeFields() []string {
+func (p *ShutdownForceLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ShutdownForceLoadBalancerParam) GetExcludeFields() []string {
+func (p *ShutdownForceLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ShutdownForceLoadBalancerParam) GetTableType() output.TableType {
+func (p *ShutdownForceLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ShutdownForceLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *ShutdownForceLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ShutdownForceLoadBalancerParam) SetSelector(v []string) {
+func (p *ShutdownForceLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ShutdownForceLoadBalancerParam) GetSelector() []string {
+func (p *ShutdownForceLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ShutdownForceLoadBalancerParam) SetAssumeyes(v bool) {
+func (p *ShutdownForceLoadbalancerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ShutdownForceLoadBalancerParam) GetAssumeyes() bool {
+func (p *ShutdownForceLoadbalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ShutdownForceLoadBalancerParam) SetParamTemplate(v string) {
+func (p *ShutdownForceLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ShutdownForceLoadBalancerParam) GetParamTemplate() string {
+func (p *ShutdownForceLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ShutdownForceLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *ShutdownForceLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownForceLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ShutdownForceLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ShutdownForceLoadBalancerParam) GetParamTemplateFile() string {
+func (p *ShutdownForceLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ShutdownForceLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *ShutdownForceLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownForceLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ShutdownForceLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ShutdownForceLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *ShutdownForceLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ShutdownForceLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *ShutdownForceLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ShutdownForceLoadBalancerParam) GetId() sacloud.ID {
+func (p *ShutdownForceLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ResetLoadBalancerParam is input parameters for the sacloud API
-type ResetLoadBalancerParam struct {
+// ResetLoadbalancerParam is input parameters for the sacloud API
+type ResetLoadbalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewResetLoadBalancerParam return new ResetLoadBalancerParam
-func NewResetLoadBalancerParam() *ResetLoadBalancerParam {
-	return &ResetLoadBalancerParam{}
+// NewResetLoadbalancerParam return new ResetLoadbalancerParam
+func NewResetLoadbalancerParam() *ResetLoadbalancerParam {
+	return &ResetLoadbalancerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ResetLoadBalancerParam) FillValueToSkeleton() {
+func (p *ResetLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1828,8 +2006,14 @@ func (p *ResetLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1841,7 +2025,7 @@ func (p *ResetLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ResetLoadBalancerParam) Validate() []error {
+func (p *ResetLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1854,97 +2038,119 @@ func (p *ResetLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *ResetLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *ResetLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ResetLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *ResetLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["reset"]
 }
 
-func (p *ResetLoadBalancerParam) GetIncludeFields() []string {
+func (p *ResetLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ResetLoadBalancerParam) GetExcludeFields() []string {
+func (p *ResetLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ResetLoadBalancerParam) GetTableType() output.TableType {
+func (p *ResetLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ResetLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *ResetLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ResetLoadBalancerParam) SetSelector(v []string) {
+func (p *ResetLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ResetLoadBalancerParam) GetSelector() []string {
+func (p *ResetLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ResetLoadBalancerParam) SetAssumeyes(v bool) {
+func (p *ResetLoadbalancerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ResetLoadBalancerParam) GetAssumeyes() bool {
+func (p *ResetLoadbalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ResetLoadBalancerParam) SetParamTemplate(v string) {
+func (p *ResetLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ResetLoadBalancerParam) GetParamTemplate() string {
+func (p *ResetLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ResetLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *ResetLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ResetLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ResetLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ResetLoadBalancerParam) GetParamTemplateFile() string {
+func (p *ResetLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ResetLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *ResetLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ResetLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ResetLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ResetLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *ResetLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ResetLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *ResetLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ResetLoadBalancerParam) GetId() sacloud.ID {
+func (p *ResetLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// WaitForBootLoadBalancerParam is input parameters for the sacloud API
-type WaitForBootLoadBalancerParam struct {
+// WaitForBootLoadbalancerParam is input parameters for the sacloud API
+type WaitForBootLoadbalancerParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewWaitForBootLoadBalancerParam return new WaitForBootLoadBalancerParam
-func NewWaitForBootLoadBalancerParam() *WaitForBootLoadBalancerParam {
-	return &WaitForBootLoadBalancerParam{}
+// NewWaitForBootLoadbalancerParam return new WaitForBootLoadbalancerParam
+func NewWaitForBootLoadbalancerParam() *WaitForBootLoadbalancerParam {
+	return &WaitForBootLoadbalancerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *WaitForBootLoadBalancerParam) FillValueToSkeleton() {
+func (p *WaitForBootLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1956,7 +2162,7 @@ func (p *WaitForBootLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *WaitForBootLoadBalancerParam) Validate() []error {
+func (p *WaitForBootLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1969,90 +2175,112 @@ func (p *WaitForBootLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *WaitForBootLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *WaitForBootLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *WaitForBootLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *WaitForBootLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["wait-for-boot"]
 }
 
-func (p *WaitForBootLoadBalancerParam) GetIncludeFields() []string {
+func (p *WaitForBootLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *WaitForBootLoadBalancerParam) GetExcludeFields() []string {
+func (p *WaitForBootLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *WaitForBootLoadBalancerParam) GetTableType() output.TableType {
+func (p *WaitForBootLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *WaitForBootLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *WaitForBootLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *WaitForBootLoadBalancerParam) SetSelector(v []string) {
+func (p *WaitForBootLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *WaitForBootLoadBalancerParam) GetSelector() []string {
+func (p *WaitForBootLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *WaitForBootLoadBalancerParam) SetParamTemplate(v string) {
+func (p *WaitForBootLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *WaitForBootLoadBalancerParam) GetParamTemplate() string {
+func (p *WaitForBootLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *WaitForBootLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *WaitForBootLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForBootLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *WaitForBootLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *WaitForBootLoadBalancerParam) GetParamTemplateFile() string {
+func (p *WaitForBootLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *WaitForBootLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *WaitForBootLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForBootLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *WaitForBootLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *WaitForBootLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *WaitForBootLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *WaitForBootLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *WaitForBootLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *WaitForBootLoadBalancerParam) GetId() sacloud.ID {
+func (p *WaitForBootLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// WaitForDownLoadBalancerParam is input parameters for the sacloud API
-type WaitForDownLoadBalancerParam struct {
+// WaitForDownLoadbalancerParam is input parameters for the sacloud API
+type WaitForDownLoadbalancerParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewWaitForDownLoadBalancerParam return new WaitForDownLoadBalancerParam
-func NewWaitForDownLoadBalancerParam() *WaitForDownLoadBalancerParam {
-	return &WaitForDownLoadBalancerParam{}
+// NewWaitForDownLoadbalancerParam return new WaitForDownLoadbalancerParam
+func NewWaitForDownLoadbalancerParam() *WaitForDownLoadbalancerParam {
+	return &WaitForDownLoadbalancerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *WaitForDownLoadBalancerParam) FillValueToSkeleton() {
+func (p *WaitForDownLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2064,7 +2292,7 @@ func (p *WaitForDownLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *WaitForDownLoadBalancerParam) Validate() []error {
+func (p *WaitForDownLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -2077,71 +2305,87 @@ func (p *WaitForDownLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *WaitForDownLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *WaitForDownLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *WaitForDownLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *WaitForDownLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["wait-for-down"]
 }
 
-func (p *WaitForDownLoadBalancerParam) GetIncludeFields() []string {
+func (p *WaitForDownLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *WaitForDownLoadBalancerParam) GetExcludeFields() []string {
+func (p *WaitForDownLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *WaitForDownLoadBalancerParam) GetTableType() output.TableType {
+func (p *WaitForDownLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *WaitForDownLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *WaitForDownLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *WaitForDownLoadBalancerParam) SetSelector(v []string) {
+func (p *WaitForDownLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *WaitForDownLoadBalancerParam) GetSelector() []string {
+func (p *WaitForDownLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *WaitForDownLoadBalancerParam) SetParamTemplate(v string) {
+func (p *WaitForDownLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *WaitForDownLoadBalancerParam) GetParamTemplate() string {
+func (p *WaitForDownLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *WaitForDownLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *WaitForDownLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForDownLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *WaitForDownLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *WaitForDownLoadBalancerParam) GetParamTemplateFile() string {
+func (p *WaitForDownLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *WaitForDownLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *WaitForDownLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForDownLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *WaitForDownLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *WaitForDownLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *WaitForDownLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *WaitForDownLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *WaitForDownLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *WaitForDownLoadBalancerParam) GetId() sacloud.ID {
+func (p *WaitForDownLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// VipInfoLoadBalancerParam is input parameters for the sacloud API
-type VipInfoLoadBalancerParam struct {
+// VipInfoLoadbalancerParam is input parameters for the sacloud API
+type VipInfoLoadbalancerParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2153,21 +2397,27 @@ type VipInfoLoadBalancerParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewVipInfoLoadBalancerParam return new VipInfoLoadBalancerParam
-func NewVipInfoLoadBalancerParam() *VipInfoLoadBalancerParam {
-	return &VipInfoLoadBalancerParam{}
+// NewVipInfoLoadbalancerParam return new VipInfoLoadbalancerParam
+func NewVipInfoLoadbalancerParam() *VipInfoLoadbalancerParam {
+	return &VipInfoLoadbalancerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *VipInfoLoadBalancerParam) FillValueToSkeleton() {
+func (p *VipInfoLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2200,7 +2450,7 @@ func (p *VipInfoLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *VipInfoLoadBalancerParam) Validate() []error {
+func (p *VipInfoLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -2233,117 +2483,131 @@ func (p *VipInfoLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *VipInfoLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *VipInfoLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *VipInfoLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *VipInfoLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["vip-info"]
 }
 
-func (p *VipInfoLoadBalancerParam) GetIncludeFields() []string {
+func (p *VipInfoLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *VipInfoLoadBalancerParam) GetExcludeFields() []string {
+func (p *VipInfoLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *VipInfoLoadBalancerParam) GetTableType() output.TableType {
+func (p *VipInfoLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *VipInfoLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *VipInfoLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *VipInfoLoadBalancerParam) SetSelector(v []string) {
+func (p *VipInfoLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *VipInfoLoadBalancerParam) GetSelector() []string {
+func (p *VipInfoLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *VipInfoLoadBalancerParam) SetParamTemplate(v string) {
+func (p *VipInfoLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *VipInfoLoadBalancerParam) GetParamTemplate() string {
+func (p *VipInfoLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *VipInfoLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *VipInfoLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *VipInfoLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *VipInfoLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *VipInfoLoadBalancerParam) GetParamTemplateFile() string {
+func (p *VipInfoLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *VipInfoLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *VipInfoLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *VipInfoLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *VipInfoLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *VipInfoLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *VipInfoLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *VipInfoLoadBalancerParam) SetOutputType(v string) {
+func (p *VipInfoLoadbalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *VipInfoLoadBalancerParam) GetOutputType() string {
+func (p *VipInfoLoadbalancerParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *VipInfoLoadBalancerParam) SetColumn(v []string) {
+func (p *VipInfoLoadbalancerParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *VipInfoLoadBalancerParam) GetColumn() []string {
+func (p *VipInfoLoadbalancerParam) GetColumn() []string {
 	return p.Column
 }
-func (p *VipInfoLoadBalancerParam) SetQuiet(v bool) {
+func (p *VipInfoLoadbalancerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *VipInfoLoadBalancerParam) GetQuiet() bool {
+func (p *VipInfoLoadbalancerParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *VipInfoLoadBalancerParam) SetFormat(v string) {
+func (p *VipInfoLoadbalancerParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *VipInfoLoadBalancerParam) GetFormat() string {
+func (p *VipInfoLoadbalancerParam) GetFormat() string {
 	return p.Format
 }
-func (p *VipInfoLoadBalancerParam) SetFormatFile(v string) {
+func (p *VipInfoLoadbalancerParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *VipInfoLoadBalancerParam) GetFormatFile() string {
+func (p *VipInfoLoadbalancerParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *VipInfoLoadBalancerParam) SetQuery(v string) {
+func (p *VipInfoLoadbalancerParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *VipInfoLoadBalancerParam) GetQuery() string {
+func (p *VipInfoLoadbalancerParam) GetQuery() string {
 	return p.Query
 }
-func (p *VipInfoLoadBalancerParam) SetQueryFile(v string) {
+func (p *VipInfoLoadbalancerParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *VipInfoLoadBalancerParam) GetQueryFile() string {
+func (p *VipInfoLoadbalancerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *VipInfoLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *VipInfoLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *VipInfoLoadBalancerParam) GetId() sacloud.ID {
+func (p *VipInfoLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// VipAddLoadBalancerParam is input parameters for the sacloud API
-type VipAddLoadBalancerParam struct {
+// VipAddLoadbalancerParam is input parameters for the sacloud API
+type VipAddLoadbalancerParam struct {
 	Vip               string     `json:"vip"`
 	Port              int        `json:"port"`
 	DelayLoop         int        `json:"delay-loop"`
@@ -2352,21 +2616,23 @@ type VipAddLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewVipAddLoadBalancerParam return new VipAddLoadBalancerParam
-func NewVipAddLoadBalancerParam() *VipAddLoadBalancerParam {
-	return &VipAddLoadBalancerParam{
+// NewVipAddLoadbalancerParam return new VipAddLoadbalancerParam
+func NewVipAddLoadbalancerParam() *VipAddLoadbalancerParam {
+	return &VipAddLoadbalancerParam{
 
 		DelayLoop: 10,
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *VipAddLoadBalancerParam) FillValueToSkeleton() {
+func (p *VipAddLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.Vip) {
 		p.Vip = ""
 	}
@@ -2391,8 +2657,14 @@ func (p *VipAddLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2404,7 +2676,7 @@ func (p *VipAddLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *VipAddLoadBalancerParam) Validate() []error {
+func (p *VipAddLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -2459,110 +2731,124 @@ func (p *VipAddLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *VipAddLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *VipAddLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *VipAddLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *VipAddLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["vip-add"]
 }
 
-func (p *VipAddLoadBalancerParam) GetIncludeFields() []string {
+func (p *VipAddLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *VipAddLoadBalancerParam) GetExcludeFields() []string {
+func (p *VipAddLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *VipAddLoadBalancerParam) GetTableType() output.TableType {
+func (p *VipAddLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *VipAddLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *VipAddLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *VipAddLoadBalancerParam) SetVip(v string) {
+func (p *VipAddLoadbalancerParam) SetVip(v string) {
 	p.Vip = v
 }
 
-func (p *VipAddLoadBalancerParam) GetVip() string {
+func (p *VipAddLoadbalancerParam) GetVip() string {
 	return p.Vip
 }
-func (p *VipAddLoadBalancerParam) SetPort(v int) {
+func (p *VipAddLoadbalancerParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *VipAddLoadBalancerParam) GetPort() int {
+func (p *VipAddLoadbalancerParam) GetPort() int {
 	return p.Port
 }
-func (p *VipAddLoadBalancerParam) SetDelayLoop(v int) {
+func (p *VipAddLoadbalancerParam) SetDelayLoop(v int) {
 	p.DelayLoop = v
 }
 
-func (p *VipAddLoadBalancerParam) GetDelayLoop() int {
+func (p *VipAddLoadbalancerParam) GetDelayLoop() int {
 	return p.DelayLoop
 }
-func (p *VipAddLoadBalancerParam) SetSorryServer(v string) {
+func (p *VipAddLoadbalancerParam) SetSorryServer(v string) {
 	p.SorryServer = v
 }
 
-func (p *VipAddLoadBalancerParam) GetSorryServer() string {
+func (p *VipAddLoadbalancerParam) GetSorryServer() string {
 	return p.SorryServer
 }
-func (p *VipAddLoadBalancerParam) SetDescription(v string) {
+func (p *VipAddLoadbalancerParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *VipAddLoadBalancerParam) GetDescription() string {
+func (p *VipAddLoadbalancerParam) GetDescription() string {
 	return p.Description
 }
-func (p *VipAddLoadBalancerParam) SetSelector(v []string) {
+func (p *VipAddLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *VipAddLoadBalancerParam) GetSelector() []string {
+func (p *VipAddLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *VipAddLoadBalancerParam) SetAssumeyes(v bool) {
+func (p *VipAddLoadbalancerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *VipAddLoadBalancerParam) GetAssumeyes() bool {
+func (p *VipAddLoadbalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *VipAddLoadBalancerParam) SetParamTemplate(v string) {
+func (p *VipAddLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *VipAddLoadBalancerParam) GetParamTemplate() string {
+func (p *VipAddLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *VipAddLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *VipAddLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *VipAddLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *VipAddLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *VipAddLoadBalancerParam) GetParamTemplateFile() string {
+func (p *VipAddLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *VipAddLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *VipAddLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *VipAddLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *VipAddLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *VipAddLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *VipAddLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *VipAddLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *VipAddLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *VipAddLoadBalancerParam) GetId() sacloud.ID {
+func (p *VipAddLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// VipUpdateLoadBalancerParam is input parameters for the sacloud API
-type VipUpdateLoadBalancerParam struct {
+// VipUpdateLoadbalancerParam is input parameters for the sacloud API
+type VipUpdateLoadbalancerParam struct {
 	Index             int        `json:"index"`
 	Vip               string     `json:"vip"`
 	Port              int        `json:"port"`
@@ -2572,21 +2858,23 @@ type VipUpdateLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewVipUpdateLoadBalancerParam return new VipUpdateLoadBalancerParam
-func NewVipUpdateLoadBalancerParam() *VipUpdateLoadBalancerParam {
-	return &VipUpdateLoadBalancerParam{
+// NewVipUpdateLoadbalancerParam return new VipUpdateLoadbalancerParam
+func NewVipUpdateLoadbalancerParam() *VipUpdateLoadbalancerParam {
+	return &VipUpdateLoadbalancerParam{
 
 		DelayLoop: 10,
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *VipUpdateLoadBalancerParam) FillValueToSkeleton() {
+func (p *VipUpdateLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -2614,8 +2902,14 @@ func (p *VipUpdateLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2627,7 +2921,7 @@ func (p *VipUpdateLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *VipUpdateLoadBalancerParam) Validate() []error {
+func (p *VipUpdateLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -2675,133 +2969,149 @@ func (p *VipUpdateLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *VipUpdateLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *VipUpdateLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *VipUpdateLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *VipUpdateLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["vip-update"]
 }
 
-func (p *VipUpdateLoadBalancerParam) GetIncludeFields() []string {
+func (p *VipUpdateLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *VipUpdateLoadBalancerParam) GetExcludeFields() []string {
+func (p *VipUpdateLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *VipUpdateLoadBalancerParam) GetTableType() output.TableType {
+func (p *VipUpdateLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *VipUpdateLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *VipUpdateLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *VipUpdateLoadBalancerParam) SetIndex(v int) {
+func (p *VipUpdateLoadbalancerParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *VipUpdateLoadBalancerParam) GetIndex() int {
+func (p *VipUpdateLoadbalancerParam) GetIndex() int {
 	return p.Index
 }
-func (p *VipUpdateLoadBalancerParam) SetVip(v string) {
+func (p *VipUpdateLoadbalancerParam) SetVip(v string) {
 	p.Vip = v
 }
 
-func (p *VipUpdateLoadBalancerParam) GetVip() string {
+func (p *VipUpdateLoadbalancerParam) GetVip() string {
 	return p.Vip
 }
-func (p *VipUpdateLoadBalancerParam) SetPort(v int) {
+func (p *VipUpdateLoadbalancerParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *VipUpdateLoadBalancerParam) GetPort() int {
+func (p *VipUpdateLoadbalancerParam) GetPort() int {
 	return p.Port
 }
-func (p *VipUpdateLoadBalancerParam) SetDelayLoop(v int) {
+func (p *VipUpdateLoadbalancerParam) SetDelayLoop(v int) {
 	p.DelayLoop = v
 }
 
-func (p *VipUpdateLoadBalancerParam) GetDelayLoop() int {
+func (p *VipUpdateLoadbalancerParam) GetDelayLoop() int {
 	return p.DelayLoop
 }
-func (p *VipUpdateLoadBalancerParam) SetSorryServer(v string) {
+func (p *VipUpdateLoadbalancerParam) SetSorryServer(v string) {
 	p.SorryServer = v
 }
 
-func (p *VipUpdateLoadBalancerParam) GetSorryServer() string {
+func (p *VipUpdateLoadbalancerParam) GetSorryServer() string {
 	return p.SorryServer
 }
-func (p *VipUpdateLoadBalancerParam) SetDescription(v string) {
+func (p *VipUpdateLoadbalancerParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *VipUpdateLoadBalancerParam) GetDescription() string {
+func (p *VipUpdateLoadbalancerParam) GetDescription() string {
 	return p.Description
 }
-func (p *VipUpdateLoadBalancerParam) SetSelector(v []string) {
+func (p *VipUpdateLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *VipUpdateLoadBalancerParam) GetSelector() []string {
+func (p *VipUpdateLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *VipUpdateLoadBalancerParam) SetAssumeyes(v bool) {
+func (p *VipUpdateLoadbalancerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *VipUpdateLoadBalancerParam) GetAssumeyes() bool {
+func (p *VipUpdateLoadbalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *VipUpdateLoadBalancerParam) SetParamTemplate(v string) {
+func (p *VipUpdateLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *VipUpdateLoadBalancerParam) GetParamTemplate() string {
+func (p *VipUpdateLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *VipUpdateLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *VipUpdateLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *VipUpdateLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *VipUpdateLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *VipUpdateLoadBalancerParam) GetParamTemplateFile() string {
+func (p *VipUpdateLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *VipUpdateLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *VipUpdateLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *VipUpdateLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *VipUpdateLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *VipUpdateLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *VipUpdateLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *VipUpdateLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *VipUpdateLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *VipUpdateLoadBalancerParam) GetId() sacloud.ID {
+func (p *VipUpdateLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// VipDeleteLoadBalancerParam is input parameters for the sacloud API
-type VipDeleteLoadBalancerParam struct {
+// VipDeleteLoadbalancerParam is input parameters for the sacloud API
+type VipDeleteLoadbalancerParam struct {
 	Index             int        `json:"index"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewVipDeleteLoadBalancerParam return new VipDeleteLoadBalancerParam
-func NewVipDeleteLoadBalancerParam() *VipDeleteLoadBalancerParam {
-	return &VipDeleteLoadBalancerParam{}
+// NewVipDeleteLoadbalancerParam return new VipDeleteLoadbalancerParam
+func NewVipDeleteLoadbalancerParam() *VipDeleteLoadbalancerParam {
+	return &VipDeleteLoadbalancerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *VipDeleteLoadBalancerParam) FillValueToSkeleton() {
+func (p *VipDeleteLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -2814,8 +3124,14 @@ func (p *VipDeleteLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2827,7 +3143,7 @@ func (p *VipDeleteLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *VipDeleteLoadBalancerParam) Validate() []error {
+func (p *VipDeleteLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -2847,88 +3163,104 @@ func (p *VipDeleteLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *VipDeleteLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *VipDeleteLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *VipDeleteLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *VipDeleteLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["vip-delete"]
 }
 
-func (p *VipDeleteLoadBalancerParam) GetIncludeFields() []string {
+func (p *VipDeleteLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *VipDeleteLoadBalancerParam) GetExcludeFields() []string {
+func (p *VipDeleteLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *VipDeleteLoadBalancerParam) GetTableType() output.TableType {
+func (p *VipDeleteLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *VipDeleteLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *VipDeleteLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *VipDeleteLoadBalancerParam) SetIndex(v int) {
+func (p *VipDeleteLoadbalancerParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *VipDeleteLoadBalancerParam) GetIndex() int {
+func (p *VipDeleteLoadbalancerParam) GetIndex() int {
 	return p.Index
 }
-func (p *VipDeleteLoadBalancerParam) SetSelector(v []string) {
+func (p *VipDeleteLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *VipDeleteLoadBalancerParam) GetSelector() []string {
+func (p *VipDeleteLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *VipDeleteLoadBalancerParam) SetAssumeyes(v bool) {
+func (p *VipDeleteLoadbalancerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *VipDeleteLoadBalancerParam) GetAssumeyes() bool {
+func (p *VipDeleteLoadbalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *VipDeleteLoadBalancerParam) SetParamTemplate(v string) {
+func (p *VipDeleteLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *VipDeleteLoadBalancerParam) GetParamTemplate() string {
+func (p *VipDeleteLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *VipDeleteLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *VipDeleteLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *VipDeleteLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *VipDeleteLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *VipDeleteLoadBalancerParam) GetParamTemplateFile() string {
+func (p *VipDeleteLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *VipDeleteLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *VipDeleteLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *VipDeleteLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *VipDeleteLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *VipDeleteLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *VipDeleteLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *VipDeleteLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *VipDeleteLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *VipDeleteLoadBalancerParam) GetId() sacloud.ID {
+func (p *VipDeleteLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ServerInfoLoadBalancerParam is input parameters for the sacloud API
-type ServerInfoLoadBalancerParam struct {
+// ServerInfoLoadbalancerParam is input parameters for the sacloud API
+type ServerInfoLoadbalancerParam struct {
 	VipIndex          int        `json:"vip-index"`
 	Vip               string     `json:"vip"`
 	Port              int        `json:"port"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2940,13 +3272,13 @@ type ServerInfoLoadBalancerParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewServerInfoLoadBalancerParam return new ServerInfoLoadBalancerParam
-func NewServerInfoLoadBalancerParam() *ServerInfoLoadBalancerParam {
-	return &ServerInfoLoadBalancerParam{}
+// NewServerInfoLoadbalancerParam return new ServerInfoLoadbalancerParam
+func NewServerInfoLoadbalancerParam() *ServerInfoLoadbalancerParam {
+	return &ServerInfoLoadbalancerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ServerInfoLoadBalancerParam) FillValueToSkeleton() {
+func (p *ServerInfoLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.VipIndex) {
 		p.VipIndex = 0
 	}
@@ -2962,8 +3294,14 @@ func (p *ServerInfoLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2996,7 +3334,7 @@ func (p *ServerInfoLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ServerInfoLoadBalancerParam) Validate() []error {
+func (p *ServerInfoLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--vip-index", p.VipIndex, map[string]interface{}{
@@ -3071,138 +3409,152 @@ func (p *ServerInfoLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *ServerInfoLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *ServerInfoLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ServerInfoLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *ServerInfoLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["server-info"]
 }
 
-func (p *ServerInfoLoadBalancerParam) GetIncludeFields() []string {
+func (p *ServerInfoLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ServerInfoLoadBalancerParam) GetExcludeFields() []string {
+func (p *ServerInfoLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ServerInfoLoadBalancerParam) GetTableType() output.TableType {
+func (p *ServerInfoLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ServerInfoLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *ServerInfoLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerInfoLoadBalancerParam) SetVipIndex(v int) {
+func (p *ServerInfoLoadbalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
 
-func (p *ServerInfoLoadBalancerParam) GetVipIndex() int {
+func (p *ServerInfoLoadbalancerParam) GetVipIndex() int {
 	return p.VipIndex
 }
-func (p *ServerInfoLoadBalancerParam) SetVip(v string) {
+func (p *ServerInfoLoadbalancerParam) SetVip(v string) {
 	p.Vip = v
 }
 
-func (p *ServerInfoLoadBalancerParam) GetVip() string {
+func (p *ServerInfoLoadbalancerParam) GetVip() string {
 	return p.Vip
 }
-func (p *ServerInfoLoadBalancerParam) SetPort(v int) {
+func (p *ServerInfoLoadbalancerParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *ServerInfoLoadBalancerParam) GetPort() int {
+func (p *ServerInfoLoadbalancerParam) GetPort() int {
 	return p.Port
 }
-func (p *ServerInfoLoadBalancerParam) SetSelector(v []string) {
+func (p *ServerInfoLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ServerInfoLoadBalancerParam) GetSelector() []string {
+func (p *ServerInfoLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ServerInfoLoadBalancerParam) SetParamTemplate(v string) {
+func (p *ServerInfoLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ServerInfoLoadBalancerParam) GetParamTemplate() string {
+func (p *ServerInfoLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ServerInfoLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *ServerInfoLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerInfoLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerInfoLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ServerInfoLoadBalancerParam) GetParamTemplateFile() string {
+func (p *ServerInfoLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ServerInfoLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *ServerInfoLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerInfoLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerInfoLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ServerInfoLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *ServerInfoLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerInfoLoadBalancerParam) SetOutputType(v string) {
+func (p *ServerInfoLoadbalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ServerInfoLoadBalancerParam) GetOutputType() string {
+func (p *ServerInfoLoadbalancerParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ServerInfoLoadBalancerParam) SetColumn(v []string) {
+func (p *ServerInfoLoadbalancerParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ServerInfoLoadBalancerParam) GetColumn() []string {
+func (p *ServerInfoLoadbalancerParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ServerInfoLoadBalancerParam) SetQuiet(v bool) {
+func (p *ServerInfoLoadbalancerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ServerInfoLoadBalancerParam) GetQuiet() bool {
+func (p *ServerInfoLoadbalancerParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ServerInfoLoadBalancerParam) SetFormat(v string) {
+func (p *ServerInfoLoadbalancerParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ServerInfoLoadBalancerParam) GetFormat() string {
+func (p *ServerInfoLoadbalancerParam) GetFormat() string {
 	return p.Format
 }
-func (p *ServerInfoLoadBalancerParam) SetFormatFile(v string) {
+func (p *ServerInfoLoadbalancerParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ServerInfoLoadBalancerParam) GetFormatFile() string {
+func (p *ServerInfoLoadbalancerParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ServerInfoLoadBalancerParam) SetQuery(v string) {
+func (p *ServerInfoLoadbalancerParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ServerInfoLoadBalancerParam) GetQuery() string {
+func (p *ServerInfoLoadbalancerParam) GetQuery() string {
 	return p.Query
 }
-func (p *ServerInfoLoadBalancerParam) SetQueryFile(v string) {
+func (p *ServerInfoLoadbalancerParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ServerInfoLoadBalancerParam) GetQueryFile() string {
+func (p *ServerInfoLoadbalancerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerInfoLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *ServerInfoLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerInfoLoadBalancerParam) GetId() sacloud.ID {
+func (p *ServerInfoLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ServerAddLoadBalancerParam is input parameters for the sacloud API
-type ServerAddLoadBalancerParam struct {
+// ServerAddLoadbalancerParam is input parameters for the sacloud API
+type ServerAddLoadbalancerParam struct {
 	VipIndex          int        `json:"vip-index"`
 	Vip               string     `json:"vip"`
 	Port              int        `json:"port"`
@@ -3214,21 +3566,23 @@ type ServerAddLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewServerAddLoadBalancerParam return new ServerAddLoadBalancerParam
-func NewServerAddLoadBalancerParam() *ServerAddLoadBalancerParam {
-	return &ServerAddLoadBalancerParam{
+// NewServerAddLoadbalancerParam return new ServerAddLoadbalancerParam
+func NewServerAddLoadbalancerParam() *ServerAddLoadbalancerParam {
+	return &ServerAddLoadbalancerParam{
 
 		Protocol: "ping",
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ServerAddLoadBalancerParam) FillValueToSkeleton() {
+func (p *ServerAddLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.VipIndex) {
 		p.VipIndex = 0
 	}
@@ -3262,8 +3616,14 @@ func (p *ServerAddLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3275,7 +3635,7 @@ func (p *ServerAddLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ServerAddLoadBalancerParam) Validate() []error {
+func (p *ServerAddLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--vip-index", p.VipIndex, map[string]interface{}{
@@ -3358,131 +3718,145 @@ func (p *ServerAddLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *ServerAddLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *ServerAddLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ServerAddLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *ServerAddLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["server-add"]
 }
 
-func (p *ServerAddLoadBalancerParam) GetIncludeFields() []string {
+func (p *ServerAddLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ServerAddLoadBalancerParam) GetExcludeFields() []string {
+func (p *ServerAddLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ServerAddLoadBalancerParam) GetTableType() output.TableType {
+func (p *ServerAddLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ServerAddLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *ServerAddLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerAddLoadBalancerParam) SetVipIndex(v int) {
+func (p *ServerAddLoadbalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
 
-func (p *ServerAddLoadBalancerParam) GetVipIndex() int {
+func (p *ServerAddLoadbalancerParam) GetVipIndex() int {
 	return p.VipIndex
 }
-func (p *ServerAddLoadBalancerParam) SetVip(v string) {
+func (p *ServerAddLoadbalancerParam) SetVip(v string) {
 	p.Vip = v
 }
 
-func (p *ServerAddLoadBalancerParam) GetVip() string {
+func (p *ServerAddLoadbalancerParam) GetVip() string {
 	return p.Vip
 }
-func (p *ServerAddLoadBalancerParam) SetPort(v int) {
+func (p *ServerAddLoadbalancerParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *ServerAddLoadBalancerParam) GetPort() int {
+func (p *ServerAddLoadbalancerParam) GetPort() int {
 	return p.Port
 }
-func (p *ServerAddLoadBalancerParam) SetIpaddress(v string) {
+func (p *ServerAddLoadbalancerParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
 
-func (p *ServerAddLoadBalancerParam) GetIpaddress() string {
+func (p *ServerAddLoadbalancerParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *ServerAddLoadBalancerParam) SetProtocol(v string) {
+func (p *ServerAddLoadbalancerParam) SetProtocol(v string) {
 	p.Protocol = v
 }
 
-func (p *ServerAddLoadBalancerParam) GetProtocol() string {
+func (p *ServerAddLoadbalancerParam) GetProtocol() string {
 	return p.Protocol
 }
-func (p *ServerAddLoadBalancerParam) SetPath(v string) {
+func (p *ServerAddLoadbalancerParam) SetPath(v string) {
 	p.Path = v
 }
 
-func (p *ServerAddLoadBalancerParam) GetPath() string {
+func (p *ServerAddLoadbalancerParam) GetPath() string {
 	return p.Path
 }
-func (p *ServerAddLoadBalancerParam) SetResponseCode(v int) {
+func (p *ServerAddLoadbalancerParam) SetResponseCode(v int) {
 	p.ResponseCode = v
 }
 
-func (p *ServerAddLoadBalancerParam) GetResponseCode() int {
+func (p *ServerAddLoadbalancerParam) GetResponseCode() int {
 	return p.ResponseCode
 }
-func (p *ServerAddLoadBalancerParam) SetDisabled(v bool) {
+func (p *ServerAddLoadbalancerParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
 
-func (p *ServerAddLoadBalancerParam) GetDisabled() bool {
+func (p *ServerAddLoadbalancerParam) GetDisabled() bool {
 	return p.Disabled
 }
-func (p *ServerAddLoadBalancerParam) SetSelector(v []string) {
+func (p *ServerAddLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ServerAddLoadBalancerParam) GetSelector() []string {
+func (p *ServerAddLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ServerAddLoadBalancerParam) SetAssumeyes(v bool) {
+func (p *ServerAddLoadbalancerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ServerAddLoadBalancerParam) GetAssumeyes() bool {
+func (p *ServerAddLoadbalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ServerAddLoadBalancerParam) SetParamTemplate(v string) {
+func (p *ServerAddLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ServerAddLoadBalancerParam) GetParamTemplate() string {
+func (p *ServerAddLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ServerAddLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *ServerAddLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerAddLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerAddLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ServerAddLoadBalancerParam) GetParamTemplateFile() string {
+func (p *ServerAddLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ServerAddLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *ServerAddLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerAddLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerAddLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ServerAddLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *ServerAddLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerAddLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *ServerAddLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerAddLoadBalancerParam) GetId() sacloud.ID {
+func (p *ServerAddLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ServerUpdateLoadBalancerParam is input parameters for the sacloud API
-type ServerUpdateLoadBalancerParam struct {
+// ServerUpdateLoadbalancerParam is input parameters for the sacloud API
+type ServerUpdateLoadbalancerParam struct {
 	VipIndex          int        `json:"vip-index"`
 	Vip               string     `json:"vip"`
 	Port              int        `json:"port"`
@@ -3494,18 +3868,20 @@ type ServerUpdateLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewServerUpdateLoadBalancerParam return new ServerUpdateLoadBalancerParam
-func NewServerUpdateLoadBalancerParam() *ServerUpdateLoadBalancerParam {
-	return &ServerUpdateLoadBalancerParam{}
+// NewServerUpdateLoadbalancerParam return new ServerUpdateLoadbalancerParam
+func NewServerUpdateLoadbalancerParam() *ServerUpdateLoadbalancerParam {
+	return &ServerUpdateLoadbalancerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ServerUpdateLoadBalancerParam) FillValueToSkeleton() {
+func (p *ServerUpdateLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.VipIndex) {
 		p.VipIndex = 0
 	}
@@ -3539,8 +3915,14 @@ func (p *ServerUpdateLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3552,7 +3934,7 @@ func (p *ServerUpdateLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ServerUpdateLoadBalancerParam) Validate() []error {
+func (p *ServerUpdateLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--vip-index", p.VipIndex, map[string]interface{}{
@@ -3628,131 +4010,145 @@ func (p *ServerUpdateLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *ServerUpdateLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *ServerUpdateLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["server-update"]
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetIncludeFields() []string {
+func (p *ServerUpdateLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetExcludeFields() []string {
+func (p *ServerUpdateLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetTableType() output.TableType {
+func (p *ServerUpdateLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *ServerUpdateLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerUpdateLoadBalancerParam) SetVipIndex(v int) {
+func (p *ServerUpdateLoadbalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetVipIndex() int {
+func (p *ServerUpdateLoadbalancerParam) GetVipIndex() int {
 	return p.VipIndex
 }
-func (p *ServerUpdateLoadBalancerParam) SetVip(v string) {
+func (p *ServerUpdateLoadbalancerParam) SetVip(v string) {
 	p.Vip = v
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetVip() string {
+func (p *ServerUpdateLoadbalancerParam) GetVip() string {
 	return p.Vip
 }
-func (p *ServerUpdateLoadBalancerParam) SetPort(v int) {
+func (p *ServerUpdateLoadbalancerParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetPort() int {
+func (p *ServerUpdateLoadbalancerParam) GetPort() int {
 	return p.Port
 }
-func (p *ServerUpdateLoadBalancerParam) SetIpaddress(v string) {
+func (p *ServerUpdateLoadbalancerParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetIpaddress() string {
+func (p *ServerUpdateLoadbalancerParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *ServerUpdateLoadBalancerParam) SetProtocol(v string) {
+func (p *ServerUpdateLoadbalancerParam) SetProtocol(v string) {
 	p.Protocol = v
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetProtocol() string {
+func (p *ServerUpdateLoadbalancerParam) GetProtocol() string {
 	return p.Protocol
 }
-func (p *ServerUpdateLoadBalancerParam) SetPath(v string) {
+func (p *ServerUpdateLoadbalancerParam) SetPath(v string) {
 	p.Path = v
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetPath() string {
+func (p *ServerUpdateLoadbalancerParam) GetPath() string {
 	return p.Path
 }
-func (p *ServerUpdateLoadBalancerParam) SetResponseCode(v int) {
+func (p *ServerUpdateLoadbalancerParam) SetResponseCode(v int) {
 	p.ResponseCode = v
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetResponseCode() int {
+func (p *ServerUpdateLoadbalancerParam) GetResponseCode() int {
 	return p.ResponseCode
 }
-func (p *ServerUpdateLoadBalancerParam) SetDisabled(v bool) {
+func (p *ServerUpdateLoadbalancerParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetDisabled() bool {
+func (p *ServerUpdateLoadbalancerParam) GetDisabled() bool {
 	return p.Disabled
 }
-func (p *ServerUpdateLoadBalancerParam) SetSelector(v []string) {
+func (p *ServerUpdateLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetSelector() []string {
+func (p *ServerUpdateLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ServerUpdateLoadBalancerParam) SetAssumeyes(v bool) {
+func (p *ServerUpdateLoadbalancerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetAssumeyes() bool {
+func (p *ServerUpdateLoadbalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ServerUpdateLoadBalancerParam) SetParamTemplate(v string) {
+func (p *ServerUpdateLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetParamTemplate() string {
+func (p *ServerUpdateLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ServerUpdateLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *ServerUpdateLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerUpdateLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerUpdateLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetParamTemplateFile() string {
+func (p *ServerUpdateLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ServerUpdateLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *ServerUpdateLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerUpdateLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerUpdateLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *ServerUpdateLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerUpdateLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *ServerUpdateLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetId() sacloud.ID {
+func (p *ServerUpdateLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ServerDeleteLoadBalancerParam is input parameters for the sacloud API
-type ServerDeleteLoadBalancerParam struct {
+// ServerDeleteLoadbalancerParam is input parameters for the sacloud API
+type ServerDeleteLoadbalancerParam struct {
 	VipIndex          int        `json:"vip-index"`
 	Vip               string     `json:"vip"`
 	Port              int        `json:"port"`
@@ -3760,18 +4156,20 @@ type ServerDeleteLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewServerDeleteLoadBalancerParam return new ServerDeleteLoadBalancerParam
-func NewServerDeleteLoadBalancerParam() *ServerDeleteLoadBalancerParam {
-	return &ServerDeleteLoadBalancerParam{}
+// NewServerDeleteLoadbalancerParam return new ServerDeleteLoadbalancerParam
+func NewServerDeleteLoadbalancerParam() *ServerDeleteLoadbalancerParam {
+	return &ServerDeleteLoadbalancerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ServerDeleteLoadBalancerParam) FillValueToSkeleton() {
+func (p *ServerDeleteLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.VipIndex) {
 		p.VipIndex = 0
 	}
@@ -3793,8 +4191,14 @@ func (p *ServerDeleteLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3806,7 +4210,7 @@ func (p *ServerDeleteLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ServerDeleteLoadBalancerParam) Validate() []error {
+func (p *ServerDeleteLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--vip-index", p.VipIndex, map[string]interface{}{
@@ -3875,109 +4279,125 @@ func (p *ServerDeleteLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *ServerDeleteLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *ServerDeleteLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["server-delete"]
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetIncludeFields() []string {
+func (p *ServerDeleteLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetExcludeFields() []string {
+func (p *ServerDeleteLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetTableType() output.TableType {
+func (p *ServerDeleteLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *ServerDeleteLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerDeleteLoadBalancerParam) SetVipIndex(v int) {
+func (p *ServerDeleteLoadbalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetVipIndex() int {
+func (p *ServerDeleteLoadbalancerParam) GetVipIndex() int {
 	return p.VipIndex
 }
-func (p *ServerDeleteLoadBalancerParam) SetVip(v string) {
+func (p *ServerDeleteLoadbalancerParam) SetVip(v string) {
 	p.Vip = v
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetVip() string {
+func (p *ServerDeleteLoadbalancerParam) GetVip() string {
 	return p.Vip
 }
-func (p *ServerDeleteLoadBalancerParam) SetPort(v int) {
+func (p *ServerDeleteLoadbalancerParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetPort() int {
+func (p *ServerDeleteLoadbalancerParam) GetPort() int {
 	return p.Port
 }
-func (p *ServerDeleteLoadBalancerParam) SetIpaddress(v string) {
+func (p *ServerDeleteLoadbalancerParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetIpaddress() string {
+func (p *ServerDeleteLoadbalancerParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *ServerDeleteLoadBalancerParam) SetSelector(v []string) {
+func (p *ServerDeleteLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetSelector() []string {
+func (p *ServerDeleteLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ServerDeleteLoadBalancerParam) SetAssumeyes(v bool) {
+func (p *ServerDeleteLoadbalancerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetAssumeyes() bool {
+func (p *ServerDeleteLoadbalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ServerDeleteLoadBalancerParam) SetParamTemplate(v string) {
+func (p *ServerDeleteLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetParamTemplate() string {
+func (p *ServerDeleteLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ServerDeleteLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *ServerDeleteLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerDeleteLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerDeleteLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetParamTemplateFile() string {
+func (p *ServerDeleteLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ServerDeleteLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *ServerDeleteLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerDeleteLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerDeleteLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *ServerDeleteLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerDeleteLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *ServerDeleteLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetId() sacloud.ID {
+func (p *ServerDeleteLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// MonitorLoadBalancerParam is input parameters for the sacloud API
-type MonitorLoadBalancerParam struct {
+// MonitorLoadbalancerParam is input parameters for the sacloud API
+type MonitorLoadbalancerParam struct {
 	Start             string     `json:"start"`
 	End               string     `json:"end"`
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -3989,16 +4409,16 @@ type MonitorLoadBalancerParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewMonitorLoadBalancerParam return new MonitorLoadBalancerParam
-func NewMonitorLoadBalancerParam() *MonitorLoadBalancerParam {
-	return &MonitorLoadBalancerParam{
+// NewMonitorLoadbalancerParam return new MonitorLoadbalancerParam
+func NewMonitorLoadbalancerParam() *MonitorLoadbalancerParam {
+	return &MonitorLoadbalancerParam{
 
 		KeyFormat: "sakuracloud.loadbalancer.{{.ID}}.nic",
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *MonitorLoadBalancerParam) FillValueToSkeleton() {
+func (p *MonitorLoadbalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.Start) {
 		p.Start = ""
 	}
@@ -4014,8 +4434,14 @@ func (p *MonitorLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -4048,7 +4474,7 @@ func (p *MonitorLoadBalancerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *MonitorLoadBalancerParam) Validate() []error {
+func (p *MonitorLoadbalancerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["LoadBalancer"].Commands["monitor"].Params["start"].ValidateFunc
@@ -4102,132 +4528,146 @@ func (p *MonitorLoadBalancerParam) Validate() []error {
 	return errors
 }
 
-func (p *MonitorLoadBalancerParam) GetResourceDef() *schema.Resource {
+func (p *MonitorLoadbalancerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *MonitorLoadBalancerParam) GetCommandDef() *schema.Command {
+func (p *MonitorLoadbalancerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["monitor"]
 }
 
-func (p *MonitorLoadBalancerParam) GetIncludeFields() []string {
+func (p *MonitorLoadbalancerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *MonitorLoadBalancerParam) GetExcludeFields() []string {
+func (p *MonitorLoadbalancerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *MonitorLoadBalancerParam) GetTableType() output.TableType {
+func (p *MonitorLoadbalancerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *MonitorLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+func (p *MonitorLoadbalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *MonitorLoadBalancerParam) SetStart(v string) {
+func (p *MonitorLoadbalancerParam) SetStart(v string) {
 	p.Start = v
 }
 
-func (p *MonitorLoadBalancerParam) GetStart() string {
+func (p *MonitorLoadbalancerParam) GetStart() string {
 	return p.Start
 }
-func (p *MonitorLoadBalancerParam) SetEnd(v string) {
+func (p *MonitorLoadbalancerParam) SetEnd(v string) {
 	p.End = v
 }
 
-func (p *MonitorLoadBalancerParam) GetEnd() string {
+func (p *MonitorLoadbalancerParam) GetEnd() string {
 	return p.End
 }
-func (p *MonitorLoadBalancerParam) SetKeyFormat(v string) {
+func (p *MonitorLoadbalancerParam) SetKeyFormat(v string) {
 	p.KeyFormat = v
 }
 
-func (p *MonitorLoadBalancerParam) GetKeyFormat() string {
+func (p *MonitorLoadbalancerParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
-func (p *MonitorLoadBalancerParam) SetSelector(v []string) {
+func (p *MonitorLoadbalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *MonitorLoadBalancerParam) GetSelector() []string {
+func (p *MonitorLoadbalancerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *MonitorLoadBalancerParam) SetParamTemplate(v string) {
+func (p *MonitorLoadbalancerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *MonitorLoadBalancerParam) GetParamTemplate() string {
+func (p *MonitorLoadbalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *MonitorLoadBalancerParam) SetParamTemplateFile(v string) {
+func (p *MonitorLoadbalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorLoadbalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorLoadbalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *MonitorLoadBalancerParam) GetParamTemplateFile() string {
+func (p *MonitorLoadbalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *MonitorLoadBalancerParam) SetGenerateSkeleton(v bool) {
+func (p *MonitorLoadbalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorLoadbalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorLoadbalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *MonitorLoadBalancerParam) GetGenerateSkeleton() bool {
+func (p *MonitorLoadbalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *MonitorLoadBalancerParam) SetOutputType(v string) {
+func (p *MonitorLoadbalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *MonitorLoadBalancerParam) GetOutputType() string {
+func (p *MonitorLoadbalancerParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *MonitorLoadBalancerParam) SetColumn(v []string) {
+func (p *MonitorLoadbalancerParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *MonitorLoadBalancerParam) GetColumn() []string {
+func (p *MonitorLoadbalancerParam) GetColumn() []string {
 	return p.Column
 }
-func (p *MonitorLoadBalancerParam) SetQuiet(v bool) {
+func (p *MonitorLoadbalancerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *MonitorLoadBalancerParam) GetQuiet() bool {
+func (p *MonitorLoadbalancerParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *MonitorLoadBalancerParam) SetFormat(v string) {
+func (p *MonitorLoadbalancerParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *MonitorLoadBalancerParam) GetFormat() string {
+func (p *MonitorLoadbalancerParam) GetFormat() string {
 	return p.Format
 }
-func (p *MonitorLoadBalancerParam) SetFormatFile(v string) {
+func (p *MonitorLoadbalancerParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *MonitorLoadBalancerParam) GetFormatFile() string {
+func (p *MonitorLoadbalancerParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *MonitorLoadBalancerParam) SetQuery(v string) {
+func (p *MonitorLoadbalancerParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *MonitorLoadBalancerParam) GetQuery() string {
+func (p *MonitorLoadbalancerParam) GetQuery() string {
 	return p.Query
 }
-func (p *MonitorLoadBalancerParam) SetQueryFile(v string) {
+func (p *MonitorLoadbalancerParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *MonitorLoadBalancerParam) GetQueryFile() string {
+func (p *MonitorLoadbalancerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *MonitorLoadBalancerParam) SetId(v sacloud.ID) {
+func (p *MonitorLoadbalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorLoadBalancerParam) GetId() sacloud.ID {
+func (p *MonitorLoadbalancerParam) GetId() sacloud.ID {
 	return p.Id
 }

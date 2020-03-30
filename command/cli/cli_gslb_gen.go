@@ -32,15 +32,15 @@ import (
 )
 
 func init() {
-	listParam := params.NewListGSLBParam()
-	serverInfoParam := params.NewServerInfoGSLBParam()
-	createParam := params.NewCreateGSLBParam()
-	serverAddParam := params.NewServerAddGSLBParam()
-	readParam := params.NewReadGSLBParam()
-	serverUpdateParam := params.NewServerUpdateGSLBParam()
-	serverDeleteParam := params.NewServerDeleteGSLBParam()
-	updateParam := params.NewUpdateGSLBParam()
-	deleteParam := params.NewDeleteGSLBParam()
+	gslbListParam := params.NewListGslbParam()
+	gslbServerInfoParam := params.NewServerInfoGslbParam()
+	gslbCreateParam := params.NewCreateGslbParam()
+	gslbServerAddParam := params.NewServerAddGslbParam()
+	gslbReadParam := params.NewReadGslbParam()
+	gslbServerUpdateParam := params.NewServerUpdateGslbParam()
+	gslbServerDeleteParam := params.NewServerDeleteGslbParam()
+	gslbUpdateParam := params.NewUpdateGslbParam()
+	gslbDeleteParam := params.NewDeleteGslbParam()
 
 	cliCommand := &cli.Command{
 		Name:  "gslb",
@@ -49,7 +49,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find", "selector"},
-				Usage:   "List GSLB",
+				Usage:   "List Gslb",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -83,8 +83,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -132,69 +140,75 @@ func init() {
 						return err
 					}
 
-					listParam.ParamTemplate = c.String("param-template")
-					listParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(listParam)
+					gslbListParam.ParamTemplate = c.String("param-template")
+					gslbListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(gslbListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListGSLBParam()
+						p := params.NewListGslbParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(listParam, p, mergo.WithOverride)
+						mergo.Merge(gslbListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						listParam.Name = c.StringSlice("name")
+						gslbListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						gslbListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
-						listParam.Tags = c.StringSlice("tags")
+						gslbListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("from") {
-						listParam.From = c.Int("from")
+						gslbListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						listParam.Max = c.Int("max")
+						gslbListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						listParam.Sort = c.StringSlice("sort")
+						gslbListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						listParam.ParamTemplate = c.String("param-template")
+						gslbListParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						gslbListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						listParam.ParamTemplateFile = c.String("param-template-file")
+						gslbListParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						gslbListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						gslbListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						listParam.OutputType = c.String("output-type")
+						gslbListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						listParam.Column = c.StringSlice("column")
+						gslbListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						listParam.Quiet = c.Bool("quiet")
+						gslbListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						listParam.Format = c.String("format")
+						gslbListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						listParam.FormatFile = c.String("format-file")
+						gslbListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						listParam.Query = c.String("query")
+						gslbListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						listParam.QueryFile = c.String("query-file")
+						gslbListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -202,7 +216,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = listParam
+					var outputTypeHolder interface{} = gslbListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -213,10 +227,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if listParam.GenerateSkeleton {
-						listParam.GenerateSkeleton = false
-						listParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(listParam, "", "\t")
+					if gslbListParam.GenerateSkeleton {
+						gslbListParam.GenerateSkeleton = false
+						gslbListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(gslbListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -225,22 +239,22 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := gslbListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), listParam)
+					ctx := command.NewContext(c, c.Args().Slice(), gslbListParam)
 
 					// Run command with params
-					return funcs.GSLBList(ctx, listParam)
+					return funcs.GslbList(ctx, gslbListParam)
 
 				},
 			},
 			{
 				Name:      "server-info",
 				Aliases:   []string{"server-list"},
-				Usage:     "ServerInfo GSLB",
+				Usage:     "ServerInfo Gslb",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -252,8 +266,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -306,57 +328,63 @@ func init() {
 						return err
 					}
 
-					serverInfoParam.ParamTemplate = c.String("param-template")
-					serverInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(serverInfoParam)
+					gslbServerInfoParam.ParamTemplate = c.String("param-template")
+					gslbServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(gslbServerInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerInfoGSLBParam()
+						p := params.NewServerInfoGslbParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(serverInfoParam, p, mergo.WithOverride)
+						mergo.Merge(gslbServerInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						serverInfoParam.Selector = c.StringSlice("selector")
+						gslbServerInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						serverInfoParam.ParamTemplate = c.String("param-template")
+						gslbServerInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						gslbServerInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						serverInfoParam.ParamTemplateFile = c.String("param-template-file")
+						gslbServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						gslbServerInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						serverInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						gslbServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						serverInfoParam.OutputType = c.String("output-type")
+						gslbServerInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						serverInfoParam.Column = c.StringSlice("column")
+						gslbServerInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						serverInfoParam.Quiet = c.Bool("quiet")
+						gslbServerInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						serverInfoParam.Format = c.String("format")
+						gslbServerInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						serverInfoParam.FormatFile = c.String("format-file")
+						gslbServerInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						serverInfoParam.Query = c.String("query")
+						gslbServerInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						serverInfoParam.QueryFile = c.String("query-file")
+						gslbServerInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						serverInfoParam.Id = sacloud.ID(c.Int64("id"))
+						gslbServerInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -364,7 +392,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = serverInfoParam
+					var outputTypeHolder interface{} = gslbServerInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -375,10 +403,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if serverInfoParam.GenerateSkeleton {
-						serverInfoParam.GenerateSkeleton = false
-						serverInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(serverInfoParam, "", "\t")
+					if gslbServerInfoParam.GenerateSkeleton {
+						gslbServerInfoParam.GenerateSkeleton = false
+						gslbServerInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(gslbServerInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -387,19 +415,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := serverInfoParam.Validate(); len(errors) > 0 {
+					if errors := gslbServerInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), serverInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), gslbServerInfoParam)
 
-					apiClient := ctx.GetAPIClient().GSLB
+					apiClient := ctx.GetAPIClient().Gslb
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(serverInfoParam.Selector) == 0 {
+						if len(gslbServerInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -408,12 +436,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceGSLBItems {
-							if hasTags(&v, serverInfoParam.Selector) {
+							if hasTags(&v, gslbServerInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", gslbServerInfoParam.Selector)
 						}
 
 					} else {
@@ -435,7 +463,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceGSLBItems {
-										if len(serverInfoParam.Selector) == 0 || hasTags(&v, serverInfoParam.Selector) {
+										if len(gslbServerInfoParam.Selector) == 0 || hasTags(&v, gslbServerInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -460,11 +488,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						serverInfoParam.SetId(id)
-						p := *serverInfoParam // copy struct value
-						serverInfoParam := &p
+						gslbServerInfoParam.SetId(id)
+						p := *gslbServerInfoParam // copy struct value
+						gslbServerInfoParam := &p
 						go func() {
-							err := funcs.GSLBServerInfo(ctx, serverInfoParam)
+							err := funcs.GslbServerInfo(ctx, gslbServerInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -478,7 +506,7 @@ func init() {
 			},
 			{
 				Name:  "create",
-				Usage: "Create GSLB",
+				Usage: "Create Gslb",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "protocol",
@@ -544,8 +572,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -593,90 +629,96 @@ func init() {
 						return err
 					}
 
-					createParam.ParamTemplate = c.String("param-template")
-					createParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(createParam)
+					gslbCreateParam.ParamTemplate = c.String("param-template")
+					gslbCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(gslbCreateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCreateGSLBParam()
+						p := params.NewCreateGslbParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(createParam, p, mergo.WithOverride)
+						mergo.Merge(gslbCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("protocol") {
-						createParam.Protocol = c.String("protocol")
+						gslbCreateParam.Protocol = c.String("protocol")
 					}
 					if c.IsSet("host-header") {
-						createParam.HostHeader = c.String("host-header")
+						gslbCreateParam.HostHeader = c.String("host-header")
 					}
 					if c.IsSet("path") {
-						createParam.Path = c.String("path")
+						gslbCreateParam.Path = c.String("path")
 					}
 					if c.IsSet("response-code") {
-						createParam.ResponseCode = c.Int("response-code")
+						gslbCreateParam.ResponseCode = c.Int("response-code")
 					}
 					if c.IsSet("port") {
-						createParam.Port = c.Int("port")
+						gslbCreateParam.Port = c.Int("port")
 					}
 					if c.IsSet("delay-loop") {
-						createParam.DelayLoop = c.Int("delay-loop")
+						gslbCreateParam.DelayLoop = c.Int("delay-loop")
 					}
 					if c.IsSet("weighted") {
-						createParam.Weighted = c.Bool("weighted")
+						gslbCreateParam.Weighted = c.Bool("weighted")
 					}
 					if c.IsSet("sorry-server") {
-						createParam.SorryServer = c.String("sorry-server")
+						gslbCreateParam.SorryServer = c.String("sorry-server")
 					}
 					if c.IsSet("name") {
-						createParam.Name = c.String("name")
+						gslbCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						createParam.Description = c.String("description")
+						gslbCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						createParam.Tags = c.StringSlice("tags")
+						gslbCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						createParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						gslbCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						createParam.Assumeyes = c.Bool("assumeyes")
+						gslbCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						createParam.ParamTemplate = c.String("param-template")
+						gslbCreateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						gslbCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						createParam.ParamTemplateFile = c.String("param-template-file")
+						gslbCreateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						gslbCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						createParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						gslbCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						createParam.OutputType = c.String("output-type")
+						gslbCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						createParam.Column = c.StringSlice("column")
+						gslbCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						createParam.Quiet = c.Bool("quiet")
+						gslbCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						createParam.Format = c.String("format")
+						gslbCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						createParam.FormatFile = c.String("format-file")
+						gslbCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						createParam.Query = c.String("query")
+						gslbCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						createParam.QueryFile = c.String("query-file")
+						gslbCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -684,7 +726,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = createParam
+					var outputTypeHolder interface{} = gslbCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -695,10 +737,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if createParam.GenerateSkeleton {
-						createParam.GenerateSkeleton = false
-						createParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(createParam, "", "\t")
+					if gslbCreateParam.GenerateSkeleton {
+						gslbCreateParam.GenerateSkeleton = false
+						gslbCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(gslbCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -707,15 +749,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := createParam.Validate(); len(errors) > 0 {
+					if errors := gslbCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), createParam)
+					ctx := command.NewContext(c, c.Args().Slice(), gslbCreateParam)
 
 					// confirm
-					if !createParam.Assumeyes {
+					if !gslbCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -725,13 +767,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.GSLBCreate(ctx, createParam)
+					return funcs.GslbCreate(ctx, gslbCreateParam)
 
 				},
 			},
 			{
 				Name:      "server-add",
-				Usage:     "ServerAdd GSLB",
+				Usage:     "ServerAdd Gslb",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -760,8 +802,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -814,69 +864,75 @@ func init() {
 						return err
 					}
 
-					serverAddParam.ParamTemplate = c.String("param-template")
-					serverAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(serverAddParam)
+					gslbServerAddParam.ParamTemplate = c.String("param-template")
+					gslbServerAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(gslbServerAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerAddGSLBParam()
+						p := params.NewServerAddGslbParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(serverAddParam, p, mergo.WithOverride)
+						mergo.Merge(gslbServerAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("ipaddress") {
-						serverAddParam.Ipaddress = c.String("ipaddress")
+						gslbServerAddParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("disabled") {
-						serverAddParam.Disabled = c.Bool("disabled")
+						gslbServerAddParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("weight") {
-						serverAddParam.Weight = c.Int("weight")
+						gslbServerAddParam.Weight = c.Int("weight")
 					}
 					if c.IsSet("selector") {
-						serverAddParam.Selector = c.StringSlice("selector")
+						gslbServerAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						serverAddParam.Assumeyes = c.Bool("assumeyes")
+						gslbServerAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						serverAddParam.ParamTemplate = c.String("param-template")
+						gslbServerAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						gslbServerAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						serverAddParam.ParamTemplateFile = c.String("param-template-file")
+						gslbServerAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						gslbServerAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						serverAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						gslbServerAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						serverAddParam.OutputType = c.String("output-type")
+						gslbServerAddParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						serverAddParam.Column = c.StringSlice("column")
+						gslbServerAddParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						serverAddParam.Quiet = c.Bool("quiet")
+						gslbServerAddParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						serverAddParam.Format = c.String("format")
+						gslbServerAddParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						serverAddParam.FormatFile = c.String("format-file")
+						gslbServerAddParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						serverAddParam.Query = c.String("query")
+						gslbServerAddParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						serverAddParam.QueryFile = c.String("query-file")
+						gslbServerAddParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						serverAddParam.Id = sacloud.ID(c.Int64("id"))
+						gslbServerAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -884,7 +940,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = serverAddParam
+					var outputTypeHolder interface{} = gslbServerAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -895,10 +951,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if serverAddParam.GenerateSkeleton {
-						serverAddParam.GenerateSkeleton = false
-						serverAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(serverAddParam, "", "\t")
+					if gslbServerAddParam.GenerateSkeleton {
+						gslbServerAddParam.GenerateSkeleton = false
+						gslbServerAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(gslbServerAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -907,19 +963,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := serverAddParam.Validate(); len(errors) > 0 {
+					if errors := gslbServerAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), serverAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), gslbServerAddParam)
 
-					apiClient := ctx.GetAPIClient().GSLB
+					apiClient := ctx.GetAPIClient().Gslb
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(serverAddParam.Selector) == 0 {
+						if len(gslbServerAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -928,12 +984,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceGSLBItems {
-							if hasTags(&v, serverAddParam.Selector) {
+							if hasTags(&v, gslbServerAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", gslbServerAddParam.Selector)
 						}
 
 					} else {
@@ -955,7 +1011,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceGSLBItems {
-										if len(serverAddParam.Selector) == 0 || hasTags(&v, serverAddParam.Selector) {
+										if len(gslbServerAddParam.Selector) == 0 || hasTags(&v, gslbServerAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -976,7 +1032,7 @@ func init() {
 					}
 
 					// confirm
-					if !serverAddParam.Assumeyes {
+					if !gslbServerAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -990,11 +1046,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						serverAddParam.SetId(id)
-						p := *serverAddParam // copy struct value
-						serverAddParam := &p
+						gslbServerAddParam.SetId(id)
+						p := *gslbServerAddParam // copy struct value
+						gslbServerAddParam := &p
 						go func() {
-							err := funcs.GSLBServerAdd(ctx, serverAddParam)
+							err := funcs.GslbServerAdd(ctx, gslbServerAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1008,7 +1064,7 @@ func init() {
 			},
 			{
 				Name:      "read",
-				Usage:     "Read GSLB",
+				Usage:     "Read Gslb",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1020,8 +1076,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1074,57 +1138,63 @@ func init() {
 						return err
 					}
 
-					readParam.ParamTemplate = c.String("param-template")
-					readParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(readParam)
+					gslbReadParam.ParamTemplate = c.String("param-template")
+					gslbReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(gslbReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadGSLBParam()
+						p := params.NewReadGslbParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(readParam, p, mergo.WithOverride)
+						mergo.Merge(gslbReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						readParam.Selector = c.StringSlice("selector")
+						gslbReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						readParam.ParamTemplate = c.String("param-template")
+						gslbReadParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						gslbReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						readParam.ParamTemplateFile = c.String("param-template-file")
+						gslbReadParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						gslbReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						readParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						gslbReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						readParam.OutputType = c.String("output-type")
+						gslbReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						readParam.Column = c.StringSlice("column")
+						gslbReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						readParam.Quiet = c.Bool("quiet")
+						gslbReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						readParam.Format = c.String("format")
+						gslbReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						readParam.FormatFile = c.String("format-file")
+						gslbReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						readParam.Query = c.String("query")
+						gslbReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						readParam.QueryFile = c.String("query-file")
+						gslbReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = sacloud.ID(c.Int64("id"))
+						gslbReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1132,7 +1202,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = readParam
+					var outputTypeHolder interface{} = gslbReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1143,10 +1213,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if readParam.GenerateSkeleton {
-						readParam.GenerateSkeleton = false
-						readParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(readParam, "", "\t")
+					if gslbReadParam.GenerateSkeleton {
+						gslbReadParam.GenerateSkeleton = false
+						gslbReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(gslbReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1155,19 +1225,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
+					if errors := gslbReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), readParam)
+					ctx := command.NewContext(c, c.Args().Slice(), gslbReadParam)
 
-					apiClient := ctx.GetAPIClient().GSLB
+					apiClient := ctx.GetAPIClient().Gslb
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(readParam.Selector) == 0 {
+						if len(gslbReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1176,12 +1246,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceGSLBItems {
-							if hasTags(&v, readParam.Selector) {
+							if hasTags(&v, gslbReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", readParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", gslbReadParam.Selector)
 						}
 
 					} else {
@@ -1203,7 +1273,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceGSLBItems {
-										if len(readParam.Selector) == 0 || hasTags(&v, readParam.Selector) {
+										if len(gslbReadParam.Selector) == 0 || hasTags(&v, gslbReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1228,11 +1298,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						readParam.SetId(id)
-						p := *readParam // copy struct value
-						readParam := &p
+						gslbReadParam.SetId(id)
+						p := *gslbReadParam // copy struct value
+						gslbReadParam := &p
 						go func() {
-							err := funcs.GSLBRead(ctx, readParam)
+							err := funcs.GslbRead(ctx, gslbReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1246,7 +1316,7 @@ func init() {
 			},
 			{
 				Name:      "server-update",
-				Usage:     "ServerUpdate GSLB",
+				Usage:     "ServerUpdate Gslb",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -1279,8 +1349,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1333,72 +1411,78 @@ func init() {
 						return err
 					}
 
-					serverUpdateParam.ParamTemplate = c.String("param-template")
-					serverUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(serverUpdateParam)
+					gslbServerUpdateParam.ParamTemplate = c.String("param-template")
+					gslbServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(gslbServerUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerUpdateGSLBParam()
+						p := params.NewServerUpdateGslbParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(serverUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(gslbServerUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						serverUpdateParam.Index = c.Int("index")
+						gslbServerUpdateParam.Index = c.Int("index")
 					}
 					if c.IsSet("ipaddress") {
-						serverUpdateParam.Ipaddress = c.String("ipaddress")
+						gslbServerUpdateParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("disabled") {
-						serverUpdateParam.Disabled = c.Bool("disabled")
+						gslbServerUpdateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("weight") {
-						serverUpdateParam.Weight = c.Int("weight")
+						gslbServerUpdateParam.Weight = c.Int("weight")
 					}
 					if c.IsSet("selector") {
-						serverUpdateParam.Selector = c.StringSlice("selector")
+						gslbServerUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						serverUpdateParam.Assumeyes = c.Bool("assumeyes")
+						gslbServerUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						serverUpdateParam.ParamTemplate = c.String("param-template")
+						gslbServerUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						gslbServerUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						serverUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						gslbServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						gslbServerUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						serverUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						gslbServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						serverUpdateParam.OutputType = c.String("output-type")
+						gslbServerUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						serverUpdateParam.Column = c.StringSlice("column")
+						gslbServerUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						serverUpdateParam.Quiet = c.Bool("quiet")
+						gslbServerUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						serverUpdateParam.Format = c.String("format")
+						gslbServerUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						serverUpdateParam.FormatFile = c.String("format-file")
+						gslbServerUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						serverUpdateParam.Query = c.String("query")
+						gslbServerUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						serverUpdateParam.QueryFile = c.String("query-file")
+						gslbServerUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						serverUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						gslbServerUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1406,7 +1490,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = serverUpdateParam
+					var outputTypeHolder interface{} = gslbServerUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1417,10 +1501,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if serverUpdateParam.GenerateSkeleton {
-						serverUpdateParam.GenerateSkeleton = false
-						serverUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(serverUpdateParam, "", "\t")
+					if gslbServerUpdateParam.GenerateSkeleton {
+						gslbServerUpdateParam.GenerateSkeleton = false
+						gslbServerUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(gslbServerUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1429,19 +1513,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := serverUpdateParam.Validate(); len(errors) > 0 {
+					if errors := gslbServerUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), serverUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), gslbServerUpdateParam)
 
-					apiClient := ctx.GetAPIClient().GSLB
+					apiClient := ctx.GetAPIClient().Gslb
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(serverUpdateParam.Selector) == 0 {
+						if len(gslbServerUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1450,12 +1534,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceGSLBItems {
-							if hasTags(&v, serverUpdateParam.Selector) {
+							if hasTags(&v, gslbServerUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", gslbServerUpdateParam.Selector)
 						}
 
 					} else {
@@ -1477,7 +1561,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceGSLBItems {
-										if len(serverUpdateParam.Selector) == 0 || hasTags(&v, serverUpdateParam.Selector) {
+										if len(gslbServerUpdateParam.Selector) == 0 || hasTags(&v, gslbServerUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1498,7 +1582,7 @@ func init() {
 					}
 
 					// confirm
-					if !serverUpdateParam.Assumeyes {
+					if !gslbServerUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1512,11 +1596,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						serverUpdateParam.SetId(id)
-						p := *serverUpdateParam // copy struct value
-						serverUpdateParam := &p
+						gslbServerUpdateParam.SetId(id)
+						p := *gslbServerUpdateParam // copy struct value
+						gslbServerUpdateParam := &p
 						go func() {
-							err := funcs.GSLBServerUpdate(ctx, serverUpdateParam)
+							err := funcs.GslbServerUpdate(ctx, gslbServerUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1530,7 +1614,7 @@ func init() {
 			},
 			{
 				Name:      "server-delete",
-				Usage:     "ServerDelete GSLB",
+				Usage:     "ServerDelete Gslb",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -1551,8 +1635,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1605,63 +1697,69 @@ func init() {
 						return err
 					}
 
-					serverDeleteParam.ParamTemplate = c.String("param-template")
-					serverDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(serverDeleteParam)
+					gslbServerDeleteParam.ParamTemplate = c.String("param-template")
+					gslbServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(gslbServerDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerDeleteGSLBParam()
+						p := params.NewServerDeleteGslbParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(serverDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(gslbServerDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						serverDeleteParam.Index = c.Int("index")
+						gslbServerDeleteParam.Index = c.Int("index")
 					}
 					if c.IsSet("selector") {
-						serverDeleteParam.Selector = c.StringSlice("selector")
+						gslbServerDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						serverDeleteParam.Assumeyes = c.Bool("assumeyes")
+						gslbServerDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						serverDeleteParam.ParamTemplate = c.String("param-template")
+						gslbServerDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						gslbServerDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						serverDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						gslbServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						gslbServerDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						serverDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						gslbServerDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						serverDeleteParam.OutputType = c.String("output-type")
+						gslbServerDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						serverDeleteParam.Column = c.StringSlice("column")
+						gslbServerDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						serverDeleteParam.Quiet = c.Bool("quiet")
+						gslbServerDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						serverDeleteParam.Format = c.String("format")
+						gslbServerDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						serverDeleteParam.FormatFile = c.String("format-file")
+						gslbServerDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						serverDeleteParam.Query = c.String("query")
+						gslbServerDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						serverDeleteParam.QueryFile = c.String("query-file")
+						gslbServerDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						serverDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						gslbServerDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1669,7 +1767,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = serverDeleteParam
+					var outputTypeHolder interface{} = gslbServerDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1680,10 +1778,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if serverDeleteParam.GenerateSkeleton {
-						serverDeleteParam.GenerateSkeleton = false
-						serverDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(serverDeleteParam, "", "\t")
+					if gslbServerDeleteParam.GenerateSkeleton {
+						gslbServerDeleteParam.GenerateSkeleton = false
+						gslbServerDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(gslbServerDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1692,19 +1790,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := serverDeleteParam.Validate(); len(errors) > 0 {
+					if errors := gslbServerDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), serverDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), gslbServerDeleteParam)
 
-					apiClient := ctx.GetAPIClient().GSLB
+					apiClient := ctx.GetAPIClient().Gslb
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(serverDeleteParam.Selector) == 0 {
+						if len(gslbServerDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1713,12 +1811,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceGSLBItems {
-							if hasTags(&v, serverDeleteParam.Selector) {
+							if hasTags(&v, gslbServerDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", gslbServerDeleteParam.Selector)
 						}
 
 					} else {
@@ -1740,7 +1838,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceGSLBItems {
-										if len(serverDeleteParam.Selector) == 0 || hasTags(&v, serverDeleteParam.Selector) {
+										if len(gslbServerDeleteParam.Selector) == 0 || hasTags(&v, gslbServerDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1761,7 +1859,7 @@ func init() {
 					}
 
 					// confirm
-					if !serverDeleteParam.Assumeyes {
+					if !gslbServerDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1775,11 +1873,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						serverDeleteParam.SetId(id)
-						p := *serverDeleteParam // copy struct value
-						serverDeleteParam := &p
+						gslbServerDeleteParam.SetId(id)
+						p := *gslbServerDeleteParam // copy struct value
+						gslbServerDeleteParam := &p
 						go func() {
-							err := funcs.GSLBServerDelete(ctx, serverDeleteParam)
+							err := funcs.GslbServerDelete(ctx, gslbServerDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1793,7 +1891,7 @@ func init() {
 			},
 			{
 				Name:      "update",
-				Usage:     "Update GSLB",
+				Usage:     "Update Gslb",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -1859,8 +1957,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1913,96 +2019,102 @@ func init() {
 						return err
 					}
 
-					updateParam.ParamTemplate = c.String("param-template")
-					updateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(updateParam)
+					gslbUpdateParam.ParamTemplate = c.String("param-template")
+					gslbUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(gslbUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUpdateGSLBParam()
+						p := params.NewUpdateGslbParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(updateParam, p, mergo.WithOverride)
+						mergo.Merge(gslbUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("protocol") {
-						updateParam.Protocol = c.String("protocol")
+						gslbUpdateParam.Protocol = c.String("protocol")
 					}
 					if c.IsSet("host-header") {
-						updateParam.HostHeader = c.String("host-header")
+						gslbUpdateParam.HostHeader = c.String("host-header")
 					}
 					if c.IsSet("path") {
-						updateParam.Path = c.String("path")
+						gslbUpdateParam.Path = c.String("path")
 					}
 					if c.IsSet("response-code") {
-						updateParam.ResponseCode = c.Int("response-code")
+						gslbUpdateParam.ResponseCode = c.Int("response-code")
 					}
 					if c.IsSet("port") {
-						updateParam.Port = c.Int("port")
+						gslbUpdateParam.Port = c.Int("port")
 					}
 					if c.IsSet("delay-loop") {
-						updateParam.DelayLoop = c.Int("delay-loop")
+						gslbUpdateParam.DelayLoop = c.Int("delay-loop")
 					}
 					if c.IsSet("weighted") {
-						updateParam.Weighted = c.Bool("weighted")
+						gslbUpdateParam.Weighted = c.Bool("weighted")
 					}
 					if c.IsSet("sorry-server") {
-						updateParam.SorryServer = c.String("sorry-server")
+						gslbUpdateParam.SorryServer = c.String("sorry-server")
 					}
 					if c.IsSet("selector") {
-						updateParam.Selector = c.StringSlice("selector")
+						gslbUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
-						updateParam.Name = c.String("name")
+						gslbUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						updateParam.Description = c.String("description")
+						gslbUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						updateParam.Tags = c.StringSlice("tags")
+						gslbUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						gslbUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						updateParam.Assumeyes = c.Bool("assumeyes")
+						gslbUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						updateParam.ParamTemplate = c.String("param-template")
+						gslbUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						gslbUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						updateParam.ParamTemplateFile = c.String("param-template-file")
+						gslbUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						gslbUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						updateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						gslbUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						updateParam.OutputType = c.String("output-type")
+						gslbUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						updateParam.Column = c.StringSlice("column")
+						gslbUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						updateParam.Quiet = c.Bool("quiet")
+						gslbUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						updateParam.Format = c.String("format")
+						gslbUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						updateParam.FormatFile = c.String("format-file")
+						gslbUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						updateParam.Query = c.String("query")
+						gslbUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						updateParam.QueryFile = c.String("query-file")
+						gslbUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = sacloud.ID(c.Int64("id"))
+						gslbUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2010,7 +2122,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = updateParam
+					var outputTypeHolder interface{} = gslbUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2021,10 +2133,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if updateParam.GenerateSkeleton {
-						updateParam.GenerateSkeleton = false
-						updateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(updateParam, "", "\t")
+					if gslbUpdateParam.GenerateSkeleton {
+						gslbUpdateParam.GenerateSkeleton = false
+						gslbUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(gslbUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2033,19 +2145,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
+					if errors := gslbUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), gslbUpdateParam)
 
-					apiClient := ctx.GetAPIClient().GSLB
+					apiClient := ctx.GetAPIClient().Gslb
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(updateParam.Selector) == 0 {
+						if len(gslbUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2054,12 +2166,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceGSLBItems {
-							if hasTags(&v, updateParam.Selector) {
+							if hasTags(&v, gslbUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", gslbUpdateParam.Selector)
 						}
 
 					} else {
@@ -2081,7 +2193,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceGSLBItems {
-										if len(updateParam.Selector) == 0 || hasTags(&v, updateParam.Selector) {
+										if len(gslbUpdateParam.Selector) == 0 || hasTags(&v, gslbUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2098,7 +2210,7 @@ func init() {
 					}
 
 					// confirm
-					if !updateParam.Assumeyes {
+					if !gslbUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2112,11 +2224,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						updateParam.SetId(id)
-						p := *updateParam // copy struct value
-						updateParam := &p
+						gslbUpdateParam.SetId(id)
+						p := *gslbUpdateParam // copy struct value
+						gslbUpdateParam := &p
 						go func() {
-							err := funcs.GSLBUpdate(ctx, updateParam)
+							err := funcs.GslbUpdate(ctx, gslbUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2131,7 +2243,7 @@ func init() {
 			{
 				Name:      "delete",
 				Aliases:   []string{"rm"},
-				Usage:     "Delete GSLB",
+				Usage:     "Delete Gslb",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2148,8 +2260,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2202,60 +2322,66 @@ func init() {
 						return err
 					}
 
-					deleteParam.ParamTemplate = c.String("param-template")
-					deleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(deleteParam)
+					gslbDeleteParam.ParamTemplate = c.String("param-template")
+					gslbDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(gslbDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeleteGSLBParam()
+						p := params.NewDeleteGslbParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(deleteParam, p, mergo.WithOverride)
+						mergo.Merge(gslbDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						deleteParam.Selector = c.StringSlice("selector")
+						gslbDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						deleteParam.Assumeyes = c.Bool("assumeyes")
+						gslbDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						deleteParam.ParamTemplate = c.String("param-template")
+						gslbDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						gslbDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						deleteParam.ParamTemplateFile = c.String("param-template-file")
+						gslbDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						gslbDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						deleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						gslbDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						deleteParam.OutputType = c.String("output-type")
+						gslbDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						deleteParam.Column = c.StringSlice("column")
+						gslbDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						deleteParam.Quiet = c.Bool("quiet")
+						gslbDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						deleteParam.Format = c.String("format")
+						gslbDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						deleteParam.FormatFile = c.String("format-file")
+						gslbDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						deleteParam.Query = c.String("query")
+						gslbDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						deleteParam.QueryFile = c.String("query-file")
+						gslbDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = sacloud.ID(c.Int64("id"))
+						gslbDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2263,7 +2389,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = deleteParam
+					var outputTypeHolder interface{} = gslbDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2274,10 +2400,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if deleteParam.GenerateSkeleton {
-						deleteParam.GenerateSkeleton = false
-						deleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(deleteParam, "", "\t")
+					if gslbDeleteParam.GenerateSkeleton {
+						gslbDeleteParam.GenerateSkeleton = false
+						gslbDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(gslbDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2286,19 +2412,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
+					if errors := gslbDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), gslbDeleteParam)
 
-					apiClient := ctx.GetAPIClient().GSLB
+					apiClient := ctx.GetAPIClient().Gslb
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(deleteParam.Selector) == 0 {
+						if len(gslbDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2307,12 +2433,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceGSLBItems {
-							if hasTags(&v, deleteParam.Selector) {
+							if hasTags(&v, gslbDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", deleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", gslbDeleteParam.Selector)
 						}
 
 					} else {
@@ -2334,7 +2460,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceGSLBItems {
-										if len(deleteParam.Selector) == 0 || hasTags(&v, deleteParam.Selector) {
+										if len(gslbDeleteParam.Selector) == 0 || hasTags(&v, gslbDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2351,7 +2477,7 @@ func init() {
 					}
 
 					// confirm
-					if !deleteParam.Assumeyes {
+					if !gslbDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2365,11 +2491,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						deleteParam.SetId(id)
-						p := *deleteParam // copy struct value
-						deleteParam := &p
+						gslbDeleteParam.SetId(id)
+						p := *gslbDeleteParam // copy struct value
+						gslbDeleteParam := &p
 						go func() {
-							err := funcs.GSLBDelete(ctx, deleteParam)
+							err := funcs.GslbDelete(ctx, gslbDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2506,6 +2632,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("gslb", "create", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("gslb", "create", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("gslb", "create", "path", &schema.Category{
 		Key:         "GSLB",
 		DisplayName: "GSLB options",
@@ -2601,6 +2737,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("gslb", "delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("gslb", "delete", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("gslb", "delete", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -2676,6 +2822,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("gslb", "list", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("gslb", "list", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("gslb", "list", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -2737,6 +2893,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("gslb", "read", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("gslb", "read", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("gslb", "read", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -2816,6 +2982,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("gslb", "server-add", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("gslb", "server-add", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("gslb", "server-add", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -2891,6 +3067,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("gslb", "server-delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("gslb", "server-delete", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("gslb", "server-delete", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -2947,6 +3133,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("gslb", "server-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("gslb", "server-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("gslb", "server-info", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3027,6 +3223,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("gslb", "server-update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("gslb", "server-update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("gslb", "server-update", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3122,6 +3328,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("gslb", "update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("gslb", "update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("gslb", "update", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

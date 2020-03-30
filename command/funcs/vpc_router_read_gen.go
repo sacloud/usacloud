@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func VPCRouterRead(ctx command.Context, params *params.ReadVPCRouterParam) error {
+func VpcrouterRead(ctx command.Context, params *params.ReadVpcrouterParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetVPCRouterAPI()
+	api := client.GetVpcrouterAPI()
 
 	// set params
 
 	// call Read(id)
 	res, err := api.Read(params.Id)
 	if err != nil {
-		return fmt.Errorf("VPCRouterRead is failed: %s", err)
+		return fmt.Errorf("VpcrouterRead is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

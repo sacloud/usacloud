@@ -29,7 +29,7 @@ import (
 )
 
 func init() {
-	infoParam := params.NewInfoSelfParam()
+	selfInfoParam := params.NewInfoSelfParam()
 
 	cliCommand := &cli.Command{
 		Name:  "self",
@@ -47,8 +47,16 @@ func init() {
 				Usage: "Set input parameter from string(JSON)",
 			},
 			&cli.StringFlag{
+				Name:  "parameters",
+				Usage: "Set input parameters from JSON string",
+			},
+			&cli.StringFlag{
 				Name:  "param-template-file",
 				Usage: "Set input parameter from file",
+			},
+			&cli.StringFlag{
+				Name:  "parameter-file",
+				Usage: "Set input parameters from file",
 			},
 			&cli.BoolFlag{
 				Name:  "generate-skeleton",
@@ -65,8 +73,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -82,9 +98,9 @@ func init() {
 						return err
 					}
 
-					infoParam.ParamTemplate = c.String("param-template")
-					infoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(infoParam)
+					selfInfoParam.ParamTemplate = c.String("param-template")
+					selfInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(selfInfoParam)
 					if err != nil {
 						return err
 					}
@@ -94,18 +110,24 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(infoParam, p, mergo.WithOverride)
+						mergo.Merge(selfInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						infoParam.ParamTemplate = c.String("param-template")
+						selfInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						selfInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						infoParam.ParamTemplateFile = c.String("param-template-file")
+						selfInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						selfInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						infoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						selfInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
 					// Validate global params
@@ -113,7 +135,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = infoParam
+					var outputTypeHolder interface{} = selfInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -124,10 +146,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if infoParam.GenerateSkeleton {
-						infoParam.GenerateSkeleton = false
-						infoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(infoParam, "", "\t")
+					if selfInfoParam.GenerateSkeleton {
+						selfInfoParam.GenerateSkeleton = false
+						selfInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(selfInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -136,15 +158,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := infoParam.Validate(); len(errors) > 0 {
+					if errors := selfInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), infoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), selfInfoParam)
 
 					// Run command with params
-					return funcs.SelfInfo(ctx, infoParam)
+					return funcs.SelfInfo(ctx, selfInfoParam)
 
 				},
 			},
@@ -179,6 +201,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("self", "info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("self", "info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("self", "info", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

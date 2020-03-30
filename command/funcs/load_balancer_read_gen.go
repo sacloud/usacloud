@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func LoadBalancerRead(ctx command.Context, params *params.ReadLoadBalancerParam) error {
+func LoadbalancerRead(ctx command.Context, params *params.ReadLoadbalancerParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetLoadBalancerAPI()
+	api := client.GetLoadbalancerAPI()
 
 	// set params
 
 	// call Read(id)
 	res, err := api.Read(params.Id)
 	if err != nil {
-		return fmt.Errorf("LoadBalancerRead is failed: %s", err)
+		return fmt.Errorf("LoadbalancerRead is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

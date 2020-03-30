@@ -32,7 +32,9 @@ type ListInternetParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -71,8 +73,14 @@ func (p *ListInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -233,12 +241,26 @@ func (p *ListInternetParam) SetParamTemplate(v string) {
 func (p *ListInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListInternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListInternetParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListInternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListInternetParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -307,7 +329,9 @@ type CreateInternetParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -353,8 +377,14 @@ func (p *CreateInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -553,12 +583,26 @@ func (p *CreateInternetParam) SetParamTemplate(v string) {
 func (p *CreateInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateInternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateInternetParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateInternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateInternetParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -621,7 +665,9 @@ func (p *CreateInternetParam) GetQueryFile() string {
 type ReadInternetParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -646,8 +692,14 @@ func (p *ReadInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -751,12 +803,26 @@ func (p *ReadInternetParam) SetParamTemplate(v string) {
 func (p *ReadInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadInternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadInternetParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadInternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadInternetParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -832,7 +898,9 @@ type UpdateInternetParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -875,8 +943,14 @@ func (p *UpdateInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1057,12 +1131,26 @@ func (p *UpdateInternetParam) SetParamTemplate(v string) {
 func (p *UpdateInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateInternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateInternetParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateInternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateInternetParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1133,7 +1221,9 @@ type DeleteInternetParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1161,8 +1251,14 @@ func (p *DeleteInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1273,12 +1369,26 @@ func (p *DeleteInternetParam) SetParamTemplate(v string) {
 func (p *DeleteInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteInternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteInternetParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteInternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteInternetParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1350,7 +1460,9 @@ type UpdateBandwidthInternetParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1384,8 +1496,14 @@ func (p *UpdateBandwidthInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1517,12 +1635,26 @@ func (p *UpdateBandwidthInternetParam) SetParamTemplate(v string) {
 func (p *UpdateBandwidthInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateBandwidthInternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateBandwidthInternetParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateBandwidthInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateBandwidthInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateBandwidthInternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateBandwidthInternetParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateBandwidthInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1592,7 +1724,9 @@ func (p *UpdateBandwidthInternetParam) GetId() sacloud.ID {
 type SubnetInfoInternetParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1617,8 +1751,14 @@ func (p *SubnetInfoInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1722,12 +1862,26 @@ func (p *SubnetInfoInternetParam) SetParamTemplate(v string) {
 func (p *SubnetInfoInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *SubnetInfoInternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *SubnetInfoInternetParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *SubnetInfoInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *SubnetInfoInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *SubnetInfoInternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *SubnetInfoInternetParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *SubnetInfoInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1800,7 +1954,9 @@ type SubnetAddInternetParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1837,8 +1993,14 @@ func (p *SubnetAddInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1991,12 +2153,26 @@ func (p *SubnetAddInternetParam) SetParamTemplate(v string) {
 func (p *SubnetAddInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *SubnetAddInternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *SubnetAddInternetParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *SubnetAddInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *SubnetAddInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *SubnetAddInternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *SubnetAddInternetParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *SubnetAddInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2068,7 +2244,9 @@ type SubnetDeleteInternetParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2092,8 +2270,14 @@ func (p *SubnetDeleteInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2177,12 +2361,26 @@ func (p *SubnetDeleteInternetParam) SetParamTemplate(v string) {
 func (p *SubnetDeleteInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *SubnetDeleteInternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *SubnetDeleteInternetParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *SubnetDeleteInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *SubnetDeleteInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *SubnetDeleteInternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *SubnetDeleteInternetParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *SubnetDeleteInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2206,7 +2404,9 @@ type SubnetUpdateInternetParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2240,8 +2440,14 @@ func (p *SubnetUpdateInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2387,12 +2593,26 @@ func (p *SubnetUpdateInternetParam) SetParamTemplate(v string) {
 func (p *SubnetUpdateInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *SubnetUpdateInternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *SubnetUpdateInternetParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *SubnetUpdateInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *SubnetUpdateInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *SubnetUpdateInternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *SubnetUpdateInternetParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *SubnetUpdateInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2462,7 +2682,9 @@ func (p *SubnetUpdateInternetParam) GetId() sacloud.ID {
 type Ipv6InfoInternetParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2487,8 +2709,14 @@ func (p *Ipv6InfoInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2592,12 +2820,26 @@ func (p *Ipv6InfoInternetParam) SetParamTemplate(v string) {
 func (p *Ipv6InfoInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *Ipv6InfoInternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *Ipv6InfoInternetParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *Ipv6InfoInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *Ipv6InfoInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *Ipv6InfoInternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *Ipv6InfoInternetParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *Ipv6InfoInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2668,7 +2910,9 @@ type Ipv6EnableInternetParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2696,8 +2940,14 @@ func (p *Ipv6EnableInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2808,12 +3058,26 @@ func (p *Ipv6EnableInternetParam) SetParamTemplate(v string) {
 func (p *Ipv6EnableInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *Ipv6EnableInternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *Ipv6EnableInternetParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *Ipv6EnableInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *Ipv6EnableInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *Ipv6EnableInternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *Ipv6EnableInternetParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *Ipv6EnableInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2884,7 +3148,9 @@ type Ipv6DisableInternetParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2905,8 +3171,14 @@ func (p *Ipv6DisableInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2976,12 +3248,26 @@ func (p *Ipv6DisableInternetParam) SetParamTemplate(v string) {
 func (p *Ipv6DisableInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *Ipv6DisableInternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *Ipv6DisableInternetParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *Ipv6DisableInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *Ipv6DisableInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *Ipv6DisableInternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *Ipv6DisableInternetParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *Ipv6DisableInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -3005,7 +3291,9 @@ type MonitorInternetParam struct {
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -3042,8 +3330,14 @@ func (p *MonitorInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3189,12 +3483,26 @@ func (p *MonitorInternetParam) SetParamTemplate(v string) {
 func (p *MonitorInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MonitorInternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorInternetParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MonitorInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MonitorInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorInternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorInternetParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MonitorInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

@@ -31,7 +31,9 @@ type ListBridgeParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -67,8 +69,14 @@ func (p *ListBridgeParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -215,12 +223,26 @@ func (p *ListBridgeParam) SetParamTemplate(v string) {
 func (p *ListBridgeParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListBridgeParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListBridgeParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListBridgeParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListBridgeParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListBridgeParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListBridgeParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListBridgeParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -285,7 +307,9 @@ type CreateBridgeParam struct {
 	Description       string   `json:"description"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Column            []string `json:"column"`
@@ -315,8 +339,14 @@ func (p *CreateBridgeParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -445,12 +475,26 @@ func (p *CreateBridgeParam) SetParamTemplate(v string) {
 func (p *CreateBridgeParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateBridgeParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateBridgeParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateBridgeParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateBridgeParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateBridgeParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateBridgeParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateBridgeParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -512,7 +556,9 @@ func (p *CreateBridgeParam) GetQueryFile() string {
 // ReadBridgeParam is input parameters for the sacloud API
 type ReadBridgeParam struct {
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -534,8 +580,14 @@ func (p *ReadBridgeParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -632,12 +684,26 @@ func (p *ReadBridgeParam) SetParamTemplate(v string) {
 func (p *ReadBridgeParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadBridgeParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadBridgeParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadBridgeParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadBridgeParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadBridgeParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadBridgeParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadBridgeParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -709,7 +775,9 @@ type UpdateBridgeParam struct {
 	Description       string     `json:"description"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -740,8 +808,14 @@ func (p *UpdateBridgeParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -873,12 +947,26 @@ func (p *UpdateBridgeParam) SetParamTemplate(v string) {
 func (p *UpdateBridgeParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateBridgeParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateBridgeParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateBridgeParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateBridgeParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateBridgeParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateBridgeParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateBridgeParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -948,7 +1036,9 @@ func (p *UpdateBridgeParam) GetId() sacloud.ID {
 type DeleteBridgeParam struct {
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -973,8 +1063,14 @@ func (p *DeleteBridgeParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1078,12 +1174,26 @@ func (p *DeleteBridgeParam) SetParamTemplate(v string) {
 func (p *DeleteBridgeParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteBridgeParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteBridgeParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteBridgeParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteBridgeParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteBridgeParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteBridgeParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteBridgeParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

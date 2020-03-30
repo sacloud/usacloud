@@ -32,7 +32,9 @@ type ListSwitchParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -71,8 +73,14 @@ func (p *ListSwitchParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -233,12 +241,26 @@ func (p *ListSwitchParam) SetParamTemplate(v string) {
 func (p *ListSwitchParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListSwitchParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListSwitchParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListSwitchParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListSwitchParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListSwitchParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListSwitchParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListSwitchParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -305,7 +327,9 @@ type CreateSwitchParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -341,8 +365,14 @@ func (p *CreateSwitchParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -499,12 +529,26 @@ func (p *CreateSwitchParam) SetParamTemplate(v string) {
 func (p *CreateSwitchParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateSwitchParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateSwitchParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateSwitchParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateSwitchParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateSwitchParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateSwitchParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateSwitchParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -567,7 +611,9 @@ func (p *CreateSwitchParam) GetQueryFile() string {
 type ReadSwitchParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -592,8 +638,14 @@ func (p *ReadSwitchParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -697,12 +749,26 @@ func (p *ReadSwitchParam) SetParamTemplate(v string) {
 func (p *ReadSwitchParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadSwitchParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadSwitchParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadSwitchParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadSwitchParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadSwitchParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadSwitchParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadSwitchParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -777,7 +843,9 @@ type UpdateSwitchParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -817,8 +885,14 @@ func (p *UpdateSwitchParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -985,12 +1059,26 @@ func (p *UpdateSwitchParam) SetParamTemplate(v string) {
 func (p *UpdateSwitchParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateSwitchParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateSwitchParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateSwitchParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateSwitchParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateSwitchParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateSwitchParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateSwitchParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1061,7 +1149,9 @@ type DeleteSwitchParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1089,8 +1179,14 @@ func (p *DeleteSwitchParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1201,12 +1297,26 @@ func (p *DeleteSwitchParam) SetParamTemplate(v string) {
 func (p *DeleteSwitchParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteSwitchParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteSwitchParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteSwitchParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteSwitchParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteSwitchParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteSwitchParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteSwitchParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1278,7 +1388,9 @@ type BridgeConnectSwitchParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1302,8 +1414,14 @@ func (p *BridgeConnectSwitchParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1394,12 +1512,26 @@ func (p *BridgeConnectSwitchParam) SetParamTemplate(v string) {
 func (p *BridgeConnectSwitchParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *BridgeConnectSwitchParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BridgeConnectSwitchParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *BridgeConnectSwitchParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *BridgeConnectSwitchParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *BridgeConnectSwitchParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BridgeConnectSwitchParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *BridgeConnectSwitchParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1421,7 +1553,9 @@ type BridgeDisconnectSwitchParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1442,8 +1576,14 @@ func (p *BridgeDisconnectSwitchParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1513,12 +1653,26 @@ func (p *BridgeDisconnectSwitchParam) SetParamTemplate(v string) {
 func (p *BridgeDisconnectSwitchParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *BridgeDisconnectSwitchParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BridgeDisconnectSwitchParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *BridgeDisconnectSwitchParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *BridgeDisconnectSwitchParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *BridgeDisconnectSwitchParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BridgeDisconnectSwitchParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *BridgeDisconnectSwitchParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

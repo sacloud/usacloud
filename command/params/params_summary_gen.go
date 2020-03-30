@@ -25,7 +25,9 @@ import (
 // ShowSummaryParam is input parameters for the sacloud API
 type ShowSummaryParam struct {
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Column            []string `json:"column"`
@@ -47,8 +49,14 @@ func (p *ShowSummaryParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -138,12 +146,26 @@ func (p *ShowSummaryParam) SetParamTemplate(v string) {
 func (p *ShowSummaryParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ShowSummaryParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShowSummaryParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ShowSummaryParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ShowSummaryParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ShowSummaryParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShowSummaryParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ShowSummaryParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

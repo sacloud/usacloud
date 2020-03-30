@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ProxyLBRead(ctx command.Context, params *params.ReadProxyLBParam) error {
+func ProxylbRead(ctx command.Context, params *params.ReadProxylbParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetProxyLBAPI()
+	api := client.GetProxylbAPI()
 
 	// set params
 
 	// call Read(id)
 	res, err := api.Read(params.Id)
 	if err != nil {
-		return fmt.Errorf("ProxyLBRead is failed: %s", err)
+		return fmt.Errorf("ProxylbRead is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

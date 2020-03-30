@@ -23,10 +23,10 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func DNSList(ctx command.Context, params *params.ListDNSParam) error {
+func DnsList(ctx command.Context, params *params.ListDnsParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetDNSAPI()
+	finder := client.GetDnsAPI()
 
 	finder.SetEmpty()
 
@@ -55,7 +55,7 @@ func DNSList(ctx command.Context, params *params.ListDNSParam) error {
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("DNSList is failed: %s", err)
+		return fmt.Errorf("DnsList is failed: %s", err)
 	}
 
 	list := []interface{}{}

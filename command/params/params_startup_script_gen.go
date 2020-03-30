@@ -23,8 +23,8 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListStartupScriptParam is input parameters for the sacloud API
-type ListStartupScriptParam struct {
+// ListStartupscriptParam is input parameters for the sacloud API
+type ListStartupscriptParam struct {
 	Name              []string     `json:"name"`
 	Id                []sacloud.ID `json:"id"`
 	Scope             string       `json:"scope"`
@@ -34,7 +34,9 @@ type ListStartupScriptParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -45,13 +47,13 @@ type ListStartupScriptParam struct {
 	QueryFile         string       `json:"query-file"`
 }
 
-// NewListStartupScriptParam return new ListStartupScriptParam
-func NewListStartupScriptParam() *ListStartupScriptParam {
-	return &ListStartupScriptParam{}
+// NewListStartupscriptParam return new ListStartupscriptParam
+func NewListStartupscriptParam() *ListStartupscriptParam {
+	return &ListStartupscriptParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListStartupScriptParam) FillValueToSkeleton() {
+func (p *ListStartupscriptParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -79,8 +81,14 @@ func (p *ListStartupScriptParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -110,7 +118,7 @@ func (p *ListStartupScriptParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListStartupScriptParam) Validate() []error {
+func (p *ListStartupscriptParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
@@ -175,159 +183,173 @@ func (p *ListStartupScriptParam) Validate() []error {
 	return errors
 }
 
-func (p *ListStartupScriptParam) GetResourceDef() *schema.Resource {
+func (p *ListStartupscriptParam) GetResourceDef() *schema.Resource {
 	return define.Resources["StartupScript"]
 }
 
-func (p *ListStartupScriptParam) GetCommandDef() *schema.Command {
+func (p *ListStartupscriptParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListStartupScriptParam) GetIncludeFields() []string {
+func (p *ListStartupscriptParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListStartupScriptParam) GetExcludeFields() []string {
+func (p *ListStartupscriptParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListStartupScriptParam) GetTableType() output.TableType {
+func (p *ListStartupscriptParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListStartupScriptParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListStartupscriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListStartupScriptParam) SetName(v []string) {
+func (p *ListStartupscriptParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListStartupScriptParam) GetName() []string {
+func (p *ListStartupscriptParam) GetName() []string {
 	return p.Name
 }
-func (p *ListStartupScriptParam) SetId(v []sacloud.ID) {
+func (p *ListStartupscriptParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListStartupScriptParam) GetId() []sacloud.ID {
+func (p *ListStartupscriptParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListStartupScriptParam) SetScope(v string) {
+func (p *ListStartupscriptParam) SetScope(v string) {
 	p.Scope = v
 }
 
-func (p *ListStartupScriptParam) GetScope() string {
+func (p *ListStartupscriptParam) GetScope() string {
 	return p.Scope
 }
-func (p *ListStartupScriptParam) SetTags(v []string) {
+func (p *ListStartupscriptParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *ListStartupScriptParam) GetTags() []string {
+func (p *ListStartupscriptParam) GetTags() []string {
 	return p.Tags
 }
-func (p *ListStartupScriptParam) SetClass(v []string) {
+func (p *ListStartupscriptParam) SetClass(v []string) {
 	p.Class = v
 }
 
-func (p *ListStartupScriptParam) GetClass() []string {
+func (p *ListStartupscriptParam) GetClass() []string {
 	return p.Class
 }
-func (p *ListStartupScriptParam) SetFrom(v int) {
+func (p *ListStartupscriptParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListStartupScriptParam) GetFrom() int {
+func (p *ListStartupscriptParam) GetFrom() int {
 	return p.From
 }
-func (p *ListStartupScriptParam) SetMax(v int) {
+func (p *ListStartupscriptParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListStartupScriptParam) GetMax() int {
+func (p *ListStartupscriptParam) GetMax() int {
 	return p.Max
 }
-func (p *ListStartupScriptParam) SetSort(v []string) {
+func (p *ListStartupscriptParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListStartupScriptParam) GetSort() []string {
+func (p *ListStartupscriptParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListStartupScriptParam) SetParamTemplate(v string) {
+func (p *ListStartupscriptParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListStartupScriptParam) GetParamTemplate() string {
+func (p *ListStartupscriptParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListStartupScriptParam) SetParamTemplateFile(v string) {
+func (p *ListStartupscriptParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListStartupscriptParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListStartupscriptParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListStartupScriptParam) GetParamTemplateFile() string {
+func (p *ListStartupscriptParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListStartupScriptParam) SetGenerateSkeleton(v bool) {
+func (p *ListStartupscriptParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListStartupscriptParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListStartupscriptParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListStartupScriptParam) GetGenerateSkeleton() bool {
+func (p *ListStartupscriptParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListStartupScriptParam) SetOutputType(v string) {
+func (p *ListStartupscriptParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListStartupScriptParam) GetOutputType() string {
+func (p *ListStartupscriptParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListStartupScriptParam) SetColumn(v []string) {
+func (p *ListStartupscriptParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListStartupScriptParam) GetColumn() []string {
+func (p *ListStartupscriptParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ListStartupScriptParam) SetQuiet(v bool) {
+func (p *ListStartupscriptParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListStartupScriptParam) GetQuiet() bool {
+func (p *ListStartupscriptParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListStartupScriptParam) SetFormat(v string) {
+func (p *ListStartupscriptParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListStartupScriptParam) GetFormat() string {
+func (p *ListStartupscriptParam) GetFormat() string {
 	return p.Format
 }
-func (p *ListStartupScriptParam) SetFormatFile(v string) {
+func (p *ListStartupscriptParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListStartupScriptParam) GetFormatFile() string {
+func (p *ListStartupscriptParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListStartupScriptParam) SetQuery(v string) {
+func (p *ListStartupscriptParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListStartupScriptParam) GetQuery() string {
+func (p *ListStartupscriptParam) GetQuery() string {
 	return p.Query
 }
-func (p *ListStartupScriptParam) SetQueryFile(v string) {
+func (p *ListStartupscriptParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListStartupScriptParam) GetQueryFile() string {
+func (p *ListStartupscriptParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// CreateStartupScriptParam is input parameters for the sacloud API
-type CreateStartupScriptParam struct {
+// CreateStartupscriptParam is input parameters for the sacloud API
+type CreateStartupscriptParam struct {
 	Script            string     `json:"script"`
 	ScriptContent     string     `json:"script-content"`
 	Class             string     `json:"class"`
@@ -336,7 +358,9 @@ type CreateStartupScriptParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -347,16 +371,16 @@ type CreateStartupScriptParam struct {
 	QueryFile         string     `json:"query-file"`
 }
 
-// NewCreateStartupScriptParam return new CreateStartupScriptParam
-func NewCreateStartupScriptParam() *CreateStartupScriptParam {
-	return &CreateStartupScriptParam{
+// NewCreateStartupscriptParam return new CreateStartupscriptParam
+func NewCreateStartupscriptParam() *CreateStartupscriptParam {
+	return &CreateStartupscriptParam{
 
 		Class: "shell",
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CreateStartupScriptParam) FillValueToSkeleton() {
+func (p *CreateStartupscriptParam) FillValueToSkeleton() {
 	if isEmpty(p.Script) {
 		p.Script = ""
 	}
@@ -381,8 +405,14 @@ func (p *CreateStartupScriptParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -412,7 +442,7 @@ func (p *CreateStartupScriptParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CreateStartupScriptParam) Validate() []error {
+func (p *CreateStartupscriptParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["StartupScript"].Commands["create"].Params["script"].ValidateFunc
@@ -496,155 +526,171 @@ func (p *CreateStartupScriptParam) Validate() []error {
 	return errors
 }
 
-func (p *CreateStartupScriptParam) GetResourceDef() *schema.Resource {
+func (p *CreateStartupscriptParam) GetResourceDef() *schema.Resource {
 	return define.Resources["StartupScript"]
 }
 
-func (p *CreateStartupScriptParam) GetCommandDef() *schema.Command {
+func (p *CreateStartupscriptParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["create"]
 }
 
-func (p *CreateStartupScriptParam) GetIncludeFields() []string {
+func (p *CreateStartupscriptParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CreateStartupScriptParam) GetExcludeFields() []string {
+func (p *CreateStartupscriptParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CreateStartupScriptParam) GetTableType() output.TableType {
+func (p *CreateStartupscriptParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CreateStartupScriptParam) GetColumnDefs() []output.ColumnDef {
+func (p *CreateStartupscriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CreateStartupScriptParam) SetScript(v string) {
+func (p *CreateStartupscriptParam) SetScript(v string) {
 	p.Script = v
 }
 
-func (p *CreateStartupScriptParam) GetScript() string {
+func (p *CreateStartupscriptParam) GetScript() string {
 	return p.Script
 }
-func (p *CreateStartupScriptParam) SetScriptContent(v string) {
+func (p *CreateStartupscriptParam) SetScriptContent(v string) {
 	p.ScriptContent = v
 }
 
-func (p *CreateStartupScriptParam) GetScriptContent() string {
+func (p *CreateStartupscriptParam) GetScriptContent() string {
 	return p.ScriptContent
 }
-func (p *CreateStartupScriptParam) SetClass(v string) {
+func (p *CreateStartupscriptParam) SetClass(v string) {
 	p.Class = v
 }
 
-func (p *CreateStartupScriptParam) GetClass() string {
+func (p *CreateStartupscriptParam) GetClass() string {
 	return p.Class
 }
-func (p *CreateStartupScriptParam) SetName(v string) {
+func (p *CreateStartupscriptParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *CreateStartupScriptParam) GetName() string {
+func (p *CreateStartupscriptParam) GetName() string {
 	return p.Name
 }
-func (p *CreateStartupScriptParam) SetTags(v []string) {
+func (p *CreateStartupscriptParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreateStartupScriptParam) GetTags() []string {
+func (p *CreateStartupscriptParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateStartupScriptParam) SetIconId(v sacloud.ID) {
+func (p *CreateStartupscriptParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateStartupScriptParam) GetIconId() sacloud.ID {
+func (p *CreateStartupscriptParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *CreateStartupScriptParam) SetAssumeyes(v bool) {
+func (p *CreateStartupscriptParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *CreateStartupScriptParam) GetAssumeyes() bool {
+func (p *CreateStartupscriptParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CreateStartupScriptParam) SetParamTemplate(v string) {
+func (p *CreateStartupscriptParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CreateStartupScriptParam) GetParamTemplate() string {
+func (p *CreateStartupscriptParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CreateStartupScriptParam) SetParamTemplateFile(v string) {
+func (p *CreateStartupscriptParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateStartupscriptParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateStartupscriptParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CreateStartupScriptParam) GetParamTemplateFile() string {
+func (p *CreateStartupscriptParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CreateStartupScriptParam) SetGenerateSkeleton(v bool) {
+func (p *CreateStartupscriptParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateStartupscriptParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateStartupscriptParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CreateStartupScriptParam) GetGenerateSkeleton() bool {
+func (p *CreateStartupscriptParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CreateStartupScriptParam) SetOutputType(v string) {
+func (p *CreateStartupscriptParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CreateStartupScriptParam) GetOutputType() string {
+func (p *CreateStartupscriptParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CreateStartupScriptParam) SetColumn(v []string) {
+func (p *CreateStartupscriptParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CreateStartupScriptParam) GetColumn() []string {
+func (p *CreateStartupscriptParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CreateStartupScriptParam) SetQuiet(v bool) {
+func (p *CreateStartupscriptParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CreateStartupScriptParam) GetQuiet() bool {
+func (p *CreateStartupscriptParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CreateStartupScriptParam) SetFormat(v string) {
+func (p *CreateStartupscriptParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CreateStartupScriptParam) GetFormat() string {
+func (p *CreateStartupscriptParam) GetFormat() string {
 	return p.Format
 }
-func (p *CreateStartupScriptParam) SetFormatFile(v string) {
+func (p *CreateStartupscriptParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CreateStartupScriptParam) GetFormatFile() string {
+func (p *CreateStartupscriptParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CreateStartupScriptParam) SetQuery(v string) {
+func (p *CreateStartupscriptParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CreateStartupScriptParam) GetQuery() string {
+func (p *CreateStartupscriptParam) GetQuery() string {
 	return p.Query
 }
-func (p *CreateStartupScriptParam) SetQueryFile(v string) {
+func (p *CreateStartupscriptParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CreateStartupScriptParam) GetQueryFile() string {
+func (p *CreateStartupscriptParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// ReadStartupScriptParam is input parameters for the sacloud API
-type ReadStartupScriptParam struct {
+// ReadStartupscriptParam is input parameters for the sacloud API
+type ReadStartupscriptParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -656,21 +702,27 @@ type ReadStartupScriptParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewReadStartupScriptParam return new ReadStartupScriptParam
-func NewReadStartupScriptParam() *ReadStartupScriptParam {
-	return &ReadStartupScriptParam{}
+// NewReadStartupscriptParam return new ReadStartupscriptParam
+func NewReadStartupscriptParam() *ReadStartupscriptParam {
+	return &ReadStartupscriptParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ReadStartupScriptParam) FillValueToSkeleton() {
+func (p *ReadStartupscriptParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -703,7 +755,7 @@ func (p *ReadStartupScriptParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ReadStartupScriptParam) Validate() []error {
+func (p *ReadStartupscriptParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -736,117 +788,131 @@ func (p *ReadStartupScriptParam) Validate() []error {
 	return errors
 }
 
-func (p *ReadStartupScriptParam) GetResourceDef() *schema.Resource {
+func (p *ReadStartupscriptParam) GetResourceDef() *schema.Resource {
 	return define.Resources["StartupScript"]
 }
 
-func (p *ReadStartupScriptParam) GetCommandDef() *schema.Command {
+func (p *ReadStartupscriptParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["read"]
 }
 
-func (p *ReadStartupScriptParam) GetIncludeFields() []string {
+func (p *ReadStartupscriptParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ReadStartupScriptParam) GetExcludeFields() []string {
+func (p *ReadStartupscriptParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ReadStartupScriptParam) GetTableType() output.TableType {
+func (p *ReadStartupscriptParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ReadStartupScriptParam) GetColumnDefs() []output.ColumnDef {
+func (p *ReadStartupscriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReadStartupScriptParam) SetSelector(v []string) {
+func (p *ReadStartupscriptParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ReadStartupScriptParam) GetSelector() []string {
+func (p *ReadStartupscriptParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ReadStartupScriptParam) SetParamTemplate(v string) {
+func (p *ReadStartupscriptParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ReadStartupScriptParam) GetParamTemplate() string {
+func (p *ReadStartupscriptParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ReadStartupScriptParam) SetParamTemplateFile(v string) {
+func (p *ReadStartupscriptParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadStartupscriptParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadStartupscriptParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ReadStartupScriptParam) GetParamTemplateFile() string {
+func (p *ReadStartupscriptParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ReadStartupScriptParam) SetGenerateSkeleton(v bool) {
+func (p *ReadStartupscriptParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadStartupscriptParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadStartupscriptParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ReadStartupScriptParam) GetGenerateSkeleton() bool {
+func (p *ReadStartupscriptParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReadStartupScriptParam) SetOutputType(v string) {
+func (p *ReadStartupscriptParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ReadStartupScriptParam) GetOutputType() string {
+func (p *ReadStartupscriptParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ReadStartupScriptParam) SetColumn(v []string) {
+func (p *ReadStartupscriptParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ReadStartupScriptParam) GetColumn() []string {
+func (p *ReadStartupscriptParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ReadStartupScriptParam) SetQuiet(v bool) {
+func (p *ReadStartupscriptParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ReadStartupScriptParam) GetQuiet() bool {
+func (p *ReadStartupscriptParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ReadStartupScriptParam) SetFormat(v string) {
+func (p *ReadStartupscriptParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ReadStartupScriptParam) GetFormat() string {
+func (p *ReadStartupscriptParam) GetFormat() string {
 	return p.Format
 }
-func (p *ReadStartupScriptParam) SetFormatFile(v string) {
+func (p *ReadStartupscriptParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ReadStartupScriptParam) GetFormatFile() string {
+func (p *ReadStartupscriptParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ReadStartupScriptParam) SetQuery(v string) {
+func (p *ReadStartupscriptParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ReadStartupScriptParam) GetQuery() string {
+func (p *ReadStartupscriptParam) GetQuery() string {
 	return p.Query
 }
-func (p *ReadStartupScriptParam) SetQueryFile(v string) {
+func (p *ReadStartupscriptParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ReadStartupScriptParam) GetQueryFile() string {
+func (p *ReadStartupscriptParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadStartupScriptParam) SetId(v sacloud.ID) {
+func (p *ReadStartupscriptParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadStartupScriptParam) GetId() sacloud.ID {
+func (p *ReadStartupscriptParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// UpdateStartupScriptParam is input parameters for the sacloud API
-type UpdateStartupScriptParam struct {
+// UpdateStartupscriptParam is input parameters for the sacloud API
+type UpdateStartupscriptParam struct {
 	Script            string     `json:"script"`
 	ScriptContent     string     `json:"script-content"`
 	Class             string     `json:"class"`
@@ -856,7 +922,9 @@ type UpdateStartupScriptParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -868,13 +936,13 @@ type UpdateStartupScriptParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewUpdateStartupScriptParam return new UpdateStartupScriptParam
-func NewUpdateStartupScriptParam() *UpdateStartupScriptParam {
-	return &UpdateStartupScriptParam{}
+// NewUpdateStartupscriptParam return new UpdateStartupscriptParam
+func NewUpdateStartupscriptParam() *UpdateStartupscriptParam {
+	return &UpdateStartupscriptParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *UpdateStartupScriptParam) FillValueToSkeleton() {
+func (p *UpdateStartupscriptParam) FillValueToSkeleton() {
 	if isEmpty(p.Script) {
 		p.Script = ""
 	}
@@ -902,8 +970,14 @@ func (p *UpdateStartupScriptParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -936,7 +1010,7 @@ func (p *UpdateStartupScriptParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *UpdateStartupScriptParam) Validate() []error {
+func (p *UpdateStartupscriptParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["StartupScript"].Commands["update"].Params["script"].ValidateFunc
@@ -1013,170 +1087,186 @@ func (p *UpdateStartupScriptParam) Validate() []error {
 	return errors
 }
 
-func (p *UpdateStartupScriptParam) GetResourceDef() *schema.Resource {
+func (p *UpdateStartupscriptParam) GetResourceDef() *schema.Resource {
 	return define.Resources["StartupScript"]
 }
 
-func (p *UpdateStartupScriptParam) GetCommandDef() *schema.Command {
+func (p *UpdateStartupscriptParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["update"]
 }
 
-func (p *UpdateStartupScriptParam) GetIncludeFields() []string {
+func (p *UpdateStartupscriptParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *UpdateStartupScriptParam) GetExcludeFields() []string {
+func (p *UpdateStartupscriptParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *UpdateStartupScriptParam) GetTableType() output.TableType {
+func (p *UpdateStartupscriptParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *UpdateStartupScriptParam) GetColumnDefs() []output.ColumnDef {
+func (p *UpdateStartupscriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *UpdateStartupScriptParam) SetScript(v string) {
+func (p *UpdateStartupscriptParam) SetScript(v string) {
 	p.Script = v
 }
 
-func (p *UpdateStartupScriptParam) GetScript() string {
+func (p *UpdateStartupscriptParam) GetScript() string {
 	return p.Script
 }
-func (p *UpdateStartupScriptParam) SetScriptContent(v string) {
+func (p *UpdateStartupscriptParam) SetScriptContent(v string) {
 	p.ScriptContent = v
 }
 
-func (p *UpdateStartupScriptParam) GetScriptContent() string {
+func (p *UpdateStartupscriptParam) GetScriptContent() string {
 	return p.ScriptContent
 }
-func (p *UpdateStartupScriptParam) SetClass(v string) {
+func (p *UpdateStartupscriptParam) SetClass(v string) {
 	p.Class = v
 }
 
-func (p *UpdateStartupScriptParam) GetClass() string {
+func (p *UpdateStartupscriptParam) GetClass() string {
 	return p.Class
 }
-func (p *UpdateStartupScriptParam) SetSelector(v []string) {
+func (p *UpdateStartupscriptParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *UpdateStartupScriptParam) GetSelector() []string {
+func (p *UpdateStartupscriptParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *UpdateStartupScriptParam) SetName(v string) {
+func (p *UpdateStartupscriptParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *UpdateStartupScriptParam) GetName() string {
+func (p *UpdateStartupscriptParam) GetName() string {
 	return p.Name
 }
-func (p *UpdateStartupScriptParam) SetTags(v []string) {
+func (p *UpdateStartupscriptParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *UpdateStartupScriptParam) GetTags() []string {
+func (p *UpdateStartupscriptParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateStartupScriptParam) SetIconId(v sacloud.ID) {
+func (p *UpdateStartupscriptParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateStartupScriptParam) GetIconId() sacloud.ID {
+func (p *UpdateStartupscriptParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *UpdateStartupScriptParam) SetAssumeyes(v bool) {
+func (p *UpdateStartupscriptParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *UpdateStartupScriptParam) GetAssumeyes() bool {
+func (p *UpdateStartupscriptParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *UpdateStartupScriptParam) SetParamTemplate(v string) {
+func (p *UpdateStartupscriptParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *UpdateStartupScriptParam) GetParamTemplate() string {
+func (p *UpdateStartupscriptParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *UpdateStartupScriptParam) SetParamTemplateFile(v string) {
+func (p *UpdateStartupscriptParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateStartupscriptParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateStartupscriptParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *UpdateStartupScriptParam) GetParamTemplateFile() string {
+func (p *UpdateStartupscriptParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *UpdateStartupScriptParam) SetGenerateSkeleton(v bool) {
+func (p *UpdateStartupscriptParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateStartupscriptParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateStartupscriptParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *UpdateStartupScriptParam) GetGenerateSkeleton() bool {
+func (p *UpdateStartupscriptParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *UpdateStartupScriptParam) SetOutputType(v string) {
+func (p *UpdateStartupscriptParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *UpdateStartupScriptParam) GetOutputType() string {
+func (p *UpdateStartupscriptParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *UpdateStartupScriptParam) SetColumn(v []string) {
+func (p *UpdateStartupscriptParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *UpdateStartupScriptParam) GetColumn() []string {
+func (p *UpdateStartupscriptParam) GetColumn() []string {
 	return p.Column
 }
-func (p *UpdateStartupScriptParam) SetQuiet(v bool) {
+func (p *UpdateStartupscriptParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *UpdateStartupScriptParam) GetQuiet() bool {
+func (p *UpdateStartupscriptParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *UpdateStartupScriptParam) SetFormat(v string) {
+func (p *UpdateStartupscriptParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *UpdateStartupScriptParam) GetFormat() string {
+func (p *UpdateStartupscriptParam) GetFormat() string {
 	return p.Format
 }
-func (p *UpdateStartupScriptParam) SetFormatFile(v string) {
+func (p *UpdateStartupscriptParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *UpdateStartupScriptParam) GetFormatFile() string {
+func (p *UpdateStartupscriptParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *UpdateStartupScriptParam) SetQuery(v string) {
+func (p *UpdateStartupscriptParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *UpdateStartupScriptParam) GetQuery() string {
+func (p *UpdateStartupscriptParam) GetQuery() string {
 	return p.Query
 }
-func (p *UpdateStartupScriptParam) SetQueryFile(v string) {
+func (p *UpdateStartupscriptParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *UpdateStartupScriptParam) GetQueryFile() string {
+func (p *UpdateStartupscriptParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateStartupScriptParam) SetId(v sacloud.ID) {
+func (p *UpdateStartupscriptParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateStartupScriptParam) GetId() sacloud.ID {
+func (p *UpdateStartupscriptParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// DeleteStartupScriptParam is input parameters for the sacloud API
-type DeleteStartupScriptParam struct {
+// DeleteStartupscriptParam is input parameters for the sacloud API
+type DeleteStartupscriptParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1188,13 +1278,13 @@ type DeleteStartupScriptParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewDeleteStartupScriptParam return new DeleteStartupScriptParam
-func NewDeleteStartupScriptParam() *DeleteStartupScriptParam {
-	return &DeleteStartupScriptParam{}
+// NewDeleteStartupscriptParam return new DeleteStartupscriptParam
+func NewDeleteStartupscriptParam() *DeleteStartupscriptParam {
+	return &DeleteStartupscriptParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *DeleteStartupScriptParam) FillValueToSkeleton() {
+func (p *DeleteStartupscriptParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1204,8 +1294,14 @@ func (p *DeleteStartupScriptParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1238,7 +1334,7 @@ func (p *DeleteStartupScriptParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *DeleteStartupScriptParam) Validate() []error {
+func (p *DeleteStartupscriptParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1271,118 +1367,132 @@ func (p *DeleteStartupScriptParam) Validate() []error {
 	return errors
 }
 
-func (p *DeleteStartupScriptParam) GetResourceDef() *schema.Resource {
+func (p *DeleteStartupscriptParam) GetResourceDef() *schema.Resource {
 	return define.Resources["StartupScript"]
 }
 
-func (p *DeleteStartupScriptParam) GetCommandDef() *schema.Command {
+func (p *DeleteStartupscriptParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["delete"]
 }
 
-func (p *DeleteStartupScriptParam) GetIncludeFields() []string {
+func (p *DeleteStartupscriptParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *DeleteStartupScriptParam) GetExcludeFields() []string {
+func (p *DeleteStartupscriptParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *DeleteStartupScriptParam) GetTableType() output.TableType {
+func (p *DeleteStartupscriptParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *DeleteStartupScriptParam) GetColumnDefs() []output.ColumnDef {
+func (p *DeleteStartupscriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DeleteStartupScriptParam) SetSelector(v []string) {
+func (p *DeleteStartupscriptParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *DeleteStartupScriptParam) GetSelector() []string {
+func (p *DeleteStartupscriptParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *DeleteStartupScriptParam) SetAssumeyes(v bool) {
+func (p *DeleteStartupscriptParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *DeleteStartupScriptParam) GetAssumeyes() bool {
+func (p *DeleteStartupscriptParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeleteStartupScriptParam) SetParamTemplate(v string) {
+func (p *DeleteStartupscriptParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *DeleteStartupScriptParam) GetParamTemplate() string {
+func (p *DeleteStartupscriptParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *DeleteStartupScriptParam) SetParamTemplateFile(v string) {
+func (p *DeleteStartupscriptParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteStartupscriptParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteStartupscriptParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *DeleteStartupScriptParam) GetParamTemplateFile() string {
+func (p *DeleteStartupscriptParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *DeleteStartupScriptParam) SetGenerateSkeleton(v bool) {
+func (p *DeleteStartupscriptParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteStartupscriptParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteStartupscriptParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *DeleteStartupScriptParam) GetGenerateSkeleton() bool {
+func (p *DeleteStartupscriptParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DeleteStartupScriptParam) SetOutputType(v string) {
+func (p *DeleteStartupscriptParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *DeleteStartupScriptParam) GetOutputType() string {
+func (p *DeleteStartupscriptParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *DeleteStartupScriptParam) SetColumn(v []string) {
+func (p *DeleteStartupscriptParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *DeleteStartupScriptParam) GetColumn() []string {
+func (p *DeleteStartupscriptParam) GetColumn() []string {
 	return p.Column
 }
-func (p *DeleteStartupScriptParam) SetQuiet(v bool) {
+func (p *DeleteStartupscriptParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *DeleteStartupScriptParam) GetQuiet() bool {
+func (p *DeleteStartupscriptParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *DeleteStartupScriptParam) SetFormat(v string) {
+func (p *DeleteStartupscriptParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *DeleteStartupScriptParam) GetFormat() string {
+func (p *DeleteStartupscriptParam) GetFormat() string {
 	return p.Format
 }
-func (p *DeleteStartupScriptParam) SetFormatFile(v string) {
+func (p *DeleteStartupscriptParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *DeleteStartupScriptParam) GetFormatFile() string {
+func (p *DeleteStartupscriptParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *DeleteStartupScriptParam) SetQuery(v string) {
+func (p *DeleteStartupscriptParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *DeleteStartupScriptParam) GetQuery() string {
+func (p *DeleteStartupscriptParam) GetQuery() string {
 	return p.Query
 }
-func (p *DeleteStartupScriptParam) SetQueryFile(v string) {
+func (p *DeleteStartupscriptParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *DeleteStartupScriptParam) GetQueryFile() string {
+func (p *DeleteStartupscriptParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteStartupScriptParam) SetId(v sacloud.ID) {
+func (p *DeleteStartupscriptParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteStartupScriptParam) GetId() sacloud.ID {
+func (p *DeleteStartupscriptParam) GetId() sacloud.ID {
 	return p.Id
 }

@@ -23,10 +23,10 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ProxyLBList(ctx command.Context, params *params.ListProxyLBParam) error {
+func ProxylbList(ctx command.Context, params *params.ListProxylbParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetProxyLBAPI()
+	finder := client.GetProxylbAPI()
 
 	finder.SetEmpty()
 
@@ -55,7 +55,7 @@ func ProxyLBList(ctx command.Context, params *params.ListProxyLBParam) error {
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("ProxyLBList is failed: %s", err)
+		return fmt.Errorf("ProxylbList is failed: %s", err)
 	}
 
 	list := []interface{}{}

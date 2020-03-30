@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func PrivateHostDelete(ctx command.Context, params *params.DeletePrivateHostParam) error {
+func PrivatehostDelete(ctx command.Context, params *params.DeletePrivatehostParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetPrivateHostAPI()
+	api := client.GetPrivatehostAPI()
 
 	// set params
 
 	// call Delete(id)
 	res, err := api.Delete(params.Id)
 	if err != nil {
-		return fmt.Errorf("PrivateHostDelete is failed: %s", err)
+		return fmt.Errorf("PrivatehostDelete is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ProxyLBDelete(ctx command.Context, params *params.DeleteProxyLBParam) error {
+func ProxylbDelete(ctx command.Context, params *params.DeleteProxylbParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetProxyLBAPI()
+	api := client.GetProxylbAPI()
 
 	// set params
 
 	// call Delete(id)
 	res, err := api.Delete(params.Id)
 	if err != nil {
-		return fmt.Errorf("ProxyLBDelete is failed: %s", err)
+		return fmt.Errorf("ProxylbDelete is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

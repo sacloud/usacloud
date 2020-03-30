@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func StartupScriptList(ctx command.Context, params *params.ListStartupScriptParam) error {
+func StartupscriptList(ctx command.Context, params *params.ListStartupscriptParam) error {
 
 	client := ctx.GetAPIClient()
 	finder := client.GetNoteAPI()
@@ -61,7 +61,7 @@ func StartupScriptList(ctx command.Context, params *params.ListStartupScriptPara
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("StartupScriptList is failed: %s", err)
+		return fmt.Errorf("StartupscriptList is failed: %s", err)
 	}
 
 	list := []interface{}{}

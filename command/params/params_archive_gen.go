@@ -35,7 +35,9 @@ type ListArchiveParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -83,8 +85,14 @@ func (p *ListArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -287,12 +295,26 @@ func (p *ListArchiveParam) SetParamTemplate(v string) {
 func (p *ListArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -363,7 +385,9 @@ type CreateArchiveParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -411,8 +435,14 @@ func (p *CreateArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -667,12 +697,26 @@ func (p *CreateArchiveParam) SetParamTemplate(v string) {
 func (p *CreateArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -735,7 +779,9 @@ func (p *CreateArchiveParam) GetQueryFile() string {
 type ReadArchiveParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -760,8 +806,14 @@ func (p *ReadArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -865,12 +917,26 @@ func (p *ReadArchiveParam) SetParamTemplate(v string) {
 func (p *ReadArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -945,7 +1011,9 @@ type UpdateArchiveParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -985,8 +1053,14 @@ func (p *UpdateArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1153,12 +1227,26 @@ func (p *UpdateArchiveParam) SetParamTemplate(v string) {
 func (p *UpdateArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1229,7 +1317,9 @@ type DeleteArchiveParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1257,8 +1347,14 @@ func (p *DeleteArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1369,12 +1465,26 @@ func (p *DeleteArchiveParam) SetParamTemplate(v string) {
 func (p *DeleteArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1446,7 +1556,9 @@ type UploadArchiveParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1477,8 +1589,14 @@ func (p *UploadArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1603,12 +1721,26 @@ func (p *UploadArchiveParam) SetParamTemplate(v string) {
 func (p *UploadArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UploadArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UploadArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UploadArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UploadArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UploadArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UploadArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UploadArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1680,7 +1812,9 @@ type DownloadArchiveParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1704,8 +1838,14 @@ func (p *DownloadArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1782,12 +1922,26 @@ func (p *DownloadArchiveParam) SetParamTemplate(v string) {
 func (p *DownloadArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DownloadArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DownloadArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DownloadArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DownloadArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DownloadArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DownloadArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DownloadArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1809,7 +1963,9 @@ type FtpOpenArchiveParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1837,8 +1993,14 @@ func (p *FtpOpenArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1949,12 +2111,26 @@ func (p *FtpOpenArchiveParam) SetParamTemplate(v string) {
 func (p *FtpOpenArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *FtpOpenArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *FtpOpenArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *FtpOpenArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *FtpOpenArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *FtpOpenArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *FtpOpenArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *FtpOpenArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2025,7 +2201,9 @@ type FtpCloseArchiveParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2046,8 +2224,14 @@ func (p *FtpCloseArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2117,12 +2301,26 @@ func (p *FtpCloseArchiveParam) SetParamTemplate(v string) {
 func (p *FtpCloseArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *FtpCloseArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *FtpCloseArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *FtpCloseArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *FtpCloseArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *FtpCloseArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *FtpCloseArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *FtpCloseArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2143,7 +2341,9 @@ func (p *FtpCloseArchiveParam) GetId() sacloud.ID {
 type WaitForCopyArchiveParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2161,8 +2361,14 @@ func (p *WaitForCopyArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2225,12 +2431,26 @@ func (p *WaitForCopyArchiveParam) SetParamTemplate(v string) {
 func (p *WaitForCopyArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *WaitForCopyArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForCopyArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *WaitForCopyArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *WaitForCopyArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *WaitForCopyArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForCopyArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *WaitForCopyArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

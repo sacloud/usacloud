@@ -23,10 +23,10 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ProductServerList(ctx command.Context, params *params.ListProductServerParam) error {
+func ProductserverList(ctx command.Context, params *params.ListProductserverParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetProductServerAPI()
+	finder := client.GetProductserverAPI()
 
 	finder.SetEmpty()
 
@@ -55,7 +55,7 @@ func ProductServerList(ctx command.Context, params *params.ListProductServerPara
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("ProductServerList is failed: %s", err)
+		return fmt.Errorf("ProductserverList is failed: %s", err)
 	}
 
 	list := []interface{}{}

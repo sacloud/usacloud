@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func DNSRead(ctx command.Context, params *params.ReadDNSParam) error {
+func DnsRead(ctx command.Context, params *params.ReadDnsParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetDNSAPI()
+	api := client.GetDnsAPI()
 
 	// set params
 
 	// call Read(id)
 	res, err := api.Read(params.Id)
 	if err != nil {
-		return fmt.Errorf("DNSRead is failed: %s", err)
+		return fmt.Errorf("DnsRead is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

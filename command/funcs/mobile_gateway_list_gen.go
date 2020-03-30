@@ -23,10 +23,10 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func MobileGatewayList(ctx command.Context, params *params.ListMobileGatewayParam) error {
+func MobilegatewayList(ctx command.Context, params *params.ListMobilegatewayParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetMobileGatewayAPI()
+	finder := client.GetMobilegatewayAPI()
 
 	finder.SetEmpty()
 
@@ -55,17 +55,17 @@ func MobileGatewayList(ctx command.Context, params *params.ListMobileGatewayPara
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("MobileGatewayList is failed: %s", err)
+		return fmt.Errorf("MobilegatewayList is failed: %s", err)
 	}
 
 	list := []interface{}{}
-	for i := range res.MobileGateways {
+	for i := range res.Mobilegateways {
 
-		if !params.GetCommandDef().Params["tags"].FilterFunc(list, &res.MobileGateways[i], params.Tags) {
+		if !params.GetCommandDef().Params["tags"].FilterFunc(list, &res.Mobilegateways[i], params.Tags) {
 			continue
 		}
 
-		list = append(list, &res.MobileGateways[i])
+		list = append(list, &res.Mobilegateways[i])
 	}
 	return ctx.GetOutput().Print(list...)
 

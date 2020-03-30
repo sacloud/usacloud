@@ -24,15 +24,21 @@ import (
 )
 
 type GenerateContext struct {
+	// for v0
 	R           string
 	C           string
 	P           string
 	ResourceDef map[string]*schema.Resource
+	// for v1
+	Resources []*Resource
 }
 
 func NewGenerateContext() *GenerateContext {
 	ctx := &GenerateContext{
 		ResourceDef: define.Resources,
+	}
+	for rn, r := range define.Resources {
+		ctx.Resources = append(ctx.Resources, NewResource(rn, r))
 	}
 	return ctx
 }
@@ -156,7 +162,7 @@ func (c *GenerateContext) InputParamCLIFlagName() string {
 }
 
 func (c *GenerateContext) InputParamVariableName() string {
-	return fmt.Sprintf("%sParam", ToCamelWithFirstLower(c.C))
+	return fmt.Sprintf("%s%sParam", ToCamelWithFirstLower(c.R), ToCamelCaseName(c.C))
 }
 
 func (c *GenerateContext) CommandFuncName() string {
@@ -172,6 +178,10 @@ func (c *GenerateContext) CommandFileName(useCustomCommand bool) string {
 
 func (c *GenerateContext) CLICommandsFileName() string {
 	return fmt.Sprintf("cli_%s_gen.go", c.SnakeR())
+}
+
+func (c *GenerateContext) CLIv2CommandsFileName() string {
+	return fmt.Sprintf("%s_gen.go", c.SnakeR())
 }
 
 func (c *GenerateContext) CommandResourceName() string {

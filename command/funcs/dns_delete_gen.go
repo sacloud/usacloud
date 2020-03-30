@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func DNSDelete(ctx command.Context, params *params.DeleteDNSParam) error {
+func DnsDelete(ctx command.Context, params *params.DeleteDnsParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetDNSAPI()
+	api := client.GetDnsAPI()
 
 	// set params
 
 	// call Delete(id)
 	res, err := api.Delete(params.Id)
 	if err != nil {
-		return fmt.Errorf("DNSDelete is failed: %s", err)
+		return fmt.Errorf("DnsDelete is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

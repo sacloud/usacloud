@@ -23,10 +23,10 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func GSLBList(ctx command.Context, params *params.ListGSLBParam) error {
+func GslbList(ctx command.Context, params *params.ListGslbParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetGSLBAPI()
+	finder := client.GetGslbAPI()
 
 	finder.SetEmpty()
 
@@ -55,7 +55,7 @@ func GSLBList(ctx command.Context, params *params.ListGSLBParam) error {
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("GSLBList is failed: %s", err)
+		return fmt.Errorf("GslbList is failed: %s", err)
 	}
 
 	list := []interface{}{}

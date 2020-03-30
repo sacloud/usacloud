@@ -23,10 +23,10 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ProductInternetList(ctx command.Context, params *params.ListProductInternetParam) error {
+func ProductinternetList(ctx command.Context, params *params.ListProductinternetParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetProductInternetAPI()
+	finder := client.GetProductinternetAPI()
 
 	finder.SetEmpty()
 
@@ -55,7 +55,7 @@ func ProductInternetList(ctx command.Context, params *params.ListProductInternet
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("ProductInternetList is failed: %s", err)
+		return fmt.Errorf("ProductinternetList is failed: %s", err)
 	}
 
 	list := []interface{}{}

@@ -23,15 +23,17 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListProductDiskParam is input parameters for the sacloud API
-type ListProductDiskParam struct {
+// ListProductdiskParam is input parameters for the sacloud API
+type ListProductdiskParam struct {
 	Name              []string     `json:"name"`
 	Id                []sacloud.ID `json:"id"`
 	From              int          `json:"from"`
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -42,13 +44,13 @@ type ListProductDiskParam struct {
 	QueryFile         string       `json:"query-file"`
 }
 
-// NewListProductDiskParam return new ListProductDiskParam
-func NewListProductDiskParam() *ListProductDiskParam {
-	return &ListProductDiskParam{}
+// NewListProductdiskParam return new ListProductdiskParam
+func NewListProductdiskParam() *ListProductdiskParam {
+	return &ListProductdiskParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListProductDiskParam) FillValueToSkeleton() {
+func (p *ListProductdiskParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -67,8 +69,14 @@ func (p *ListProductDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -98,7 +106,7 @@ func (p *ListProductDiskParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListProductDiskParam) Validate() []error {
+func (p *ListProductdiskParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
@@ -149,141 +157,157 @@ func (p *ListProductDiskParam) Validate() []error {
 	return errors
 }
 
-func (p *ListProductDiskParam) GetResourceDef() *schema.Resource {
+func (p *ListProductdiskParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProductDisk"]
 }
 
-func (p *ListProductDiskParam) GetCommandDef() *schema.Command {
+func (p *ListProductdiskParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListProductDiskParam) GetIncludeFields() []string {
+func (p *ListProductdiskParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListProductDiskParam) GetExcludeFields() []string {
+func (p *ListProductdiskParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListProductDiskParam) GetTableType() output.TableType {
+func (p *ListProductdiskParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListProductDiskParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListProductdiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListProductDiskParam) SetName(v []string) {
+func (p *ListProductdiskParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListProductDiskParam) GetName() []string {
+func (p *ListProductdiskParam) GetName() []string {
 	return p.Name
 }
-func (p *ListProductDiskParam) SetId(v []sacloud.ID) {
+func (p *ListProductdiskParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListProductDiskParam) GetId() []sacloud.ID {
+func (p *ListProductdiskParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListProductDiskParam) SetFrom(v int) {
+func (p *ListProductdiskParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListProductDiskParam) GetFrom() int {
+func (p *ListProductdiskParam) GetFrom() int {
 	return p.From
 }
-func (p *ListProductDiskParam) SetMax(v int) {
+func (p *ListProductdiskParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListProductDiskParam) GetMax() int {
+func (p *ListProductdiskParam) GetMax() int {
 	return p.Max
 }
-func (p *ListProductDiskParam) SetSort(v []string) {
+func (p *ListProductdiskParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListProductDiskParam) GetSort() []string {
+func (p *ListProductdiskParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListProductDiskParam) SetParamTemplate(v string) {
+func (p *ListProductdiskParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListProductDiskParam) GetParamTemplate() string {
+func (p *ListProductdiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListProductDiskParam) SetParamTemplateFile(v string) {
+func (p *ListProductdiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListProductdiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListProductdiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListProductDiskParam) GetParamTemplateFile() string {
+func (p *ListProductdiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListProductDiskParam) SetGenerateSkeleton(v bool) {
+func (p *ListProductdiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListProductdiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListProductdiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListProductDiskParam) GetGenerateSkeleton() bool {
+func (p *ListProductdiskParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListProductDiskParam) SetOutputType(v string) {
+func (p *ListProductdiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListProductDiskParam) GetOutputType() string {
+func (p *ListProductdiskParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListProductDiskParam) SetColumn(v []string) {
+func (p *ListProductdiskParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListProductDiskParam) GetColumn() []string {
+func (p *ListProductdiskParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ListProductDiskParam) SetQuiet(v bool) {
+func (p *ListProductdiskParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListProductDiskParam) GetQuiet() bool {
+func (p *ListProductdiskParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListProductDiskParam) SetFormat(v string) {
+func (p *ListProductdiskParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListProductDiskParam) GetFormat() string {
+func (p *ListProductdiskParam) GetFormat() string {
 	return p.Format
 }
-func (p *ListProductDiskParam) SetFormatFile(v string) {
+func (p *ListProductdiskParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListProductDiskParam) GetFormatFile() string {
+func (p *ListProductdiskParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListProductDiskParam) SetQuery(v string) {
+func (p *ListProductdiskParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListProductDiskParam) GetQuery() string {
+func (p *ListProductdiskParam) GetQuery() string {
 	return p.Query
 }
-func (p *ListProductDiskParam) SetQueryFile(v string) {
+func (p *ListProductdiskParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListProductDiskParam) GetQueryFile() string {
+func (p *ListProductdiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// ReadProductDiskParam is input parameters for the sacloud API
-type ReadProductDiskParam struct {
+// ReadProductdiskParam is input parameters for the sacloud API
+type ReadProductdiskParam struct {
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -295,21 +319,27 @@ type ReadProductDiskParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewReadProductDiskParam return new ReadProductDiskParam
-func NewReadProductDiskParam() *ReadProductDiskParam {
-	return &ReadProductDiskParam{}
+// NewReadProductdiskParam return new ReadProductdiskParam
+func NewReadProductdiskParam() *ReadProductdiskParam {
+	return &ReadProductdiskParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ReadProductDiskParam) FillValueToSkeleton() {
+func (p *ReadProductdiskParam) FillValueToSkeleton() {
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -342,7 +372,7 @@ func (p *ReadProductDiskParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ReadProductDiskParam) Validate() []error {
+func (p *ReadProductdiskParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -382,111 +412,125 @@ func (p *ReadProductDiskParam) Validate() []error {
 	return errors
 }
 
-func (p *ReadProductDiskParam) GetResourceDef() *schema.Resource {
+func (p *ReadProductdiskParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProductDisk"]
 }
 
-func (p *ReadProductDiskParam) GetCommandDef() *schema.Command {
+func (p *ReadProductdiskParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["read"]
 }
 
-func (p *ReadProductDiskParam) GetIncludeFields() []string {
+func (p *ReadProductdiskParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ReadProductDiskParam) GetExcludeFields() []string {
+func (p *ReadProductdiskParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ReadProductDiskParam) GetTableType() output.TableType {
+func (p *ReadProductdiskParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ReadProductDiskParam) GetColumnDefs() []output.ColumnDef {
+func (p *ReadProductdiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReadProductDiskParam) SetAssumeyes(v bool) {
+func (p *ReadProductdiskParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ReadProductDiskParam) GetAssumeyes() bool {
+func (p *ReadProductdiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ReadProductDiskParam) SetParamTemplate(v string) {
+func (p *ReadProductdiskParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ReadProductDiskParam) GetParamTemplate() string {
+func (p *ReadProductdiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ReadProductDiskParam) SetParamTemplateFile(v string) {
+func (p *ReadProductdiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadProductdiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadProductdiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ReadProductDiskParam) GetParamTemplateFile() string {
+func (p *ReadProductdiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ReadProductDiskParam) SetGenerateSkeleton(v bool) {
+func (p *ReadProductdiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadProductdiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadProductdiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ReadProductDiskParam) GetGenerateSkeleton() bool {
+func (p *ReadProductdiskParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReadProductDiskParam) SetOutputType(v string) {
+func (p *ReadProductdiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ReadProductDiskParam) GetOutputType() string {
+func (p *ReadProductdiskParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ReadProductDiskParam) SetColumn(v []string) {
+func (p *ReadProductdiskParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ReadProductDiskParam) GetColumn() []string {
+func (p *ReadProductdiskParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ReadProductDiskParam) SetQuiet(v bool) {
+func (p *ReadProductdiskParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ReadProductDiskParam) GetQuiet() bool {
+func (p *ReadProductdiskParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ReadProductDiskParam) SetFormat(v string) {
+func (p *ReadProductdiskParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ReadProductDiskParam) GetFormat() string {
+func (p *ReadProductdiskParam) GetFormat() string {
 	return p.Format
 }
-func (p *ReadProductDiskParam) SetFormatFile(v string) {
+func (p *ReadProductdiskParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ReadProductDiskParam) GetFormatFile() string {
+func (p *ReadProductdiskParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ReadProductDiskParam) SetQuery(v string) {
+func (p *ReadProductdiskParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ReadProductDiskParam) GetQuery() string {
+func (p *ReadProductdiskParam) GetQuery() string {
 	return p.Query
 }
-func (p *ReadProductDiskParam) SetQueryFile(v string) {
+func (p *ReadProductdiskParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ReadProductDiskParam) GetQueryFile() string {
+func (p *ReadProductdiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadProductDiskParam) SetId(v sacloud.ID) {
+func (p *ReadProductdiskParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadProductDiskParam) GetId() sacloud.ID {
+func (p *ReadProductdiskParam) GetId() sacloud.ID {
 	return p.Id
 }

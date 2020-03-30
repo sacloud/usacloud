@@ -23,10 +23,10 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func LoadBalancerList(ctx command.Context, params *params.ListLoadBalancerParam) error {
+func LoadbalancerList(ctx command.Context, params *params.ListLoadbalancerParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetLoadBalancerAPI()
+	finder := client.GetLoadbalancerAPI()
 
 	finder.SetEmpty()
 
@@ -55,17 +55,17 @@ func LoadBalancerList(ctx command.Context, params *params.ListLoadBalancerParam)
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("LoadBalancerList is failed: %s", err)
+		return fmt.Errorf("LoadbalancerList is failed: %s", err)
 	}
 
 	list := []interface{}{}
-	for i := range res.LoadBalancers {
+	for i := range res.Loadbalancers {
 
-		if !params.GetCommandDef().Params["tags"].FilterFunc(list, &res.LoadBalancers[i], params.Tags) {
+		if !params.GetCommandDef().Params["tags"].FilterFunc(list, &res.Loadbalancers[i], params.Tags) {
 			continue
 		}
 
-		list = append(list, &res.LoadBalancers[i])
+		list = append(list, &res.Loadbalancers[i])
 	}
 	return ctx.GetOutput().Print(list...)
 

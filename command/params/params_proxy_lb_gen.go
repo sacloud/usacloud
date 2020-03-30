@@ -23,8 +23,8 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListProxyLBParam is input parameters for the sacloud API
-type ListProxyLBParam struct {
+// ListProxylbParam is input parameters for the sacloud API
+type ListProxylbParam struct {
 	Name              []string     `json:"name"`
 	Id                []sacloud.ID `json:"id"`
 	Tags              []string     `json:"tags"`
@@ -32,7 +32,9 @@ type ListProxyLBParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -43,13 +45,13 @@ type ListProxyLBParam struct {
 	QueryFile         string       `json:"query-file"`
 }
 
-// NewListProxyLBParam return new ListProxyLBParam
-func NewListProxyLBParam() *ListProxyLBParam {
-	return &ListProxyLBParam{}
+// NewListProxylbParam return new ListProxylbParam
+func NewListProxylbParam() *ListProxylbParam {
+	return &ListProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListProxyLBParam) FillValueToSkeleton() {
+func (p *ListProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -71,8 +73,14 @@ func (p *ListProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -102,7 +110,7 @@ func (p *ListProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListProxyLBParam) Validate() []error {
+func (p *ListProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
@@ -160,145 +168,159 @@ func (p *ListProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ListProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *ListProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ListProxyLBParam) GetCommandDef() *schema.Command {
+func (p *ListProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListProxyLBParam) GetIncludeFields() []string {
+func (p *ListProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListProxyLBParam) GetExcludeFields() []string {
+func (p *ListProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListProxyLBParam) GetTableType() output.TableType {
+func (p *ListProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListProxyLBParam) SetName(v []string) {
+func (p *ListProxylbParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListProxyLBParam) GetName() []string {
+func (p *ListProxylbParam) GetName() []string {
 	return p.Name
 }
-func (p *ListProxyLBParam) SetId(v []sacloud.ID) {
+func (p *ListProxylbParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListProxyLBParam) GetId() []sacloud.ID {
+func (p *ListProxylbParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListProxyLBParam) SetTags(v []string) {
+func (p *ListProxylbParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *ListProxyLBParam) GetTags() []string {
+func (p *ListProxylbParam) GetTags() []string {
 	return p.Tags
 }
-func (p *ListProxyLBParam) SetFrom(v int) {
+func (p *ListProxylbParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListProxyLBParam) GetFrom() int {
+func (p *ListProxylbParam) GetFrom() int {
 	return p.From
 }
-func (p *ListProxyLBParam) SetMax(v int) {
+func (p *ListProxylbParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListProxyLBParam) GetMax() int {
+func (p *ListProxylbParam) GetMax() int {
 	return p.Max
 }
-func (p *ListProxyLBParam) SetSort(v []string) {
+func (p *ListProxylbParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListProxyLBParam) GetSort() []string {
+func (p *ListProxylbParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListProxyLBParam) SetParamTemplate(v string) {
+func (p *ListProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListProxyLBParam) GetParamTemplate() string {
+func (p *ListProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListProxyLBParam) SetParamTemplateFile(v string) {
+func (p *ListProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListProxyLBParam) GetParamTemplateFile() string {
+func (p *ListProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *ListProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListProxyLBParam) GetGenerateSkeleton() bool {
+func (p *ListProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListProxyLBParam) SetOutputType(v string) {
+func (p *ListProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListProxyLBParam) GetOutputType() string {
+func (p *ListProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListProxyLBParam) SetColumn(v []string) {
+func (p *ListProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListProxyLBParam) GetColumn() []string {
+func (p *ListProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ListProxyLBParam) SetQuiet(v bool) {
+func (p *ListProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListProxyLBParam) GetQuiet() bool {
+func (p *ListProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListProxyLBParam) SetFormat(v string) {
+func (p *ListProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListProxyLBParam) GetFormat() string {
+func (p *ListProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *ListProxyLBParam) SetFormatFile(v string) {
+func (p *ListProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListProxyLBParam) GetFormatFile() string {
+func (p *ListProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListProxyLBParam) SetQuery(v string) {
+func (p *ListProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListProxyLBParam) GetQuery() string {
+func (p *ListProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *ListProxyLBParam) SetQueryFile(v string) {
+func (p *ListProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListProxyLBParam) GetQueryFile() string {
+func (p *ListProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// CreateProxyLBParam is input parameters for the sacloud API
-type CreateProxyLBParam struct {
+// CreateProxylbParam is input parameters for the sacloud API
+type CreateProxylbParam struct {
 	Plan                 int        `json:"plan"`
 	Protocol             string     `json:"protocol"`
 	HostHeader           string     `json:"host-header"`
@@ -314,7 +336,9 @@ type CreateProxyLBParam struct {
 	IconId               sacloud.ID `json:"icon-id"`
 	Assumeyes            bool       `json:"assumeyes"`
 	ParamTemplate        string     `json:"param-template"`
+	Parameters           string     `json:"parameters"`
 	ParamTemplateFile    string     `json:"param-template-file"`
+	ParameterFile        string     `json:"parameter-file"`
 	GenerateSkeleton     bool       `json:"generate-skeleton"`
 	OutputType           string     `json:"output-type"`
 	Column               []string   `json:"column"`
@@ -325,9 +349,9 @@ type CreateProxyLBParam struct {
 	QueryFile            string     `json:"query-file"`
 }
 
-// NewCreateProxyLBParam return new CreateProxyLBParam
-func NewCreateProxyLBParam() *CreateProxyLBParam {
-	return &CreateProxyLBParam{
+// NewCreateProxylbParam return new CreateProxylbParam
+func NewCreateProxylbParam() *CreateProxylbParam {
+	return &CreateProxylbParam{
 
 		Plan:      1000,
 		Protocol:  "tcp",
@@ -338,7 +362,7 @@ func NewCreateProxyLBParam() *CreateProxyLBParam {
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CreateProxyLBParam) FillValueToSkeleton() {
+func (p *CreateProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Plan) {
 		p.Plan = 0
 	}
@@ -384,8 +408,14 @@ func (p *CreateProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -415,7 +445,7 @@ func (p *CreateProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CreateProxyLBParam) Validate() []error {
+func (p *CreateProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["ProxyLB"].Commands["create"].Params["plan"].ValidateFunc
@@ -525,204 +555,220 @@ func (p *CreateProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *CreateProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *CreateProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *CreateProxyLBParam) GetCommandDef() *schema.Command {
+func (p *CreateProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["create"]
 }
 
-func (p *CreateProxyLBParam) GetIncludeFields() []string {
+func (p *CreateProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CreateProxyLBParam) GetExcludeFields() []string {
+func (p *CreateProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CreateProxyLBParam) GetTableType() output.TableType {
+func (p *CreateProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CreateProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *CreateProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CreateProxyLBParam) SetPlan(v int) {
+func (p *CreateProxylbParam) SetPlan(v int) {
 	p.Plan = v
 }
 
-func (p *CreateProxyLBParam) GetPlan() int {
+func (p *CreateProxylbParam) GetPlan() int {
 	return p.Plan
 }
-func (p *CreateProxyLBParam) SetProtocol(v string) {
+func (p *CreateProxylbParam) SetProtocol(v string) {
 	p.Protocol = v
 }
 
-func (p *CreateProxyLBParam) GetProtocol() string {
+func (p *CreateProxylbParam) GetProtocol() string {
 	return p.Protocol
 }
-func (p *CreateProxyLBParam) SetHostHeader(v string) {
+func (p *CreateProxylbParam) SetHostHeader(v string) {
 	p.HostHeader = v
 }
 
-func (p *CreateProxyLBParam) GetHostHeader() string {
+func (p *CreateProxylbParam) GetHostHeader() string {
 	return p.HostHeader
 }
-func (p *CreateProxyLBParam) SetPath(v string) {
+func (p *CreateProxylbParam) SetPath(v string) {
 	p.Path = v
 }
 
-func (p *CreateProxyLBParam) GetPath() string {
+func (p *CreateProxylbParam) GetPath() string {
 	return p.Path
 }
-func (p *CreateProxyLBParam) SetDelayLoop(v int) {
+func (p *CreateProxylbParam) SetDelayLoop(v int) {
 	p.DelayLoop = v
 }
 
-func (p *CreateProxyLBParam) GetDelayLoop() int {
+func (p *CreateProxylbParam) GetDelayLoop() int {
 	return p.DelayLoop
 }
-func (p *CreateProxyLBParam) SetStickySession(v bool) {
+func (p *CreateProxylbParam) SetStickySession(v bool) {
 	p.StickySession = v
 }
 
-func (p *CreateProxyLBParam) GetStickySession() bool {
+func (p *CreateProxylbParam) GetStickySession() bool {
 	return p.StickySession
 }
-func (p *CreateProxyLBParam) SetSorryServerIpaddress(v string) {
+func (p *CreateProxylbParam) SetSorryServerIpaddress(v string) {
 	p.SorryServerIpaddress = v
 }
 
-func (p *CreateProxyLBParam) GetSorryServerIpaddress() string {
+func (p *CreateProxylbParam) GetSorryServerIpaddress() string {
 	return p.SorryServerIpaddress
 }
-func (p *CreateProxyLBParam) SetSorryServerPort(v int) {
+func (p *CreateProxylbParam) SetSorryServerPort(v int) {
 	p.SorryServerPort = v
 }
 
-func (p *CreateProxyLBParam) GetSorryServerPort() int {
+func (p *CreateProxylbParam) GetSorryServerPort() int {
 	return p.SorryServerPort
 }
-func (p *CreateProxyLBParam) SetTimeout(v int) {
+func (p *CreateProxylbParam) SetTimeout(v int) {
 	p.Timeout = v
 }
 
-func (p *CreateProxyLBParam) GetTimeout() int {
+func (p *CreateProxylbParam) GetTimeout() int {
 	return p.Timeout
 }
-func (p *CreateProxyLBParam) SetName(v string) {
+func (p *CreateProxylbParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *CreateProxyLBParam) GetName() string {
+func (p *CreateProxylbParam) GetName() string {
 	return p.Name
 }
-func (p *CreateProxyLBParam) SetDescription(v string) {
+func (p *CreateProxylbParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *CreateProxyLBParam) GetDescription() string {
+func (p *CreateProxylbParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateProxyLBParam) SetTags(v []string) {
+func (p *CreateProxylbParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreateProxyLBParam) GetTags() []string {
+func (p *CreateProxylbParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateProxyLBParam) SetIconId(v sacloud.ID) {
+func (p *CreateProxylbParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateProxyLBParam) GetIconId() sacloud.ID {
+func (p *CreateProxylbParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *CreateProxyLBParam) SetAssumeyes(v bool) {
+func (p *CreateProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *CreateProxyLBParam) GetAssumeyes() bool {
+func (p *CreateProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CreateProxyLBParam) SetParamTemplate(v string) {
+func (p *CreateProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CreateProxyLBParam) GetParamTemplate() string {
+func (p *CreateProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CreateProxyLBParam) SetParamTemplateFile(v string) {
+func (p *CreateProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CreateProxyLBParam) GetParamTemplateFile() string {
+func (p *CreateProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CreateProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *CreateProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CreateProxyLBParam) GetGenerateSkeleton() bool {
+func (p *CreateProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CreateProxyLBParam) SetOutputType(v string) {
+func (p *CreateProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CreateProxyLBParam) GetOutputType() string {
+func (p *CreateProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CreateProxyLBParam) SetColumn(v []string) {
+func (p *CreateProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CreateProxyLBParam) GetColumn() []string {
+func (p *CreateProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CreateProxyLBParam) SetQuiet(v bool) {
+func (p *CreateProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CreateProxyLBParam) GetQuiet() bool {
+func (p *CreateProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CreateProxyLBParam) SetFormat(v string) {
+func (p *CreateProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CreateProxyLBParam) GetFormat() string {
+func (p *CreateProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *CreateProxyLBParam) SetFormatFile(v string) {
+func (p *CreateProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CreateProxyLBParam) GetFormatFile() string {
+func (p *CreateProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CreateProxyLBParam) SetQuery(v string) {
+func (p *CreateProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CreateProxyLBParam) GetQuery() string {
+func (p *CreateProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *CreateProxyLBParam) SetQueryFile(v string) {
+func (p *CreateProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CreateProxyLBParam) GetQueryFile() string {
+func (p *CreateProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// ReadProxyLBParam is input parameters for the sacloud API
-type ReadProxyLBParam struct {
+// ReadProxylbParam is input parameters for the sacloud API
+type ReadProxylbParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -734,21 +780,27 @@ type ReadProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewReadProxyLBParam return new ReadProxyLBParam
-func NewReadProxyLBParam() *ReadProxyLBParam {
-	return &ReadProxyLBParam{}
+// NewReadProxylbParam return new ReadProxylbParam
+func NewReadProxylbParam() *ReadProxylbParam {
+	return &ReadProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ReadProxyLBParam) FillValueToSkeleton() {
+func (p *ReadProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -781,7 +833,7 @@ func (p *ReadProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ReadProxyLBParam) Validate() []error {
+func (p *ReadProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -814,117 +866,131 @@ func (p *ReadProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ReadProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *ReadProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ReadProxyLBParam) GetCommandDef() *schema.Command {
+func (p *ReadProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["read"]
 }
 
-func (p *ReadProxyLBParam) GetIncludeFields() []string {
+func (p *ReadProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ReadProxyLBParam) GetExcludeFields() []string {
+func (p *ReadProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ReadProxyLBParam) GetTableType() output.TableType {
+func (p *ReadProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ReadProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ReadProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReadProxyLBParam) SetSelector(v []string) {
+func (p *ReadProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ReadProxyLBParam) GetSelector() []string {
+func (p *ReadProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ReadProxyLBParam) SetParamTemplate(v string) {
+func (p *ReadProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ReadProxyLBParam) GetParamTemplate() string {
+func (p *ReadProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ReadProxyLBParam) SetParamTemplateFile(v string) {
+func (p *ReadProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ReadProxyLBParam) GetParamTemplateFile() string {
+func (p *ReadProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ReadProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *ReadProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ReadProxyLBParam) GetGenerateSkeleton() bool {
+func (p *ReadProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReadProxyLBParam) SetOutputType(v string) {
+func (p *ReadProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ReadProxyLBParam) GetOutputType() string {
+func (p *ReadProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ReadProxyLBParam) SetColumn(v []string) {
+func (p *ReadProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ReadProxyLBParam) GetColumn() []string {
+func (p *ReadProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ReadProxyLBParam) SetQuiet(v bool) {
+func (p *ReadProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ReadProxyLBParam) GetQuiet() bool {
+func (p *ReadProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ReadProxyLBParam) SetFormat(v string) {
+func (p *ReadProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ReadProxyLBParam) GetFormat() string {
+func (p *ReadProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *ReadProxyLBParam) SetFormatFile(v string) {
+func (p *ReadProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ReadProxyLBParam) GetFormatFile() string {
+func (p *ReadProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ReadProxyLBParam) SetQuery(v string) {
+func (p *ReadProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ReadProxyLBParam) GetQuery() string {
+func (p *ReadProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *ReadProxyLBParam) SetQueryFile(v string) {
+func (p *ReadProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ReadProxyLBParam) GetQueryFile() string {
+func (p *ReadProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadProxyLBParam) SetId(v sacloud.ID) {
+func (p *ReadProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadProxyLBParam) GetId() sacloud.ID {
+func (p *ReadProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// UpdateProxyLBParam is input parameters for the sacloud API
-type UpdateProxyLBParam struct {
+// UpdateProxylbParam is input parameters for the sacloud API
+type UpdateProxylbParam struct {
 	Protocol             string     `json:"protocol"`
 	HostHeader           string     `json:"host-header"`
 	Path                 string     `json:"path"`
@@ -940,7 +1006,9 @@ type UpdateProxyLBParam struct {
 	IconId               sacloud.ID `json:"icon-id"`
 	Assumeyes            bool       `json:"assumeyes"`
 	ParamTemplate        string     `json:"param-template"`
+	Parameters           string     `json:"parameters"`
 	ParamTemplateFile    string     `json:"param-template-file"`
+	ParameterFile        string     `json:"parameter-file"`
 	GenerateSkeleton     bool       `json:"generate-skeleton"`
 	OutputType           string     `json:"output-type"`
 	Column               []string   `json:"column"`
@@ -952,16 +1020,16 @@ type UpdateProxyLBParam struct {
 	Id                   sacloud.ID `json:"id"`
 }
 
-// NewUpdateProxyLBParam return new UpdateProxyLBParam
-func NewUpdateProxyLBParam() *UpdateProxyLBParam {
-	return &UpdateProxyLBParam{
+// NewUpdateProxylbParam return new UpdateProxylbParam
+func NewUpdateProxylbParam() *UpdateProxylbParam {
+	return &UpdateProxylbParam{
 
 		Timeout: 10,
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *UpdateProxyLBParam) FillValueToSkeleton() {
+func (p *UpdateProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
@@ -1007,8 +1075,14 @@ func (p *UpdateProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1041,7 +1115,7 @@ func (p *UpdateProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *UpdateProxyLBParam) Validate() []error {
+func (p *UpdateProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["ProxyLB"].Commands["update"].Params["protocol"].ValidateFunc
@@ -1130,212 +1204,228 @@ func (p *UpdateProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *UpdateProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *UpdateProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *UpdateProxyLBParam) GetCommandDef() *schema.Command {
+func (p *UpdateProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["update"]
 }
 
-func (p *UpdateProxyLBParam) GetIncludeFields() []string {
+func (p *UpdateProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *UpdateProxyLBParam) GetExcludeFields() []string {
+func (p *UpdateProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *UpdateProxyLBParam) GetTableType() output.TableType {
+func (p *UpdateProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *UpdateProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *UpdateProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *UpdateProxyLBParam) SetProtocol(v string) {
+func (p *UpdateProxylbParam) SetProtocol(v string) {
 	p.Protocol = v
 }
 
-func (p *UpdateProxyLBParam) GetProtocol() string {
+func (p *UpdateProxylbParam) GetProtocol() string {
 	return p.Protocol
 }
-func (p *UpdateProxyLBParam) SetHostHeader(v string) {
+func (p *UpdateProxylbParam) SetHostHeader(v string) {
 	p.HostHeader = v
 }
 
-func (p *UpdateProxyLBParam) GetHostHeader() string {
+func (p *UpdateProxylbParam) GetHostHeader() string {
 	return p.HostHeader
 }
-func (p *UpdateProxyLBParam) SetPath(v string) {
+func (p *UpdateProxylbParam) SetPath(v string) {
 	p.Path = v
 }
 
-func (p *UpdateProxyLBParam) GetPath() string {
+func (p *UpdateProxylbParam) GetPath() string {
 	return p.Path
 }
-func (p *UpdateProxyLBParam) SetDelayLoop(v int) {
+func (p *UpdateProxylbParam) SetDelayLoop(v int) {
 	p.DelayLoop = v
 }
 
-func (p *UpdateProxyLBParam) GetDelayLoop() int {
+func (p *UpdateProxylbParam) GetDelayLoop() int {
 	return p.DelayLoop
 }
-func (p *UpdateProxyLBParam) SetStickySession(v bool) {
+func (p *UpdateProxylbParam) SetStickySession(v bool) {
 	p.StickySession = v
 }
 
-func (p *UpdateProxyLBParam) GetStickySession() bool {
+func (p *UpdateProxylbParam) GetStickySession() bool {
 	return p.StickySession
 }
-func (p *UpdateProxyLBParam) SetSorryServerIpaddress(v string) {
+func (p *UpdateProxylbParam) SetSorryServerIpaddress(v string) {
 	p.SorryServerIpaddress = v
 }
 
-func (p *UpdateProxyLBParam) GetSorryServerIpaddress() string {
+func (p *UpdateProxylbParam) GetSorryServerIpaddress() string {
 	return p.SorryServerIpaddress
 }
-func (p *UpdateProxyLBParam) SetSorryServerPort(v int) {
+func (p *UpdateProxylbParam) SetSorryServerPort(v int) {
 	p.SorryServerPort = v
 }
 
-func (p *UpdateProxyLBParam) GetSorryServerPort() int {
+func (p *UpdateProxylbParam) GetSorryServerPort() int {
 	return p.SorryServerPort
 }
-func (p *UpdateProxyLBParam) SetTimeout(v int) {
+func (p *UpdateProxylbParam) SetTimeout(v int) {
 	p.Timeout = v
 }
 
-func (p *UpdateProxyLBParam) GetTimeout() int {
+func (p *UpdateProxylbParam) GetTimeout() int {
 	return p.Timeout
 }
-func (p *UpdateProxyLBParam) SetSelector(v []string) {
+func (p *UpdateProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *UpdateProxyLBParam) GetSelector() []string {
+func (p *UpdateProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *UpdateProxyLBParam) SetName(v string) {
+func (p *UpdateProxylbParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *UpdateProxyLBParam) GetName() string {
+func (p *UpdateProxylbParam) GetName() string {
 	return p.Name
 }
-func (p *UpdateProxyLBParam) SetDescription(v string) {
+func (p *UpdateProxylbParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdateProxyLBParam) GetDescription() string {
+func (p *UpdateProxylbParam) GetDescription() string {
 	return p.Description
 }
-func (p *UpdateProxyLBParam) SetTags(v []string) {
+func (p *UpdateProxylbParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *UpdateProxyLBParam) GetTags() []string {
+func (p *UpdateProxylbParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateProxyLBParam) SetIconId(v sacloud.ID) {
+func (p *UpdateProxylbParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateProxyLBParam) GetIconId() sacloud.ID {
+func (p *UpdateProxylbParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *UpdateProxyLBParam) SetAssumeyes(v bool) {
+func (p *UpdateProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *UpdateProxyLBParam) GetAssumeyes() bool {
+func (p *UpdateProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *UpdateProxyLBParam) SetParamTemplate(v string) {
+func (p *UpdateProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *UpdateProxyLBParam) GetParamTemplate() string {
+func (p *UpdateProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *UpdateProxyLBParam) SetParamTemplateFile(v string) {
+func (p *UpdateProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *UpdateProxyLBParam) GetParamTemplateFile() string {
+func (p *UpdateProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *UpdateProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *UpdateProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *UpdateProxyLBParam) GetGenerateSkeleton() bool {
+func (p *UpdateProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *UpdateProxyLBParam) SetOutputType(v string) {
+func (p *UpdateProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *UpdateProxyLBParam) GetOutputType() string {
+func (p *UpdateProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *UpdateProxyLBParam) SetColumn(v []string) {
+func (p *UpdateProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *UpdateProxyLBParam) GetColumn() []string {
+func (p *UpdateProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *UpdateProxyLBParam) SetQuiet(v bool) {
+func (p *UpdateProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *UpdateProxyLBParam) GetQuiet() bool {
+func (p *UpdateProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *UpdateProxyLBParam) SetFormat(v string) {
+func (p *UpdateProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *UpdateProxyLBParam) GetFormat() string {
+func (p *UpdateProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *UpdateProxyLBParam) SetFormatFile(v string) {
+func (p *UpdateProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *UpdateProxyLBParam) GetFormatFile() string {
+func (p *UpdateProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *UpdateProxyLBParam) SetQuery(v string) {
+func (p *UpdateProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *UpdateProxyLBParam) GetQuery() string {
+func (p *UpdateProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *UpdateProxyLBParam) SetQueryFile(v string) {
+func (p *UpdateProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *UpdateProxyLBParam) GetQueryFile() string {
+func (p *UpdateProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateProxyLBParam) SetId(v sacloud.ID) {
+func (p *UpdateProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateProxyLBParam) GetId() sacloud.ID {
+func (p *UpdateProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// DeleteProxyLBParam is input parameters for the sacloud API
-type DeleteProxyLBParam struct {
+// DeleteProxylbParam is input parameters for the sacloud API
+type DeleteProxylbParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1347,13 +1437,13 @@ type DeleteProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewDeleteProxyLBParam return new DeleteProxyLBParam
-func NewDeleteProxyLBParam() *DeleteProxyLBParam {
-	return &DeleteProxyLBParam{}
+// NewDeleteProxylbParam return new DeleteProxylbParam
+func NewDeleteProxylbParam() *DeleteProxylbParam {
+	return &DeleteProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *DeleteProxyLBParam) FillValueToSkeleton() {
+func (p *DeleteProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1363,8 +1453,14 @@ func (p *DeleteProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1397,7 +1493,7 @@ func (p *DeleteProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *DeleteProxyLBParam) Validate() []error {
+func (p *DeleteProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1430,129 +1526,145 @@ func (p *DeleteProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *DeleteProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *DeleteProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *DeleteProxyLBParam) GetCommandDef() *schema.Command {
+func (p *DeleteProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["delete"]
 }
 
-func (p *DeleteProxyLBParam) GetIncludeFields() []string {
+func (p *DeleteProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *DeleteProxyLBParam) GetExcludeFields() []string {
+func (p *DeleteProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *DeleteProxyLBParam) GetTableType() output.TableType {
+func (p *DeleteProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *DeleteProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *DeleteProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DeleteProxyLBParam) SetSelector(v []string) {
+func (p *DeleteProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *DeleteProxyLBParam) GetSelector() []string {
+func (p *DeleteProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *DeleteProxyLBParam) SetAssumeyes(v bool) {
+func (p *DeleteProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *DeleteProxyLBParam) GetAssumeyes() bool {
+func (p *DeleteProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeleteProxyLBParam) SetParamTemplate(v string) {
+func (p *DeleteProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *DeleteProxyLBParam) GetParamTemplate() string {
+func (p *DeleteProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *DeleteProxyLBParam) SetParamTemplateFile(v string) {
+func (p *DeleteProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *DeleteProxyLBParam) GetParamTemplateFile() string {
+func (p *DeleteProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *DeleteProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *DeleteProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *DeleteProxyLBParam) GetGenerateSkeleton() bool {
+func (p *DeleteProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DeleteProxyLBParam) SetOutputType(v string) {
+func (p *DeleteProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *DeleteProxyLBParam) GetOutputType() string {
+func (p *DeleteProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *DeleteProxyLBParam) SetColumn(v []string) {
+func (p *DeleteProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *DeleteProxyLBParam) GetColumn() []string {
+func (p *DeleteProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *DeleteProxyLBParam) SetQuiet(v bool) {
+func (p *DeleteProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *DeleteProxyLBParam) GetQuiet() bool {
+func (p *DeleteProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *DeleteProxyLBParam) SetFormat(v string) {
+func (p *DeleteProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *DeleteProxyLBParam) GetFormat() string {
+func (p *DeleteProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *DeleteProxyLBParam) SetFormatFile(v string) {
+func (p *DeleteProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *DeleteProxyLBParam) GetFormatFile() string {
+func (p *DeleteProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *DeleteProxyLBParam) SetQuery(v string) {
+func (p *DeleteProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *DeleteProxyLBParam) GetQuery() string {
+func (p *DeleteProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *DeleteProxyLBParam) SetQueryFile(v string) {
+func (p *DeleteProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *DeleteProxyLBParam) GetQueryFile() string {
+func (p *DeleteProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteProxyLBParam) SetId(v sacloud.ID) {
+func (p *DeleteProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteProxyLBParam) GetId() sacloud.ID {
+func (p *DeleteProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// PlanChangeProxyLBParam is input parameters for the sacloud API
-type PlanChangeProxyLBParam struct {
+// PlanChangeProxylbParam is input parameters for the sacloud API
+type PlanChangeProxylbParam struct {
 	Plan              int        `json:"plan"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1564,13 +1676,13 @@ type PlanChangeProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewPlanChangeProxyLBParam return new PlanChangeProxyLBParam
-func NewPlanChangeProxyLBParam() *PlanChangeProxyLBParam {
-	return &PlanChangeProxyLBParam{}
+// NewPlanChangeProxylbParam return new PlanChangeProxylbParam
+func NewPlanChangeProxylbParam() *PlanChangeProxylbParam {
+	return &PlanChangeProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *PlanChangeProxyLBParam) FillValueToSkeleton() {
+func (p *PlanChangeProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Plan) {
 		p.Plan = 0
 	}
@@ -1583,8 +1695,14 @@ func (p *PlanChangeProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1617,7 +1735,7 @@ func (p *PlanChangeProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *PlanChangeProxyLBParam) Validate() []error {
+func (p *PlanChangeProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -1664,134 +1782,150 @@ func (p *PlanChangeProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *PlanChangeProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *PlanChangeProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *PlanChangeProxyLBParam) GetCommandDef() *schema.Command {
+func (p *PlanChangeProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["plan-change"]
 }
 
-func (p *PlanChangeProxyLBParam) GetIncludeFields() []string {
+func (p *PlanChangeProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *PlanChangeProxyLBParam) GetExcludeFields() []string {
+func (p *PlanChangeProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *PlanChangeProxyLBParam) GetTableType() output.TableType {
+func (p *PlanChangeProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *PlanChangeProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *PlanChangeProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *PlanChangeProxyLBParam) SetPlan(v int) {
+func (p *PlanChangeProxylbParam) SetPlan(v int) {
 	p.Plan = v
 }
 
-func (p *PlanChangeProxyLBParam) GetPlan() int {
+func (p *PlanChangeProxylbParam) GetPlan() int {
 	return p.Plan
 }
-func (p *PlanChangeProxyLBParam) SetSelector(v []string) {
+func (p *PlanChangeProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *PlanChangeProxyLBParam) GetSelector() []string {
+func (p *PlanChangeProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *PlanChangeProxyLBParam) SetAssumeyes(v bool) {
+func (p *PlanChangeProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *PlanChangeProxyLBParam) GetAssumeyes() bool {
+func (p *PlanChangeProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *PlanChangeProxyLBParam) SetParamTemplate(v string) {
+func (p *PlanChangeProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *PlanChangeProxyLBParam) GetParamTemplate() string {
+func (p *PlanChangeProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *PlanChangeProxyLBParam) SetParamTemplateFile(v string) {
+func (p *PlanChangeProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PlanChangeProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *PlanChangeProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *PlanChangeProxyLBParam) GetParamTemplateFile() string {
+func (p *PlanChangeProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *PlanChangeProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *PlanChangeProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PlanChangeProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PlanChangeProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *PlanChangeProxyLBParam) GetGenerateSkeleton() bool {
+func (p *PlanChangeProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *PlanChangeProxyLBParam) SetOutputType(v string) {
+func (p *PlanChangeProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *PlanChangeProxyLBParam) GetOutputType() string {
+func (p *PlanChangeProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *PlanChangeProxyLBParam) SetColumn(v []string) {
+func (p *PlanChangeProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *PlanChangeProxyLBParam) GetColumn() []string {
+func (p *PlanChangeProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *PlanChangeProxyLBParam) SetQuiet(v bool) {
+func (p *PlanChangeProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *PlanChangeProxyLBParam) GetQuiet() bool {
+func (p *PlanChangeProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *PlanChangeProxyLBParam) SetFormat(v string) {
+func (p *PlanChangeProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *PlanChangeProxyLBParam) GetFormat() string {
+func (p *PlanChangeProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *PlanChangeProxyLBParam) SetFormatFile(v string) {
+func (p *PlanChangeProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *PlanChangeProxyLBParam) GetFormatFile() string {
+func (p *PlanChangeProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *PlanChangeProxyLBParam) SetQuery(v string) {
+func (p *PlanChangeProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *PlanChangeProxyLBParam) GetQuery() string {
+func (p *PlanChangeProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *PlanChangeProxyLBParam) SetQueryFile(v string) {
+func (p *PlanChangeProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *PlanChangeProxyLBParam) GetQueryFile() string {
+func (p *PlanChangeProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *PlanChangeProxyLBParam) SetId(v sacloud.ID) {
+func (p *PlanChangeProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *PlanChangeProxyLBParam) GetId() sacloud.ID {
+func (p *PlanChangeProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// BindPortInfoProxyLBParam is input parameters for the sacloud API
-type BindPortInfoProxyLBParam struct {
+// BindPortInfoProxylbParam is input parameters for the sacloud API
+type BindPortInfoProxylbParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1803,21 +1937,27 @@ type BindPortInfoProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewBindPortInfoProxyLBParam return new BindPortInfoProxyLBParam
-func NewBindPortInfoProxyLBParam() *BindPortInfoProxyLBParam {
-	return &BindPortInfoProxyLBParam{}
+// NewBindPortInfoProxylbParam return new BindPortInfoProxylbParam
+func NewBindPortInfoProxylbParam() *BindPortInfoProxylbParam {
+	return &BindPortInfoProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *BindPortInfoProxyLBParam) FillValueToSkeleton() {
+func (p *BindPortInfoProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1850,7 +1990,7 @@ func (p *BindPortInfoProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *BindPortInfoProxyLBParam) Validate() []error {
+func (p *BindPortInfoProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1883,125 +2023,141 @@ func (p *BindPortInfoProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *BindPortInfoProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *BindPortInfoProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *BindPortInfoProxyLBParam) GetCommandDef() *schema.Command {
+func (p *BindPortInfoProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["bind-port-info"]
 }
 
-func (p *BindPortInfoProxyLBParam) GetIncludeFields() []string {
+func (p *BindPortInfoProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *BindPortInfoProxyLBParam) GetExcludeFields() []string {
+func (p *BindPortInfoProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *BindPortInfoProxyLBParam) GetTableType() output.TableType {
+func (p *BindPortInfoProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *BindPortInfoProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *BindPortInfoProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *BindPortInfoProxyLBParam) SetSelector(v []string) {
+func (p *BindPortInfoProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *BindPortInfoProxyLBParam) GetSelector() []string {
+func (p *BindPortInfoProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *BindPortInfoProxyLBParam) SetParamTemplate(v string) {
+func (p *BindPortInfoProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *BindPortInfoProxyLBParam) GetParamTemplate() string {
+func (p *BindPortInfoProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *BindPortInfoProxyLBParam) SetParamTemplateFile(v string) {
+func (p *BindPortInfoProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BindPortInfoProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BindPortInfoProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *BindPortInfoProxyLBParam) GetParamTemplateFile() string {
+func (p *BindPortInfoProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *BindPortInfoProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *BindPortInfoProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BindPortInfoProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BindPortInfoProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *BindPortInfoProxyLBParam) GetGenerateSkeleton() bool {
+func (p *BindPortInfoProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *BindPortInfoProxyLBParam) SetOutputType(v string) {
+func (p *BindPortInfoProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *BindPortInfoProxyLBParam) GetOutputType() string {
+func (p *BindPortInfoProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *BindPortInfoProxyLBParam) SetColumn(v []string) {
+func (p *BindPortInfoProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *BindPortInfoProxyLBParam) GetColumn() []string {
+func (p *BindPortInfoProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *BindPortInfoProxyLBParam) SetQuiet(v bool) {
+func (p *BindPortInfoProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *BindPortInfoProxyLBParam) GetQuiet() bool {
+func (p *BindPortInfoProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *BindPortInfoProxyLBParam) SetFormat(v string) {
+func (p *BindPortInfoProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *BindPortInfoProxyLBParam) GetFormat() string {
+func (p *BindPortInfoProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *BindPortInfoProxyLBParam) SetFormatFile(v string) {
+func (p *BindPortInfoProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *BindPortInfoProxyLBParam) GetFormatFile() string {
+func (p *BindPortInfoProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *BindPortInfoProxyLBParam) SetQuery(v string) {
+func (p *BindPortInfoProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *BindPortInfoProxyLBParam) GetQuery() string {
+func (p *BindPortInfoProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *BindPortInfoProxyLBParam) SetQueryFile(v string) {
+func (p *BindPortInfoProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *BindPortInfoProxyLBParam) GetQueryFile() string {
+func (p *BindPortInfoProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *BindPortInfoProxyLBParam) SetId(v sacloud.ID) {
+func (p *BindPortInfoProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *BindPortInfoProxyLBParam) GetId() sacloud.ID {
+func (p *BindPortInfoProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// BindPortAddProxyLBParam is input parameters for the sacloud API
-type BindPortAddProxyLBParam struct {
+// BindPortAddProxylbParam is input parameters for the sacloud API
+type BindPortAddProxylbParam struct {
 	Mode              string     `json:"mode"`
 	Port              int        `json:"port"`
 	RedirectToHttps   bool       `json:"redirect-to-https"`
-	SupportHttp2      bool       `json:"support-http2"`
+	SupportHttp2      bool       `json:"support-http-2"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2013,13 +2169,13 @@ type BindPortAddProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewBindPortAddProxyLBParam return new BindPortAddProxyLBParam
-func NewBindPortAddProxyLBParam() *BindPortAddProxyLBParam {
-	return &BindPortAddProxyLBParam{}
+// NewBindPortAddProxylbParam return new BindPortAddProxylbParam
+func NewBindPortAddProxylbParam() *BindPortAddProxylbParam {
+	return &BindPortAddProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *BindPortAddProxyLBParam) FillValueToSkeleton() {
+func (p *BindPortAddProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Mode) {
 		p.Mode = ""
 	}
@@ -2041,8 +2197,14 @@ func (p *BindPortAddProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2075,7 +2237,7 @@ func (p *BindPortAddProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *BindPortAddProxyLBParam) Validate() []error {
+func (p *BindPortAddProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -2136,161 +2298,177 @@ func (p *BindPortAddProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *BindPortAddProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *BindPortAddProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *BindPortAddProxyLBParam) GetCommandDef() *schema.Command {
+func (p *BindPortAddProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["bind-port-add"]
 }
 
-func (p *BindPortAddProxyLBParam) GetIncludeFields() []string {
+func (p *BindPortAddProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *BindPortAddProxyLBParam) GetExcludeFields() []string {
+func (p *BindPortAddProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *BindPortAddProxyLBParam) GetTableType() output.TableType {
+func (p *BindPortAddProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *BindPortAddProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *BindPortAddProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *BindPortAddProxyLBParam) SetMode(v string) {
+func (p *BindPortAddProxylbParam) SetMode(v string) {
 	p.Mode = v
 }
 
-func (p *BindPortAddProxyLBParam) GetMode() string {
+func (p *BindPortAddProxylbParam) GetMode() string {
 	return p.Mode
 }
-func (p *BindPortAddProxyLBParam) SetPort(v int) {
+func (p *BindPortAddProxylbParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *BindPortAddProxyLBParam) GetPort() int {
+func (p *BindPortAddProxylbParam) GetPort() int {
 	return p.Port
 }
-func (p *BindPortAddProxyLBParam) SetRedirectToHttps(v bool) {
+func (p *BindPortAddProxylbParam) SetRedirectToHttps(v bool) {
 	p.RedirectToHttps = v
 }
 
-func (p *BindPortAddProxyLBParam) GetRedirectToHttps() bool {
+func (p *BindPortAddProxylbParam) GetRedirectToHttps() bool {
 	return p.RedirectToHttps
 }
-func (p *BindPortAddProxyLBParam) SetSupportHttp2(v bool) {
+func (p *BindPortAddProxylbParam) SetSupportHttp2(v bool) {
 	p.SupportHttp2 = v
 }
 
-func (p *BindPortAddProxyLBParam) GetSupportHttp2() bool {
+func (p *BindPortAddProxylbParam) GetSupportHttp2() bool {
 	return p.SupportHttp2
 }
-func (p *BindPortAddProxyLBParam) SetSelector(v []string) {
+func (p *BindPortAddProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *BindPortAddProxyLBParam) GetSelector() []string {
+func (p *BindPortAddProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *BindPortAddProxyLBParam) SetAssumeyes(v bool) {
+func (p *BindPortAddProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *BindPortAddProxyLBParam) GetAssumeyes() bool {
+func (p *BindPortAddProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *BindPortAddProxyLBParam) SetParamTemplate(v string) {
+func (p *BindPortAddProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *BindPortAddProxyLBParam) GetParamTemplate() string {
+func (p *BindPortAddProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *BindPortAddProxyLBParam) SetParamTemplateFile(v string) {
+func (p *BindPortAddProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BindPortAddProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BindPortAddProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *BindPortAddProxyLBParam) GetParamTemplateFile() string {
+func (p *BindPortAddProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *BindPortAddProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *BindPortAddProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BindPortAddProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BindPortAddProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *BindPortAddProxyLBParam) GetGenerateSkeleton() bool {
+func (p *BindPortAddProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *BindPortAddProxyLBParam) SetOutputType(v string) {
+func (p *BindPortAddProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *BindPortAddProxyLBParam) GetOutputType() string {
+func (p *BindPortAddProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *BindPortAddProxyLBParam) SetColumn(v []string) {
+func (p *BindPortAddProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *BindPortAddProxyLBParam) GetColumn() []string {
+func (p *BindPortAddProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *BindPortAddProxyLBParam) SetQuiet(v bool) {
+func (p *BindPortAddProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *BindPortAddProxyLBParam) GetQuiet() bool {
+func (p *BindPortAddProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *BindPortAddProxyLBParam) SetFormat(v string) {
+func (p *BindPortAddProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *BindPortAddProxyLBParam) GetFormat() string {
+func (p *BindPortAddProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *BindPortAddProxyLBParam) SetFormatFile(v string) {
+func (p *BindPortAddProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *BindPortAddProxyLBParam) GetFormatFile() string {
+func (p *BindPortAddProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *BindPortAddProxyLBParam) SetQuery(v string) {
+func (p *BindPortAddProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *BindPortAddProxyLBParam) GetQuery() string {
+func (p *BindPortAddProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *BindPortAddProxyLBParam) SetQueryFile(v string) {
+func (p *BindPortAddProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *BindPortAddProxyLBParam) GetQueryFile() string {
+func (p *BindPortAddProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *BindPortAddProxyLBParam) SetId(v sacloud.ID) {
+func (p *BindPortAddProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *BindPortAddProxyLBParam) GetId() sacloud.ID {
+func (p *BindPortAddProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// BindPortUpdateProxyLBParam is input parameters for the sacloud API
-type BindPortUpdateProxyLBParam struct {
+// BindPortUpdateProxylbParam is input parameters for the sacloud API
+type BindPortUpdateProxylbParam struct {
 	Index             int        `json:"index"`
 	Mode              string     `json:"mode"`
 	Port              int        `json:"port"`
 	RedirectToHttps   bool       `json:"redirect-to-https"`
-	SupportHttp2      bool       `json:"support-http2"`
+	SupportHttp2      bool       `json:"support-http-2"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2302,13 +2480,13 @@ type BindPortUpdateProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewBindPortUpdateProxyLBParam return new BindPortUpdateProxyLBParam
-func NewBindPortUpdateProxyLBParam() *BindPortUpdateProxyLBParam {
-	return &BindPortUpdateProxyLBParam{}
+// NewBindPortUpdateProxylbParam return new BindPortUpdateProxylbParam
+func NewBindPortUpdateProxylbParam() *BindPortUpdateProxylbParam {
+	return &BindPortUpdateProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *BindPortUpdateProxyLBParam) FillValueToSkeleton() {
+func (p *BindPortUpdateProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -2333,8 +2511,14 @@ func (p *BindPortUpdateProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2367,7 +2551,7 @@ func (p *BindPortUpdateProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *BindPortUpdateProxyLBParam) Validate() []error {
+func (p *BindPortUpdateProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -2421,164 +2605,180 @@ func (p *BindPortUpdateProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *BindPortUpdateProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *BindPortUpdateProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *BindPortUpdateProxyLBParam) GetCommandDef() *schema.Command {
+func (p *BindPortUpdateProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["bind-port-update"]
 }
 
-func (p *BindPortUpdateProxyLBParam) GetIncludeFields() []string {
+func (p *BindPortUpdateProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *BindPortUpdateProxyLBParam) GetExcludeFields() []string {
+func (p *BindPortUpdateProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *BindPortUpdateProxyLBParam) GetTableType() output.TableType {
+func (p *BindPortUpdateProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *BindPortUpdateProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *BindPortUpdateProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *BindPortUpdateProxyLBParam) SetIndex(v int) {
+func (p *BindPortUpdateProxylbParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetIndex() int {
+func (p *BindPortUpdateProxylbParam) GetIndex() int {
 	return p.Index
 }
-func (p *BindPortUpdateProxyLBParam) SetMode(v string) {
+func (p *BindPortUpdateProxylbParam) SetMode(v string) {
 	p.Mode = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetMode() string {
+func (p *BindPortUpdateProxylbParam) GetMode() string {
 	return p.Mode
 }
-func (p *BindPortUpdateProxyLBParam) SetPort(v int) {
+func (p *BindPortUpdateProxylbParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetPort() int {
+func (p *BindPortUpdateProxylbParam) GetPort() int {
 	return p.Port
 }
-func (p *BindPortUpdateProxyLBParam) SetRedirectToHttps(v bool) {
+func (p *BindPortUpdateProxylbParam) SetRedirectToHttps(v bool) {
 	p.RedirectToHttps = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetRedirectToHttps() bool {
+func (p *BindPortUpdateProxylbParam) GetRedirectToHttps() bool {
 	return p.RedirectToHttps
 }
-func (p *BindPortUpdateProxyLBParam) SetSupportHttp2(v bool) {
+func (p *BindPortUpdateProxylbParam) SetSupportHttp2(v bool) {
 	p.SupportHttp2 = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetSupportHttp2() bool {
+func (p *BindPortUpdateProxylbParam) GetSupportHttp2() bool {
 	return p.SupportHttp2
 }
-func (p *BindPortUpdateProxyLBParam) SetSelector(v []string) {
+func (p *BindPortUpdateProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetSelector() []string {
+func (p *BindPortUpdateProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *BindPortUpdateProxyLBParam) SetAssumeyes(v bool) {
+func (p *BindPortUpdateProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetAssumeyes() bool {
+func (p *BindPortUpdateProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *BindPortUpdateProxyLBParam) SetParamTemplate(v string) {
+func (p *BindPortUpdateProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetParamTemplate() string {
+func (p *BindPortUpdateProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *BindPortUpdateProxyLBParam) SetParamTemplateFile(v string) {
+func (p *BindPortUpdateProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BindPortUpdateProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BindPortUpdateProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetParamTemplateFile() string {
+func (p *BindPortUpdateProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *BindPortUpdateProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *BindPortUpdateProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BindPortUpdateProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BindPortUpdateProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetGenerateSkeleton() bool {
+func (p *BindPortUpdateProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *BindPortUpdateProxyLBParam) SetOutputType(v string) {
+func (p *BindPortUpdateProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetOutputType() string {
+func (p *BindPortUpdateProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *BindPortUpdateProxyLBParam) SetColumn(v []string) {
+func (p *BindPortUpdateProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetColumn() []string {
+func (p *BindPortUpdateProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *BindPortUpdateProxyLBParam) SetQuiet(v bool) {
+func (p *BindPortUpdateProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetQuiet() bool {
+func (p *BindPortUpdateProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *BindPortUpdateProxyLBParam) SetFormat(v string) {
+func (p *BindPortUpdateProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetFormat() string {
+func (p *BindPortUpdateProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *BindPortUpdateProxyLBParam) SetFormatFile(v string) {
+func (p *BindPortUpdateProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetFormatFile() string {
+func (p *BindPortUpdateProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *BindPortUpdateProxyLBParam) SetQuery(v string) {
+func (p *BindPortUpdateProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetQuery() string {
+func (p *BindPortUpdateProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *BindPortUpdateProxyLBParam) SetQueryFile(v string) {
+func (p *BindPortUpdateProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetQueryFile() string {
+func (p *BindPortUpdateProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *BindPortUpdateProxyLBParam) SetId(v sacloud.ID) {
+func (p *BindPortUpdateProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetId() sacloud.ID {
+func (p *BindPortUpdateProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// BindPortDeleteProxyLBParam is input parameters for the sacloud API
-type BindPortDeleteProxyLBParam struct {
+// BindPortDeleteProxylbParam is input parameters for the sacloud API
+type BindPortDeleteProxylbParam struct {
 	Index             int        `json:"index"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2590,13 +2790,13 @@ type BindPortDeleteProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewBindPortDeleteProxyLBParam return new BindPortDeleteProxyLBParam
-func NewBindPortDeleteProxyLBParam() *BindPortDeleteProxyLBParam {
-	return &BindPortDeleteProxyLBParam{}
+// NewBindPortDeleteProxylbParam return new BindPortDeleteProxylbParam
+func NewBindPortDeleteProxylbParam() *BindPortDeleteProxylbParam {
+	return &BindPortDeleteProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *BindPortDeleteProxyLBParam) FillValueToSkeleton() {
+func (p *BindPortDeleteProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -2609,8 +2809,14 @@ func (p *BindPortDeleteProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2643,7 +2849,7 @@ func (p *BindPortDeleteProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *BindPortDeleteProxyLBParam) Validate() []error {
+func (p *BindPortDeleteProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -2683,135 +2889,151 @@ func (p *BindPortDeleteProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *BindPortDeleteProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *BindPortDeleteProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *BindPortDeleteProxyLBParam) GetCommandDef() *schema.Command {
+func (p *BindPortDeleteProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["bind-port-delete"]
 }
 
-func (p *BindPortDeleteProxyLBParam) GetIncludeFields() []string {
+func (p *BindPortDeleteProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *BindPortDeleteProxyLBParam) GetExcludeFields() []string {
+func (p *BindPortDeleteProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *BindPortDeleteProxyLBParam) GetTableType() output.TableType {
+func (p *BindPortDeleteProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *BindPortDeleteProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *BindPortDeleteProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *BindPortDeleteProxyLBParam) SetIndex(v int) {
+func (p *BindPortDeleteProxylbParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *BindPortDeleteProxyLBParam) GetIndex() int {
+func (p *BindPortDeleteProxylbParam) GetIndex() int {
 	return p.Index
 }
-func (p *BindPortDeleteProxyLBParam) SetSelector(v []string) {
+func (p *BindPortDeleteProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *BindPortDeleteProxyLBParam) GetSelector() []string {
+func (p *BindPortDeleteProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *BindPortDeleteProxyLBParam) SetAssumeyes(v bool) {
+func (p *BindPortDeleteProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *BindPortDeleteProxyLBParam) GetAssumeyes() bool {
+func (p *BindPortDeleteProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *BindPortDeleteProxyLBParam) SetParamTemplate(v string) {
+func (p *BindPortDeleteProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *BindPortDeleteProxyLBParam) GetParamTemplate() string {
+func (p *BindPortDeleteProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *BindPortDeleteProxyLBParam) SetParamTemplateFile(v string) {
+func (p *BindPortDeleteProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BindPortDeleteProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BindPortDeleteProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *BindPortDeleteProxyLBParam) GetParamTemplateFile() string {
+func (p *BindPortDeleteProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *BindPortDeleteProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *BindPortDeleteProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BindPortDeleteProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BindPortDeleteProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *BindPortDeleteProxyLBParam) GetGenerateSkeleton() bool {
+func (p *BindPortDeleteProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *BindPortDeleteProxyLBParam) SetOutputType(v string) {
+func (p *BindPortDeleteProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *BindPortDeleteProxyLBParam) GetOutputType() string {
+func (p *BindPortDeleteProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *BindPortDeleteProxyLBParam) SetColumn(v []string) {
+func (p *BindPortDeleteProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *BindPortDeleteProxyLBParam) GetColumn() []string {
+func (p *BindPortDeleteProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *BindPortDeleteProxyLBParam) SetQuiet(v bool) {
+func (p *BindPortDeleteProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *BindPortDeleteProxyLBParam) GetQuiet() bool {
+func (p *BindPortDeleteProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *BindPortDeleteProxyLBParam) SetFormat(v string) {
+func (p *BindPortDeleteProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *BindPortDeleteProxyLBParam) GetFormat() string {
+func (p *BindPortDeleteProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *BindPortDeleteProxyLBParam) SetFormatFile(v string) {
+func (p *BindPortDeleteProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *BindPortDeleteProxyLBParam) GetFormatFile() string {
+func (p *BindPortDeleteProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *BindPortDeleteProxyLBParam) SetQuery(v string) {
+func (p *BindPortDeleteProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *BindPortDeleteProxyLBParam) GetQuery() string {
+func (p *BindPortDeleteProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *BindPortDeleteProxyLBParam) SetQueryFile(v string) {
+func (p *BindPortDeleteProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *BindPortDeleteProxyLBParam) GetQueryFile() string {
+func (p *BindPortDeleteProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *BindPortDeleteProxyLBParam) SetId(v sacloud.ID) {
+func (p *BindPortDeleteProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *BindPortDeleteProxyLBParam) GetId() sacloud.ID {
+func (p *BindPortDeleteProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ResponseHeaderInfoProxyLBParam is input parameters for the sacloud API
-type ResponseHeaderInfoProxyLBParam struct {
+// ResponseHeaderInfoProxylbParam is input parameters for the sacloud API
+type ResponseHeaderInfoProxylbParam struct {
 	PortIndex         int        `json:"port-index"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2823,13 +3045,13 @@ type ResponseHeaderInfoProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewResponseHeaderInfoProxyLBParam return new ResponseHeaderInfoProxyLBParam
-func NewResponseHeaderInfoProxyLBParam() *ResponseHeaderInfoProxyLBParam {
-	return &ResponseHeaderInfoProxyLBParam{}
+// NewResponseHeaderInfoProxylbParam return new ResponseHeaderInfoProxylbParam
+func NewResponseHeaderInfoProxylbParam() *ResponseHeaderInfoProxylbParam {
+	return &ResponseHeaderInfoProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ResponseHeaderInfoProxyLBParam) FillValueToSkeleton() {
+func (p *ResponseHeaderInfoProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.PortIndex) {
 		p.PortIndex = 0
 	}
@@ -2839,8 +3061,14 @@ func (p *ResponseHeaderInfoProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2873,7 +3101,7 @@ func (p *ResponseHeaderInfoProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ResponseHeaderInfoProxyLBParam) Validate() []error {
+func (p *ResponseHeaderInfoProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -2913,131 +3141,147 @@ func (p *ResponseHeaderInfoProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *ResponseHeaderInfoProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetCommandDef() *schema.Command {
+func (p *ResponseHeaderInfoProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["response-header-info"]
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetIncludeFields() []string {
+func (p *ResponseHeaderInfoProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetExcludeFields() []string {
+func (p *ResponseHeaderInfoProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetTableType() output.TableType {
+func (p *ResponseHeaderInfoProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ResponseHeaderInfoProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) SetPortIndex(v int) {
+func (p *ResponseHeaderInfoProxylbParam) SetPortIndex(v int) {
 	p.PortIndex = v
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetPortIndex() int {
+func (p *ResponseHeaderInfoProxylbParam) GetPortIndex() int {
 	return p.PortIndex
 }
-func (p *ResponseHeaderInfoProxyLBParam) SetSelector(v []string) {
+func (p *ResponseHeaderInfoProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetSelector() []string {
+func (p *ResponseHeaderInfoProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ResponseHeaderInfoProxyLBParam) SetParamTemplate(v string) {
+func (p *ResponseHeaderInfoProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetParamTemplate() string {
+func (p *ResponseHeaderInfoProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ResponseHeaderInfoProxyLBParam) SetParamTemplateFile(v string) {
+func (p *ResponseHeaderInfoProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ResponseHeaderInfoProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ResponseHeaderInfoProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetParamTemplateFile() string {
+func (p *ResponseHeaderInfoProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ResponseHeaderInfoProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *ResponseHeaderInfoProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ResponseHeaderInfoProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ResponseHeaderInfoProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetGenerateSkeleton() bool {
+func (p *ResponseHeaderInfoProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ResponseHeaderInfoProxyLBParam) SetOutputType(v string) {
+func (p *ResponseHeaderInfoProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetOutputType() string {
+func (p *ResponseHeaderInfoProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ResponseHeaderInfoProxyLBParam) SetColumn(v []string) {
+func (p *ResponseHeaderInfoProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetColumn() []string {
+func (p *ResponseHeaderInfoProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ResponseHeaderInfoProxyLBParam) SetQuiet(v bool) {
+func (p *ResponseHeaderInfoProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetQuiet() bool {
+func (p *ResponseHeaderInfoProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ResponseHeaderInfoProxyLBParam) SetFormat(v string) {
+func (p *ResponseHeaderInfoProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetFormat() string {
+func (p *ResponseHeaderInfoProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *ResponseHeaderInfoProxyLBParam) SetFormatFile(v string) {
+func (p *ResponseHeaderInfoProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetFormatFile() string {
+func (p *ResponseHeaderInfoProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ResponseHeaderInfoProxyLBParam) SetQuery(v string) {
+func (p *ResponseHeaderInfoProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetQuery() string {
+func (p *ResponseHeaderInfoProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *ResponseHeaderInfoProxyLBParam) SetQueryFile(v string) {
+func (p *ResponseHeaderInfoProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetQueryFile() string {
+func (p *ResponseHeaderInfoProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ResponseHeaderInfoProxyLBParam) SetId(v sacloud.ID) {
+func (p *ResponseHeaderInfoProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetId() sacloud.ID {
+func (p *ResponseHeaderInfoProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ResponseHeaderAddProxyLBParam is input parameters for the sacloud API
-type ResponseHeaderAddProxyLBParam struct {
+// ResponseHeaderAddProxylbParam is input parameters for the sacloud API
+type ResponseHeaderAddProxylbParam struct {
 	PortIndex         int        `json:"port-index"`
 	Header            string     `json:"header"`
 	Value             string     `json:"value"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -3049,13 +3293,13 @@ type ResponseHeaderAddProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewResponseHeaderAddProxyLBParam return new ResponseHeaderAddProxyLBParam
-func NewResponseHeaderAddProxyLBParam() *ResponseHeaderAddProxyLBParam {
-	return &ResponseHeaderAddProxyLBParam{}
+// NewResponseHeaderAddProxylbParam return new ResponseHeaderAddProxylbParam
+func NewResponseHeaderAddProxylbParam() *ResponseHeaderAddProxylbParam {
+	return &ResponseHeaderAddProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ResponseHeaderAddProxyLBParam) FillValueToSkeleton() {
+func (p *ResponseHeaderAddProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.PortIndex) {
 		p.PortIndex = 0
 	}
@@ -3074,8 +3318,14 @@ func (p *ResponseHeaderAddProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3108,7 +3358,7 @@ func (p *ResponseHeaderAddProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ResponseHeaderAddProxyLBParam) Validate() []error {
+func (p *ResponseHeaderAddProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -3162,145 +3412,159 @@ func (p *ResponseHeaderAddProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *ResponseHeaderAddProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetCommandDef() *schema.Command {
+func (p *ResponseHeaderAddProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["response-header-add"]
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetIncludeFields() []string {
+func (p *ResponseHeaderAddProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetExcludeFields() []string {
+func (p *ResponseHeaderAddProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetTableType() output.TableType {
+func (p *ResponseHeaderAddProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ResponseHeaderAddProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ResponseHeaderAddProxyLBParam) SetPortIndex(v int) {
+func (p *ResponseHeaderAddProxylbParam) SetPortIndex(v int) {
 	p.PortIndex = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetPortIndex() int {
+func (p *ResponseHeaderAddProxylbParam) GetPortIndex() int {
 	return p.PortIndex
 }
-func (p *ResponseHeaderAddProxyLBParam) SetHeader(v string) {
+func (p *ResponseHeaderAddProxylbParam) SetHeader(v string) {
 	p.Header = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetHeader() string {
+func (p *ResponseHeaderAddProxylbParam) GetHeader() string {
 	return p.Header
 }
-func (p *ResponseHeaderAddProxyLBParam) SetValue(v string) {
+func (p *ResponseHeaderAddProxylbParam) SetValue(v string) {
 	p.Value = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetValue() string {
+func (p *ResponseHeaderAddProxylbParam) GetValue() string {
 	return p.Value
 }
-func (p *ResponseHeaderAddProxyLBParam) SetSelector(v []string) {
+func (p *ResponseHeaderAddProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetSelector() []string {
+func (p *ResponseHeaderAddProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ResponseHeaderAddProxyLBParam) SetAssumeyes(v bool) {
+func (p *ResponseHeaderAddProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetAssumeyes() bool {
+func (p *ResponseHeaderAddProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ResponseHeaderAddProxyLBParam) SetParamTemplate(v string) {
+func (p *ResponseHeaderAddProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetParamTemplate() string {
+func (p *ResponseHeaderAddProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ResponseHeaderAddProxyLBParam) SetParamTemplateFile(v string) {
+func (p *ResponseHeaderAddProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ResponseHeaderAddProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ResponseHeaderAddProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetParamTemplateFile() string {
+func (p *ResponseHeaderAddProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ResponseHeaderAddProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *ResponseHeaderAddProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ResponseHeaderAddProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ResponseHeaderAddProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetGenerateSkeleton() bool {
+func (p *ResponseHeaderAddProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ResponseHeaderAddProxyLBParam) SetOutputType(v string) {
+func (p *ResponseHeaderAddProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetOutputType() string {
+func (p *ResponseHeaderAddProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ResponseHeaderAddProxyLBParam) SetColumn(v []string) {
+func (p *ResponseHeaderAddProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetColumn() []string {
+func (p *ResponseHeaderAddProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ResponseHeaderAddProxyLBParam) SetQuiet(v bool) {
+func (p *ResponseHeaderAddProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetQuiet() bool {
+func (p *ResponseHeaderAddProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ResponseHeaderAddProxyLBParam) SetFormat(v string) {
+func (p *ResponseHeaderAddProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetFormat() string {
+func (p *ResponseHeaderAddProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *ResponseHeaderAddProxyLBParam) SetFormatFile(v string) {
+func (p *ResponseHeaderAddProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetFormatFile() string {
+func (p *ResponseHeaderAddProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ResponseHeaderAddProxyLBParam) SetQuery(v string) {
+func (p *ResponseHeaderAddProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetQuery() string {
+func (p *ResponseHeaderAddProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *ResponseHeaderAddProxyLBParam) SetQueryFile(v string) {
+func (p *ResponseHeaderAddProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetQueryFile() string {
+func (p *ResponseHeaderAddProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ResponseHeaderAddProxyLBParam) SetId(v sacloud.ID) {
+func (p *ResponseHeaderAddProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetId() sacloud.ID {
+func (p *ResponseHeaderAddProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ResponseHeaderUpdateProxyLBParam is input parameters for the sacloud API
-type ResponseHeaderUpdateProxyLBParam struct {
+// ResponseHeaderUpdateProxylbParam is input parameters for the sacloud API
+type ResponseHeaderUpdateProxylbParam struct {
 	Index             int        `json:"index"`
 	PortIndex         int        `json:"port-index"`
 	Header            string     `json:"header"`
@@ -3308,7 +3572,9 @@ type ResponseHeaderUpdateProxyLBParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -3320,13 +3586,13 @@ type ResponseHeaderUpdateProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewResponseHeaderUpdateProxyLBParam return new ResponseHeaderUpdateProxyLBParam
-func NewResponseHeaderUpdateProxyLBParam() *ResponseHeaderUpdateProxyLBParam {
-	return &ResponseHeaderUpdateProxyLBParam{}
+// NewResponseHeaderUpdateProxylbParam return new ResponseHeaderUpdateProxylbParam
+func NewResponseHeaderUpdateProxylbParam() *ResponseHeaderUpdateProxylbParam {
+	return &ResponseHeaderUpdateProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ResponseHeaderUpdateProxyLBParam) FillValueToSkeleton() {
+func (p *ResponseHeaderUpdateProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -3348,8 +3614,14 @@ func (p *ResponseHeaderUpdateProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3382,7 +3654,7 @@ func (p *ResponseHeaderUpdateProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ResponseHeaderUpdateProxyLBParam) Validate() []error {
+func (p *ResponseHeaderUpdateProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -3429,158 +3701,174 @@ func (p *ResponseHeaderUpdateProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *ResponseHeaderUpdateProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetCommandDef() *schema.Command {
+func (p *ResponseHeaderUpdateProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["response-header-update"]
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetIncludeFields() []string {
+func (p *ResponseHeaderUpdateProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetExcludeFields() []string {
+func (p *ResponseHeaderUpdateProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetTableType() output.TableType {
+func (p *ResponseHeaderUpdateProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ResponseHeaderUpdateProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) SetIndex(v int) {
+func (p *ResponseHeaderUpdateProxylbParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetIndex() int {
+func (p *ResponseHeaderUpdateProxylbParam) GetIndex() int {
 	return p.Index
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetPortIndex(v int) {
+func (p *ResponseHeaderUpdateProxylbParam) SetPortIndex(v int) {
 	p.PortIndex = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetPortIndex() int {
+func (p *ResponseHeaderUpdateProxylbParam) GetPortIndex() int {
 	return p.PortIndex
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetHeader(v string) {
+func (p *ResponseHeaderUpdateProxylbParam) SetHeader(v string) {
 	p.Header = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetHeader() string {
+func (p *ResponseHeaderUpdateProxylbParam) GetHeader() string {
 	return p.Header
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetValue(v string) {
+func (p *ResponseHeaderUpdateProxylbParam) SetValue(v string) {
 	p.Value = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetValue() string {
+func (p *ResponseHeaderUpdateProxylbParam) GetValue() string {
 	return p.Value
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetSelector(v []string) {
+func (p *ResponseHeaderUpdateProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetSelector() []string {
+func (p *ResponseHeaderUpdateProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetAssumeyes(v bool) {
+func (p *ResponseHeaderUpdateProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetAssumeyes() bool {
+func (p *ResponseHeaderUpdateProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetParamTemplate(v string) {
+func (p *ResponseHeaderUpdateProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetParamTemplate() string {
+func (p *ResponseHeaderUpdateProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetParamTemplateFile(v string) {
+func (p *ResponseHeaderUpdateProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ResponseHeaderUpdateProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ResponseHeaderUpdateProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetParamTemplateFile() string {
+func (p *ResponseHeaderUpdateProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *ResponseHeaderUpdateProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ResponseHeaderUpdateProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ResponseHeaderUpdateProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetGenerateSkeleton() bool {
+func (p *ResponseHeaderUpdateProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetOutputType(v string) {
+func (p *ResponseHeaderUpdateProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetOutputType() string {
+func (p *ResponseHeaderUpdateProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetColumn(v []string) {
+func (p *ResponseHeaderUpdateProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetColumn() []string {
+func (p *ResponseHeaderUpdateProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetQuiet(v bool) {
+func (p *ResponseHeaderUpdateProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetQuiet() bool {
+func (p *ResponseHeaderUpdateProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetFormat(v string) {
+func (p *ResponseHeaderUpdateProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetFormat() string {
+func (p *ResponseHeaderUpdateProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetFormatFile(v string) {
+func (p *ResponseHeaderUpdateProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetFormatFile() string {
+func (p *ResponseHeaderUpdateProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetQuery(v string) {
+func (p *ResponseHeaderUpdateProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetQuery() string {
+func (p *ResponseHeaderUpdateProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetQueryFile(v string) {
+func (p *ResponseHeaderUpdateProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetQueryFile() string {
+func (p *ResponseHeaderUpdateProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetId(v sacloud.ID) {
+func (p *ResponseHeaderUpdateProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetId() sacloud.ID {
+func (p *ResponseHeaderUpdateProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ResponseHeaderDeleteProxyLBParam is input parameters for the sacloud API
-type ResponseHeaderDeleteProxyLBParam struct {
+// ResponseHeaderDeleteProxylbParam is input parameters for the sacloud API
+type ResponseHeaderDeleteProxylbParam struct {
 	Index             int        `json:"index"`
 	PortIndex         int        `json:"port-index"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -3592,13 +3880,13 @@ type ResponseHeaderDeleteProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewResponseHeaderDeleteProxyLBParam return new ResponseHeaderDeleteProxyLBParam
-func NewResponseHeaderDeleteProxyLBParam() *ResponseHeaderDeleteProxyLBParam {
-	return &ResponseHeaderDeleteProxyLBParam{}
+// NewResponseHeaderDeleteProxylbParam return new ResponseHeaderDeleteProxylbParam
+func NewResponseHeaderDeleteProxylbParam() *ResponseHeaderDeleteProxylbParam {
+	return &ResponseHeaderDeleteProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ResponseHeaderDeleteProxyLBParam) FillValueToSkeleton() {
+func (p *ResponseHeaderDeleteProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -3614,8 +3902,14 @@ func (p *ResponseHeaderDeleteProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3648,7 +3942,7 @@ func (p *ResponseHeaderDeleteProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ResponseHeaderDeleteProxyLBParam) Validate() []error {
+func (p *ResponseHeaderDeleteProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -3695,141 +3989,157 @@ func (p *ResponseHeaderDeleteProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *ResponseHeaderDeleteProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetCommandDef() *schema.Command {
+func (p *ResponseHeaderDeleteProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["response-header-delete"]
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetIncludeFields() []string {
+func (p *ResponseHeaderDeleteProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetExcludeFields() []string {
+func (p *ResponseHeaderDeleteProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetTableType() output.TableType {
+func (p *ResponseHeaderDeleteProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ResponseHeaderDeleteProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) SetIndex(v int) {
+func (p *ResponseHeaderDeleteProxylbParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetIndex() int {
+func (p *ResponseHeaderDeleteProxylbParam) GetIndex() int {
 	return p.Index
 }
-func (p *ResponseHeaderDeleteProxyLBParam) SetPortIndex(v int) {
+func (p *ResponseHeaderDeleteProxylbParam) SetPortIndex(v int) {
 	p.PortIndex = v
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetPortIndex() int {
+func (p *ResponseHeaderDeleteProxylbParam) GetPortIndex() int {
 	return p.PortIndex
 }
-func (p *ResponseHeaderDeleteProxyLBParam) SetSelector(v []string) {
+func (p *ResponseHeaderDeleteProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetSelector() []string {
+func (p *ResponseHeaderDeleteProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ResponseHeaderDeleteProxyLBParam) SetAssumeyes(v bool) {
+func (p *ResponseHeaderDeleteProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetAssumeyes() bool {
+func (p *ResponseHeaderDeleteProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ResponseHeaderDeleteProxyLBParam) SetParamTemplate(v string) {
+func (p *ResponseHeaderDeleteProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetParamTemplate() string {
+func (p *ResponseHeaderDeleteProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ResponseHeaderDeleteProxyLBParam) SetParamTemplateFile(v string) {
+func (p *ResponseHeaderDeleteProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ResponseHeaderDeleteProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ResponseHeaderDeleteProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetParamTemplateFile() string {
+func (p *ResponseHeaderDeleteProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ResponseHeaderDeleteProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *ResponseHeaderDeleteProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ResponseHeaderDeleteProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ResponseHeaderDeleteProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetGenerateSkeleton() bool {
+func (p *ResponseHeaderDeleteProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ResponseHeaderDeleteProxyLBParam) SetOutputType(v string) {
+func (p *ResponseHeaderDeleteProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetOutputType() string {
+func (p *ResponseHeaderDeleteProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ResponseHeaderDeleteProxyLBParam) SetColumn(v []string) {
+func (p *ResponseHeaderDeleteProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetColumn() []string {
+func (p *ResponseHeaderDeleteProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ResponseHeaderDeleteProxyLBParam) SetQuiet(v bool) {
+func (p *ResponseHeaderDeleteProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetQuiet() bool {
+func (p *ResponseHeaderDeleteProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ResponseHeaderDeleteProxyLBParam) SetFormat(v string) {
+func (p *ResponseHeaderDeleteProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetFormat() string {
+func (p *ResponseHeaderDeleteProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *ResponseHeaderDeleteProxyLBParam) SetFormatFile(v string) {
+func (p *ResponseHeaderDeleteProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetFormatFile() string {
+func (p *ResponseHeaderDeleteProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ResponseHeaderDeleteProxyLBParam) SetQuery(v string) {
+func (p *ResponseHeaderDeleteProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetQuery() string {
+func (p *ResponseHeaderDeleteProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *ResponseHeaderDeleteProxyLBParam) SetQueryFile(v string) {
+func (p *ResponseHeaderDeleteProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetQueryFile() string {
+func (p *ResponseHeaderDeleteProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ResponseHeaderDeleteProxyLBParam) SetId(v sacloud.ID) {
+func (p *ResponseHeaderDeleteProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetId() sacloud.ID {
+func (p *ResponseHeaderDeleteProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// AcmeInfoProxyLBParam is input parameters for the sacloud API
-type AcmeInfoProxyLBParam struct {
+// AcmeInfoProxylbParam is input parameters for the sacloud API
+type AcmeInfoProxylbParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -3841,21 +4151,27 @@ type AcmeInfoProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewAcmeInfoProxyLBParam return new AcmeInfoProxyLBParam
-func NewAcmeInfoProxyLBParam() *AcmeInfoProxyLBParam {
-	return &AcmeInfoProxyLBParam{}
+// NewAcmeInfoProxylbParam return new AcmeInfoProxylbParam
+func NewAcmeInfoProxylbParam() *AcmeInfoProxylbParam {
+	return &AcmeInfoProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *AcmeInfoProxyLBParam) FillValueToSkeleton() {
+func (p *AcmeInfoProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3888,7 +4204,7 @@ func (p *AcmeInfoProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *AcmeInfoProxyLBParam) Validate() []error {
+func (p *AcmeInfoProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -3921,124 +4237,140 @@ func (p *AcmeInfoProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *AcmeInfoProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *AcmeInfoProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *AcmeInfoProxyLBParam) GetCommandDef() *schema.Command {
+func (p *AcmeInfoProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["acme-info"]
 }
 
-func (p *AcmeInfoProxyLBParam) GetIncludeFields() []string {
+func (p *AcmeInfoProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *AcmeInfoProxyLBParam) GetExcludeFields() []string {
+func (p *AcmeInfoProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *AcmeInfoProxyLBParam) GetTableType() output.TableType {
+func (p *AcmeInfoProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *AcmeInfoProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *AcmeInfoProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *AcmeInfoProxyLBParam) SetSelector(v []string) {
+func (p *AcmeInfoProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *AcmeInfoProxyLBParam) GetSelector() []string {
+func (p *AcmeInfoProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *AcmeInfoProxyLBParam) SetParamTemplate(v string) {
+func (p *AcmeInfoProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *AcmeInfoProxyLBParam) GetParamTemplate() string {
+func (p *AcmeInfoProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *AcmeInfoProxyLBParam) SetParamTemplateFile(v string) {
+func (p *AcmeInfoProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *AcmeInfoProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *AcmeInfoProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *AcmeInfoProxyLBParam) GetParamTemplateFile() string {
+func (p *AcmeInfoProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *AcmeInfoProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *AcmeInfoProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *AcmeInfoProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *AcmeInfoProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *AcmeInfoProxyLBParam) GetGenerateSkeleton() bool {
+func (p *AcmeInfoProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *AcmeInfoProxyLBParam) SetOutputType(v string) {
+func (p *AcmeInfoProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *AcmeInfoProxyLBParam) GetOutputType() string {
+func (p *AcmeInfoProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *AcmeInfoProxyLBParam) SetColumn(v []string) {
+func (p *AcmeInfoProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *AcmeInfoProxyLBParam) GetColumn() []string {
+func (p *AcmeInfoProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *AcmeInfoProxyLBParam) SetQuiet(v bool) {
+func (p *AcmeInfoProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *AcmeInfoProxyLBParam) GetQuiet() bool {
+func (p *AcmeInfoProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *AcmeInfoProxyLBParam) SetFormat(v string) {
+func (p *AcmeInfoProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *AcmeInfoProxyLBParam) GetFormat() string {
+func (p *AcmeInfoProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *AcmeInfoProxyLBParam) SetFormatFile(v string) {
+func (p *AcmeInfoProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *AcmeInfoProxyLBParam) GetFormatFile() string {
+func (p *AcmeInfoProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *AcmeInfoProxyLBParam) SetQuery(v string) {
+func (p *AcmeInfoProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *AcmeInfoProxyLBParam) GetQuery() string {
+func (p *AcmeInfoProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *AcmeInfoProxyLBParam) SetQueryFile(v string) {
+func (p *AcmeInfoProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *AcmeInfoProxyLBParam) GetQueryFile() string {
+func (p *AcmeInfoProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *AcmeInfoProxyLBParam) SetId(v sacloud.ID) {
+func (p *AcmeInfoProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *AcmeInfoProxyLBParam) GetId() sacloud.ID {
+func (p *AcmeInfoProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// AcmeSettingProxyLBParam is input parameters for the sacloud API
-type AcmeSettingProxyLBParam struct {
+// AcmeSettingProxylbParam is input parameters for the sacloud API
+type AcmeSettingProxylbParam struct {
 	AcceptTos         bool       `json:"accept-tos"`
 	CommonName        string     `json:"common-name"`
 	Disable           bool       `json:"disable"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -4050,13 +4382,13 @@ type AcmeSettingProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewAcmeSettingProxyLBParam return new AcmeSettingProxyLBParam
-func NewAcmeSettingProxyLBParam() *AcmeSettingProxyLBParam {
-	return &AcmeSettingProxyLBParam{}
+// NewAcmeSettingProxylbParam return new AcmeSettingProxylbParam
+func NewAcmeSettingProxylbParam() *AcmeSettingProxylbParam {
+	return &AcmeSettingProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *AcmeSettingProxyLBParam) FillValueToSkeleton() {
+func (p *AcmeSettingProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.AcceptTos) {
 		p.AcceptTos = false
 	}
@@ -4075,8 +4407,14 @@ func (p *AcmeSettingProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -4109,7 +4447,7 @@ func (p *AcmeSettingProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *AcmeSettingProxyLBParam) Validate() []error {
+func (p *AcmeSettingProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -4142,160 +4480,176 @@ func (p *AcmeSettingProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *AcmeSettingProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *AcmeSettingProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *AcmeSettingProxyLBParam) GetCommandDef() *schema.Command {
+func (p *AcmeSettingProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["acme-setting"]
 }
 
-func (p *AcmeSettingProxyLBParam) GetIncludeFields() []string {
+func (p *AcmeSettingProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *AcmeSettingProxyLBParam) GetExcludeFields() []string {
+func (p *AcmeSettingProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *AcmeSettingProxyLBParam) GetTableType() output.TableType {
+func (p *AcmeSettingProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *AcmeSettingProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *AcmeSettingProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *AcmeSettingProxyLBParam) SetAcceptTos(v bool) {
+func (p *AcmeSettingProxylbParam) SetAcceptTos(v bool) {
 	p.AcceptTos = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetAcceptTos() bool {
+func (p *AcmeSettingProxylbParam) GetAcceptTos() bool {
 	return p.AcceptTos
 }
-func (p *AcmeSettingProxyLBParam) SetCommonName(v string) {
+func (p *AcmeSettingProxylbParam) SetCommonName(v string) {
 	p.CommonName = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetCommonName() string {
+func (p *AcmeSettingProxylbParam) GetCommonName() string {
 	return p.CommonName
 }
-func (p *AcmeSettingProxyLBParam) SetDisable(v bool) {
+func (p *AcmeSettingProxylbParam) SetDisable(v bool) {
 	p.Disable = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetDisable() bool {
+func (p *AcmeSettingProxylbParam) GetDisable() bool {
 	return p.Disable
 }
-func (p *AcmeSettingProxyLBParam) SetSelector(v []string) {
+func (p *AcmeSettingProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetSelector() []string {
+func (p *AcmeSettingProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *AcmeSettingProxyLBParam) SetAssumeyes(v bool) {
+func (p *AcmeSettingProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetAssumeyes() bool {
+func (p *AcmeSettingProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *AcmeSettingProxyLBParam) SetParamTemplate(v string) {
+func (p *AcmeSettingProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetParamTemplate() string {
+func (p *AcmeSettingProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *AcmeSettingProxyLBParam) SetParamTemplateFile(v string) {
+func (p *AcmeSettingProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *AcmeSettingProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *AcmeSettingProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetParamTemplateFile() string {
+func (p *AcmeSettingProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *AcmeSettingProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *AcmeSettingProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *AcmeSettingProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *AcmeSettingProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetGenerateSkeleton() bool {
+func (p *AcmeSettingProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *AcmeSettingProxyLBParam) SetOutputType(v string) {
+func (p *AcmeSettingProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetOutputType() string {
+func (p *AcmeSettingProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *AcmeSettingProxyLBParam) SetColumn(v []string) {
+func (p *AcmeSettingProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetColumn() []string {
+func (p *AcmeSettingProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *AcmeSettingProxyLBParam) SetQuiet(v bool) {
+func (p *AcmeSettingProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetQuiet() bool {
+func (p *AcmeSettingProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *AcmeSettingProxyLBParam) SetFormat(v string) {
+func (p *AcmeSettingProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetFormat() string {
+func (p *AcmeSettingProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *AcmeSettingProxyLBParam) SetFormatFile(v string) {
+func (p *AcmeSettingProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetFormatFile() string {
+func (p *AcmeSettingProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *AcmeSettingProxyLBParam) SetQuery(v string) {
+func (p *AcmeSettingProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetQuery() string {
+func (p *AcmeSettingProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *AcmeSettingProxyLBParam) SetQueryFile(v string) {
+func (p *AcmeSettingProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetQueryFile() string {
+func (p *AcmeSettingProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *AcmeSettingProxyLBParam) SetId(v sacloud.ID) {
+func (p *AcmeSettingProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetId() sacloud.ID {
+func (p *AcmeSettingProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// AcmeRenewProxyLBParam is input parameters for the sacloud API
-type AcmeRenewProxyLBParam struct {
+// AcmeRenewProxylbParam is input parameters for the sacloud API
+type AcmeRenewProxylbParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewAcmeRenewProxyLBParam return new AcmeRenewProxyLBParam
-func NewAcmeRenewProxyLBParam() *AcmeRenewProxyLBParam {
-	return &AcmeRenewProxyLBParam{}
+// NewAcmeRenewProxylbParam return new AcmeRenewProxylbParam
+func NewAcmeRenewProxylbParam() *AcmeRenewProxylbParam {
+	return &AcmeRenewProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *AcmeRenewProxyLBParam) FillValueToSkeleton() {
+func (p *AcmeRenewProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -4305,8 +4659,14 @@ func (p *AcmeRenewProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -4318,7 +4678,7 @@ func (p *AcmeRenewProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *AcmeRenewProxyLBParam) Validate() []error {
+func (p *AcmeRenewProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -4331,78 +4691,94 @@ func (p *AcmeRenewProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *AcmeRenewProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *AcmeRenewProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *AcmeRenewProxyLBParam) GetCommandDef() *schema.Command {
+func (p *AcmeRenewProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["acme-renew"]
 }
 
-func (p *AcmeRenewProxyLBParam) GetIncludeFields() []string {
+func (p *AcmeRenewProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *AcmeRenewProxyLBParam) GetExcludeFields() []string {
+func (p *AcmeRenewProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *AcmeRenewProxyLBParam) GetTableType() output.TableType {
+func (p *AcmeRenewProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *AcmeRenewProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *AcmeRenewProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *AcmeRenewProxyLBParam) SetSelector(v []string) {
+func (p *AcmeRenewProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *AcmeRenewProxyLBParam) GetSelector() []string {
+func (p *AcmeRenewProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *AcmeRenewProxyLBParam) SetAssumeyes(v bool) {
+func (p *AcmeRenewProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *AcmeRenewProxyLBParam) GetAssumeyes() bool {
+func (p *AcmeRenewProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *AcmeRenewProxyLBParam) SetParamTemplate(v string) {
+func (p *AcmeRenewProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *AcmeRenewProxyLBParam) GetParamTemplate() string {
+func (p *AcmeRenewProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *AcmeRenewProxyLBParam) SetParamTemplateFile(v string) {
+func (p *AcmeRenewProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *AcmeRenewProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *AcmeRenewProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *AcmeRenewProxyLBParam) GetParamTemplateFile() string {
+func (p *AcmeRenewProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *AcmeRenewProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *AcmeRenewProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *AcmeRenewProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *AcmeRenewProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *AcmeRenewProxyLBParam) GetGenerateSkeleton() bool {
+func (p *AcmeRenewProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *AcmeRenewProxyLBParam) SetId(v sacloud.ID) {
+func (p *AcmeRenewProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *AcmeRenewProxyLBParam) GetId() sacloud.ID {
+func (p *AcmeRenewProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ServerInfoProxyLBParam is input parameters for the sacloud API
-type ServerInfoProxyLBParam struct {
+// ServerInfoProxylbParam is input parameters for the sacloud API
+type ServerInfoProxylbParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -4414,21 +4790,27 @@ type ServerInfoProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewServerInfoProxyLBParam return new ServerInfoProxyLBParam
-func NewServerInfoProxyLBParam() *ServerInfoProxyLBParam {
-	return &ServerInfoProxyLBParam{}
+// NewServerInfoProxylbParam return new ServerInfoProxylbParam
+func NewServerInfoProxylbParam() *ServerInfoProxylbParam {
+	return &ServerInfoProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ServerInfoProxyLBParam) FillValueToSkeleton() {
+func (p *ServerInfoProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -4461,7 +4843,7 @@ func (p *ServerInfoProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ServerInfoProxyLBParam) Validate() []error {
+func (p *ServerInfoProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -4494,124 +4876,140 @@ func (p *ServerInfoProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ServerInfoProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *ServerInfoProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ServerInfoProxyLBParam) GetCommandDef() *schema.Command {
+func (p *ServerInfoProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["server-info"]
 }
 
-func (p *ServerInfoProxyLBParam) GetIncludeFields() []string {
+func (p *ServerInfoProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ServerInfoProxyLBParam) GetExcludeFields() []string {
+func (p *ServerInfoProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ServerInfoProxyLBParam) GetTableType() output.TableType {
+func (p *ServerInfoProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ServerInfoProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ServerInfoProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerInfoProxyLBParam) SetSelector(v []string) {
+func (p *ServerInfoProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ServerInfoProxyLBParam) GetSelector() []string {
+func (p *ServerInfoProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ServerInfoProxyLBParam) SetParamTemplate(v string) {
+func (p *ServerInfoProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ServerInfoProxyLBParam) GetParamTemplate() string {
+func (p *ServerInfoProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ServerInfoProxyLBParam) SetParamTemplateFile(v string) {
+func (p *ServerInfoProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerInfoProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerInfoProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ServerInfoProxyLBParam) GetParamTemplateFile() string {
+func (p *ServerInfoProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ServerInfoProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *ServerInfoProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerInfoProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerInfoProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ServerInfoProxyLBParam) GetGenerateSkeleton() bool {
+func (p *ServerInfoProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerInfoProxyLBParam) SetOutputType(v string) {
+func (p *ServerInfoProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ServerInfoProxyLBParam) GetOutputType() string {
+func (p *ServerInfoProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ServerInfoProxyLBParam) SetColumn(v []string) {
+func (p *ServerInfoProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ServerInfoProxyLBParam) GetColumn() []string {
+func (p *ServerInfoProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ServerInfoProxyLBParam) SetQuiet(v bool) {
+func (p *ServerInfoProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ServerInfoProxyLBParam) GetQuiet() bool {
+func (p *ServerInfoProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ServerInfoProxyLBParam) SetFormat(v string) {
+func (p *ServerInfoProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ServerInfoProxyLBParam) GetFormat() string {
+func (p *ServerInfoProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *ServerInfoProxyLBParam) SetFormatFile(v string) {
+func (p *ServerInfoProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ServerInfoProxyLBParam) GetFormatFile() string {
+func (p *ServerInfoProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ServerInfoProxyLBParam) SetQuery(v string) {
+func (p *ServerInfoProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ServerInfoProxyLBParam) GetQuery() string {
+func (p *ServerInfoProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *ServerInfoProxyLBParam) SetQueryFile(v string) {
+func (p *ServerInfoProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ServerInfoProxyLBParam) GetQueryFile() string {
+func (p *ServerInfoProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerInfoProxyLBParam) SetId(v sacloud.ID) {
+func (p *ServerInfoProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerInfoProxyLBParam) GetId() sacloud.ID {
+func (p *ServerInfoProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ServerAddProxyLBParam is input parameters for the sacloud API
-type ServerAddProxyLBParam struct {
+// ServerAddProxylbParam is input parameters for the sacloud API
+type ServerAddProxylbParam struct {
 	Ipaddress         string     `json:"ipaddress"`
 	Disabled          bool       `json:"disabled"`
 	Port              int        `json:"port"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -4623,13 +5021,13 @@ type ServerAddProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewServerAddProxyLBParam return new ServerAddProxyLBParam
-func NewServerAddProxyLBParam() *ServerAddProxyLBParam {
-	return &ServerAddProxyLBParam{}
+// NewServerAddProxylbParam return new ServerAddProxylbParam
+func NewServerAddProxylbParam() *ServerAddProxylbParam {
+	return &ServerAddProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ServerAddProxyLBParam) FillValueToSkeleton() {
+func (p *ServerAddProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
@@ -4648,8 +5046,14 @@ func (p *ServerAddProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -4682,7 +5086,7 @@ func (p *ServerAddProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ServerAddProxyLBParam) Validate() []error {
+func (p *ServerAddProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -4743,145 +5147,159 @@ func (p *ServerAddProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ServerAddProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *ServerAddProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ServerAddProxyLBParam) GetCommandDef() *schema.Command {
+func (p *ServerAddProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["server-add"]
 }
 
-func (p *ServerAddProxyLBParam) GetIncludeFields() []string {
+func (p *ServerAddProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ServerAddProxyLBParam) GetExcludeFields() []string {
+func (p *ServerAddProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ServerAddProxyLBParam) GetTableType() output.TableType {
+func (p *ServerAddProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ServerAddProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ServerAddProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerAddProxyLBParam) SetIpaddress(v string) {
+func (p *ServerAddProxylbParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
 
-func (p *ServerAddProxyLBParam) GetIpaddress() string {
+func (p *ServerAddProxylbParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *ServerAddProxyLBParam) SetDisabled(v bool) {
+func (p *ServerAddProxylbParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
 
-func (p *ServerAddProxyLBParam) GetDisabled() bool {
+func (p *ServerAddProxylbParam) GetDisabled() bool {
 	return p.Disabled
 }
-func (p *ServerAddProxyLBParam) SetPort(v int) {
+func (p *ServerAddProxylbParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *ServerAddProxyLBParam) GetPort() int {
+func (p *ServerAddProxylbParam) GetPort() int {
 	return p.Port
 }
-func (p *ServerAddProxyLBParam) SetSelector(v []string) {
+func (p *ServerAddProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ServerAddProxyLBParam) GetSelector() []string {
+func (p *ServerAddProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ServerAddProxyLBParam) SetAssumeyes(v bool) {
+func (p *ServerAddProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ServerAddProxyLBParam) GetAssumeyes() bool {
+func (p *ServerAddProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ServerAddProxyLBParam) SetParamTemplate(v string) {
+func (p *ServerAddProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ServerAddProxyLBParam) GetParamTemplate() string {
+func (p *ServerAddProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ServerAddProxyLBParam) SetParamTemplateFile(v string) {
+func (p *ServerAddProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerAddProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerAddProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ServerAddProxyLBParam) GetParamTemplateFile() string {
+func (p *ServerAddProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ServerAddProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *ServerAddProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerAddProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerAddProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ServerAddProxyLBParam) GetGenerateSkeleton() bool {
+func (p *ServerAddProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerAddProxyLBParam) SetOutputType(v string) {
+func (p *ServerAddProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ServerAddProxyLBParam) GetOutputType() string {
+func (p *ServerAddProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ServerAddProxyLBParam) SetColumn(v []string) {
+func (p *ServerAddProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ServerAddProxyLBParam) GetColumn() []string {
+func (p *ServerAddProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ServerAddProxyLBParam) SetQuiet(v bool) {
+func (p *ServerAddProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ServerAddProxyLBParam) GetQuiet() bool {
+func (p *ServerAddProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ServerAddProxyLBParam) SetFormat(v string) {
+func (p *ServerAddProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ServerAddProxyLBParam) GetFormat() string {
+func (p *ServerAddProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *ServerAddProxyLBParam) SetFormatFile(v string) {
+func (p *ServerAddProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ServerAddProxyLBParam) GetFormatFile() string {
+func (p *ServerAddProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ServerAddProxyLBParam) SetQuery(v string) {
+func (p *ServerAddProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ServerAddProxyLBParam) GetQuery() string {
+func (p *ServerAddProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *ServerAddProxyLBParam) SetQueryFile(v string) {
+func (p *ServerAddProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ServerAddProxyLBParam) GetQueryFile() string {
+func (p *ServerAddProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerAddProxyLBParam) SetId(v sacloud.ID) {
+func (p *ServerAddProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerAddProxyLBParam) GetId() sacloud.ID {
+func (p *ServerAddProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ServerUpdateProxyLBParam is input parameters for the sacloud API
-type ServerUpdateProxyLBParam struct {
+// ServerUpdateProxylbParam is input parameters for the sacloud API
+type ServerUpdateProxylbParam struct {
 	Index             int        `json:"index"`
 	Ipaddress         string     `json:"ipaddress"`
 	Disabled          bool       `json:"disabled"`
@@ -4889,7 +5307,9 @@ type ServerUpdateProxyLBParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -4901,13 +5321,13 @@ type ServerUpdateProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewServerUpdateProxyLBParam return new ServerUpdateProxyLBParam
-func NewServerUpdateProxyLBParam() *ServerUpdateProxyLBParam {
-	return &ServerUpdateProxyLBParam{}
+// NewServerUpdateProxylbParam return new ServerUpdateProxylbParam
+func NewServerUpdateProxylbParam() *ServerUpdateProxylbParam {
+	return &ServerUpdateProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ServerUpdateProxyLBParam) FillValueToSkeleton() {
+func (p *ServerUpdateProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -4929,8 +5349,14 @@ func (p *ServerUpdateProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -4963,7 +5389,7 @@ func (p *ServerUpdateProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ServerUpdateProxyLBParam) Validate() []error {
+func (p *ServerUpdateProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -5017,157 +5443,173 @@ func (p *ServerUpdateProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ServerUpdateProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *ServerUpdateProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ServerUpdateProxyLBParam) GetCommandDef() *schema.Command {
+func (p *ServerUpdateProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["server-update"]
 }
 
-func (p *ServerUpdateProxyLBParam) GetIncludeFields() []string {
+func (p *ServerUpdateProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ServerUpdateProxyLBParam) GetExcludeFields() []string {
+func (p *ServerUpdateProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ServerUpdateProxyLBParam) GetTableType() output.TableType {
+func (p *ServerUpdateProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ServerUpdateProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ServerUpdateProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerUpdateProxyLBParam) SetIndex(v int) {
+func (p *ServerUpdateProxylbParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetIndex() int {
+func (p *ServerUpdateProxylbParam) GetIndex() int {
 	return p.Index
 }
-func (p *ServerUpdateProxyLBParam) SetIpaddress(v string) {
+func (p *ServerUpdateProxylbParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetIpaddress() string {
+func (p *ServerUpdateProxylbParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *ServerUpdateProxyLBParam) SetDisabled(v bool) {
+func (p *ServerUpdateProxylbParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetDisabled() bool {
+func (p *ServerUpdateProxylbParam) GetDisabled() bool {
 	return p.Disabled
 }
-func (p *ServerUpdateProxyLBParam) SetPort(v int) {
+func (p *ServerUpdateProxylbParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetPort() int {
+func (p *ServerUpdateProxylbParam) GetPort() int {
 	return p.Port
 }
-func (p *ServerUpdateProxyLBParam) SetSelector(v []string) {
+func (p *ServerUpdateProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetSelector() []string {
+func (p *ServerUpdateProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ServerUpdateProxyLBParam) SetAssumeyes(v bool) {
+func (p *ServerUpdateProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetAssumeyes() bool {
+func (p *ServerUpdateProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ServerUpdateProxyLBParam) SetParamTemplate(v string) {
+func (p *ServerUpdateProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetParamTemplate() string {
+func (p *ServerUpdateProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ServerUpdateProxyLBParam) SetParamTemplateFile(v string) {
+func (p *ServerUpdateProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerUpdateProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerUpdateProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetParamTemplateFile() string {
+func (p *ServerUpdateProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ServerUpdateProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *ServerUpdateProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerUpdateProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerUpdateProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetGenerateSkeleton() bool {
+func (p *ServerUpdateProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerUpdateProxyLBParam) SetOutputType(v string) {
+func (p *ServerUpdateProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetOutputType() string {
+func (p *ServerUpdateProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ServerUpdateProxyLBParam) SetColumn(v []string) {
+func (p *ServerUpdateProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetColumn() []string {
+func (p *ServerUpdateProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ServerUpdateProxyLBParam) SetQuiet(v bool) {
+func (p *ServerUpdateProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetQuiet() bool {
+func (p *ServerUpdateProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ServerUpdateProxyLBParam) SetFormat(v string) {
+func (p *ServerUpdateProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetFormat() string {
+func (p *ServerUpdateProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *ServerUpdateProxyLBParam) SetFormatFile(v string) {
+func (p *ServerUpdateProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetFormatFile() string {
+func (p *ServerUpdateProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ServerUpdateProxyLBParam) SetQuery(v string) {
+func (p *ServerUpdateProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetQuery() string {
+func (p *ServerUpdateProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *ServerUpdateProxyLBParam) SetQueryFile(v string) {
+func (p *ServerUpdateProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetQueryFile() string {
+func (p *ServerUpdateProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerUpdateProxyLBParam) SetId(v sacloud.ID) {
+func (p *ServerUpdateProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetId() sacloud.ID {
+func (p *ServerUpdateProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ServerDeleteProxyLBParam is input parameters for the sacloud API
-type ServerDeleteProxyLBParam struct {
+// ServerDeleteProxylbParam is input parameters for the sacloud API
+type ServerDeleteProxylbParam struct {
 	Index             int        `json:"index"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -5179,13 +5621,13 @@ type ServerDeleteProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewServerDeleteProxyLBParam return new ServerDeleteProxyLBParam
-func NewServerDeleteProxyLBParam() *ServerDeleteProxyLBParam {
-	return &ServerDeleteProxyLBParam{}
+// NewServerDeleteProxylbParam return new ServerDeleteProxylbParam
+func NewServerDeleteProxylbParam() *ServerDeleteProxylbParam {
+	return &ServerDeleteProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ServerDeleteProxyLBParam) FillValueToSkeleton() {
+func (p *ServerDeleteProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -5198,8 +5640,14 @@ func (p *ServerDeleteProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -5232,7 +5680,7 @@ func (p *ServerDeleteProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ServerDeleteProxyLBParam) Validate() []error {
+func (p *ServerDeleteProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -5272,134 +5720,150 @@ func (p *ServerDeleteProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ServerDeleteProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *ServerDeleteProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ServerDeleteProxyLBParam) GetCommandDef() *schema.Command {
+func (p *ServerDeleteProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["server-delete"]
 }
 
-func (p *ServerDeleteProxyLBParam) GetIncludeFields() []string {
+func (p *ServerDeleteProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ServerDeleteProxyLBParam) GetExcludeFields() []string {
+func (p *ServerDeleteProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ServerDeleteProxyLBParam) GetTableType() output.TableType {
+func (p *ServerDeleteProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ServerDeleteProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ServerDeleteProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerDeleteProxyLBParam) SetIndex(v int) {
+func (p *ServerDeleteProxylbParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *ServerDeleteProxyLBParam) GetIndex() int {
+func (p *ServerDeleteProxylbParam) GetIndex() int {
 	return p.Index
 }
-func (p *ServerDeleteProxyLBParam) SetSelector(v []string) {
+func (p *ServerDeleteProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ServerDeleteProxyLBParam) GetSelector() []string {
+func (p *ServerDeleteProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ServerDeleteProxyLBParam) SetAssumeyes(v bool) {
+func (p *ServerDeleteProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ServerDeleteProxyLBParam) GetAssumeyes() bool {
+func (p *ServerDeleteProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ServerDeleteProxyLBParam) SetParamTemplate(v string) {
+func (p *ServerDeleteProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ServerDeleteProxyLBParam) GetParamTemplate() string {
+func (p *ServerDeleteProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ServerDeleteProxyLBParam) SetParamTemplateFile(v string) {
+func (p *ServerDeleteProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerDeleteProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerDeleteProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ServerDeleteProxyLBParam) GetParamTemplateFile() string {
+func (p *ServerDeleteProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ServerDeleteProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *ServerDeleteProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerDeleteProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerDeleteProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ServerDeleteProxyLBParam) GetGenerateSkeleton() bool {
+func (p *ServerDeleteProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerDeleteProxyLBParam) SetOutputType(v string) {
+func (p *ServerDeleteProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ServerDeleteProxyLBParam) GetOutputType() string {
+func (p *ServerDeleteProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ServerDeleteProxyLBParam) SetColumn(v []string) {
+func (p *ServerDeleteProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ServerDeleteProxyLBParam) GetColumn() []string {
+func (p *ServerDeleteProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ServerDeleteProxyLBParam) SetQuiet(v bool) {
+func (p *ServerDeleteProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ServerDeleteProxyLBParam) GetQuiet() bool {
+func (p *ServerDeleteProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ServerDeleteProxyLBParam) SetFormat(v string) {
+func (p *ServerDeleteProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ServerDeleteProxyLBParam) GetFormat() string {
+func (p *ServerDeleteProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *ServerDeleteProxyLBParam) SetFormatFile(v string) {
+func (p *ServerDeleteProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ServerDeleteProxyLBParam) GetFormatFile() string {
+func (p *ServerDeleteProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ServerDeleteProxyLBParam) SetQuery(v string) {
+func (p *ServerDeleteProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ServerDeleteProxyLBParam) GetQuery() string {
+func (p *ServerDeleteProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *ServerDeleteProxyLBParam) SetQueryFile(v string) {
+func (p *ServerDeleteProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ServerDeleteProxyLBParam) GetQueryFile() string {
+func (p *ServerDeleteProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerDeleteProxyLBParam) SetId(v sacloud.ID) {
+func (p *ServerDeleteProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerDeleteProxyLBParam) GetId() sacloud.ID {
+func (p *ServerDeleteProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// CertificateInfoProxyLBParam is input parameters for the sacloud API
-type CertificateInfoProxyLBParam struct {
+// CertificateInfoProxylbParam is input parameters for the sacloud API
+type CertificateInfoProxylbParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -5411,21 +5875,27 @@ type CertificateInfoProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewCertificateInfoProxyLBParam return new CertificateInfoProxyLBParam
-func NewCertificateInfoProxyLBParam() *CertificateInfoProxyLBParam {
-	return &CertificateInfoProxyLBParam{}
+// NewCertificateInfoProxylbParam return new CertificateInfoProxylbParam
+func NewCertificateInfoProxylbParam() *CertificateInfoProxylbParam {
+	return &CertificateInfoProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CertificateInfoProxyLBParam) FillValueToSkeleton() {
+func (p *CertificateInfoProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -5458,7 +5928,7 @@ func (p *CertificateInfoProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CertificateInfoProxyLBParam) Validate() []error {
+func (p *CertificateInfoProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -5491,124 +5961,140 @@ func (p *CertificateInfoProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *CertificateInfoProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *CertificateInfoProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *CertificateInfoProxyLBParam) GetCommandDef() *schema.Command {
+func (p *CertificateInfoProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["certificate-info"]
 }
 
-func (p *CertificateInfoProxyLBParam) GetIncludeFields() []string {
+func (p *CertificateInfoProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CertificateInfoProxyLBParam) GetExcludeFields() []string {
+func (p *CertificateInfoProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CertificateInfoProxyLBParam) GetTableType() output.TableType {
+func (p *CertificateInfoProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CertificateInfoProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *CertificateInfoProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CertificateInfoProxyLBParam) SetSelector(v []string) {
+func (p *CertificateInfoProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *CertificateInfoProxyLBParam) GetSelector() []string {
+func (p *CertificateInfoProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *CertificateInfoProxyLBParam) SetParamTemplate(v string) {
+func (p *CertificateInfoProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CertificateInfoProxyLBParam) GetParamTemplate() string {
+func (p *CertificateInfoProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CertificateInfoProxyLBParam) SetParamTemplateFile(v string) {
+func (p *CertificateInfoProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CertificateInfoProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CertificateInfoProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CertificateInfoProxyLBParam) GetParamTemplateFile() string {
+func (p *CertificateInfoProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CertificateInfoProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *CertificateInfoProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CertificateInfoProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CertificateInfoProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CertificateInfoProxyLBParam) GetGenerateSkeleton() bool {
+func (p *CertificateInfoProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CertificateInfoProxyLBParam) SetOutputType(v string) {
+func (p *CertificateInfoProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CertificateInfoProxyLBParam) GetOutputType() string {
+func (p *CertificateInfoProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CertificateInfoProxyLBParam) SetColumn(v []string) {
+func (p *CertificateInfoProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CertificateInfoProxyLBParam) GetColumn() []string {
+func (p *CertificateInfoProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CertificateInfoProxyLBParam) SetQuiet(v bool) {
+func (p *CertificateInfoProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CertificateInfoProxyLBParam) GetQuiet() bool {
+func (p *CertificateInfoProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CertificateInfoProxyLBParam) SetFormat(v string) {
+func (p *CertificateInfoProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CertificateInfoProxyLBParam) GetFormat() string {
+func (p *CertificateInfoProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *CertificateInfoProxyLBParam) SetFormatFile(v string) {
+func (p *CertificateInfoProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CertificateInfoProxyLBParam) GetFormatFile() string {
+func (p *CertificateInfoProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CertificateInfoProxyLBParam) SetQuery(v string) {
+func (p *CertificateInfoProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CertificateInfoProxyLBParam) GetQuery() string {
+func (p *CertificateInfoProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *CertificateInfoProxyLBParam) SetQueryFile(v string) {
+func (p *CertificateInfoProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CertificateInfoProxyLBParam) GetQueryFile() string {
+func (p *CertificateInfoProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *CertificateInfoProxyLBParam) SetId(v sacloud.ID) {
+func (p *CertificateInfoProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CertificateInfoProxyLBParam) GetId() sacloud.ID {
+func (p *CertificateInfoProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// CertificateAddProxyLBParam is input parameters for the sacloud API
-type CertificateAddProxyLBParam struct {
+// CertificateAddProxylbParam is input parameters for the sacloud API
+type CertificateAddProxylbParam struct {
 	ServerCertificate       string     `json:"server-certificate"`
 	IntermediateCertificate string     `json:"intermediate-certificate"`
 	PrivateKey              string     `json:"private-key"`
 	Selector                []string   `json:"selector"`
 	Assumeyes               bool       `json:"assumeyes"`
 	ParamTemplate           string     `json:"param-template"`
+	Parameters              string     `json:"parameters"`
 	ParamTemplateFile       string     `json:"param-template-file"`
+	ParameterFile           string     `json:"parameter-file"`
 	GenerateSkeleton        bool       `json:"generate-skeleton"`
 	OutputType              string     `json:"output-type"`
 	Column                  []string   `json:"column"`
@@ -5620,13 +6106,13 @@ type CertificateAddProxyLBParam struct {
 	Id                      sacloud.ID `json:"id"`
 }
 
-// NewCertificateAddProxyLBParam return new CertificateAddProxyLBParam
-func NewCertificateAddProxyLBParam() *CertificateAddProxyLBParam {
-	return &CertificateAddProxyLBParam{}
+// NewCertificateAddProxylbParam return new CertificateAddProxylbParam
+func NewCertificateAddProxylbParam() *CertificateAddProxylbParam {
+	return &CertificateAddProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CertificateAddProxyLBParam) FillValueToSkeleton() {
+func (p *CertificateAddProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.ServerCertificate) {
 		p.ServerCertificate = ""
 	}
@@ -5645,8 +6131,14 @@ func (p *CertificateAddProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -5679,7 +6171,7 @@ func (p *CertificateAddProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CertificateAddProxyLBParam) Validate() []error {
+func (p *CertificateAddProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -5726,152 +6218,168 @@ func (p *CertificateAddProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *CertificateAddProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *CertificateAddProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *CertificateAddProxyLBParam) GetCommandDef() *schema.Command {
+func (p *CertificateAddProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["certificate-add"]
 }
 
-func (p *CertificateAddProxyLBParam) GetIncludeFields() []string {
+func (p *CertificateAddProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CertificateAddProxyLBParam) GetExcludeFields() []string {
+func (p *CertificateAddProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CertificateAddProxyLBParam) GetTableType() output.TableType {
+func (p *CertificateAddProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CertificateAddProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *CertificateAddProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CertificateAddProxyLBParam) SetServerCertificate(v string) {
+func (p *CertificateAddProxylbParam) SetServerCertificate(v string) {
 	p.ServerCertificate = v
 }
 
-func (p *CertificateAddProxyLBParam) GetServerCertificate() string {
+func (p *CertificateAddProxylbParam) GetServerCertificate() string {
 	return p.ServerCertificate
 }
-func (p *CertificateAddProxyLBParam) SetIntermediateCertificate(v string) {
+func (p *CertificateAddProxylbParam) SetIntermediateCertificate(v string) {
 	p.IntermediateCertificate = v
 }
 
-func (p *CertificateAddProxyLBParam) GetIntermediateCertificate() string {
+func (p *CertificateAddProxylbParam) GetIntermediateCertificate() string {
 	return p.IntermediateCertificate
 }
-func (p *CertificateAddProxyLBParam) SetPrivateKey(v string) {
+func (p *CertificateAddProxylbParam) SetPrivateKey(v string) {
 	p.PrivateKey = v
 }
 
-func (p *CertificateAddProxyLBParam) GetPrivateKey() string {
+func (p *CertificateAddProxylbParam) GetPrivateKey() string {
 	return p.PrivateKey
 }
-func (p *CertificateAddProxyLBParam) SetSelector(v []string) {
+func (p *CertificateAddProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *CertificateAddProxyLBParam) GetSelector() []string {
+func (p *CertificateAddProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *CertificateAddProxyLBParam) SetAssumeyes(v bool) {
+func (p *CertificateAddProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *CertificateAddProxyLBParam) GetAssumeyes() bool {
+func (p *CertificateAddProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CertificateAddProxyLBParam) SetParamTemplate(v string) {
+func (p *CertificateAddProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CertificateAddProxyLBParam) GetParamTemplate() string {
+func (p *CertificateAddProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CertificateAddProxyLBParam) SetParamTemplateFile(v string) {
+func (p *CertificateAddProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CertificateAddProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CertificateAddProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CertificateAddProxyLBParam) GetParamTemplateFile() string {
+func (p *CertificateAddProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CertificateAddProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *CertificateAddProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CertificateAddProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CertificateAddProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CertificateAddProxyLBParam) GetGenerateSkeleton() bool {
+func (p *CertificateAddProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CertificateAddProxyLBParam) SetOutputType(v string) {
+func (p *CertificateAddProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CertificateAddProxyLBParam) GetOutputType() string {
+func (p *CertificateAddProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CertificateAddProxyLBParam) SetColumn(v []string) {
+func (p *CertificateAddProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CertificateAddProxyLBParam) GetColumn() []string {
+func (p *CertificateAddProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CertificateAddProxyLBParam) SetQuiet(v bool) {
+func (p *CertificateAddProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CertificateAddProxyLBParam) GetQuiet() bool {
+func (p *CertificateAddProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CertificateAddProxyLBParam) SetFormat(v string) {
+func (p *CertificateAddProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CertificateAddProxyLBParam) GetFormat() string {
+func (p *CertificateAddProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *CertificateAddProxyLBParam) SetFormatFile(v string) {
+func (p *CertificateAddProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CertificateAddProxyLBParam) GetFormatFile() string {
+func (p *CertificateAddProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CertificateAddProxyLBParam) SetQuery(v string) {
+func (p *CertificateAddProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CertificateAddProxyLBParam) GetQuery() string {
+func (p *CertificateAddProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *CertificateAddProxyLBParam) SetQueryFile(v string) {
+func (p *CertificateAddProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CertificateAddProxyLBParam) GetQueryFile() string {
+func (p *CertificateAddProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *CertificateAddProxyLBParam) SetId(v sacloud.ID) {
+func (p *CertificateAddProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CertificateAddProxyLBParam) GetId() sacloud.ID {
+func (p *CertificateAddProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// CertificateUpdateProxyLBParam is input parameters for the sacloud API
-type CertificateUpdateProxyLBParam struct {
+// CertificateUpdateProxylbParam is input parameters for the sacloud API
+type CertificateUpdateProxylbParam struct {
 	ServerCertificate       string     `json:"server-certificate"`
 	IntermediateCertificate string     `json:"intermediate-certificate"`
 	PrivateKey              string     `json:"private-key"`
 	Selector                []string   `json:"selector"`
 	Assumeyes               bool       `json:"assumeyes"`
 	ParamTemplate           string     `json:"param-template"`
+	Parameters              string     `json:"parameters"`
 	ParamTemplateFile       string     `json:"param-template-file"`
+	ParameterFile           string     `json:"parameter-file"`
 	GenerateSkeleton        bool       `json:"generate-skeleton"`
 	OutputType              string     `json:"output-type"`
 	Column                  []string   `json:"column"`
@@ -5883,13 +6391,13 @@ type CertificateUpdateProxyLBParam struct {
 	Id                      sacloud.ID `json:"id"`
 }
 
-// NewCertificateUpdateProxyLBParam return new CertificateUpdateProxyLBParam
-func NewCertificateUpdateProxyLBParam() *CertificateUpdateProxyLBParam {
-	return &CertificateUpdateProxyLBParam{}
+// NewCertificateUpdateProxylbParam return new CertificateUpdateProxylbParam
+func NewCertificateUpdateProxylbParam() *CertificateUpdateProxylbParam {
+	return &CertificateUpdateProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CertificateUpdateProxyLBParam) FillValueToSkeleton() {
+func (p *CertificateUpdateProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.ServerCertificate) {
 		p.ServerCertificate = ""
 	}
@@ -5908,8 +6416,14 @@ func (p *CertificateUpdateProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -5942,7 +6456,7 @@ func (p *CertificateUpdateProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CertificateUpdateProxyLBParam) Validate() []error {
+func (p *CertificateUpdateProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -5975,149 +6489,165 @@ func (p *CertificateUpdateProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *CertificateUpdateProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *CertificateUpdateProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *CertificateUpdateProxyLBParam) GetCommandDef() *schema.Command {
+func (p *CertificateUpdateProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["certificate-update"]
 }
 
-func (p *CertificateUpdateProxyLBParam) GetIncludeFields() []string {
+func (p *CertificateUpdateProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CertificateUpdateProxyLBParam) GetExcludeFields() []string {
+func (p *CertificateUpdateProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CertificateUpdateProxyLBParam) GetTableType() output.TableType {
+func (p *CertificateUpdateProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CertificateUpdateProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *CertificateUpdateProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CertificateUpdateProxyLBParam) SetServerCertificate(v string) {
+func (p *CertificateUpdateProxylbParam) SetServerCertificate(v string) {
 	p.ServerCertificate = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetServerCertificate() string {
+func (p *CertificateUpdateProxylbParam) GetServerCertificate() string {
 	return p.ServerCertificate
 }
-func (p *CertificateUpdateProxyLBParam) SetIntermediateCertificate(v string) {
+func (p *CertificateUpdateProxylbParam) SetIntermediateCertificate(v string) {
 	p.IntermediateCertificate = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetIntermediateCertificate() string {
+func (p *CertificateUpdateProxylbParam) GetIntermediateCertificate() string {
 	return p.IntermediateCertificate
 }
-func (p *CertificateUpdateProxyLBParam) SetPrivateKey(v string) {
+func (p *CertificateUpdateProxylbParam) SetPrivateKey(v string) {
 	p.PrivateKey = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetPrivateKey() string {
+func (p *CertificateUpdateProxylbParam) GetPrivateKey() string {
 	return p.PrivateKey
 }
-func (p *CertificateUpdateProxyLBParam) SetSelector(v []string) {
+func (p *CertificateUpdateProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetSelector() []string {
+func (p *CertificateUpdateProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *CertificateUpdateProxyLBParam) SetAssumeyes(v bool) {
+func (p *CertificateUpdateProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetAssumeyes() bool {
+func (p *CertificateUpdateProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CertificateUpdateProxyLBParam) SetParamTemplate(v string) {
+func (p *CertificateUpdateProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetParamTemplate() string {
+func (p *CertificateUpdateProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CertificateUpdateProxyLBParam) SetParamTemplateFile(v string) {
+func (p *CertificateUpdateProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CertificateUpdateProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CertificateUpdateProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetParamTemplateFile() string {
+func (p *CertificateUpdateProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CertificateUpdateProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *CertificateUpdateProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CertificateUpdateProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CertificateUpdateProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetGenerateSkeleton() bool {
+func (p *CertificateUpdateProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CertificateUpdateProxyLBParam) SetOutputType(v string) {
+func (p *CertificateUpdateProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetOutputType() string {
+func (p *CertificateUpdateProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CertificateUpdateProxyLBParam) SetColumn(v []string) {
+func (p *CertificateUpdateProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetColumn() []string {
+func (p *CertificateUpdateProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CertificateUpdateProxyLBParam) SetQuiet(v bool) {
+func (p *CertificateUpdateProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetQuiet() bool {
+func (p *CertificateUpdateProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CertificateUpdateProxyLBParam) SetFormat(v string) {
+func (p *CertificateUpdateProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetFormat() string {
+func (p *CertificateUpdateProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *CertificateUpdateProxyLBParam) SetFormatFile(v string) {
+func (p *CertificateUpdateProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetFormatFile() string {
+func (p *CertificateUpdateProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CertificateUpdateProxyLBParam) SetQuery(v string) {
+func (p *CertificateUpdateProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetQuery() string {
+func (p *CertificateUpdateProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *CertificateUpdateProxyLBParam) SetQueryFile(v string) {
+func (p *CertificateUpdateProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetQueryFile() string {
+func (p *CertificateUpdateProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *CertificateUpdateProxyLBParam) SetId(v sacloud.ID) {
+func (p *CertificateUpdateProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetId() sacloud.ID {
+func (p *CertificateUpdateProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// CertificateDeleteProxyLBParam is input parameters for the sacloud API
-type CertificateDeleteProxyLBParam struct {
+// CertificateDeleteProxylbParam is input parameters for the sacloud API
+type CertificateDeleteProxylbParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -6129,13 +6659,13 @@ type CertificateDeleteProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewCertificateDeleteProxyLBParam return new CertificateDeleteProxyLBParam
-func NewCertificateDeleteProxyLBParam() *CertificateDeleteProxyLBParam {
-	return &CertificateDeleteProxyLBParam{}
+// NewCertificateDeleteProxylbParam return new CertificateDeleteProxylbParam
+func NewCertificateDeleteProxylbParam() *CertificateDeleteProxylbParam {
+	return &CertificateDeleteProxylbParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CertificateDeleteProxyLBParam) FillValueToSkeleton() {
+func (p *CertificateDeleteProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -6145,8 +6675,14 @@ func (p *CertificateDeleteProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -6179,7 +6715,7 @@ func (p *CertificateDeleteProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CertificateDeleteProxyLBParam) Validate() []error {
+func (p *CertificateDeleteProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -6212,130 +6748,146 @@ func (p *CertificateDeleteProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *CertificateDeleteProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *CertificateDeleteProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *CertificateDeleteProxyLBParam) GetCommandDef() *schema.Command {
+func (p *CertificateDeleteProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["certificate-delete"]
 }
 
-func (p *CertificateDeleteProxyLBParam) GetIncludeFields() []string {
+func (p *CertificateDeleteProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CertificateDeleteProxyLBParam) GetExcludeFields() []string {
+func (p *CertificateDeleteProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CertificateDeleteProxyLBParam) GetTableType() output.TableType {
+func (p *CertificateDeleteProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CertificateDeleteProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *CertificateDeleteProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CertificateDeleteProxyLBParam) SetSelector(v []string) {
+func (p *CertificateDeleteProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *CertificateDeleteProxyLBParam) GetSelector() []string {
+func (p *CertificateDeleteProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *CertificateDeleteProxyLBParam) SetAssumeyes(v bool) {
+func (p *CertificateDeleteProxylbParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *CertificateDeleteProxyLBParam) GetAssumeyes() bool {
+func (p *CertificateDeleteProxylbParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CertificateDeleteProxyLBParam) SetParamTemplate(v string) {
+func (p *CertificateDeleteProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CertificateDeleteProxyLBParam) GetParamTemplate() string {
+func (p *CertificateDeleteProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CertificateDeleteProxyLBParam) SetParamTemplateFile(v string) {
+func (p *CertificateDeleteProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CertificateDeleteProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CertificateDeleteProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CertificateDeleteProxyLBParam) GetParamTemplateFile() string {
+func (p *CertificateDeleteProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CertificateDeleteProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *CertificateDeleteProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CertificateDeleteProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CertificateDeleteProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CertificateDeleteProxyLBParam) GetGenerateSkeleton() bool {
+func (p *CertificateDeleteProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CertificateDeleteProxyLBParam) SetOutputType(v string) {
+func (p *CertificateDeleteProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CertificateDeleteProxyLBParam) GetOutputType() string {
+func (p *CertificateDeleteProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CertificateDeleteProxyLBParam) SetColumn(v []string) {
+func (p *CertificateDeleteProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CertificateDeleteProxyLBParam) GetColumn() []string {
+func (p *CertificateDeleteProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CertificateDeleteProxyLBParam) SetQuiet(v bool) {
+func (p *CertificateDeleteProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CertificateDeleteProxyLBParam) GetQuiet() bool {
+func (p *CertificateDeleteProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CertificateDeleteProxyLBParam) SetFormat(v string) {
+func (p *CertificateDeleteProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CertificateDeleteProxyLBParam) GetFormat() string {
+func (p *CertificateDeleteProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *CertificateDeleteProxyLBParam) SetFormatFile(v string) {
+func (p *CertificateDeleteProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CertificateDeleteProxyLBParam) GetFormatFile() string {
+func (p *CertificateDeleteProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CertificateDeleteProxyLBParam) SetQuery(v string) {
+func (p *CertificateDeleteProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CertificateDeleteProxyLBParam) GetQuery() string {
+func (p *CertificateDeleteProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *CertificateDeleteProxyLBParam) SetQueryFile(v string) {
+func (p *CertificateDeleteProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CertificateDeleteProxyLBParam) GetQueryFile() string {
+func (p *CertificateDeleteProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *CertificateDeleteProxyLBParam) SetId(v sacloud.ID) {
+func (p *CertificateDeleteProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CertificateDeleteProxyLBParam) GetId() sacloud.ID {
+func (p *CertificateDeleteProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// MonitorProxyLBParam is input parameters for the sacloud API
-type MonitorProxyLBParam struct {
+// MonitorProxylbParam is input parameters for the sacloud API
+type MonitorProxylbParam struct {
 	Start             string     `json:"start"`
 	End               string     `json:"end"`
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -6347,16 +6899,16 @@ type MonitorProxyLBParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewMonitorProxyLBParam return new MonitorProxyLBParam
-func NewMonitorProxyLBParam() *MonitorProxyLBParam {
-	return &MonitorProxyLBParam{
+// NewMonitorProxylbParam return new MonitorProxylbParam
+func NewMonitorProxylbParam() *MonitorProxylbParam {
+	return &MonitorProxylbParam{
 
 		KeyFormat: "sakuracloud.proxylb.{{.ID}}",
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *MonitorProxyLBParam) FillValueToSkeleton() {
+func (p *MonitorProxylbParam) FillValueToSkeleton() {
 	if isEmpty(p.Start) {
 		p.Start = ""
 	}
@@ -6372,8 +6924,14 @@ func (p *MonitorProxyLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -6406,7 +6964,7 @@ func (p *MonitorProxyLBParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *MonitorProxyLBParam) Validate() []error {
+func (p *MonitorProxylbParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["ProxyLB"].Commands["monitor"].Params["start"].ValidateFunc
@@ -6460,132 +7018,146 @@ func (p *MonitorProxyLBParam) Validate() []error {
 	return errors
 }
 
-func (p *MonitorProxyLBParam) GetResourceDef() *schema.Resource {
+func (p *MonitorProxylbParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *MonitorProxyLBParam) GetCommandDef() *schema.Command {
+func (p *MonitorProxylbParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["monitor"]
 }
 
-func (p *MonitorProxyLBParam) GetIncludeFields() []string {
+func (p *MonitorProxylbParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *MonitorProxyLBParam) GetExcludeFields() []string {
+func (p *MonitorProxylbParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *MonitorProxyLBParam) GetTableType() output.TableType {
+func (p *MonitorProxylbParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *MonitorProxyLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *MonitorProxylbParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *MonitorProxyLBParam) SetStart(v string) {
+func (p *MonitorProxylbParam) SetStart(v string) {
 	p.Start = v
 }
 
-func (p *MonitorProxyLBParam) GetStart() string {
+func (p *MonitorProxylbParam) GetStart() string {
 	return p.Start
 }
-func (p *MonitorProxyLBParam) SetEnd(v string) {
+func (p *MonitorProxylbParam) SetEnd(v string) {
 	p.End = v
 }
 
-func (p *MonitorProxyLBParam) GetEnd() string {
+func (p *MonitorProxylbParam) GetEnd() string {
 	return p.End
 }
-func (p *MonitorProxyLBParam) SetKeyFormat(v string) {
+func (p *MonitorProxylbParam) SetKeyFormat(v string) {
 	p.KeyFormat = v
 }
 
-func (p *MonitorProxyLBParam) GetKeyFormat() string {
+func (p *MonitorProxylbParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
-func (p *MonitorProxyLBParam) SetSelector(v []string) {
+func (p *MonitorProxylbParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *MonitorProxyLBParam) GetSelector() []string {
+func (p *MonitorProxylbParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *MonitorProxyLBParam) SetParamTemplate(v string) {
+func (p *MonitorProxylbParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *MonitorProxyLBParam) GetParamTemplate() string {
+func (p *MonitorProxylbParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *MonitorProxyLBParam) SetParamTemplateFile(v string) {
+func (p *MonitorProxylbParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorProxylbParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorProxylbParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *MonitorProxyLBParam) GetParamTemplateFile() string {
+func (p *MonitorProxylbParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *MonitorProxyLBParam) SetGenerateSkeleton(v bool) {
+func (p *MonitorProxylbParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorProxylbParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorProxylbParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *MonitorProxyLBParam) GetGenerateSkeleton() bool {
+func (p *MonitorProxylbParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *MonitorProxyLBParam) SetOutputType(v string) {
+func (p *MonitorProxylbParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *MonitorProxyLBParam) GetOutputType() string {
+func (p *MonitorProxylbParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *MonitorProxyLBParam) SetColumn(v []string) {
+func (p *MonitorProxylbParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *MonitorProxyLBParam) GetColumn() []string {
+func (p *MonitorProxylbParam) GetColumn() []string {
 	return p.Column
 }
-func (p *MonitorProxyLBParam) SetQuiet(v bool) {
+func (p *MonitorProxylbParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *MonitorProxyLBParam) GetQuiet() bool {
+func (p *MonitorProxylbParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *MonitorProxyLBParam) SetFormat(v string) {
+func (p *MonitorProxylbParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *MonitorProxyLBParam) GetFormat() string {
+func (p *MonitorProxylbParam) GetFormat() string {
 	return p.Format
 }
-func (p *MonitorProxyLBParam) SetFormatFile(v string) {
+func (p *MonitorProxylbParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *MonitorProxyLBParam) GetFormatFile() string {
+func (p *MonitorProxylbParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *MonitorProxyLBParam) SetQuery(v string) {
+func (p *MonitorProxylbParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *MonitorProxyLBParam) GetQuery() string {
+func (p *MonitorProxylbParam) GetQuery() string {
 	return p.Query
 }
-func (p *MonitorProxyLBParam) SetQueryFile(v string) {
+func (p *MonitorProxylbParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *MonitorProxyLBParam) GetQueryFile() string {
+func (p *MonitorProxylbParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *MonitorProxyLBParam) SetId(v sacloud.ID) {
+func (p *MonitorProxylbParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorProxyLBParam) GetId() sacloud.ID {
+func (p *MonitorProxylbParam) GetId() sacloud.ID {
 	return p.Id
 }

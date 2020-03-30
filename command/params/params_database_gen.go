@@ -32,7 +32,9 @@ type ListDatabaseParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -71,8 +73,14 @@ func (p *ListDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -233,12 +241,26 @@ func (p *ListDatabaseParam) SetParamTemplate(v string) {
 func (p *ListDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -311,7 +333,7 @@ type CreateDatabaseParam struct {
 	BackupWeekdays      []string   `json:"backup-weekdays"`
 	BackupTime          string     `json:"backup-time"`
 	Port                int        `json:"port"`
-	Ipaddress1          string     `json:"ipaddress1"`
+	Ipaddress1          string     `json:"ipaddress-1"`
 	NwMaskLen           int        `json:"nw-mask-len"`
 	DefaultRoute        string     `json:"default-route"`
 	Name                string     `json:"name"`
@@ -320,7 +342,9 @@ type CreateDatabaseParam struct {
 	IconId              sacloud.ID `json:"icon-id"`
 	Assumeyes           bool       `json:"assumeyes"`
 	ParamTemplate       string     `json:"param-template"`
+	Parameters          string     `json:"parameters"`
 	ParamTemplateFile   string     `json:"param-template-file"`
+	ParameterFile       string     `json:"parameter-file"`
 	GenerateSkeleton    bool       `json:"generate-skeleton"`
 	OutputType          string     `json:"output-type"`
 	Column              []string   `json:"column"`
@@ -405,8 +429,14 @@ func (p *CreateDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -545,14 +575,14 @@ func (p *CreateDatabaseParam) Validate() []error {
 	}
 	{
 		validator := validateRequired
-		errs := validator("--ipaddress1", p.Ipaddress1)
+		errs := validator("--ipaddress-1", p.Ipaddress1)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
 		validator := define.Resources["Database"].Commands["create"].Params["ipaddress1"].ValidateFunc
-		errs := validator("--ipaddress1", p.Ipaddress1)
+		errs := validator("--ipaddress-1", p.Ipaddress1)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -815,12 +845,26 @@ func (p *CreateDatabaseParam) SetParamTemplate(v string) {
 func (p *CreateDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -883,7 +927,9 @@ func (p *CreateDatabaseParam) GetQueryFile() string {
 type ReadDatabaseParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -908,8 +954,14 @@ func (p *ReadDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1013,12 +1065,26 @@ func (p *ReadDatabaseParam) SetParamTemplate(v string) {
 func (p *ReadDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1102,7 +1168,9 @@ type UpdateDatabaseParam struct {
 	IconId              sacloud.ID `json:"icon-id"`
 	Assumeyes           bool       `json:"assumeyes"`
 	ParamTemplate       string     `json:"param-template"`
+	Parameters          string     `json:"parameters"`
 	ParamTemplateFile   string     `json:"param-template-file"`
+	ParameterFile       string     `json:"parameter-file"`
 	GenerateSkeleton    bool       `json:"generate-skeleton"`
 	OutputType          string     `json:"output-type"`
 	Column              []string   `json:"column"`
@@ -1172,8 +1240,14 @@ func (p *UpdateDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1445,12 +1519,26 @@ func (p *UpdateDatabaseParam) SetParamTemplate(v string) {
 func (p *UpdateDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1521,7 +1609,9 @@ type DeleteDatabaseParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1550,8 +1640,14 @@ func (p *DeleteDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1665,12 +1761,26 @@ func (p *DeleteDatabaseParam) SetParamTemplate(v string) {
 func (p *DeleteDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1748,7 +1858,9 @@ type BootDatabaseParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1769,8 +1881,14 @@ func (p *BootDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1840,12 +1958,26 @@ func (p *BootDatabaseParam) SetParamTemplate(v string) {
 func (p *BootDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *BootDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BootDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *BootDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *BootDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *BootDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BootDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *BootDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1867,7 +1999,9 @@ type ShutdownDatabaseParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1888,8 +2022,14 @@ func (p *ShutdownDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1959,12 +2099,26 @@ func (p *ShutdownDatabaseParam) SetParamTemplate(v string) {
 func (p *ShutdownDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ShutdownDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ShutdownDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ShutdownDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ShutdownDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ShutdownDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1986,7 +2140,9 @@ type ShutdownForceDatabaseParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2007,8 +2163,14 @@ func (p *ShutdownForceDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2078,12 +2240,26 @@ func (p *ShutdownForceDatabaseParam) SetParamTemplate(v string) {
 func (p *ShutdownForceDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ShutdownForceDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownForceDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ShutdownForceDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ShutdownForceDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ShutdownForceDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownForceDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ShutdownForceDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2105,7 +2281,9 @@ type ResetDatabaseParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2126,8 +2304,14 @@ func (p *ResetDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2197,12 +2381,26 @@ func (p *ResetDatabaseParam) SetParamTemplate(v string) {
 func (p *ResetDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ResetDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ResetDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ResetDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ResetDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ResetDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ResetDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ResetDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2223,7 +2421,9 @@ func (p *ResetDatabaseParam) GetId() sacloud.ID {
 type WaitForBootDatabaseParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2241,8 +2441,14 @@ func (p *WaitForBootDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2305,12 +2511,26 @@ func (p *WaitForBootDatabaseParam) SetParamTemplate(v string) {
 func (p *WaitForBootDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *WaitForBootDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForBootDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *WaitForBootDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *WaitForBootDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *WaitForBootDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForBootDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *WaitForBootDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2331,7 +2551,9 @@ func (p *WaitForBootDatabaseParam) GetId() sacloud.ID {
 type WaitForDownDatabaseParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2349,8 +2571,14 @@ func (p *WaitForDownDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2413,12 +2641,26 @@ func (p *WaitForDownDatabaseParam) SetParamTemplate(v string) {
 func (p *WaitForDownDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *WaitForDownDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForDownDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *WaitForDownDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *WaitForDownDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *WaitForDownDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForDownDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *WaitForDownDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2439,7 +2681,9 @@ func (p *WaitForDownDatabaseParam) GetId() sacloud.ID {
 type BackupInfoDatabaseParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2464,8 +2708,14 @@ func (p *BackupInfoDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2569,12 +2819,26 @@ func (p *BackupInfoDatabaseParam) SetParamTemplate(v string) {
 func (p *BackupInfoDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *BackupInfoDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BackupInfoDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *BackupInfoDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *BackupInfoDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *BackupInfoDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BackupInfoDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *BackupInfoDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2644,7 +2908,9 @@ func (p *BackupInfoDatabaseParam) GetId() sacloud.ID {
 type BackupCreateDatabaseParam struct {
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2669,8 +2935,14 @@ func (p *BackupCreateDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2774,12 +3046,26 @@ func (p *BackupCreateDatabaseParam) SetParamTemplate(v string) {
 func (p *BackupCreateDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *BackupCreateDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BackupCreateDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *BackupCreateDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *BackupCreateDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *BackupCreateDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BackupCreateDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *BackupCreateDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2850,7 +3136,9 @@ type BackupRestoreDatabaseParam struct {
 	Index             int        `json:"index"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2878,8 +3166,14 @@ func (p *BackupRestoreDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3004,12 +3298,26 @@ func (p *BackupRestoreDatabaseParam) SetParamTemplate(v string) {
 func (p *BackupRestoreDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *BackupRestoreDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *BackupRestoreDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *BackupRestoreDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *BackupRestoreDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *BackupRestoreDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -3080,7 +3388,9 @@ type BackupLockDatabaseParam struct {
 	Index             int        `json:"index"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -3108,8 +3418,14 @@ func (p *BackupLockDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3234,12 +3550,26 @@ func (p *BackupLockDatabaseParam) SetParamTemplate(v string) {
 func (p *BackupLockDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *BackupLockDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BackupLockDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *BackupLockDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *BackupLockDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *BackupLockDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BackupLockDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *BackupLockDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -3310,7 +3640,9 @@ type BackupUnlockDatabaseParam struct {
 	Index             int        `json:"index"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -3338,8 +3670,14 @@ func (p *BackupUnlockDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3464,12 +3802,26 @@ func (p *BackupUnlockDatabaseParam) SetParamTemplate(v string) {
 func (p *BackupUnlockDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *BackupUnlockDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *BackupUnlockDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *BackupUnlockDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *BackupUnlockDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *BackupUnlockDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -3540,7 +3892,9 @@ type BackupRemoveDatabaseParam struct {
 	Index             int        `json:"index"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -3568,8 +3922,14 @@ func (p *BackupRemoveDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3694,12 +4054,26 @@ func (p *BackupRemoveDatabaseParam) SetParamTemplate(v string) {
 func (p *BackupRemoveDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *BackupRemoveDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *BackupRemoveDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *BackupRemoveDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *BackupRemoveDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *BackupRemoveDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -3769,7 +4143,7 @@ func (p *BackupRemoveDatabaseParam) GetId() sacloud.ID {
 type CloneDatabaseParam struct {
 	Port                int        `json:"port"`
 	SwitchId            sacloud.ID `json:"switch-id"`
-	Ipaddress1          string     `json:"ipaddress1"`
+	Ipaddress1          string     `json:"ipaddress-1"`
 	Plan                int        `json:"plan"`
 	NwMaskLen           int        `json:"nw-mask-len"`
 	DefaultRoute        string     `json:"default-route"`
@@ -3785,7 +4159,9 @@ type CloneDatabaseParam struct {
 	IconId              sacloud.ID `json:"icon-id"`
 	Assumeyes           bool       `json:"assumeyes"`
 	ParamTemplate       string     `json:"param-template"`
+	Parameters          string     `json:"parameters"`
 	ParamTemplateFile   string     `json:"param-template-file"`
+	ParameterFile       string     `json:"parameter-file"`
 	GenerateSkeleton    bool       `json:"generate-skeleton"`
 	OutputType          string     `json:"output-type"`
 	Column              []string   `json:"column"`
@@ -3862,8 +4238,14 @@ func (p *CloneDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3914,14 +4296,14 @@ func (p *CloneDatabaseParam) Validate() []error {
 	}
 	{
 		validator := validateRequired
-		errs := validator("--ipaddress1", p.Ipaddress1)
+		errs := validator("--ipaddress-1", p.Ipaddress1)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
 		validator := define.Resources["Database"].Commands["clone"].Params["ipaddress1"].ValidateFunc
-		errs := validator("--ipaddress1", p.Ipaddress1)
+		errs := validator("--ipaddress-1", p.Ipaddress1)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4198,12 +4580,26 @@ func (p *CloneDatabaseParam) SetParamTemplate(v string) {
 func (p *CloneDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CloneDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CloneDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CloneDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CloneDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CloneDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CloneDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CloneDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -4272,7 +4668,7 @@ func (p *CloneDatabaseParam) GetId() sacloud.ID {
 // ReplicaCreateDatabaseParam is input parameters for the sacloud API
 type ReplicaCreateDatabaseParam struct {
 	SwitchId          sacloud.ID `json:"switch-id"`
-	Ipaddress1        string     `json:"ipaddress1"`
+	Ipaddress1        string     `json:"ipaddress-1"`
 	NwMaskLen         int        `json:"nw-mask-len"`
 	DefaultRoute      string     `json:"default-route"`
 	Name              string     `json:"name"`
@@ -4281,7 +4677,9 @@ type ReplicaCreateDatabaseParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -4330,8 +4728,14 @@ func (p *ReplicaCreateDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -4375,14 +4779,14 @@ func (p *ReplicaCreateDatabaseParam) Validate() []error {
 	}
 	{
 		validator := validateRequired
-		errs := validator("--ipaddress1", p.Ipaddress1)
+		errs := validator("--ipaddress-1", p.Ipaddress1)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
 		validator := define.Resources["Database"].Commands["replica-create"].Params["ipaddress1"].ValidateFunc
-		errs := validator("--ipaddress1", p.Ipaddress1)
+		errs := validator("--ipaddress-1", p.Ipaddress1)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4561,12 +4965,26 @@ func (p *ReplicaCreateDatabaseParam) SetParamTemplate(v string) {
 func (p *ReplicaCreateDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReplicaCreateDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReplicaCreateDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReplicaCreateDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReplicaCreateDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReplicaCreateDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -4639,7 +5057,9 @@ type MonitorCpuDatabaseParam struct {
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -4676,8 +5096,14 @@ func (p *MonitorCpuDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -4823,12 +5249,26 @@ func (p *MonitorCpuDatabaseParam) SetParamTemplate(v string) {
 func (p *MonitorCpuDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MonitorCpuDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorCpuDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MonitorCpuDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MonitorCpuDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorCpuDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorCpuDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MonitorCpuDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -4901,7 +5341,9 @@ type MonitorMemoryDatabaseParam struct {
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -4938,8 +5380,14 @@ func (p *MonitorMemoryDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -5085,12 +5533,26 @@ func (p *MonitorMemoryDatabaseParam) SetParamTemplate(v string) {
 func (p *MonitorMemoryDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MonitorMemoryDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MonitorMemoryDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MonitorMemoryDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorMemoryDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MonitorMemoryDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -5163,7 +5625,9 @@ type MonitorNicDatabaseParam struct {
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -5200,8 +5664,14 @@ func (p *MonitorNicDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -5347,12 +5817,26 @@ func (p *MonitorNicDatabaseParam) SetParamTemplate(v string) {
 func (p *MonitorNicDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MonitorNicDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorNicDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MonitorNicDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MonitorNicDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorNicDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorNicDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MonitorNicDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -5425,7 +5909,9 @@ type MonitorSystemDiskDatabaseParam struct {
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -5462,8 +5948,14 @@ func (p *MonitorSystemDiskDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -5609,12 +6101,26 @@ func (p *MonitorSystemDiskDatabaseParam) SetParamTemplate(v string) {
 func (p *MonitorSystemDiskDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MonitorSystemDiskDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MonitorSystemDiskDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MonitorSystemDiskDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorSystemDiskDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MonitorSystemDiskDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -5687,7 +6193,9 @@ type MonitorBackupDiskDatabaseParam struct {
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -5724,8 +6232,14 @@ func (p *MonitorBackupDiskDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -5871,12 +6385,26 @@ func (p *MonitorBackupDiskDatabaseParam) SetParamTemplate(v string) {
 func (p *MonitorBackupDiskDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MonitorBackupDiskDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MonitorBackupDiskDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MonitorBackupDiskDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorBackupDiskDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MonitorBackupDiskDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -5949,7 +6477,9 @@ type MonitorSystemDiskSizeDatabaseParam struct {
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -5986,8 +6516,14 @@ func (p *MonitorSystemDiskSizeDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -6133,12 +6669,26 @@ func (p *MonitorSystemDiskSizeDatabaseParam) SetParamTemplate(v string) {
 func (p *MonitorSystemDiskSizeDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MonitorSystemDiskSizeDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MonitorSystemDiskSizeDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MonitorSystemDiskSizeDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MonitorSystemDiskSizeDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -6211,7 +6761,9 @@ type MonitorBackupDiskSizeDatabaseParam struct {
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -6248,8 +6800,14 @@ func (p *MonitorBackupDiskSizeDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -6395,12 +6953,26 @@ func (p *MonitorBackupDiskSizeDatabaseParam) SetParamTemplate(v string) {
 func (p *MonitorBackupDiskSizeDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MonitorBackupDiskSizeDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MonitorBackupDiskSizeDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MonitorBackupDiskSizeDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MonitorBackupDiskSizeDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -6474,7 +7046,9 @@ type LogsDatabaseParam struct {
 	ListLogNames      bool       `json:"list-log-names"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -6508,8 +7082,14 @@ func (p *LogsDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -6607,12 +7187,26 @@ func (p *LogsDatabaseParam) SetParamTemplate(v string) {
 func (p *LogsDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *LogsDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *LogsDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *LogsDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *LogsDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *LogsDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *LogsDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *LogsDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

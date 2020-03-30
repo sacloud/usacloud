@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func StartupScriptDelete(ctx command.Context, params *params.DeleteStartupScriptParam) error {
+func StartupscriptDelete(ctx command.Context, params *params.DeleteStartupscriptParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetNoteAPI()
@@ -33,7 +33,7 @@ func StartupScriptDelete(ctx command.Context, params *params.DeleteStartupScript
 	// call Delete(id)
 	res, err := api.Delete(params.Id)
 	if err != nil {
-		return fmt.Errorf("StartupScriptDelete is failed: %s", err)
+		return fmt.Errorf("StartupscriptDelete is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)
