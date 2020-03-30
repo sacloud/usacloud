@@ -10,7 +10,7 @@ require (
 	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32
 	github.com/hnakamur/go-scp v0.0.0-20170731142846-05a5990ec145
 	github.com/hnakamur/go-sshd v0.0.0-20170228152141-dccc3399d26a // indirect
-	github.com/huandu/xstrings v1.2.0
+	github.com/huandu/xstrings v1.3.0
 	github.com/imdario/mergo v0.3.6
 	github.com/kr/pty v1.1.3 // indirect
 	github.com/mattn/go-colorable v0.0.9

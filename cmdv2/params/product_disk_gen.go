@@ -27,24 +27,24 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListProductdiskParam is input parameters for the sacloud API
-type ListProductdiskParam struct {
-	Sort []string
+// ListProductDiskParam is input parameters for the sacloud API
+type ListProductDiskParam struct {
 	Name []string
 	Id   []sacloud.ID
 	From int
 	Max  int
+	Sort []string
 
 	input Input
 }
 
-// NewListProductdiskParam return new ListProductdiskParam
-func NewListProductdiskParam() *ListProductdiskParam {
-	return &ListProductdiskParam{}
+// NewListProductDiskParam return new ListProductDiskParam
+func NewListProductDiskParam() *ListProductDiskParam {
+	return &ListProductDiskParam{}
 }
 
-// Initialize init ListProductdiskParam
-func (p *ListProductdiskParam) Initialize(in Input) error {
+// Initialize init ListProductDiskParam
+func (p *ListProductDiskParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -53,14 +53,11 @@ func (p *ListProductdiskParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ListProductdiskParam) WriteSkeleton(writer io.Writer) error {
+func (p *ListProductDiskParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListProductdiskParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
+func (p *ListProductDiskParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -73,10 +70,13 @@ func (p *ListProductdiskParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
 	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
 
 }
 
-func (p *ListProductdiskParam) validate() error {
+func (p *ListProductDiskParam) validate() error {
 	var errors []error
 
 	{
@@ -109,80 +109,80 @@ func (p *ListProductdiskParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ListProductdiskParam) ResourceDef() *schema.Resource {
+func (p *ListProductDiskParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProductDisk"]
 }
 
-func (p *ListProductdiskParam) CommandDef() *schema.Command {
+func (p *ListProductDiskParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["list"]
 }
 
-func (p *ListProductdiskParam) IncludeFields() []string {
+func (p *ListProductDiskParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ListProductdiskParam) ExcludeFields() []string {
+func (p *ListProductDiskParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ListProductdiskParam) TableType() output.TableType {
+func (p *ListProductDiskParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ListProductdiskParam) ColumnDefs() []output.ColumnDef {
+func (p *ListProductDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListProductdiskParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListProductdiskParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListProductdiskParam) SetName(v []string) {
+func (p *ListProductDiskParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListProductdiskParam) GetName() []string {
+func (p *ListProductDiskParam) GetName() []string {
 	return p.Name
 }
-func (p *ListProductdiskParam) SetId(v []sacloud.ID) {
+func (p *ListProductDiskParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListProductdiskParam) GetId() []sacloud.ID {
+func (p *ListProductDiskParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListProductdiskParam) SetFrom(v int) {
+func (p *ListProductDiskParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListProductdiskParam) GetFrom() int {
+func (p *ListProductDiskParam) GetFrom() int {
 	return p.From
 }
-func (p *ListProductdiskParam) SetMax(v int) {
+func (p *ListProductDiskParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListProductdiskParam) GetMax() int {
+func (p *ListProductDiskParam) GetMax() int {
 	return p.Max
 }
+func (p *ListProductDiskParam) SetSort(v []string) {
+	p.Sort = v
+}
 
-// ReadProductdiskParam is input parameters for the sacloud API
-type ReadProductdiskParam struct {
+func (p *ListProductDiskParam) GetSort() []string {
+	return p.Sort
+}
+
+// ReadProductDiskParam is input parameters for the sacloud API
+type ReadProductDiskParam struct {
 	Id sacloud.ID
 
 	input Input
 }
 
-// NewReadProductdiskParam return new ReadProductdiskParam
-func NewReadProductdiskParam() *ReadProductdiskParam {
-	return &ReadProductdiskParam{}
+// NewReadProductDiskParam return new ReadProductDiskParam
+func NewReadProductDiskParam() *ReadProductDiskParam {
+	return &ReadProductDiskParam{}
 }
 
-// Initialize init ReadProductdiskParam
-func (p *ReadProductdiskParam) Initialize(in Input) error {
+// Initialize init ReadProductDiskParam
+func (p *ReadProductDiskParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -191,18 +191,18 @@ func (p *ReadProductdiskParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ReadProductdiskParam) WriteSkeleton(writer io.Writer) error {
+func (p *ReadProductDiskParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadProductdiskParam) fillValueToSkeleton() {
+func (p *ReadProductDiskParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
 }
 
-func (p *ReadProductdiskParam) validate() error {
+func (p *ReadProductDiskParam) validate() error {
 	var errors []error
 
 	{
@@ -223,34 +223,34 @@ func (p *ReadProductdiskParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ReadProductdiskParam) ResourceDef() *schema.Resource {
+func (p *ReadProductDiskParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProductDisk"]
 }
 
-func (p *ReadProductdiskParam) CommandDef() *schema.Command {
+func (p *ReadProductDiskParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["read"]
 }
 
-func (p *ReadProductdiskParam) IncludeFields() []string {
+func (p *ReadProductDiskParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ReadProductdiskParam) ExcludeFields() []string {
+func (p *ReadProductDiskParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ReadProductdiskParam) TableType() output.TableType {
+func (p *ReadProductDiskParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ReadProductdiskParam) ColumnDefs() []output.ColumnDef {
+func (p *ReadProductDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ReadProductdiskParam) SetId(v sacloud.ID) {
+func (p *ReadProductDiskParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadProductdiskParam) GetId() sacloud.ID {
+func (p *ReadProductDiskParam) GetId() sacloud.ID {
 	return p.Id
 }

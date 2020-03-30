@@ -27,25 +27,25 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListNfsParam is input parameters for the sacloud API
-type ListNfsParam struct {
-	Name []string
-	Id   []sacloud.ID
+// ListNFSParam is input parameters for the sacloud API
+type ListNFSParam struct {
 	From int
 	Max  int
 	Sort []string
+	Name []string
 	Tags []string
+	Id   []sacloud.ID
 
 	input Input
 }
 
-// NewListNfsParam return new ListNfsParam
-func NewListNfsParam() *ListNfsParam {
-	return &ListNfsParam{}
+// NewListNFSParam return new ListNFSParam
+func NewListNFSParam() *ListNFSParam {
+	return &ListNFSParam{}
 }
 
-// Initialize init ListNfsParam
-func (p *ListNfsParam) Initialize(in Input) error {
+// Initialize init ListNFSParam
+func (p *ListNFSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -54,17 +54,11 @@ func (p *ListNfsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ListNfsParam) WriteSkeleton(writer io.Writer) error {
+func (p *ListNFSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListNfsParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
-	if utils.IsEmpty(p.Id) {
-		p.Id = []sacloud.ID{}
-	}
+func (p *ListNFSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
@@ -74,13 +68,19 @@ func (p *ListNfsParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = []sacloud.ID{}
 	}
 
 }
 
-func (p *ListNfsParam) validate() error {
+func (p *ListNFSParam) validate() error {
 	var errors []error
 
 	{
@@ -88,6 +88,14 @@ func (p *ListNfsParam) validate() error {
 
 			"--id": p.Id,
 		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["NFS"].Commands["list"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -110,108 +118,100 @@ func (p *ListNfsParam) validate() error {
 		}
 	}
 
-	{
-		validator := define.Resources["NFS"].Commands["list"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ListNfsParam) ResourceDef() *schema.Resource {
+func (p *ListNFSParam) ResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *ListNfsParam) CommandDef() *schema.Command {
+func (p *ListNFSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["list"]
 }
 
-func (p *ListNfsParam) IncludeFields() []string {
+func (p *ListNFSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ListNfsParam) ExcludeFields() []string {
+func (p *ListNFSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ListNfsParam) TableType() output.TableType {
+func (p *ListNFSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ListNfsParam) ColumnDefs() []output.ColumnDef {
+func (p *ListNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListNfsParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListNfsParam) GetName() []string {
-	return p.Name
-}
-func (p *ListNfsParam) SetId(v []sacloud.ID) {
-	p.Id = v
-}
-
-func (p *ListNfsParam) GetId() []sacloud.ID {
-	return p.Id
-}
-func (p *ListNfsParam) SetFrom(v int) {
+func (p *ListNFSParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListNfsParam) GetFrom() int {
+func (p *ListNFSParam) GetFrom() int {
 	return p.From
 }
-func (p *ListNfsParam) SetMax(v int) {
+func (p *ListNFSParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListNfsParam) GetMax() int {
+func (p *ListNFSParam) GetMax() int {
 	return p.Max
 }
-func (p *ListNfsParam) SetSort(v []string) {
+func (p *ListNFSParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListNfsParam) GetSort() []string {
+func (p *ListNFSParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListNfsParam) SetTags(v []string) {
+func (p *ListNFSParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListNFSParam) GetName() []string {
+	return p.Name
+}
+func (p *ListNFSParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *ListNfsParam) GetTags() []string {
+func (p *ListNFSParam) GetTags() []string {
 	return p.Tags
 }
+func (p *ListNFSParam) SetId(v []sacloud.ID) {
+	p.Id = v
+}
 
-// CreateNfsParam is input parameters for the sacloud API
-type CreateNfsParam struct {
+func (p *ListNFSParam) GetId() []sacloud.ID {
+	return p.Id
+}
+
+// CreateNFSParam is input parameters for the sacloud API
+type CreateNFSParam struct {
+	Plan         string
+	Size         int
+	Description  string
+	Tags         []string
+	SwitchId     sacloud.ID
 	Ipaddress    string
 	NwMaskLen    int
 	DefaultRoute string
-	SwitchId     sacloud.ID
-	Plan         string
-	Size         int
 	Name         string
-	Description  string
-	Tags         []string
 	IconId       sacloud.ID
 
 	input Input
 }
 
-// NewCreateNfsParam return new CreateNfsParam
-func NewCreateNfsParam() *CreateNfsParam {
-	return &CreateNfsParam{
+// NewCreateNFSParam return new CreateNFSParam
+func NewCreateNFSParam() *CreateNFSParam {
+	return &CreateNFSParam{
 		Plan: "hdd", Size: 100}
 }
 
-// Initialize init CreateNfsParam
-func (p *CreateNfsParam) Initialize(in Input) error {
+// Initialize init CreateNFSParam
+func (p *CreateNFSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -220,11 +220,26 @@ func (p *CreateNfsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CreateNfsParam) WriteSkeleton(writer io.Writer) error {
+func (p *CreateNFSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateNfsParam) fillValueToSkeleton() {
+func (p *CreateNFSParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Plan) {
+		p.Plan = ""
+	}
+	if utils.IsEmpty(p.Size) {
+		p.Size = 0
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if utils.IsEmpty(p.SwitchId) {
+		p.SwitchId = sacloud.ID(0)
+	}
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
@@ -234,23 +249,8 @@ func (p *CreateNfsParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.DefaultRoute) {
 		p.DefaultRoute = ""
 	}
-	if utils.IsEmpty(p.SwitchId) {
-		p.SwitchId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.Plan) {
-		p.Plan = ""
-	}
-	if utils.IsEmpty(p.Size) {
-		p.Size = 0
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
-	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
@@ -258,8 +258,69 @@ func (p *CreateNfsParam) fillValueToSkeleton() {
 
 }
 
-func (p *CreateNfsParam) validate() error {
+func (p *CreateNFSParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--plan", p.Plan)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["NFS"].Commands["create"].Params["plan"].ValidateFunc
+		errs := validator("--plan", p.Plan)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--size", p.Size)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["NFS"].Commands["create"].Params["size"].ValidateFunc
+		errs := validator("--size", p.Size)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["NFS"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["NFS"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--switch-id", p.SwitchId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["NFS"].Commands["create"].Params["switch-id"].ValidateFunc
+		errs := validator("--switch-id", p.SwitchId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -301,51 +362,6 @@ func (p *CreateNfsParam) validate() error {
 
 	{
 		validator := validateRequired
-		errs := validator("--switch-id", p.SwitchId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["NFS"].Commands["create"].Params["switch-id"].ValidateFunc
-		errs := validator("--switch-id", p.SwitchId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["NFS"].Commands["create"].Params["plan"].ValidateFunc
-		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--size", p.Size)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["NFS"].Commands["create"].Params["size"].ValidateFunc
-		errs := validator("--size", p.Size)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
 		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -354,22 +370,6 @@ func (p *CreateNfsParam) validate() error {
 	{
 		validator := define.Resources["NFS"].Commands["create"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["NFS"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["NFS"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -386,113 +386,113 @@ func (p *CreateNfsParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CreateNfsParam) ResourceDef() *schema.Resource {
+func (p *CreateNFSParam) ResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *CreateNfsParam) CommandDef() *schema.Command {
+func (p *CreateNFSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["create"]
 }
 
-func (p *CreateNfsParam) IncludeFields() []string {
+func (p *CreateNFSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CreateNfsParam) ExcludeFields() []string {
+func (p *CreateNFSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CreateNfsParam) TableType() output.TableType {
+func (p *CreateNFSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CreateNfsParam) ColumnDefs() []output.ColumnDef {
+func (p *CreateNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateNfsParam) SetIpaddress(v string) {
-	p.Ipaddress = v
-}
-
-func (p *CreateNfsParam) GetIpaddress() string {
-	return p.Ipaddress
-}
-func (p *CreateNfsParam) SetNwMaskLen(v int) {
-	p.NwMaskLen = v
-}
-
-func (p *CreateNfsParam) GetNwMaskLen() int {
-	return p.NwMaskLen
-}
-func (p *CreateNfsParam) SetDefaultRoute(v string) {
-	p.DefaultRoute = v
-}
-
-func (p *CreateNfsParam) GetDefaultRoute() string {
-	return p.DefaultRoute
-}
-func (p *CreateNfsParam) SetSwitchId(v sacloud.ID) {
-	p.SwitchId = v
-}
-
-func (p *CreateNfsParam) GetSwitchId() sacloud.ID {
-	return p.SwitchId
-}
-func (p *CreateNfsParam) SetPlan(v string) {
+func (p *CreateNFSParam) SetPlan(v string) {
 	p.Plan = v
 }
 
-func (p *CreateNfsParam) GetPlan() string {
+func (p *CreateNFSParam) GetPlan() string {
 	return p.Plan
 }
-func (p *CreateNfsParam) SetSize(v int) {
+func (p *CreateNFSParam) SetSize(v int) {
 	p.Size = v
 }
 
-func (p *CreateNfsParam) GetSize() int {
+func (p *CreateNFSParam) GetSize() int {
 	return p.Size
 }
-func (p *CreateNfsParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateNfsParam) GetName() string {
-	return p.Name
-}
-func (p *CreateNfsParam) SetDescription(v string) {
+func (p *CreateNFSParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *CreateNfsParam) GetDescription() string {
+func (p *CreateNFSParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateNfsParam) SetTags(v []string) {
+func (p *CreateNFSParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreateNfsParam) GetTags() []string {
+func (p *CreateNFSParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateNfsParam) SetIconId(v sacloud.ID) {
+func (p *CreateNFSParam) SetSwitchId(v sacloud.ID) {
+	p.SwitchId = v
+}
+
+func (p *CreateNFSParam) GetSwitchId() sacloud.ID {
+	return p.SwitchId
+}
+func (p *CreateNFSParam) SetIpaddress(v string) {
+	p.Ipaddress = v
+}
+
+func (p *CreateNFSParam) GetIpaddress() string {
+	return p.Ipaddress
+}
+func (p *CreateNFSParam) SetNwMaskLen(v int) {
+	p.NwMaskLen = v
+}
+
+func (p *CreateNFSParam) GetNwMaskLen() int {
+	return p.NwMaskLen
+}
+func (p *CreateNFSParam) SetDefaultRoute(v string) {
+	p.DefaultRoute = v
+}
+
+func (p *CreateNFSParam) GetDefaultRoute() string {
+	return p.DefaultRoute
+}
+func (p *CreateNFSParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateNFSParam) GetName() string {
+	return p.Name
+}
+func (p *CreateNFSParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateNfsParam) GetIconId() sacloud.ID {
+func (p *CreateNFSParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 
-// ReadNfsParam is input parameters for the sacloud API
-type ReadNfsParam struct {
+// ReadNFSParam is input parameters for the sacloud API
+type ReadNFSParam struct {
 	input Input
 }
 
-// NewReadNfsParam return new ReadNfsParam
-func NewReadNfsParam() *ReadNfsParam {
-	return &ReadNfsParam{}
+// NewReadNFSParam return new ReadNFSParam
+func NewReadNFSParam() *ReadNFSParam {
+	return &ReadNFSParam{}
 }
 
-// Initialize init ReadNfsParam
-func (p *ReadNfsParam) Initialize(in Input) error {
+// Initialize init ReadNFSParam
+func (p *ReadNFSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -501,61 +501,61 @@ func (p *ReadNfsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ReadNfsParam) WriteSkeleton(writer io.Writer) error {
+func (p *ReadNFSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadNfsParam) fillValueToSkeleton() {
+func (p *ReadNFSParam) fillValueToSkeleton() {
 
 }
 
-func (p *ReadNfsParam) validate() error {
+func (p *ReadNFSParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ReadNfsParam) ResourceDef() *schema.Resource {
+func (p *ReadNFSParam) ResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *ReadNfsParam) CommandDef() *schema.Command {
+func (p *ReadNFSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["read"]
 }
 
-func (p *ReadNfsParam) IncludeFields() []string {
+func (p *ReadNFSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ReadNfsParam) ExcludeFields() []string {
+func (p *ReadNFSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ReadNfsParam) TableType() output.TableType {
+func (p *ReadNFSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ReadNfsParam) ColumnDefs() []output.ColumnDef {
+func (p *ReadNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// UpdateNfsParam is input parameters for the sacloud API
-type UpdateNfsParam struct {
-	IconId      sacloud.ID
+// UpdateNFSParam is input parameters for the sacloud API
+type UpdateNFSParam struct {
 	Name        string
 	Description string
 	Tags        []string
+	IconId      sacloud.ID
 
 	input Input
 }
 
-// NewUpdateNfsParam return new UpdateNfsParam
-func NewUpdateNfsParam() *UpdateNfsParam {
-	return &UpdateNfsParam{}
+// NewUpdateNFSParam return new UpdateNFSParam
+func NewUpdateNFSParam() *UpdateNFSParam {
+	return &UpdateNFSParam{}
 }
 
-// Initialize init UpdateNfsParam
-func (p *UpdateNfsParam) Initialize(in Input) error {
+// Initialize init UpdateNFSParam
+func (p *UpdateNFSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -564,14 +564,11 @@ func (p *UpdateNfsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *UpdateNfsParam) WriteSkeleton(writer io.Writer) error {
+func (p *UpdateNFSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateNfsParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
+func (p *UpdateNFSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -581,19 +578,14 @@ func (p *UpdateNfsParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
 
 }
 
-func (p *UpdateNfsParam) validate() error {
+func (p *UpdateNFSParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["NFS"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["NFS"].Commands["update"].Params["name"].ValidateFunc
@@ -619,76 +611,84 @@ func (p *UpdateNfsParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["NFS"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
-func (p *UpdateNfsParam) ResourceDef() *schema.Resource {
+func (p *UpdateNFSParam) ResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *UpdateNfsParam) CommandDef() *schema.Command {
+func (p *UpdateNFSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["update"]
 }
 
-func (p *UpdateNfsParam) IncludeFields() []string {
+func (p *UpdateNFSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *UpdateNfsParam) ExcludeFields() []string {
+func (p *UpdateNFSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *UpdateNfsParam) TableType() output.TableType {
+func (p *UpdateNFSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *UpdateNfsParam) ColumnDefs() []output.ColumnDef {
+func (p *UpdateNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateNfsParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *UpdateNfsParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
-func (p *UpdateNfsParam) SetName(v string) {
+func (p *UpdateNFSParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *UpdateNfsParam) GetName() string {
+func (p *UpdateNFSParam) GetName() string {
 	return p.Name
 }
-func (p *UpdateNfsParam) SetDescription(v string) {
+func (p *UpdateNFSParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdateNfsParam) GetDescription() string {
+func (p *UpdateNFSParam) GetDescription() string {
 	return p.Description
 }
-func (p *UpdateNfsParam) SetTags(v []string) {
+func (p *UpdateNFSParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *UpdateNfsParam) GetTags() []string {
+func (p *UpdateNFSParam) GetTags() []string {
 	return p.Tags
 }
+func (p *UpdateNFSParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
 
-// DeleteNfsParam is input parameters for the sacloud API
-type DeleteNfsParam struct {
+func (p *UpdateNFSParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+
+// DeleteNFSParam is input parameters for the sacloud API
+type DeleteNFSParam struct {
 	Force bool
 
 	input Input
 }
 
-// NewDeleteNfsParam return new DeleteNfsParam
-func NewDeleteNfsParam() *DeleteNfsParam {
-	return &DeleteNfsParam{}
+// NewDeleteNFSParam return new DeleteNFSParam
+func NewDeleteNFSParam() *DeleteNFSParam {
+	return &DeleteNFSParam{}
 }
 
-// Initialize init DeleteNfsParam
-func (p *DeleteNfsParam) Initialize(in Input) error {
+// Initialize init DeleteNFSParam
+func (p *DeleteNFSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -697,67 +697,67 @@ func (p *DeleteNfsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DeleteNfsParam) WriteSkeleton(writer io.Writer) error {
+func (p *DeleteNFSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteNfsParam) fillValueToSkeleton() {
+func (p *DeleteNFSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Force) {
 		p.Force = false
 	}
 
 }
 
-func (p *DeleteNfsParam) validate() error {
+func (p *DeleteNFSParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DeleteNfsParam) ResourceDef() *schema.Resource {
+func (p *DeleteNFSParam) ResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *DeleteNfsParam) CommandDef() *schema.Command {
+func (p *DeleteNFSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["delete"]
 }
 
-func (p *DeleteNfsParam) IncludeFields() []string {
+func (p *DeleteNFSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DeleteNfsParam) ExcludeFields() []string {
+func (p *DeleteNFSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DeleteNfsParam) TableType() output.TableType {
+func (p *DeleteNFSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DeleteNfsParam) ColumnDefs() []output.ColumnDef {
+func (p *DeleteNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *DeleteNfsParam) SetForce(v bool) {
+func (p *DeleteNFSParam) SetForce(v bool) {
 	p.Force = v
 }
 
-func (p *DeleteNfsParam) GetForce() bool {
+func (p *DeleteNFSParam) GetForce() bool {
 	return p.Force
 }
 
-// BootNfsParam is input parameters for the sacloud API
-type BootNfsParam struct {
+// BootNFSParam is input parameters for the sacloud API
+type BootNFSParam struct {
 	input Input
 }
 
-// NewBootNfsParam return new BootNfsParam
-func NewBootNfsParam() *BootNfsParam {
-	return &BootNfsParam{}
+// NewBootNFSParam return new BootNFSParam
+func NewBootNFSParam() *BootNFSParam {
+	return &BootNFSParam{}
 }
 
-// Initialize init BootNfsParam
-func (p *BootNfsParam) Initialize(in Input) error {
+// Initialize init BootNFSParam
+func (p *BootNFSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -766,56 +766,56 @@ func (p *BootNfsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *BootNfsParam) WriteSkeleton(writer io.Writer) error {
+func (p *BootNFSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *BootNfsParam) fillValueToSkeleton() {
+func (p *BootNFSParam) fillValueToSkeleton() {
 
 }
 
-func (p *BootNfsParam) validate() error {
+func (p *BootNFSParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *BootNfsParam) ResourceDef() *schema.Resource {
+func (p *BootNFSParam) ResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *BootNfsParam) CommandDef() *schema.Command {
+func (p *BootNFSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["boot"]
 }
 
-func (p *BootNfsParam) IncludeFields() []string {
+func (p *BootNFSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *BootNfsParam) ExcludeFields() []string {
+func (p *BootNFSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *BootNfsParam) TableType() output.TableType {
+func (p *BootNFSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *BootNfsParam) ColumnDefs() []output.ColumnDef {
+func (p *BootNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// ShutdownNfsParam is input parameters for the sacloud API
-type ShutdownNfsParam struct {
+// ShutdownNFSParam is input parameters for the sacloud API
+type ShutdownNFSParam struct {
 	input Input
 }
 
-// NewShutdownNfsParam return new ShutdownNfsParam
-func NewShutdownNfsParam() *ShutdownNfsParam {
-	return &ShutdownNfsParam{}
+// NewShutdownNFSParam return new ShutdownNFSParam
+func NewShutdownNFSParam() *ShutdownNFSParam {
+	return &ShutdownNFSParam{}
 }
 
-// Initialize init ShutdownNfsParam
-func (p *ShutdownNfsParam) Initialize(in Input) error {
+// Initialize init ShutdownNFSParam
+func (p *ShutdownNFSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -824,56 +824,56 @@ func (p *ShutdownNfsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ShutdownNfsParam) WriteSkeleton(writer io.Writer) error {
+func (p *ShutdownNFSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ShutdownNfsParam) fillValueToSkeleton() {
+func (p *ShutdownNFSParam) fillValueToSkeleton() {
 
 }
 
-func (p *ShutdownNfsParam) validate() error {
+func (p *ShutdownNFSParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ShutdownNfsParam) ResourceDef() *schema.Resource {
+func (p *ShutdownNFSParam) ResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *ShutdownNfsParam) CommandDef() *schema.Command {
+func (p *ShutdownNFSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["shutdown"]
 }
 
-func (p *ShutdownNfsParam) IncludeFields() []string {
+func (p *ShutdownNFSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ShutdownNfsParam) ExcludeFields() []string {
+func (p *ShutdownNFSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ShutdownNfsParam) TableType() output.TableType {
+func (p *ShutdownNFSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ShutdownNfsParam) ColumnDefs() []output.ColumnDef {
+func (p *ShutdownNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// ShutdownForceNfsParam is input parameters for the sacloud API
-type ShutdownForceNfsParam struct {
+// ShutdownForceNFSParam is input parameters for the sacloud API
+type ShutdownForceNFSParam struct {
 	input Input
 }
 
-// NewShutdownForceNfsParam return new ShutdownForceNfsParam
-func NewShutdownForceNfsParam() *ShutdownForceNfsParam {
-	return &ShutdownForceNfsParam{}
+// NewShutdownForceNFSParam return new ShutdownForceNFSParam
+func NewShutdownForceNFSParam() *ShutdownForceNFSParam {
+	return &ShutdownForceNFSParam{}
 }
 
-// Initialize init ShutdownForceNfsParam
-func (p *ShutdownForceNfsParam) Initialize(in Input) error {
+// Initialize init ShutdownForceNFSParam
+func (p *ShutdownForceNFSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -882,56 +882,56 @@ func (p *ShutdownForceNfsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ShutdownForceNfsParam) WriteSkeleton(writer io.Writer) error {
+func (p *ShutdownForceNFSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ShutdownForceNfsParam) fillValueToSkeleton() {
+func (p *ShutdownForceNFSParam) fillValueToSkeleton() {
 
 }
 
-func (p *ShutdownForceNfsParam) validate() error {
+func (p *ShutdownForceNFSParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ShutdownForceNfsParam) ResourceDef() *schema.Resource {
+func (p *ShutdownForceNFSParam) ResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *ShutdownForceNfsParam) CommandDef() *schema.Command {
+func (p *ShutdownForceNFSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["shutdown-force"]
 }
 
-func (p *ShutdownForceNfsParam) IncludeFields() []string {
+func (p *ShutdownForceNFSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ShutdownForceNfsParam) ExcludeFields() []string {
+func (p *ShutdownForceNFSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ShutdownForceNfsParam) TableType() output.TableType {
+func (p *ShutdownForceNFSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ShutdownForceNfsParam) ColumnDefs() []output.ColumnDef {
+func (p *ShutdownForceNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// ResetNfsParam is input parameters for the sacloud API
-type ResetNfsParam struct {
+// ResetNFSParam is input parameters for the sacloud API
+type ResetNFSParam struct {
 	input Input
 }
 
-// NewResetNfsParam return new ResetNfsParam
-func NewResetNfsParam() *ResetNfsParam {
-	return &ResetNfsParam{}
+// NewResetNFSParam return new ResetNFSParam
+func NewResetNFSParam() *ResetNFSParam {
+	return &ResetNFSParam{}
 }
 
-// Initialize init ResetNfsParam
-func (p *ResetNfsParam) Initialize(in Input) error {
+// Initialize init ResetNFSParam
+func (p *ResetNFSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -940,56 +940,56 @@ func (p *ResetNfsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ResetNfsParam) WriteSkeleton(writer io.Writer) error {
+func (p *ResetNFSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ResetNfsParam) fillValueToSkeleton() {
+func (p *ResetNFSParam) fillValueToSkeleton() {
 
 }
 
-func (p *ResetNfsParam) validate() error {
+func (p *ResetNFSParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ResetNfsParam) ResourceDef() *schema.Resource {
+func (p *ResetNFSParam) ResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *ResetNfsParam) CommandDef() *schema.Command {
+func (p *ResetNFSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["reset"]
 }
 
-func (p *ResetNfsParam) IncludeFields() []string {
+func (p *ResetNFSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ResetNfsParam) ExcludeFields() []string {
+func (p *ResetNFSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ResetNfsParam) TableType() output.TableType {
+func (p *ResetNFSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ResetNfsParam) ColumnDefs() []output.ColumnDef {
+func (p *ResetNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// WaitForBootNfsParam is input parameters for the sacloud API
-type WaitForBootNfsParam struct {
+// WaitForBootNFSParam is input parameters for the sacloud API
+type WaitForBootNFSParam struct {
 	input Input
 }
 
-// NewWaitForBootNfsParam return new WaitForBootNfsParam
-func NewWaitForBootNfsParam() *WaitForBootNfsParam {
-	return &WaitForBootNfsParam{}
+// NewWaitForBootNFSParam return new WaitForBootNFSParam
+func NewWaitForBootNFSParam() *WaitForBootNFSParam {
+	return &WaitForBootNFSParam{}
 }
 
-// Initialize init WaitForBootNfsParam
-func (p *WaitForBootNfsParam) Initialize(in Input) error {
+// Initialize init WaitForBootNFSParam
+func (p *WaitForBootNFSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -998,56 +998,56 @@ func (p *WaitForBootNfsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *WaitForBootNfsParam) WriteSkeleton(writer io.Writer) error {
+func (p *WaitForBootNFSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *WaitForBootNfsParam) fillValueToSkeleton() {
+func (p *WaitForBootNFSParam) fillValueToSkeleton() {
 
 }
 
-func (p *WaitForBootNfsParam) validate() error {
+func (p *WaitForBootNFSParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *WaitForBootNfsParam) ResourceDef() *schema.Resource {
+func (p *WaitForBootNFSParam) ResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *WaitForBootNfsParam) CommandDef() *schema.Command {
+func (p *WaitForBootNFSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["wait-for-boot"]
 }
 
-func (p *WaitForBootNfsParam) IncludeFields() []string {
+func (p *WaitForBootNFSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *WaitForBootNfsParam) ExcludeFields() []string {
+func (p *WaitForBootNFSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *WaitForBootNfsParam) TableType() output.TableType {
+func (p *WaitForBootNFSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *WaitForBootNfsParam) ColumnDefs() []output.ColumnDef {
+func (p *WaitForBootNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// WaitForDownNfsParam is input parameters for the sacloud API
-type WaitForDownNfsParam struct {
+// WaitForDownNFSParam is input parameters for the sacloud API
+type WaitForDownNFSParam struct {
 	input Input
 }
 
-// NewWaitForDownNfsParam return new WaitForDownNfsParam
-func NewWaitForDownNfsParam() *WaitForDownNfsParam {
-	return &WaitForDownNfsParam{}
+// NewWaitForDownNFSParam return new WaitForDownNFSParam
+func NewWaitForDownNFSParam() *WaitForDownNFSParam {
+	return &WaitForDownNFSParam{}
 }
 
-// Initialize init WaitForDownNfsParam
-func (p *WaitForDownNfsParam) Initialize(in Input) error {
+// Initialize init WaitForDownNFSParam
+func (p *WaitForDownNFSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1056,61 +1056,61 @@ func (p *WaitForDownNfsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *WaitForDownNfsParam) WriteSkeleton(writer io.Writer) error {
+func (p *WaitForDownNFSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *WaitForDownNfsParam) fillValueToSkeleton() {
+func (p *WaitForDownNFSParam) fillValueToSkeleton() {
 
 }
 
-func (p *WaitForDownNfsParam) validate() error {
+func (p *WaitForDownNFSParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *WaitForDownNfsParam) ResourceDef() *schema.Resource {
+func (p *WaitForDownNFSParam) ResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *WaitForDownNfsParam) CommandDef() *schema.Command {
+func (p *WaitForDownNFSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["wait-for-down"]
 }
 
-func (p *WaitForDownNfsParam) IncludeFields() []string {
+func (p *WaitForDownNFSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *WaitForDownNfsParam) ExcludeFields() []string {
+func (p *WaitForDownNFSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *WaitForDownNfsParam) TableType() output.TableType {
+func (p *WaitForDownNFSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *WaitForDownNfsParam) ColumnDefs() []output.ColumnDef {
+func (p *WaitForDownNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// MonitorNicNfsParam is input parameters for the sacloud API
-type MonitorNicNfsParam struct {
+// MonitorNicNFSParam is input parameters for the sacloud API
+type MonitorNicNFSParam struct {
+	KeyFormat string
 	Start     string
 	End       string
-	KeyFormat string
 
 	input Input
 }
 
-// NewMonitorNicNfsParam return new MonitorNicNfsParam
-func NewMonitorNicNfsParam() *MonitorNicNfsParam {
-	return &MonitorNicNfsParam{
+// NewMonitorNicNFSParam return new MonitorNicNFSParam
+func NewMonitorNicNFSParam() *MonitorNicNFSParam {
+	return &MonitorNicNFSParam{
 		KeyFormat: "sakuracloud.disk.{{.ID}}.nic"}
 }
 
-// Initialize init MonitorNicNfsParam
-func (p *MonitorNicNfsParam) Initialize(in Input) error {
+// Initialize init MonitorNicNFSParam
+func (p *MonitorNicNFSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1119,25 +1119,33 @@ func (p *MonitorNicNfsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *MonitorNicNfsParam) WriteSkeleton(writer io.Writer) error {
+func (p *MonitorNicNFSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *MonitorNicNfsParam) fillValueToSkeleton() {
+func (p *MonitorNicNFSParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
 	if utils.IsEmpty(p.Start) {
 		p.Start = ""
 	}
 	if utils.IsEmpty(p.End) {
 		p.End = ""
 	}
-	if utils.IsEmpty(p.KeyFormat) {
-		p.KeyFormat = ""
-	}
 
 }
 
-func (p *MonitorNicNfsParam) validate() error {
+func (p *MonitorNicNFSParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["NFS"].Commands["monitor-nic"].Params["start"].ValidateFunc
@@ -1155,80 +1163,72 @@ func (p *MonitorNicNfsParam) validate() error {
 		}
 	}
 
-	{
-		validator := validateRequired
-		errs := validator("--key-format", p.KeyFormat)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *MonitorNicNfsParam) ResourceDef() *schema.Resource {
+func (p *MonitorNicNFSParam) ResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *MonitorNicNfsParam) CommandDef() *schema.Command {
+func (p *MonitorNicNFSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["monitor-nic"]
 }
 
-func (p *MonitorNicNfsParam) IncludeFields() []string {
+func (p *MonitorNicNFSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *MonitorNicNfsParam) ExcludeFields() []string {
+func (p *MonitorNicNFSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *MonitorNicNfsParam) TableType() output.TableType {
+func (p *MonitorNicNFSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *MonitorNicNfsParam) ColumnDefs() []output.ColumnDef {
+func (p *MonitorNicNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *MonitorNicNfsParam) SetStart(v string) {
-	p.Start = v
-}
-
-func (p *MonitorNicNfsParam) GetStart() string {
-	return p.Start
-}
-func (p *MonitorNicNfsParam) SetEnd(v string) {
-	p.End = v
-}
-
-func (p *MonitorNicNfsParam) GetEnd() string {
-	return p.End
-}
-func (p *MonitorNicNfsParam) SetKeyFormat(v string) {
+func (p *MonitorNicNFSParam) SetKeyFormat(v string) {
 	p.KeyFormat = v
 }
 
-func (p *MonitorNicNfsParam) GetKeyFormat() string {
+func (p *MonitorNicNFSParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
+func (p *MonitorNicNFSParam) SetStart(v string) {
+	p.Start = v
+}
 
-// MonitorFreeDiskSizeNfsParam is input parameters for the sacloud API
-type MonitorFreeDiskSizeNfsParam struct {
-	Start     string
+func (p *MonitorNicNFSParam) GetStart() string {
+	return p.Start
+}
+func (p *MonitorNicNFSParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorNicNFSParam) GetEnd() string {
+	return p.End
+}
+
+// MonitorFreeDiskSizeNFSParam is input parameters for the sacloud API
+type MonitorFreeDiskSizeNFSParam struct {
 	End       string
 	KeyFormat string
+	Start     string
 
 	input Input
 }
 
-// NewMonitorFreeDiskSizeNfsParam return new MonitorFreeDiskSizeNfsParam
-func NewMonitorFreeDiskSizeNfsParam() *MonitorFreeDiskSizeNfsParam {
-	return &MonitorFreeDiskSizeNfsParam{
+// NewMonitorFreeDiskSizeNFSParam return new MonitorFreeDiskSizeNFSParam
+func NewMonitorFreeDiskSizeNFSParam() *MonitorFreeDiskSizeNFSParam {
+	return &MonitorFreeDiskSizeNFSParam{
 		KeyFormat: "sakuracloud.disk.{{.ID}}.free-disk-size"}
 }
 
-// Initialize init MonitorFreeDiskSizeNfsParam
-func (p *MonitorFreeDiskSizeNfsParam) Initialize(in Input) error {
+// Initialize init MonitorFreeDiskSizeNFSParam
+func (p *MonitorFreeDiskSizeNFSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1237,33 +1237,25 @@ func (p *MonitorFreeDiskSizeNfsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *MonitorFreeDiskSizeNfsParam) WriteSkeleton(writer io.Writer) error {
+func (p *MonitorFreeDiskSizeNFSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *MonitorFreeDiskSizeNfsParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Start) {
-		p.Start = ""
-	}
+func (p *MonitorFreeDiskSizeNFSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.End) {
 		p.End = ""
 	}
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
+	if utils.IsEmpty(p.Start) {
+		p.Start = ""
+	}
 
 }
 
-func (p *MonitorFreeDiskSizeNfsParam) validate() error {
+func (p *MonitorFreeDiskSizeNFSParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["NFS"].Commands["monitor-free-disk-size"].Params["start"].ValidateFunc
-		errs := validator("--start", p.Start)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["NFS"].Commands["monitor-free-disk-size"].Params["end"].ValidateFunc
@@ -1281,51 +1273,59 @@ func (p *MonitorFreeDiskSizeNfsParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["NFS"].Commands["monitor-free-disk-size"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
-func (p *MonitorFreeDiskSizeNfsParam) ResourceDef() *schema.Resource {
+func (p *MonitorFreeDiskSizeNFSParam) ResourceDef() *schema.Resource {
 	return define.Resources["NFS"]
 }
 
-func (p *MonitorFreeDiskSizeNfsParam) CommandDef() *schema.Command {
+func (p *MonitorFreeDiskSizeNFSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["monitor-free-disk-size"]
 }
 
-func (p *MonitorFreeDiskSizeNfsParam) IncludeFields() []string {
+func (p *MonitorFreeDiskSizeNFSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *MonitorFreeDiskSizeNfsParam) ExcludeFields() []string {
+func (p *MonitorFreeDiskSizeNFSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *MonitorFreeDiskSizeNfsParam) TableType() output.TableType {
+func (p *MonitorFreeDiskSizeNFSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *MonitorFreeDiskSizeNfsParam) ColumnDefs() []output.ColumnDef {
+func (p *MonitorFreeDiskSizeNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *MonitorFreeDiskSizeNfsParam) SetStart(v string) {
-	p.Start = v
-}
-
-func (p *MonitorFreeDiskSizeNfsParam) GetStart() string {
-	return p.Start
-}
-func (p *MonitorFreeDiskSizeNfsParam) SetEnd(v string) {
+func (p *MonitorFreeDiskSizeNFSParam) SetEnd(v string) {
 	p.End = v
 }
 
-func (p *MonitorFreeDiskSizeNfsParam) GetEnd() string {
+func (p *MonitorFreeDiskSizeNFSParam) GetEnd() string {
 	return p.End
 }
-func (p *MonitorFreeDiskSizeNfsParam) SetKeyFormat(v string) {
+func (p *MonitorFreeDiskSizeNFSParam) SetKeyFormat(v string) {
 	p.KeyFormat = v
 }
 
-func (p *MonitorFreeDiskSizeNfsParam) GetKeyFormat() string {
+func (p *MonitorFreeDiskSizeNFSParam) GetKeyFormat() string {
 	return p.KeyFormat
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetStart() string {
+	return p.Start
 }

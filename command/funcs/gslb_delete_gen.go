@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func GslbDelete(ctx command.Context, params *params.DeleteGslbParam) error {
+func GSLBDelete(ctx command.Context, params *params.DeleteGSLBParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetGslbAPI()
+	api := client.GetGSLBAPI()
 
 	// set params
 
 	// call Delete(id)
 	res, err := api.Delete(params.Id)
 	if err != nil {
-		return fmt.Errorf("GslbDelete is failed: %s", err)
+		return fmt.Errorf("GSLBDelete is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

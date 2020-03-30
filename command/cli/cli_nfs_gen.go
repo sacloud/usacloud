@@ -32,19 +32,19 @@ import (
 )
 
 func init() {
-	nfsListParam := params.NewListNfsParam()
-	nfsCreateParam := params.NewCreateNfsParam()
-	nfsReadParam := params.NewReadNfsParam()
-	nfsUpdateParam := params.NewUpdateNfsParam()
-	nfsDeleteParam := params.NewDeleteNfsParam()
-	nfsBootParam := params.NewBootNfsParam()
-	nfsShutdownParam := params.NewShutdownNfsParam()
-	nfsShutdownForceParam := params.NewShutdownForceNfsParam()
-	nfsResetParam := params.NewResetNfsParam()
-	nfsWaitForBootParam := params.NewWaitForBootNfsParam()
-	nfsWaitForDownParam := params.NewWaitForDownNfsParam()
-	nfsMonitorNicParam := params.NewMonitorNicNfsParam()
-	nfsMonitorFreeDiskSizeParam := params.NewMonitorFreeDiskSizeNfsParam()
+	nfsListParam := params.NewListNFSParam()
+	nfsCreateParam := params.NewCreateNFSParam()
+	nfsReadParam := params.NewReadNFSParam()
+	nfsUpdateParam := params.NewUpdateNFSParam()
+	nfsDeleteParam := params.NewDeleteNFSParam()
+	nfsBootParam := params.NewBootNFSParam()
+	nfsShutdownParam := params.NewShutdownNFSParam()
+	nfsShutdownForceParam := params.NewShutdownForceNFSParam()
+	nfsResetParam := params.NewResetNFSParam()
+	nfsWaitForBootParam := params.NewWaitForBootNFSParam()
+	nfsWaitForDownParam := params.NewWaitForDownNFSParam()
+	nfsMonitorNicParam := params.NewMonitorNicNFSParam()
+	nfsMonitorFreeDiskSizeParam := params.NewMonitorFreeDiskSizeNFSParam()
 
 	cliCommand := &cli.Command{
 		Name:  "nfs",
@@ -53,7 +53,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find", "selector"},
-				Usage:   "List Nfs",
+				Usage:   "List NFS",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -151,7 +151,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListNfsParam()
+						p := params.NewListNFSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -251,13 +251,13 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), nfsListParam)
 
 					// Run command with params
-					return funcs.NfsList(ctx, nfsListParam)
+					return funcs.NFSList(ctx, nfsListParam)
 
 				},
 			},
 			{
 				Name:  "create",
-				Usage: "Create Nfs",
+				Usage: "Create NFS",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:  "switch-id",
@@ -377,7 +377,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCreateNfsParam()
+						p := params.NewCreateNFSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -502,13 +502,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.NfsCreate(ctx, nfsCreateParam)
+					return funcs.NFSCreate(ctx, nfsCreateParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Nfs",
+				Usage:     "Read NFS",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -589,7 +589,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadNfsParam()
+						p := params.NewReadNFSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -676,7 +676,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), nfsReadParam)
 
-					apiClient := ctx.GetAPIClient().Nfs
+					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -746,7 +746,7 @@ func init() {
 						p := *nfsReadParam // copy struct value
 						nfsReadParam := &p
 						go func() {
-							err := funcs.NfsRead(ctx, nfsReadParam)
+							err := funcs.NFSRead(ctx, nfsReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -760,7 +760,7 @@ func init() {
 			},
 			{
 				Name:      "update",
-				Usage:     "Update Nfs",
+				Usage:     "Update NFS",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -863,7 +863,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUpdateNfsParam()
+						p := params.NewUpdateNFSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -965,7 +965,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), nfsUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Nfs
+					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1041,7 +1041,7 @@ func init() {
 						p := *nfsUpdateParam // copy struct value
 						nfsUpdateParam := &p
 						go func() {
-							err := funcs.NfsUpdate(ctx, nfsUpdateParam)
+							err := funcs.NFSUpdate(ctx, nfsUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1056,7 +1056,7 @@ func init() {
 			{
 				Name:      "delete",
 				Aliases:   []string{"rm"},
-				Usage:     "Delete Nfs",
+				Usage:     "Delete NFS",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -1147,7 +1147,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeleteNfsParam()
+						p := params.NewDeleteNFSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -1240,7 +1240,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), nfsDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Nfs
+					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1316,7 +1316,7 @@ func init() {
 						p := *nfsDeleteParam // copy struct value
 						nfsDeleteParam := &p
 						go func() {
-							err := funcs.NfsDelete(ctx, nfsDeleteParam)
+							err := funcs.NFSDelete(ctx, nfsDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1331,7 +1331,7 @@ func init() {
 			{
 				Name:      "boot",
 				Aliases:   []string{"power-on"},
-				Usage:     "Boot Nfs",
+				Usage:     "Boot NFS",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1385,7 +1385,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewBootNfsParam()
+						p := params.NewBootNFSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -1454,7 +1454,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), nfsBootParam)
 
-					apiClient := ctx.GetAPIClient().Nfs
+					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1530,7 +1530,7 @@ func init() {
 						p := *nfsBootParam // copy struct value
 						nfsBootParam := &p
 						go func() {
-							err := funcs.NfsBoot(ctx, nfsBootParam)
+							err := funcs.NFSBoot(ctx, nfsBootParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1545,7 +1545,7 @@ func init() {
 			{
 				Name:      "shutdown",
 				Aliases:   []string{"power-off"},
-				Usage:     "Shutdown Nfs",
+				Usage:     "Shutdown NFS",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1599,7 +1599,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewShutdownNfsParam()
+						p := params.NewShutdownNFSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -1668,7 +1668,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), nfsShutdownParam)
 
-					apiClient := ctx.GetAPIClient().Nfs
+					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1744,7 +1744,7 @@ func init() {
 						p := *nfsShutdownParam // copy struct value
 						nfsShutdownParam := &p
 						go func() {
-							err := funcs.NfsShutdown(ctx, nfsShutdownParam)
+							err := funcs.NFSShutdown(ctx, nfsShutdownParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1759,7 +1759,7 @@ func init() {
 			{
 				Name:      "shutdown-force",
 				Aliases:   []string{"stop"},
-				Usage:     "ShutdownForce Nfs",
+				Usage:     "ShutdownForce NFS",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1813,7 +1813,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewShutdownForceNfsParam()
+						p := params.NewShutdownForceNFSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -1882,7 +1882,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), nfsShutdownForceParam)
 
-					apiClient := ctx.GetAPIClient().Nfs
+					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1958,7 +1958,7 @@ func init() {
 						p := *nfsShutdownForceParam // copy struct value
 						nfsShutdownForceParam := &p
 						go func() {
-							err := funcs.NfsShutdownForce(ctx, nfsShutdownForceParam)
+							err := funcs.NFSShutdownForce(ctx, nfsShutdownForceParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1972,7 +1972,7 @@ func init() {
 			},
 			{
 				Name:      "reset",
-				Usage:     "Reset Nfs",
+				Usage:     "Reset NFS",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2026,7 +2026,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewResetNfsParam()
+						p := params.NewResetNFSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -2095,7 +2095,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), nfsResetParam)
 
-					apiClient := ctx.GetAPIClient().Nfs
+					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -2171,7 +2171,7 @@ func init() {
 						p := *nfsResetParam // copy struct value
 						nfsResetParam := &p
 						go func() {
-							err := funcs.NfsReset(ctx, nfsResetParam)
+							err := funcs.NFSReset(ctx, nfsResetParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2234,7 +2234,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewWaitForBootNfsParam()
+						p := params.NewWaitForBootNFSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -2300,7 +2300,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), nfsWaitForBootParam)
 
-					apiClient := ctx.GetAPIClient().Nfs
+					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -2366,7 +2366,7 @@ func init() {
 						p := *nfsWaitForBootParam // copy struct value
 						nfsWaitForBootParam := &p
 						go func() {
-							err := funcs.NfsWaitForBoot(ctx, nfsWaitForBootParam)
+							err := funcs.NFSWaitForBoot(ctx, nfsWaitForBootParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2429,7 +2429,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewWaitForDownNfsParam()
+						p := params.NewWaitForDownNFSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -2495,7 +2495,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), nfsWaitForDownParam)
 
-					apiClient := ctx.GetAPIClient().Nfs
+					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -2561,7 +2561,7 @@ func init() {
 						p := *nfsWaitForDownParam // copy struct value
 						nfsWaitForDownParam := &p
 						go func() {
-							err := funcs.NfsWaitForDown(ctx, nfsWaitForDownParam)
+							err := funcs.NFSWaitForDown(ctx, nfsWaitForDownParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2669,7 +2669,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewMonitorNicNfsParam()
+						p := params.NewMonitorNicNFSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -2765,7 +2765,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), nfsMonitorNicParam)
 
-					apiClient := ctx.GetAPIClient().Nfs
+					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -2835,7 +2835,7 @@ func init() {
 						p := *nfsMonitorNicParam // copy struct value
 						nfsMonitorNicParam := &p
 						go func() {
-							err := funcs.NfsMonitorNic(ctx, nfsMonitorNicParam)
+							err := funcs.NFSMonitorNic(ctx, nfsMonitorNicParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2943,7 +2943,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewMonitorFreeDiskSizeNfsParam()
+						p := params.NewMonitorFreeDiskSizeNFSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -3039,7 +3039,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), nfsMonitorFreeDiskSizeParam)
 
-					apiClient := ctx.GetAPIClient().Nfs
+					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -3109,7 +3109,7 @@ func init() {
 						p := *nfsMonitorFreeDiskSizeParam // copy struct value
 						nfsMonitorFreeDiskSizeParam := &p
 						go func() {
-							err := funcs.NfsMonitorFreeDiskSize(ctx, nfsMonitorFreeDiskSizeParam)
+							err := funcs.NFSMonitorFreeDiskSize(ctx, nfsMonitorFreeDiskSizeParam)
 							if err != nil {
 								errs = append(errs, err)
 							}

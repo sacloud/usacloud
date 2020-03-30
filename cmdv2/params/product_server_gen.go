@@ -27,24 +27,24 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListProductserverParam is input parameters for the sacloud API
-type ListProductserverParam struct {
-	Name []string
-	Id   []sacloud.ID
+// ListProductServerParam is input parameters for the sacloud API
+type ListProductServerParam struct {
 	From int
 	Max  int
 	Sort []string
+	Name []string
+	Id   []sacloud.ID
 
 	input Input
 }
 
-// NewListProductserverParam return new ListProductserverParam
-func NewListProductserverParam() *ListProductserverParam {
-	return &ListProductserverParam{}
+// NewListProductServerParam return new ListProductServerParam
+func NewListProductServerParam() *ListProductServerParam {
+	return &ListProductServerParam{}
 }
 
-// Initialize init ListProductserverParam
-func (p *ListProductserverParam) Initialize(in Input) error {
+// Initialize init ListProductServerParam
+func (p *ListProductServerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -53,17 +53,11 @@ func (p *ListProductserverParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ListProductserverParam) WriteSkeleton(writer io.Writer) error {
+func (p *ListProductServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListProductserverParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
-	if utils.IsEmpty(p.Id) {
-		p.Id = []sacloud.ID{}
-	}
+func (p *ListProductServerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
@@ -73,10 +67,16 @@ func (p *ListProductserverParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = []sacloud.ID{}
+	}
 
 }
 
-func (p *ListProductserverParam) validate() error {
+func (p *ListProductServerParam) validate() error {
 	var errors []error
 
 	{
@@ -109,80 +109,80 @@ func (p *ListProductserverParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ListProductserverParam) ResourceDef() *schema.Resource {
+func (p *ListProductServerParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProductServer"]
 }
 
-func (p *ListProductserverParam) CommandDef() *schema.Command {
+func (p *ListProductServerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["list"]
 }
 
-func (p *ListProductserverParam) IncludeFields() []string {
+func (p *ListProductServerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ListProductserverParam) ExcludeFields() []string {
+func (p *ListProductServerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ListProductserverParam) TableType() output.TableType {
+func (p *ListProductServerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ListProductserverParam) ColumnDefs() []output.ColumnDef {
+func (p *ListProductServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListProductserverParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListProductserverParam) GetName() []string {
-	return p.Name
-}
-func (p *ListProductserverParam) SetId(v []sacloud.ID) {
-	p.Id = v
-}
-
-func (p *ListProductserverParam) GetId() []sacloud.ID {
-	return p.Id
-}
-func (p *ListProductserverParam) SetFrom(v int) {
+func (p *ListProductServerParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListProductserverParam) GetFrom() int {
+func (p *ListProductServerParam) GetFrom() int {
 	return p.From
 }
-func (p *ListProductserverParam) SetMax(v int) {
+func (p *ListProductServerParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListProductserverParam) GetMax() int {
+func (p *ListProductServerParam) GetMax() int {
 	return p.Max
 }
-func (p *ListProductserverParam) SetSort(v []string) {
+func (p *ListProductServerParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListProductserverParam) GetSort() []string {
+func (p *ListProductServerParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListProductServerParam) SetName(v []string) {
+	p.Name = v
+}
 
-// ReadProductserverParam is input parameters for the sacloud API
-type ReadProductserverParam struct {
+func (p *ListProductServerParam) GetName() []string {
+	return p.Name
+}
+func (p *ListProductServerParam) SetId(v []sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ListProductServerParam) GetId() []sacloud.ID {
+	return p.Id
+}
+
+// ReadProductServerParam is input parameters for the sacloud API
+type ReadProductServerParam struct {
 	Id sacloud.ID
 
 	input Input
 }
 
-// NewReadProductserverParam return new ReadProductserverParam
-func NewReadProductserverParam() *ReadProductserverParam {
-	return &ReadProductserverParam{}
+// NewReadProductServerParam return new ReadProductServerParam
+func NewReadProductServerParam() *ReadProductServerParam {
+	return &ReadProductServerParam{}
 }
 
-// Initialize init ReadProductserverParam
-func (p *ReadProductserverParam) Initialize(in Input) error {
+// Initialize init ReadProductServerParam
+func (p *ReadProductServerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -191,18 +191,18 @@ func (p *ReadProductserverParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ReadProductserverParam) WriteSkeleton(writer io.Writer) error {
+func (p *ReadProductServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadProductserverParam) fillValueToSkeleton() {
+func (p *ReadProductServerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
 }
 
-func (p *ReadProductserverParam) validate() error {
+func (p *ReadProductServerParam) validate() error {
 	var errors []error
 
 	{
@@ -223,34 +223,34 @@ func (p *ReadProductserverParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ReadProductserverParam) ResourceDef() *schema.Resource {
+func (p *ReadProductServerParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProductServer"]
 }
 
-func (p *ReadProductserverParam) CommandDef() *schema.Command {
+func (p *ReadProductServerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["read"]
 }
 
-func (p *ReadProductserverParam) IncludeFields() []string {
+func (p *ReadProductServerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ReadProductserverParam) ExcludeFields() []string {
+func (p *ReadProductServerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ReadProductserverParam) TableType() output.TableType {
+func (p *ReadProductServerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ReadProductserverParam) ColumnDefs() []output.ColumnDef {
+func (p *ReadProductServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ReadProductserverParam) SetId(v sacloud.ID) {
+func (p *ReadProductServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadProductserverParam) GetId() sacloud.ID {
+func (p *ReadProductServerParam) GetId() sacloud.ID {
 	return p.Id
 }

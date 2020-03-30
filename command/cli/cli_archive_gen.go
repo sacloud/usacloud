@@ -39,8 +39,8 @@ func init() {
 	archiveDeleteParam := params.NewDeleteArchiveParam()
 	archiveUploadParam := params.NewUploadArchiveParam()
 	archiveDownloadParam := params.NewDownloadArchiveParam()
-	archiveFtpOpenParam := params.NewFtpOpenArchiveParam()
-	archiveFtpCloseParam := params.NewFtpCloseArchiveParam()
+	archiveFTPOpenParam := params.NewFTPOpenArchiveParam()
+	archiveFTPCloseParam := params.NewFTPCloseArchiveParam()
 	archiveWaitForCopyParam := params.NewWaitForCopyArchiveParam()
 
 	cliCommand := &cli.Command{
@@ -1824,7 +1824,7 @@ func init() {
 			},
 			{
 				Name:      "ftp-open",
-				Usage:     "FtpOpen Archive",
+				Usage:     "FTPOpen Archive",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1903,66 +1903,66 @@ func init() {
 						return err
 					}
 
-					archiveFtpOpenParam.ParamTemplate = c.String("param-template")
-					archiveFtpOpenParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(archiveFtpOpenParam)
+					archiveFTPOpenParam.ParamTemplate = c.String("param-template")
+					archiveFTPOpenParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(archiveFTPOpenParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewFtpOpenArchiveParam()
+						p := params.NewFTPOpenArchiveParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(archiveFtpOpenParam, p, mergo.WithOverride)
+						mergo.Merge(archiveFTPOpenParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						archiveFtpOpenParam.Selector = c.StringSlice("selector")
+						archiveFTPOpenParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						archiveFtpOpenParam.Assumeyes = c.Bool("assumeyes")
+						archiveFTPOpenParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						archiveFtpOpenParam.ParamTemplate = c.String("param-template")
+						archiveFTPOpenParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						archiveFtpOpenParam.Parameters = c.String("parameters")
+						archiveFTPOpenParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						archiveFtpOpenParam.ParamTemplateFile = c.String("param-template-file")
+						archiveFTPOpenParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						archiveFtpOpenParam.ParameterFile = c.String("parameter-file")
+						archiveFTPOpenParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						archiveFtpOpenParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						archiveFTPOpenParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						archiveFtpOpenParam.OutputType = c.String("output-type")
+						archiveFTPOpenParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						archiveFtpOpenParam.Column = c.StringSlice("column")
+						archiveFTPOpenParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						archiveFtpOpenParam.Quiet = c.Bool("quiet")
+						archiveFTPOpenParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						archiveFtpOpenParam.Format = c.String("format")
+						archiveFTPOpenParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						archiveFtpOpenParam.FormatFile = c.String("format-file")
+						archiveFTPOpenParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						archiveFtpOpenParam.Query = c.String("query")
+						archiveFTPOpenParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						archiveFtpOpenParam.QueryFile = c.String("query-file")
+						archiveFTPOpenParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						archiveFtpOpenParam.Id = sacloud.ID(c.Int64("id"))
+						archiveFTPOpenParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1970,7 +1970,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = archiveFtpOpenParam
+					var outputTypeHolder interface{} = archiveFTPOpenParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1981,10 +1981,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if archiveFtpOpenParam.GenerateSkeleton {
-						archiveFtpOpenParam.GenerateSkeleton = false
-						archiveFtpOpenParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(archiveFtpOpenParam, "", "\t")
+					if archiveFTPOpenParam.GenerateSkeleton {
+						archiveFTPOpenParam.GenerateSkeleton = false
+						archiveFTPOpenParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(archiveFTPOpenParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1993,19 +1993,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := archiveFtpOpenParam.Validate(); len(errors) > 0 {
+					if errors := archiveFTPOpenParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), archiveFtpOpenParam)
+					ctx := command.NewContext(c, c.Args().Slice(), archiveFTPOpenParam)
 
 					apiClient := ctx.GetAPIClient().Archive
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(archiveFtpOpenParam.Selector) == 0 {
+						if len(archiveFTPOpenParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2014,12 +2014,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Archives {
-							if hasTags(&v, archiveFtpOpenParam.Selector) {
+							if hasTags(&v, archiveFTPOpenParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", archiveFtpOpenParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", archiveFTPOpenParam.Selector)
 						}
 
 					} else {
@@ -2041,7 +2041,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Archives {
-										if len(archiveFtpOpenParam.Selector) == 0 || hasTags(&v, archiveFtpOpenParam.Selector) {
+										if len(archiveFTPOpenParam.Selector) == 0 || hasTags(&v, archiveFTPOpenParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2058,7 +2058,7 @@ func init() {
 					}
 
 					// confirm
-					if !archiveFtpOpenParam.Assumeyes {
+					if !archiveFTPOpenParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2072,11 +2072,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						archiveFtpOpenParam.SetId(id)
-						p := *archiveFtpOpenParam // copy struct value
-						archiveFtpOpenParam := &p
+						archiveFTPOpenParam.SetId(id)
+						p := *archiveFTPOpenParam // copy struct value
+						archiveFTPOpenParam := &p
 						go func() {
-							err := funcs.ArchiveFtpOpen(ctx, archiveFtpOpenParam)
+							err := funcs.ArchiveFTPOpen(ctx, archiveFTPOpenParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2090,7 +2090,7 @@ func init() {
 			},
 			{
 				Name:      "ftp-close",
-				Usage:     "FtpClose Archive",
+				Usage:     "FTPClose Archive",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2137,45 +2137,45 @@ func init() {
 						return err
 					}
 
-					archiveFtpCloseParam.ParamTemplate = c.String("param-template")
-					archiveFtpCloseParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(archiveFtpCloseParam)
+					archiveFTPCloseParam.ParamTemplate = c.String("param-template")
+					archiveFTPCloseParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(archiveFTPCloseParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewFtpCloseArchiveParam()
+						p := params.NewFTPCloseArchiveParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(archiveFtpCloseParam, p, mergo.WithOverride)
+						mergo.Merge(archiveFTPCloseParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						archiveFtpCloseParam.Selector = c.StringSlice("selector")
+						archiveFTPCloseParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						archiveFtpCloseParam.Assumeyes = c.Bool("assumeyes")
+						archiveFTPCloseParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						archiveFtpCloseParam.ParamTemplate = c.String("param-template")
+						archiveFTPCloseParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						archiveFtpCloseParam.Parameters = c.String("parameters")
+						archiveFTPCloseParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						archiveFtpCloseParam.ParamTemplateFile = c.String("param-template-file")
+						archiveFTPCloseParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						archiveFtpCloseParam.ParameterFile = c.String("parameter-file")
+						archiveFTPCloseParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						archiveFtpCloseParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						archiveFTPCloseParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						archiveFtpCloseParam.Id = sacloud.ID(c.Int64("id"))
+						archiveFTPCloseParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2183,7 +2183,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = archiveFtpCloseParam
+					var outputTypeHolder interface{} = archiveFTPCloseParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2194,10 +2194,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if archiveFtpCloseParam.GenerateSkeleton {
-						archiveFtpCloseParam.GenerateSkeleton = false
-						archiveFtpCloseParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(archiveFtpCloseParam, "", "\t")
+					if archiveFTPCloseParam.GenerateSkeleton {
+						archiveFTPCloseParam.GenerateSkeleton = false
+						archiveFTPCloseParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(archiveFTPCloseParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2206,19 +2206,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := archiveFtpCloseParam.Validate(); len(errors) > 0 {
+					if errors := archiveFTPCloseParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), archiveFtpCloseParam)
+					ctx := command.NewContext(c, c.Args().Slice(), archiveFTPCloseParam)
 
 					apiClient := ctx.GetAPIClient().Archive
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(archiveFtpCloseParam.Selector) == 0 {
+						if len(archiveFTPCloseParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2227,12 +2227,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Archives {
-							if hasTags(&v, archiveFtpCloseParam.Selector) {
+							if hasTags(&v, archiveFTPCloseParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", archiveFtpCloseParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", archiveFTPCloseParam.Selector)
 						}
 
 					} else {
@@ -2254,7 +2254,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Archives {
-										if len(archiveFtpCloseParam.Selector) == 0 || hasTags(&v, archiveFtpCloseParam.Selector) {
+										if len(archiveFTPCloseParam.Selector) == 0 || hasTags(&v, archiveFTPCloseParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2271,7 +2271,7 @@ func init() {
 					}
 
 					// confirm
-					if !archiveFtpCloseParam.Assumeyes {
+					if !archiveFTPCloseParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2285,11 +2285,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						archiveFtpCloseParam.SetId(id)
-						p := *archiveFtpCloseParam // copy struct value
-						archiveFtpCloseParam := &p
+						archiveFTPCloseParam.SetId(id)
+						p := *archiveFTPCloseParam // copy struct value
+						archiveFTPCloseParam := &p
 						go func() {
-							err := funcs.ArchiveFtpClose(ctx, archiveFtpCloseParam)
+							err := funcs.ArchiveFTPClose(ctx, archiveFTPCloseParam)
 							if err != nil {
 								errs = append(errs, err)
 							}

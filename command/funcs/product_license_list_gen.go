@@ -23,10 +23,10 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ProductlicenseList(ctx command.Context, params *params.ListProductlicenseParam) error {
+func ProductLicenseList(ctx command.Context, params *params.ListProductLicenseParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetProductlicenseAPI()
+	finder := client.GetProductLicenseAPI()
 
 	finder.SetEmpty()
 
@@ -55,7 +55,7 @@ func ProductlicenseList(ctx command.Context, params *params.ListProductlicensePa
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("ProductlicenseList is failed: %s", err)
+		return fmt.Errorf("ProductLicenseList is failed: %s", err)
 	}
 
 	list := []interface{}{}

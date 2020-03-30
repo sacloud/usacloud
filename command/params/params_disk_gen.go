@@ -1621,7 +1621,7 @@ func (p *DeleteDiskParam) GetId() sacloud.ID {
 type EditDiskParam struct {
 	Hostname            string       `json:"hostname"`
 	Password            string       `json:"password"`
-	SshKeyIds           []sacloud.ID `json:"ssh-key-ids"`
+	SSHKeyIds           []sacloud.ID `json:"ssh-key-ids"`
 	DisablePasswordAuth bool         `json:"disable-password-auth"`
 	Ipaddress           string       `json:"ipaddress"`
 	DefaultRoute        string       `json:"default-route"`
@@ -1660,8 +1660,8 @@ func (p *EditDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.Password) {
 		p.Password = ""
 	}
-	if isEmpty(p.SshKeyIds) {
-		p.SshKeyIds = []sacloud.ID{}
+	if isEmpty(p.SSHKeyIds) {
+		p.SSHKeyIds = []sacloud.ID{}
 	}
 	if isEmpty(p.DisablePasswordAuth) {
 		p.DisablePasswordAuth = false
@@ -1731,7 +1731,7 @@ func (p *EditDiskParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["Disk"].Commands["edit"].Params["ssh-key-ids"].ValidateFunc
-		errs := validator("--ssh-key-ids", p.SshKeyIds)
+		errs := validator("--ssh-key-ids", p.SSHKeyIds)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1819,12 +1819,12 @@ func (p *EditDiskParam) SetPassword(v string) {
 func (p *EditDiskParam) GetPassword() string {
 	return p.Password
 }
-func (p *EditDiskParam) SetSshKeyIds(v []sacloud.ID) {
-	p.SshKeyIds = v
+func (p *EditDiskParam) SetSSHKeyIds(v []sacloud.ID) {
+	p.SSHKeyIds = v
 }
 
-func (p *EditDiskParam) GetSshKeyIds() []sacloud.ID {
-	return p.SshKeyIds
+func (p *EditDiskParam) GetSSHKeyIds() []sacloud.ID {
+	return p.SSHKeyIds
 }
 func (p *EditDiskParam) SetDisablePasswordAuth(v bool) {
 	p.DisablePasswordAuth = v

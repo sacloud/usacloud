@@ -23,8 +23,8 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListSimplemonitorParam is input parameters for the sacloud API
-type ListSimplemonitorParam struct {
+// ListSimpleMonitorParam is input parameters for the sacloud API
+type ListSimpleMonitorParam struct {
 	Name              []string     `json:"name"`
 	Id                []sacloud.ID `json:"id"`
 	Tags              []string     `json:"tags"`
@@ -46,13 +46,13 @@ type ListSimplemonitorParam struct {
 	QueryFile         string       `json:"query-file"`
 }
 
-// NewListSimplemonitorParam return new ListSimplemonitorParam
-func NewListSimplemonitorParam() *ListSimplemonitorParam {
-	return &ListSimplemonitorParam{}
+// NewListSimpleMonitorParam return new ListSimpleMonitorParam
+func NewListSimpleMonitorParam() *ListSimpleMonitorParam {
+	return &ListSimpleMonitorParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListSimplemonitorParam) FillValueToSkeleton() {
+func (p *ListSimpleMonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -114,7 +114,7 @@ func (p *ListSimplemonitorParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListSimplemonitorParam) Validate() []error {
+func (p *ListSimpleMonitorParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
@@ -179,166 +179,166 @@ func (p *ListSimplemonitorParam) Validate() []error {
 	return errors
 }
 
-func (p *ListSimplemonitorParam) GetResourceDef() *schema.Resource {
+func (p *ListSimpleMonitorParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SimpleMonitor"]
 }
 
-func (p *ListSimplemonitorParam) GetCommandDef() *schema.Command {
+func (p *ListSimpleMonitorParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListSimplemonitorParam) GetIncludeFields() []string {
+func (p *ListSimpleMonitorParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListSimplemonitorParam) GetExcludeFields() []string {
+func (p *ListSimpleMonitorParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListSimplemonitorParam) GetTableType() output.TableType {
+func (p *ListSimpleMonitorParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListSimplemonitorParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListSimplemonitorParam) SetName(v []string) {
+func (p *ListSimpleMonitorParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListSimplemonitorParam) GetName() []string {
+func (p *ListSimpleMonitorParam) GetName() []string {
 	return p.Name
 }
-func (p *ListSimplemonitorParam) SetId(v []sacloud.ID) {
+func (p *ListSimpleMonitorParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListSimplemonitorParam) GetId() []sacloud.ID {
+func (p *ListSimpleMonitorParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListSimplemonitorParam) SetTags(v []string) {
+func (p *ListSimpleMonitorParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *ListSimplemonitorParam) GetTags() []string {
+func (p *ListSimpleMonitorParam) GetTags() []string {
 	return p.Tags
 }
-func (p *ListSimplemonitorParam) SetHealth(v string) {
+func (p *ListSimpleMonitorParam) SetHealth(v string) {
 	p.Health = v
 }
 
-func (p *ListSimplemonitorParam) GetHealth() string {
+func (p *ListSimpleMonitorParam) GetHealth() string {
 	return p.Health
 }
-func (p *ListSimplemonitorParam) SetFrom(v int) {
+func (p *ListSimpleMonitorParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListSimplemonitorParam) GetFrom() int {
+func (p *ListSimpleMonitorParam) GetFrom() int {
 	return p.From
 }
-func (p *ListSimplemonitorParam) SetMax(v int) {
+func (p *ListSimpleMonitorParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListSimplemonitorParam) GetMax() int {
+func (p *ListSimpleMonitorParam) GetMax() int {
 	return p.Max
 }
-func (p *ListSimplemonitorParam) SetSort(v []string) {
+func (p *ListSimpleMonitorParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListSimplemonitorParam) GetSort() []string {
+func (p *ListSimpleMonitorParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListSimplemonitorParam) SetParamTemplate(v string) {
+func (p *ListSimpleMonitorParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListSimplemonitorParam) GetParamTemplate() string {
+func (p *ListSimpleMonitorParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListSimplemonitorParam) SetParameters(v string) {
+func (p *ListSimpleMonitorParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ListSimplemonitorParam) GetParameters() string {
+func (p *ListSimpleMonitorParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ListSimplemonitorParam) SetParamTemplateFile(v string) {
+func (p *ListSimpleMonitorParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListSimplemonitorParam) GetParamTemplateFile() string {
+func (p *ListSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListSimplemonitorParam) SetParameterFile(v string) {
+func (p *ListSimpleMonitorParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ListSimplemonitorParam) GetParameterFile() string {
+func (p *ListSimpleMonitorParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ListSimplemonitorParam) SetGenerateSkeleton(v bool) {
+func (p *ListSimpleMonitorParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListSimplemonitorParam) GetGenerateSkeleton() bool {
+func (p *ListSimpleMonitorParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListSimplemonitorParam) SetOutputType(v string) {
+func (p *ListSimpleMonitorParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListSimplemonitorParam) GetOutputType() string {
+func (p *ListSimpleMonitorParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListSimplemonitorParam) SetColumn(v []string) {
+func (p *ListSimpleMonitorParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListSimplemonitorParam) GetColumn() []string {
+func (p *ListSimpleMonitorParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ListSimplemonitorParam) SetQuiet(v bool) {
+func (p *ListSimpleMonitorParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListSimplemonitorParam) GetQuiet() bool {
+func (p *ListSimpleMonitorParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListSimplemonitorParam) SetFormat(v string) {
+func (p *ListSimpleMonitorParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListSimplemonitorParam) GetFormat() string {
+func (p *ListSimpleMonitorParam) GetFormat() string {
 	return p.Format
 }
-func (p *ListSimplemonitorParam) SetFormatFile(v string) {
+func (p *ListSimpleMonitorParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListSimplemonitorParam) GetFormatFile() string {
+func (p *ListSimpleMonitorParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListSimplemonitorParam) SetQuery(v string) {
+func (p *ListSimpleMonitorParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListSimplemonitorParam) GetQuery() string {
+func (p *ListSimpleMonitorParam) GetQuery() string {
 	return p.Query
 }
-func (p *ListSimplemonitorParam) SetQueryFile(v string) {
+func (p *ListSimpleMonitorParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListSimplemonitorParam) GetQueryFile() string {
+func (p *ListSimpleMonitorParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// CreateSimplemonitorParam is input parameters for the sacloud API
-type CreateSimplemonitorParam struct {
+// CreateSimpleMonitorParam is input parameters for the sacloud API
+type CreateSimpleMonitorParam struct {
 	Target            string     `json:"target"`
 	Protocol          string     `json:"protocol"`
 	Port              int        `json:"port"`
@@ -350,8 +350,8 @@ type CreateSimplemonitorParam struct {
 	Sni               bool       `json:"sni"`
 	Username          string     `json:"username"`
 	Password          string     `json:"password"`
-	DnsQname          string     `json:"dns-qname"`
-	DnsExcepted       string     `json:"dns-excepted"`
+	DNSQname          string     `json:"dns-qname"`
+	DNSExcepted       string     `json:"dns-excepted"`
 	RemainingDays     int        `json:"remaining-days"`
 	NotifyEmail       bool       `json:"notify-email"`
 	EmailType         string     `json:"email-type"`
@@ -375,9 +375,9 @@ type CreateSimplemonitorParam struct {
 	QueryFile         string     `json:"query-file"`
 }
 
-// NewCreateSimplemonitorParam return new CreateSimplemonitorParam
-func NewCreateSimplemonitorParam() *CreateSimplemonitorParam {
-	return &CreateSimplemonitorParam{
+// NewCreateSimpleMonitorParam return new CreateSimpleMonitorParam
+func NewCreateSimpleMonitorParam() *CreateSimpleMonitorParam {
+	return &CreateSimpleMonitorParam{
 
 		Protocol:       "ping",
 		DelayLoop:      1,
@@ -389,7 +389,7 @@ func NewCreateSimplemonitorParam() *CreateSimplemonitorParam {
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CreateSimplemonitorParam) FillValueToSkeleton() {
+func (p *CreateSimpleMonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.Target) {
 		p.Target = ""
 	}
@@ -423,11 +423,11 @@ func (p *CreateSimplemonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.Password) {
 		p.Password = ""
 	}
-	if isEmpty(p.DnsQname) {
-		p.DnsQname = ""
+	if isEmpty(p.DNSQname) {
+		p.DNSQname = ""
 	}
-	if isEmpty(p.DnsExcepted) {
-		p.DnsExcepted = ""
+	if isEmpty(p.DNSExcepted) {
+		p.DNSExcepted = ""
 	}
 	if isEmpty(p.RemainingDays) {
 		p.RemainingDays = 0
@@ -496,7 +496,7 @@ func (p *CreateSimplemonitorParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CreateSimplemonitorParam) Validate() []error {
+func (p *CreateSimpleMonitorParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -606,271 +606,271 @@ func (p *CreateSimplemonitorParam) Validate() []error {
 	return errors
 }
 
-func (p *CreateSimplemonitorParam) GetResourceDef() *schema.Resource {
+func (p *CreateSimpleMonitorParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SimpleMonitor"]
 }
 
-func (p *CreateSimplemonitorParam) GetCommandDef() *schema.Command {
+func (p *CreateSimpleMonitorParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["create"]
 }
 
-func (p *CreateSimplemonitorParam) GetIncludeFields() []string {
+func (p *CreateSimpleMonitorParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CreateSimplemonitorParam) GetExcludeFields() []string {
+func (p *CreateSimpleMonitorParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CreateSimplemonitorParam) GetTableType() output.TableType {
+func (p *CreateSimpleMonitorParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CreateSimplemonitorParam) GetColumnDefs() []output.ColumnDef {
+func (p *CreateSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CreateSimplemonitorParam) SetTarget(v string) {
+func (p *CreateSimpleMonitorParam) SetTarget(v string) {
 	p.Target = v
 }
 
-func (p *CreateSimplemonitorParam) GetTarget() string {
+func (p *CreateSimpleMonitorParam) GetTarget() string {
 	return p.Target
 }
-func (p *CreateSimplemonitorParam) SetProtocol(v string) {
+func (p *CreateSimpleMonitorParam) SetProtocol(v string) {
 	p.Protocol = v
 }
 
-func (p *CreateSimplemonitorParam) GetProtocol() string {
+func (p *CreateSimpleMonitorParam) GetProtocol() string {
 	return p.Protocol
 }
-func (p *CreateSimplemonitorParam) SetPort(v int) {
+func (p *CreateSimpleMonitorParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *CreateSimplemonitorParam) GetPort() int {
+func (p *CreateSimpleMonitorParam) GetPort() int {
 	return p.Port
 }
-func (p *CreateSimplemonitorParam) SetDelayLoop(v int) {
+func (p *CreateSimpleMonitorParam) SetDelayLoop(v int) {
 	p.DelayLoop = v
 }
 
-func (p *CreateSimplemonitorParam) GetDelayLoop() int {
+func (p *CreateSimpleMonitorParam) GetDelayLoop() int {
 	return p.DelayLoop
 }
-func (p *CreateSimplemonitorParam) SetDisabled(v bool) {
+func (p *CreateSimpleMonitorParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
 
-func (p *CreateSimplemonitorParam) GetDisabled() bool {
+func (p *CreateSimpleMonitorParam) GetDisabled() bool {
 	return p.Disabled
 }
-func (p *CreateSimplemonitorParam) SetHostHeader(v string) {
+func (p *CreateSimpleMonitorParam) SetHostHeader(v string) {
 	p.HostHeader = v
 }
 
-func (p *CreateSimplemonitorParam) GetHostHeader() string {
+func (p *CreateSimpleMonitorParam) GetHostHeader() string {
 	return p.HostHeader
 }
-func (p *CreateSimplemonitorParam) SetPath(v string) {
+func (p *CreateSimpleMonitorParam) SetPath(v string) {
 	p.Path = v
 }
 
-func (p *CreateSimplemonitorParam) GetPath() string {
+func (p *CreateSimpleMonitorParam) GetPath() string {
 	return p.Path
 }
-func (p *CreateSimplemonitorParam) SetResponseCode(v int) {
+func (p *CreateSimpleMonitorParam) SetResponseCode(v int) {
 	p.ResponseCode = v
 }
 
-func (p *CreateSimplemonitorParam) GetResponseCode() int {
+func (p *CreateSimpleMonitorParam) GetResponseCode() int {
 	return p.ResponseCode
 }
-func (p *CreateSimplemonitorParam) SetSni(v bool) {
+func (p *CreateSimpleMonitorParam) SetSni(v bool) {
 	p.Sni = v
 }
 
-func (p *CreateSimplemonitorParam) GetSni() bool {
+func (p *CreateSimpleMonitorParam) GetSni() bool {
 	return p.Sni
 }
-func (p *CreateSimplemonitorParam) SetUsername(v string) {
+func (p *CreateSimpleMonitorParam) SetUsername(v string) {
 	p.Username = v
 }
 
-func (p *CreateSimplemonitorParam) GetUsername() string {
+func (p *CreateSimpleMonitorParam) GetUsername() string {
 	return p.Username
 }
-func (p *CreateSimplemonitorParam) SetPassword(v string) {
+func (p *CreateSimpleMonitorParam) SetPassword(v string) {
 	p.Password = v
 }
 
-func (p *CreateSimplemonitorParam) GetPassword() string {
+func (p *CreateSimpleMonitorParam) GetPassword() string {
 	return p.Password
 }
-func (p *CreateSimplemonitorParam) SetDnsQname(v string) {
-	p.DnsQname = v
+func (p *CreateSimpleMonitorParam) SetDNSQname(v string) {
+	p.DNSQname = v
 }
 
-func (p *CreateSimplemonitorParam) GetDnsQname() string {
-	return p.DnsQname
+func (p *CreateSimpleMonitorParam) GetDNSQname() string {
+	return p.DNSQname
 }
-func (p *CreateSimplemonitorParam) SetDnsExcepted(v string) {
-	p.DnsExcepted = v
+func (p *CreateSimpleMonitorParam) SetDNSExcepted(v string) {
+	p.DNSExcepted = v
 }
 
-func (p *CreateSimplemonitorParam) GetDnsExcepted() string {
-	return p.DnsExcepted
+func (p *CreateSimpleMonitorParam) GetDNSExcepted() string {
+	return p.DNSExcepted
 }
-func (p *CreateSimplemonitorParam) SetRemainingDays(v int) {
+func (p *CreateSimpleMonitorParam) SetRemainingDays(v int) {
 	p.RemainingDays = v
 }
 
-func (p *CreateSimplemonitorParam) GetRemainingDays() int {
+func (p *CreateSimpleMonitorParam) GetRemainingDays() int {
 	return p.RemainingDays
 }
-func (p *CreateSimplemonitorParam) SetNotifyEmail(v bool) {
+func (p *CreateSimpleMonitorParam) SetNotifyEmail(v bool) {
 	p.NotifyEmail = v
 }
 
-func (p *CreateSimplemonitorParam) GetNotifyEmail() bool {
+func (p *CreateSimpleMonitorParam) GetNotifyEmail() bool {
 	return p.NotifyEmail
 }
-func (p *CreateSimplemonitorParam) SetEmailType(v string) {
+func (p *CreateSimpleMonitorParam) SetEmailType(v string) {
 	p.EmailType = v
 }
 
-func (p *CreateSimplemonitorParam) GetEmailType() string {
+func (p *CreateSimpleMonitorParam) GetEmailType() string {
 	return p.EmailType
 }
-func (p *CreateSimplemonitorParam) SetSlackWebhook(v string) {
+func (p *CreateSimpleMonitorParam) SetSlackWebhook(v string) {
 	p.SlackWebhook = v
 }
 
-func (p *CreateSimplemonitorParam) GetSlackWebhook() string {
+func (p *CreateSimpleMonitorParam) GetSlackWebhook() string {
 	return p.SlackWebhook
 }
-func (p *CreateSimplemonitorParam) SetNotifyInterval(v int) {
+func (p *CreateSimpleMonitorParam) SetNotifyInterval(v int) {
 	p.NotifyInterval = v
 }
 
-func (p *CreateSimplemonitorParam) GetNotifyInterval() int {
+func (p *CreateSimpleMonitorParam) GetNotifyInterval() int {
 	return p.NotifyInterval
 }
-func (p *CreateSimplemonitorParam) SetDescription(v string) {
+func (p *CreateSimpleMonitorParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *CreateSimplemonitorParam) GetDescription() string {
+func (p *CreateSimpleMonitorParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateSimplemonitorParam) SetTags(v []string) {
+func (p *CreateSimpleMonitorParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreateSimplemonitorParam) GetTags() []string {
+func (p *CreateSimpleMonitorParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateSimplemonitorParam) SetIconId(v sacloud.ID) {
+func (p *CreateSimpleMonitorParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateSimplemonitorParam) GetIconId() sacloud.ID {
+func (p *CreateSimpleMonitorParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *CreateSimplemonitorParam) SetAssumeyes(v bool) {
+func (p *CreateSimpleMonitorParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *CreateSimplemonitorParam) GetAssumeyes() bool {
+func (p *CreateSimpleMonitorParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CreateSimplemonitorParam) SetParamTemplate(v string) {
+func (p *CreateSimpleMonitorParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CreateSimplemonitorParam) GetParamTemplate() string {
+func (p *CreateSimpleMonitorParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CreateSimplemonitorParam) SetParameters(v string) {
+func (p *CreateSimpleMonitorParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *CreateSimplemonitorParam) GetParameters() string {
+func (p *CreateSimpleMonitorParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *CreateSimplemonitorParam) SetParamTemplateFile(v string) {
+func (p *CreateSimpleMonitorParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CreateSimplemonitorParam) GetParamTemplateFile() string {
+func (p *CreateSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CreateSimplemonitorParam) SetParameterFile(v string) {
+func (p *CreateSimpleMonitorParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *CreateSimplemonitorParam) GetParameterFile() string {
+func (p *CreateSimpleMonitorParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *CreateSimplemonitorParam) SetGenerateSkeleton(v bool) {
+func (p *CreateSimpleMonitorParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CreateSimplemonitorParam) GetGenerateSkeleton() bool {
+func (p *CreateSimpleMonitorParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CreateSimplemonitorParam) SetOutputType(v string) {
+func (p *CreateSimpleMonitorParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CreateSimplemonitorParam) GetOutputType() string {
+func (p *CreateSimpleMonitorParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CreateSimplemonitorParam) SetColumn(v []string) {
+func (p *CreateSimpleMonitorParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CreateSimplemonitorParam) GetColumn() []string {
+func (p *CreateSimpleMonitorParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CreateSimplemonitorParam) SetQuiet(v bool) {
+func (p *CreateSimpleMonitorParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CreateSimplemonitorParam) GetQuiet() bool {
+func (p *CreateSimpleMonitorParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CreateSimplemonitorParam) SetFormat(v string) {
+func (p *CreateSimpleMonitorParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CreateSimplemonitorParam) GetFormat() string {
+func (p *CreateSimpleMonitorParam) GetFormat() string {
 	return p.Format
 }
-func (p *CreateSimplemonitorParam) SetFormatFile(v string) {
+func (p *CreateSimpleMonitorParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CreateSimplemonitorParam) GetFormatFile() string {
+func (p *CreateSimpleMonitorParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CreateSimplemonitorParam) SetQuery(v string) {
+func (p *CreateSimpleMonitorParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CreateSimplemonitorParam) GetQuery() string {
+func (p *CreateSimpleMonitorParam) GetQuery() string {
 	return p.Query
 }
-func (p *CreateSimplemonitorParam) SetQueryFile(v string) {
+func (p *CreateSimpleMonitorParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CreateSimplemonitorParam) GetQueryFile() string {
+func (p *CreateSimpleMonitorParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// ReadSimplemonitorParam is input parameters for the sacloud API
-type ReadSimplemonitorParam struct {
+// ReadSimpleMonitorParam is input parameters for the sacloud API
+type ReadSimpleMonitorParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
 	Parameters        string     `json:"parameters"`
@@ -887,13 +887,13 @@ type ReadSimplemonitorParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewReadSimplemonitorParam return new ReadSimplemonitorParam
-func NewReadSimplemonitorParam() *ReadSimplemonitorParam {
-	return &ReadSimplemonitorParam{}
+// NewReadSimpleMonitorParam return new ReadSimpleMonitorParam
+func NewReadSimpleMonitorParam() *ReadSimpleMonitorParam {
+	return &ReadSimpleMonitorParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ReadSimplemonitorParam) FillValueToSkeleton() {
+func (p *ReadSimpleMonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -940,7 +940,7 @@ func (p *ReadSimplemonitorParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ReadSimplemonitorParam) Validate() []error {
+func (p *ReadSimpleMonitorParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -973,131 +973,131 @@ func (p *ReadSimplemonitorParam) Validate() []error {
 	return errors
 }
 
-func (p *ReadSimplemonitorParam) GetResourceDef() *schema.Resource {
+func (p *ReadSimpleMonitorParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SimpleMonitor"]
 }
 
-func (p *ReadSimplemonitorParam) GetCommandDef() *schema.Command {
+func (p *ReadSimpleMonitorParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["read"]
 }
 
-func (p *ReadSimplemonitorParam) GetIncludeFields() []string {
+func (p *ReadSimpleMonitorParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ReadSimplemonitorParam) GetExcludeFields() []string {
+func (p *ReadSimpleMonitorParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ReadSimplemonitorParam) GetTableType() output.TableType {
+func (p *ReadSimpleMonitorParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ReadSimplemonitorParam) GetColumnDefs() []output.ColumnDef {
+func (p *ReadSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReadSimplemonitorParam) SetSelector(v []string) {
+func (p *ReadSimpleMonitorParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ReadSimplemonitorParam) GetSelector() []string {
+func (p *ReadSimpleMonitorParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ReadSimplemonitorParam) SetParamTemplate(v string) {
+func (p *ReadSimpleMonitorParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ReadSimplemonitorParam) GetParamTemplate() string {
+func (p *ReadSimpleMonitorParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ReadSimplemonitorParam) SetParameters(v string) {
+func (p *ReadSimpleMonitorParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ReadSimplemonitorParam) GetParameters() string {
+func (p *ReadSimpleMonitorParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ReadSimplemonitorParam) SetParamTemplateFile(v string) {
+func (p *ReadSimpleMonitorParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ReadSimplemonitorParam) GetParamTemplateFile() string {
+func (p *ReadSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ReadSimplemonitorParam) SetParameterFile(v string) {
+func (p *ReadSimpleMonitorParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ReadSimplemonitorParam) GetParameterFile() string {
+func (p *ReadSimpleMonitorParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ReadSimplemonitorParam) SetGenerateSkeleton(v bool) {
+func (p *ReadSimpleMonitorParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ReadSimplemonitorParam) GetGenerateSkeleton() bool {
+func (p *ReadSimpleMonitorParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReadSimplemonitorParam) SetOutputType(v string) {
+func (p *ReadSimpleMonitorParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ReadSimplemonitorParam) GetOutputType() string {
+func (p *ReadSimpleMonitorParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ReadSimplemonitorParam) SetColumn(v []string) {
+func (p *ReadSimpleMonitorParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ReadSimplemonitorParam) GetColumn() []string {
+func (p *ReadSimpleMonitorParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ReadSimplemonitorParam) SetQuiet(v bool) {
+func (p *ReadSimpleMonitorParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ReadSimplemonitorParam) GetQuiet() bool {
+func (p *ReadSimpleMonitorParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ReadSimplemonitorParam) SetFormat(v string) {
+func (p *ReadSimpleMonitorParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ReadSimplemonitorParam) GetFormat() string {
+func (p *ReadSimpleMonitorParam) GetFormat() string {
 	return p.Format
 }
-func (p *ReadSimplemonitorParam) SetFormatFile(v string) {
+func (p *ReadSimpleMonitorParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ReadSimplemonitorParam) GetFormatFile() string {
+func (p *ReadSimpleMonitorParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ReadSimplemonitorParam) SetQuery(v string) {
+func (p *ReadSimpleMonitorParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ReadSimplemonitorParam) GetQuery() string {
+func (p *ReadSimpleMonitorParam) GetQuery() string {
 	return p.Query
 }
-func (p *ReadSimplemonitorParam) SetQueryFile(v string) {
+func (p *ReadSimpleMonitorParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ReadSimplemonitorParam) GetQueryFile() string {
+func (p *ReadSimpleMonitorParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadSimplemonitorParam) SetId(v sacloud.ID) {
+func (p *ReadSimpleMonitorParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadSimplemonitorParam) GetId() sacloud.ID {
+func (p *ReadSimpleMonitorParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// UpdateSimplemonitorParam is input parameters for the sacloud API
-type UpdateSimplemonitorParam struct {
+// UpdateSimpleMonitorParam is input parameters for the sacloud API
+type UpdateSimpleMonitorParam struct {
 	Protocol          string     `json:"protocol"`
 	Port              int        `json:"port"`
 	DelayLoop         int        `json:"delay-loop"`
@@ -1108,8 +1108,8 @@ type UpdateSimplemonitorParam struct {
 	Sni               bool       `json:"sni"`
 	Username          string     `json:"username"`
 	Password          string     `json:"password"`
-	DnsQname          string     `json:"dns-qname"`
-	DnsExcepted       string     `json:"dns-excepted"`
+	DNSQname          string     `json:"dns-qname"`
+	DNSExcepted       string     `json:"dns-excepted"`
 	RemainingDays     int        `json:"remaining-days"`
 	NotifyEmail       bool       `json:"notify-email"`
 	EmailType         string     `json:"email-type"`
@@ -1135,16 +1135,16 @@ type UpdateSimplemonitorParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewUpdateSimplemonitorParam return new UpdateSimplemonitorParam
-func NewUpdateSimplemonitorParam() *UpdateSimplemonitorParam {
-	return &UpdateSimplemonitorParam{
+// NewUpdateSimpleMonitorParam return new UpdateSimpleMonitorParam
+func NewUpdateSimpleMonitorParam() *UpdateSimpleMonitorParam {
+	return &UpdateSimpleMonitorParam{
 
 		NotifyInterval: 2,
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *UpdateSimplemonitorParam) FillValueToSkeleton() {
+func (p *UpdateSimpleMonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
@@ -1175,11 +1175,11 @@ func (p *UpdateSimplemonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.Password) {
 		p.Password = ""
 	}
-	if isEmpty(p.DnsQname) {
-		p.DnsQname = ""
+	if isEmpty(p.DNSQname) {
+		p.DNSQname = ""
 	}
-	if isEmpty(p.DnsExcepted) {
-		p.DnsExcepted = ""
+	if isEmpty(p.DNSExcepted) {
+		p.DNSExcepted = ""
 	}
 	if isEmpty(p.RemainingDays) {
 		p.RemainingDays = 0
@@ -1254,7 +1254,7 @@ func (p *UpdateSimplemonitorParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *UpdateSimplemonitorParam) Validate() []error {
+func (p *UpdateSimpleMonitorParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["protocol"].ValidateFunc
@@ -1350,278 +1350,278 @@ func (p *UpdateSimplemonitorParam) Validate() []error {
 	return errors
 }
 
-func (p *UpdateSimplemonitorParam) GetResourceDef() *schema.Resource {
+func (p *UpdateSimpleMonitorParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SimpleMonitor"]
 }
 
-func (p *UpdateSimplemonitorParam) GetCommandDef() *schema.Command {
+func (p *UpdateSimpleMonitorParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["update"]
 }
 
-func (p *UpdateSimplemonitorParam) GetIncludeFields() []string {
+func (p *UpdateSimpleMonitorParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *UpdateSimplemonitorParam) GetExcludeFields() []string {
+func (p *UpdateSimpleMonitorParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *UpdateSimplemonitorParam) GetTableType() output.TableType {
+func (p *UpdateSimpleMonitorParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *UpdateSimplemonitorParam) GetColumnDefs() []output.ColumnDef {
+func (p *UpdateSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *UpdateSimplemonitorParam) SetProtocol(v string) {
+func (p *UpdateSimpleMonitorParam) SetProtocol(v string) {
 	p.Protocol = v
 }
 
-func (p *UpdateSimplemonitorParam) GetProtocol() string {
+func (p *UpdateSimpleMonitorParam) GetProtocol() string {
 	return p.Protocol
 }
-func (p *UpdateSimplemonitorParam) SetPort(v int) {
+func (p *UpdateSimpleMonitorParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *UpdateSimplemonitorParam) GetPort() int {
+func (p *UpdateSimpleMonitorParam) GetPort() int {
 	return p.Port
 }
-func (p *UpdateSimplemonitorParam) SetDelayLoop(v int) {
+func (p *UpdateSimpleMonitorParam) SetDelayLoop(v int) {
 	p.DelayLoop = v
 }
 
-func (p *UpdateSimplemonitorParam) GetDelayLoop() int {
+func (p *UpdateSimpleMonitorParam) GetDelayLoop() int {
 	return p.DelayLoop
 }
-func (p *UpdateSimplemonitorParam) SetDisabled(v bool) {
+func (p *UpdateSimpleMonitorParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
 
-func (p *UpdateSimplemonitorParam) GetDisabled() bool {
+func (p *UpdateSimpleMonitorParam) GetDisabled() bool {
 	return p.Disabled
 }
-func (p *UpdateSimplemonitorParam) SetHostHeader(v string) {
+func (p *UpdateSimpleMonitorParam) SetHostHeader(v string) {
 	p.HostHeader = v
 }
 
-func (p *UpdateSimplemonitorParam) GetHostHeader() string {
+func (p *UpdateSimpleMonitorParam) GetHostHeader() string {
 	return p.HostHeader
 }
-func (p *UpdateSimplemonitorParam) SetPath(v string) {
+func (p *UpdateSimpleMonitorParam) SetPath(v string) {
 	p.Path = v
 }
 
-func (p *UpdateSimplemonitorParam) GetPath() string {
+func (p *UpdateSimpleMonitorParam) GetPath() string {
 	return p.Path
 }
-func (p *UpdateSimplemonitorParam) SetResponseCode(v int) {
+func (p *UpdateSimpleMonitorParam) SetResponseCode(v int) {
 	p.ResponseCode = v
 }
 
-func (p *UpdateSimplemonitorParam) GetResponseCode() int {
+func (p *UpdateSimpleMonitorParam) GetResponseCode() int {
 	return p.ResponseCode
 }
-func (p *UpdateSimplemonitorParam) SetSni(v bool) {
+func (p *UpdateSimpleMonitorParam) SetSni(v bool) {
 	p.Sni = v
 }
 
-func (p *UpdateSimplemonitorParam) GetSni() bool {
+func (p *UpdateSimpleMonitorParam) GetSni() bool {
 	return p.Sni
 }
-func (p *UpdateSimplemonitorParam) SetUsername(v string) {
+func (p *UpdateSimpleMonitorParam) SetUsername(v string) {
 	p.Username = v
 }
 
-func (p *UpdateSimplemonitorParam) GetUsername() string {
+func (p *UpdateSimpleMonitorParam) GetUsername() string {
 	return p.Username
 }
-func (p *UpdateSimplemonitorParam) SetPassword(v string) {
+func (p *UpdateSimpleMonitorParam) SetPassword(v string) {
 	p.Password = v
 }
 
-func (p *UpdateSimplemonitorParam) GetPassword() string {
+func (p *UpdateSimpleMonitorParam) GetPassword() string {
 	return p.Password
 }
-func (p *UpdateSimplemonitorParam) SetDnsQname(v string) {
-	p.DnsQname = v
+func (p *UpdateSimpleMonitorParam) SetDNSQname(v string) {
+	p.DNSQname = v
 }
 
-func (p *UpdateSimplemonitorParam) GetDnsQname() string {
-	return p.DnsQname
+func (p *UpdateSimpleMonitorParam) GetDNSQname() string {
+	return p.DNSQname
 }
-func (p *UpdateSimplemonitorParam) SetDnsExcepted(v string) {
-	p.DnsExcepted = v
+func (p *UpdateSimpleMonitorParam) SetDNSExcepted(v string) {
+	p.DNSExcepted = v
 }
 
-func (p *UpdateSimplemonitorParam) GetDnsExcepted() string {
-	return p.DnsExcepted
+func (p *UpdateSimpleMonitorParam) GetDNSExcepted() string {
+	return p.DNSExcepted
 }
-func (p *UpdateSimplemonitorParam) SetRemainingDays(v int) {
+func (p *UpdateSimpleMonitorParam) SetRemainingDays(v int) {
 	p.RemainingDays = v
 }
 
-func (p *UpdateSimplemonitorParam) GetRemainingDays() int {
+func (p *UpdateSimpleMonitorParam) GetRemainingDays() int {
 	return p.RemainingDays
 }
-func (p *UpdateSimplemonitorParam) SetNotifyEmail(v bool) {
+func (p *UpdateSimpleMonitorParam) SetNotifyEmail(v bool) {
 	p.NotifyEmail = v
 }
 
-func (p *UpdateSimplemonitorParam) GetNotifyEmail() bool {
+func (p *UpdateSimpleMonitorParam) GetNotifyEmail() bool {
 	return p.NotifyEmail
 }
-func (p *UpdateSimplemonitorParam) SetEmailType(v string) {
+func (p *UpdateSimpleMonitorParam) SetEmailType(v string) {
 	p.EmailType = v
 }
 
-func (p *UpdateSimplemonitorParam) GetEmailType() string {
+func (p *UpdateSimpleMonitorParam) GetEmailType() string {
 	return p.EmailType
 }
-func (p *UpdateSimplemonitorParam) SetSlackWebhook(v string) {
+func (p *UpdateSimpleMonitorParam) SetSlackWebhook(v string) {
 	p.SlackWebhook = v
 }
 
-func (p *UpdateSimplemonitorParam) GetSlackWebhook() string {
+func (p *UpdateSimpleMonitorParam) GetSlackWebhook() string {
 	return p.SlackWebhook
 }
-func (p *UpdateSimplemonitorParam) SetNotifyInterval(v int) {
+func (p *UpdateSimpleMonitorParam) SetNotifyInterval(v int) {
 	p.NotifyInterval = v
 }
 
-func (p *UpdateSimplemonitorParam) GetNotifyInterval() int {
+func (p *UpdateSimpleMonitorParam) GetNotifyInterval() int {
 	return p.NotifyInterval
 }
-func (p *UpdateSimplemonitorParam) SetSelector(v []string) {
+func (p *UpdateSimpleMonitorParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *UpdateSimplemonitorParam) GetSelector() []string {
+func (p *UpdateSimpleMonitorParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *UpdateSimplemonitorParam) SetDescription(v string) {
+func (p *UpdateSimpleMonitorParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdateSimplemonitorParam) GetDescription() string {
+func (p *UpdateSimpleMonitorParam) GetDescription() string {
 	return p.Description
 }
-func (p *UpdateSimplemonitorParam) SetTags(v []string) {
+func (p *UpdateSimpleMonitorParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *UpdateSimplemonitorParam) GetTags() []string {
+func (p *UpdateSimpleMonitorParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateSimplemonitorParam) SetIconId(v sacloud.ID) {
+func (p *UpdateSimpleMonitorParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateSimplemonitorParam) GetIconId() sacloud.ID {
+func (p *UpdateSimpleMonitorParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *UpdateSimplemonitorParam) SetAssumeyes(v bool) {
+func (p *UpdateSimpleMonitorParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *UpdateSimplemonitorParam) GetAssumeyes() bool {
+func (p *UpdateSimpleMonitorParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *UpdateSimplemonitorParam) SetParamTemplate(v string) {
+func (p *UpdateSimpleMonitorParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *UpdateSimplemonitorParam) GetParamTemplate() string {
+func (p *UpdateSimpleMonitorParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *UpdateSimplemonitorParam) SetParameters(v string) {
+func (p *UpdateSimpleMonitorParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *UpdateSimplemonitorParam) GetParameters() string {
+func (p *UpdateSimpleMonitorParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *UpdateSimplemonitorParam) SetParamTemplateFile(v string) {
+func (p *UpdateSimpleMonitorParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *UpdateSimplemonitorParam) GetParamTemplateFile() string {
+func (p *UpdateSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *UpdateSimplemonitorParam) SetParameterFile(v string) {
+func (p *UpdateSimpleMonitorParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *UpdateSimplemonitorParam) GetParameterFile() string {
+func (p *UpdateSimpleMonitorParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *UpdateSimplemonitorParam) SetGenerateSkeleton(v bool) {
+func (p *UpdateSimpleMonitorParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *UpdateSimplemonitorParam) GetGenerateSkeleton() bool {
+func (p *UpdateSimpleMonitorParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *UpdateSimplemonitorParam) SetOutputType(v string) {
+func (p *UpdateSimpleMonitorParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *UpdateSimplemonitorParam) GetOutputType() string {
+func (p *UpdateSimpleMonitorParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *UpdateSimplemonitorParam) SetColumn(v []string) {
+func (p *UpdateSimpleMonitorParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *UpdateSimplemonitorParam) GetColumn() []string {
+func (p *UpdateSimpleMonitorParam) GetColumn() []string {
 	return p.Column
 }
-func (p *UpdateSimplemonitorParam) SetQuiet(v bool) {
+func (p *UpdateSimpleMonitorParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *UpdateSimplemonitorParam) GetQuiet() bool {
+func (p *UpdateSimpleMonitorParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *UpdateSimplemonitorParam) SetFormat(v string) {
+func (p *UpdateSimpleMonitorParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *UpdateSimplemonitorParam) GetFormat() string {
+func (p *UpdateSimpleMonitorParam) GetFormat() string {
 	return p.Format
 }
-func (p *UpdateSimplemonitorParam) SetFormatFile(v string) {
+func (p *UpdateSimpleMonitorParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *UpdateSimplemonitorParam) GetFormatFile() string {
+func (p *UpdateSimpleMonitorParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *UpdateSimplemonitorParam) SetQuery(v string) {
+func (p *UpdateSimpleMonitorParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *UpdateSimplemonitorParam) GetQuery() string {
+func (p *UpdateSimpleMonitorParam) GetQuery() string {
 	return p.Query
 }
-func (p *UpdateSimplemonitorParam) SetQueryFile(v string) {
+func (p *UpdateSimpleMonitorParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *UpdateSimplemonitorParam) GetQueryFile() string {
+func (p *UpdateSimpleMonitorParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateSimplemonitorParam) SetId(v sacloud.ID) {
+func (p *UpdateSimpleMonitorParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateSimplemonitorParam) GetId() sacloud.ID {
+func (p *UpdateSimpleMonitorParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// DeleteSimplemonitorParam is input parameters for the sacloud API
-type DeleteSimplemonitorParam struct {
+// DeleteSimpleMonitorParam is input parameters for the sacloud API
+type DeleteSimpleMonitorParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -1639,13 +1639,13 @@ type DeleteSimplemonitorParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewDeleteSimplemonitorParam return new DeleteSimplemonitorParam
-func NewDeleteSimplemonitorParam() *DeleteSimplemonitorParam {
-	return &DeleteSimplemonitorParam{}
+// NewDeleteSimpleMonitorParam return new DeleteSimpleMonitorParam
+func NewDeleteSimpleMonitorParam() *DeleteSimpleMonitorParam {
+	return &DeleteSimpleMonitorParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *DeleteSimplemonitorParam) FillValueToSkeleton() {
+func (p *DeleteSimpleMonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1695,7 +1695,7 @@ func (p *DeleteSimplemonitorParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *DeleteSimplemonitorParam) Validate() []error {
+func (p *DeleteSimpleMonitorParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1728,138 +1728,138 @@ func (p *DeleteSimplemonitorParam) Validate() []error {
 	return errors
 }
 
-func (p *DeleteSimplemonitorParam) GetResourceDef() *schema.Resource {
+func (p *DeleteSimpleMonitorParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SimpleMonitor"]
 }
 
-func (p *DeleteSimplemonitorParam) GetCommandDef() *schema.Command {
+func (p *DeleteSimpleMonitorParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["delete"]
 }
 
-func (p *DeleteSimplemonitorParam) GetIncludeFields() []string {
+func (p *DeleteSimpleMonitorParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *DeleteSimplemonitorParam) GetExcludeFields() []string {
+func (p *DeleteSimpleMonitorParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *DeleteSimplemonitorParam) GetTableType() output.TableType {
+func (p *DeleteSimpleMonitorParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *DeleteSimplemonitorParam) GetColumnDefs() []output.ColumnDef {
+func (p *DeleteSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DeleteSimplemonitorParam) SetSelector(v []string) {
+func (p *DeleteSimpleMonitorParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *DeleteSimplemonitorParam) GetSelector() []string {
+func (p *DeleteSimpleMonitorParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *DeleteSimplemonitorParam) SetAssumeyes(v bool) {
+func (p *DeleteSimpleMonitorParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *DeleteSimplemonitorParam) GetAssumeyes() bool {
+func (p *DeleteSimpleMonitorParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeleteSimplemonitorParam) SetParamTemplate(v string) {
+func (p *DeleteSimpleMonitorParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *DeleteSimplemonitorParam) GetParamTemplate() string {
+func (p *DeleteSimpleMonitorParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *DeleteSimplemonitorParam) SetParameters(v string) {
+func (p *DeleteSimpleMonitorParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *DeleteSimplemonitorParam) GetParameters() string {
+func (p *DeleteSimpleMonitorParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *DeleteSimplemonitorParam) SetParamTemplateFile(v string) {
+func (p *DeleteSimpleMonitorParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *DeleteSimplemonitorParam) GetParamTemplateFile() string {
+func (p *DeleteSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *DeleteSimplemonitorParam) SetParameterFile(v string) {
+func (p *DeleteSimpleMonitorParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *DeleteSimplemonitorParam) GetParameterFile() string {
+func (p *DeleteSimpleMonitorParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *DeleteSimplemonitorParam) SetGenerateSkeleton(v bool) {
+func (p *DeleteSimpleMonitorParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *DeleteSimplemonitorParam) GetGenerateSkeleton() bool {
+func (p *DeleteSimpleMonitorParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DeleteSimplemonitorParam) SetOutputType(v string) {
+func (p *DeleteSimpleMonitorParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *DeleteSimplemonitorParam) GetOutputType() string {
+func (p *DeleteSimpleMonitorParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *DeleteSimplemonitorParam) SetColumn(v []string) {
+func (p *DeleteSimpleMonitorParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *DeleteSimplemonitorParam) GetColumn() []string {
+func (p *DeleteSimpleMonitorParam) GetColumn() []string {
 	return p.Column
 }
-func (p *DeleteSimplemonitorParam) SetQuiet(v bool) {
+func (p *DeleteSimpleMonitorParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *DeleteSimplemonitorParam) GetQuiet() bool {
+func (p *DeleteSimpleMonitorParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *DeleteSimplemonitorParam) SetFormat(v string) {
+func (p *DeleteSimpleMonitorParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *DeleteSimplemonitorParam) GetFormat() string {
+func (p *DeleteSimpleMonitorParam) GetFormat() string {
 	return p.Format
 }
-func (p *DeleteSimplemonitorParam) SetFormatFile(v string) {
+func (p *DeleteSimpleMonitorParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *DeleteSimplemonitorParam) GetFormatFile() string {
+func (p *DeleteSimpleMonitorParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *DeleteSimplemonitorParam) SetQuery(v string) {
+func (p *DeleteSimpleMonitorParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *DeleteSimplemonitorParam) GetQuery() string {
+func (p *DeleteSimpleMonitorParam) GetQuery() string {
 	return p.Query
 }
-func (p *DeleteSimplemonitorParam) SetQueryFile(v string) {
+func (p *DeleteSimpleMonitorParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *DeleteSimplemonitorParam) GetQueryFile() string {
+func (p *DeleteSimpleMonitorParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteSimplemonitorParam) SetId(v sacloud.ID) {
+func (p *DeleteSimpleMonitorParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteSimplemonitorParam) GetId() sacloud.ID {
+func (p *DeleteSimpleMonitorParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// HealthSimplemonitorParam is input parameters for the sacloud API
-type HealthSimplemonitorParam struct {
+// HealthSimpleMonitorParam is input parameters for the sacloud API
+type HealthSimpleMonitorParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
 	Parameters        string     `json:"parameters"`
@@ -1876,13 +1876,13 @@ type HealthSimplemonitorParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewHealthSimplemonitorParam return new HealthSimplemonitorParam
-func NewHealthSimplemonitorParam() *HealthSimplemonitorParam {
-	return &HealthSimplemonitorParam{}
+// NewHealthSimpleMonitorParam return new HealthSimpleMonitorParam
+func NewHealthSimpleMonitorParam() *HealthSimpleMonitorParam {
+	return &HealthSimpleMonitorParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *HealthSimplemonitorParam) FillValueToSkeleton() {
+func (p *HealthSimpleMonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1929,7 +1929,7 @@ func (p *HealthSimplemonitorParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *HealthSimplemonitorParam) Validate() []error {
+func (p *HealthSimpleMonitorParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1962,125 +1962,125 @@ func (p *HealthSimplemonitorParam) Validate() []error {
 	return errors
 }
 
-func (p *HealthSimplemonitorParam) GetResourceDef() *schema.Resource {
+func (p *HealthSimpleMonitorParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SimpleMonitor"]
 }
 
-func (p *HealthSimplemonitorParam) GetCommandDef() *schema.Command {
+func (p *HealthSimpleMonitorParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["health"]
 }
 
-func (p *HealthSimplemonitorParam) GetIncludeFields() []string {
+func (p *HealthSimpleMonitorParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *HealthSimplemonitorParam) GetExcludeFields() []string {
+func (p *HealthSimpleMonitorParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *HealthSimplemonitorParam) GetTableType() output.TableType {
+func (p *HealthSimpleMonitorParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *HealthSimplemonitorParam) GetColumnDefs() []output.ColumnDef {
+func (p *HealthSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *HealthSimplemonitorParam) SetSelector(v []string) {
+func (p *HealthSimpleMonitorParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *HealthSimplemonitorParam) GetSelector() []string {
+func (p *HealthSimpleMonitorParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *HealthSimplemonitorParam) SetParamTemplate(v string) {
+func (p *HealthSimpleMonitorParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *HealthSimplemonitorParam) GetParamTemplate() string {
+func (p *HealthSimpleMonitorParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *HealthSimplemonitorParam) SetParameters(v string) {
+func (p *HealthSimpleMonitorParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *HealthSimplemonitorParam) GetParameters() string {
+func (p *HealthSimpleMonitorParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *HealthSimplemonitorParam) SetParamTemplateFile(v string) {
+func (p *HealthSimpleMonitorParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *HealthSimplemonitorParam) GetParamTemplateFile() string {
+func (p *HealthSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *HealthSimplemonitorParam) SetParameterFile(v string) {
+func (p *HealthSimpleMonitorParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *HealthSimplemonitorParam) GetParameterFile() string {
+func (p *HealthSimpleMonitorParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *HealthSimplemonitorParam) SetGenerateSkeleton(v bool) {
+func (p *HealthSimpleMonitorParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *HealthSimplemonitorParam) GetGenerateSkeleton() bool {
+func (p *HealthSimpleMonitorParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *HealthSimplemonitorParam) SetOutputType(v string) {
+func (p *HealthSimpleMonitorParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *HealthSimplemonitorParam) GetOutputType() string {
+func (p *HealthSimpleMonitorParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *HealthSimplemonitorParam) SetColumn(v []string) {
+func (p *HealthSimpleMonitorParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *HealthSimplemonitorParam) GetColumn() []string {
+func (p *HealthSimpleMonitorParam) GetColumn() []string {
 	return p.Column
 }
-func (p *HealthSimplemonitorParam) SetQuiet(v bool) {
+func (p *HealthSimpleMonitorParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *HealthSimplemonitorParam) GetQuiet() bool {
+func (p *HealthSimpleMonitorParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *HealthSimplemonitorParam) SetFormat(v string) {
+func (p *HealthSimpleMonitorParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *HealthSimplemonitorParam) GetFormat() string {
+func (p *HealthSimpleMonitorParam) GetFormat() string {
 	return p.Format
 }
-func (p *HealthSimplemonitorParam) SetFormatFile(v string) {
+func (p *HealthSimpleMonitorParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *HealthSimplemonitorParam) GetFormatFile() string {
+func (p *HealthSimpleMonitorParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *HealthSimplemonitorParam) SetQuery(v string) {
+func (p *HealthSimpleMonitorParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *HealthSimplemonitorParam) GetQuery() string {
+func (p *HealthSimpleMonitorParam) GetQuery() string {
 	return p.Query
 }
-func (p *HealthSimplemonitorParam) SetQueryFile(v string) {
+func (p *HealthSimpleMonitorParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *HealthSimplemonitorParam) GetQueryFile() string {
+func (p *HealthSimpleMonitorParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *HealthSimplemonitorParam) SetId(v sacloud.ID) {
+func (p *HealthSimpleMonitorParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *HealthSimplemonitorParam) GetId() sacloud.ID {
+func (p *HealthSimpleMonitorParam) GetId() sacloud.ID {
 	return p.Id
 }

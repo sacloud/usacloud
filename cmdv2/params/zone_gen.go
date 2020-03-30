@@ -29,11 +29,11 @@ import (
 
 // ListZoneParam is input parameters for the sacloud API
 type ListZoneParam struct {
-	Sort []string
-	Name []string
 	Id   []sacloud.ID
 	From int
 	Max  int
+	Sort []string
+	Name []string
 
 	input Input
 }
@@ -58,12 +58,6 @@ func (p *ListZoneParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListZoneParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
@@ -73,21 +67,17 @@ func (p *ListZoneParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
 	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
 
 }
 
 func (p *ListZoneParam) validate() error {
 	var errors []error
-
-	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Zone"].Commands["list"].Params["id"].ValidateFunc
@@ -100,6 +90,16 @@ func (p *ListZoneParam) validate() error {
 		errs := validation.ConflictsWith("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -133,20 +133,6 @@ func (p *ListZoneParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListZoneParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListZoneParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListZoneParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListZoneParam) GetName() []string {
-	return p.Name
-}
 func (p *ListZoneParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
@@ -167,6 +153,20 @@ func (p *ListZoneParam) SetMax(v int) {
 
 func (p *ListZoneParam) GetMax() int {
 	return p.Max
+}
+func (p *ListZoneParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListZoneParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListZoneParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListZoneParam) GetName() []string {
+	return p.Name
 }
 
 // ReadZoneParam is input parameters for the sacloud API

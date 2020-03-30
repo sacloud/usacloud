@@ -1499,7 +1499,7 @@ func init() {
 						diskEditParam.Password = c.String("password")
 					}
 					if c.IsSet("ssh-key-ids") {
-						diskEditParam.SshKeyIds = toSakuraIDs(c.Int64Slice("ssh-key-ids"))
+						diskEditParam.SSHKeyIds = toSakuraIDs(c.Int64Slice("ssh-key-ids"))
 					}
 					if c.IsSet("disable-password-auth") {
 						diskEditParam.DisablePasswordAuth = c.Bool("disable-password-auth")

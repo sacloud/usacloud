@@ -30,8 +30,8 @@ import (
 )
 
 func init() {
-	productinternetListParam := params.NewListProductinternetParam()
-	productinternetReadParam := params.NewReadProductinternetParam()
+	productInternetListParam := params.NewListProductInternetParam()
+	productInternetReadParam := params.NewReadProductInternetParam()
 
 	cliCommand := &cli.Command{
 		Name:    "product-internet",
@@ -124,7 +124,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find"},
-				Usage:   "List Productinternet (default)",
+				Usage:   "List ProductInternet (default)",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -210,72 +210,72 @@ func init() {
 						return err
 					}
 
-					productinternetListParam.ParamTemplate = c.String("param-template")
-					productinternetListParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(productinternetListParam)
+					productInternetListParam.ParamTemplate = c.String("param-template")
+					productInternetListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(productInternetListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListProductinternetParam()
+						p := params.NewListProductInternetParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(productinternetListParam, p, mergo.WithOverride)
+						mergo.Merge(productInternetListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						productinternetListParam.Name = c.StringSlice("name")
+						productInternetListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						productinternetListParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						productInternetListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("from") {
-						productinternetListParam.From = c.Int("from")
+						productInternetListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						productinternetListParam.Max = c.Int("max")
+						productInternetListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						productinternetListParam.Sort = c.StringSlice("sort")
+						productInternetListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						productinternetListParam.ParamTemplate = c.String("param-template")
+						productInternetListParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						productinternetListParam.Parameters = c.String("parameters")
+						productInternetListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						productinternetListParam.ParamTemplateFile = c.String("param-template-file")
+						productInternetListParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						productinternetListParam.ParameterFile = c.String("parameter-file")
+						productInternetListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						productinternetListParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						productInternetListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						productinternetListParam.OutputType = c.String("output-type")
+						productInternetListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						productinternetListParam.Column = c.StringSlice("column")
+						productInternetListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						productinternetListParam.Quiet = c.Bool("quiet")
+						productInternetListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						productinternetListParam.Format = c.String("format")
+						productInternetListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						productinternetListParam.FormatFile = c.String("format-file")
+						productInternetListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						productinternetListParam.Query = c.String("query")
+						productInternetListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						productinternetListParam.QueryFile = c.String("query-file")
+						productInternetListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -283,7 +283,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = productinternetListParam
+					var outputTypeHolder interface{} = productInternetListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -294,10 +294,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if productinternetListParam.GenerateSkeleton {
-						productinternetListParam.GenerateSkeleton = false
-						productinternetListParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(productinternetListParam, "", "\t")
+					if productInternetListParam.GenerateSkeleton {
+						productInternetListParam.GenerateSkeleton = false
+						productInternetListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(productInternetListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -306,21 +306,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := productinternetListParam.Validate(); len(errors) > 0 {
+					if errors := productInternetListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), productinternetListParam)
+					ctx := command.NewContext(c, c.Args().Slice(), productInternetListParam)
 
 					// Run command with params
-					return funcs.ProductinternetList(ctx, productinternetListParam)
+					return funcs.ProductInternetList(ctx, productInternetListParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Productinternet",
+				Usage:     "Read ProductInternet",
 				ArgsUsage: "<ID>",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -395,63 +395,63 @@ func init() {
 						return err
 					}
 
-					productinternetReadParam.ParamTemplate = c.String("param-template")
-					productinternetReadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(productinternetReadParam)
+					productInternetReadParam.ParamTemplate = c.String("param-template")
+					productInternetReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(productInternetReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadProductinternetParam()
+						p := params.NewReadProductInternetParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(productinternetReadParam, p, mergo.WithOverride)
+						mergo.Merge(productInternetReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("assumeyes") {
-						productinternetReadParam.Assumeyes = c.Bool("assumeyes")
+						productInternetReadParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						productinternetReadParam.ParamTemplate = c.String("param-template")
+						productInternetReadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						productinternetReadParam.Parameters = c.String("parameters")
+						productInternetReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						productinternetReadParam.ParamTemplateFile = c.String("param-template-file")
+						productInternetReadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						productinternetReadParam.ParameterFile = c.String("parameter-file")
+						productInternetReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						productinternetReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						productInternetReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						productinternetReadParam.OutputType = c.String("output-type")
+						productInternetReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						productinternetReadParam.Column = c.StringSlice("column")
+						productInternetReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						productinternetReadParam.Quiet = c.Bool("quiet")
+						productInternetReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						productinternetReadParam.Format = c.String("format")
+						productInternetReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						productinternetReadParam.FormatFile = c.String("format-file")
+						productInternetReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						productinternetReadParam.Query = c.String("query")
+						productInternetReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						productinternetReadParam.QueryFile = c.String("query-file")
+						productInternetReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						productinternetReadParam.Id = sacloud.ID(c.Int64("id"))
+						productInternetReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -459,7 +459,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = productinternetReadParam
+					var outputTypeHolder interface{} = productInternetReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -470,10 +470,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if productinternetReadParam.GenerateSkeleton {
-						productinternetReadParam.GenerateSkeleton = false
-						productinternetReadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(productinternetReadParam, "", "\t")
+					if productInternetReadParam.GenerateSkeleton {
+						productInternetReadParam.GenerateSkeleton = false
+						productInternetReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(productInternetReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -485,18 +485,18 @@ func init() {
 						return fmt.Errorf("ID argument is required")
 					}
 					c.Set("id", c.Args().First())
-					productinternetReadParam.SetId(sacloud.ID(c.Int64("id")))
+					productInternetReadParam.SetId(sacloud.ID(c.Int64("id")))
 
 					// Validate specific for each command params
-					if errors := productinternetReadParam.Validate(); len(errors) > 0 {
+					if errors := productInternetReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), productinternetReadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), productInternetReadParam)
 
 					// confirm
-					if !productinternetReadParam.Assumeyes {
+					if !productInternetReadParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -506,7 +506,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.ProductinternetRead(ctx, productinternetReadParam)
+					return funcs.ProductInternetRead(ctx, productInternetReadParam)
 
 				},
 			},

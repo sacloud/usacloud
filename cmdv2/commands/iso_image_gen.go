@@ -25,20 +25,20 @@ import (
 )
 
 var (
-	isoimageListParam     = params.NewListIsoimageParam()
-	isoimageCreateParam   = params.NewCreateIsoimageParam()
-	isoimageReadParam     = params.NewReadIsoimageParam()
-	isoimageUpdateParam   = params.NewUpdateIsoimageParam()
-	isoimageDeleteParam   = params.NewDeleteIsoimageParam()
-	isoimageUploadParam   = params.NewUploadIsoimageParam()
-	isoimageDownloadParam = params.NewDownloadIsoimageParam()
-	isoimageFtpOpenParam  = params.NewFtpOpenIsoimageParam()
-	isoimageFtpCloseParam = params.NewFtpCloseIsoimageParam()
+	isoImageListParam     = params.NewListISOImageParam()
+	isoImageCreateParam   = params.NewCreateISOImageParam()
+	isoImageReadParam     = params.NewReadISOImageParam()
+	isoImageUpdateParam   = params.NewUpdateISOImageParam()
+	isoImageDeleteParam   = params.NewDeleteISOImageParam()
+	isoImageUploadParam   = params.NewUploadISOImageParam()
+	isoImageDownloadParam = params.NewDownloadISOImageParam()
+	isoImageFTPOpenParam  = params.NewFTPOpenISOImageParam()
+	isoImageFTPCloseParam = params.NewFTPCloseISOImageParam()
 )
 
-// isoimageCmd represents the command to manage SAKURA Cloud ISOImage
-var isoimageCmd = &cobra.Command{
-	Use:   "isoimage",
+// isoImageCmd represents the command to manage SAKURA Cloud ISOImage
+var isoImageCmd = &cobra.Command{
+	Use:   "isoImage",
 	Short: "A manage commands of ISOImage",
 	Long:  `A manage commands of ISOImage`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -46,203 +46,203 @@ var isoimageCmd = &cobra.Command{
 	},
 }
 
-var isoimageListCmd = &cobra.Command{
+var isoImageListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Isoimage",
-	Long:    `List Isoimage`,
+	Short:   "List ISOImage",
+	Long:    `List ISOImage`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoimageListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := isoImageListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(isoimageListParam))
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(isoImageListParam))
 		return err
 	},
 }
 
-func isoimageListCmdInit() {
-	fs := isoimageListCmd.Flags()
-	fs.StringSliceVarP(&isoimageListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&isoimageListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &isoimageListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&isoimageListParam.From, "from", "", 0, "set offset")
-	fs.StringVarP(&isoimageListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
-	fs.StringSliceVarP(&isoimageListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
-	fs.IntVarP(&isoimageListParam.Max, "max", "", 0, "set limit")
+func isoImageListCmdInit() {
+	fs := isoImageListCmd.Flags()
+	fs.StringSliceVarP(&isoImageListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &isoImageListParam.Id), "id", "", "set filter by id(s)")
+	fs.IntVarP(&isoImageListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&isoImageListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&isoImageListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&isoImageListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
+	fs.StringSliceVarP(&isoImageListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 }
 
-var isoimageCreateCmd = &cobra.Command{
+var isoImageCreateCmd = &cobra.Command{
 	Use: "create",
 
-	Short: "Create Isoimage",
-	Long:  `Create Isoimage`,
+	Short: "Create ISOImage",
+	Long:  `Create ISOImage`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoimageCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := isoImageCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(isoimageCreateParam))
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(isoImageCreateParam))
 		return err
 	},
 }
 
-func isoimageCreateCmdInit() {
-	fs := isoimageCreateCmd.Flags()
-	fs.IntVarP(&isoimageCreateParam.Size, "size", "", 5, "set iso size(GB)")
-	fs.StringVarP(&isoimageCreateParam.IsoFile, "iso-file", "", "", "set iso image file")
-	fs.StringVarP(&isoimageCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&isoimageCreateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&isoimageCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &isoimageCreateParam.IconId), "icon-id", "", "set Icon ID")
+func isoImageCreateCmdInit() {
+	fs := isoImageCreateCmd.Flags()
+	fs.IntVarP(&isoImageCreateParam.Size, "size", "", 5, "set iso size(GB)")
+	fs.StringVarP(&isoImageCreateParam.ISOFile, "iso-file", "", "", "set iso image file")
+	fs.StringVarP(&isoImageCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&isoImageCreateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&isoImageCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &isoImageCreateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
-var isoimageReadCmd = &cobra.Command{
+var isoImageReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Isoimage",
-	Long:  `Read Isoimage`,
+	Short: "Read ISOImage",
+	Long:  `Read ISOImage`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoimageReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := isoImageReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(isoimageReadParam))
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(isoImageReadParam))
 		return err
 	},
 }
 
-func isoimageReadCmdInit() {
+func isoImageReadCmdInit() {
 }
 
-var isoimageUpdateCmd = &cobra.Command{
+var isoImageUpdateCmd = &cobra.Command{
 	Use: "update",
 
-	Short: "Update Isoimage",
-	Long:  `Update Isoimage`,
+	Short: "Update ISOImage",
+	Long:  `Update ISOImage`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoimageUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := isoImageUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(isoimageUpdateParam))
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(isoImageUpdateParam))
 		return err
 	},
 }
 
-func isoimageUpdateCmdInit() {
-	fs := isoimageUpdateCmd.Flags()
-	fs.StringVarP(&isoimageUpdateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&isoimageUpdateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&isoimageUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &isoimageUpdateParam.IconId), "icon-id", "", "set Icon ID")
+func isoImageUpdateCmdInit() {
+	fs := isoImageUpdateCmd.Flags()
+	fs.StringVarP(&isoImageUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&isoImageUpdateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&isoImageUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &isoImageUpdateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
-var isoimageDeleteCmd = &cobra.Command{
+var isoImageDeleteCmd = &cobra.Command{
 	Use:     "delete",
 	Aliases: []string{"rm"},
-	Short:   "Delete Isoimage",
-	Long:    `Delete Isoimage`,
+	Short:   "Delete ISOImage",
+	Long:    `Delete ISOImage`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoimageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := isoImageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(isoimageDeleteParam))
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(isoImageDeleteParam))
 		return err
 	},
 }
 
-func isoimageDeleteCmdInit() {
+func isoImageDeleteCmdInit() {
 }
 
-var isoimageUploadCmd = &cobra.Command{
+var isoImageUploadCmd = &cobra.Command{
 	Use: "upload",
 
-	Short: "Upload Isoimage",
-	Long:  `Upload Isoimage`,
+	Short: "Upload ISOImage",
+	Long:  `Upload ISOImage`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoimageUploadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := isoImageUploadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("upload parameter: \n%s\n", debugMarshalIndent(isoimageUploadParam))
+		fmt.Printf("upload parameter: \n%s\n", debugMarshalIndent(isoImageUploadParam))
 		return err
 	},
 }
 
-func isoimageUploadCmdInit() {
-	fs := isoimageUploadCmd.Flags()
-	fs.StringVarP(&isoimageUploadParam.IsoFile, "iso-file", "", "", "set iso image file")
+func isoImageUploadCmdInit() {
+	fs := isoImageUploadCmd.Flags()
+	fs.StringVarP(&isoImageUploadParam.ISOFile, "iso-file", "", "", "set iso image file")
 }
 
-var isoimageDownloadCmd = &cobra.Command{
+var isoImageDownloadCmd = &cobra.Command{
 	Use: "download",
 
-	Short: "Download Isoimage",
-	Long:  `Download Isoimage`,
+	Short: "Download ISOImage",
+	Long:  `Download ISOImage`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoimageDownloadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := isoImageDownloadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("download parameter: \n%s\n", debugMarshalIndent(isoimageDownloadParam))
+		fmt.Printf("download parameter: \n%s\n", debugMarshalIndent(isoImageDownloadParam))
 		return err
 	},
 }
 
-func isoimageDownloadCmdInit() {
-	fs := isoimageDownloadCmd.Flags()
-	fs.StringVarP(&isoimageDownloadParam.FileDestination, "file-destination", "", "", "set file destination path")
+func isoImageDownloadCmdInit() {
+	fs := isoImageDownloadCmd.Flags()
+	fs.StringVarP(&isoImageDownloadParam.FileDestination, "file-destination", "", "", "set file destination path")
 }
 
-var isoimageFtpOpenCmd = &cobra.Command{
+var isoImageFTPOpenCmd = &cobra.Command{
 	Use: "ftp-open",
 
-	Short: "FtpOpen Isoimage",
-	Long:  `FtpOpen Isoimage`,
+	Short: "FTPOpen ISOImage",
+	Long:  `FTPOpen ISOImage`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoimageFtpOpenParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := isoImageFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("ftp-open parameter: \n%s\n", debugMarshalIndent(isoimageFtpOpenParam))
+		fmt.Printf("ftp-open parameter: \n%s\n", debugMarshalIndent(isoImageFTPOpenParam))
 		return err
 	},
 }
 
-func isoimageFtpOpenCmdInit() {
+func isoImageFTPOpenCmdInit() {
 }
 
-var isoimageFtpCloseCmd = &cobra.Command{
+var isoImageFTPCloseCmd = &cobra.Command{
 	Use: "ftp-close",
 
-	Short: "FtpClose Isoimage",
-	Long:  `FtpClose Isoimage`,
+	Short: "FTPClose ISOImage",
+	Long:  `FTPClose ISOImage`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoimageFtpCloseParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := isoImageFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("ftp-close parameter: \n%s\n", debugMarshalIndent(isoimageFtpCloseParam))
+		fmt.Printf("ftp-close parameter: \n%s\n", debugMarshalIndent(isoImageFTPCloseParam))
 		return err
 	},
 }
 
-func isoimageFtpCloseCmdInit() {
+func isoImageFTPCloseCmdInit() {
 }
 
 func init() {
-	parent := isoimageCmd
+	parent := isoImageCmd
 
-	isoimageListCmdInit()
-	parent.AddCommand(isoimageListCmd)
+	isoImageListCmdInit()
+	parent.AddCommand(isoImageListCmd)
 
-	isoimageCreateCmdInit()
-	parent.AddCommand(isoimageCreateCmd)
+	isoImageCreateCmdInit()
+	parent.AddCommand(isoImageCreateCmd)
 
-	isoimageReadCmdInit()
-	parent.AddCommand(isoimageReadCmd)
+	isoImageReadCmdInit()
+	parent.AddCommand(isoImageReadCmd)
 
-	isoimageUpdateCmdInit()
-	parent.AddCommand(isoimageUpdateCmd)
+	isoImageUpdateCmdInit()
+	parent.AddCommand(isoImageUpdateCmd)
 
-	isoimageDeleteCmdInit()
-	parent.AddCommand(isoimageDeleteCmd)
+	isoImageDeleteCmdInit()
+	parent.AddCommand(isoImageDeleteCmd)
 
-	isoimageUploadCmdInit()
-	parent.AddCommand(isoimageUploadCmd)
+	isoImageUploadCmdInit()
+	parent.AddCommand(isoImageUploadCmd)
 
-	isoimageDownloadCmdInit()
-	parent.AddCommand(isoimageDownloadCmd)
+	isoImageDownloadCmdInit()
+	parent.AddCommand(isoImageDownloadCmd)
 
-	isoimageFtpOpenCmdInit()
-	parent.AddCommand(isoimageFtpOpenCmd)
+	isoImageFTPOpenCmdInit()
+	parent.AddCommand(isoImageFTPOpenCmd)
 
-	isoimageFtpCloseCmdInit()
-	parent.AddCommand(isoimageFtpCloseCmd)
+	isoImageFTPCloseCmdInit()
+	parent.AddCommand(isoImageFTPCloseCmd)
 
 	rootCmd.AddCommand(parent)
 }

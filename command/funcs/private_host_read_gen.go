@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func PrivatehostRead(ctx command.Context, params *params.ReadPrivatehostParam) error {
+func PrivateHostRead(ctx command.Context, params *params.ReadPrivateHostParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetPrivatehostAPI()
+	api := client.GetPrivateHostAPI()
 
 	// set params
 
 	// call Read(id)
 	res, err := api.Read(params.Id)
 	if err != nil {
-		return fmt.Errorf("PrivatehostRead is failed: %s", err)
+		return fmt.Errorf("PrivateHostRead is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

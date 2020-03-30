@@ -22,13 +22,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ProxyLBAcmeRenew(ctx command.Context, params *params.AcmeRenewProxyLBParam) error {
+func ProxyLBACMERenew(ctx command.Context, params *params.ACMERenewProxyLBParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetProxyLBAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("ProxyLBAcmeRenew is failed: %s", e)
+		return fmt.Errorf("ProxyLBACMERenew is failed: %s", e)
 	}
 
 	if !p.Settings.ProxyLB.LetsEncrypt.Enabled {
@@ -38,7 +38,7 @@ func ProxyLBAcmeRenew(ctx command.Context, params *params.AcmeRenewProxyLBParam)
 	// call manipurate functions
 	_, err := api.RenewLetsEncryptCert(params.Id)
 	if err != nil {
-		return fmt.Errorf("ProxyLBAcmeRenew is failed: %s", err)
+		return fmt.Errorf("ProxyLBACMERenew is failed: %s", err)
 	}
 	return nil
 }

@@ -27,26 +27,26 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListIsoimageParam is input parameters for the sacloud API
-type ListIsoimageParam struct {
+// ListISOImageParam is input parameters for the sacloud API
+type ListISOImageParam struct {
+	Name  []string
 	Id    []sacloud.ID
 	From  int
-	Scope string
-	Tags  []string
 	Max   int
 	Sort  []string
-	Name  []string
+	Scope string
+	Tags  []string
 
 	input Input
 }
 
-// NewListIsoimageParam return new ListIsoimageParam
-func NewListIsoimageParam() *ListIsoimageParam {
-	return &ListIsoimageParam{}
+// NewListISOImageParam return new ListISOImageParam
+func NewListISOImageParam() *ListISOImageParam {
+	return &ListISOImageParam{}
 }
 
-// Initialize init ListIsoimageParam
-func (p *ListIsoimageParam) Initialize(in Input) error {
+// Initialize init ListISOImageParam
+func (p *ListISOImageParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -55,22 +55,19 @@ func (p *ListIsoimageParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ListIsoimageParam) WriteSkeleton(writer io.Writer) error {
+func (p *ListISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListIsoimageParam) fillValueToSkeleton() {
+func (p *ListISOImageParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
-	}
-	if utils.IsEmpty(p.Scope) {
-		p.Scope = ""
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
@@ -78,14 +75,27 @@ func (p *ListIsoimageParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
+	if utils.IsEmpty(p.Scope) {
+		p.Scope = ""
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 
 }
 
-func (p *ListIsoimageParam) validate() error {
+func (p *ListISOImageParam) validate() error {
 	var errors []error
+
+	{
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["ISOImage"].Commands["list"].Params["id"].ValidateFunc
@@ -120,113 +130,103 @@ func (p *ListIsoimageParam) validate() error {
 		}
 	}
 
-	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ListIsoimageParam) ResourceDef() *schema.Resource {
+func (p *ListISOImageParam) ResourceDef() *schema.Resource {
 	return define.Resources["ISOImage"]
 }
 
-func (p *ListIsoimageParam) CommandDef() *schema.Command {
+func (p *ListISOImageParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["list"]
 }
 
-func (p *ListIsoimageParam) IncludeFields() []string {
+func (p *ListISOImageParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ListIsoimageParam) ExcludeFields() []string {
+func (p *ListISOImageParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ListIsoimageParam) TableType() output.TableType {
+func (p *ListISOImageParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ListIsoimageParam) ColumnDefs() []output.ColumnDef {
+func (p *ListISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListIsoimageParam) SetId(v []sacloud.ID) {
-	p.Id = v
-}
-
-func (p *ListIsoimageParam) GetId() []sacloud.ID {
-	return p.Id
-}
-func (p *ListIsoimageParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListIsoimageParam) GetFrom() int {
-	return p.From
-}
-func (p *ListIsoimageParam) SetScope(v string) {
-	p.Scope = v
-}
-
-func (p *ListIsoimageParam) GetScope() string {
-	return p.Scope
-}
-func (p *ListIsoimageParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *ListIsoimageParam) GetTags() []string {
-	return p.Tags
-}
-func (p *ListIsoimageParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListIsoimageParam) GetMax() int {
-	return p.Max
-}
-func (p *ListIsoimageParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListIsoimageParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListIsoimageParam) SetName(v []string) {
+func (p *ListISOImageParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListIsoimageParam) GetName() []string {
+func (p *ListISOImageParam) GetName() []string {
 	return p.Name
 }
+func (p *ListISOImageParam) SetId(v []sacloud.ID) {
+	p.Id = v
+}
 
-// CreateIsoimageParam is input parameters for the sacloud API
-type CreateIsoimageParam struct {
+func (p *ListISOImageParam) GetId() []sacloud.ID {
+	return p.Id
+}
+func (p *ListISOImageParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListISOImageParam) GetFrom() int {
+	return p.From
+}
+func (p *ListISOImageParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListISOImageParam) GetMax() int {
+	return p.Max
+}
+func (p *ListISOImageParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListISOImageParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListISOImageParam) SetScope(v string) {
+	p.Scope = v
+}
+
+func (p *ListISOImageParam) GetScope() string {
+	return p.Scope
+}
+func (p *ListISOImageParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *ListISOImageParam) GetTags() []string {
+	return p.Tags
+}
+
+// CreateISOImageParam is input parameters for the sacloud API
+type CreateISOImageParam struct {
+	ISOFile     string
 	Name        string
 	Description string
 	Tags        []string
 	IconId      sacloud.ID
 	Size        int
-	IsoFile     string
 
 	input Input
 }
 
-// NewCreateIsoimageParam return new CreateIsoimageParam
-func NewCreateIsoimageParam() *CreateIsoimageParam {
-	return &CreateIsoimageParam{
+// NewCreateISOImageParam return new CreateISOImageParam
+func NewCreateISOImageParam() *CreateISOImageParam {
+	return &CreateISOImageParam{
 		Size: 5}
 }
 
-// Initialize init CreateIsoimageParam
-func (p *CreateIsoimageParam) Initialize(in Input) error {
+// Initialize init CreateISOImageParam
+func (p *CreateISOImageParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -235,11 +235,14 @@ func (p *CreateIsoimageParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CreateIsoimageParam) WriteSkeleton(writer io.Writer) error {
+func (p *CreateISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateIsoimageParam) fillValueToSkeleton() {
+func (p *CreateISOImageParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.ISOFile) {
+		p.ISOFile = ""
+	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -255,14 +258,19 @@ func (p *CreateIsoimageParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Size) {
 		p.Size = 0
 	}
-	if utils.IsEmpty(p.IsoFile) {
-		p.IsoFile = ""
-	}
 
 }
 
-func (p *CreateIsoimageParam) validate() error {
+func (p *CreateISOImageParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["ISOImage"].Commands["create"].Params["iso-file"].ValidateFunc
+		errs := validator("--iso-file", p.ISOFile)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -318,96 +326,88 @@ func (p *CreateIsoimageParam) validate() error {
 		}
 	}
 
-	{
-		validator := define.Resources["ISOImage"].Commands["create"].Params["iso-file"].ValidateFunc
-		errs := validator("--iso-file", p.IsoFile)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CreateIsoimageParam) ResourceDef() *schema.Resource {
+func (p *CreateISOImageParam) ResourceDef() *schema.Resource {
 	return define.Resources["ISOImage"]
 }
 
-func (p *CreateIsoimageParam) CommandDef() *schema.Command {
+func (p *CreateISOImageParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["create"]
 }
 
-func (p *CreateIsoimageParam) IncludeFields() []string {
+func (p *CreateISOImageParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CreateIsoimageParam) ExcludeFields() []string {
+func (p *CreateISOImageParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CreateIsoimageParam) TableType() output.TableType {
+func (p *CreateISOImageParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CreateIsoimageParam) ColumnDefs() []output.ColumnDef {
+func (p *CreateISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateIsoimageParam) SetName(v string) {
+func (p *CreateISOImageParam) SetISOFile(v string) {
+	p.ISOFile = v
+}
+
+func (p *CreateISOImageParam) GetISOFile() string {
+	return p.ISOFile
+}
+func (p *CreateISOImageParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *CreateIsoimageParam) GetName() string {
+func (p *CreateISOImageParam) GetName() string {
 	return p.Name
 }
-func (p *CreateIsoimageParam) SetDescription(v string) {
+func (p *CreateISOImageParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *CreateIsoimageParam) GetDescription() string {
+func (p *CreateISOImageParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateIsoimageParam) SetTags(v []string) {
+func (p *CreateISOImageParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreateIsoimageParam) GetTags() []string {
+func (p *CreateISOImageParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateIsoimageParam) SetIconId(v sacloud.ID) {
+func (p *CreateISOImageParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateIsoimageParam) GetIconId() sacloud.ID {
+func (p *CreateISOImageParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *CreateIsoimageParam) SetSize(v int) {
+func (p *CreateISOImageParam) SetSize(v int) {
 	p.Size = v
 }
 
-func (p *CreateIsoimageParam) GetSize() int {
+func (p *CreateISOImageParam) GetSize() int {
 	return p.Size
 }
-func (p *CreateIsoimageParam) SetIsoFile(v string) {
-	p.IsoFile = v
-}
 
-func (p *CreateIsoimageParam) GetIsoFile() string {
-	return p.IsoFile
-}
-
-// ReadIsoimageParam is input parameters for the sacloud API
-type ReadIsoimageParam struct {
+// ReadISOImageParam is input parameters for the sacloud API
+type ReadISOImageParam struct {
 	input Input
 }
 
-// NewReadIsoimageParam return new ReadIsoimageParam
-func NewReadIsoimageParam() *ReadIsoimageParam {
-	return &ReadIsoimageParam{}
+// NewReadISOImageParam return new ReadISOImageParam
+func NewReadISOImageParam() *ReadISOImageParam {
+	return &ReadISOImageParam{}
 }
 
-// Initialize init ReadIsoimageParam
-func (p *ReadIsoimageParam) Initialize(in Input) error {
+// Initialize init ReadISOImageParam
+func (p *ReadISOImageParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -416,46 +416,46 @@ func (p *ReadIsoimageParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ReadIsoimageParam) WriteSkeleton(writer io.Writer) error {
+func (p *ReadISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadIsoimageParam) fillValueToSkeleton() {
+func (p *ReadISOImageParam) fillValueToSkeleton() {
 
 }
 
-func (p *ReadIsoimageParam) validate() error {
+func (p *ReadISOImageParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ReadIsoimageParam) ResourceDef() *schema.Resource {
+func (p *ReadISOImageParam) ResourceDef() *schema.Resource {
 	return define.Resources["ISOImage"]
 }
 
-func (p *ReadIsoimageParam) CommandDef() *schema.Command {
+func (p *ReadISOImageParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["read"]
 }
 
-func (p *ReadIsoimageParam) IncludeFields() []string {
+func (p *ReadISOImageParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ReadIsoimageParam) ExcludeFields() []string {
+func (p *ReadISOImageParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ReadIsoimageParam) TableType() output.TableType {
+func (p *ReadISOImageParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ReadIsoimageParam) ColumnDefs() []output.ColumnDef {
+func (p *ReadISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// UpdateIsoimageParam is input parameters for the sacloud API
-type UpdateIsoimageParam struct {
+// UpdateISOImageParam is input parameters for the sacloud API
+type UpdateISOImageParam struct {
 	Name        string
 	Description string
 	Tags        []string
@@ -464,13 +464,13 @@ type UpdateIsoimageParam struct {
 	input Input
 }
 
-// NewUpdateIsoimageParam return new UpdateIsoimageParam
-func NewUpdateIsoimageParam() *UpdateIsoimageParam {
-	return &UpdateIsoimageParam{}
+// NewUpdateISOImageParam return new UpdateISOImageParam
+func NewUpdateISOImageParam() *UpdateISOImageParam {
+	return &UpdateISOImageParam{}
 }
 
-// Initialize init UpdateIsoimageParam
-func (p *UpdateIsoimageParam) Initialize(in Input) error {
+// Initialize init UpdateISOImageParam
+func (p *UpdateISOImageParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -479,11 +479,11 @@ func (p *UpdateIsoimageParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *UpdateIsoimageParam) WriteSkeleton(writer io.Writer) error {
+func (p *UpdateISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateIsoimageParam) fillValueToSkeleton() {
+func (p *UpdateISOImageParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -499,7 +499,7 @@ func (p *UpdateIsoimageParam) fillValueToSkeleton() {
 
 }
 
-func (p *UpdateIsoimageParam) validate() error {
+func (p *UpdateISOImageParam) validate() error {
 	var errors []error
 
 	{
@@ -537,71 +537,71 @@ func (p *UpdateIsoimageParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *UpdateIsoimageParam) ResourceDef() *schema.Resource {
+func (p *UpdateISOImageParam) ResourceDef() *schema.Resource {
 	return define.Resources["ISOImage"]
 }
 
-func (p *UpdateIsoimageParam) CommandDef() *schema.Command {
+func (p *UpdateISOImageParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["update"]
 }
 
-func (p *UpdateIsoimageParam) IncludeFields() []string {
+func (p *UpdateISOImageParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *UpdateIsoimageParam) ExcludeFields() []string {
+func (p *UpdateISOImageParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *UpdateIsoimageParam) TableType() output.TableType {
+func (p *UpdateISOImageParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *UpdateIsoimageParam) ColumnDefs() []output.ColumnDef {
+func (p *UpdateISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateIsoimageParam) SetName(v string) {
+func (p *UpdateISOImageParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *UpdateIsoimageParam) GetName() string {
+func (p *UpdateISOImageParam) GetName() string {
 	return p.Name
 }
-func (p *UpdateIsoimageParam) SetDescription(v string) {
+func (p *UpdateISOImageParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdateIsoimageParam) GetDescription() string {
+func (p *UpdateISOImageParam) GetDescription() string {
 	return p.Description
 }
-func (p *UpdateIsoimageParam) SetTags(v []string) {
+func (p *UpdateISOImageParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *UpdateIsoimageParam) GetTags() []string {
+func (p *UpdateISOImageParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateIsoimageParam) SetIconId(v sacloud.ID) {
+func (p *UpdateISOImageParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateIsoimageParam) GetIconId() sacloud.ID {
+func (p *UpdateISOImageParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 
-// DeleteIsoimageParam is input parameters for the sacloud API
-type DeleteIsoimageParam struct {
+// DeleteISOImageParam is input parameters for the sacloud API
+type DeleteISOImageParam struct {
 	input Input
 }
 
-// NewDeleteIsoimageParam return new DeleteIsoimageParam
-func NewDeleteIsoimageParam() *DeleteIsoimageParam {
-	return &DeleteIsoimageParam{}
+// NewDeleteISOImageParam return new DeleteISOImageParam
+func NewDeleteISOImageParam() *DeleteISOImageParam {
+	return &DeleteISOImageParam{}
 }
 
-// Initialize init DeleteIsoimageParam
-func (p *DeleteIsoimageParam) Initialize(in Input) error {
+// Initialize init DeleteISOImageParam
+func (p *DeleteISOImageParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -610,58 +610,58 @@ func (p *DeleteIsoimageParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DeleteIsoimageParam) WriteSkeleton(writer io.Writer) error {
+func (p *DeleteISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteIsoimageParam) fillValueToSkeleton() {
+func (p *DeleteISOImageParam) fillValueToSkeleton() {
 
 }
 
-func (p *DeleteIsoimageParam) validate() error {
+func (p *DeleteISOImageParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DeleteIsoimageParam) ResourceDef() *schema.Resource {
+func (p *DeleteISOImageParam) ResourceDef() *schema.Resource {
 	return define.Resources["ISOImage"]
 }
 
-func (p *DeleteIsoimageParam) CommandDef() *schema.Command {
+func (p *DeleteISOImageParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["delete"]
 }
 
-func (p *DeleteIsoimageParam) IncludeFields() []string {
+func (p *DeleteISOImageParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DeleteIsoimageParam) ExcludeFields() []string {
+func (p *DeleteISOImageParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DeleteIsoimageParam) TableType() output.TableType {
+func (p *DeleteISOImageParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DeleteIsoimageParam) ColumnDefs() []output.ColumnDef {
+func (p *DeleteISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// UploadIsoimageParam is input parameters for the sacloud API
-type UploadIsoimageParam struct {
-	IsoFile string
+// UploadISOImageParam is input parameters for the sacloud API
+type UploadISOImageParam struct {
+	ISOFile string
 
 	input Input
 }
 
-// NewUploadIsoimageParam return new UploadIsoimageParam
-func NewUploadIsoimageParam() *UploadIsoimageParam {
-	return &UploadIsoimageParam{}
+// NewUploadISOImageParam return new UploadISOImageParam
+func NewUploadISOImageParam() *UploadISOImageParam {
+	return &UploadISOImageParam{}
 }
 
-// Initialize init UploadIsoimageParam
-func (p *UploadIsoimageParam) Initialize(in Input) error {
+// Initialize init UploadISOImageParam
+func (p *UploadISOImageParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -670,23 +670,23 @@ func (p *UploadIsoimageParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *UploadIsoimageParam) WriteSkeleton(writer io.Writer) error {
+func (p *UploadISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UploadIsoimageParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.IsoFile) {
-		p.IsoFile = ""
+func (p *UploadISOImageParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.ISOFile) {
+		p.ISOFile = ""
 	}
 
 }
 
-func (p *UploadIsoimageParam) validate() error {
+func (p *UploadISOImageParam) validate() error {
 	var errors []error
 
 	{
 		validator := define.Resources["ISOImage"].Commands["upload"].Params["iso-file"].ValidateFunc
-		errs := validator("--iso-file", p.IsoFile)
+		errs := validator("--iso-file", p.ISOFile)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -695,52 +695,52 @@ func (p *UploadIsoimageParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *UploadIsoimageParam) ResourceDef() *schema.Resource {
+func (p *UploadISOImageParam) ResourceDef() *schema.Resource {
 	return define.Resources["ISOImage"]
 }
 
-func (p *UploadIsoimageParam) CommandDef() *schema.Command {
+func (p *UploadISOImageParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["upload"]
 }
 
-func (p *UploadIsoimageParam) IncludeFields() []string {
+func (p *UploadISOImageParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *UploadIsoimageParam) ExcludeFields() []string {
+func (p *UploadISOImageParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *UploadIsoimageParam) TableType() output.TableType {
+func (p *UploadISOImageParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *UploadIsoimageParam) ColumnDefs() []output.ColumnDef {
+func (p *UploadISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UploadIsoimageParam) SetIsoFile(v string) {
-	p.IsoFile = v
+func (p *UploadISOImageParam) SetISOFile(v string) {
+	p.ISOFile = v
 }
 
-func (p *UploadIsoimageParam) GetIsoFile() string {
-	return p.IsoFile
+func (p *UploadISOImageParam) GetISOFile() string {
+	return p.ISOFile
 }
 
-// DownloadIsoimageParam is input parameters for the sacloud API
-type DownloadIsoimageParam struct {
+// DownloadISOImageParam is input parameters for the sacloud API
+type DownloadISOImageParam struct {
 	FileDestination string
 
 	input Input
 }
 
-// NewDownloadIsoimageParam return new DownloadIsoimageParam
-func NewDownloadIsoimageParam() *DownloadIsoimageParam {
-	return &DownloadIsoimageParam{}
+// NewDownloadISOImageParam return new DownloadISOImageParam
+func NewDownloadISOImageParam() *DownloadISOImageParam {
+	return &DownloadISOImageParam{}
 }
 
-// Initialize init DownloadIsoimageParam
-func (p *DownloadIsoimageParam) Initialize(in Input) error {
+// Initialize init DownloadISOImageParam
+func (p *DownloadISOImageParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -749,67 +749,67 @@ func (p *DownloadIsoimageParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DownloadIsoimageParam) WriteSkeleton(writer io.Writer) error {
+func (p *DownloadISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DownloadIsoimageParam) fillValueToSkeleton() {
+func (p *DownloadISOImageParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.FileDestination) {
 		p.FileDestination = ""
 	}
 
 }
 
-func (p *DownloadIsoimageParam) validate() error {
+func (p *DownloadISOImageParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DownloadIsoimageParam) ResourceDef() *schema.Resource {
+func (p *DownloadISOImageParam) ResourceDef() *schema.Resource {
 	return define.Resources["ISOImage"]
 }
 
-func (p *DownloadIsoimageParam) CommandDef() *schema.Command {
+func (p *DownloadISOImageParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["download"]
 }
 
-func (p *DownloadIsoimageParam) IncludeFields() []string {
+func (p *DownloadISOImageParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DownloadIsoimageParam) ExcludeFields() []string {
+func (p *DownloadISOImageParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DownloadIsoimageParam) TableType() output.TableType {
+func (p *DownloadISOImageParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DownloadIsoimageParam) ColumnDefs() []output.ColumnDef {
+func (p *DownloadISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *DownloadIsoimageParam) SetFileDestination(v string) {
+func (p *DownloadISOImageParam) SetFileDestination(v string) {
 	p.FileDestination = v
 }
 
-func (p *DownloadIsoimageParam) GetFileDestination() string {
+func (p *DownloadISOImageParam) GetFileDestination() string {
 	return p.FileDestination
 }
 
-// FtpOpenIsoimageParam is input parameters for the sacloud API
-type FtpOpenIsoimageParam struct {
+// FTPOpenISOImageParam is input parameters for the sacloud API
+type FTPOpenISOImageParam struct {
 	input Input
 }
 
-// NewFtpOpenIsoimageParam return new FtpOpenIsoimageParam
-func NewFtpOpenIsoimageParam() *FtpOpenIsoimageParam {
-	return &FtpOpenIsoimageParam{}
+// NewFTPOpenISOImageParam return new FTPOpenISOImageParam
+func NewFTPOpenISOImageParam() *FTPOpenISOImageParam {
+	return &FTPOpenISOImageParam{}
 }
 
-// Initialize init FtpOpenIsoimageParam
-func (p *FtpOpenIsoimageParam) Initialize(in Input) error {
+// Initialize init FTPOpenISOImageParam
+func (p *FTPOpenISOImageParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -818,56 +818,56 @@ func (p *FtpOpenIsoimageParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *FtpOpenIsoimageParam) WriteSkeleton(writer io.Writer) error {
+func (p *FTPOpenISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *FtpOpenIsoimageParam) fillValueToSkeleton() {
+func (p *FTPOpenISOImageParam) fillValueToSkeleton() {
 
 }
 
-func (p *FtpOpenIsoimageParam) validate() error {
+func (p *FTPOpenISOImageParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *FtpOpenIsoimageParam) ResourceDef() *schema.Resource {
+func (p *FTPOpenISOImageParam) ResourceDef() *schema.Resource {
 	return define.Resources["ISOImage"]
 }
 
-func (p *FtpOpenIsoimageParam) CommandDef() *schema.Command {
+func (p *FTPOpenISOImageParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["ftp-open"]
 }
 
-func (p *FtpOpenIsoimageParam) IncludeFields() []string {
+func (p *FTPOpenISOImageParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *FtpOpenIsoimageParam) ExcludeFields() []string {
+func (p *FTPOpenISOImageParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *FtpOpenIsoimageParam) TableType() output.TableType {
+func (p *FTPOpenISOImageParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *FtpOpenIsoimageParam) ColumnDefs() []output.ColumnDef {
+func (p *FTPOpenISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// FtpCloseIsoimageParam is input parameters for the sacloud API
-type FtpCloseIsoimageParam struct {
+// FTPCloseISOImageParam is input parameters for the sacloud API
+type FTPCloseISOImageParam struct {
 	input Input
 }
 
-// NewFtpCloseIsoimageParam return new FtpCloseIsoimageParam
-func NewFtpCloseIsoimageParam() *FtpCloseIsoimageParam {
-	return &FtpCloseIsoimageParam{}
+// NewFTPCloseISOImageParam return new FTPCloseISOImageParam
+func NewFTPCloseISOImageParam() *FTPCloseISOImageParam {
+	return &FTPCloseISOImageParam{}
 }
 
-// Initialize init FtpCloseIsoimageParam
-func (p *FtpCloseIsoimageParam) Initialize(in Input) error {
+// Initialize init FTPCloseISOImageParam
+func (p *FTPCloseISOImageParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -876,40 +876,40 @@ func (p *FtpCloseIsoimageParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *FtpCloseIsoimageParam) WriteSkeleton(writer io.Writer) error {
+func (p *FTPCloseISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *FtpCloseIsoimageParam) fillValueToSkeleton() {
+func (p *FTPCloseISOImageParam) fillValueToSkeleton() {
 
 }
 
-func (p *FtpCloseIsoimageParam) validate() error {
+func (p *FTPCloseISOImageParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *FtpCloseIsoimageParam) ResourceDef() *schema.Resource {
+func (p *FTPCloseISOImageParam) ResourceDef() *schema.Resource {
 	return define.Resources["ISOImage"]
 }
 
-func (p *FtpCloseIsoimageParam) CommandDef() *schema.Command {
+func (p *FTPCloseISOImageParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["ftp-close"]
 }
 
-func (p *FtpCloseIsoimageParam) IncludeFields() []string {
+func (p *FTPCloseISOImageParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *FtpCloseIsoimageParam) ExcludeFields() []string {
+func (p *FTPCloseISOImageParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *FtpCloseIsoimageParam) TableType() output.TableType {
+func (p *FTPCloseISOImageParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *FtpCloseIsoimageParam) ColumnDefs() []output.ColumnDef {
+func (p *FTPCloseISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }

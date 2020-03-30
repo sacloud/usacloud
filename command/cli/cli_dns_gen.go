@@ -32,16 +32,16 @@ import (
 )
 
 func init() {
-	dnsListParam := params.NewListDnsParam()
-	dnsRecordInfoParam := params.NewRecordInfoDnsParam()
-	dnsRecordBulkUpdateParam := params.NewRecordBulkUpdateDnsParam()
-	dnsCreateParam := params.NewCreateDnsParam()
-	dnsRecordAddParam := params.NewRecordAddDnsParam()
-	dnsReadParam := params.NewReadDnsParam()
-	dnsRecordUpdateParam := params.NewRecordUpdateDnsParam()
-	dnsRecordDeleteParam := params.NewRecordDeleteDnsParam()
-	dnsUpdateParam := params.NewUpdateDnsParam()
-	dnsDeleteParam := params.NewDeleteDnsParam()
+	dnsListParam := params.NewListDNSParam()
+	dnsRecordInfoParam := params.NewRecordInfoDNSParam()
+	dnsRecordBulkUpdateParam := params.NewRecordBulkUpdateDNSParam()
+	dnsCreateParam := params.NewCreateDNSParam()
+	dnsRecordAddParam := params.NewRecordAddDNSParam()
+	dnsReadParam := params.NewReadDNSParam()
+	dnsRecordUpdateParam := params.NewRecordUpdateDNSParam()
+	dnsRecordDeleteParam := params.NewRecordDeleteDNSParam()
+	dnsUpdateParam := params.NewUpdateDNSParam()
+	dnsDeleteParam := params.NewDeleteDNSParam()
 
 	cliCommand := &cli.Command{
 		Name:  "dns",
@@ -50,7 +50,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find", "selector"},
-				Usage:   "List Dns",
+				Usage:   "List DNS",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -148,7 +148,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListDnsParam()
+						p := params.NewListDNSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -248,14 +248,14 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), dnsListParam)
 
 					// Run command with params
-					return funcs.DnsList(ctx, dnsListParam)
+					return funcs.DNSList(ctx, dnsListParam)
 
 				},
 			},
 			{
 				Name:      "record-info",
 				Aliases:   []string{"record-list"},
-				Usage:     "RecordInfo Dns",
+				Usage:     "RecordInfo DNS",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -344,7 +344,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewRecordInfoDnsParam()
+						p := params.NewRecordInfoDNSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -437,7 +437,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), dnsRecordInfoParam)
 
-					apiClient := ctx.GetAPIClient().Dns
+					apiClient := ctx.GetAPIClient().DNS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -507,7 +507,7 @@ func init() {
 						p := *dnsRecordInfoParam // copy struct value
 						dnsRecordInfoParam := &p
 						go func() {
-							err := funcs.DnsRecordInfo(ctx, dnsRecordInfoParam)
+							err := funcs.DNSRecordInfo(ctx, dnsRecordInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -521,7 +521,7 @@ func init() {
 			},
 			{
 				Name:      "record-bulk-update",
-				Usage:     "RecordBulkUpdate Dns",
+				Usage:     "RecordBulkUpdate DNS",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -616,7 +616,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewRecordBulkUpdateDnsParam()
+						p := params.NewRecordBulkUpdateDNSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -712,7 +712,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), dnsRecordBulkUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Dns
+					apiClient := ctx.GetAPIClient().DNS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -792,7 +792,7 @@ func init() {
 						p := *dnsRecordBulkUpdateParam // copy struct value
 						dnsRecordBulkUpdateParam := &p
 						go func() {
-							err := funcs.DnsRecordBulkUpdate(ctx, dnsRecordBulkUpdateParam)
+							err := funcs.DNSRecordBulkUpdate(ctx, dnsRecordBulkUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -806,7 +806,7 @@ func init() {
 			},
 			{
 				Name:  "create",
-				Usage: "Create Dns",
+				Usage: "Create DNS",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "name",
@@ -899,7 +899,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCreateDnsParam()
+						p := params.NewCreateDNSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -1006,13 +1006,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.DnsCreate(ctx, dnsCreateParam)
+					return funcs.DNSCreate(ctx, dnsCreateParam)
 
 				},
 			},
 			{
 				Name:      "record-add",
-				Usage:     "RecordAdd Dns",
+				Usage:     "RecordAdd DNS",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -1139,7 +1139,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewRecordAddDnsParam()
+						p := params.NewRecordAddDNSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -1256,7 +1256,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), dnsRecordAddParam)
 
-					apiClient := ctx.GetAPIClient().Dns
+					apiClient := ctx.GetAPIClient().DNS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1336,7 +1336,7 @@ func init() {
 						p := *dnsRecordAddParam // copy struct value
 						dnsRecordAddParam := &p
 						go func() {
-							err := funcs.DnsRecordAdd(ctx, dnsRecordAddParam)
+							err := funcs.DNSRecordAdd(ctx, dnsRecordAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1350,7 +1350,7 @@ func init() {
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Dns",
+				Usage:     "Read DNS",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1431,7 +1431,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadDnsParam()
+						p := params.NewReadDNSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -1518,7 +1518,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), dnsReadParam)
 
-					apiClient := ctx.GetAPIClient().Dns
+					apiClient := ctx.GetAPIClient().DNS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1588,7 +1588,7 @@ func init() {
 						p := *dnsReadParam // copy struct value
 						dnsReadParam := &p
 						go func() {
-							err := funcs.DnsRead(ctx, dnsReadParam)
+							err := funcs.DNSRead(ctx, dnsReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1602,7 +1602,7 @@ func init() {
 			},
 			{
 				Name:      "record-update",
-				Usage:     "RecordUpdate Dns",
+				Usage:     "RecordUpdate DNS",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -1728,7 +1728,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewRecordUpdateDnsParam()
+						p := params.NewRecordUpdateDNSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -1848,7 +1848,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), dnsRecordUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Dns
+					apiClient := ctx.GetAPIClient().DNS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1928,7 +1928,7 @@ func init() {
 						p := *dnsRecordUpdateParam // copy struct value
 						dnsRecordUpdateParam := &p
 						go func() {
-							err := funcs.DnsRecordUpdate(ctx, dnsRecordUpdateParam)
+							err := funcs.DNSRecordUpdate(ctx, dnsRecordUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1942,7 +1942,7 @@ func init() {
 			},
 			{
 				Name:      "record-delete",
-				Usage:     "RecordDelete Dns",
+				Usage:     "RecordDelete DNS",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -2032,7 +2032,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewRecordDeleteDnsParam()
+						p := params.NewRecordDeleteDNSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -2125,7 +2125,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), dnsRecordDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Dns
+					apiClient := ctx.GetAPIClient().DNS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -2205,7 +2205,7 @@ func init() {
 						p := *dnsRecordDeleteParam // copy struct value
 						dnsRecordDeleteParam := &p
 						go func() {
-							err := funcs.DnsRecordDelete(ctx, dnsRecordDeleteParam)
+							err := funcs.DNSRecordDelete(ctx, dnsRecordDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2219,7 +2219,7 @@ func init() {
 			},
 			{
 				Name:      "update",
-				Usage:     "Update Dns",
+				Usage:     "Update DNS",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2318,7 +2318,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUpdateDnsParam()
+						p := params.NewUpdateDNSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -2417,7 +2417,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), dnsUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Dns
+					apiClient := ctx.GetAPIClient().DNS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -2493,7 +2493,7 @@ func init() {
 						p := *dnsUpdateParam // copy struct value
 						dnsUpdateParam := &p
 						go func() {
-							err := funcs.DnsUpdate(ctx, dnsUpdateParam)
+							err := funcs.DNSUpdate(ctx, dnsUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2508,7 +2508,7 @@ func init() {
 			{
 				Name:      "delete",
 				Aliases:   []string{"rm"},
-				Usage:     "Delete Dns",
+				Usage:     "Delete DNS",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2594,7 +2594,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeleteDnsParam()
+						p := params.NewDeleteDNSParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -2684,7 +2684,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), dnsDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Dns
+					apiClient := ctx.GetAPIClient().DNS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -2760,7 +2760,7 @@ func init() {
 						p := *dnsDeleteParam // copy struct value
 						dnsDeleteParam := &p
 						go func() {
-							err := funcs.DnsDelete(ctx, dnsDeleteParam)
+							err := funcs.DNSDelete(ctx, dnsDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}

@@ -51,7 +51,7 @@ func init() {
 	databaseBackupRemoveParam := params.NewBackupRemoveDatabaseParam()
 	databaseCloneParam := params.NewCloneDatabaseParam()
 	databaseReplicaCreateParam := params.NewReplicaCreateDatabaseParam()
-	databaseMonitorCpuParam := params.NewMonitorCpuDatabaseParam()
+	databaseMonitorCPUParam := params.NewMonitorCPUDatabaseParam()
 	databaseMonitorMemoryParam := params.NewMonitorMemoryDatabaseParam()
 	databaseMonitorNicParam := params.NewMonitorNicDatabaseParam()
 	databaseMonitorSystemDiskParam := params.NewMonitorSystemDiskDatabaseParam()
@@ -4998,72 +4998,72 @@ func init() {
 						return err
 					}
 
-					databaseMonitorCpuParam.ParamTemplate = c.String("param-template")
-					databaseMonitorCpuParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(databaseMonitorCpuParam)
+					databaseMonitorCPUParam.ParamTemplate = c.String("param-template")
+					databaseMonitorCPUParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseMonitorCPUParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewMonitorCpuDatabaseParam()
+						p := params.NewMonitorCPUDatabaseParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(databaseMonitorCpuParam, p, mergo.WithOverride)
+						mergo.Merge(databaseMonitorCPUParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						databaseMonitorCpuParam.Start = c.String("start")
+						databaseMonitorCPUParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						databaseMonitorCpuParam.End = c.String("end")
+						databaseMonitorCPUParam.End = c.String("end")
 					}
 					if c.IsSet("key-format") {
-						databaseMonitorCpuParam.KeyFormat = c.String("key-format")
+						databaseMonitorCPUParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						databaseMonitorCpuParam.Selector = c.StringSlice("selector")
+						databaseMonitorCPUParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						databaseMonitorCpuParam.ParamTemplate = c.String("param-template")
+						databaseMonitorCPUParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						databaseMonitorCpuParam.Parameters = c.String("parameters")
+						databaseMonitorCPUParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						databaseMonitorCpuParam.ParamTemplateFile = c.String("param-template-file")
+						databaseMonitorCPUParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						databaseMonitorCpuParam.ParameterFile = c.String("parameter-file")
+						databaseMonitorCPUParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						databaseMonitorCpuParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseMonitorCPUParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						databaseMonitorCpuParam.OutputType = c.String("output-type")
+						databaseMonitorCPUParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						databaseMonitorCpuParam.Column = c.StringSlice("column")
+						databaseMonitorCPUParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						databaseMonitorCpuParam.Quiet = c.Bool("quiet")
+						databaseMonitorCPUParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						databaseMonitorCpuParam.Format = c.String("format")
+						databaseMonitorCPUParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						databaseMonitorCpuParam.FormatFile = c.String("format-file")
+						databaseMonitorCPUParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						databaseMonitorCpuParam.Query = c.String("query")
+						databaseMonitorCPUParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						databaseMonitorCpuParam.QueryFile = c.String("query-file")
+						databaseMonitorCPUParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						databaseMonitorCpuParam.Id = sacloud.ID(c.Int64("id"))
+						databaseMonitorCPUParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5071,7 +5071,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = databaseMonitorCpuParam
+					var outputTypeHolder interface{} = databaseMonitorCPUParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5082,10 +5082,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if databaseMonitorCpuParam.GenerateSkeleton {
-						databaseMonitorCpuParam.GenerateSkeleton = false
-						databaseMonitorCpuParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(databaseMonitorCpuParam, "", "\t")
+					if databaseMonitorCPUParam.GenerateSkeleton {
+						databaseMonitorCPUParam.GenerateSkeleton = false
+						databaseMonitorCPUParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseMonitorCPUParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5094,19 +5094,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := databaseMonitorCpuParam.Validate(); len(errors) > 0 {
+					if errors := databaseMonitorCPUParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), databaseMonitorCpuParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseMonitorCPUParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(databaseMonitorCpuParam.Selector) == 0 {
+						if len(databaseMonitorCPUParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5115,12 +5115,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, databaseMonitorCpuParam.Selector) {
+							if hasTags(&v, databaseMonitorCPUParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseMonitorCpuParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseMonitorCPUParam.Selector)
 						}
 
 					} else {
@@ -5142,7 +5142,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(databaseMonitorCpuParam.Selector) == 0 || hasTags(&v, databaseMonitorCpuParam.Selector) {
+										if len(databaseMonitorCPUParam.Selector) == 0 || hasTags(&v, databaseMonitorCPUParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5167,11 +5167,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						databaseMonitorCpuParam.SetId(id)
-						p := *databaseMonitorCpuParam // copy struct value
-						databaseMonitorCpuParam := &p
+						databaseMonitorCPUParam.SetId(id)
+						p := *databaseMonitorCPUParam // copy struct value
+						databaseMonitorCPUParam := &p
 						go func() {
-							err := funcs.DatabaseMonitorCpu(ctx, databaseMonitorCpuParam)
+							err := funcs.DatabaseMonitorCPU(ctx, databaseMonitorCPUParam)
 							if err != nil {
 								errs = append(errs, err)
 							}

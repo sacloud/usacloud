@@ -44,7 +44,7 @@ var (
 	databaseBackupRemoveParam          = params.NewBackupRemoveDatabaseParam()
 	databaseCloneParam                 = params.NewCloneDatabaseParam()
 	databaseReplicaCreateParam         = params.NewReplicaCreateDatabaseParam()
-	databaseMonitorCpuParam            = params.NewMonitorCpuDatabaseParam()
+	databaseMonitorCPUParam            = params.NewMonitorCPUDatabaseParam()
 	databaseMonitorMemoryParam         = params.NewMonitorMemoryDatabaseParam()
 	databaseMonitorNicParam            = params.NewMonitorNicDatabaseParam()
 	databaseMonitorSystemDiskParam     = params.NewMonitorSystemDiskDatabaseParam()
@@ -79,8 +79,8 @@ var databaseListCmd = &cobra.Command{
 
 func databaseListCmdInit() {
 	fs := databaseListCmd.Flags()
-	fs.StringSliceVarP(&databaseListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&databaseListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.StringSliceVarP(&databaseListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&databaseListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &databaseListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&databaseListParam.From, "from", "", 0, "set offset")
@@ -102,25 +102,25 @@ var databaseCreateCmd = &cobra.Command{
 
 func databaseCreateCmdInit() {
 	fs := databaseCreateCmd.Flags()
-	fs.StringVarP(&databaseCreateParam.Description, "description", "", "", "set resource description")
+	fs.BoolVarP(&databaseCreateParam.EnableWebUi, "enable-web-ui", "", false, "enable web-ui")
+	fs.BoolVarP(&databaseCreateParam.EnableBackup, "enable-backup", "", false, "enable backup")
+	fs.StringVarP(&databaseCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
+	fs.IntVarP(&databaseCreateParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
+	fs.StringVarP(&databaseCreateParam.Name, "name", "", "", "set resource display name")
+	fs.VarP(newIDValue(0, &databaseCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringVarP(&databaseCreateParam.Database, "database", "", "", "set database type[postgresql/mariadb]")
+	fs.StringVarP(&databaseCreateParam.ReplicaUserPassword, "replica-user-password", "", "", "set database replica user password")
+	fs.StringVarP(&databaseCreateParam.DefaultRoute, "default-route", "", "", "set default route")
+	fs.StringSliceVarP(&databaseCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.IntVarP(&databaseCreateParam.Plan, "plan", "", 10, "set plan[10/30/90/240/500/1000]")
+	fs.StringVarP(&databaseCreateParam.Password, "password", "", "", "set database default user password")
+	fs.IntVarP(&databaseCreateParam.Port, "port", "", 0, "set database port")
 	fs.VarP(newIDValue(0, &databaseCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.StringSliceVarP(&databaseCreateParam.SourceNetworks, "source-networks", "", []string{}, "set network of allow connection")
 	fs.StringSliceVarP(&databaseCreateParam.BackupWeekdays, "backup-weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
-	fs.StringVarP(&databaseCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
-	fs.BoolVarP(&databaseCreateParam.EnableWebUi, "enable-web-ui", "", false, "enable web-ui")
-	fs.StringVarP(&databaseCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringSliceVarP(&databaseCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.IntVarP(&databaseCreateParam.Port, "port", "", 0, "set database port")
-	fs.IntVarP(&databaseCreateParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
-	fs.StringVarP(&databaseCreateParam.DefaultRoute, "default-route", "", "", "set default route")
-	fs.IntVarP(&databaseCreateParam.Plan, "plan", "", 10, "set plan[10/30/90/240/500/1000]")
-	fs.StringVarP(&databaseCreateParam.Username, "username", "", "", "set database default user name")
-	fs.StringVarP(&databaseCreateParam.Password, "password", "", "", "set database default user password")
-	fs.BoolVarP(&databaseCreateParam.EnableBackup, "enable-backup", "", false, "enable backup")
-	fs.StringVarP(&databaseCreateParam.Database, "database", "", "", "set database type[postgresql/mariadb]")
-	fs.StringVarP(&databaseCreateParam.ReplicaUserPassword, "replica-user-password", "", "", "set database replica user password")
 	fs.StringVarP(&databaseCreateParam.BackupTime, "backup-time", "", "", "set backup start time")
-	fs.VarP(newIDValue(0, &databaseCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringVarP(&databaseCreateParam.Description, "description", "", "", "set resource description")
+	fs.StringVarP(&databaseCreateParam.Username, "username", "", "", "set database default user name")
 }
 
 var databaseReadCmd = &cobra.Command{
@@ -154,18 +154,18 @@ var databaseUpdateCmd = &cobra.Command{
 
 func databaseUpdateCmdInit() {
 	fs := databaseUpdateCmd.Flags()
+	fs.StringVarP(&databaseUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringSliceVarP(&databaseUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.StringSliceVarP(&databaseUpdateParam.SourceNetworks, "source-networks", "", []string{}, "set network of allow connection")
-	fs.StringVarP(&databaseUpdateParam.Description, "description", "", "", "set resource description")
-	fs.StringVarP(&databaseUpdateParam.Password, "password", "", "", "set database default user password")
+	fs.StringSliceVarP(&databaseUpdateParam.BackupWeekdays, "backup-weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
+	fs.BoolVarP(&databaseUpdateParam.EnableReplication, "enable-replication", "", false, "enable replication")
 	fs.IntVarP(&databaseUpdateParam.Port, "port", "", 0, "set database port")
 	fs.BoolVarP(&databaseUpdateParam.EnableWebUi, "enable-web-ui", "", false, "enable web-ui")
 	fs.BoolVarP(&databaseUpdateParam.EnableBackup, "enable-backup", "", false, "enable backup")
-	fs.StringSliceVarP(&databaseUpdateParam.BackupWeekdays, "backup-weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
 	fs.StringVarP(&databaseUpdateParam.BackupTime, "backup-time", "", "", "set backup start time")
-	fs.StringVarP(&databaseUpdateParam.Name, "name", "", "", "set resource display name")
-	fs.StringSliceVarP(&databaseUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.StringVarP(&databaseUpdateParam.Description, "description", "", "", "set resource description")
+	fs.StringVarP(&databaseUpdateParam.Password, "password", "", "", "set database default user password")
 	fs.StringVarP(&databaseUpdateParam.ReplicaUserPassword, "replica-user-password", "", "", "set database replica user password")
-	fs.BoolVarP(&databaseUpdateParam.EnableReplication, "enable-replication", "", false, "enable replication")
 	fs.VarP(newIDValue(0, &databaseUpdateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
@@ -402,21 +402,21 @@ var databaseCloneCmd = &cobra.Command{
 
 func databaseCloneCmdInit() {
 	fs := databaseCloneCmd.Flags()
-	fs.StringSliceVarP(&databaseCloneParam.BackupWeekdays, "backup-weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
-	fs.IntVarP(&databaseCloneParam.Port, "port", "", 0, "set database port")
-	fs.StringVarP(&databaseCloneParam.DefaultRoute, "default-route", "", "", "set default route")
-	fs.VarP(newIDValue(0, &databaseCloneParam.SwitchId), "switch-id", "", "set connect switch ID")
-	fs.StringVarP(&databaseCloneParam.Name, "name", "", "", "set resource display name")
-	fs.StringSliceVarP(&databaseCloneParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.StringVarP(&databaseCloneParam.ReplicaUserPassword, "replica-user-password", "", "", "set database replica user password")
 	fs.StringSliceVarP(&databaseCloneParam.SourceNetworks, "source-networks", "", []string{}, "set network of allow connection")
-	fs.BoolVarP(&databaseCloneParam.EnableWebUi, "enable-web-ui", "", false, "enable web-ui")
 	fs.BoolVarP(&databaseCloneParam.EnableBackup, "enable-backup", "", false, "enable backup")
-	fs.StringVarP(&databaseCloneParam.Description, "description", "", "", "set resource description")
-	fs.IntVarP(&databaseCloneParam.Plan, "plan", "", 10, "set plan[10/30/90/240/500/1000]")
 	fs.StringVarP(&databaseCloneParam.BackupTime, "backup-time", "", "", "set backup start time")
-	fs.StringVarP(&databaseCloneParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
 	fs.IntVarP(&databaseCloneParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
+	fs.IntVarP(&databaseCloneParam.Plan, "plan", "", 10, "set plan[10/30/90/240/500/1000]")
+	fs.StringVarP(&databaseCloneParam.DefaultRoute, "default-route", "", "", "set default route")
+	fs.StringVarP(&databaseCloneParam.Name, "name", "", "", "set resource display name")
+	fs.VarP(newIDValue(0, &databaseCloneParam.SwitchId), "switch-id", "", "set connect switch ID")
+	fs.StringVarP(&databaseCloneParam.ReplicaUserPassword, "replica-user-password", "", "", "set database replica user password")
+	fs.StringSliceVarP(&databaseCloneParam.BackupWeekdays, "backup-weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
+	fs.StringVarP(&databaseCloneParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
+	fs.StringVarP(&databaseCloneParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&databaseCloneParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.BoolVarP(&databaseCloneParam.EnableWebUi, "enable-web-ui", "", false, "enable web-ui")
+	fs.IntVarP(&databaseCloneParam.Port, "port", "", 0, "set database port")
 	fs.VarP(newIDValue(0, &databaseCloneParam.IconId), "icon-id", "", "set Icon ID")
 }
 
@@ -435,34 +435,34 @@ var databaseReplicaCreateCmd = &cobra.Command{
 
 func databaseReplicaCreateCmdInit() {
 	fs := databaseReplicaCreateCmd.Flags()
-	fs.StringVarP(&databaseReplicaCreateParam.DefaultRoute, "default-route", "", "", "set default route")
-	fs.StringVarP(&databaseReplicaCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&databaseReplicaCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&databaseReplicaCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &databaseReplicaCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.VarP(newIDValue(0, &databaseReplicaCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.StringVarP(&databaseReplicaCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
 	fs.IntVarP(&databaseReplicaCreateParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
+	fs.StringVarP(&databaseReplicaCreateParam.DefaultRoute, "default-route", "", "", "set default route")
+	fs.StringVarP(&databaseReplicaCreateParam.Name, "name", "", "", "set resource display name")
 }
 
-var databaseMonitorCpuCmd = &cobra.Command{
+var databaseMonitorCPUCmd = &cobra.Command{
 	Use: "monitor-cpu",
 
 	Short: "Collect CPU monitor values",
 	Long:  `Collect CPU monitor values`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseMonitorCpuParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := databaseMonitorCPUParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("monitor-cpu parameter: \n%s\n", debugMarshalIndent(databaseMonitorCpuParam))
+		fmt.Printf("monitor-cpu parameter: \n%s\n", debugMarshalIndent(databaseMonitorCPUParam))
 		return err
 	},
 }
 
-func databaseMonitorCpuCmdInit() {
-	fs := databaseMonitorCpuCmd.Flags()
-	fs.StringVarP(&databaseMonitorCpuParam.Start, "start", "", "", "set start-time")
-	fs.StringVarP(&databaseMonitorCpuParam.End, "end", "", "", "set end-time")
-	fs.StringVarP(&databaseMonitorCpuParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.cpu", "set monitoring value key-format")
+func databaseMonitorCPUCmdInit() {
+	fs := databaseMonitorCPUCmd.Flags()
+	fs.StringVarP(&databaseMonitorCPUParam.Start, "start", "", "", "set start-time")
+	fs.StringVarP(&databaseMonitorCPUParam.End, "end", "", "", "set end-time")
+	fs.StringVarP(&databaseMonitorCPUParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.cpu", "set monitoring value key-format")
 }
 
 var databaseMonitorMemoryCmd = &cobra.Command{
@@ -666,8 +666,8 @@ func init() {
 	databaseReplicaCreateCmdInit()
 	parent.AddCommand(databaseReplicaCreateCmd)
 
-	databaseMonitorCpuCmdInit()
-	parent.AddCommand(databaseMonitorCpuCmd)
+	databaseMonitorCPUCmdInit()
+	parent.AddCommand(databaseMonitorCPUCmd)
 
 	databaseMonitorMemoryCmdInit()
 	parent.AddCommand(databaseMonitorMemoryCmd)

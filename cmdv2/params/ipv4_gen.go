@@ -27,24 +27,24 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListIpv4Param is input parameters for the sacloud API
-type ListIpv4Param struct {
-	Max  int
-	Sort []string
+// ListIPv4Param is input parameters for the sacloud API
+type ListIPv4Param struct {
 	Name []string
 	Id   []sacloud.ID
 	From int
+	Max  int
+	Sort []string
 
 	input Input
 }
 
-// NewListIpv4Param return new ListIpv4Param
-func NewListIpv4Param() *ListIpv4Param {
-	return &ListIpv4Param{}
+// NewListIPv4Param return new ListIPv4Param
+func NewListIPv4Param() *ListIPv4Param {
+	return &ListIPv4Param{}
 }
 
-// Initialize init ListIpv4Param
-func (p *ListIpv4Param) Initialize(in Input) error {
+// Initialize init ListIPv4Param
+func (p *ListIPv4Param) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -53,17 +53,11 @@ func (p *ListIpv4Param) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ListIpv4Param) WriteSkeleton(writer io.Writer) error {
+func (p *ListIPv4Param) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListIpv4Param) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
-	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
+func (p *ListIPv4Param) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -73,10 +67,16 @@ func (p *ListIpv4Param) fillValueToSkeleton() {
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
+	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
 
 }
 
-func (p *ListIpv4Param) validate() error {
+func (p *ListIPv4Param) validate() error {
 	var errors []error
 
 	{
@@ -109,80 +109,80 @@ func (p *ListIpv4Param) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ListIpv4Param) ResourceDef() *schema.Resource {
+func (p *ListIPv4Param) ResourceDef() *schema.Resource {
 	return define.Resources["IPv4"]
 }
 
-func (p *ListIpv4Param) CommandDef() *schema.Command {
+func (p *ListIPv4Param) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["list"]
 }
 
-func (p *ListIpv4Param) IncludeFields() []string {
+func (p *ListIPv4Param) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ListIpv4Param) ExcludeFields() []string {
+func (p *ListIPv4Param) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ListIpv4Param) TableType() output.TableType {
+func (p *ListIPv4Param) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ListIpv4Param) ColumnDefs() []output.ColumnDef {
+func (p *ListIPv4Param) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListIpv4Param) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListIpv4Param) GetMax() int {
-	return p.Max
-}
-func (p *ListIpv4Param) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListIpv4Param) GetSort() []string {
-	return p.Sort
-}
-func (p *ListIpv4Param) SetName(v []string) {
+func (p *ListIPv4Param) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListIpv4Param) GetName() []string {
+func (p *ListIPv4Param) GetName() []string {
 	return p.Name
 }
-func (p *ListIpv4Param) SetId(v []sacloud.ID) {
+func (p *ListIPv4Param) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListIpv4Param) GetId() []sacloud.ID {
+func (p *ListIPv4Param) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListIpv4Param) SetFrom(v int) {
+func (p *ListIPv4Param) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListIpv4Param) GetFrom() int {
+func (p *ListIPv4Param) GetFrom() int {
 	return p.From
 }
+func (p *ListIPv4Param) SetMax(v int) {
+	p.Max = v
+}
 
-// PtrAddIpv4Param is input parameters for the sacloud API
-type PtrAddIpv4Param struct {
+func (p *ListIPv4Param) GetMax() int {
+	return p.Max
+}
+func (p *ListIPv4Param) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListIPv4Param) GetSort() []string {
+	return p.Sort
+}
+
+// PtrAddIPv4Param is input parameters for the sacloud API
+type PtrAddIPv4Param struct {
 	Hostname string
 
 	input Input
 }
 
-// NewPtrAddIpv4Param return new PtrAddIpv4Param
-func NewPtrAddIpv4Param() *PtrAddIpv4Param {
-	return &PtrAddIpv4Param{}
+// NewPtrAddIPv4Param return new PtrAddIPv4Param
+func NewPtrAddIPv4Param() *PtrAddIPv4Param {
+	return &PtrAddIPv4Param{}
 }
 
-// Initialize init PtrAddIpv4Param
-func (p *PtrAddIpv4Param) Initialize(in Input) error {
+// Initialize init PtrAddIPv4Param
+func (p *PtrAddIPv4Param) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -191,18 +191,18 @@ func (p *PtrAddIpv4Param) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *PtrAddIpv4Param) WriteSkeleton(writer io.Writer) error {
+func (p *PtrAddIPv4Param) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PtrAddIpv4Param) fillValueToSkeleton() {
+func (p *PtrAddIPv4Param) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Hostname) {
 		p.Hostname = ""
 	}
 
 }
 
-func (p *PtrAddIpv4Param) validate() error {
+func (p *PtrAddIPv4Param) validate() error {
 	var errors []error
 
 	{
@@ -216,50 +216,50 @@ func (p *PtrAddIpv4Param) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *PtrAddIpv4Param) ResourceDef() *schema.Resource {
+func (p *PtrAddIPv4Param) ResourceDef() *schema.Resource {
 	return define.Resources["IPv4"]
 }
 
-func (p *PtrAddIpv4Param) CommandDef() *schema.Command {
+func (p *PtrAddIPv4Param) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["ptr-add"]
 }
 
-func (p *PtrAddIpv4Param) IncludeFields() []string {
+func (p *PtrAddIPv4Param) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *PtrAddIpv4Param) ExcludeFields() []string {
+func (p *PtrAddIPv4Param) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *PtrAddIpv4Param) TableType() output.TableType {
+func (p *PtrAddIPv4Param) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *PtrAddIpv4Param) ColumnDefs() []output.ColumnDef {
+func (p *PtrAddIPv4Param) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *PtrAddIpv4Param) SetHostname(v string) {
+func (p *PtrAddIPv4Param) SetHostname(v string) {
 	p.Hostname = v
 }
 
-func (p *PtrAddIpv4Param) GetHostname() string {
+func (p *PtrAddIPv4Param) GetHostname() string {
 	return p.Hostname
 }
 
-// PtrReadIpv4Param is input parameters for the sacloud API
-type PtrReadIpv4Param struct {
+// PtrReadIPv4Param is input parameters for the sacloud API
+type PtrReadIPv4Param struct {
 	input Input
 }
 
-// NewPtrReadIpv4Param return new PtrReadIpv4Param
-func NewPtrReadIpv4Param() *PtrReadIpv4Param {
-	return &PtrReadIpv4Param{}
+// NewPtrReadIPv4Param return new PtrReadIPv4Param
+func NewPtrReadIPv4Param() *PtrReadIPv4Param {
+	return &PtrReadIPv4Param{}
 }
 
-// Initialize init PtrReadIpv4Param
-func (p *PtrReadIpv4Param) Initialize(in Input) error {
+// Initialize init PtrReadIPv4Param
+func (p *PtrReadIPv4Param) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -268,58 +268,58 @@ func (p *PtrReadIpv4Param) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *PtrReadIpv4Param) WriteSkeleton(writer io.Writer) error {
+func (p *PtrReadIPv4Param) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PtrReadIpv4Param) fillValueToSkeleton() {
+func (p *PtrReadIPv4Param) fillValueToSkeleton() {
 
 }
 
-func (p *PtrReadIpv4Param) validate() error {
+func (p *PtrReadIPv4Param) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *PtrReadIpv4Param) ResourceDef() *schema.Resource {
+func (p *PtrReadIPv4Param) ResourceDef() *schema.Resource {
 	return define.Resources["IPv4"]
 }
 
-func (p *PtrReadIpv4Param) CommandDef() *schema.Command {
+func (p *PtrReadIPv4Param) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["ptr-read"]
 }
 
-func (p *PtrReadIpv4Param) IncludeFields() []string {
+func (p *PtrReadIPv4Param) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *PtrReadIpv4Param) ExcludeFields() []string {
+func (p *PtrReadIPv4Param) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *PtrReadIpv4Param) TableType() output.TableType {
+func (p *PtrReadIPv4Param) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *PtrReadIpv4Param) ColumnDefs() []output.ColumnDef {
+func (p *PtrReadIPv4Param) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// PtrUpdateIpv4Param is input parameters for the sacloud API
-type PtrUpdateIpv4Param struct {
+// PtrUpdateIPv4Param is input parameters for the sacloud API
+type PtrUpdateIPv4Param struct {
 	Hostname string
 
 	input Input
 }
 
-// NewPtrUpdateIpv4Param return new PtrUpdateIpv4Param
-func NewPtrUpdateIpv4Param() *PtrUpdateIpv4Param {
-	return &PtrUpdateIpv4Param{}
+// NewPtrUpdateIPv4Param return new PtrUpdateIPv4Param
+func NewPtrUpdateIPv4Param() *PtrUpdateIPv4Param {
+	return &PtrUpdateIPv4Param{}
 }
 
-// Initialize init PtrUpdateIpv4Param
-func (p *PtrUpdateIpv4Param) Initialize(in Input) error {
+// Initialize init PtrUpdateIPv4Param
+func (p *PtrUpdateIPv4Param) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -328,18 +328,18 @@ func (p *PtrUpdateIpv4Param) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *PtrUpdateIpv4Param) WriteSkeleton(writer io.Writer) error {
+func (p *PtrUpdateIPv4Param) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PtrUpdateIpv4Param) fillValueToSkeleton() {
+func (p *PtrUpdateIPv4Param) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Hostname) {
 		p.Hostname = ""
 	}
 
 }
 
-func (p *PtrUpdateIpv4Param) validate() error {
+func (p *PtrUpdateIPv4Param) validate() error {
 	var errors []error
 
 	{
@@ -353,50 +353,50 @@ func (p *PtrUpdateIpv4Param) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *PtrUpdateIpv4Param) ResourceDef() *schema.Resource {
+func (p *PtrUpdateIPv4Param) ResourceDef() *schema.Resource {
 	return define.Resources["IPv4"]
 }
 
-func (p *PtrUpdateIpv4Param) CommandDef() *schema.Command {
+func (p *PtrUpdateIPv4Param) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["ptr-update"]
 }
 
-func (p *PtrUpdateIpv4Param) IncludeFields() []string {
+func (p *PtrUpdateIPv4Param) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *PtrUpdateIpv4Param) ExcludeFields() []string {
+func (p *PtrUpdateIPv4Param) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *PtrUpdateIpv4Param) TableType() output.TableType {
+func (p *PtrUpdateIPv4Param) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *PtrUpdateIpv4Param) ColumnDefs() []output.ColumnDef {
+func (p *PtrUpdateIPv4Param) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *PtrUpdateIpv4Param) SetHostname(v string) {
+func (p *PtrUpdateIPv4Param) SetHostname(v string) {
 	p.Hostname = v
 }
 
-func (p *PtrUpdateIpv4Param) GetHostname() string {
+func (p *PtrUpdateIPv4Param) GetHostname() string {
 	return p.Hostname
 }
 
-// PtrDeleteIpv4Param is input parameters for the sacloud API
-type PtrDeleteIpv4Param struct {
+// PtrDeleteIPv4Param is input parameters for the sacloud API
+type PtrDeleteIPv4Param struct {
 	input Input
 }
 
-// NewPtrDeleteIpv4Param return new PtrDeleteIpv4Param
-func NewPtrDeleteIpv4Param() *PtrDeleteIpv4Param {
-	return &PtrDeleteIpv4Param{}
+// NewPtrDeleteIPv4Param return new PtrDeleteIPv4Param
+func NewPtrDeleteIPv4Param() *PtrDeleteIPv4Param {
+	return &PtrDeleteIPv4Param{}
 }
 
-// Initialize init PtrDeleteIpv4Param
-func (p *PtrDeleteIpv4Param) Initialize(in Input) error {
+// Initialize init PtrDeleteIPv4Param
+func (p *PtrDeleteIPv4Param) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -405,40 +405,40 @@ func (p *PtrDeleteIpv4Param) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *PtrDeleteIpv4Param) WriteSkeleton(writer io.Writer) error {
+func (p *PtrDeleteIPv4Param) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PtrDeleteIpv4Param) fillValueToSkeleton() {
+func (p *PtrDeleteIPv4Param) fillValueToSkeleton() {
 
 }
 
-func (p *PtrDeleteIpv4Param) validate() error {
+func (p *PtrDeleteIPv4Param) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *PtrDeleteIpv4Param) ResourceDef() *schema.Resource {
+func (p *PtrDeleteIPv4Param) ResourceDef() *schema.Resource {
 	return define.Resources["IPv4"]
 }
 
-func (p *PtrDeleteIpv4Param) CommandDef() *schema.Command {
+func (p *PtrDeleteIPv4Param) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["ptr-delete"]
 }
 
-func (p *PtrDeleteIpv4Param) IncludeFields() []string {
+func (p *PtrDeleteIPv4Param) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *PtrDeleteIpv4Param) ExcludeFields() []string {
+func (p *PtrDeleteIPv4Param) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *PtrDeleteIpv4Param) TableType() output.TableType {
+func (p *PtrDeleteIPv4Param) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *PtrDeleteIpv4Param) ColumnDefs() []output.ColumnDef {
+func (p *PtrDeleteIPv4Param) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }

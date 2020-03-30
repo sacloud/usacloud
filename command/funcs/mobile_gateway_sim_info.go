@@ -21,18 +21,18 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func MobileGatewaySimInfo(ctx command.Context, params *params.SimInfoMobileGatewayParam) error {
+func MobileGatewaySIMInfo(ctx command.Context, params *params.SIMInfoMobileGatewayParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetMobileGatewayAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("MobileGatewaySimInfo is failed: %s", e)
+		return fmt.Errorf("MobileGatewaySIMInfo is failed: %s", e)
 	}
 
 	sims, err := api.ListSIM(p.ID, nil)
 	if err != nil {
-		return fmt.Errorf("MobileGatewaySimInfo is failed: %s", e)
+		return fmt.Errorf("MobileGatewaySIMInfo is failed: %s", e)
 	}
 
 	list := []interface{}{}

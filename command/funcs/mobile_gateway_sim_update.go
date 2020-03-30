@@ -21,20 +21,20 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func MobileGatewaySimUpdate(ctx command.Context, params *params.SimUpdateMobileGatewayParam) error {
+func MobileGatewaySIMUpdate(ctx command.Context, params *params.SIMUpdateMobileGatewayParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetMobileGatewayAPI()
 	_, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("MobileGatewaySimUpdate is failed: %s", e)
+		return fmt.Errorf("MobileGatewaySIMUpdate is failed: %s", e)
 	}
 
 	// set IPAddress
 	simAPI := client.GetSIMAPI()
-	_, err := simAPI.AssignIP(params.SimId, params.Ipaddress)
+	_, err := simAPI.AssignIP(params.SIMId, params.Ipaddress)
 	if err != nil {
-		return fmt.Errorf("MobileGatewaySimUpdate is failed: %s", err)
+		return fmt.Errorf("MobileGatewaySIMUpdate is failed: %s", err)
 	}
 
 	return nil

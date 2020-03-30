@@ -29,7 +29,7 @@ func TestDiskEdit(t *testing.T) {
 	params := &params.EditDiskParam{
 		Hostname:            "dummy",
 		Password:            "dummy",
-		SshKeyIds:           []sacloud.ID{111111111111, 222222222222},
+		SSHKeyIds:           []sacloud.ID{111111111111, 222222222222},
 		DisablePasswordAuth: true,
 		Ipaddress:           "192.2.0.10",
 		DefaultRoute:        "192.2.0.1",
@@ -42,7 +42,7 @@ func TestDiskEdit(t *testing.T) {
 		flags: map[string]interface{}{
 			"hostname":              params.Hostname,
 			"password":              params.Password,
-			"ssh-key-ids":           params.SshKeyIds,
+			"ssh-key-ids":           params.SSHKeyIds,
 			"disable-password-auth": params.DisablePasswordAuth,
 			"ipaddress":             params.Ipaddress,
 			"default-route":         params.DefaultRoute,

@@ -32,11 +32,11 @@ import (
 )
 
 func init() {
-	autobackupListParam := params.NewListAutobackupParam()
-	autobackupCreateParam := params.NewCreateAutobackupParam()
-	autobackupReadParam := params.NewReadAutobackupParam()
-	autobackupUpdateParam := params.NewUpdateAutobackupParam()
-	autobackupDeleteParam := params.NewDeleteAutobackupParam()
+	autoBackupListParam := params.NewListAutoBackupParam()
+	autoBackupCreateParam := params.NewCreateAutoBackupParam()
+	autoBackupReadParam := params.NewReadAutoBackupParam()
+	autoBackupUpdateParam := params.NewUpdateAutoBackupParam()
+	autoBackupDeleteParam := params.NewDeleteAutoBackupParam()
 
 	cliCommand := &cli.Command{
 		Name:  "auto-backup",
@@ -45,7 +45,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find", "selector"},
-				Usage:   "List Autobackup",
+				Usage:   "List AutoBackup",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -136,75 +136,75 @@ func init() {
 						return err
 					}
 
-					autobackupListParam.ParamTemplate = c.String("param-template")
-					autobackupListParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(autobackupListParam)
+					autoBackupListParam.ParamTemplate = c.String("param-template")
+					autoBackupListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(autoBackupListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListAutobackupParam()
+						p := params.NewListAutoBackupParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(autobackupListParam, p, mergo.WithOverride)
+						mergo.Merge(autoBackupListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						autobackupListParam.Name = c.StringSlice("name")
+						autoBackupListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						autobackupListParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						autoBackupListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
-						autobackupListParam.Tags = c.StringSlice("tags")
+						autoBackupListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("from") {
-						autobackupListParam.From = c.Int("from")
+						autoBackupListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						autobackupListParam.Max = c.Int("max")
+						autoBackupListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						autobackupListParam.Sort = c.StringSlice("sort")
+						autoBackupListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						autobackupListParam.ParamTemplate = c.String("param-template")
+						autoBackupListParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						autobackupListParam.Parameters = c.String("parameters")
+						autoBackupListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						autobackupListParam.ParamTemplateFile = c.String("param-template-file")
+						autoBackupListParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						autobackupListParam.ParameterFile = c.String("parameter-file")
+						autoBackupListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						autobackupListParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						autoBackupListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						autobackupListParam.OutputType = c.String("output-type")
+						autoBackupListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						autobackupListParam.Column = c.StringSlice("column")
+						autoBackupListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						autobackupListParam.Quiet = c.Bool("quiet")
+						autoBackupListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						autobackupListParam.Format = c.String("format")
+						autoBackupListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						autobackupListParam.FormatFile = c.String("format-file")
+						autoBackupListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						autobackupListParam.Query = c.String("query")
+						autoBackupListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						autobackupListParam.QueryFile = c.String("query-file")
+						autoBackupListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -212,7 +212,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = autobackupListParam
+					var outputTypeHolder interface{} = autoBackupListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -223,10 +223,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if autobackupListParam.GenerateSkeleton {
-						autobackupListParam.GenerateSkeleton = false
-						autobackupListParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(autobackupListParam, "", "\t")
+					if autoBackupListParam.GenerateSkeleton {
+						autoBackupListParam.GenerateSkeleton = false
+						autoBackupListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(autoBackupListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -235,21 +235,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := autobackupListParam.Validate(); len(errors) > 0 {
+					if errors := autoBackupListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), autobackupListParam)
+					ctx := command.NewContext(c, c.Args().Slice(), autoBackupListParam)
 
 					// Run command with params
-					return funcs.AutobackupList(ctx, autobackupListParam)
+					return funcs.AutoBackupList(ctx, autoBackupListParam)
 
 				},
 			},
 			{
 				Name:  "create",
-				Usage: "Create Autobackup",
+				Usage: "Create AutoBackup",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:  "disk-id",
@@ -349,81 +349,81 @@ func init() {
 						return err
 					}
 
-					autobackupCreateParam.ParamTemplate = c.String("param-template")
-					autobackupCreateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(autobackupCreateParam)
+					autoBackupCreateParam.ParamTemplate = c.String("param-template")
+					autoBackupCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(autoBackupCreateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCreateAutobackupParam()
+						p := params.NewCreateAutoBackupParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(autobackupCreateParam, p, mergo.WithOverride)
+						mergo.Merge(autoBackupCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("disk-id") {
-						autobackupCreateParam.DiskId = sacloud.ID(c.Int64("disk-id"))
+						autoBackupCreateParam.DiskId = sacloud.ID(c.Int64("disk-id"))
 					}
 					if c.IsSet("weekdays") {
-						autobackupCreateParam.Weekdays = c.StringSlice("weekdays")
+						autoBackupCreateParam.Weekdays = c.StringSlice("weekdays")
 					}
 					if c.IsSet("generation") {
-						autobackupCreateParam.Generation = c.Int("generation")
+						autoBackupCreateParam.Generation = c.Int("generation")
 					}
 					if c.IsSet("name") {
-						autobackupCreateParam.Name = c.String("name")
+						autoBackupCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						autobackupCreateParam.Description = c.String("description")
+						autoBackupCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						autobackupCreateParam.Tags = c.StringSlice("tags")
+						autoBackupCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						autobackupCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						autoBackupCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						autobackupCreateParam.Assumeyes = c.Bool("assumeyes")
+						autoBackupCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						autobackupCreateParam.ParamTemplate = c.String("param-template")
+						autoBackupCreateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						autobackupCreateParam.Parameters = c.String("parameters")
+						autoBackupCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						autobackupCreateParam.ParamTemplateFile = c.String("param-template-file")
+						autoBackupCreateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						autobackupCreateParam.ParameterFile = c.String("parameter-file")
+						autoBackupCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						autobackupCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						autoBackupCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						autobackupCreateParam.OutputType = c.String("output-type")
+						autoBackupCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						autobackupCreateParam.Column = c.StringSlice("column")
+						autoBackupCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						autobackupCreateParam.Quiet = c.Bool("quiet")
+						autoBackupCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						autobackupCreateParam.Format = c.String("format")
+						autoBackupCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						autobackupCreateParam.FormatFile = c.String("format-file")
+						autoBackupCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						autobackupCreateParam.Query = c.String("query")
+						autoBackupCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						autobackupCreateParam.QueryFile = c.String("query-file")
+						autoBackupCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -431,7 +431,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = autobackupCreateParam
+					var outputTypeHolder interface{} = autoBackupCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -442,10 +442,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if autobackupCreateParam.GenerateSkeleton {
-						autobackupCreateParam.GenerateSkeleton = false
-						autobackupCreateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(autobackupCreateParam, "", "\t")
+					if autoBackupCreateParam.GenerateSkeleton {
+						autoBackupCreateParam.GenerateSkeleton = false
+						autoBackupCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(autoBackupCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -454,15 +454,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := autobackupCreateParam.Validate(); len(errors) > 0 {
+					if errors := autoBackupCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), autobackupCreateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), autoBackupCreateParam)
 
 					// confirm
-					if !autobackupCreateParam.Assumeyes {
+					if !autoBackupCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -472,13 +472,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.AutobackupCreate(ctx, autobackupCreateParam)
+					return funcs.AutoBackupCreate(ctx, autoBackupCreateParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Autobackup",
+				Usage:     "Read AutoBackup",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -552,63 +552,63 @@ func init() {
 						return err
 					}
 
-					autobackupReadParam.ParamTemplate = c.String("param-template")
-					autobackupReadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(autobackupReadParam)
+					autoBackupReadParam.ParamTemplate = c.String("param-template")
+					autoBackupReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(autoBackupReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadAutobackupParam()
+						p := params.NewReadAutoBackupParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(autobackupReadParam, p, mergo.WithOverride)
+						mergo.Merge(autoBackupReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						autobackupReadParam.Selector = c.StringSlice("selector")
+						autoBackupReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						autobackupReadParam.ParamTemplate = c.String("param-template")
+						autoBackupReadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						autobackupReadParam.Parameters = c.String("parameters")
+						autoBackupReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						autobackupReadParam.ParamTemplateFile = c.String("param-template-file")
+						autoBackupReadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						autobackupReadParam.ParameterFile = c.String("parameter-file")
+						autoBackupReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						autobackupReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						autoBackupReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						autobackupReadParam.OutputType = c.String("output-type")
+						autoBackupReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						autobackupReadParam.Column = c.StringSlice("column")
+						autoBackupReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						autobackupReadParam.Quiet = c.Bool("quiet")
+						autoBackupReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						autobackupReadParam.Format = c.String("format")
+						autoBackupReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						autobackupReadParam.FormatFile = c.String("format-file")
+						autoBackupReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						autobackupReadParam.Query = c.String("query")
+						autoBackupReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						autobackupReadParam.QueryFile = c.String("query-file")
+						autoBackupReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						autobackupReadParam.Id = sacloud.ID(c.Int64("id"))
+						autoBackupReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -616,7 +616,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = autobackupReadParam
+					var outputTypeHolder interface{} = autoBackupReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -627,10 +627,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if autobackupReadParam.GenerateSkeleton {
-						autobackupReadParam.GenerateSkeleton = false
-						autobackupReadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(autobackupReadParam, "", "\t")
+					if autoBackupReadParam.GenerateSkeleton {
+						autoBackupReadParam.GenerateSkeleton = false
+						autoBackupReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(autoBackupReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -639,19 +639,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := autobackupReadParam.Validate(); len(errors) > 0 {
+					if errors := autoBackupReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), autobackupReadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), autoBackupReadParam)
 
-					apiClient := ctx.GetAPIClient().Autobackup
+					apiClient := ctx.GetAPIClient().AutoBackup
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(autobackupReadParam.Selector) == 0 {
+						if len(autoBackupReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -660,12 +660,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceAutoBackupItems {
-							if hasTags(&v, autobackupReadParam.Selector) {
+							if hasTags(&v, autoBackupReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", autobackupReadParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", autoBackupReadParam.Selector)
 						}
 
 					} else {
@@ -687,7 +687,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceAutoBackupItems {
-										if len(autobackupReadParam.Selector) == 0 || hasTags(&v, autobackupReadParam.Selector) {
+										if len(autoBackupReadParam.Selector) == 0 || hasTags(&v, autoBackupReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -712,11 +712,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						autobackupReadParam.SetId(id)
-						p := *autobackupReadParam // copy struct value
-						autobackupReadParam := &p
+						autoBackupReadParam.SetId(id)
+						p := *autoBackupReadParam // copy struct value
+						autoBackupReadParam := &p
 						go func() {
-							err := funcs.AutobackupRead(ctx, autobackupReadParam)
+							err := funcs.AutoBackupRead(ctx, autoBackupReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -730,7 +730,7 @@ func init() {
 			},
 			{
 				Name:      "update",
-				Usage:     "Update Autobackup",
+				Usage:     "Update AutoBackup",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -834,84 +834,84 @@ func init() {
 						return err
 					}
 
-					autobackupUpdateParam.ParamTemplate = c.String("param-template")
-					autobackupUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(autobackupUpdateParam)
+					autoBackupUpdateParam.ParamTemplate = c.String("param-template")
+					autoBackupUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(autoBackupUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUpdateAutobackupParam()
+						p := params.NewUpdateAutoBackupParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(autobackupUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(autoBackupUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("weekdays") {
-						autobackupUpdateParam.Weekdays = c.StringSlice("weekdays")
+						autoBackupUpdateParam.Weekdays = c.StringSlice("weekdays")
 					}
 					if c.IsSet("generation") {
-						autobackupUpdateParam.Generation = c.Int("generation")
+						autoBackupUpdateParam.Generation = c.Int("generation")
 					}
 					if c.IsSet("selector") {
-						autobackupUpdateParam.Selector = c.StringSlice("selector")
+						autoBackupUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
-						autobackupUpdateParam.Name = c.String("name")
+						autoBackupUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						autobackupUpdateParam.Description = c.String("description")
+						autoBackupUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						autobackupUpdateParam.Tags = c.StringSlice("tags")
+						autoBackupUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						autobackupUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						autoBackupUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						autobackupUpdateParam.Assumeyes = c.Bool("assumeyes")
+						autoBackupUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						autobackupUpdateParam.ParamTemplate = c.String("param-template")
+						autoBackupUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						autobackupUpdateParam.Parameters = c.String("parameters")
+						autoBackupUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						autobackupUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						autoBackupUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						autobackupUpdateParam.ParameterFile = c.String("parameter-file")
+						autoBackupUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						autobackupUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						autoBackupUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						autobackupUpdateParam.OutputType = c.String("output-type")
+						autoBackupUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						autobackupUpdateParam.Column = c.StringSlice("column")
+						autoBackupUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						autobackupUpdateParam.Quiet = c.Bool("quiet")
+						autoBackupUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						autobackupUpdateParam.Format = c.String("format")
+						autoBackupUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						autobackupUpdateParam.FormatFile = c.String("format-file")
+						autoBackupUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						autobackupUpdateParam.Query = c.String("query")
+						autoBackupUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						autobackupUpdateParam.QueryFile = c.String("query-file")
+						autoBackupUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						autobackupUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						autoBackupUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -919,7 +919,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = autobackupUpdateParam
+					var outputTypeHolder interface{} = autoBackupUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -930,10 +930,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if autobackupUpdateParam.GenerateSkeleton {
-						autobackupUpdateParam.GenerateSkeleton = false
-						autobackupUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(autobackupUpdateParam, "", "\t")
+					if autoBackupUpdateParam.GenerateSkeleton {
+						autoBackupUpdateParam.GenerateSkeleton = false
+						autoBackupUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(autoBackupUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -942,19 +942,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := autobackupUpdateParam.Validate(); len(errors) > 0 {
+					if errors := autoBackupUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), autobackupUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), autoBackupUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Autobackup
+					apiClient := ctx.GetAPIClient().AutoBackup
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(autobackupUpdateParam.Selector) == 0 {
+						if len(autoBackupUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -963,12 +963,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceAutoBackupItems {
-							if hasTags(&v, autobackupUpdateParam.Selector) {
+							if hasTags(&v, autoBackupUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", autobackupUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", autoBackupUpdateParam.Selector)
 						}
 
 					} else {
@@ -990,7 +990,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceAutoBackupItems {
-										if len(autobackupUpdateParam.Selector) == 0 || hasTags(&v, autobackupUpdateParam.Selector) {
+										if len(autoBackupUpdateParam.Selector) == 0 || hasTags(&v, autoBackupUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1007,7 +1007,7 @@ func init() {
 					}
 
 					// confirm
-					if !autobackupUpdateParam.Assumeyes {
+					if !autoBackupUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1021,11 +1021,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						autobackupUpdateParam.SetId(id)
-						p := *autobackupUpdateParam // copy struct value
-						autobackupUpdateParam := &p
+						autoBackupUpdateParam.SetId(id)
+						p := *autoBackupUpdateParam // copy struct value
+						autoBackupUpdateParam := &p
 						go func() {
-							err := funcs.AutobackupUpdate(ctx, autobackupUpdateParam)
+							err := funcs.AutoBackupUpdate(ctx, autoBackupUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1040,7 +1040,7 @@ func init() {
 			{
 				Name:      "delete",
 				Aliases:   []string{"rm"},
-				Usage:     "Delete Autobackup",
+				Usage:     "Delete AutoBackup",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1119,66 +1119,66 @@ func init() {
 						return err
 					}
 
-					autobackupDeleteParam.ParamTemplate = c.String("param-template")
-					autobackupDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(autobackupDeleteParam)
+					autoBackupDeleteParam.ParamTemplate = c.String("param-template")
+					autoBackupDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(autoBackupDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeleteAutobackupParam()
+						p := params.NewDeleteAutoBackupParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(autobackupDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(autoBackupDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						autobackupDeleteParam.Selector = c.StringSlice("selector")
+						autoBackupDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						autobackupDeleteParam.Assumeyes = c.Bool("assumeyes")
+						autoBackupDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						autobackupDeleteParam.ParamTemplate = c.String("param-template")
+						autoBackupDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						autobackupDeleteParam.Parameters = c.String("parameters")
+						autoBackupDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						autobackupDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						autoBackupDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						autobackupDeleteParam.ParameterFile = c.String("parameter-file")
+						autoBackupDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						autobackupDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						autoBackupDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						autobackupDeleteParam.OutputType = c.String("output-type")
+						autoBackupDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						autobackupDeleteParam.Column = c.StringSlice("column")
+						autoBackupDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						autobackupDeleteParam.Quiet = c.Bool("quiet")
+						autoBackupDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						autobackupDeleteParam.Format = c.String("format")
+						autoBackupDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						autobackupDeleteParam.FormatFile = c.String("format-file")
+						autoBackupDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						autobackupDeleteParam.Query = c.String("query")
+						autoBackupDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						autobackupDeleteParam.QueryFile = c.String("query-file")
+						autoBackupDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						autobackupDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						autoBackupDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1186,7 +1186,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = autobackupDeleteParam
+					var outputTypeHolder interface{} = autoBackupDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1197,10 +1197,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if autobackupDeleteParam.GenerateSkeleton {
-						autobackupDeleteParam.GenerateSkeleton = false
-						autobackupDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(autobackupDeleteParam, "", "\t")
+					if autoBackupDeleteParam.GenerateSkeleton {
+						autoBackupDeleteParam.GenerateSkeleton = false
+						autoBackupDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(autoBackupDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1209,19 +1209,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := autobackupDeleteParam.Validate(); len(errors) > 0 {
+					if errors := autoBackupDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), autobackupDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), autoBackupDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Autobackup
+					apiClient := ctx.GetAPIClient().AutoBackup
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(autobackupDeleteParam.Selector) == 0 {
+						if len(autoBackupDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1230,12 +1230,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceAutoBackupItems {
-							if hasTags(&v, autobackupDeleteParam.Selector) {
+							if hasTags(&v, autoBackupDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", autobackupDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", autoBackupDeleteParam.Selector)
 						}
 
 					} else {
@@ -1257,7 +1257,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceAutoBackupItems {
-										if len(autobackupDeleteParam.Selector) == 0 || hasTags(&v, autobackupDeleteParam.Selector) {
+										if len(autoBackupDeleteParam.Selector) == 0 || hasTags(&v, autoBackupDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1274,7 +1274,7 @@ func init() {
 					}
 
 					// confirm
-					if !autobackupDeleteParam.Assumeyes {
+					if !autoBackupDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1288,11 +1288,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						autobackupDeleteParam.SetId(id)
-						p := *autobackupDeleteParam // copy struct value
-						autobackupDeleteParam := &p
+						autoBackupDeleteParam.SetId(id)
+						p := *autoBackupDeleteParam // copy struct value
+						autoBackupDeleteParam := &p
 						go func() {
-							err := funcs.AutobackupDelete(ctx, autobackupDeleteParam)
+							err := funcs.AutoBackupDelete(ctx, autoBackupDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}

@@ -25,16 +25,16 @@ import (
 )
 
 var (
-	autobackupListParam   = params.NewListAutobackupParam()
-	autobackupCreateParam = params.NewCreateAutobackupParam()
-	autobackupReadParam   = params.NewReadAutobackupParam()
-	autobackupUpdateParam = params.NewUpdateAutobackupParam()
-	autobackupDeleteParam = params.NewDeleteAutobackupParam()
+	autoBackupListParam   = params.NewListAutoBackupParam()
+	autoBackupCreateParam = params.NewCreateAutoBackupParam()
+	autoBackupReadParam   = params.NewReadAutoBackupParam()
+	autoBackupUpdateParam = params.NewUpdateAutoBackupParam()
+	autoBackupDeleteParam = params.NewDeleteAutoBackupParam()
 )
 
-// autobackupCmd represents the command to manage SAKURA Cloud AutoBackup
-var autobackupCmd = &cobra.Command{
-	Use:   "autobackup",
+// autoBackupCmd represents the command to manage SAKURA Cloud AutoBackup
+var autoBackupCmd = &cobra.Command{
+	Use:   "autoBackup",
 	Short: "A manage commands of AutoBackup",
 	Long:  `A manage commands of AutoBackup`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -42,125 +42,125 @@ var autobackupCmd = &cobra.Command{
 	},
 }
 
-var autobackupListCmd = &cobra.Command{
+var autoBackupListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Autobackup",
-	Long:    `List Autobackup`,
+	Short:   "List AutoBackup",
+	Long:    `List AutoBackup`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := autobackupListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := autoBackupListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(autobackupListParam))
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(autoBackupListParam))
 		return err
 	},
 }
 
-func autobackupListCmdInit() {
-	fs := autobackupListCmd.Flags()
-	fs.IntVarP(&autobackupListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&autobackupListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&autobackupListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
-	fs.StringSliceVarP(&autobackupListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &autobackupListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&autobackupListParam.From, "from", "", 0, "set offset")
+func autoBackupListCmdInit() {
+	fs := autoBackupListCmd.Flags()
+	fs.StringSliceVarP(&autoBackupListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &autoBackupListParam.Id), "id", "", "set filter by id(s)")
+	fs.IntVarP(&autoBackupListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&autoBackupListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&autoBackupListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&autoBackupListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 }
 
-var autobackupCreateCmd = &cobra.Command{
+var autoBackupCreateCmd = &cobra.Command{
 	Use: "create",
 
-	Short: "Create Autobackup",
-	Long:  `Create Autobackup`,
+	Short: "Create AutoBackup",
+	Long:  `Create AutoBackup`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := autobackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := autoBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(autobackupCreateParam))
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(autoBackupCreateParam))
 		return err
 	},
 }
 
-func autobackupCreateCmdInit() {
-	fs := autobackupCreateCmd.Flags()
-	fs.IntVarP(&autobackupCreateParam.Generation, "generation", "", 1, "set backup generation[1-10]")
-	fs.StringVarP(&autobackupCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&autobackupCreateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&autobackupCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &autobackupCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.VarP(newIDValue(0, &autobackupCreateParam.DiskId), "disk-id", "", "set target diskID ")
-	fs.StringSliceVarP(&autobackupCreateParam.Weekdays, "weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
+func autoBackupCreateCmdInit() {
+	fs := autoBackupCreateCmd.Flags()
+	fs.IntVarP(&autoBackupCreateParam.Generation, "generation", "", 1, "set backup generation[1-10]")
+	fs.StringVarP(&autoBackupCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&autoBackupCreateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&autoBackupCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &autoBackupCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.VarP(newIDValue(0, &autoBackupCreateParam.DiskId), "disk-id", "", "set target diskID ")
+	fs.StringSliceVarP(&autoBackupCreateParam.Weekdays, "weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
 }
 
-var autobackupReadCmd = &cobra.Command{
+var autoBackupReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Autobackup",
-	Long:  `Read Autobackup`,
+	Short: "Read AutoBackup",
+	Long:  `Read AutoBackup`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := autobackupReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := autoBackupReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(autobackupReadParam))
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(autoBackupReadParam))
 		return err
 	},
 }
 
-func autobackupReadCmdInit() {
+func autoBackupReadCmdInit() {
 }
 
-var autobackupUpdateCmd = &cobra.Command{
+var autoBackupUpdateCmd = &cobra.Command{
 	Use: "update",
 
-	Short: "Update Autobackup",
-	Long:  `Update Autobackup`,
+	Short: "Update AutoBackup",
+	Long:  `Update AutoBackup`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := autobackupUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := autoBackupUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(autobackupUpdateParam))
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(autoBackupUpdateParam))
 		return err
 	},
 }
 
-func autobackupUpdateCmdInit() {
-	fs := autobackupUpdateCmd.Flags()
-	fs.IntVarP(&autobackupUpdateParam.Generation, "generation", "", 0, "set backup generation[1-10]")
-	fs.StringVarP(&autobackupUpdateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&autobackupUpdateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&autobackupUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &autobackupUpdateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringSliceVarP(&autobackupUpdateParam.Weekdays, "weekdays", "", []string{}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
+func autoBackupUpdateCmdInit() {
+	fs := autoBackupUpdateCmd.Flags()
+	fs.StringVarP(&autoBackupUpdateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&autoBackupUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &autoBackupUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringSliceVarP(&autoBackupUpdateParam.Weekdays, "weekdays", "", []string{}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
+	fs.IntVarP(&autoBackupUpdateParam.Generation, "generation", "", 0, "set backup generation[1-10]")
+	fs.StringVarP(&autoBackupUpdateParam.Name, "name", "", "", "set resource display name")
 }
 
-var autobackupDeleteCmd = &cobra.Command{
+var autoBackupDeleteCmd = &cobra.Command{
 	Use:     "delete",
 	Aliases: []string{"rm"},
-	Short:   "Delete Autobackup",
-	Long:    `Delete Autobackup`,
+	Short:   "Delete AutoBackup",
+	Long:    `Delete AutoBackup`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := autobackupDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := autoBackupDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(autobackupDeleteParam))
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(autoBackupDeleteParam))
 		return err
 	},
 }
 
-func autobackupDeleteCmdInit() {
+func autoBackupDeleteCmdInit() {
 }
 
 func init() {
-	parent := autobackupCmd
+	parent := autoBackupCmd
 
-	autobackupListCmdInit()
-	parent.AddCommand(autobackupListCmd)
+	autoBackupListCmdInit()
+	parent.AddCommand(autoBackupListCmd)
 
-	autobackupCreateCmdInit()
-	parent.AddCommand(autobackupCreateCmd)
+	autoBackupCreateCmdInit()
+	parent.AddCommand(autoBackupCreateCmd)
 
-	autobackupReadCmdInit()
-	parent.AddCommand(autobackupReadCmd)
+	autoBackupReadCmdInit()
+	parent.AddCommand(autoBackupReadCmd)
 
-	autobackupUpdateCmdInit()
-	parent.AddCommand(autobackupUpdateCmd)
+	autoBackupUpdateCmdInit()
+	parent.AddCommand(autoBackupUpdateCmd)
 
-	autobackupDeleteCmdInit()
-	parent.AddCommand(autobackupDeleteCmd)
+	autoBackupDeleteCmdInit()
+	parent.AddCommand(autoBackupDeleteCmd)
 
 	rootCmd.AddCommand(parent)
 }

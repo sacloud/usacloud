@@ -22,8 +22,8 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ShowAuthstatusParam is input parameters for the sacloud API
-type ShowAuthstatusParam struct {
+// ShowAuthStatusParam is input parameters for the sacloud API
+type ShowAuthStatusParam struct {
 	ParamTemplate     string   `json:"param-template"`
 	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -38,13 +38,13 @@ type ShowAuthstatusParam struct {
 	QueryFile         string   `json:"query-file"`
 }
 
-// NewShowAuthstatusParam return new ShowAuthstatusParam
-func NewShowAuthstatusParam() *ShowAuthstatusParam {
-	return &ShowAuthstatusParam{}
+// NewShowAuthStatusParam return new ShowAuthStatusParam
+func NewShowAuthStatusParam() *ShowAuthStatusParam {
+	return &ShowAuthStatusParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ShowAuthstatusParam) FillValueToSkeleton() {
+func (p *ShowAuthStatusParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -85,7 +85,7 @@ func (p *ShowAuthstatusParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ShowAuthstatusParam) Validate() []error {
+func (p *ShowAuthStatusParam) Validate() []error {
 	errors := []error{}
 
 	{
@@ -111,111 +111,111 @@ func (p *ShowAuthstatusParam) Validate() []error {
 	return errors
 }
 
-func (p *ShowAuthstatusParam) GetResourceDef() *schema.Resource {
+func (p *ShowAuthStatusParam) GetResourceDef() *schema.Resource {
 	return define.Resources["AuthStatus"]
 }
 
-func (p *ShowAuthstatusParam) GetCommandDef() *schema.Command {
+func (p *ShowAuthStatusParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["show"]
 }
 
-func (p *ShowAuthstatusParam) GetIncludeFields() []string {
+func (p *ShowAuthStatusParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ShowAuthstatusParam) GetExcludeFields() []string {
+func (p *ShowAuthStatusParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ShowAuthstatusParam) GetTableType() output.TableType {
+func (p *ShowAuthStatusParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ShowAuthstatusParam) GetColumnDefs() []output.ColumnDef {
+func (p *ShowAuthStatusParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ShowAuthstatusParam) SetParamTemplate(v string) {
+func (p *ShowAuthStatusParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ShowAuthstatusParam) GetParamTemplate() string {
+func (p *ShowAuthStatusParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ShowAuthstatusParam) SetParameters(v string) {
+func (p *ShowAuthStatusParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ShowAuthstatusParam) GetParameters() string {
+func (p *ShowAuthStatusParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ShowAuthstatusParam) SetParamTemplateFile(v string) {
+func (p *ShowAuthStatusParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ShowAuthstatusParam) GetParamTemplateFile() string {
+func (p *ShowAuthStatusParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ShowAuthstatusParam) SetParameterFile(v string) {
+func (p *ShowAuthStatusParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ShowAuthstatusParam) GetParameterFile() string {
+func (p *ShowAuthStatusParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ShowAuthstatusParam) SetGenerateSkeleton(v bool) {
+func (p *ShowAuthStatusParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ShowAuthstatusParam) GetGenerateSkeleton() bool {
+func (p *ShowAuthStatusParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ShowAuthstatusParam) SetOutputType(v string) {
+func (p *ShowAuthStatusParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ShowAuthstatusParam) GetOutputType() string {
+func (p *ShowAuthStatusParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ShowAuthstatusParam) SetColumn(v []string) {
+func (p *ShowAuthStatusParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ShowAuthstatusParam) GetColumn() []string {
+func (p *ShowAuthStatusParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ShowAuthstatusParam) SetQuiet(v bool) {
+func (p *ShowAuthStatusParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ShowAuthstatusParam) GetQuiet() bool {
+func (p *ShowAuthStatusParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ShowAuthstatusParam) SetFormat(v string) {
+func (p *ShowAuthStatusParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ShowAuthstatusParam) GetFormat() string {
+func (p *ShowAuthStatusParam) GetFormat() string {
 	return p.Format
 }
-func (p *ShowAuthstatusParam) SetFormatFile(v string) {
+func (p *ShowAuthStatusParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ShowAuthstatusParam) GetFormatFile() string {
+func (p *ShowAuthStatusParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ShowAuthstatusParam) SetQuery(v string) {
+func (p *ShowAuthStatusParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ShowAuthstatusParam) GetQuery() string {
+func (p *ShowAuthStatusParam) GetQuery() string {
 	return p.Query
 }
-func (p *ShowAuthstatusParam) SetQueryFile(v string) {
+func (p *ShowAuthStatusParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ShowAuthstatusParam) GetQueryFile() string {
+func (p *ShowAuthStatusParam) GetQueryFile() string {
 	return p.QueryFile
 }

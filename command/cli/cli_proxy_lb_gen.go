@@ -32,32 +32,32 @@ import (
 )
 
 func init() {
-	proxylbListParam := params.NewListProxylbParam()
-	proxylbCreateParam := params.NewCreateProxylbParam()
-	proxylbReadParam := params.NewReadProxylbParam()
-	proxylbUpdateParam := params.NewUpdateProxylbParam()
-	proxylbDeleteParam := params.NewDeleteProxylbParam()
-	proxylbPlanChangeParam := params.NewPlanChangeProxylbParam()
-	proxylbBindPortInfoParam := params.NewBindPortInfoProxylbParam()
-	proxylbBindPortAddParam := params.NewBindPortAddProxylbParam()
-	proxylbBindPortUpdateParam := params.NewBindPortUpdateProxylbParam()
-	proxylbBindPortDeleteParam := params.NewBindPortDeleteProxylbParam()
-	proxylbResponseHeaderInfoParam := params.NewResponseHeaderInfoProxylbParam()
-	proxylbResponseHeaderAddParam := params.NewResponseHeaderAddProxylbParam()
-	proxylbResponseHeaderUpdateParam := params.NewResponseHeaderUpdateProxylbParam()
-	proxylbResponseHeaderDeleteParam := params.NewResponseHeaderDeleteProxylbParam()
-	proxylbAcmeInfoParam := params.NewAcmeInfoProxylbParam()
-	proxylbAcmeSettingParam := params.NewAcmeSettingProxylbParam()
-	proxylbAcmeRenewParam := params.NewAcmeRenewProxylbParam()
-	proxylbServerInfoParam := params.NewServerInfoProxylbParam()
-	proxylbServerAddParam := params.NewServerAddProxylbParam()
-	proxylbServerUpdateParam := params.NewServerUpdateProxylbParam()
-	proxylbServerDeleteParam := params.NewServerDeleteProxylbParam()
-	proxylbCertificateInfoParam := params.NewCertificateInfoProxylbParam()
-	proxylbCertificateAddParam := params.NewCertificateAddProxylbParam()
-	proxylbCertificateUpdateParam := params.NewCertificateUpdateProxylbParam()
-	proxylbCertificateDeleteParam := params.NewCertificateDeleteProxylbParam()
-	proxylbMonitorParam := params.NewMonitorProxylbParam()
+	proxyLBListParam := params.NewListProxyLBParam()
+	proxyLBCreateParam := params.NewCreateProxyLBParam()
+	proxyLBReadParam := params.NewReadProxyLBParam()
+	proxyLBUpdateParam := params.NewUpdateProxyLBParam()
+	proxyLBDeleteParam := params.NewDeleteProxyLBParam()
+	proxyLBPlanChangeParam := params.NewPlanChangeProxyLBParam()
+	proxyLBBindPortInfoParam := params.NewBindPortInfoProxyLBParam()
+	proxyLBBindPortAddParam := params.NewBindPortAddProxyLBParam()
+	proxyLBBindPortUpdateParam := params.NewBindPortUpdateProxyLBParam()
+	proxyLBBindPortDeleteParam := params.NewBindPortDeleteProxyLBParam()
+	proxyLBResponseHeaderInfoParam := params.NewResponseHeaderInfoProxyLBParam()
+	proxyLBResponseHeaderAddParam := params.NewResponseHeaderAddProxyLBParam()
+	proxyLBResponseHeaderUpdateParam := params.NewResponseHeaderUpdateProxyLBParam()
+	proxyLBResponseHeaderDeleteParam := params.NewResponseHeaderDeleteProxyLBParam()
+	proxyLBACMEInfoParam := params.NewACMEInfoProxyLBParam()
+	proxyLBACMESettingParam := params.NewACMESettingProxyLBParam()
+	proxyLBACMERenewParam := params.NewACMERenewProxyLBParam()
+	proxyLBServerInfoParam := params.NewServerInfoProxyLBParam()
+	proxyLBServerAddParam := params.NewServerAddProxyLBParam()
+	proxyLBServerUpdateParam := params.NewServerUpdateProxyLBParam()
+	proxyLBServerDeleteParam := params.NewServerDeleteProxyLBParam()
+	proxyLBCertificateInfoParam := params.NewCertificateInfoProxyLBParam()
+	proxyLBCertificateAddParam := params.NewCertificateAddProxyLBParam()
+	proxyLBCertificateUpdateParam := params.NewCertificateUpdateProxyLBParam()
+	proxyLBCertificateDeleteParam := params.NewCertificateDeleteProxyLBParam()
+	proxyLBMonitorParam := params.NewMonitorProxyLBParam()
 
 	cliCommand := &cli.Command{
 		Name:    "proxy-lb",
@@ -67,7 +67,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find", "selector"},
-				Usage:   "List Proxylb",
+				Usage:   "List ProxyLB",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -158,75 +158,75 @@ func init() {
 						return err
 					}
 
-					proxylbListParam.ParamTemplate = c.String("param-template")
-					proxylbListParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbListParam)
+					proxyLBListParam.ParamTemplate = c.String("param-template")
+					proxyLBListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListProxylbParam()
+						p := params.NewListProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbListParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						proxylbListParam.Name = c.StringSlice("name")
+						proxyLBListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						proxylbListParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						proxyLBListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
-						proxylbListParam.Tags = c.StringSlice("tags")
+						proxyLBListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("from") {
-						proxylbListParam.From = c.Int("from")
+						proxyLBListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						proxylbListParam.Max = c.Int("max")
+						proxyLBListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						proxylbListParam.Sort = c.StringSlice("sort")
+						proxyLBListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						proxylbListParam.ParamTemplate = c.String("param-template")
+						proxyLBListParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbListParam.Parameters = c.String("parameters")
+						proxyLBListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbListParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBListParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbListParam.ParameterFile = c.String("parameter-file")
+						proxyLBListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbListParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbListParam.OutputType = c.String("output-type")
+						proxyLBListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbListParam.Column = c.StringSlice("column")
+						proxyLBListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbListParam.Quiet = c.Bool("quiet")
+						proxyLBListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbListParam.Format = c.String("format")
+						proxyLBListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbListParam.FormatFile = c.String("format-file")
+						proxyLBListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbListParam.Query = c.String("query")
+						proxyLBListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbListParam.QueryFile = c.String("query-file")
+						proxyLBListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -234,7 +234,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbListParam
+					var outputTypeHolder interface{} = proxyLBListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -245,10 +245,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbListParam.GenerateSkeleton {
-						proxylbListParam.GenerateSkeleton = false
-						proxylbListParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbListParam, "", "\t")
+					if proxyLBListParam.GenerateSkeleton {
+						proxyLBListParam.GenerateSkeleton = false
+						proxyLBListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -257,21 +257,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbListParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbListParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBListParam)
 
 					// Run command with params
-					return funcs.ProxylbList(ctx, proxylbListParam)
+					return funcs.ProxyLBList(ctx, proxyLBListParam)
 
 				},
 			},
 			{
 				Name:  "create",
-				Usage: "Create Proxylb",
+				Usage: "Create ProxyLB",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
 						Name:  "plan",
@@ -398,99 +398,99 @@ func init() {
 						return err
 					}
 
-					proxylbCreateParam.ParamTemplate = c.String("param-template")
-					proxylbCreateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbCreateParam)
+					proxyLBCreateParam.ParamTemplate = c.String("param-template")
+					proxyLBCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBCreateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCreateProxylbParam()
+						p := params.NewCreateProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbCreateParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("plan") {
-						proxylbCreateParam.Plan = c.Int("plan")
+						proxyLBCreateParam.Plan = c.Int("plan")
 					}
 					if c.IsSet("protocol") {
-						proxylbCreateParam.Protocol = c.String("protocol")
+						proxyLBCreateParam.Protocol = c.String("protocol")
 					}
 					if c.IsSet("host-header") {
-						proxylbCreateParam.HostHeader = c.String("host-header")
+						proxyLBCreateParam.HostHeader = c.String("host-header")
 					}
 					if c.IsSet("path") {
-						proxylbCreateParam.Path = c.String("path")
+						proxyLBCreateParam.Path = c.String("path")
 					}
 					if c.IsSet("delay-loop") {
-						proxylbCreateParam.DelayLoop = c.Int("delay-loop")
+						proxyLBCreateParam.DelayLoop = c.Int("delay-loop")
 					}
 					if c.IsSet("sticky-session") {
-						proxylbCreateParam.StickySession = c.Bool("sticky-session")
+						proxyLBCreateParam.StickySession = c.Bool("sticky-session")
 					}
 					if c.IsSet("sorry-server-ipaddress") {
-						proxylbCreateParam.SorryServerIpaddress = c.String("sorry-server-ipaddress")
+						proxyLBCreateParam.SorryServerIpaddress = c.String("sorry-server-ipaddress")
 					}
 					if c.IsSet("sorry-server-port") {
-						proxylbCreateParam.SorryServerPort = c.Int("sorry-server-port")
+						proxyLBCreateParam.SorryServerPort = c.Int("sorry-server-port")
 					}
 					if c.IsSet("timeout") {
-						proxylbCreateParam.Timeout = c.Int("timeout")
+						proxyLBCreateParam.Timeout = c.Int("timeout")
 					}
 					if c.IsSet("name") {
-						proxylbCreateParam.Name = c.String("name")
+						proxyLBCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						proxylbCreateParam.Description = c.String("description")
+						proxyLBCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						proxylbCreateParam.Tags = c.StringSlice("tags")
+						proxyLBCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						proxylbCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						proxyLBCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						proxylbCreateParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbCreateParam.ParamTemplate = c.String("param-template")
+						proxyLBCreateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbCreateParam.Parameters = c.String("parameters")
+						proxyLBCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbCreateParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBCreateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbCreateParam.ParameterFile = c.String("parameter-file")
+						proxyLBCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbCreateParam.OutputType = c.String("output-type")
+						proxyLBCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbCreateParam.Column = c.StringSlice("column")
+						proxyLBCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbCreateParam.Quiet = c.Bool("quiet")
+						proxyLBCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbCreateParam.Format = c.String("format")
+						proxyLBCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbCreateParam.FormatFile = c.String("format-file")
+						proxyLBCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbCreateParam.Query = c.String("query")
+						proxyLBCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbCreateParam.QueryFile = c.String("query-file")
+						proxyLBCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -498,7 +498,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbCreateParam
+					var outputTypeHolder interface{} = proxyLBCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -509,10 +509,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbCreateParam.GenerateSkeleton {
-						proxylbCreateParam.GenerateSkeleton = false
-						proxylbCreateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbCreateParam, "", "\t")
+					if proxyLBCreateParam.GenerateSkeleton {
+						proxyLBCreateParam.GenerateSkeleton = false
+						proxyLBCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -521,15 +521,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbCreateParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbCreateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBCreateParam)
 
 					// confirm
-					if !proxylbCreateParam.Assumeyes {
+					if !proxyLBCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -539,13 +539,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.ProxylbCreate(ctx, proxylbCreateParam)
+					return funcs.ProxyLBCreate(ctx, proxyLBCreateParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Proxylb",
+				Usage:     "Read ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -619,63 +619,63 @@ func init() {
 						return err
 					}
 
-					proxylbReadParam.ParamTemplate = c.String("param-template")
-					proxylbReadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbReadParam)
+					proxyLBReadParam.ParamTemplate = c.String("param-template")
+					proxyLBReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadProxylbParam()
+						p := params.NewReadProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbReadParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						proxylbReadParam.Selector = c.StringSlice("selector")
+						proxyLBReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						proxylbReadParam.ParamTemplate = c.String("param-template")
+						proxyLBReadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbReadParam.Parameters = c.String("parameters")
+						proxyLBReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbReadParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBReadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbReadParam.ParameterFile = c.String("parameter-file")
+						proxyLBReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbReadParam.OutputType = c.String("output-type")
+						proxyLBReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbReadParam.Column = c.StringSlice("column")
+						proxyLBReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbReadParam.Quiet = c.Bool("quiet")
+						proxyLBReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbReadParam.Format = c.String("format")
+						proxyLBReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbReadParam.FormatFile = c.String("format-file")
+						proxyLBReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbReadParam.Query = c.String("query")
+						proxyLBReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbReadParam.QueryFile = c.String("query-file")
+						proxyLBReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbReadParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -683,7 +683,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbReadParam
+					var outputTypeHolder interface{} = proxyLBReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -694,10 +694,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbReadParam.GenerateSkeleton {
-						proxylbReadParam.GenerateSkeleton = false
-						proxylbReadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbReadParam, "", "\t")
+					if proxyLBReadParam.GenerateSkeleton {
+						proxyLBReadParam.GenerateSkeleton = false
+						proxyLBReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -706,19 +706,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbReadParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbReadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBReadParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbReadParam.Selector) == 0 {
+						if len(proxyLBReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -727,12 +727,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbReadParam.Selector) {
+							if hasTags(&v, proxyLBReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbReadParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBReadParam.Selector)
 						}
 
 					} else {
@@ -754,7 +754,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbReadParam.Selector) == 0 || hasTags(&v, proxylbReadParam.Selector) {
+										if len(proxyLBReadParam.Selector) == 0 || hasTags(&v, proxyLBReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -779,11 +779,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbReadParam.SetId(id)
-						p := *proxylbReadParam // copy struct value
-						proxylbReadParam := &p
+						proxyLBReadParam.SetId(id)
+						p := *proxyLBReadParam // copy struct value
+						proxyLBReadParam := &p
 						go func() {
-							err := funcs.ProxylbRead(ctx, proxylbReadParam)
+							err := funcs.ProxyLBRead(ctx, proxyLBReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -797,7 +797,7 @@ func init() {
 			},
 			{
 				Name:      "update",
-				Usage:     "Update Proxylb",
+				Usage:     "Update ProxyLB",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -926,102 +926,102 @@ func init() {
 						return err
 					}
 
-					proxylbUpdateParam.ParamTemplate = c.String("param-template")
-					proxylbUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbUpdateParam)
+					proxyLBUpdateParam.ParamTemplate = c.String("param-template")
+					proxyLBUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUpdateProxylbParam()
+						p := params.NewUpdateProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("protocol") {
-						proxylbUpdateParam.Protocol = c.String("protocol")
+						proxyLBUpdateParam.Protocol = c.String("protocol")
 					}
 					if c.IsSet("host-header") {
-						proxylbUpdateParam.HostHeader = c.String("host-header")
+						proxyLBUpdateParam.HostHeader = c.String("host-header")
 					}
 					if c.IsSet("path") {
-						proxylbUpdateParam.Path = c.String("path")
+						proxyLBUpdateParam.Path = c.String("path")
 					}
 					if c.IsSet("delay-loop") {
-						proxylbUpdateParam.DelayLoop = c.Int("delay-loop")
+						proxyLBUpdateParam.DelayLoop = c.Int("delay-loop")
 					}
 					if c.IsSet("sticky-session") {
-						proxylbUpdateParam.StickySession = c.Bool("sticky-session")
+						proxyLBUpdateParam.StickySession = c.Bool("sticky-session")
 					}
 					if c.IsSet("sorry-server-ipaddress") {
-						proxylbUpdateParam.SorryServerIpaddress = c.String("sorry-server-ipaddress")
+						proxyLBUpdateParam.SorryServerIpaddress = c.String("sorry-server-ipaddress")
 					}
 					if c.IsSet("sorry-server-port") {
-						proxylbUpdateParam.SorryServerPort = c.Int("sorry-server-port")
+						proxyLBUpdateParam.SorryServerPort = c.Int("sorry-server-port")
 					}
 					if c.IsSet("timeout") {
-						proxylbUpdateParam.Timeout = c.Int("timeout")
+						proxyLBUpdateParam.Timeout = c.Int("timeout")
 					}
 					if c.IsSet("selector") {
-						proxylbUpdateParam.Selector = c.StringSlice("selector")
+						proxyLBUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
-						proxylbUpdateParam.Name = c.String("name")
+						proxyLBUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						proxylbUpdateParam.Description = c.String("description")
+						proxyLBUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						proxylbUpdateParam.Tags = c.StringSlice("tags")
+						proxyLBUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						proxylbUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						proxyLBUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						proxylbUpdateParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbUpdateParam.ParamTemplate = c.String("param-template")
+						proxyLBUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbUpdateParam.Parameters = c.String("parameters")
+						proxyLBUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbUpdateParam.ParameterFile = c.String("parameter-file")
+						proxyLBUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbUpdateParam.OutputType = c.String("output-type")
+						proxyLBUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbUpdateParam.Column = c.StringSlice("column")
+						proxyLBUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbUpdateParam.Quiet = c.Bool("quiet")
+						proxyLBUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbUpdateParam.Format = c.String("format")
+						proxyLBUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbUpdateParam.FormatFile = c.String("format-file")
+						proxyLBUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbUpdateParam.Query = c.String("query")
+						proxyLBUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbUpdateParam.QueryFile = c.String("query-file")
+						proxyLBUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1029,7 +1029,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbUpdateParam
+					var outputTypeHolder interface{} = proxyLBUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1040,10 +1040,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbUpdateParam.GenerateSkeleton {
-						proxylbUpdateParam.GenerateSkeleton = false
-						proxylbUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbUpdateParam, "", "\t")
+					if proxyLBUpdateParam.GenerateSkeleton {
+						proxyLBUpdateParam.GenerateSkeleton = false
+						proxyLBUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1052,19 +1052,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbUpdateParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbUpdateParam.Selector) == 0 {
+						if len(proxyLBUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1073,12 +1073,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbUpdateParam.Selector) {
+							if hasTags(&v, proxyLBUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBUpdateParam.Selector)
 						}
 
 					} else {
@@ -1100,7 +1100,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbUpdateParam.Selector) == 0 || hasTags(&v, proxylbUpdateParam.Selector) {
+										if len(proxyLBUpdateParam.Selector) == 0 || hasTags(&v, proxyLBUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1117,7 +1117,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbUpdateParam.Assumeyes {
+					if !proxyLBUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1131,11 +1131,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbUpdateParam.SetId(id)
-						p := *proxylbUpdateParam // copy struct value
-						proxylbUpdateParam := &p
+						proxyLBUpdateParam.SetId(id)
+						p := *proxyLBUpdateParam // copy struct value
+						proxyLBUpdateParam := &p
 						go func() {
-							err := funcs.ProxylbUpdate(ctx, proxylbUpdateParam)
+							err := funcs.ProxyLBUpdate(ctx, proxyLBUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1150,7 +1150,7 @@ func init() {
 			{
 				Name:      "delete",
 				Aliases:   []string{"rm"},
-				Usage:     "Delete Proxylb",
+				Usage:     "Delete ProxyLB",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1229,66 +1229,66 @@ func init() {
 						return err
 					}
 
-					proxylbDeleteParam.ParamTemplate = c.String("param-template")
-					proxylbDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbDeleteParam)
+					proxyLBDeleteParam.ParamTemplate = c.String("param-template")
+					proxyLBDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeleteProxylbParam()
+						p := params.NewDeleteProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						proxylbDeleteParam.Selector = c.StringSlice("selector")
+						proxyLBDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						proxylbDeleteParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbDeleteParam.ParamTemplate = c.String("param-template")
+						proxyLBDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbDeleteParam.Parameters = c.String("parameters")
+						proxyLBDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbDeleteParam.ParameterFile = c.String("parameter-file")
+						proxyLBDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbDeleteParam.OutputType = c.String("output-type")
+						proxyLBDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbDeleteParam.Column = c.StringSlice("column")
+						proxyLBDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbDeleteParam.Quiet = c.Bool("quiet")
+						proxyLBDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbDeleteParam.Format = c.String("format")
+						proxyLBDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbDeleteParam.FormatFile = c.String("format-file")
+						proxyLBDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbDeleteParam.Query = c.String("query")
+						proxyLBDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbDeleteParam.QueryFile = c.String("query-file")
+						proxyLBDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1296,7 +1296,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbDeleteParam
+					var outputTypeHolder interface{} = proxyLBDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1307,10 +1307,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbDeleteParam.GenerateSkeleton {
-						proxylbDeleteParam.GenerateSkeleton = false
-						proxylbDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbDeleteParam, "", "\t")
+					if proxyLBDeleteParam.GenerateSkeleton {
+						proxyLBDeleteParam.GenerateSkeleton = false
+						proxyLBDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1319,19 +1319,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbDeleteParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbDeleteParam.Selector) == 0 {
+						if len(proxyLBDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1340,12 +1340,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbDeleteParam.Selector) {
+							if hasTags(&v, proxyLBDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBDeleteParam.Selector)
 						}
 
 					} else {
@@ -1367,7 +1367,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbDeleteParam.Selector) == 0 || hasTags(&v, proxylbDeleteParam.Selector) {
+										if len(proxyLBDeleteParam.Selector) == 0 || hasTags(&v, proxyLBDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1384,7 +1384,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbDeleteParam.Assumeyes {
+					if !proxyLBDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1398,11 +1398,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbDeleteParam.SetId(id)
-						p := *proxylbDeleteParam // copy struct value
-						proxylbDeleteParam := &p
+						proxyLBDeleteParam.SetId(id)
+						p := *proxyLBDeleteParam // copy struct value
+						proxyLBDeleteParam := &p
 						go func() {
-							err := funcs.ProxylbDelete(ctx, proxylbDeleteParam)
+							err := funcs.ProxyLBDelete(ctx, proxyLBDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1499,69 +1499,69 @@ func init() {
 						return err
 					}
 
-					proxylbPlanChangeParam.ParamTemplate = c.String("param-template")
-					proxylbPlanChangeParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbPlanChangeParam)
+					proxyLBPlanChangeParam.ParamTemplate = c.String("param-template")
+					proxyLBPlanChangeParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBPlanChangeParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewPlanChangeProxylbParam()
+						p := params.NewPlanChangeProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbPlanChangeParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBPlanChangeParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("plan") {
-						proxylbPlanChangeParam.Plan = c.Int("plan")
+						proxyLBPlanChangeParam.Plan = c.Int("plan")
 					}
 					if c.IsSet("selector") {
-						proxylbPlanChangeParam.Selector = c.StringSlice("selector")
+						proxyLBPlanChangeParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						proxylbPlanChangeParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBPlanChangeParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbPlanChangeParam.ParamTemplate = c.String("param-template")
+						proxyLBPlanChangeParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbPlanChangeParam.Parameters = c.String("parameters")
+						proxyLBPlanChangeParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbPlanChangeParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBPlanChangeParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbPlanChangeParam.ParameterFile = c.String("parameter-file")
+						proxyLBPlanChangeParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbPlanChangeParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBPlanChangeParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbPlanChangeParam.OutputType = c.String("output-type")
+						proxyLBPlanChangeParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbPlanChangeParam.Column = c.StringSlice("column")
+						proxyLBPlanChangeParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbPlanChangeParam.Quiet = c.Bool("quiet")
+						proxyLBPlanChangeParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbPlanChangeParam.Format = c.String("format")
+						proxyLBPlanChangeParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbPlanChangeParam.FormatFile = c.String("format-file")
+						proxyLBPlanChangeParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbPlanChangeParam.Query = c.String("query")
+						proxyLBPlanChangeParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbPlanChangeParam.QueryFile = c.String("query-file")
+						proxyLBPlanChangeParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbPlanChangeParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBPlanChangeParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1569,7 +1569,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbPlanChangeParam
+					var outputTypeHolder interface{} = proxyLBPlanChangeParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1580,10 +1580,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbPlanChangeParam.GenerateSkeleton {
-						proxylbPlanChangeParam.GenerateSkeleton = false
-						proxylbPlanChangeParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbPlanChangeParam, "", "\t")
+					if proxyLBPlanChangeParam.GenerateSkeleton {
+						proxyLBPlanChangeParam.GenerateSkeleton = false
+						proxyLBPlanChangeParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBPlanChangeParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1592,19 +1592,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbPlanChangeParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBPlanChangeParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbPlanChangeParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBPlanChangeParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbPlanChangeParam.Selector) == 0 {
+						if len(proxyLBPlanChangeParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1613,12 +1613,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbPlanChangeParam.Selector) {
+							if hasTags(&v, proxyLBPlanChangeParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbPlanChangeParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBPlanChangeParam.Selector)
 						}
 
 					} else {
@@ -1640,7 +1640,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbPlanChangeParam.Selector) == 0 || hasTags(&v, proxylbPlanChangeParam.Selector) {
+										if len(proxyLBPlanChangeParam.Selector) == 0 || hasTags(&v, proxyLBPlanChangeParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1657,7 +1657,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbPlanChangeParam.Assumeyes {
+					if !proxyLBPlanChangeParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1671,11 +1671,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbPlanChangeParam.SetId(id)
-						p := *proxylbPlanChangeParam // copy struct value
-						proxylbPlanChangeParam := &p
+						proxyLBPlanChangeParam.SetId(id)
+						p := *proxyLBPlanChangeParam // copy struct value
+						proxyLBPlanChangeParam := &p
 						go func() {
-							err := funcs.ProxylbPlanChange(ctx, proxylbPlanChangeParam)
+							err := funcs.ProxyLBPlanChange(ctx, proxyLBPlanChangeParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1690,7 +1690,7 @@ func init() {
 			{
 				Name:      "bind-port-info",
 				Aliases:   []string{"bind-port-list"},
-				Usage:     "BindPortInfo Proxylb",
+				Usage:     "BindPortInfo ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1764,63 +1764,63 @@ func init() {
 						return err
 					}
 
-					proxylbBindPortInfoParam.ParamTemplate = c.String("param-template")
-					proxylbBindPortInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbBindPortInfoParam)
+					proxyLBBindPortInfoParam.ParamTemplate = c.String("param-template")
+					proxyLBBindPortInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBBindPortInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewBindPortInfoProxylbParam()
+						p := params.NewBindPortInfoProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbBindPortInfoParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBBindPortInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						proxylbBindPortInfoParam.Selector = c.StringSlice("selector")
+						proxyLBBindPortInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						proxylbBindPortInfoParam.ParamTemplate = c.String("param-template")
+						proxyLBBindPortInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbBindPortInfoParam.Parameters = c.String("parameters")
+						proxyLBBindPortInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbBindPortInfoParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBBindPortInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbBindPortInfoParam.ParameterFile = c.String("parameter-file")
+						proxyLBBindPortInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbBindPortInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBBindPortInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbBindPortInfoParam.OutputType = c.String("output-type")
+						proxyLBBindPortInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbBindPortInfoParam.Column = c.StringSlice("column")
+						proxyLBBindPortInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbBindPortInfoParam.Quiet = c.Bool("quiet")
+						proxyLBBindPortInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbBindPortInfoParam.Format = c.String("format")
+						proxyLBBindPortInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbBindPortInfoParam.FormatFile = c.String("format-file")
+						proxyLBBindPortInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbBindPortInfoParam.Query = c.String("query")
+						proxyLBBindPortInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbBindPortInfoParam.QueryFile = c.String("query-file")
+						proxyLBBindPortInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbBindPortInfoParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBBindPortInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1828,7 +1828,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbBindPortInfoParam
+					var outputTypeHolder interface{} = proxyLBBindPortInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1839,10 +1839,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbBindPortInfoParam.GenerateSkeleton {
-						proxylbBindPortInfoParam.GenerateSkeleton = false
-						proxylbBindPortInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbBindPortInfoParam, "", "\t")
+					if proxyLBBindPortInfoParam.GenerateSkeleton {
+						proxyLBBindPortInfoParam.GenerateSkeleton = false
+						proxyLBBindPortInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBBindPortInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1851,19 +1851,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbBindPortInfoParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBBindPortInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbBindPortInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBBindPortInfoParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbBindPortInfoParam.Selector) == 0 {
+						if len(proxyLBBindPortInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1872,12 +1872,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbBindPortInfoParam.Selector) {
+							if hasTags(&v, proxyLBBindPortInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbBindPortInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBBindPortInfoParam.Selector)
 						}
 
 					} else {
@@ -1899,7 +1899,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbBindPortInfoParam.Selector) == 0 || hasTags(&v, proxylbBindPortInfoParam.Selector) {
+										if len(proxyLBBindPortInfoParam.Selector) == 0 || hasTags(&v, proxyLBBindPortInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1924,11 +1924,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbBindPortInfoParam.SetId(id)
-						p := *proxylbBindPortInfoParam // copy struct value
-						proxylbBindPortInfoParam := &p
+						proxyLBBindPortInfoParam.SetId(id)
+						p := *proxyLBBindPortInfoParam // copy struct value
+						proxyLBBindPortInfoParam := &p
 						go func() {
-							err := funcs.ProxylbBindPortInfo(ctx, proxylbBindPortInfoParam)
+							err := funcs.ProxyLBBindPortInfo(ctx, proxyLBBindPortInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1942,7 +1942,7 @@ func init() {
 			},
 			{
 				Name:      "bind-port-add",
-				Usage:     "BindPortAdd Proxylb",
+				Usage:     "BindPortAdd ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -2037,78 +2037,78 @@ func init() {
 						return err
 					}
 
-					proxylbBindPortAddParam.ParamTemplate = c.String("param-template")
-					proxylbBindPortAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbBindPortAddParam)
+					proxyLBBindPortAddParam.ParamTemplate = c.String("param-template")
+					proxyLBBindPortAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBBindPortAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewBindPortAddProxylbParam()
+						p := params.NewBindPortAddProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbBindPortAddParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBBindPortAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("mode") {
-						proxylbBindPortAddParam.Mode = c.String("mode")
+						proxyLBBindPortAddParam.Mode = c.String("mode")
 					}
 					if c.IsSet("port") {
-						proxylbBindPortAddParam.Port = c.Int("port")
+						proxyLBBindPortAddParam.Port = c.Int("port")
 					}
 					if c.IsSet("redirect-to-https") {
-						proxylbBindPortAddParam.RedirectToHttps = c.Bool("redirect-to-https")
+						proxyLBBindPortAddParam.RedirectToHttps = c.Bool("redirect-to-https")
 					}
 					if c.IsSet("support-http-2") {
-						proxylbBindPortAddParam.SupportHttp2 = c.Bool("support-http-2")
+						proxyLBBindPortAddParam.SupportHttp2 = c.Bool("support-http-2")
 					}
 					if c.IsSet("selector") {
-						proxylbBindPortAddParam.Selector = c.StringSlice("selector")
+						proxyLBBindPortAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						proxylbBindPortAddParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBBindPortAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbBindPortAddParam.ParamTemplate = c.String("param-template")
+						proxyLBBindPortAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbBindPortAddParam.Parameters = c.String("parameters")
+						proxyLBBindPortAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbBindPortAddParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBBindPortAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbBindPortAddParam.ParameterFile = c.String("parameter-file")
+						proxyLBBindPortAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbBindPortAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBBindPortAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbBindPortAddParam.OutputType = c.String("output-type")
+						proxyLBBindPortAddParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbBindPortAddParam.Column = c.StringSlice("column")
+						proxyLBBindPortAddParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbBindPortAddParam.Quiet = c.Bool("quiet")
+						proxyLBBindPortAddParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbBindPortAddParam.Format = c.String("format")
+						proxyLBBindPortAddParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbBindPortAddParam.FormatFile = c.String("format-file")
+						proxyLBBindPortAddParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbBindPortAddParam.Query = c.String("query")
+						proxyLBBindPortAddParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbBindPortAddParam.QueryFile = c.String("query-file")
+						proxyLBBindPortAddParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbBindPortAddParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBBindPortAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2116,7 +2116,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbBindPortAddParam
+					var outputTypeHolder interface{} = proxyLBBindPortAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2127,10 +2127,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbBindPortAddParam.GenerateSkeleton {
-						proxylbBindPortAddParam.GenerateSkeleton = false
-						proxylbBindPortAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbBindPortAddParam, "", "\t")
+					if proxyLBBindPortAddParam.GenerateSkeleton {
+						proxyLBBindPortAddParam.GenerateSkeleton = false
+						proxyLBBindPortAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBBindPortAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2139,19 +2139,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbBindPortAddParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBBindPortAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbBindPortAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBBindPortAddParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbBindPortAddParam.Selector) == 0 {
+						if len(proxyLBBindPortAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2160,12 +2160,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbBindPortAddParam.Selector) {
+							if hasTags(&v, proxyLBBindPortAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbBindPortAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBBindPortAddParam.Selector)
 						}
 
 					} else {
@@ -2187,7 +2187,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbBindPortAddParam.Selector) == 0 || hasTags(&v, proxylbBindPortAddParam.Selector) {
+										if len(proxyLBBindPortAddParam.Selector) == 0 || hasTags(&v, proxyLBBindPortAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2208,7 +2208,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbBindPortAddParam.Assumeyes {
+					if !proxyLBBindPortAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2222,11 +2222,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbBindPortAddParam.SetId(id)
-						p := *proxylbBindPortAddParam // copy struct value
-						proxylbBindPortAddParam := &p
+						proxyLBBindPortAddParam.SetId(id)
+						p := *proxyLBBindPortAddParam // copy struct value
+						proxyLBBindPortAddParam := &p
 						go func() {
-							err := funcs.ProxylbBindPortAdd(ctx, proxylbBindPortAddParam)
+							err := funcs.ProxyLBBindPortAdd(ctx, proxyLBBindPortAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2240,7 +2240,7 @@ func init() {
 			},
 			{
 				Name:      "bind-port-update",
-				Usage:     "BindPortUpdate Proxylb",
+				Usage:     "BindPortUpdate ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -2339,81 +2339,81 @@ func init() {
 						return err
 					}
 
-					proxylbBindPortUpdateParam.ParamTemplate = c.String("param-template")
-					proxylbBindPortUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbBindPortUpdateParam)
+					proxyLBBindPortUpdateParam.ParamTemplate = c.String("param-template")
+					proxyLBBindPortUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBBindPortUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewBindPortUpdateProxylbParam()
+						p := params.NewBindPortUpdateProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbBindPortUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBBindPortUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						proxylbBindPortUpdateParam.Index = c.Int("index")
+						proxyLBBindPortUpdateParam.Index = c.Int("index")
 					}
 					if c.IsSet("mode") {
-						proxylbBindPortUpdateParam.Mode = c.String("mode")
+						proxyLBBindPortUpdateParam.Mode = c.String("mode")
 					}
 					if c.IsSet("port") {
-						proxylbBindPortUpdateParam.Port = c.Int("port")
+						proxyLBBindPortUpdateParam.Port = c.Int("port")
 					}
 					if c.IsSet("redirect-to-https") {
-						proxylbBindPortUpdateParam.RedirectToHttps = c.Bool("redirect-to-https")
+						proxyLBBindPortUpdateParam.RedirectToHttps = c.Bool("redirect-to-https")
 					}
 					if c.IsSet("support-http-2") {
-						proxylbBindPortUpdateParam.SupportHttp2 = c.Bool("support-http-2")
+						proxyLBBindPortUpdateParam.SupportHttp2 = c.Bool("support-http-2")
 					}
 					if c.IsSet("selector") {
-						proxylbBindPortUpdateParam.Selector = c.StringSlice("selector")
+						proxyLBBindPortUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						proxylbBindPortUpdateParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBBindPortUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbBindPortUpdateParam.ParamTemplate = c.String("param-template")
+						proxyLBBindPortUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbBindPortUpdateParam.Parameters = c.String("parameters")
+						proxyLBBindPortUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbBindPortUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBBindPortUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbBindPortUpdateParam.ParameterFile = c.String("parameter-file")
+						proxyLBBindPortUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbBindPortUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBBindPortUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbBindPortUpdateParam.OutputType = c.String("output-type")
+						proxyLBBindPortUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbBindPortUpdateParam.Column = c.StringSlice("column")
+						proxyLBBindPortUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbBindPortUpdateParam.Quiet = c.Bool("quiet")
+						proxyLBBindPortUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbBindPortUpdateParam.Format = c.String("format")
+						proxyLBBindPortUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbBindPortUpdateParam.FormatFile = c.String("format-file")
+						proxyLBBindPortUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbBindPortUpdateParam.Query = c.String("query")
+						proxyLBBindPortUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbBindPortUpdateParam.QueryFile = c.String("query-file")
+						proxyLBBindPortUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbBindPortUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBBindPortUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2421,7 +2421,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbBindPortUpdateParam
+					var outputTypeHolder interface{} = proxyLBBindPortUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2432,10 +2432,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbBindPortUpdateParam.GenerateSkeleton {
-						proxylbBindPortUpdateParam.GenerateSkeleton = false
-						proxylbBindPortUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbBindPortUpdateParam, "", "\t")
+					if proxyLBBindPortUpdateParam.GenerateSkeleton {
+						proxyLBBindPortUpdateParam.GenerateSkeleton = false
+						proxyLBBindPortUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBBindPortUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2444,19 +2444,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbBindPortUpdateParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBBindPortUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbBindPortUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBBindPortUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbBindPortUpdateParam.Selector) == 0 {
+						if len(proxyLBBindPortUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2465,12 +2465,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbBindPortUpdateParam.Selector) {
+							if hasTags(&v, proxyLBBindPortUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbBindPortUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBBindPortUpdateParam.Selector)
 						}
 
 					} else {
@@ -2492,7 +2492,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbBindPortUpdateParam.Selector) == 0 || hasTags(&v, proxylbBindPortUpdateParam.Selector) {
+										if len(proxyLBBindPortUpdateParam.Selector) == 0 || hasTags(&v, proxyLBBindPortUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2513,7 +2513,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbBindPortUpdateParam.Assumeyes {
+					if !proxyLBBindPortUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2527,11 +2527,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbBindPortUpdateParam.SetId(id)
-						p := *proxylbBindPortUpdateParam // copy struct value
-						proxylbBindPortUpdateParam := &p
+						proxyLBBindPortUpdateParam.SetId(id)
+						p := *proxyLBBindPortUpdateParam // copy struct value
+						proxyLBBindPortUpdateParam := &p
 						go func() {
-							err := funcs.ProxylbBindPortUpdate(ctx, proxylbBindPortUpdateParam)
+							err := funcs.ProxyLBBindPortUpdate(ctx, proxyLBBindPortUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2545,7 +2545,7 @@ func init() {
 			},
 			{
 				Name:      "bind-port-delete",
-				Usage:     "BindPortDelete Proxylb",
+				Usage:     "BindPortDelete ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -2628,69 +2628,69 @@ func init() {
 						return err
 					}
 
-					proxylbBindPortDeleteParam.ParamTemplate = c.String("param-template")
-					proxylbBindPortDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbBindPortDeleteParam)
+					proxyLBBindPortDeleteParam.ParamTemplate = c.String("param-template")
+					proxyLBBindPortDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBBindPortDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewBindPortDeleteProxylbParam()
+						p := params.NewBindPortDeleteProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbBindPortDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBBindPortDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						proxylbBindPortDeleteParam.Index = c.Int("index")
+						proxyLBBindPortDeleteParam.Index = c.Int("index")
 					}
 					if c.IsSet("selector") {
-						proxylbBindPortDeleteParam.Selector = c.StringSlice("selector")
+						proxyLBBindPortDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						proxylbBindPortDeleteParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBBindPortDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbBindPortDeleteParam.ParamTemplate = c.String("param-template")
+						proxyLBBindPortDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbBindPortDeleteParam.Parameters = c.String("parameters")
+						proxyLBBindPortDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbBindPortDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBBindPortDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbBindPortDeleteParam.ParameterFile = c.String("parameter-file")
+						proxyLBBindPortDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbBindPortDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBBindPortDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbBindPortDeleteParam.OutputType = c.String("output-type")
+						proxyLBBindPortDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbBindPortDeleteParam.Column = c.StringSlice("column")
+						proxyLBBindPortDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbBindPortDeleteParam.Quiet = c.Bool("quiet")
+						proxyLBBindPortDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbBindPortDeleteParam.Format = c.String("format")
+						proxyLBBindPortDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbBindPortDeleteParam.FormatFile = c.String("format-file")
+						proxyLBBindPortDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbBindPortDeleteParam.Query = c.String("query")
+						proxyLBBindPortDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbBindPortDeleteParam.QueryFile = c.String("query-file")
+						proxyLBBindPortDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbBindPortDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBBindPortDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2698,7 +2698,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbBindPortDeleteParam
+					var outputTypeHolder interface{} = proxyLBBindPortDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2709,10 +2709,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbBindPortDeleteParam.GenerateSkeleton {
-						proxylbBindPortDeleteParam.GenerateSkeleton = false
-						proxylbBindPortDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbBindPortDeleteParam, "", "\t")
+					if proxyLBBindPortDeleteParam.GenerateSkeleton {
+						proxyLBBindPortDeleteParam.GenerateSkeleton = false
+						proxyLBBindPortDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBBindPortDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2721,19 +2721,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbBindPortDeleteParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBBindPortDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbBindPortDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBBindPortDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbBindPortDeleteParam.Selector) == 0 {
+						if len(proxyLBBindPortDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2742,12 +2742,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbBindPortDeleteParam.Selector) {
+							if hasTags(&v, proxyLBBindPortDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbBindPortDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBBindPortDeleteParam.Selector)
 						}
 
 					} else {
@@ -2769,7 +2769,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbBindPortDeleteParam.Selector) == 0 || hasTags(&v, proxylbBindPortDeleteParam.Selector) {
+										if len(proxyLBBindPortDeleteParam.Selector) == 0 || hasTags(&v, proxyLBBindPortDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2790,7 +2790,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbBindPortDeleteParam.Assumeyes {
+					if !proxyLBBindPortDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2804,11 +2804,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbBindPortDeleteParam.SetId(id)
-						p := *proxylbBindPortDeleteParam // copy struct value
-						proxylbBindPortDeleteParam := &p
+						proxyLBBindPortDeleteParam.SetId(id)
+						p := *proxyLBBindPortDeleteParam // copy struct value
+						proxyLBBindPortDeleteParam := &p
 						go func() {
-							err := funcs.ProxylbBindPortDelete(ctx, proxylbBindPortDeleteParam)
+							err := funcs.ProxyLBBindPortDelete(ctx, proxyLBBindPortDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2823,7 +2823,7 @@ func init() {
 			{
 				Name:      "response-header-info",
 				Aliases:   []string{"response-header-list"},
-				Usage:     "ResponseHeaderInfo Proxylb",
+				Usage:     "ResponseHeaderInfo ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -2901,66 +2901,66 @@ func init() {
 						return err
 					}
 
-					proxylbResponseHeaderInfoParam.ParamTemplate = c.String("param-template")
-					proxylbResponseHeaderInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbResponseHeaderInfoParam)
+					proxyLBResponseHeaderInfoParam.ParamTemplate = c.String("param-template")
+					proxyLBResponseHeaderInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBResponseHeaderInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewResponseHeaderInfoProxylbParam()
+						p := params.NewResponseHeaderInfoProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbResponseHeaderInfoParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBResponseHeaderInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("port-index") {
-						proxylbResponseHeaderInfoParam.PortIndex = c.Int("port-index")
+						proxyLBResponseHeaderInfoParam.PortIndex = c.Int("port-index")
 					}
 					if c.IsSet("selector") {
-						proxylbResponseHeaderInfoParam.Selector = c.StringSlice("selector")
+						proxyLBResponseHeaderInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						proxylbResponseHeaderInfoParam.ParamTemplate = c.String("param-template")
+						proxyLBResponseHeaderInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbResponseHeaderInfoParam.Parameters = c.String("parameters")
+						proxyLBResponseHeaderInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbResponseHeaderInfoParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBResponseHeaderInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbResponseHeaderInfoParam.ParameterFile = c.String("parameter-file")
+						proxyLBResponseHeaderInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbResponseHeaderInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBResponseHeaderInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbResponseHeaderInfoParam.OutputType = c.String("output-type")
+						proxyLBResponseHeaderInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbResponseHeaderInfoParam.Column = c.StringSlice("column")
+						proxyLBResponseHeaderInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbResponseHeaderInfoParam.Quiet = c.Bool("quiet")
+						proxyLBResponseHeaderInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbResponseHeaderInfoParam.Format = c.String("format")
+						proxyLBResponseHeaderInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbResponseHeaderInfoParam.FormatFile = c.String("format-file")
+						proxyLBResponseHeaderInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbResponseHeaderInfoParam.Query = c.String("query")
+						proxyLBResponseHeaderInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbResponseHeaderInfoParam.QueryFile = c.String("query-file")
+						proxyLBResponseHeaderInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbResponseHeaderInfoParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBResponseHeaderInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2968,7 +2968,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbResponseHeaderInfoParam
+					var outputTypeHolder interface{} = proxyLBResponseHeaderInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2979,10 +2979,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbResponseHeaderInfoParam.GenerateSkeleton {
-						proxylbResponseHeaderInfoParam.GenerateSkeleton = false
-						proxylbResponseHeaderInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbResponseHeaderInfoParam, "", "\t")
+					if proxyLBResponseHeaderInfoParam.GenerateSkeleton {
+						proxyLBResponseHeaderInfoParam.GenerateSkeleton = false
+						proxyLBResponseHeaderInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBResponseHeaderInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2991,19 +2991,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbResponseHeaderInfoParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBResponseHeaderInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbResponseHeaderInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBResponseHeaderInfoParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbResponseHeaderInfoParam.Selector) == 0 {
+						if len(proxyLBResponseHeaderInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3012,12 +3012,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbResponseHeaderInfoParam.Selector) {
+							if hasTags(&v, proxyLBResponseHeaderInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbResponseHeaderInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBResponseHeaderInfoParam.Selector)
 						}
 
 					} else {
@@ -3039,7 +3039,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbResponseHeaderInfoParam.Selector) == 0 || hasTags(&v, proxylbResponseHeaderInfoParam.Selector) {
+										if len(proxyLBResponseHeaderInfoParam.Selector) == 0 || hasTags(&v, proxyLBResponseHeaderInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3064,11 +3064,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbResponseHeaderInfoParam.SetId(id)
-						p := *proxylbResponseHeaderInfoParam // copy struct value
-						proxylbResponseHeaderInfoParam := &p
+						proxyLBResponseHeaderInfoParam.SetId(id)
+						p := *proxyLBResponseHeaderInfoParam // copy struct value
+						proxyLBResponseHeaderInfoParam := &p
 						go func() {
-							err := funcs.ProxylbResponseHeaderInfo(ctx, proxylbResponseHeaderInfoParam)
+							err := funcs.ProxyLBResponseHeaderInfo(ctx, proxyLBResponseHeaderInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3082,7 +3082,7 @@ func init() {
 			},
 			{
 				Name:      "response-header-add",
-				Usage:     "ResponseHeaderAdd Proxylb",
+				Usage:     "ResponseHeaderAdd ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -3173,75 +3173,75 @@ func init() {
 						return err
 					}
 
-					proxylbResponseHeaderAddParam.ParamTemplate = c.String("param-template")
-					proxylbResponseHeaderAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbResponseHeaderAddParam)
+					proxyLBResponseHeaderAddParam.ParamTemplate = c.String("param-template")
+					proxyLBResponseHeaderAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBResponseHeaderAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewResponseHeaderAddProxylbParam()
+						p := params.NewResponseHeaderAddProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbResponseHeaderAddParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBResponseHeaderAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("port-index") {
-						proxylbResponseHeaderAddParam.PortIndex = c.Int("port-index")
+						proxyLBResponseHeaderAddParam.PortIndex = c.Int("port-index")
 					}
 					if c.IsSet("header") {
-						proxylbResponseHeaderAddParam.Header = c.String("header")
+						proxyLBResponseHeaderAddParam.Header = c.String("header")
 					}
 					if c.IsSet("value") {
-						proxylbResponseHeaderAddParam.Value = c.String("value")
+						proxyLBResponseHeaderAddParam.Value = c.String("value")
 					}
 					if c.IsSet("selector") {
-						proxylbResponseHeaderAddParam.Selector = c.StringSlice("selector")
+						proxyLBResponseHeaderAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						proxylbResponseHeaderAddParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBResponseHeaderAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbResponseHeaderAddParam.ParamTemplate = c.String("param-template")
+						proxyLBResponseHeaderAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbResponseHeaderAddParam.Parameters = c.String("parameters")
+						proxyLBResponseHeaderAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbResponseHeaderAddParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBResponseHeaderAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbResponseHeaderAddParam.ParameterFile = c.String("parameter-file")
+						proxyLBResponseHeaderAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbResponseHeaderAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBResponseHeaderAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbResponseHeaderAddParam.OutputType = c.String("output-type")
+						proxyLBResponseHeaderAddParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbResponseHeaderAddParam.Column = c.StringSlice("column")
+						proxyLBResponseHeaderAddParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbResponseHeaderAddParam.Quiet = c.Bool("quiet")
+						proxyLBResponseHeaderAddParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbResponseHeaderAddParam.Format = c.String("format")
+						proxyLBResponseHeaderAddParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbResponseHeaderAddParam.FormatFile = c.String("format-file")
+						proxyLBResponseHeaderAddParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbResponseHeaderAddParam.Query = c.String("query")
+						proxyLBResponseHeaderAddParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbResponseHeaderAddParam.QueryFile = c.String("query-file")
+						proxyLBResponseHeaderAddParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbResponseHeaderAddParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBResponseHeaderAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3249,7 +3249,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbResponseHeaderAddParam
+					var outputTypeHolder interface{} = proxyLBResponseHeaderAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3260,10 +3260,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbResponseHeaderAddParam.GenerateSkeleton {
-						proxylbResponseHeaderAddParam.GenerateSkeleton = false
-						proxylbResponseHeaderAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbResponseHeaderAddParam, "", "\t")
+					if proxyLBResponseHeaderAddParam.GenerateSkeleton {
+						proxyLBResponseHeaderAddParam.GenerateSkeleton = false
+						proxyLBResponseHeaderAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBResponseHeaderAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3272,19 +3272,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbResponseHeaderAddParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBResponseHeaderAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbResponseHeaderAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBResponseHeaderAddParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbResponseHeaderAddParam.Selector) == 0 {
+						if len(proxyLBResponseHeaderAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3293,12 +3293,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbResponseHeaderAddParam.Selector) {
+							if hasTags(&v, proxyLBResponseHeaderAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbResponseHeaderAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBResponseHeaderAddParam.Selector)
 						}
 
 					} else {
@@ -3320,7 +3320,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbResponseHeaderAddParam.Selector) == 0 || hasTags(&v, proxylbResponseHeaderAddParam.Selector) {
+										if len(proxyLBResponseHeaderAddParam.Selector) == 0 || hasTags(&v, proxyLBResponseHeaderAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3341,7 +3341,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbResponseHeaderAddParam.Assumeyes {
+					if !proxyLBResponseHeaderAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3355,11 +3355,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbResponseHeaderAddParam.SetId(id)
-						p := *proxylbResponseHeaderAddParam // copy struct value
-						proxylbResponseHeaderAddParam := &p
+						proxyLBResponseHeaderAddParam.SetId(id)
+						p := *proxyLBResponseHeaderAddParam // copy struct value
+						proxyLBResponseHeaderAddParam := &p
 						go func() {
-							err := funcs.ProxylbResponseHeaderAdd(ctx, proxylbResponseHeaderAddParam)
+							err := funcs.ProxyLBResponseHeaderAdd(ctx, proxyLBResponseHeaderAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3373,7 +3373,7 @@ func init() {
 			},
 			{
 				Name:      "response-header-update",
-				Usage:     "ResponseHeaderUpdate Proxylb",
+				Usage:     "ResponseHeaderUpdate ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -3468,78 +3468,78 @@ func init() {
 						return err
 					}
 
-					proxylbResponseHeaderUpdateParam.ParamTemplate = c.String("param-template")
-					proxylbResponseHeaderUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbResponseHeaderUpdateParam)
+					proxyLBResponseHeaderUpdateParam.ParamTemplate = c.String("param-template")
+					proxyLBResponseHeaderUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBResponseHeaderUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewResponseHeaderUpdateProxylbParam()
+						p := params.NewResponseHeaderUpdateProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbResponseHeaderUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBResponseHeaderUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						proxylbResponseHeaderUpdateParam.Index = c.Int("index")
+						proxyLBResponseHeaderUpdateParam.Index = c.Int("index")
 					}
 					if c.IsSet("port-index") {
-						proxylbResponseHeaderUpdateParam.PortIndex = c.Int("port-index")
+						proxyLBResponseHeaderUpdateParam.PortIndex = c.Int("port-index")
 					}
 					if c.IsSet("header") {
-						proxylbResponseHeaderUpdateParam.Header = c.String("header")
+						proxyLBResponseHeaderUpdateParam.Header = c.String("header")
 					}
 					if c.IsSet("value") {
-						proxylbResponseHeaderUpdateParam.Value = c.String("value")
+						proxyLBResponseHeaderUpdateParam.Value = c.String("value")
 					}
 					if c.IsSet("selector") {
-						proxylbResponseHeaderUpdateParam.Selector = c.StringSlice("selector")
+						proxyLBResponseHeaderUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						proxylbResponseHeaderUpdateParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBResponseHeaderUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbResponseHeaderUpdateParam.ParamTemplate = c.String("param-template")
+						proxyLBResponseHeaderUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbResponseHeaderUpdateParam.Parameters = c.String("parameters")
+						proxyLBResponseHeaderUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbResponseHeaderUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBResponseHeaderUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbResponseHeaderUpdateParam.ParameterFile = c.String("parameter-file")
+						proxyLBResponseHeaderUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbResponseHeaderUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBResponseHeaderUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbResponseHeaderUpdateParam.OutputType = c.String("output-type")
+						proxyLBResponseHeaderUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbResponseHeaderUpdateParam.Column = c.StringSlice("column")
+						proxyLBResponseHeaderUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbResponseHeaderUpdateParam.Quiet = c.Bool("quiet")
+						proxyLBResponseHeaderUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbResponseHeaderUpdateParam.Format = c.String("format")
+						proxyLBResponseHeaderUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbResponseHeaderUpdateParam.FormatFile = c.String("format-file")
+						proxyLBResponseHeaderUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbResponseHeaderUpdateParam.Query = c.String("query")
+						proxyLBResponseHeaderUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbResponseHeaderUpdateParam.QueryFile = c.String("query-file")
+						proxyLBResponseHeaderUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbResponseHeaderUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBResponseHeaderUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3547,7 +3547,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbResponseHeaderUpdateParam
+					var outputTypeHolder interface{} = proxyLBResponseHeaderUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3558,10 +3558,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbResponseHeaderUpdateParam.GenerateSkeleton {
-						proxylbResponseHeaderUpdateParam.GenerateSkeleton = false
-						proxylbResponseHeaderUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbResponseHeaderUpdateParam, "", "\t")
+					if proxyLBResponseHeaderUpdateParam.GenerateSkeleton {
+						proxyLBResponseHeaderUpdateParam.GenerateSkeleton = false
+						proxyLBResponseHeaderUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBResponseHeaderUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3570,19 +3570,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbResponseHeaderUpdateParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBResponseHeaderUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbResponseHeaderUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBResponseHeaderUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbResponseHeaderUpdateParam.Selector) == 0 {
+						if len(proxyLBResponseHeaderUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3591,12 +3591,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbResponseHeaderUpdateParam.Selector) {
+							if hasTags(&v, proxyLBResponseHeaderUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbResponseHeaderUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBResponseHeaderUpdateParam.Selector)
 						}
 
 					} else {
@@ -3618,7 +3618,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbResponseHeaderUpdateParam.Selector) == 0 || hasTags(&v, proxylbResponseHeaderUpdateParam.Selector) {
+										if len(proxyLBResponseHeaderUpdateParam.Selector) == 0 || hasTags(&v, proxyLBResponseHeaderUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3639,7 +3639,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbResponseHeaderUpdateParam.Assumeyes {
+					if !proxyLBResponseHeaderUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3653,11 +3653,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbResponseHeaderUpdateParam.SetId(id)
-						p := *proxylbResponseHeaderUpdateParam // copy struct value
-						proxylbResponseHeaderUpdateParam := &p
+						proxyLBResponseHeaderUpdateParam.SetId(id)
+						p := *proxyLBResponseHeaderUpdateParam // copy struct value
+						proxyLBResponseHeaderUpdateParam := &p
 						go func() {
-							err := funcs.ProxylbResponseHeaderUpdate(ctx, proxylbResponseHeaderUpdateParam)
+							err := funcs.ProxyLBResponseHeaderUpdate(ctx, proxyLBResponseHeaderUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3671,7 +3671,7 @@ func init() {
 			},
 			{
 				Name:      "response-header-delete",
-				Usage:     "ResponseHeaderDelete Proxylb",
+				Usage:     "ResponseHeaderDelete ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -3758,72 +3758,72 @@ func init() {
 						return err
 					}
 
-					proxylbResponseHeaderDeleteParam.ParamTemplate = c.String("param-template")
-					proxylbResponseHeaderDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbResponseHeaderDeleteParam)
+					proxyLBResponseHeaderDeleteParam.ParamTemplate = c.String("param-template")
+					proxyLBResponseHeaderDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBResponseHeaderDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewResponseHeaderDeleteProxylbParam()
+						p := params.NewResponseHeaderDeleteProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbResponseHeaderDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBResponseHeaderDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						proxylbResponseHeaderDeleteParam.Index = c.Int("index")
+						proxyLBResponseHeaderDeleteParam.Index = c.Int("index")
 					}
 					if c.IsSet("port-index") {
-						proxylbResponseHeaderDeleteParam.PortIndex = c.Int("port-index")
+						proxyLBResponseHeaderDeleteParam.PortIndex = c.Int("port-index")
 					}
 					if c.IsSet("selector") {
-						proxylbResponseHeaderDeleteParam.Selector = c.StringSlice("selector")
+						proxyLBResponseHeaderDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						proxylbResponseHeaderDeleteParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBResponseHeaderDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbResponseHeaderDeleteParam.ParamTemplate = c.String("param-template")
+						proxyLBResponseHeaderDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbResponseHeaderDeleteParam.Parameters = c.String("parameters")
+						proxyLBResponseHeaderDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbResponseHeaderDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBResponseHeaderDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbResponseHeaderDeleteParam.ParameterFile = c.String("parameter-file")
+						proxyLBResponseHeaderDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbResponseHeaderDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBResponseHeaderDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbResponseHeaderDeleteParam.OutputType = c.String("output-type")
+						proxyLBResponseHeaderDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbResponseHeaderDeleteParam.Column = c.StringSlice("column")
+						proxyLBResponseHeaderDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbResponseHeaderDeleteParam.Quiet = c.Bool("quiet")
+						proxyLBResponseHeaderDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbResponseHeaderDeleteParam.Format = c.String("format")
+						proxyLBResponseHeaderDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbResponseHeaderDeleteParam.FormatFile = c.String("format-file")
+						proxyLBResponseHeaderDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbResponseHeaderDeleteParam.Query = c.String("query")
+						proxyLBResponseHeaderDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbResponseHeaderDeleteParam.QueryFile = c.String("query-file")
+						proxyLBResponseHeaderDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbResponseHeaderDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBResponseHeaderDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3831,7 +3831,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbResponseHeaderDeleteParam
+					var outputTypeHolder interface{} = proxyLBResponseHeaderDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3842,10 +3842,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbResponseHeaderDeleteParam.GenerateSkeleton {
-						proxylbResponseHeaderDeleteParam.GenerateSkeleton = false
-						proxylbResponseHeaderDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbResponseHeaderDeleteParam, "", "\t")
+					if proxyLBResponseHeaderDeleteParam.GenerateSkeleton {
+						proxyLBResponseHeaderDeleteParam.GenerateSkeleton = false
+						proxyLBResponseHeaderDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBResponseHeaderDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3854,19 +3854,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbResponseHeaderDeleteParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBResponseHeaderDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbResponseHeaderDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBResponseHeaderDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbResponseHeaderDeleteParam.Selector) == 0 {
+						if len(proxyLBResponseHeaderDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3875,12 +3875,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbResponseHeaderDeleteParam.Selector) {
+							if hasTags(&v, proxyLBResponseHeaderDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbResponseHeaderDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBResponseHeaderDeleteParam.Selector)
 						}
 
 					} else {
@@ -3902,7 +3902,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbResponseHeaderDeleteParam.Selector) == 0 || hasTags(&v, proxylbResponseHeaderDeleteParam.Selector) {
+										if len(proxyLBResponseHeaderDeleteParam.Selector) == 0 || hasTags(&v, proxyLBResponseHeaderDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3923,7 +3923,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbResponseHeaderDeleteParam.Assumeyes {
+					if !proxyLBResponseHeaderDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3937,11 +3937,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbResponseHeaderDeleteParam.SetId(id)
-						p := *proxylbResponseHeaderDeleteParam // copy struct value
-						proxylbResponseHeaderDeleteParam := &p
+						proxyLBResponseHeaderDeleteParam.SetId(id)
+						p := *proxyLBResponseHeaderDeleteParam // copy struct value
+						proxyLBResponseHeaderDeleteParam := &p
 						go func() {
-							err := funcs.ProxylbResponseHeaderDelete(ctx, proxylbResponseHeaderDeleteParam)
+							err := funcs.ProxyLBResponseHeaderDelete(ctx, proxyLBResponseHeaderDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3955,7 +3955,7 @@ func init() {
 			},
 			{
 				Name:      "acme-info",
-				Usage:     "AcmeInfo Proxylb",
+				Usage:     "ACMEInfo ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -4029,63 +4029,63 @@ func init() {
 						return err
 					}
 
-					proxylbAcmeInfoParam.ParamTemplate = c.String("param-template")
-					proxylbAcmeInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbAcmeInfoParam)
+					proxyLBACMEInfoParam.ParamTemplate = c.String("param-template")
+					proxyLBACMEInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBACMEInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewAcmeInfoProxylbParam()
+						p := params.NewACMEInfoProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbAcmeInfoParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBACMEInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						proxylbAcmeInfoParam.Selector = c.StringSlice("selector")
+						proxyLBACMEInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						proxylbAcmeInfoParam.ParamTemplate = c.String("param-template")
+						proxyLBACMEInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbAcmeInfoParam.Parameters = c.String("parameters")
+						proxyLBACMEInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbAcmeInfoParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBACMEInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbAcmeInfoParam.ParameterFile = c.String("parameter-file")
+						proxyLBACMEInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbAcmeInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBACMEInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbAcmeInfoParam.OutputType = c.String("output-type")
+						proxyLBACMEInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbAcmeInfoParam.Column = c.StringSlice("column")
+						proxyLBACMEInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbAcmeInfoParam.Quiet = c.Bool("quiet")
+						proxyLBACMEInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbAcmeInfoParam.Format = c.String("format")
+						proxyLBACMEInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbAcmeInfoParam.FormatFile = c.String("format-file")
+						proxyLBACMEInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbAcmeInfoParam.Query = c.String("query")
+						proxyLBACMEInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbAcmeInfoParam.QueryFile = c.String("query-file")
+						proxyLBACMEInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbAcmeInfoParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBACMEInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4093,7 +4093,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbAcmeInfoParam
+					var outputTypeHolder interface{} = proxyLBACMEInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4104,10 +4104,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbAcmeInfoParam.GenerateSkeleton {
-						proxylbAcmeInfoParam.GenerateSkeleton = false
-						proxylbAcmeInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbAcmeInfoParam, "", "\t")
+					if proxyLBACMEInfoParam.GenerateSkeleton {
+						proxyLBACMEInfoParam.GenerateSkeleton = false
+						proxyLBACMEInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBACMEInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4116,19 +4116,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbAcmeInfoParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBACMEInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbAcmeInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBACMEInfoParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbAcmeInfoParam.Selector) == 0 {
+						if len(proxyLBACMEInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4137,12 +4137,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbAcmeInfoParam.Selector) {
+							if hasTags(&v, proxyLBACMEInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbAcmeInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBACMEInfoParam.Selector)
 						}
 
 					} else {
@@ -4164,7 +4164,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbAcmeInfoParam.Selector) == 0 || hasTags(&v, proxylbAcmeInfoParam.Selector) {
+										if len(proxyLBACMEInfoParam.Selector) == 0 || hasTags(&v, proxyLBACMEInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4189,11 +4189,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbAcmeInfoParam.SetId(id)
-						p := *proxylbAcmeInfoParam // copy struct value
-						proxylbAcmeInfoParam := &p
+						proxyLBACMEInfoParam.SetId(id)
+						p := *proxyLBACMEInfoParam // copy struct value
+						proxyLBACMEInfoParam := &p
 						go func() {
-							err := funcs.ProxylbAcmeInfo(ctx, proxylbAcmeInfoParam)
+							err := funcs.ProxyLBACMEInfo(ctx, proxyLBACMEInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4207,7 +4207,7 @@ func init() {
 			},
 			{
 				Name:      "acme-setting",
-				Usage:     "AcmeSetting Proxylb",
+				Usage:     "ACMESetting ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -4298,75 +4298,75 @@ func init() {
 						return err
 					}
 
-					proxylbAcmeSettingParam.ParamTemplate = c.String("param-template")
-					proxylbAcmeSettingParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbAcmeSettingParam)
+					proxyLBACMESettingParam.ParamTemplate = c.String("param-template")
+					proxyLBACMESettingParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBACMESettingParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewAcmeSettingProxylbParam()
+						p := params.NewACMESettingProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbAcmeSettingParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBACMESettingParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("accept-tos") {
-						proxylbAcmeSettingParam.AcceptTos = c.Bool("accept-tos")
+						proxyLBACMESettingParam.AcceptTos = c.Bool("accept-tos")
 					}
 					if c.IsSet("common-name") {
-						proxylbAcmeSettingParam.CommonName = c.String("common-name")
+						proxyLBACMESettingParam.CommonName = c.String("common-name")
 					}
 					if c.IsSet("disable") {
-						proxylbAcmeSettingParam.Disable = c.Bool("disable")
+						proxyLBACMESettingParam.Disable = c.Bool("disable")
 					}
 					if c.IsSet("selector") {
-						proxylbAcmeSettingParam.Selector = c.StringSlice("selector")
+						proxyLBACMESettingParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						proxylbAcmeSettingParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBACMESettingParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbAcmeSettingParam.ParamTemplate = c.String("param-template")
+						proxyLBACMESettingParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbAcmeSettingParam.Parameters = c.String("parameters")
+						proxyLBACMESettingParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbAcmeSettingParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBACMESettingParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbAcmeSettingParam.ParameterFile = c.String("parameter-file")
+						proxyLBACMESettingParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbAcmeSettingParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBACMESettingParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbAcmeSettingParam.OutputType = c.String("output-type")
+						proxyLBACMESettingParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbAcmeSettingParam.Column = c.StringSlice("column")
+						proxyLBACMESettingParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbAcmeSettingParam.Quiet = c.Bool("quiet")
+						proxyLBACMESettingParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbAcmeSettingParam.Format = c.String("format")
+						proxyLBACMESettingParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbAcmeSettingParam.FormatFile = c.String("format-file")
+						proxyLBACMESettingParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbAcmeSettingParam.Query = c.String("query")
+						proxyLBACMESettingParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbAcmeSettingParam.QueryFile = c.String("query-file")
+						proxyLBACMESettingParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbAcmeSettingParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBACMESettingParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4374,7 +4374,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbAcmeSettingParam
+					var outputTypeHolder interface{} = proxyLBACMESettingParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4385,10 +4385,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbAcmeSettingParam.GenerateSkeleton {
-						proxylbAcmeSettingParam.GenerateSkeleton = false
-						proxylbAcmeSettingParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbAcmeSettingParam, "", "\t")
+					if proxyLBACMESettingParam.GenerateSkeleton {
+						proxyLBACMESettingParam.GenerateSkeleton = false
+						proxyLBACMESettingParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBACMESettingParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4397,19 +4397,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbAcmeSettingParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBACMESettingParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbAcmeSettingParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBACMESettingParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbAcmeSettingParam.Selector) == 0 {
+						if len(proxyLBACMESettingParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4418,12 +4418,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbAcmeSettingParam.Selector) {
+							if hasTags(&v, proxyLBACMESettingParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbAcmeSettingParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBACMESettingParam.Selector)
 						}
 
 					} else {
@@ -4445,7 +4445,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbAcmeSettingParam.Selector) == 0 || hasTags(&v, proxylbAcmeSettingParam.Selector) {
+										if len(proxyLBACMESettingParam.Selector) == 0 || hasTags(&v, proxyLBACMESettingParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4466,7 +4466,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbAcmeSettingParam.Assumeyes {
+					if !proxyLBACMESettingParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -4480,11 +4480,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbAcmeSettingParam.SetId(id)
-						p := *proxylbAcmeSettingParam // copy struct value
-						proxylbAcmeSettingParam := &p
+						proxyLBACMESettingParam.SetId(id)
+						p := *proxyLBACMESettingParam // copy struct value
+						proxyLBACMESettingParam := &p
 						go func() {
-							err := funcs.ProxylbAcmeSetting(ctx, proxylbAcmeSettingParam)
+							err := funcs.ProxyLBACMESetting(ctx, proxyLBACMESettingParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4498,7 +4498,7 @@ func init() {
 			},
 			{
 				Name:      "acme-renew",
-				Usage:     "AcmeRenew Proxylb",
+				Usage:     "ACMERenew ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -4545,45 +4545,45 @@ func init() {
 						return err
 					}
 
-					proxylbAcmeRenewParam.ParamTemplate = c.String("param-template")
-					proxylbAcmeRenewParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbAcmeRenewParam)
+					proxyLBACMERenewParam.ParamTemplate = c.String("param-template")
+					proxyLBACMERenewParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBACMERenewParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewAcmeRenewProxylbParam()
+						p := params.NewACMERenewProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbAcmeRenewParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBACMERenewParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						proxylbAcmeRenewParam.Selector = c.StringSlice("selector")
+						proxyLBACMERenewParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						proxylbAcmeRenewParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBACMERenewParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbAcmeRenewParam.ParamTemplate = c.String("param-template")
+						proxyLBACMERenewParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbAcmeRenewParam.Parameters = c.String("parameters")
+						proxyLBACMERenewParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbAcmeRenewParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBACMERenewParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbAcmeRenewParam.ParameterFile = c.String("parameter-file")
+						proxyLBACMERenewParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbAcmeRenewParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBACMERenewParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						proxylbAcmeRenewParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBACMERenewParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4591,7 +4591,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbAcmeRenewParam
+					var outputTypeHolder interface{} = proxyLBACMERenewParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4602,10 +4602,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbAcmeRenewParam.GenerateSkeleton {
-						proxylbAcmeRenewParam.GenerateSkeleton = false
-						proxylbAcmeRenewParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbAcmeRenewParam, "", "\t")
+					if proxyLBACMERenewParam.GenerateSkeleton {
+						proxyLBACMERenewParam.GenerateSkeleton = false
+						proxyLBACMERenewParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBACMERenewParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4614,19 +4614,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbAcmeRenewParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBACMERenewParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbAcmeRenewParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBACMERenewParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbAcmeRenewParam.Selector) == 0 {
+						if len(proxyLBACMERenewParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4635,12 +4635,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbAcmeRenewParam.Selector) {
+							if hasTags(&v, proxyLBACMERenewParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbAcmeRenewParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBACMERenewParam.Selector)
 						}
 
 					} else {
@@ -4662,7 +4662,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbAcmeRenewParam.Selector) == 0 || hasTags(&v, proxylbAcmeRenewParam.Selector) {
+										if len(proxyLBACMERenewParam.Selector) == 0 || hasTags(&v, proxyLBACMERenewParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4683,7 +4683,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbAcmeRenewParam.Assumeyes {
+					if !proxyLBACMERenewParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -4697,11 +4697,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbAcmeRenewParam.SetId(id)
-						p := *proxylbAcmeRenewParam // copy struct value
-						proxylbAcmeRenewParam := &p
+						proxyLBACMERenewParam.SetId(id)
+						p := *proxyLBACMERenewParam // copy struct value
+						proxyLBACMERenewParam := &p
 						go func() {
-							err := funcs.ProxylbAcmeRenew(ctx, proxylbAcmeRenewParam)
+							err := funcs.ProxyLBACMERenew(ctx, proxyLBACMERenewParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4716,7 +4716,7 @@ func init() {
 			{
 				Name:      "server-info",
 				Aliases:   []string{"server-list"},
-				Usage:     "ServerInfo Proxylb",
+				Usage:     "ServerInfo ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -4790,63 +4790,63 @@ func init() {
 						return err
 					}
 
-					proxylbServerInfoParam.ParamTemplate = c.String("param-template")
-					proxylbServerInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbServerInfoParam)
+					proxyLBServerInfoParam.ParamTemplate = c.String("param-template")
+					proxyLBServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBServerInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerInfoProxylbParam()
+						p := params.NewServerInfoProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbServerInfoParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBServerInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						proxylbServerInfoParam.Selector = c.StringSlice("selector")
+						proxyLBServerInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						proxylbServerInfoParam.ParamTemplate = c.String("param-template")
+						proxyLBServerInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbServerInfoParam.Parameters = c.String("parameters")
+						proxyLBServerInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBServerInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbServerInfoParam.ParameterFile = c.String("parameter-file")
+						proxyLBServerInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbServerInfoParam.OutputType = c.String("output-type")
+						proxyLBServerInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbServerInfoParam.Column = c.StringSlice("column")
+						proxyLBServerInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbServerInfoParam.Quiet = c.Bool("quiet")
+						proxyLBServerInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbServerInfoParam.Format = c.String("format")
+						proxyLBServerInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbServerInfoParam.FormatFile = c.String("format-file")
+						proxyLBServerInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbServerInfoParam.Query = c.String("query")
+						proxyLBServerInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbServerInfoParam.QueryFile = c.String("query-file")
+						proxyLBServerInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbServerInfoParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBServerInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4854,7 +4854,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbServerInfoParam
+					var outputTypeHolder interface{} = proxyLBServerInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4865,10 +4865,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbServerInfoParam.GenerateSkeleton {
-						proxylbServerInfoParam.GenerateSkeleton = false
-						proxylbServerInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbServerInfoParam, "", "\t")
+					if proxyLBServerInfoParam.GenerateSkeleton {
+						proxyLBServerInfoParam.GenerateSkeleton = false
+						proxyLBServerInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBServerInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4877,19 +4877,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbServerInfoParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBServerInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbServerInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBServerInfoParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbServerInfoParam.Selector) == 0 {
+						if len(proxyLBServerInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4898,12 +4898,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbServerInfoParam.Selector) {
+							if hasTags(&v, proxyLBServerInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbServerInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBServerInfoParam.Selector)
 						}
 
 					} else {
@@ -4925,7 +4925,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbServerInfoParam.Selector) == 0 || hasTags(&v, proxylbServerInfoParam.Selector) {
+										if len(proxyLBServerInfoParam.Selector) == 0 || hasTags(&v, proxyLBServerInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4950,11 +4950,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbServerInfoParam.SetId(id)
-						p := *proxylbServerInfoParam // copy struct value
-						proxylbServerInfoParam := &p
+						proxyLBServerInfoParam.SetId(id)
+						p := *proxyLBServerInfoParam // copy struct value
+						proxyLBServerInfoParam := &p
 						go func() {
-							err := funcs.ProxylbServerInfo(ctx, proxylbServerInfoParam)
+							err := funcs.ProxyLBServerInfo(ctx, proxyLBServerInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4968,7 +4968,7 @@ func init() {
 			},
 			{
 				Name:      "server-add",
-				Usage:     "ServerAdd Proxylb",
+				Usage:     "ServerAdd ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -5059,75 +5059,75 @@ func init() {
 						return err
 					}
 
-					proxylbServerAddParam.ParamTemplate = c.String("param-template")
-					proxylbServerAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbServerAddParam)
+					proxyLBServerAddParam.ParamTemplate = c.String("param-template")
+					proxyLBServerAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBServerAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerAddProxylbParam()
+						p := params.NewServerAddProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbServerAddParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBServerAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("ipaddress") {
-						proxylbServerAddParam.Ipaddress = c.String("ipaddress")
+						proxyLBServerAddParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("disabled") {
-						proxylbServerAddParam.Disabled = c.Bool("disabled")
+						proxyLBServerAddParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("port") {
-						proxylbServerAddParam.Port = c.Int("port")
+						proxyLBServerAddParam.Port = c.Int("port")
 					}
 					if c.IsSet("selector") {
-						proxylbServerAddParam.Selector = c.StringSlice("selector")
+						proxyLBServerAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						proxylbServerAddParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBServerAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbServerAddParam.ParamTemplate = c.String("param-template")
+						proxyLBServerAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbServerAddParam.Parameters = c.String("parameters")
+						proxyLBServerAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbServerAddParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBServerAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbServerAddParam.ParameterFile = c.String("parameter-file")
+						proxyLBServerAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbServerAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBServerAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbServerAddParam.OutputType = c.String("output-type")
+						proxyLBServerAddParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbServerAddParam.Column = c.StringSlice("column")
+						proxyLBServerAddParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbServerAddParam.Quiet = c.Bool("quiet")
+						proxyLBServerAddParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbServerAddParam.Format = c.String("format")
+						proxyLBServerAddParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbServerAddParam.FormatFile = c.String("format-file")
+						proxyLBServerAddParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbServerAddParam.Query = c.String("query")
+						proxyLBServerAddParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbServerAddParam.QueryFile = c.String("query-file")
+						proxyLBServerAddParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbServerAddParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBServerAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5135,7 +5135,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbServerAddParam
+					var outputTypeHolder interface{} = proxyLBServerAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5146,10 +5146,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbServerAddParam.GenerateSkeleton {
-						proxylbServerAddParam.GenerateSkeleton = false
-						proxylbServerAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbServerAddParam, "", "\t")
+					if proxyLBServerAddParam.GenerateSkeleton {
+						proxyLBServerAddParam.GenerateSkeleton = false
+						proxyLBServerAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBServerAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5158,19 +5158,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbServerAddParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBServerAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbServerAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBServerAddParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbServerAddParam.Selector) == 0 {
+						if len(proxyLBServerAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5179,12 +5179,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbServerAddParam.Selector) {
+							if hasTags(&v, proxyLBServerAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbServerAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBServerAddParam.Selector)
 						}
 
 					} else {
@@ -5206,7 +5206,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbServerAddParam.Selector) == 0 || hasTags(&v, proxylbServerAddParam.Selector) {
+										if len(proxyLBServerAddParam.Selector) == 0 || hasTags(&v, proxyLBServerAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5227,7 +5227,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbServerAddParam.Assumeyes {
+					if !proxyLBServerAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -5241,11 +5241,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbServerAddParam.SetId(id)
-						p := *proxylbServerAddParam // copy struct value
-						proxylbServerAddParam := &p
+						proxyLBServerAddParam.SetId(id)
+						p := *proxyLBServerAddParam // copy struct value
+						proxyLBServerAddParam := &p
 						go func() {
-							err := funcs.ProxylbServerAdd(ctx, proxylbServerAddParam)
+							err := funcs.ProxyLBServerAdd(ctx, proxyLBServerAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5259,7 +5259,7 @@ func init() {
 			},
 			{
 				Name:      "server-update",
-				Usage:     "ServerUpdate Proxylb",
+				Usage:     "ServerUpdate ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -5354,78 +5354,78 @@ func init() {
 						return err
 					}
 
-					proxylbServerUpdateParam.ParamTemplate = c.String("param-template")
-					proxylbServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbServerUpdateParam)
+					proxyLBServerUpdateParam.ParamTemplate = c.String("param-template")
+					proxyLBServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBServerUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerUpdateProxylbParam()
+						p := params.NewServerUpdateProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbServerUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBServerUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						proxylbServerUpdateParam.Index = c.Int("index")
+						proxyLBServerUpdateParam.Index = c.Int("index")
 					}
 					if c.IsSet("ipaddress") {
-						proxylbServerUpdateParam.Ipaddress = c.String("ipaddress")
+						proxyLBServerUpdateParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("disabled") {
-						proxylbServerUpdateParam.Disabled = c.Bool("disabled")
+						proxyLBServerUpdateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("port") {
-						proxylbServerUpdateParam.Port = c.Int("port")
+						proxyLBServerUpdateParam.Port = c.Int("port")
 					}
 					if c.IsSet("selector") {
-						proxylbServerUpdateParam.Selector = c.StringSlice("selector")
+						proxyLBServerUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						proxylbServerUpdateParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBServerUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbServerUpdateParam.ParamTemplate = c.String("param-template")
+						proxyLBServerUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbServerUpdateParam.Parameters = c.String("parameters")
+						proxyLBServerUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbServerUpdateParam.ParameterFile = c.String("parameter-file")
+						proxyLBServerUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbServerUpdateParam.OutputType = c.String("output-type")
+						proxyLBServerUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbServerUpdateParam.Column = c.StringSlice("column")
+						proxyLBServerUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbServerUpdateParam.Quiet = c.Bool("quiet")
+						proxyLBServerUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbServerUpdateParam.Format = c.String("format")
+						proxyLBServerUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbServerUpdateParam.FormatFile = c.String("format-file")
+						proxyLBServerUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbServerUpdateParam.Query = c.String("query")
+						proxyLBServerUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbServerUpdateParam.QueryFile = c.String("query-file")
+						proxyLBServerUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbServerUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBServerUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5433,7 +5433,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbServerUpdateParam
+					var outputTypeHolder interface{} = proxyLBServerUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5444,10 +5444,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbServerUpdateParam.GenerateSkeleton {
-						proxylbServerUpdateParam.GenerateSkeleton = false
-						proxylbServerUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbServerUpdateParam, "", "\t")
+					if proxyLBServerUpdateParam.GenerateSkeleton {
+						proxyLBServerUpdateParam.GenerateSkeleton = false
+						proxyLBServerUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBServerUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5456,19 +5456,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbServerUpdateParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBServerUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbServerUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBServerUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbServerUpdateParam.Selector) == 0 {
+						if len(proxyLBServerUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5477,12 +5477,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbServerUpdateParam.Selector) {
+							if hasTags(&v, proxyLBServerUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbServerUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBServerUpdateParam.Selector)
 						}
 
 					} else {
@@ -5504,7 +5504,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbServerUpdateParam.Selector) == 0 || hasTags(&v, proxylbServerUpdateParam.Selector) {
+										if len(proxyLBServerUpdateParam.Selector) == 0 || hasTags(&v, proxyLBServerUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5525,7 +5525,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbServerUpdateParam.Assumeyes {
+					if !proxyLBServerUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -5539,11 +5539,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbServerUpdateParam.SetId(id)
-						p := *proxylbServerUpdateParam // copy struct value
-						proxylbServerUpdateParam := &p
+						proxyLBServerUpdateParam.SetId(id)
+						p := *proxyLBServerUpdateParam // copy struct value
+						proxyLBServerUpdateParam := &p
 						go func() {
-							err := funcs.ProxylbServerUpdate(ctx, proxylbServerUpdateParam)
+							err := funcs.ProxyLBServerUpdate(ctx, proxyLBServerUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5557,7 +5557,7 @@ func init() {
 			},
 			{
 				Name:      "server-delete",
-				Usage:     "ServerDelete Proxylb",
+				Usage:     "ServerDelete ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -5640,69 +5640,69 @@ func init() {
 						return err
 					}
 
-					proxylbServerDeleteParam.ParamTemplate = c.String("param-template")
-					proxylbServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbServerDeleteParam)
+					proxyLBServerDeleteParam.ParamTemplate = c.String("param-template")
+					proxyLBServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBServerDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerDeleteProxylbParam()
+						p := params.NewServerDeleteProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbServerDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBServerDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						proxylbServerDeleteParam.Index = c.Int("index")
+						proxyLBServerDeleteParam.Index = c.Int("index")
 					}
 					if c.IsSet("selector") {
-						proxylbServerDeleteParam.Selector = c.StringSlice("selector")
+						proxyLBServerDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						proxylbServerDeleteParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBServerDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbServerDeleteParam.ParamTemplate = c.String("param-template")
+						proxyLBServerDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbServerDeleteParam.Parameters = c.String("parameters")
+						proxyLBServerDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbServerDeleteParam.ParameterFile = c.String("parameter-file")
+						proxyLBServerDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbServerDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBServerDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbServerDeleteParam.OutputType = c.String("output-type")
+						proxyLBServerDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbServerDeleteParam.Column = c.StringSlice("column")
+						proxyLBServerDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbServerDeleteParam.Quiet = c.Bool("quiet")
+						proxyLBServerDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbServerDeleteParam.Format = c.String("format")
+						proxyLBServerDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbServerDeleteParam.FormatFile = c.String("format-file")
+						proxyLBServerDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbServerDeleteParam.Query = c.String("query")
+						proxyLBServerDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbServerDeleteParam.QueryFile = c.String("query-file")
+						proxyLBServerDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbServerDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBServerDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5710,7 +5710,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbServerDeleteParam
+					var outputTypeHolder interface{} = proxyLBServerDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5721,10 +5721,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbServerDeleteParam.GenerateSkeleton {
-						proxylbServerDeleteParam.GenerateSkeleton = false
-						proxylbServerDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbServerDeleteParam, "", "\t")
+					if proxyLBServerDeleteParam.GenerateSkeleton {
+						proxyLBServerDeleteParam.GenerateSkeleton = false
+						proxyLBServerDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBServerDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5733,19 +5733,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbServerDeleteParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBServerDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbServerDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBServerDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbServerDeleteParam.Selector) == 0 {
+						if len(proxyLBServerDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5754,12 +5754,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbServerDeleteParam.Selector) {
+							if hasTags(&v, proxyLBServerDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbServerDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBServerDeleteParam.Selector)
 						}
 
 					} else {
@@ -5781,7 +5781,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbServerDeleteParam.Selector) == 0 || hasTags(&v, proxylbServerDeleteParam.Selector) {
+										if len(proxyLBServerDeleteParam.Selector) == 0 || hasTags(&v, proxyLBServerDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5802,7 +5802,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbServerDeleteParam.Assumeyes {
+					if !proxyLBServerDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -5816,11 +5816,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbServerDeleteParam.SetId(id)
-						p := *proxylbServerDeleteParam // copy struct value
-						proxylbServerDeleteParam := &p
+						proxyLBServerDeleteParam.SetId(id)
+						p := *proxyLBServerDeleteParam // copy struct value
+						proxyLBServerDeleteParam := &p
 						go func() {
-							err := funcs.ProxylbServerDelete(ctx, proxylbServerDeleteParam)
+							err := funcs.ProxyLBServerDelete(ctx, proxyLBServerDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5835,7 +5835,7 @@ func init() {
 			{
 				Name:      "certificate-info",
 				Aliases:   []string{"certificate-list", "cert-list", "cert-info"},
-				Usage:     "CertificateInfo Proxylb",
+				Usage:     "CertificateInfo ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -5909,63 +5909,63 @@ func init() {
 						return err
 					}
 
-					proxylbCertificateInfoParam.ParamTemplate = c.String("param-template")
-					proxylbCertificateInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbCertificateInfoParam)
+					proxyLBCertificateInfoParam.ParamTemplate = c.String("param-template")
+					proxyLBCertificateInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBCertificateInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCertificateInfoProxylbParam()
+						p := params.NewCertificateInfoProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbCertificateInfoParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBCertificateInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						proxylbCertificateInfoParam.Selector = c.StringSlice("selector")
+						proxyLBCertificateInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						proxylbCertificateInfoParam.ParamTemplate = c.String("param-template")
+						proxyLBCertificateInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbCertificateInfoParam.Parameters = c.String("parameters")
+						proxyLBCertificateInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbCertificateInfoParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBCertificateInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbCertificateInfoParam.ParameterFile = c.String("parameter-file")
+						proxyLBCertificateInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbCertificateInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBCertificateInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbCertificateInfoParam.OutputType = c.String("output-type")
+						proxyLBCertificateInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbCertificateInfoParam.Column = c.StringSlice("column")
+						proxyLBCertificateInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbCertificateInfoParam.Quiet = c.Bool("quiet")
+						proxyLBCertificateInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbCertificateInfoParam.Format = c.String("format")
+						proxyLBCertificateInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbCertificateInfoParam.FormatFile = c.String("format-file")
+						proxyLBCertificateInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbCertificateInfoParam.Query = c.String("query")
+						proxyLBCertificateInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbCertificateInfoParam.QueryFile = c.String("query-file")
+						proxyLBCertificateInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbCertificateInfoParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBCertificateInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5973,7 +5973,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbCertificateInfoParam
+					var outputTypeHolder interface{} = proxyLBCertificateInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5984,10 +5984,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbCertificateInfoParam.GenerateSkeleton {
-						proxylbCertificateInfoParam.GenerateSkeleton = false
-						proxylbCertificateInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbCertificateInfoParam, "", "\t")
+					if proxyLBCertificateInfoParam.GenerateSkeleton {
+						proxyLBCertificateInfoParam.GenerateSkeleton = false
+						proxyLBCertificateInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBCertificateInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5996,19 +5996,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbCertificateInfoParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBCertificateInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbCertificateInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBCertificateInfoParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbCertificateInfoParam.Selector) == 0 {
+						if len(proxyLBCertificateInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6017,12 +6017,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbCertificateInfoParam.Selector) {
+							if hasTags(&v, proxyLBCertificateInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbCertificateInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBCertificateInfoParam.Selector)
 						}
 
 					} else {
@@ -6044,7 +6044,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbCertificateInfoParam.Selector) == 0 || hasTags(&v, proxylbCertificateInfoParam.Selector) {
+										if len(proxyLBCertificateInfoParam.Selector) == 0 || hasTags(&v, proxyLBCertificateInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6069,11 +6069,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbCertificateInfoParam.SetId(id)
-						p := *proxylbCertificateInfoParam // copy struct value
-						proxylbCertificateInfoParam := &p
+						proxyLBCertificateInfoParam.SetId(id)
+						p := *proxyLBCertificateInfoParam // copy struct value
+						proxyLBCertificateInfoParam := &p
 						go func() {
-							err := funcs.ProxylbCertificateInfo(ctx, proxylbCertificateInfoParam)
+							err := funcs.ProxyLBCertificateInfo(ctx, proxyLBCertificateInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6088,7 +6088,7 @@ func init() {
 			{
 				Name:      "certificate-add",
 				Aliases:   []string{"cert-add"},
-				Usage:     "CertificateAdd Proxylb",
+				Usage:     "CertificateAdd ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -6180,75 +6180,75 @@ func init() {
 						return err
 					}
 
-					proxylbCertificateAddParam.ParamTemplate = c.String("param-template")
-					proxylbCertificateAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbCertificateAddParam)
+					proxyLBCertificateAddParam.ParamTemplate = c.String("param-template")
+					proxyLBCertificateAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBCertificateAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCertificateAddProxylbParam()
+						p := params.NewCertificateAddProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbCertificateAddParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBCertificateAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("server-certificate") {
-						proxylbCertificateAddParam.ServerCertificate = c.String("server-certificate")
+						proxyLBCertificateAddParam.ServerCertificate = c.String("server-certificate")
 					}
 					if c.IsSet("intermediate-certificate") {
-						proxylbCertificateAddParam.IntermediateCertificate = c.String("intermediate-certificate")
+						proxyLBCertificateAddParam.IntermediateCertificate = c.String("intermediate-certificate")
 					}
 					if c.IsSet("private-key") {
-						proxylbCertificateAddParam.PrivateKey = c.String("private-key")
+						proxyLBCertificateAddParam.PrivateKey = c.String("private-key")
 					}
 					if c.IsSet("selector") {
-						proxylbCertificateAddParam.Selector = c.StringSlice("selector")
+						proxyLBCertificateAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						proxylbCertificateAddParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBCertificateAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbCertificateAddParam.ParamTemplate = c.String("param-template")
+						proxyLBCertificateAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbCertificateAddParam.Parameters = c.String("parameters")
+						proxyLBCertificateAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbCertificateAddParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBCertificateAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbCertificateAddParam.ParameterFile = c.String("parameter-file")
+						proxyLBCertificateAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbCertificateAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBCertificateAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbCertificateAddParam.OutputType = c.String("output-type")
+						proxyLBCertificateAddParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbCertificateAddParam.Column = c.StringSlice("column")
+						proxyLBCertificateAddParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbCertificateAddParam.Quiet = c.Bool("quiet")
+						proxyLBCertificateAddParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbCertificateAddParam.Format = c.String("format")
+						proxyLBCertificateAddParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbCertificateAddParam.FormatFile = c.String("format-file")
+						proxyLBCertificateAddParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbCertificateAddParam.Query = c.String("query")
+						proxyLBCertificateAddParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbCertificateAddParam.QueryFile = c.String("query-file")
+						proxyLBCertificateAddParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbCertificateAddParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBCertificateAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6256,7 +6256,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbCertificateAddParam
+					var outputTypeHolder interface{} = proxyLBCertificateAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6267,10 +6267,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbCertificateAddParam.GenerateSkeleton {
-						proxylbCertificateAddParam.GenerateSkeleton = false
-						proxylbCertificateAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbCertificateAddParam, "", "\t")
+					if proxyLBCertificateAddParam.GenerateSkeleton {
+						proxyLBCertificateAddParam.GenerateSkeleton = false
+						proxyLBCertificateAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBCertificateAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6279,19 +6279,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbCertificateAddParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBCertificateAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbCertificateAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBCertificateAddParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbCertificateAddParam.Selector) == 0 {
+						if len(proxyLBCertificateAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6300,12 +6300,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbCertificateAddParam.Selector) {
+							if hasTags(&v, proxyLBCertificateAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbCertificateAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBCertificateAddParam.Selector)
 						}
 
 					} else {
@@ -6327,7 +6327,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbCertificateAddParam.Selector) == 0 || hasTags(&v, proxylbCertificateAddParam.Selector) {
+										if len(proxyLBCertificateAddParam.Selector) == 0 || hasTags(&v, proxyLBCertificateAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6348,7 +6348,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbCertificateAddParam.Assumeyes {
+					if !proxyLBCertificateAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -6362,11 +6362,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbCertificateAddParam.SetId(id)
-						p := *proxylbCertificateAddParam // copy struct value
-						proxylbCertificateAddParam := &p
+						proxyLBCertificateAddParam.SetId(id)
+						p := *proxyLBCertificateAddParam // copy struct value
+						proxyLBCertificateAddParam := &p
 						go func() {
-							err := funcs.ProxylbCertificateAdd(ctx, proxylbCertificateAddParam)
+							err := funcs.ProxyLBCertificateAdd(ctx, proxyLBCertificateAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6381,7 +6381,7 @@ func init() {
 			{
 				Name:      "certificate-update",
 				Aliases:   []string{"cert-update"},
-				Usage:     "CertificateUpdate Proxylb",
+				Usage:     "CertificateUpdate ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -6471,75 +6471,75 @@ func init() {
 						return err
 					}
 
-					proxylbCertificateUpdateParam.ParamTemplate = c.String("param-template")
-					proxylbCertificateUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbCertificateUpdateParam)
+					proxyLBCertificateUpdateParam.ParamTemplate = c.String("param-template")
+					proxyLBCertificateUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBCertificateUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCertificateUpdateProxylbParam()
+						p := params.NewCertificateUpdateProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbCertificateUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBCertificateUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("server-certificate") {
-						proxylbCertificateUpdateParam.ServerCertificate = c.String("server-certificate")
+						proxyLBCertificateUpdateParam.ServerCertificate = c.String("server-certificate")
 					}
 					if c.IsSet("intermediate-certificate") {
-						proxylbCertificateUpdateParam.IntermediateCertificate = c.String("intermediate-certificate")
+						proxyLBCertificateUpdateParam.IntermediateCertificate = c.String("intermediate-certificate")
 					}
 					if c.IsSet("private-key") {
-						proxylbCertificateUpdateParam.PrivateKey = c.String("private-key")
+						proxyLBCertificateUpdateParam.PrivateKey = c.String("private-key")
 					}
 					if c.IsSet("selector") {
-						proxylbCertificateUpdateParam.Selector = c.StringSlice("selector")
+						proxyLBCertificateUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						proxylbCertificateUpdateParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBCertificateUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbCertificateUpdateParam.ParamTemplate = c.String("param-template")
+						proxyLBCertificateUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbCertificateUpdateParam.Parameters = c.String("parameters")
+						proxyLBCertificateUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbCertificateUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBCertificateUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbCertificateUpdateParam.ParameterFile = c.String("parameter-file")
+						proxyLBCertificateUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbCertificateUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBCertificateUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbCertificateUpdateParam.OutputType = c.String("output-type")
+						proxyLBCertificateUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbCertificateUpdateParam.Column = c.StringSlice("column")
+						proxyLBCertificateUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbCertificateUpdateParam.Quiet = c.Bool("quiet")
+						proxyLBCertificateUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbCertificateUpdateParam.Format = c.String("format")
+						proxyLBCertificateUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbCertificateUpdateParam.FormatFile = c.String("format-file")
+						proxyLBCertificateUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbCertificateUpdateParam.Query = c.String("query")
+						proxyLBCertificateUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbCertificateUpdateParam.QueryFile = c.String("query-file")
+						proxyLBCertificateUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbCertificateUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBCertificateUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6547,7 +6547,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbCertificateUpdateParam
+					var outputTypeHolder interface{} = proxyLBCertificateUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6558,10 +6558,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbCertificateUpdateParam.GenerateSkeleton {
-						proxylbCertificateUpdateParam.GenerateSkeleton = false
-						proxylbCertificateUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbCertificateUpdateParam, "", "\t")
+					if proxyLBCertificateUpdateParam.GenerateSkeleton {
+						proxyLBCertificateUpdateParam.GenerateSkeleton = false
+						proxyLBCertificateUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBCertificateUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6570,19 +6570,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbCertificateUpdateParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBCertificateUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbCertificateUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBCertificateUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbCertificateUpdateParam.Selector) == 0 {
+						if len(proxyLBCertificateUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6591,12 +6591,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbCertificateUpdateParam.Selector) {
+							if hasTags(&v, proxyLBCertificateUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbCertificateUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBCertificateUpdateParam.Selector)
 						}
 
 					} else {
@@ -6618,7 +6618,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbCertificateUpdateParam.Selector) == 0 || hasTags(&v, proxylbCertificateUpdateParam.Selector) {
+										if len(proxyLBCertificateUpdateParam.Selector) == 0 || hasTags(&v, proxyLBCertificateUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6639,7 +6639,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbCertificateUpdateParam.Assumeyes {
+					if !proxyLBCertificateUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -6653,11 +6653,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbCertificateUpdateParam.SetId(id)
-						p := *proxylbCertificateUpdateParam // copy struct value
-						proxylbCertificateUpdateParam := &p
+						proxyLBCertificateUpdateParam.SetId(id)
+						p := *proxyLBCertificateUpdateParam // copy struct value
+						proxyLBCertificateUpdateParam := &p
 						go func() {
-							err := funcs.ProxylbCertificateUpdate(ctx, proxylbCertificateUpdateParam)
+							err := funcs.ProxyLBCertificateUpdate(ctx, proxyLBCertificateUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6672,7 +6672,7 @@ func init() {
 			{
 				Name:      "certificate-delete",
 				Aliases:   []string{"cert-delete"},
-				Usage:     "CertificateDelete Proxylb",
+				Usage:     "CertificateDelete ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -6751,66 +6751,66 @@ func init() {
 						return err
 					}
 
-					proxylbCertificateDeleteParam.ParamTemplate = c.String("param-template")
-					proxylbCertificateDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbCertificateDeleteParam)
+					proxyLBCertificateDeleteParam.ParamTemplate = c.String("param-template")
+					proxyLBCertificateDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBCertificateDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCertificateDeleteProxylbParam()
+						p := params.NewCertificateDeleteProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbCertificateDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBCertificateDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						proxylbCertificateDeleteParam.Selector = c.StringSlice("selector")
+						proxyLBCertificateDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						proxylbCertificateDeleteParam.Assumeyes = c.Bool("assumeyes")
+						proxyLBCertificateDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						proxylbCertificateDeleteParam.ParamTemplate = c.String("param-template")
+						proxyLBCertificateDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbCertificateDeleteParam.Parameters = c.String("parameters")
+						proxyLBCertificateDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbCertificateDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBCertificateDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbCertificateDeleteParam.ParameterFile = c.String("parameter-file")
+						proxyLBCertificateDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbCertificateDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBCertificateDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbCertificateDeleteParam.OutputType = c.String("output-type")
+						proxyLBCertificateDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbCertificateDeleteParam.Column = c.StringSlice("column")
+						proxyLBCertificateDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbCertificateDeleteParam.Quiet = c.Bool("quiet")
+						proxyLBCertificateDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbCertificateDeleteParam.Format = c.String("format")
+						proxyLBCertificateDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbCertificateDeleteParam.FormatFile = c.String("format-file")
+						proxyLBCertificateDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbCertificateDeleteParam.Query = c.String("query")
+						proxyLBCertificateDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbCertificateDeleteParam.QueryFile = c.String("query-file")
+						proxyLBCertificateDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbCertificateDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBCertificateDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6818,7 +6818,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbCertificateDeleteParam
+					var outputTypeHolder interface{} = proxyLBCertificateDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6829,10 +6829,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbCertificateDeleteParam.GenerateSkeleton {
-						proxylbCertificateDeleteParam.GenerateSkeleton = false
-						proxylbCertificateDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbCertificateDeleteParam, "", "\t")
+					if proxyLBCertificateDeleteParam.GenerateSkeleton {
+						proxyLBCertificateDeleteParam.GenerateSkeleton = false
+						proxyLBCertificateDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBCertificateDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6841,19 +6841,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbCertificateDeleteParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBCertificateDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbCertificateDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBCertificateDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbCertificateDeleteParam.Selector) == 0 {
+						if len(proxyLBCertificateDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6862,12 +6862,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbCertificateDeleteParam.Selector) {
+							if hasTags(&v, proxyLBCertificateDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbCertificateDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBCertificateDeleteParam.Selector)
 						}
 
 					} else {
@@ -6889,7 +6889,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbCertificateDeleteParam.Selector) == 0 || hasTags(&v, proxylbCertificateDeleteParam.Selector) {
+										if len(proxyLBCertificateDeleteParam.Selector) == 0 || hasTags(&v, proxyLBCertificateDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6910,7 +6910,7 @@ func init() {
 					}
 
 					// confirm
-					if !proxylbCertificateDeleteParam.Assumeyes {
+					if !proxyLBCertificateDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -6924,11 +6924,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbCertificateDeleteParam.SetId(id)
-						p := *proxylbCertificateDeleteParam // copy struct value
-						proxylbCertificateDeleteParam := &p
+						proxyLBCertificateDeleteParam.SetId(id)
+						p := *proxyLBCertificateDeleteParam // copy struct value
+						proxyLBCertificateDeleteParam := &p
 						go func() {
-							err := funcs.ProxylbCertificateDelete(ctx, proxylbCertificateDeleteParam)
+							err := funcs.ProxyLBCertificateDelete(ctx, proxyLBCertificateDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6942,7 +6942,7 @@ func init() {
 			},
 			{
 				Name:      "monitor",
-				Usage:     "Monitor Proxylb",
+				Usage:     "Monitor ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -7029,72 +7029,72 @@ func init() {
 						return err
 					}
 
-					proxylbMonitorParam.ParamTemplate = c.String("param-template")
-					proxylbMonitorParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(proxylbMonitorParam)
+					proxyLBMonitorParam.ParamTemplate = c.String("param-template")
+					proxyLBMonitorParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(proxyLBMonitorParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewMonitorProxylbParam()
+						p := params.NewMonitorProxyLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(proxylbMonitorParam, p, mergo.WithOverride)
+						mergo.Merge(proxyLBMonitorParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						proxylbMonitorParam.Start = c.String("start")
+						proxyLBMonitorParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						proxylbMonitorParam.End = c.String("end")
+						proxyLBMonitorParam.End = c.String("end")
 					}
 					if c.IsSet("key-format") {
-						proxylbMonitorParam.KeyFormat = c.String("key-format")
+						proxyLBMonitorParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						proxylbMonitorParam.Selector = c.StringSlice("selector")
+						proxyLBMonitorParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						proxylbMonitorParam.ParamTemplate = c.String("param-template")
+						proxyLBMonitorParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						proxylbMonitorParam.Parameters = c.String("parameters")
+						proxyLBMonitorParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						proxylbMonitorParam.ParamTemplateFile = c.String("param-template-file")
+						proxyLBMonitorParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						proxylbMonitorParam.ParameterFile = c.String("parameter-file")
+						proxyLBMonitorParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						proxylbMonitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						proxyLBMonitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						proxylbMonitorParam.OutputType = c.String("output-type")
+						proxyLBMonitorParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						proxylbMonitorParam.Column = c.StringSlice("column")
+						proxyLBMonitorParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						proxylbMonitorParam.Quiet = c.Bool("quiet")
+						proxyLBMonitorParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						proxylbMonitorParam.Format = c.String("format")
+						proxyLBMonitorParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						proxylbMonitorParam.FormatFile = c.String("format-file")
+						proxyLBMonitorParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						proxylbMonitorParam.Query = c.String("query")
+						proxyLBMonitorParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						proxylbMonitorParam.QueryFile = c.String("query-file")
+						proxyLBMonitorParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						proxylbMonitorParam.Id = sacloud.ID(c.Int64("id"))
+						proxyLBMonitorParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -7102,7 +7102,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = proxylbMonitorParam
+					var outputTypeHolder interface{} = proxyLBMonitorParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -7113,10 +7113,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if proxylbMonitorParam.GenerateSkeleton {
-						proxylbMonitorParam.GenerateSkeleton = false
-						proxylbMonitorParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(proxylbMonitorParam, "", "\t")
+					if proxyLBMonitorParam.GenerateSkeleton {
+						proxyLBMonitorParam.GenerateSkeleton = false
+						proxyLBMonitorParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(proxyLBMonitorParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -7125,19 +7125,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := proxylbMonitorParam.Validate(); len(errors) > 0 {
+					if errors := proxyLBMonitorParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), proxylbMonitorParam)
+					ctx := command.NewContext(c, c.Args().Slice(), proxyLBMonitorParam)
 
-					apiClient := ctx.GetAPIClient().Proxylb
+					apiClient := ctx.GetAPIClient().ProxyLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(proxylbMonitorParam.Selector) == 0 {
+						if len(proxyLBMonitorParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -7146,12 +7146,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, proxylbMonitorParam.Selector) {
+							if hasTags(&v, proxyLBMonitorParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxylbMonitorParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", proxyLBMonitorParam.Selector)
 						}
 
 					} else {
@@ -7173,7 +7173,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceProxyLBItems {
-										if len(proxylbMonitorParam.Selector) == 0 || hasTags(&v, proxylbMonitorParam.Selector) {
+										if len(proxyLBMonitorParam.Selector) == 0 || hasTags(&v, proxyLBMonitorParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -7198,11 +7198,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						proxylbMonitorParam.SetId(id)
-						p := *proxylbMonitorParam // copy struct value
-						proxylbMonitorParam := &p
+						proxyLBMonitorParam.SetId(id)
+						p := *proxyLBMonitorParam // copy struct value
+						proxyLBMonitorParam := &p
 						go func() {
-							err := funcs.ProxylbMonitor(ctx, proxylbMonitorParam)
+							err := funcs.ProxyLBMonitor(ctx, proxyLBMonitorParam)
 							if err != nil {
 								errs = append(errs, err)
 							}

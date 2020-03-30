@@ -25,18 +25,18 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ShowAuthstatusParam is input parameters for the sacloud API
-type ShowAuthstatusParam struct {
+// ShowAuthStatusParam is input parameters for the sacloud API
+type ShowAuthStatusParam struct {
 	input Input
 }
 
-// NewShowAuthstatusParam return new ShowAuthstatusParam
-func NewShowAuthstatusParam() *ShowAuthstatusParam {
-	return &ShowAuthstatusParam{}
+// NewShowAuthStatusParam return new ShowAuthStatusParam
+func NewShowAuthStatusParam() *ShowAuthStatusParam {
+	return &ShowAuthStatusParam{}
 }
 
-// Initialize init ShowAuthstatusParam
-func (p *ShowAuthstatusParam) Initialize(in Input) error {
+// Initialize init ShowAuthStatusParam
+func (p *ShowAuthStatusParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -45,40 +45,40 @@ func (p *ShowAuthstatusParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ShowAuthstatusParam) WriteSkeleton(writer io.Writer) error {
+func (p *ShowAuthStatusParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ShowAuthstatusParam) fillValueToSkeleton() {
+func (p *ShowAuthStatusParam) fillValueToSkeleton() {
 
 }
 
-func (p *ShowAuthstatusParam) validate() error {
+func (p *ShowAuthStatusParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ShowAuthstatusParam) ResourceDef() *schema.Resource {
+func (p *ShowAuthStatusParam) ResourceDef() *schema.Resource {
 	return define.Resources["AuthStatus"]
 }
 
-func (p *ShowAuthstatusParam) CommandDef() *schema.Command {
+func (p *ShowAuthStatusParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["show"]
 }
 
-func (p *ShowAuthstatusParam) IncludeFields() []string {
+func (p *ShowAuthStatusParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ShowAuthstatusParam) ExcludeFields() []string {
+func (p *ShowAuthStatusParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ShowAuthstatusParam) TableType() output.TableType {
+func (p *ShowAuthStatusParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ShowAuthstatusParam) ColumnDefs() []output.ColumnDef {
+func (p *ShowAuthStatusParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }

@@ -24,13 +24,13 @@ import (
 	usacloud_params "github.com/sacloud/usacloud/command/params"
 )
 
-func ServerIsoInsert(ctx command.Context, params *usacloud_params.IsoInsertServerParam) error {
+func ServerISOInsert(ctx command.Context, params *usacloud_params.ISOInsertServerParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetServerAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("ServerIsoInsert is failed: %s", e)
+		return fmt.Errorf("ServerISOInsert is failed: %s", e)
 	}
 
 	if p.Instance.CDROM != nil && p.Instance.CDROM.ID != sacloud.EmptyID {
@@ -38,7 +38,7 @@ func ServerIsoInsert(ctx command.Context, params *usacloud_params.IsoInsertServe
 		return nil
 	}
 
-	imageID := params.IsoImageId
+	imageID := params.ISOImageId
 	if imageID == sacloud.EmptyID {
 
 		//validate
@@ -48,7 +48,7 @@ func ServerIsoInsert(ctx command.Context, params *usacloud_params.IsoInsertServe
 			Size:        params.Size,
 			Name:        params.Name,
 			Description: params.Description,
-			IsoFile:     params.IsoFile,
+			ISOFile:     params.ISOFile,
 		}
 		if errs := isoParams.Validate(); len(errs) > 0 {
 			return command.FlattenErrors(errs)
@@ -68,7 +68,7 @@ func ServerIsoInsert(ctx command.Context, params *usacloud_params.IsoInsertServe
 		// call Create(id)
 		res, ftpServer, err := api.Create(iso)
 		if err != nil {
-			return fmt.Errorf("ServerIsoInsert is failed: %s", err)
+			return fmt.Errorf("ServerISOInsert is failed: %s", err)
 		}
 
 		// upload
@@ -79,7 +79,7 @@ func ServerIsoInsert(ctx command.Context, params *usacloud_params.IsoInsertServe
 			command.GlobalOption.Progress,
 			func(compChan chan bool, errChan chan error) {
 
-				file, df, err := fileOrStdin(params.GetIsoFile())
+				file, df, err := fileOrStdin(params.GetISOFile())
 				if err != nil {
 					errChan <- err
 					return
@@ -95,13 +95,13 @@ func ServerIsoInsert(ctx command.Context, params *usacloud_params.IsoInsertServe
 			},
 		)
 		if err != nil {
-			return fmt.Errorf("ServerIsoInsert is failed: %s", err)
+			return fmt.Errorf("ServerISOInsert is failed: %s", err)
 		}
 
 		// close FTP
 		_, err = api.CloseFTP(res.ID)
 		if err != nil {
-			return fmt.Errorf("ServerIsoInsert is failed: %s", err)
+			return fmt.Errorf("ServerISOInsert is failed: %s", err)
 		}
 
 		imageID = res.ID
@@ -110,7 +110,7 @@ func ServerIsoInsert(ctx command.Context, params *usacloud_params.IsoInsertServe
 	// call manipurate functions
 	_, err := api.InsertCDROM(params.Id, imageID)
 	if err != nil {
-		return fmt.Errorf("ServerIsoInsert is failed: %s", err)
+		return fmt.Errorf("ServerISOInsert is failed: %s", err)
 	}
 
 	return nil

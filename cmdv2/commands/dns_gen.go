@@ -25,16 +25,16 @@ import (
 )
 
 var (
-	dnsListParam             = params.NewListDnsParam()
-	dnsRecordInfoParam       = params.NewRecordInfoDnsParam()
-	dnsRecordBulkUpdateParam = params.NewRecordBulkUpdateDnsParam()
-	dnsCreateParam           = params.NewCreateDnsParam()
-	dnsRecordAddParam        = params.NewRecordAddDnsParam()
-	dnsReadParam             = params.NewReadDnsParam()
-	dnsRecordUpdateParam     = params.NewRecordUpdateDnsParam()
-	dnsRecordDeleteParam     = params.NewRecordDeleteDnsParam()
-	dnsUpdateParam           = params.NewUpdateDnsParam()
-	dnsDeleteParam           = params.NewDeleteDnsParam()
+	dnsListParam             = params.NewListDNSParam()
+	dnsRecordInfoParam       = params.NewRecordInfoDNSParam()
+	dnsRecordBulkUpdateParam = params.NewRecordBulkUpdateDNSParam()
+	dnsCreateParam           = params.NewCreateDNSParam()
+	dnsRecordAddParam        = params.NewRecordAddDNSParam()
+	dnsReadParam             = params.NewReadDNSParam()
+	dnsRecordUpdateParam     = params.NewRecordUpdateDNSParam()
+	dnsRecordDeleteParam     = params.NewRecordDeleteDNSParam()
+	dnsUpdateParam           = params.NewUpdateDNSParam()
+	dnsDeleteParam           = params.NewDeleteDNSParam()
 )
 
 // dnsCmd represents the command to manage SAKURA Cloud DNS
@@ -50,8 +50,8 @@ var dnsCmd = &cobra.Command{
 var dnsListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Dns",
-	Long:    `List Dns`,
+	Short:   "List DNS",
+	Long:    `List DNS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := dnsListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -62,19 +62,19 @@ var dnsListCmd = &cobra.Command{
 
 func dnsListCmdInit() {
 	fs := dnsListCmd.Flags()
+	fs.IntVarP(&dnsListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&dnsListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&dnsListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.StringSliceVarP(&dnsListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&dnsListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &dnsListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&dnsListParam.From, "from", "", 0, "set offset")
-	fs.StringSliceVarP(&dnsListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
-	fs.IntVarP(&dnsListParam.Max, "max", "", 0, "set limit")
 }
 
 var dnsRecordInfoCmd = &cobra.Command{
 	Use:     "record-info",
 	Aliases: []string{"record-list"},
-	Short:   "RecordInfo Dns",
-	Long:    `RecordInfo Dns`,
+	Short:   "RecordInfo DNS",
+	Long:    `RecordInfo DNS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := dnsRecordInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -92,8 +92,8 @@ func dnsRecordInfoCmdInit() {
 var dnsRecordBulkUpdateCmd = &cobra.Command{
 	Use: "record-bulk-update",
 
-	Short: "RecordBulkUpdate Dns",
-	Long:  `RecordBulkUpdate Dns`,
+	Short: "RecordBulkUpdate DNS",
+	Long:  `RecordBulkUpdate DNS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := dnsRecordBulkUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -111,8 +111,8 @@ func dnsRecordBulkUpdateCmdInit() {
 var dnsCreateCmd = &cobra.Command{
 	Use: "create",
 
-	Short: "Create Dns",
-	Long:  `Create Dns`,
+	Short: "Create DNS",
+	Long:  `Create DNS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := dnsCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -132,8 +132,8 @@ func dnsCreateCmdInit() {
 var dnsRecordAddCmd = &cobra.Command{
 	Use: "record-add",
 
-	Short: "RecordAdd Dns",
-	Long:  `RecordAdd Dns`,
+	Short: "RecordAdd DNS",
+	Long:  `RecordAdd DNS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := dnsRecordAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -144,22 +144,22 @@ var dnsRecordAddCmd = &cobra.Command{
 
 func dnsRecordAddCmdInit() {
 	fs := dnsRecordAddCmd.Flags()
-	fs.IntVarP(&dnsRecordAddParam.SrvPriority, "srv-priority", "", 0, "set SRV priority")
-	fs.IntVarP(&dnsRecordAddParam.SrvWeight, "srv-weight", "", 0, "set SRV priority")
-	fs.IntVarP(&dnsRecordAddParam.SrvPort, "srv-port", "", 0, "set SRV priority")
-	fs.StringVarP(&dnsRecordAddParam.SrvTarget, "srv-target", "", "", "set SRV priority")
-	fs.IntVarP(&dnsRecordAddParam.Ttl, "ttl", "", 3600, "set ttl")
-	fs.IntVarP(&dnsRecordAddParam.MxPriority, "mx-priority", "", 10, "set MX priority")
 	fs.StringVarP(&dnsRecordAddParam.Value, "value", "", "", "set record data")
+	fs.IntVarP(&dnsRecordAddParam.Ttl, "ttl", "", 3600, "set ttl")
+	fs.IntVarP(&dnsRecordAddParam.SrvPriority, "srv-priority", "", 0, "set SRV priority")
+	fs.IntVarP(&dnsRecordAddParam.SrvPort, "srv-port", "", 0, "set SRV priority")
 	fs.StringVarP(&dnsRecordAddParam.Name, "name", "", "", "set name")
 	fs.StringVarP(&dnsRecordAddParam.Type, "type", "", "", "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]")
+	fs.StringVarP(&dnsRecordAddParam.SrvTarget, "srv-target", "", "", "set SRV priority")
+	fs.IntVarP(&dnsRecordAddParam.MxPriority, "mx-priority", "", 10, "set MX priority")
+	fs.IntVarP(&dnsRecordAddParam.SrvWeight, "srv-weight", "", 0, "set SRV priority")
 }
 
 var dnsReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Dns",
-	Long:  `Read Dns`,
+	Short: "Read DNS",
+	Long:  `Read DNS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := dnsReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -174,8 +174,8 @@ func dnsReadCmdInit() {
 var dnsRecordUpdateCmd = &cobra.Command{
 	Use: "record-update",
 
-	Short: "RecordUpdate Dns",
-	Long:  `RecordUpdate Dns`,
+	Short: "RecordUpdate DNS",
+	Long:  `RecordUpdate DNS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := dnsRecordUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -186,23 +186,23 @@ var dnsRecordUpdateCmd = &cobra.Command{
 
 func dnsRecordUpdateCmdInit() {
 	fs := dnsRecordUpdateCmd.Flags()
+	fs.StringVarP(&dnsRecordUpdateParam.Name, "name", "", "", "set name")
+	fs.StringVarP(&dnsRecordUpdateParam.Value, "value", "", "", "set record data")
+	fs.IntVarP(&dnsRecordUpdateParam.SrvWeight, "srv-weight", "", 0, "set SRV priority")
+	fs.StringVarP(&dnsRecordUpdateParam.SrvTarget, "srv-target", "", "", "set SRV priority")
 	fs.IntVarP(&dnsRecordUpdateParam.Index, "index", "", 0, "index of target record")
 	fs.StringVarP(&dnsRecordUpdateParam.Type, "type", "", "", "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]")
 	fs.IntVarP(&dnsRecordUpdateParam.Ttl, "ttl", "", 0, "set ttl")
 	fs.IntVarP(&dnsRecordUpdateParam.MxPriority, "mx-priority", "", 0, "set MX priority")
 	fs.IntVarP(&dnsRecordUpdateParam.SrvPriority, "srv-priority", "", 0, "set SRV priority")
-	fs.IntVarP(&dnsRecordUpdateParam.SrvWeight, "srv-weight", "", 0, "set SRV priority")
-	fs.StringVarP(&dnsRecordUpdateParam.Name, "name", "", "", "set name")
-	fs.StringVarP(&dnsRecordUpdateParam.Value, "value", "", "", "set record data")
 	fs.IntVarP(&dnsRecordUpdateParam.SrvPort, "srv-port", "", 0, "set SRV priority")
-	fs.StringVarP(&dnsRecordUpdateParam.SrvTarget, "srv-target", "", "", "set SRV priority")
 }
 
 var dnsRecordDeleteCmd = &cobra.Command{
 	Use: "record-delete",
 
-	Short: "RecordDelete Dns",
-	Long:  `RecordDelete Dns`,
+	Short: "RecordDelete DNS",
+	Long:  `RecordDelete DNS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := dnsRecordDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -219,8 +219,8 @@ func dnsRecordDeleteCmdInit() {
 var dnsUpdateCmd = &cobra.Command{
 	Use: "update",
 
-	Short: "Update Dns",
-	Long:  `Update Dns`,
+	Short: "Update DNS",
+	Long:  `Update DNS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := dnsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -231,16 +231,16 @@ var dnsUpdateCmd = &cobra.Command{
 
 func dnsUpdateCmdInit() {
 	fs := dnsUpdateCmd.Flags()
-	fs.StringVarP(&dnsUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&dnsUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &dnsUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringVarP(&dnsUpdateParam.Description, "description", "", "", "set resource description")
 }
 
 var dnsDeleteCmd = &cobra.Command{
 	Use:     "delete",
 	Aliases: []string{"rm"},
-	Short:   "Delete Dns",
-	Long:    `Delete Dns`,
+	Short:   "Delete DNS",
+	Long:    `Delete DNS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := dnsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG

@@ -21,7 +21,7 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func Ipv4PtrRead(ctx command.Context, params *params.PtrReadIpv4Param) error {
+func IPv4PtrRead(ctx command.Context, params *params.PtrReadIPv4Param) error {
 	client := ctx.GetAPIClient()
 	api := client.GetIPAddressAPI()
 

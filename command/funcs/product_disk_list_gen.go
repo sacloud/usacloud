@@ -23,10 +23,10 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ProductdiskList(ctx command.Context, params *params.ListProductdiskParam) error {
+func ProductDiskList(ctx command.Context, params *params.ListProductDiskParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetProductdiskAPI()
+	finder := client.GetProductDiskAPI()
 
 	finder.SetEmpty()
 
@@ -55,7 +55,7 @@ func ProductdiskList(ctx command.Context, params *params.ListProductdiskParam) e
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("ProductdiskList is failed: %s", err)
+		return fmt.Errorf("ProductDiskList is failed: %s", err)
 	}
 
 	list := []interface{}{}

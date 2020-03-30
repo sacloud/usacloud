@@ -30,8 +30,8 @@ import (
 )
 
 func init() {
-	productserverListParam := params.NewListProductserverParam()
-	productserverReadParam := params.NewReadProductserverParam()
+	productServerListParam := params.NewListProductServerParam()
+	productServerReadParam := params.NewReadProductServerParam()
 
 	cliCommand := &cli.Command{
 		Name:    "product-server",
@@ -124,7 +124,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find"},
-				Usage:   "List Productserver (default)",
+				Usage:   "List ProductServer (default)",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -210,72 +210,72 @@ func init() {
 						return err
 					}
 
-					productserverListParam.ParamTemplate = c.String("param-template")
-					productserverListParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(productserverListParam)
+					productServerListParam.ParamTemplate = c.String("param-template")
+					productServerListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(productServerListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListProductserverParam()
+						p := params.NewListProductServerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(productserverListParam, p, mergo.WithOverride)
+						mergo.Merge(productServerListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						productserverListParam.Name = c.StringSlice("name")
+						productServerListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						productserverListParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						productServerListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("from") {
-						productserverListParam.From = c.Int("from")
+						productServerListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						productserverListParam.Max = c.Int("max")
+						productServerListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						productserverListParam.Sort = c.StringSlice("sort")
+						productServerListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						productserverListParam.ParamTemplate = c.String("param-template")
+						productServerListParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						productserverListParam.Parameters = c.String("parameters")
+						productServerListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						productserverListParam.ParamTemplateFile = c.String("param-template-file")
+						productServerListParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						productserverListParam.ParameterFile = c.String("parameter-file")
+						productServerListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						productserverListParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						productServerListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						productserverListParam.OutputType = c.String("output-type")
+						productServerListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						productserverListParam.Column = c.StringSlice("column")
+						productServerListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						productserverListParam.Quiet = c.Bool("quiet")
+						productServerListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						productserverListParam.Format = c.String("format")
+						productServerListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						productserverListParam.FormatFile = c.String("format-file")
+						productServerListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						productserverListParam.Query = c.String("query")
+						productServerListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						productserverListParam.QueryFile = c.String("query-file")
+						productServerListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -283,7 +283,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = productserverListParam
+					var outputTypeHolder interface{} = productServerListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -294,10 +294,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if productserverListParam.GenerateSkeleton {
-						productserverListParam.GenerateSkeleton = false
-						productserverListParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(productserverListParam, "", "\t")
+					if productServerListParam.GenerateSkeleton {
+						productServerListParam.GenerateSkeleton = false
+						productServerListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(productServerListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -306,21 +306,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := productserverListParam.Validate(); len(errors) > 0 {
+					if errors := productServerListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), productserverListParam)
+					ctx := command.NewContext(c, c.Args().Slice(), productServerListParam)
 
 					// Run command with params
-					return funcs.ProductserverList(ctx, productserverListParam)
+					return funcs.ProductServerList(ctx, productServerListParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Productserver",
+				Usage:     "Read ProductServer",
 				ArgsUsage: "<ID>",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -395,63 +395,63 @@ func init() {
 						return err
 					}
 
-					productserverReadParam.ParamTemplate = c.String("param-template")
-					productserverReadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(productserverReadParam)
+					productServerReadParam.ParamTemplate = c.String("param-template")
+					productServerReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(productServerReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadProductserverParam()
+						p := params.NewReadProductServerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(productserverReadParam, p, mergo.WithOverride)
+						mergo.Merge(productServerReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("assumeyes") {
-						productserverReadParam.Assumeyes = c.Bool("assumeyes")
+						productServerReadParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						productserverReadParam.ParamTemplate = c.String("param-template")
+						productServerReadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						productserverReadParam.Parameters = c.String("parameters")
+						productServerReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						productserverReadParam.ParamTemplateFile = c.String("param-template-file")
+						productServerReadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						productserverReadParam.ParameterFile = c.String("parameter-file")
+						productServerReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						productserverReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						productServerReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						productserverReadParam.OutputType = c.String("output-type")
+						productServerReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						productserverReadParam.Column = c.StringSlice("column")
+						productServerReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						productserverReadParam.Quiet = c.Bool("quiet")
+						productServerReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						productserverReadParam.Format = c.String("format")
+						productServerReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						productserverReadParam.FormatFile = c.String("format-file")
+						productServerReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						productserverReadParam.Query = c.String("query")
+						productServerReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						productserverReadParam.QueryFile = c.String("query-file")
+						productServerReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						productserverReadParam.Id = sacloud.ID(c.Int64("id"))
+						productServerReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -459,7 +459,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = productserverReadParam
+					var outputTypeHolder interface{} = productServerReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -470,10 +470,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if productserverReadParam.GenerateSkeleton {
-						productserverReadParam.GenerateSkeleton = false
-						productserverReadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(productserverReadParam, "", "\t")
+					if productServerReadParam.GenerateSkeleton {
+						productServerReadParam.GenerateSkeleton = false
+						productServerReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(productServerReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -485,18 +485,18 @@ func init() {
 						return fmt.Errorf("ID argument is required")
 					}
 					c.Set("id", c.Args().First())
-					productserverReadParam.SetId(sacloud.ID(c.Int64("id")))
+					productServerReadParam.SetId(sacloud.ID(c.Int64("id")))
 
 					// Validate specific for each command params
-					if errors := productserverReadParam.Validate(); len(errors) > 0 {
+					if errors := productServerReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), productserverReadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), productServerReadParam)
 
 					// confirm
-					if !productserverReadParam.Assumeyes {
+					if !productServerReadParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -506,7 +506,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.ProductserverRead(ctx, productserverReadParam)
+					return funcs.ProductServerRead(ctx, productServerReadParam)
 
 				},
 			},

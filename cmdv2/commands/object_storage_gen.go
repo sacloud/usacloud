@@ -24,15 +24,15 @@ import (
 )
 
 var (
-	objectstorageListParam   = params.NewListObjectstorageParam()
-	objectstoragePutParam    = params.NewPutObjectstorageParam()
-	objectstorageGetParam    = params.NewGetObjectstorageParam()
-	objectstorageDeleteParam = params.NewDeleteObjectstorageParam()
+	objectStorageListParam   = params.NewListObjectStorageParam()
+	objectStoragePutParam    = params.NewPutObjectStorageParam()
+	objectStorageGetParam    = params.NewGetObjectStorageParam()
+	objectStorageDeleteParam = params.NewDeleteObjectStorageParam()
 )
 
-// objectstorageCmd represents the command to manage SAKURA Cloud ObjectStorage
-var objectstorageCmd = &cobra.Command{
-	Use:   "objectstorage",
+// objectStorageCmd represents the command to manage SAKURA Cloud ObjectStorage
+var objectStorageCmd = &cobra.Command{
+	Use:   "objectStorage",
 	Short: "A manage commands of ObjectStorage",
 	Long:  `A manage commands of ObjectStorage`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -40,104 +40,104 @@ var objectstorageCmd = &cobra.Command{
 	},
 }
 
-var objectstorageListCmd = &cobra.Command{
+var objectStorageListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls"},
-	Short:   "List Objectstorage",
-	Long:    `List Objectstorage`,
+	Short:   "List ObjectStorage",
+	Long:    `List ObjectStorage`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := objectstorageListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := objectStorageListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(objectstorageListParam))
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(objectStorageListParam))
 		return err
 	},
 }
 
-func objectstorageListCmdInit() {
-	fs := objectstorageListCmd.Flags()
-	fs.StringVarP(&objectstorageListParam.AccessKey, "access-key", "", "", "set access-key")
-	fs.StringVarP(&objectstorageListParam.SecretKey, "secret-key", "", "", "set access-key")
-	fs.StringVarP(&objectstorageListParam.Bucket, "bucket", "", "", "set bucket")
+func objectStorageListCmdInit() {
+	fs := objectStorageListCmd.Flags()
+	fs.StringVarP(&objectStorageListParam.Bucket, "bucket", "", "", "set bucket")
+	fs.StringVarP(&objectStorageListParam.AccessKey, "access-key", "", "", "set access-key")
+	fs.StringVarP(&objectStorageListParam.SecretKey, "secret-key", "", "", "set access-key")
 }
 
-var objectstoragePutCmd = &cobra.Command{
+var objectStoragePutCmd = &cobra.Command{
 	Use: "put",
 
-	Short: "Put Objectstorage",
-	Long:  `Put Objectstorage`,
+	Short: "Put ObjectStorage",
+	Long:  `Put ObjectStorage`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := objectstoragePutParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := objectStoragePutParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("put parameter: \n%s\n", debugMarshalIndent(objectstoragePutParam))
+		fmt.Printf("put parameter: \n%s\n", debugMarshalIndent(objectStoragePutParam))
 		return err
 	},
 }
 
-func objectstoragePutCmdInit() {
-	fs := objectstoragePutCmd.Flags()
-	fs.StringVarP(&objectstoragePutParam.Bucket, "bucket", "", "", "set bucket")
-	fs.StringVarP(&objectstoragePutParam.ContentType, "content-type", "", "application/octet-stream", "set content-type")
-	fs.BoolVarP(&objectstoragePutParam.Recursive, "recursive", "r", false, "put objects recursive")
-	fs.StringVarP(&objectstoragePutParam.AccessKey, "access-key", "", "", "set access-key")
-	fs.StringVarP(&objectstoragePutParam.SecretKey, "secret-key", "", "", "set access-key")
+func objectStoragePutCmdInit() {
+	fs := objectStoragePutCmd.Flags()
+	fs.BoolVarP(&objectStoragePutParam.Recursive, "recursive", "r", false, "put objects recursive")
+	fs.StringVarP(&objectStoragePutParam.AccessKey, "access-key", "", "", "set access-key")
+	fs.StringVarP(&objectStoragePutParam.SecretKey, "secret-key", "", "", "set access-key")
+	fs.StringVarP(&objectStoragePutParam.Bucket, "bucket", "", "", "set bucket")
+	fs.StringVarP(&objectStoragePutParam.ContentType, "content-type", "", "application/octet-stream", "set content-type")
 }
 
-var objectstorageGetCmd = &cobra.Command{
+var objectStorageGetCmd = &cobra.Command{
 	Use: "get",
 
-	Short: "Get Objectstorage",
-	Long:  `Get Objectstorage`,
+	Short: "Get ObjectStorage",
+	Long:  `Get ObjectStorage`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := objectstorageGetParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := objectStorageGetParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("get parameter: \n%s\n", debugMarshalIndent(objectstorageGetParam))
+		fmt.Printf("get parameter: \n%s\n", debugMarshalIndent(objectStorageGetParam))
 		return err
 	},
 }
 
-func objectstorageGetCmdInit() {
-	fs := objectstorageGetCmd.Flags()
-	fs.StringVarP(&objectstorageGetParam.Bucket, "bucket", "", "", "set bucket")
-	fs.BoolVarP(&objectstorageGetParam.Recursive, "recursive", "r", false, "get objects recursive")
-	fs.StringVarP(&objectstorageGetParam.AccessKey, "access-key", "", "", "set access-key")
-	fs.StringVarP(&objectstorageGetParam.SecretKey, "secret-key", "", "", "set access-key")
+func objectStorageGetCmdInit() {
+	fs := objectStorageGetCmd.Flags()
+	fs.StringVarP(&objectStorageGetParam.AccessKey, "access-key", "", "", "set access-key")
+	fs.StringVarP(&objectStorageGetParam.SecretKey, "secret-key", "", "", "set access-key")
+	fs.StringVarP(&objectStorageGetParam.Bucket, "bucket", "", "", "set bucket")
+	fs.BoolVarP(&objectStorageGetParam.Recursive, "recursive", "r", false, "get objects recursive")
 }
 
-var objectstorageDeleteCmd = &cobra.Command{
+var objectStorageDeleteCmd = &cobra.Command{
 	Use:     "delete",
 	Aliases: []string{"rm", "del"},
-	Short:   "Delete Objectstorage",
-	Long:    `Delete Objectstorage`,
+	Short:   "Delete ObjectStorage",
+	Long:    `Delete ObjectStorage`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := objectstorageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := objectStorageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(objectstorageDeleteParam))
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(objectStorageDeleteParam))
 		return err
 	},
 }
 
-func objectstorageDeleteCmdInit() {
-	fs := objectstorageDeleteCmd.Flags()
-	fs.StringVarP(&objectstorageDeleteParam.Bucket, "bucket", "", "", "set bucket")
-	fs.BoolVarP(&objectstorageDeleteParam.Recursive, "recursive", "r", false, "delete objects recursive")
-	fs.StringVarP(&objectstorageDeleteParam.AccessKey, "access-key", "", "", "set access-key")
-	fs.StringVarP(&objectstorageDeleteParam.SecretKey, "secret-key", "", "", "set access-key")
+func objectStorageDeleteCmdInit() {
+	fs := objectStorageDeleteCmd.Flags()
+	fs.StringVarP(&objectStorageDeleteParam.Bucket, "bucket", "", "", "set bucket")
+	fs.BoolVarP(&objectStorageDeleteParam.Recursive, "recursive", "r", false, "delete objects recursive")
+	fs.StringVarP(&objectStorageDeleteParam.AccessKey, "access-key", "", "", "set access-key")
+	fs.StringVarP(&objectStorageDeleteParam.SecretKey, "secret-key", "", "", "set access-key")
 }
 
 func init() {
-	parent := objectstorageCmd
+	parent := objectStorageCmd
 
-	objectstorageListCmdInit()
-	parent.AddCommand(objectstorageListCmd)
+	objectStorageListCmdInit()
+	parent.AddCommand(objectStorageListCmd)
 
-	objectstoragePutCmdInit()
-	parent.AddCommand(objectstoragePutCmd)
+	objectStoragePutCmdInit()
+	parent.AddCommand(objectStoragePutCmd)
 
-	objectstorageGetCmdInit()
-	parent.AddCommand(objectstorageGetCmd)
+	objectStorageGetCmdInit()
+	parent.AddCommand(objectStorageGetCmd)
 
-	objectstorageDeleteCmdInit()
-	parent.AddCommand(objectstorageDeleteCmd)
+	objectStorageDeleteCmdInit()
+	parent.AddCommand(objectStorageDeleteCmd)
 
 	rootCmd.AddCommand(parent)
 }

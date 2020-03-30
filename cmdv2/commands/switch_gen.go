@@ -59,12 +59,12 @@ var switchListCmd = &cobra.Command{
 
 func switchListCmdInit() {
 	fs := switchListCmd.Flags()
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &switchListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&switchListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&switchListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&switchListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&switchListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.StringSliceVarP(&switchListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &switchListParam.Id), "id", "", "set filter by id(s)")
 }
 
 var switchCreateCmd = &cobra.Command{
@@ -82,10 +82,10 @@ var switchCreateCmd = &cobra.Command{
 
 func switchCreateCmdInit() {
 	fs := switchCreateCmd.Flags()
+	fs.VarP(newIDValue(0, &switchCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.StringVarP(&switchCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&switchCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&switchCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &switchCreateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
 var switchReadCmd = &cobra.Command{

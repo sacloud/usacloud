@@ -32,12 +32,12 @@ import (
 )
 
 func init() {
-	webaccelListParam := params.NewListWebaccelParam()
-	webaccelReadParam := params.NewReadWebaccelParam()
-	webaccelCertificateInfoParam := params.NewCertificateInfoWebaccelParam()
-	webaccelCertificateNewParam := params.NewCertificateNewWebaccelParam()
-	webaccelCertificateUpdateParam := params.NewCertificateUpdateWebaccelParam()
-	webaccelDeleteCacheParam := params.NewDeleteCacheWebaccelParam()
+	webAccelListParam := params.NewListWebAccelParam()
+	webAccelReadParam := params.NewReadWebAccelParam()
+	webAccelCertificateInfoParam := params.NewCertificateInfoWebAccelParam()
+	webAccelCertificateNewParam := params.NewCertificateNewWebAccelParam()
+	webAccelCertificateUpdateParam := params.NewCertificateUpdateWebAccelParam()
+	webAccelDeleteCacheParam := params.NewDeleteCacheWebAccelParam()
 
 	cliCommand := &cli.Command{
 		Name:  "web-accel",
@@ -46,7 +46,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find", "selector"},
-				Usage:   "List Webaccel",
+				Usage:   "List WebAccel",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "param-template",
@@ -110,57 +110,57 @@ func init() {
 						return err
 					}
 
-					webaccelListParam.ParamTemplate = c.String("param-template")
-					webaccelListParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(webaccelListParam)
+					webAccelListParam.ParamTemplate = c.String("param-template")
+					webAccelListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(webAccelListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListWebaccelParam()
+						p := params.NewListWebAccelParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(webaccelListParam, p, mergo.WithOverride)
+						mergo.Merge(webAccelListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						webaccelListParam.ParamTemplate = c.String("param-template")
+						webAccelListParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						webaccelListParam.Parameters = c.String("parameters")
+						webAccelListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						webaccelListParam.ParamTemplateFile = c.String("param-template-file")
+						webAccelListParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						webaccelListParam.ParameterFile = c.String("parameter-file")
+						webAccelListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						webaccelListParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						webAccelListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						webaccelListParam.OutputType = c.String("output-type")
+						webAccelListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						webaccelListParam.Column = c.StringSlice("column")
+						webAccelListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						webaccelListParam.Quiet = c.Bool("quiet")
+						webAccelListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						webaccelListParam.Format = c.String("format")
+						webAccelListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						webaccelListParam.FormatFile = c.String("format-file")
+						webAccelListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						webaccelListParam.Query = c.String("query")
+						webAccelListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						webaccelListParam.QueryFile = c.String("query-file")
+						webAccelListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -168,7 +168,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = webaccelListParam
+					var outputTypeHolder interface{} = webAccelListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -179,10 +179,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if webaccelListParam.GenerateSkeleton {
-						webaccelListParam.GenerateSkeleton = false
-						webaccelListParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(webaccelListParam, "", "\t")
+					if webAccelListParam.GenerateSkeleton {
+						webAccelListParam.GenerateSkeleton = false
+						webAccelListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(webAccelListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -191,21 +191,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := webaccelListParam.Validate(); len(errors) > 0 {
+					if errors := webAccelListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), webaccelListParam)
+					ctx := command.NewContext(c, c.Args().Slice(), webAccelListParam)
 
 					// Run command with params
-					return funcs.WebaccelList(ctx, webaccelListParam)
+					return funcs.WebAccelList(ctx, webAccelListParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Webaccel",
+				Usage:     "Read WebAccel",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -279,63 +279,63 @@ func init() {
 						return err
 					}
 
-					webaccelReadParam.ParamTemplate = c.String("param-template")
-					webaccelReadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(webaccelReadParam)
+					webAccelReadParam.ParamTemplate = c.String("param-template")
+					webAccelReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(webAccelReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadWebaccelParam()
+						p := params.NewReadWebAccelParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(webaccelReadParam, p, mergo.WithOverride)
+						mergo.Merge(webAccelReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						webaccelReadParam.Selector = c.StringSlice("selector")
+						webAccelReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						webaccelReadParam.ParamTemplate = c.String("param-template")
+						webAccelReadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						webaccelReadParam.Parameters = c.String("parameters")
+						webAccelReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						webaccelReadParam.ParamTemplateFile = c.String("param-template-file")
+						webAccelReadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						webaccelReadParam.ParameterFile = c.String("parameter-file")
+						webAccelReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						webaccelReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						webAccelReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						webaccelReadParam.OutputType = c.String("output-type")
+						webAccelReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						webaccelReadParam.Column = c.StringSlice("column")
+						webAccelReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						webaccelReadParam.Quiet = c.Bool("quiet")
+						webAccelReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						webaccelReadParam.Format = c.String("format")
+						webAccelReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						webaccelReadParam.FormatFile = c.String("format-file")
+						webAccelReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						webaccelReadParam.Query = c.String("query")
+						webAccelReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						webaccelReadParam.QueryFile = c.String("query-file")
+						webAccelReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						webaccelReadParam.Id = sacloud.ID(c.Int64("id"))
+						webAccelReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -343,7 +343,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = webaccelReadParam
+					var outputTypeHolder interface{} = webAccelReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -354,10 +354,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if webaccelReadParam.GenerateSkeleton {
-						webaccelReadParam.GenerateSkeleton = false
-						webaccelReadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(webaccelReadParam, "", "\t")
+					if webAccelReadParam.GenerateSkeleton {
+						webAccelReadParam.GenerateSkeleton = false
+						webAccelReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(webAccelReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -366,19 +366,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := webaccelReadParam.Validate(); len(errors) > 0 {
+					if errors := webAccelReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), webaccelReadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), webAccelReadParam)
 
-					apiClient := ctx.GetAPIClient().Webaccel
+					apiClient := ctx.GetAPIClient().WebAccel
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(webaccelReadParam.Selector) == 0 {
+						if len(webAccelReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -387,12 +387,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.WebAccelSites {
-							if hasTags(&v, webaccelReadParam.Selector) {
+							if hasTags(&v, webAccelReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", webaccelReadParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", webAccelReadParam.Selector)
 						}
 
 					} else {
@@ -414,7 +414,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.WebAccelSites {
-										if len(webaccelReadParam.Selector) == 0 || hasTags(&v, webaccelReadParam.Selector) {
+										if len(webAccelReadParam.Selector) == 0 || hasTags(&v, webAccelReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -439,11 +439,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						webaccelReadParam.SetId(id)
-						p := *webaccelReadParam // copy struct value
-						webaccelReadParam := &p
+						webAccelReadParam.SetId(id)
+						p := *webAccelReadParam // copy struct value
+						webAccelReadParam := &p
 						go func() {
-							err := funcs.WebaccelRead(ctx, webaccelReadParam)
+							err := funcs.WebAccelRead(ctx, webAccelReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -458,7 +458,7 @@ func init() {
 			{
 				Name:      "certificate-info",
 				Aliases:   []string{"cert-info"},
-				Usage:     "CertificateInfo Webaccel",
+				Usage:     "CertificateInfo WebAccel",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -532,63 +532,63 @@ func init() {
 						return err
 					}
 
-					webaccelCertificateInfoParam.ParamTemplate = c.String("param-template")
-					webaccelCertificateInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(webaccelCertificateInfoParam)
+					webAccelCertificateInfoParam.ParamTemplate = c.String("param-template")
+					webAccelCertificateInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(webAccelCertificateInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCertificateInfoWebaccelParam()
+						p := params.NewCertificateInfoWebAccelParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(webaccelCertificateInfoParam, p, mergo.WithOverride)
+						mergo.Merge(webAccelCertificateInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						webaccelCertificateInfoParam.Selector = c.StringSlice("selector")
+						webAccelCertificateInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						webaccelCertificateInfoParam.ParamTemplate = c.String("param-template")
+						webAccelCertificateInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						webaccelCertificateInfoParam.Parameters = c.String("parameters")
+						webAccelCertificateInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						webaccelCertificateInfoParam.ParamTemplateFile = c.String("param-template-file")
+						webAccelCertificateInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						webaccelCertificateInfoParam.ParameterFile = c.String("parameter-file")
+						webAccelCertificateInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						webaccelCertificateInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						webAccelCertificateInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						webaccelCertificateInfoParam.OutputType = c.String("output-type")
+						webAccelCertificateInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						webaccelCertificateInfoParam.Column = c.StringSlice("column")
+						webAccelCertificateInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						webaccelCertificateInfoParam.Quiet = c.Bool("quiet")
+						webAccelCertificateInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						webaccelCertificateInfoParam.Format = c.String("format")
+						webAccelCertificateInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						webaccelCertificateInfoParam.FormatFile = c.String("format-file")
+						webAccelCertificateInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						webaccelCertificateInfoParam.Query = c.String("query")
+						webAccelCertificateInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						webaccelCertificateInfoParam.QueryFile = c.String("query-file")
+						webAccelCertificateInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						webaccelCertificateInfoParam.Id = sacloud.ID(c.Int64("id"))
+						webAccelCertificateInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -596,7 +596,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = webaccelCertificateInfoParam
+					var outputTypeHolder interface{} = webAccelCertificateInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -607,10 +607,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if webaccelCertificateInfoParam.GenerateSkeleton {
-						webaccelCertificateInfoParam.GenerateSkeleton = false
-						webaccelCertificateInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(webaccelCertificateInfoParam, "", "\t")
+					if webAccelCertificateInfoParam.GenerateSkeleton {
+						webAccelCertificateInfoParam.GenerateSkeleton = false
+						webAccelCertificateInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(webAccelCertificateInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -619,19 +619,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := webaccelCertificateInfoParam.Validate(); len(errors) > 0 {
+					if errors := webAccelCertificateInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), webaccelCertificateInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), webAccelCertificateInfoParam)
 
-					apiClient := ctx.GetAPIClient().Webaccel
+					apiClient := ctx.GetAPIClient().WebAccel
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(webaccelCertificateInfoParam.Selector) == 0 {
+						if len(webAccelCertificateInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -640,12 +640,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.WebAccelSites {
-							if hasTags(&v, webaccelCertificateInfoParam.Selector) {
+							if hasTags(&v, webAccelCertificateInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", webaccelCertificateInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", webAccelCertificateInfoParam.Selector)
 						}
 
 					} else {
@@ -667,7 +667,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.WebAccelSites {
-										if len(webaccelCertificateInfoParam.Selector) == 0 || hasTags(&v, webaccelCertificateInfoParam.Selector) {
+										if len(webAccelCertificateInfoParam.Selector) == 0 || hasTags(&v, webAccelCertificateInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -692,11 +692,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						webaccelCertificateInfoParam.SetId(id)
-						p := *webaccelCertificateInfoParam // copy struct value
-						webaccelCertificateInfoParam := &p
+						webAccelCertificateInfoParam.SetId(id)
+						p := *webAccelCertificateInfoParam // copy struct value
+						webAccelCertificateInfoParam := &p
 						go func() {
-							err := funcs.WebaccelCertificateInfo(ctx, webaccelCertificateInfoParam)
+							err := funcs.WebAccelCertificateInfo(ctx, webAccelCertificateInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -711,7 +711,7 @@ func init() {
 			{
 				Name:      "certificate-new",
 				Aliases:   []string{"cert-new", "cert-create", "certificate-create"},
-				Usage:     "CertificateNew Webaccel",
+				Usage:     "CertificateNew WebAccel",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -806,78 +806,78 @@ func init() {
 						return err
 					}
 
-					webaccelCertificateNewParam.ParamTemplate = c.String("param-template")
-					webaccelCertificateNewParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(webaccelCertificateNewParam)
+					webAccelCertificateNewParam.ParamTemplate = c.String("param-template")
+					webAccelCertificateNewParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(webAccelCertificateNewParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCertificateNewWebaccelParam()
+						p := params.NewCertificateNewWebAccelParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(webaccelCertificateNewParam, p, mergo.WithOverride)
+						mergo.Merge(webAccelCertificateNewParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("cert") {
-						webaccelCertificateNewParam.Cert = c.String("cert")
+						webAccelCertificateNewParam.Cert = c.String("cert")
 					}
 					if c.IsSet("key") {
-						webaccelCertificateNewParam.Key = c.String("key")
+						webAccelCertificateNewParam.Key = c.String("key")
 					}
 					if c.IsSet("cert-content") {
-						webaccelCertificateNewParam.CertContent = c.String("cert-content")
+						webAccelCertificateNewParam.CertContent = c.String("cert-content")
 					}
 					if c.IsSet("key-content") {
-						webaccelCertificateNewParam.KeyContent = c.String("key-content")
+						webAccelCertificateNewParam.KeyContent = c.String("key-content")
 					}
 					if c.IsSet("selector") {
-						webaccelCertificateNewParam.Selector = c.StringSlice("selector")
+						webAccelCertificateNewParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						webaccelCertificateNewParam.Assumeyes = c.Bool("assumeyes")
+						webAccelCertificateNewParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						webaccelCertificateNewParam.ParamTemplate = c.String("param-template")
+						webAccelCertificateNewParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						webaccelCertificateNewParam.Parameters = c.String("parameters")
+						webAccelCertificateNewParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						webaccelCertificateNewParam.ParamTemplateFile = c.String("param-template-file")
+						webAccelCertificateNewParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						webaccelCertificateNewParam.ParameterFile = c.String("parameter-file")
+						webAccelCertificateNewParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						webaccelCertificateNewParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						webAccelCertificateNewParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						webaccelCertificateNewParam.OutputType = c.String("output-type")
+						webAccelCertificateNewParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						webaccelCertificateNewParam.Column = c.StringSlice("column")
+						webAccelCertificateNewParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						webaccelCertificateNewParam.Quiet = c.Bool("quiet")
+						webAccelCertificateNewParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						webaccelCertificateNewParam.Format = c.String("format")
+						webAccelCertificateNewParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						webaccelCertificateNewParam.FormatFile = c.String("format-file")
+						webAccelCertificateNewParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						webaccelCertificateNewParam.Query = c.String("query")
+						webAccelCertificateNewParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						webaccelCertificateNewParam.QueryFile = c.String("query-file")
+						webAccelCertificateNewParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						webaccelCertificateNewParam.Id = sacloud.ID(c.Int64("id"))
+						webAccelCertificateNewParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -885,7 +885,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = webaccelCertificateNewParam
+					var outputTypeHolder interface{} = webAccelCertificateNewParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -896,10 +896,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if webaccelCertificateNewParam.GenerateSkeleton {
-						webaccelCertificateNewParam.GenerateSkeleton = false
-						webaccelCertificateNewParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(webaccelCertificateNewParam, "", "\t")
+					if webAccelCertificateNewParam.GenerateSkeleton {
+						webAccelCertificateNewParam.GenerateSkeleton = false
+						webAccelCertificateNewParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(webAccelCertificateNewParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -908,19 +908,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := webaccelCertificateNewParam.Validate(); len(errors) > 0 {
+					if errors := webAccelCertificateNewParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), webaccelCertificateNewParam)
+					ctx := command.NewContext(c, c.Args().Slice(), webAccelCertificateNewParam)
 
-					apiClient := ctx.GetAPIClient().Webaccel
+					apiClient := ctx.GetAPIClient().WebAccel
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(webaccelCertificateNewParam.Selector) == 0 {
+						if len(webAccelCertificateNewParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -929,12 +929,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.WebAccelSites {
-							if hasTags(&v, webaccelCertificateNewParam.Selector) {
+							if hasTags(&v, webAccelCertificateNewParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", webaccelCertificateNewParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", webAccelCertificateNewParam.Selector)
 						}
 
 					} else {
@@ -956,7 +956,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.WebAccelSites {
-										if len(webaccelCertificateNewParam.Selector) == 0 || hasTags(&v, webaccelCertificateNewParam.Selector) {
+										if len(webAccelCertificateNewParam.Selector) == 0 || hasTags(&v, webAccelCertificateNewParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -977,7 +977,7 @@ func init() {
 					}
 
 					// confirm
-					if !webaccelCertificateNewParam.Assumeyes {
+					if !webAccelCertificateNewParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -991,11 +991,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						webaccelCertificateNewParam.SetId(id)
-						p := *webaccelCertificateNewParam // copy struct value
-						webaccelCertificateNewParam := &p
+						webAccelCertificateNewParam.SetId(id)
+						p := *webAccelCertificateNewParam // copy struct value
+						webAccelCertificateNewParam := &p
 						go func() {
-							err := funcs.WebaccelCertificateNew(ctx, webaccelCertificateNewParam)
+							err := funcs.WebAccelCertificateNew(ctx, webAccelCertificateNewParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1010,7 +1010,7 @@ func init() {
 			{
 				Name:      "certificate-update",
 				Aliases:   []string{"cert-update"},
-				Usage:     "CertificateUpdate Webaccel",
+				Usage:     "CertificateUpdate WebAccel",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -1105,78 +1105,78 @@ func init() {
 						return err
 					}
 
-					webaccelCertificateUpdateParam.ParamTemplate = c.String("param-template")
-					webaccelCertificateUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(webaccelCertificateUpdateParam)
+					webAccelCertificateUpdateParam.ParamTemplate = c.String("param-template")
+					webAccelCertificateUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(webAccelCertificateUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCertificateUpdateWebaccelParam()
+						p := params.NewCertificateUpdateWebAccelParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(webaccelCertificateUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(webAccelCertificateUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("cert") {
-						webaccelCertificateUpdateParam.Cert = c.String("cert")
+						webAccelCertificateUpdateParam.Cert = c.String("cert")
 					}
 					if c.IsSet("key") {
-						webaccelCertificateUpdateParam.Key = c.String("key")
+						webAccelCertificateUpdateParam.Key = c.String("key")
 					}
 					if c.IsSet("cert-content") {
-						webaccelCertificateUpdateParam.CertContent = c.String("cert-content")
+						webAccelCertificateUpdateParam.CertContent = c.String("cert-content")
 					}
 					if c.IsSet("key-content") {
-						webaccelCertificateUpdateParam.KeyContent = c.String("key-content")
+						webAccelCertificateUpdateParam.KeyContent = c.String("key-content")
 					}
 					if c.IsSet("selector") {
-						webaccelCertificateUpdateParam.Selector = c.StringSlice("selector")
+						webAccelCertificateUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						webaccelCertificateUpdateParam.Assumeyes = c.Bool("assumeyes")
+						webAccelCertificateUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						webaccelCertificateUpdateParam.ParamTemplate = c.String("param-template")
+						webAccelCertificateUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						webaccelCertificateUpdateParam.Parameters = c.String("parameters")
+						webAccelCertificateUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						webaccelCertificateUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						webAccelCertificateUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						webaccelCertificateUpdateParam.ParameterFile = c.String("parameter-file")
+						webAccelCertificateUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						webaccelCertificateUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						webAccelCertificateUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						webaccelCertificateUpdateParam.OutputType = c.String("output-type")
+						webAccelCertificateUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						webaccelCertificateUpdateParam.Column = c.StringSlice("column")
+						webAccelCertificateUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						webaccelCertificateUpdateParam.Quiet = c.Bool("quiet")
+						webAccelCertificateUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						webaccelCertificateUpdateParam.Format = c.String("format")
+						webAccelCertificateUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						webaccelCertificateUpdateParam.FormatFile = c.String("format-file")
+						webAccelCertificateUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						webaccelCertificateUpdateParam.Query = c.String("query")
+						webAccelCertificateUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						webaccelCertificateUpdateParam.QueryFile = c.String("query-file")
+						webAccelCertificateUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						webaccelCertificateUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						webAccelCertificateUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1184,7 +1184,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = webaccelCertificateUpdateParam
+					var outputTypeHolder interface{} = webAccelCertificateUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1195,10 +1195,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if webaccelCertificateUpdateParam.GenerateSkeleton {
-						webaccelCertificateUpdateParam.GenerateSkeleton = false
-						webaccelCertificateUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(webaccelCertificateUpdateParam, "", "\t")
+					if webAccelCertificateUpdateParam.GenerateSkeleton {
+						webAccelCertificateUpdateParam.GenerateSkeleton = false
+						webAccelCertificateUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(webAccelCertificateUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1207,19 +1207,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := webaccelCertificateUpdateParam.Validate(); len(errors) > 0 {
+					if errors := webAccelCertificateUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), webaccelCertificateUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), webAccelCertificateUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Webaccel
+					apiClient := ctx.GetAPIClient().WebAccel
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(webaccelCertificateUpdateParam.Selector) == 0 {
+						if len(webAccelCertificateUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1228,12 +1228,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.WebAccelSites {
-							if hasTags(&v, webaccelCertificateUpdateParam.Selector) {
+							if hasTags(&v, webAccelCertificateUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", webaccelCertificateUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", webAccelCertificateUpdateParam.Selector)
 						}
 
 					} else {
@@ -1255,7 +1255,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.WebAccelSites {
-										if len(webaccelCertificateUpdateParam.Selector) == 0 || hasTags(&v, webaccelCertificateUpdateParam.Selector) {
+										if len(webAccelCertificateUpdateParam.Selector) == 0 || hasTags(&v, webAccelCertificateUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1276,7 +1276,7 @@ func init() {
 					}
 
 					// confirm
-					if !webaccelCertificateUpdateParam.Assumeyes {
+					if !webAccelCertificateUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1290,11 +1290,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						webaccelCertificateUpdateParam.SetId(id)
-						p := *webaccelCertificateUpdateParam // copy struct value
-						webaccelCertificateUpdateParam := &p
+						webAccelCertificateUpdateParam.SetId(id)
+						p := *webAccelCertificateUpdateParam // copy struct value
+						webAccelCertificateUpdateParam := &p
 						go func() {
-							err := funcs.WebaccelCertificateUpdate(ctx, webaccelCertificateUpdateParam)
+							err := funcs.WebAccelCertificateUpdate(ctx, webAccelCertificateUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1309,7 +1309,7 @@ func init() {
 			{
 				Name:      "delete-cache",
 				Aliases:   []string{"purge"},
-				Usage:     "DeleteCache Webaccel",
+				Usage:     "DeleteCache WebAccel",
 				ArgsUsage: "[URLs]...",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -1379,60 +1379,60 @@ func init() {
 						return err
 					}
 
-					webaccelDeleteCacheParam.ParamTemplate = c.String("param-template")
-					webaccelDeleteCacheParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(webaccelDeleteCacheParam)
+					webAccelDeleteCacheParam.ParamTemplate = c.String("param-template")
+					webAccelDeleteCacheParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(webAccelDeleteCacheParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeleteCacheWebaccelParam()
+						p := params.NewDeleteCacheWebAccelParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(webaccelDeleteCacheParam, p, mergo.WithOverride)
+						mergo.Merge(webAccelDeleteCacheParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("assumeyes") {
-						webaccelDeleteCacheParam.Assumeyes = c.Bool("assumeyes")
+						webAccelDeleteCacheParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						webaccelDeleteCacheParam.ParamTemplate = c.String("param-template")
+						webAccelDeleteCacheParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						webaccelDeleteCacheParam.Parameters = c.String("parameters")
+						webAccelDeleteCacheParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						webaccelDeleteCacheParam.ParamTemplateFile = c.String("param-template-file")
+						webAccelDeleteCacheParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						webaccelDeleteCacheParam.ParameterFile = c.String("parameter-file")
+						webAccelDeleteCacheParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						webaccelDeleteCacheParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						webAccelDeleteCacheParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						webaccelDeleteCacheParam.OutputType = c.String("output-type")
+						webAccelDeleteCacheParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						webaccelDeleteCacheParam.Column = c.StringSlice("column")
+						webAccelDeleteCacheParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						webaccelDeleteCacheParam.Quiet = c.Bool("quiet")
+						webAccelDeleteCacheParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						webaccelDeleteCacheParam.Format = c.String("format")
+						webAccelDeleteCacheParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						webaccelDeleteCacheParam.FormatFile = c.String("format-file")
+						webAccelDeleteCacheParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						webaccelDeleteCacheParam.Query = c.String("query")
+						webAccelDeleteCacheParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						webaccelDeleteCacheParam.QueryFile = c.String("query-file")
+						webAccelDeleteCacheParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -1440,7 +1440,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = webaccelDeleteCacheParam
+					var outputTypeHolder interface{} = webAccelDeleteCacheParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1451,10 +1451,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if webaccelDeleteCacheParam.GenerateSkeleton {
-						webaccelDeleteCacheParam.GenerateSkeleton = false
-						webaccelDeleteCacheParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(webaccelDeleteCacheParam, "", "\t")
+					if webAccelDeleteCacheParam.GenerateSkeleton {
+						webAccelDeleteCacheParam.GenerateSkeleton = false
+						webAccelDeleteCacheParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(webAccelDeleteCacheParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1463,15 +1463,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := webaccelDeleteCacheParam.Validate(); len(errors) > 0 {
+					if errors := webAccelDeleteCacheParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), webaccelDeleteCacheParam)
+					ctx := command.NewContext(c, c.Args().Slice(), webAccelDeleteCacheParam)
 
 					// confirm
-					if !webaccelDeleteCacheParam.Assumeyes {
+					if !webAccelDeleteCacheParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1481,7 +1481,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.WebaccelDeleteCache(ctx, webaccelDeleteCacheParam)
+					return funcs.WebAccelDeleteCache(ctx, webAccelDeleteCacheParam)
 
 				},
 			},

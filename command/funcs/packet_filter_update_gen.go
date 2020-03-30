@@ -23,13 +23,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func PacketfilterUpdate(ctx command.Context, params *params.UpdatePacketfilterParam) error {
+func PacketFilterUpdate(ctx command.Context, params *params.UpdatePacketFilterParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetPacketfilterAPI()
+	api := client.GetPacketFilterAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("PacketfilterUpdate is failed: %s", e)
+		return fmt.Errorf("PacketFilterUpdate is failed: %s", e)
 	}
 
 	// set params
@@ -44,7 +44,7 @@ func PacketfilterUpdate(ctx command.Context, params *params.UpdatePacketfilterPa
 	// call Update(id)
 	res, err := api.Update(params.Id, p)
 	if err != nil {
-		return fmt.Errorf("PacketfilterUpdate is failed: %s", err)
+		return fmt.Errorf("PacketFilterUpdate is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

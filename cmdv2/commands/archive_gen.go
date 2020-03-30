@@ -32,8 +32,8 @@ var (
 	archiveDeleteParam      = params.NewDeleteArchiveParam()
 	archiveUploadParam      = params.NewUploadArchiveParam()
 	archiveDownloadParam    = params.NewDownloadArchiveParam()
-	archiveFtpOpenParam     = params.NewFtpOpenArchiveParam()
-	archiveFtpCloseParam    = params.NewFtpCloseArchiveParam()
+	archiveFTPOpenParam     = params.NewFTPOpenArchiveParam()
+	archiveFTPCloseParam    = params.NewFTPCloseArchiveParam()
 	archiveWaitForCopyParam = params.NewWaitForCopyArchiveParam()
 )
 
@@ -62,15 +62,15 @@ var archiveListCmd = &cobra.Command{
 
 func archiveListCmdInit() {
 	fs := archiveListCmd.Flags()
+	fs.IntVarP(&archiveListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&archiveListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&archiveListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &archiveListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&archiveListParam.From, "from", "", 0, "set offset")
+	fs.StringSliceVarP(&archiveListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.StringVarP(&archiveListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
 	fs.VarP(newIDValue(0, &archiveListParam.SourceArchiveId), "source-archive-id", "", "set filter by source-archive-id")
 	fs.VarP(newIDValue(0, &archiveListParam.SourceDiskId), "source-disk-id", "", "set filter by source-disk-id")
-	fs.StringSliceVarP(&archiveListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &archiveListParam.Id), "id", "", "set filter by id(s)")
-	fs.StringVarP(&archiveListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
-	fs.StringSliceVarP(&archiveListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
-	fs.StringSliceVarP(&archiveListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.IntVarP(&archiveListParam.Max, "max", "", 0, "set limit")
 }
 
 var archiveCreateCmd = &cobra.Command{
@@ -88,14 +88,14 @@ var archiveCreateCmd = &cobra.Command{
 
 func archiveCreateCmdInit() {
 	fs := archiveCreateCmd.Flags()
-	fs.StringVarP(&archiveCreateParam.ArchiveFile, "archive-file", "", "", "set archive image file")
-	fs.StringVarP(&archiveCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&archiveCreateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&archiveCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &archiveCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.VarP(newIDValue(0, &archiveCreateParam.SourceDiskId), "source-disk-id", "", "set source disk ID")
 	fs.VarP(newIDValue(0, &archiveCreateParam.SourceArchiveId), "source-archive-id", "", "set source archive ID")
 	fs.IntVarP(&archiveCreateParam.Size, "size", "", 0, "set archive size(GB)")
+	fs.StringVarP(&archiveCreateParam.ArchiveFile, "archive-file", "", "", "set archive image file")
+	fs.StringVarP(&archiveCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&archiveCreateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&archiveCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 }
 
 var archiveReadCmd = &cobra.Command{
@@ -129,10 +129,10 @@ var archiveUpdateCmd = &cobra.Command{
 
 func archiveUpdateCmdInit() {
 	fs := archiveUpdateCmd.Flags()
-	fs.StringVarP(&archiveUpdateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&archiveUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&archiveUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &archiveUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringVarP(&archiveUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&archiveUpdateParam.Description, "description", "", "", "set resource description")
 }
 
 var archiveDeleteCmd = &cobra.Command{
@@ -187,36 +187,36 @@ func archiveDownloadCmdInit() {
 	fs.StringVarP(&archiveDownloadParam.FileDestination, "file-destination", "", "", "set file destination path")
 }
 
-var archiveFtpOpenCmd = &cobra.Command{
+var archiveFTPOpenCmd = &cobra.Command{
 	Use: "ftp-open",
 
-	Short: "FtpOpen Archive",
-	Long:  `FtpOpen Archive`,
+	Short: "FTPOpen Archive",
+	Long:  `FTPOpen Archive`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := archiveFtpOpenParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := archiveFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("ftp-open parameter: \n%s\n", debugMarshalIndent(archiveFtpOpenParam))
+		fmt.Printf("ftp-open parameter: \n%s\n", debugMarshalIndent(archiveFTPOpenParam))
 		return err
 	},
 }
 
-func archiveFtpOpenCmdInit() {
+func archiveFTPOpenCmdInit() {
 }
 
-var archiveFtpCloseCmd = &cobra.Command{
+var archiveFTPCloseCmd = &cobra.Command{
 	Use: "ftp-close",
 
-	Short: "FtpClose Archive",
-	Long:  `FtpClose Archive`,
+	Short: "FTPClose Archive",
+	Long:  `FTPClose Archive`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := archiveFtpCloseParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := archiveFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("ftp-close parameter: \n%s\n", debugMarshalIndent(archiveFtpCloseParam))
+		fmt.Printf("ftp-close parameter: \n%s\n", debugMarshalIndent(archiveFTPCloseParam))
 		return err
 	},
 }
 
-func archiveFtpCloseCmdInit() {
+func archiveFTPCloseCmdInit() {
 }
 
 var archiveWaitForCopyCmd = &cobra.Command{
@@ -259,11 +259,11 @@ func init() {
 	archiveDownloadCmdInit()
 	parent.AddCommand(archiveDownloadCmd)
 
-	archiveFtpOpenCmdInit()
-	parent.AddCommand(archiveFtpOpenCmd)
+	archiveFTPOpenCmdInit()
+	parent.AddCommand(archiveFTPOpenCmd)
 
-	archiveFtpCloseCmdInit()
-	parent.AddCommand(archiveFtpCloseCmd)
+	archiveFTPCloseCmdInit()
+	parent.AddCommand(archiveFTPCloseCmd)
 
 	archiveWaitForCopyCmdInit()
 	parent.AddCommand(archiveWaitForCopyCmd)

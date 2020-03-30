@@ -32,26 +32,26 @@ import (
 )
 
 func init() {
-	loadbalancerListParam := params.NewListLoadbalancerParam()
-	loadbalancerCreateParam := params.NewCreateLoadbalancerParam()
-	loadbalancerReadParam := params.NewReadLoadbalancerParam()
-	loadbalancerUpdateParam := params.NewUpdateLoadbalancerParam()
-	loadbalancerDeleteParam := params.NewDeleteLoadbalancerParam()
-	loadbalancerBootParam := params.NewBootLoadbalancerParam()
-	loadbalancerShutdownParam := params.NewShutdownLoadbalancerParam()
-	loadbalancerShutdownForceParam := params.NewShutdownForceLoadbalancerParam()
-	loadbalancerResetParam := params.NewResetLoadbalancerParam()
-	loadbalancerWaitForBootParam := params.NewWaitForBootLoadbalancerParam()
-	loadbalancerWaitForDownParam := params.NewWaitForDownLoadbalancerParam()
-	loadbalancerVipInfoParam := params.NewVipInfoLoadbalancerParam()
-	loadbalancerVipAddParam := params.NewVipAddLoadbalancerParam()
-	loadbalancerVipUpdateParam := params.NewVipUpdateLoadbalancerParam()
-	loadbalancerVipDeleteParam := params.NewVipDeleteLoadbalancerParam()
-	loadbalancerServerInfoParam := params.NewServerInfoLoadbalancerParam()
-	loadbalancerServerAddParam := params.NewServerAddLoadbalancerParam()
-	loadbalancerServerUpdateParam := params.NewServerUpdateLoadbalancerParam()
-	loadbalancerServerDeleteParam := params.NewServerDeleteLoadbalancerParam()
-	loadbalancerMonitorParam := params.NewMonitorLoadbalancerParam()
+	loadBalancerListParam := params.NewListLoadBalancerParam()
+	loadBalancerCreateParam := params.NewCreateLoadBalancerParam()
+	loadBalancerReadParam := params.NewReadLoadBalancerParam()
+	loadBalancerUpdateParam := params.NewUpdateLoadBalancerParam()
+	loadBalancerDeleteParam := params.NewDeleteLoadBalancerParam()
+	loadBalancerBootParam := params.NewBootLoadBalancerParam()
+	loadBalancerShutdownParam := params.NewShutdownLoadBalancerParam()
+	loadBalancerShutdownForceParam := params.NewShutdownForceLoadBalancerParam()
+	loadBalancerResetParam := params.NewResetLoadBalancerParam()
+	loadBalancerWaitForBootParam := params.NewWaitForBootLoadBalancerParam()
+	loadBalancerWaitForDownParam := params.NewWaitForDownLoadBalancerParam()
+	loadBalancerVipInfoParam := params.NewVipInfoLoadBalancerParam()
+	loadBalancerVipAddParam := params.NewVipAddLoadBalancerParam()
+	loadBalancerVipUpdateParam := params.NewVipUpdateLoadBalancerParam()
+	loadBalancerVipDeleteParam := params.NewVipDeleteLoadBalancerParam()
+	loadBalancerServerInfoParam := params.NewServerInfoLoadBalancerParam()
+	loadBalancerServerAddParam := params.NewServerAddLoadBalancerParam()
+	loadBalancerServerUpdateParam := params.NewServerUpdateLoadBalancerParam()
+	loadBalancerServerDeleteParam := params.NewServerDeleteLoadBalancerParam()
+	loadBalancerMonitorParam := params.NewMonitorLoadBalancerParam()
 
 	cliCommand := &cli.Command{
 		Name:  "load-balancer",
@@ -60,7 +60,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find", "selector"},
-				Usage:   "List Loadbalancer",
+				Usage:   "List LoadBalancer",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -151,75 +151,75 @@ func init() {
 						return err
 					}
 
-					loadbalancerListParam.ParamTemplate = c.String("param-template")
-					loadbalancerListParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerListParam)
+					loadBalancerListParam.ParamTemplate = c.String("param-template")
+					loadBalancerListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListLoadbalancerParam()
+						p := params.NewListLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerListParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						loadbalancerListParam.Name = c.StringSlice("name")
+						loadBalancerListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						loadbalancerListParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						loadBalancerListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
-						loadbalancerListParam.Tags = c.StringSlice("tags")
+						loadBalancerListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("from") {
-						loadbalancerListParam.From = c.Int("from")
+						loadBalancerListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						loadbalancerListParam.Max = c.Int("max")
+						loadBalancerListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						loadbalancerListParam.Sort = c.StringSlice("sort")
+						loadBalancerListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerListParam.ParamTemplate = c.String("param-template")
+						loadBalancerListParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerListParam.Parameters = c.String("parameters")
+						loadBalancerListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerListParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerListParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerListParam.ParameterFile = c.String("parameter-file")
+						loadBalancerListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerListParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						loadbalancerListParam.OutputType = c.String("output-type")
+						loadBalancerListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						loadbalancerListParam.Column = c.StringSlice("column")
+						loadBalancerListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						loadbalancerListParam.Quiet = c.Bool("quiet")
+						loadBalancerListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						loadbalancerListParam.Format = c.String("format")
+						loadBalancerListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						loadbalancerListParam.FormatFile = c.String("format-file")
+						loadBalancerListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						loadbalancerListParam.Query = c.String("query")
+						loadBalancerListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						loadbalancerListParam.QueryFile = c.String("query-file")
+						loadBalancerListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -227,7 +227,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerListParam
+					var outputTypeHolder interface{} = loadBalancerListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -238,10 +238,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerListParam.GenerateSkeleton {
-						loadbalancerListParam.GenerateSkeleton = false
-						loadbalancerListParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerListParam, "", "\t")
+					if loadBalancerListParam.GenerateSkeleton {
+						loadBalancerListParam.GenerateSkeleton = false
+						loadBalancerListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -250,21 +250,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerListParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerListParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerListParam)
 
 					// Run command with params
-					return funcs.LoadbalancerList(ctx, loadbalancerListParam)
+					return funcs.LoadBalancerList(ctx, loadBalancerListParam)
 
 				},
 			},
 			{
 				Name:  "create",
-				Usage: "Create Loadbalancer",
+				Usage: "Create LoadBalancer",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:  "switch-id",
@@ -389,96 +389,96 @@ func init() {
 						return err
 					}
 
-					loadbalancerCreateParam.ParamTemplate = c.String("param-template")
-					loadbalancerCreateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerCreateParam)
+					loadBalancerCreateParam.ParamTemplate = c.String("param-template")
+					loadBalancerCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerCreateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCreateLoadbalancerParam()
+						p := params.NewCreateLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerCreateParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("switch-id") {
-						loadbalancerCreateParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
+						loadBalancerCreateParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
 					}
 					if c.IsSet("vrid") {
-						loadbalancerCreateParam.Vrid = c.Int("vrid")
+						loadBalancerCreateParam.Vrid = c.Int("vrid")
 					}
 					if c.IsSet("high-availability") {
-						loadbalancerCreateParam.HighAvailability = c.Bool("high-availability")
+						loadBalancerCreateParam.HighAvailability = c.Bool("high-availability")
 					}
 					if c.IsSet("plan") {
-						loadbalancerCreateParam.Plan = c.String("plan")
+						loadBalancerCreateParam.Plan = c.String("plan")
 					}
 					if c.IsSet("ipaddress-1") {
-						loadbalancerCreateParam.Ipaddress1 = c.String("ipaddress-1")
+						loadBalancerCreateParam.Ipaddress1 = c.String("ipaddress-1")
 					}
 					if c.IsSet("ipaddress-2") {
-						loadbalancerCreateParam.Ipaddress2 = c.String("ipaddress-2")
+						loadBalancerCreateParam.Ipaddress2 = c.String("ipaddress-2")
 					}
 					if c.IsSet("nw-mask-len") {
-						loadbalancerCreateParam.NwMaskLen = c.Int("nw-mask-len")
+						loadBalancerCreateParam.NwMaskLen = c.Int("nw-mask-len")
 					}
 					if c.IsSet("default-route") {
-						loadbalancerCreateParam.DefaultRoute = c.String("default-route")
+						loadBalancerCreateParam.DefaultRoute = c.String("default-route")
 					}
 					if c.IsSet("name") {
-						loadbalancerCreateParam.Name = c.String("name")
+						loadBalancerCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						loadbalancerCreateParam.Description = c.String("description")
+						loadBalancerCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						loadbalancerCreateParam.Tags = c.StringSlice("tags")
+						loadBalancerCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						loadbalancerCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						loadBalancerCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						loadbalancerCreateParam.Assumeyes = c.Bool("assumeyes")
+						loadBalancerCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerCreateParam.ParamTemplate = c.String("param-template")
+						loadBalancerCreateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerCreateParam.Parameters = c.String("parameters")
+						loadBalancerCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerCreateParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerCreateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerCreateParam.ParameterFile = c.String("parameter-file")
+						loadBalancerCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						loadbalancerCreateParam.OutputType = c.String("output-type")
+						loadBalancerCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						loadbalancerCreateParam.Column = c.StringSlice("column")
+						loadBalancerCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						loadbalancerCreateParam.Quiet = c.Bool("quiet")
+						loadBalancerCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						loadbalancerCreateParam.Format = c.String("format")
+						loadBalancerCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						loadbalancerCreateParam.FormatFile = c.String("format-file")
+						loadBalancerCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						loadbalancerCreateParam.Query = c.String("query")
+						loadBalancerCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						loadbalancerCreateParam.QueryFile = c.String("query-file")
+						loadBalancerCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -486,7 +486,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerCreateParam
+					var outputTypeHolder interface{} = loadBalancerCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -497,10 +497,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerCreateParam.GenerateSkeleton {
-						loadbalancerCreateParam.GenerateSkeleton = false
-						loadbalancerCreateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerCreateParam, "", "\t")
+					if loadBalancerCreateParam.GenerateSkeleton {
+						loadBalancerCreateParam.GenerateSkeleton = false
+						loadBalancerCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -509,15 +509,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerCreateParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerCreateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerCreateParam)
 
 					// confirm
-					if !loadbalancerCreateParam.Assumeyes {
+					if !loadBalancerCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -527,13 +527,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.LoadbalancerCreate(ctx, loadbalancerCreateParam)
+					return funcs.LoadBalancerCreate(ctx, loadBalancerCreateParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Loadbalancer",
+				Usage:     "Read LoadBalancer",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -607,63 +607,63 @@ func init() {
 						return err
 					}
 
-					loadbalancerReadParam.ParamTemplate = c.String("param-template")
-					loadbalancerReadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerReadParam)
+					loadBalancerReadParam.ParamTemplate = c.String("param-template")
+					loadBalancerReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadLoadbalancerParam()
+						p := params.NewReadLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerReadParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						loadbalancerReadParam.Selector = c.StringSlice("selector")
+						loadBalancerReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerReadParam.ParamTemplate = c.String("param-template")
+						loadBalancerReadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerReadParam.Parameters = c.String("parameters")
+						loadBalancerReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerReadParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerReadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerReadParam.ParameterFile = c.String("parameter-file")
+						loadBalancerReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						loadbalancerReadParam.OutputType = c.String("output-type")
+						loadBalancerReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						loadbalancerReadParam.Column = c.StringSlice("column")
+						loadBalancerReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						loadbalancerReadParam.Quiet = c.Bool("quiet")
+						loadBalancerReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						loadbalancerReadParam.Format = c.String("format")
+						loadBalancerReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						loadbalancerReadParam.FormatFile = c.String("format-file")
+						loadBalancerReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						loadbalancerReadParam.Query = c.String("query")
+						loadBalancerReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						loadbalancerReadParam.QueryFile = c.String("query-file")
+						loadBalancerReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						loadbalancerReadParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -671,7 +671,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerReadParam
+					var outputTypeHolder interface{} = loadBalancerReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -682,10 +682,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerReadParam.GenerateSkeleton {
-						loadbalancerReadParam.GenerateSkeleton = false
-						loadbalancerReadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerReadParam, "", "\t")
+					if loadBalancerReadParam.GenerateSkeleton {
+						loadBalancerReadParam.GenerateSkeleton = false
+						loadBalancerReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -694,19 +694,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerReadParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerReadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerReadParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerReadParam.Selector) == 0 {
+						if len(loadBalancerReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -714,13 +714,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerReadParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerReadParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerReadParam.Selector)
 						}
 
 					} else {
@@ -741,8 +741,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerReadParam.Selector) == 0 || hasTags(&v, loadbalancerReadParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerReadParam.Selector) == 0 || hasTags(&v, loadBalancerReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -767,11 +767,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerReadParam.SetId(id)
-						p := *loadbalancerReadParam // copy struct value
-						loadbalancerReadParam := &p
+						loadBalancerReadParam.SetId(id)
+						p := *loadBalancerReadParam // copy struct value
+						loadBalancerReadParam := &p
 						go func() {
-							err := funcs.LoadbalancerRead(ctx, loadbalancerReadParam)
+							err := funcs.LoadBalancerRead(ctx, loadBalancerReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -785,7 +785,7 @@ func init() {
 			},
 			{
 				Name:      "update",
-				Usage:     "Update Loadbalancer",
+				Usage:     "Update LoadBalancer",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -881,78 +881,78 @@ func init() {
 						return err
 					}
 
-					loadbalancerUpdateParam.ParamTemplate = c.String("param-template")
-					loadbalancerUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerUpdateParam)
+					loadBalancerUpdateParam.ParamTemplate = c.String("param-template")
+					loadBalancerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUpdateLoadbalancerParam()
+						p := params.NewUpdateLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						loadbalancerUpdateParam.Selector = c.StringSlice("selector")
+						loadBalancerUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
-						loadbalancerUpdateParam.Name = c.String("name")
+						loadBalancerUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						loadbalancerUpdateParam.Description = c.String("description")
+						loadBalancerUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						loadbalancerUpdateParam.Tags = c.StringSlice("tags")
+						loadBalancerUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						loadbalancerUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						loadBalancerUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						loadbalancerUpdateParam.Assumeyes = c.Bool("assumeyes")
+						loadBalancerUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerUpdateParam.ParamTemplate = c.String("param-template")
+						loadBalancerUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerUpdateParam.Parameters = c.String("parameters")
+						loadBalancerUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerUpdateParam.ParameterFile = c.String("parameter-file")
+						loadBalancerUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						loadbalancerUpdateParam.OutputType = c.String("output-type")
+						loadBalancerUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						loadbalancerUpdateParam.Column = c.StringSlice("column")
+						loadBalancerUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						loadbalancerUpdateParam.Quiet = c.Bool("quiet")
+						loadBalancerUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						loadbalancerUpdateParam.Format = c.String("format")
+						loadBalancerUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						loadbalancerUpdateParam.FormatFile = c.String("format-file")
+						loadBalancerUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						loadbalancerUpdateParam.Query = c.String("query")
+						loadBalancerUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						loadbalancerUpdateParam.QueryFile = c.String("query-file")
+						loadBalancerUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						loadbalancerUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -960,7 +960,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerUpdateParam
+					var outputTypeHolder interface{} = loadBalancerUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -971,10 +971,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerUpdateParam.GenerateSkeleton {
-						loadbalancerUpdateParam.GenerateSkeleton = false
-						loadbalancerUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerUpdateParam, "", "\t")
+					if loadBalancerUpdateParam.GenerateSkeleton {
+						loadBalancerUpdateParam.GenerateSkeleton = false
+						loadBalancerUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -983,19 +983,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerUpdateParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerUpdateParam.Selector) == 0 {
+						if len(loadBalancerUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1003,13 +1003,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerUpdateParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerUpdateParam.Selector)
 						}
 
 					} else {
@@ -1030,8 +1030,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerUpdateParam.Selector) == 0 || hasTags(&v, loadbalancerUpdateParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerUpdateParam.Selector) == 0 || hasTags(&v, loadBalancerUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1048,7 +1048,7 @@ func init() {
 					}
 
 					// confirm
-					if !loadbalancerUpdateParam.Assumeyes {
+					if !loadBalancerUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1062,11 +1062,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerUpdateParam.SetId(id)
-						p := *loadbalancerUpdateParam // copy struct value
-						loadbalancerUpdateParam := &p
+						loadBalancerUpdateParam.SetId(id)
+						p := *loadBalancerUpdateParam // copy struct value
+						loadBalancerUpdateParam := &p
 						go func() {
-							err := funcs.LoadbalancerUpdate(ctx, loadbalancerUpdateParam)
+							err := funcs.LoadBalancerUpdate(ctx, loadBalancerUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1081,7 +1081,7 @@ func init() {
 			{
 				Name:      "delete",
 				Aliases:   []string{"rm"},
-				Usage:     "Delete Loadbalancer",
+				Usage:     "Delete LoadBalancer",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -1165,69 +1165,69 @@ func init() {
 						return err
 					}
 
-					loadbalancerDeleteParam.ParamTemplate = c.String("param-template")
-					loadbalancerDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerDeleteParam)
+					loadBalancerDeleteParam.ParamTemplate = c.String("param-template")
+					loadBalancerDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeleteLoadbalancerParam()
+						p := params.NewDeleteLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("force") {
-						loadbalancerDeleteParam.Force = c.Bool("force")
+						loadBalancerDeleteParam.Force = c.Bool("force")
 					}
 					if c.IsSet("selector") {
-						loadbalancerDeleteParam.Selector = c.StringSlice("selector")
+						loadBalancerDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						loadbalancerDeleteParam.Assumeyes = c.Bool("assumeyes")
+						loadBalancerDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerDeleteParam.ParamTemplate = c.String("param-template")
+						loadBalancerDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerDeleteParam.Parameters = c.String("parameters")
+						loadBalancerDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerDeleteParam.ParameterFile = c.String("parameter-file")
+						loadBalancerDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						loadbalancerDeleteParam.OutputType = c.String("output-type")
+						loadBalancerDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						loadbalancerDeleteParam.Column = c.StringSlice("column")
+						loadBalancerDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						loadbalancerDeleteParam.Quiet = c.Bool("quiet")
+						loadBalancerDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						loadbalancerDeleteParam.Format = c.String("format")
+						loadBalancerDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						loadbalancerDeleteParam.FormatFile = c.String("format-file")
+						loadBalancerDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						loadbalancerDeleteParam.Query = c.String("query")
+						loadBalancerDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						loadbalancerDeleteParam.QueryFile = c.String("query-file")
+						loadBalancerDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						loadbalancerDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1235,7 +1235,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerDeleteParam
+					var outputTypeHolder interface{} = loadBalancerDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1246,10 +1246,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerDeleteParam.GenerateSkeleton {
-						loadbalancerDeleteParam.GenerateSkeleton = false
-						loadbalancerDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerDeleteParam, "", "\t")
+					if loadBalancerDeleteParam.GenerateSkeleton {
+						loadBalancerDeleteParam.GenerateSkeleton = false
+						loadBalancerDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1258,19 +1258,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerDeleteParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerDeleteParam.Selector) == 0 {
+						if len(loadBalancerDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1278,13 +1278,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerDeleteParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerDeleteParam.Selector)
 						}
 
 					} else {
@@ -1305,8 +1305,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerDeleteParam.Selector) == 0 || hasTags(&v, loadbalancerDeleteParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerDeleteParam.Selector) == 0 || hasTags(&v, loadBalancerDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1323,7 +1323,7 @@ func init() {
 					}
 
 					// confirm
-					if !loadbalancerDeleteParam.Assumeyes {
+					if !loadBalancerDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1337,11 +1337,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerDeleteParam.SetId(id)
-						p := *loadbalancerDeleteParam // copy struct value
-						loadbalancerDeleteParam := &p
+						loadBalancerDeleteParam.SetId(id)
+						p := *loadBalancerDeleteParam // copy struct value
+						loadBalancerDeleteParam := &p
 						go func() {
-							err := funcs.LoadbalancerDelete(ctx, loadbalancerDeleteParam)
+							err := funcs.LoadBalancerDelete(ctx, loadBalancerDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1356,7 +1356,7 @@ func init() {
 			{
 				Name:      "boot",
 				Aliases:   []string{"power-on"},
-				Usage:     "Boot Loadbalancer",
+				Usage:     "Boot LoadBalancer",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1403,45 +1403,45 @@ func init() {
 						return err
 					}
 
-					loadbalancerBootParam.ParamTemplate = c.String("param-template")
-					loadbalancerBootParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerBootParam)
+					loadBalancerBootParam.ParamTemplate = c.String("param-template")
+					loadBalancerBootParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerBootParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewBootLoadbalancerParam()
+						p := params.NewBootLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerBootParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerBootParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						loadbalancerBootParam.Selector = c.StringSlice("selector")
+						loadBalancerBootParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						loadbalancerBootParam.Assumeyes = c.Bool("assumeyes")
+						loadBalancerBootParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerBootParam.ParamTemplate = c.String("param-template")
+						loadBalancerBootParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerBootParam.Parameters = c.String("parameters")
+						loadBalancerBootParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerBootParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerBootParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerBootParam.ParameterFile = c.String("parameter-file")
+						loadBalancerBootParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						loadbalancerBootParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerBootParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1449,7 +1449,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerBootParam
+					var outputTypeHolder interface{} = loadBalancerBootParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1460,10 +1460,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerBootParam.GenerateSkeleton {
-						loadbalancerBootParam.GenerateSkeleton = false
-						loadbalancerBootParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerBootParam, "", "\t")
+					if loadBalancerBootParam.GenerateSkeleton {
+						loadBalancerBootParam.GenerateSkeleton = false
+						loadBalancerBootParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerBootParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1472,19 +1472,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerBootParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerBootParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerBootParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerBootParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerBootParam.Selector) == 0 {
+						if len(loadBalancerBootParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1492,13 +1492,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerBootParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerBootParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerBootParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerBootParam.Selector)
 						}
 
 					} else {
@@ -1519,8 +1519,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerBootParam.Selector) == 0 || hasTags(&v, loadbalancerBootParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerBootParam.Selector) == 0 || hasTags(&v, loadBalancerBootParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1537,7 +1537,7 @@ func init() {
 					}
 
 					// confirm
-					if !loadbalancerBootParam.Assumeyes {
+					if !loadBalancerBootParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1551,11 +1551,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerBootParam.SetId(id)
-						p := *loadbalancerBootParam // copy struct value
-						loadbalancerBootParam := &p
+						loadBalancerBootParam.SetId(id)
+						p := *loadBalancerBootParam // copy struct value
+						loadBalancerBootParam := &p
 						go func() {
-							err := funcs.LoadbalancerBoot(ctx, loadbalancerBootParam)
+							err := funcs.LoadBalancerBoot(ctx, loadBalancerBootParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1570,7 +1570,7 @@ func init() {
 			{
 				Name:      "shutdown",
 				Aliases:   []string{"power-off"},
-				Usage:     "Shutdown Loadbalancer",
+				Usage:     "Shutdown LoadBalancer",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1617,45 +1617,45 @@ func init() {
 						return err
 					}
 
-					loadbalancerShutdownParam.ParamTemplate = c.String("param-template")
-					loadbalancerShutdownParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerShutdownParam)
+					loadBalancerShutdownParam.ParamTemplate = c.String("param-template")
+					loadBalancerShutdownParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerShutdownParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewShutdownLoadbalancerParam()
+						p := params.NewShutdownLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerShutdownParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerShutdownParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						loadbalancerShutdownParam.Selector = c.StringSlice("selector")
+						loadBalancerShutdownParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						loadbalancerShutdownParam.Assumeyes = c.Bool("assumeyes")
+						loadBalancerShutdownParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerShutdownParam.ParamTemplate = c.String("param-template")
+						loadBalancerShutdownParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerShutdownParam.Parameters = c.String("parameters")
+						loadBalancerShutdownParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerShutdownParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerShutdownParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerShutdownParam.ParameterFile = c.String("parameter-file")
+						loadBalancerShutdownParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerShutdownParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerShutdownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						loadbalancerShutdownParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerShutdownParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1663,7 +1663,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerShutdownParam
+					var outputTypeHolder interface{} = loadBalancerShutdownParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1674,10 +1674,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerShutdownParam.GenerateSkeleton {
-						loadbalancerShutdownParam.GenerateSkeleton = false
-						loadbalancerShutdownParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerShutdownParam, "", "\t")
+					if loadBalancerShutdownParam.GenerateSkeleton {
+						loadBalancerShutdownParam.GenerateSkeleton = false
+						loadBalancerShutdownParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerShutdownParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1686,19 +1686,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerShutdownParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerShutdownParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerShutdownParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerShutdownParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerShutdownParam.Selector) == 0 {
+						if len(loadBalancerShutdownParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1706,13 +1706,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerShutdownParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerShutdownParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerShutdownParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerShutdownParam.Selector)
 						}
 
 					} else {
@@ -1733,8 +1733,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerShutdownParam.Selector) == 0 || hasTags(&v, loadbalancerShutdownParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerShutdownParam.Selector) == 0 || hasTags(&v, loadBalancerShutdownParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1751,7 +1751,7 @@ func init() {
 					}
 
 					// confirm
-					if !loadbalancerShutdownParam.Assumeyes {
+					if !loadBalancerShutdownParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1765,11 +1765,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerShutdownParam.SetId(id)
-						p := *loadbalancerShutdownParam // copy struct value
-						loadbalancerShutdownParam := &p
+						loadBalancerShutdownParam.SetId(id)
+						p := *loadBalancerShutdownParam // copy struct value
+						loadBalancerShutdownParam := &p
 						go func() {
-							err := funcs.LoadbalancerShutdown(ctx, loadbalancerShutdownParam)
+							err := funcs.LoadBalancerShutdown(ctx, loadBalancerShutdownParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1784,7 +1784,7 @@ func init() {
 			{
 				Name:      "shutdown-force",
 				Aliases:   []string{"stop"},
-				Usage:     "ShutdownForce Loadbalancer",
+				Usage:     "ShutdownForce LoadBalancer",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1831,45 +1831,45 @@ func init() {
 						return err
 					}
 
-					loadbalancerShutdownForceParam.ParamTemplate = c.String("param-template")
-					loadbalancerShutdownForceParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerShutdownForceParam)
+					loadBalancerShutdownForceParam.ParamTemplate = c.String("param-template")
+					loadBalancerShutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerShutdownForceParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewShutdownForceLoadbalancerParam()
+						p := params.NewShutdownForceLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerShutdownForceParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerShutdownForceParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						loadbalancerShutdownForceParam.Selector = c.StringSlice("selector")
+						loadBalancerShutdownForceParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						loadbalancerShutdownForceParam.Assumeyes = c.Bool("assumeyes")
+						loadBalancerShutdownForceParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerShutdownForceParam.ParamTemplate = c.String("param-template")
+						loadBalancerShutdownForceParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerShutdownForceParam.Parameters = c.String("parameters")
+						loadBalancerShutdownForceParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerShutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerShutdownForceParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerShutdownForceParam.ParameterFile = c.String("parameter-file")
+						loadBalancerShutdownForceParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerShutdownForceParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerShutdownForceParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						loadbalancerShutdownForceParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerShutdownForceParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1877,7 +1877,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerShutdownForceParam
+					var outputTypeHolder interface{} = loadBalancerShutdownForceParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1888,10 +1888,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerShutdownForceParam.GenerateSkeleton {
-						loadbalancerShutdownForceParam.GenerateSkeleton = false
-						loadbalancerShutdownForceParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerShutdownForceParam, "", "\t")
+					if loadBalancerShutdownForceParam.GenerateSkeleton {
+						loadBalancerShutdownForceParam.GenerateSkeleton = false
+						loadBalancerShutdownForceParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerShutdownForceParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1900,19 +1900,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerShutdownForceParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerShutdownForceParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerShutdownForceParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerShutdownForceParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerShutdownForceParam.Selector) == 0 {
+						if len(loadBalancerShutdownForceParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1920,13 +1920,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerShutdownForceParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerShutdownForceParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerShutdownForceParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerShutdownForceParam.Selector)
 						}
 
 					} else {
@@ -1947,8 +1947,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerShutdownForceParam.Selector) == 0 || hasTags(&v, loadbalancerShutdownForceParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerShutdownForceParam.Selector) == 0 || hasTags(&v, loadBalancerShutdownForceParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1965,7 +1965,7 @@ func init() {
 					}
 
 					// confirm
-					if !loadbalancerShutdownForceParam.Assumeyes {
+					if !loadBalancerShutdownForceParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1979,11 +1979,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerShutdownForceParam.SetId(id)
-						p := *loadbalancerShutdownForceParam // copy struct value
-						loadbalancerShutdownForceParam := &p
+						loadBalancerShutdownForceParam.SetId(id)
+						p := *loadBalancerShutdownForceParam // copy struct value
+						loadBalancerShutdownForceParam := &p
 						go func() {
-							err := funcs.LoadbalancerShutdownForce(ctx, loadbalancerShutdownForceParam)
+							err := funcs.LoadBalancerShutdownForce(ctx, loadBalancerShutdownForceParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1997,7 +1997,7 @@ func init() {
 			},
 			{
 				Name:      "reset",
-				Usage:     "Reset Loadbalancer",
+				Usage:     "Reset LoadBalancer",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2044,45 +2044,45 @@ func init() {
 						return err
 					}
 
-					loadbalancerResetParam.ParamTemplate = c.String("param-template")
-					loadbalancerResetParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerResetParam)
+					loadBalancerResetParam.ParamTemplate = c.String("param-template")
+					loadBalancerResetParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerResetParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewResetLoadbalancerParam()
+						p := params.NewResetLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerResetParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerResetParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						loadbalancerResetParam.Selector = c.StringSlice("selector")
+						loadBalancerResetParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						loadbalancerResetParam.Assumeyes = c.Bool("assumeyes")
+						loadBalancerResetParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerResetParam.ParamTemplate = c.String("param-template")
+						loadBalancerResetParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerResetParam.Parameters = c.String("parameters")
+						loadBalancerResetParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerResetParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerResetParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerResetParam.ParameterFile = c.String("parameter-file")
+						loadBalancerResetParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerResetParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerResetParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						loadbalancerResetParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerResetParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2090,7 +2090,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerResetParam
+					var outputTypeHolder interface{} = loadBalancerResetParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2101,10 +2101,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerResetParam.GenerateSkeleton {
-						loadbalancerResetParam.GenerateSkeleton = false
-						loadbalancerResetParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerResetParam, "", "\t")
+					if loadBalancerResetParam.GenerateSkeleton {
+						loadBalancerResetParam.GenerateSkeleton = false
+						loadBalancerResetParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerResetParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2113,19 +2113,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerResetParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerResetParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerResetParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerResetParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerResetParam.Selector) == 0 {
+						if len(loadBalancerResetParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2133,13 +2133,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerResetParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerResetParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerResetParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerResetParam.Selector)
 						}
 
 					} else {
@@ -2160,8 +2160,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerResetParam.Selector) == 0 || hasTags(&v, loadbalancerResetParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerResetParam.Selector) == 0 || hasTags(&v, loadBalancerResetParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2178,7 +2178,7 @@ func init() {
 					}
 
 					// confirm
-					if !loadbalancerResetParam.Assumeyes {
+					if !loadBalancerResetParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2192,11 +2192,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerResetParam.SetId(id)
-						p := *loadbalancerResetParam // copy struct value
-						loadbalancerResetParam := &p
+						loadBalancerResetParam.SetId(id)
+						p := *loadBalancerResetParam // copy struct value
+						loadBalancerResetParam := &p
 						go func() {
-							err := funcs.LoadbalancerReset(ctx, loadbalancerResetParam)
+							err := funcs.LoadBalancerReset(ctx, loadBalancerResetParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2252,42 +2252,42 @@ func init() {
 						return err
 					}
 
-					loadbalancerWaitForBootParam.ParamTemplate = c.String("param-template")
-					loadbalancerWaitForBootParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerWaitForBootParam)
+					loadBalancerWaitForBootParam.ParamTemplate = c.String("param-template")
+					loadBalancerWaitForBootParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerWaitForBootParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewWaitForBootLoadbalancerParam()
+						p := params.NewWaitForBootLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerWaitForBootParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerWaitForBootParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						loadbalancerWaitForBootParam.Selector = c.StringSlice("selector")
+						loadBalancerWaitForBootParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerWaitForBootParam.ParamTemplate = c.String("param-template")
+						loadBalancerWaitForBootParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerWaitForBootParam.Parameters = c.String("parameters")
+						loadBalancerWaitForBootParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerWaitForBootParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerWaitForBootParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerWaitForBootParam.ParameterFile = c.String("parameter-file")
+						loadBalancerWaitForBootParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerWaitForBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerWaitForBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						loadbalancerWaitForBootParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerWaitForBootParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2295,7 +2295,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerWaitForBootParam
+					var outputTypeHolder interface{} = loadBalancerWaitForBootParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2306,10 +2306,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerWaitForBootParam.GenerateSkeleton {
-						loadbalancerWaitForBootParam.GenerateSkeleton = false
-						loadbalancerWaitForBootParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerWaitForBootParam, "", "\t")
+					if loadBalancerWaitForBootParam.GenerateSkeleton {
+						loadBalancerWaitForBootParam.GenerateSkeleton = false
+						loadBalancerWaitForBootParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerWaitForBootParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2318,19 +2318,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerWaitForBootParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerWaitForBootParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerWaitForBootParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerWaitForBootParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerWaitForBootParam.Selector) == 0 {
+						if len(loadBalancerWaitForBootParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2338,13 +2338,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerWaitForBootParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerWaitForBootParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerWaitForBootParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerWaitForBootParam.Selector)
 						}
 
 					} else {
@@ -2365,8 +2365,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerWaitForBootParam.Selector) == 0 || hasTags(&v, loadbalancerWaitForBootParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerWaitForBootParam.Selector) == 0 || hasTags(&v, loadBalancerWaitForBootParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2387,11 +2387,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerWaitForBootParam.SetId(id)
-						p := *loadbalancerWaitForBootParam // copy struct value
-						loadbalancerWaitForBootParam := &p
+						loadBalancerWaitForBootParam.SetId(id)
+						p := *loadBalancerWaitForBootParam // copy struct value
+						loadBalancerWaitForBootParam := &p
 						go func() {
-							err := funcs.LoadbalancerWaitForBoot(ctx, loadbalancerWaitForBootParam)
+							err := funcs.LoadBalancerWaitForBoot(ctx, loadBalancerWaitForBootParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2447,42 +2447,42 @@ func init() {
 						return err
 					}
 
-					loadbalancerWaitForDownParam.ParamTemplate = c.String("param-template")
-					loadbalancerWaitForDownParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerWaitForDownParam)
+					loadBalancerWaitForDownParam.ParamTemplate = c.String("param-template")
+					loadBalancerWaitForDownParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerWaitForDownParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewWaitForDownLoadbalancerParam()
+						p := params.NewWaitForDownLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerWaitForDownParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerWaitForDownParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						loadbalancerWaitForDownParam.Selector = c.StringSlice("selector")
+						loadBalancerWaitForDownParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerWaitForDownParam.ParamTemplate = c.String("param-template")
+						loadBalancerWaitForDownParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerWaitForDownParam.Parameters = c.String("parameters")
+						loadBalancerWaitForDownParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerWaitForDownParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerWaitForDownParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerWaitForDownParam.ParameterFile = c.String("parameter-file")
+						loadBalancerWaitForDownParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerWaitForDownParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerWaitForDownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						loadbalancerWaitForDownParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerWaitForDownParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2490,7 +2490,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerWaitForDownParam
+					var outputTypeHolder interface{} = loadBalancerWaitForDownParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2501,10 +2501,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerWaitForDownParam.GenerateSkeleton {
-						loadbalancerWaitForDownParam.GenerateSkeleton = false
-						loadbalancerWaitForDownParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerWaitForDownParam, "", "\t")
+					if loadBalancerWaitForDownParam.GenerateSkeleton {
+						loadBalancerWaitForDownParam.GenerateSkeleton = false
+						loadBalancerWaitForDownParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerWaitForDownParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2513,19 +2513,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerWaitForDownParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerWaitForDownParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerWaitForDownParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerWaitForDownParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerWaitForDownParam.Selector) == 0 {
+						if len(loadBalancerWaitForDownParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2533,13 +2533,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerWaitForDownParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerWaitForDownParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerWaitForDownParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerWaitForDownParam.Selector)
 						}
 
 					} else {
@@ -2560,8 +2560,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerWaitForDownParam.Selector) == 0 || hasTags(&v, loadbalancerWaitForDownParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerWaitForDownParam.Selector) == 0 || hasTags(&v, loadBalancerWaitForDownParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2582,11 +2582,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerWaitForDownParam.SetId(id)
-						p := *loadbalancerWaitForDownParam // copy struct value
-						loadbalancerWaitForDownParam := &p
+						loadBalancerWaitForDownParam.SetId(id)
+						p := *loadBalancerWaitForDownParam // copy struct value
+						loadBalancerWaitForDownParam := &p
 						go func() {
-							err := funcs.LoadbalancerWaitForDown(ctx, loadbalancerWaitForDownParam)
+							err := funcs.LoadBalancerWaitForDown(ctx, loadBalancerWaitForDownParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2674,63 +2674,63 @@ func init() {
 						return err
 					}
 
-					loadbalancerVipInfoParam.ParamTemplate = c.String("param-template")
-					loadbalancerVipInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerVipInfoParam)
+					loadBalancerVipInfoParam.ParamTemplate = c.String("param-template")
+					loadBalancerVipInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerVipInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewVipInfoLoadbalancerParam()
+						p := params.NewVipInfoLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerVipInfoParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerVipInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						loadbalancerVipInfoParam.Selector = c.StringSlice("selector")
+						loadBalancerVipInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerVipInfoParam.ParamTemplate = c.String("param-template")
+						loadBalancerVipInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerVipInfoParam.Parameters = c.String("parameters")
+						loadBalancerVipInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerVipInfoParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerVipInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerVipInfoParam.ParameterFile = c.String("parameter-file")
+						loadBalancerVipInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerVipInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerVipInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						loadbalancerVipInfoParam.OutputType = c.String("output-type")
+						loadBalancerVipInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						loadbalancerVipInfoParam.Column = c.StringSlice("column")
+						loadBalancerVipInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						loadbalancerVipInfoParam.Quiet = c.Bool("quiet")
+						loadBalancerVipInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						loadbalancerVipInfoParam.Format = c.String("format")
+						loadBalancerVipInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						loadbalancerVipInfoParam.FormatFile = c.String("format-file")
+						loadBalancerVipInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						loadbalancerVipInfoParam.Query = c.String("query")
+						loadBalancerVipInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						loadbalancerVipInfoParam.QueryFile = c.String("query-file")
+						loadBalancerVipInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						loadbalancerVipInfoParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerVipInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2738,7 +2738,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerVipInfoParam
+					var outputTypeHolder interface{} = loadBalancerVipInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2749,10 +2749,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerVipInfoParam.GenerateSkeleton {
-						loadbalancerVipInfoParam.GenerateSkeleton = false
-						loadbalancerVipInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerVipInfoParam, "", "\t")
+					if loadBalancerVipInfoParam.GenerateSkeleton {
+						loadBalancerVipInfoParam.GenerateSkeleton = false
+						loadBalancerVipInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerVipInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2761,19 +2761,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerVipInfoParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerVipInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerVipInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerVipInfoParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerVipInfoParam.Selector) == 0 {
+						if len(loadBalancerVipInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2781,13 +2781,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerVipInfoParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerVipInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerVipInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerVipInfoParam.Selector)
 						}
 
 					} else {
@@ -2808,8 +2808,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerVipInfoParam.Selector) == 0 || hasTags(&v, loadbalancerVipInfoParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerVipInfoParam.Selector) == 0 || hasTags(&v, loadBalancerVipInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2834,11 +2834,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerVipInfoParam.SetId(id)
-						p := *loadbalancerVipInfoParam // copy struct value
-						loadbalancerVipInfoParam := &p
+						loadBalancerVipInfoParam.SetId(id)
+						p := *loadBalancerVipInfoParam // copy struct value
+						loadBalancerVipInfoParam := &p
 						go func() {
-							err := funcs.LoadbalancerVipInfo(ctx, loadbalancerVipInfoParam)
+							err := funcs.LoadBalancerVipInfo(ctx, loadBalancerVipInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2921,60 +2921,60 @@ func init() {
 						return err
 					}
 
-					loadbalancerVipAddParam.ParamTemplate = c.String("param-template")
-					loadbalancerVipAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerVipAddParam)
+					loadBalancerVipAddParam.ParamTemplate = c.String("param-template")
+					loadBalancerVipAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerVipAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewVipAddLoadbalancerParam()
+						p := params.NewVipAddLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerVipAddParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerVipAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("vip") {
-						loadbalancerVipAddParam.Vip = c.String("vip")
+						loadBalancerVipAddParam.Vip = c.String("vip")
 					}
 					if c.IsSet("port") {
-						loadbalancerVipAddParam.Port = c.Int("port")
+						loadBalancerVipAddParam.Port = c.Int("port")
 					}
 					if c.IsSet("delay-loop") {
-						loadbalancerVipAddParam.DelayLoop = c.Int("delay-loop")
+						loadBalancerVipAddParam.DelayLoop = c.Int("delay-loop")
 					}
 					if c.IsSet("sorry-server") {
-						loadbalancerVipAddParam.SorryServer = c.String("sorry-server")
+						loadBalancerVipAddParam.SorryServer = c.String("sorry-server")
 					}
 					if c.IsSet("description") {
-						loadbalancerVipAddParam.Description = c.String("description")
+						loadBalancerVipAddParam.Description = c.String("description")
 					}
 					if c.IsSet("selector") {
-						loadbalancerVipAddParam.Selector = c.StringSlice("selector")
+						loadBalancerVipAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						loadbalancerVipAddParam.Assumeyes = c.Bool("assumeyes")
+						loadBalancerVipAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerVipAddParam.ParamTemplate = c.String("param-template")
+						loadBalancerVipAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerVipAddParam.Parameters = c.String("parameters")
+						loadBalancerVipAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerVipAddParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerVipAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerVipAddParam.ParameterFile = c.String("parameter-file")
+						loadBalancerVipAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerVipAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerVipAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						loadbalancerVipAddParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerVipAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2982,7 +2982,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerVipAddParam
+					var outputTypeHolder interface{} = loadBalancerVipAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2993,10 +2993,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerVipAddParam.GenerateSkeleton {
-						loadbalancerVipAddParam.GenerateSkeleton = false
-						loadbalancerVipAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerVipAddParam, "", "\t")
+					if loadBalancerVipAddParam.GenerateSkeleton {
+						loadBalancerVipAddParam.GenerateSkeleton = false
+						loadBalancerVipAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerVipAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3005,19 +3005,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerVipAddParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerVipAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerVipAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerVipAddParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerVipAddParam.Selector) == 0 {
+						if len(loadBalancerVipAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3025,13 +3025,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerVipAddParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerVipAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerVipAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerVipAddParam.Selector)
 						}
 
 					} else {
@@ -3052,8 +3052,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerVipAddParam.Selector) == 0 || hasTags(&v, loadbalancerVipAddParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerVipAddParam.Selector) == 0 || hasTags(&v, loadBalancerVipAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3074,7 +3074,7 @@ func init() {
 					}
 
 					// confirm
-					if !loadbalancerVipAddParam.Assumeyes {
+					if !loadBalancerVipAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3088,11 +3088,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerVipAddParam.SetId(id)
-						p := *loadbalancerVipAddParam // copy struct value
-						loadbalancerVipAddParam := &p
+						loadBalancerVipAddParam.SetId(id)
+						p := *loadBalancerVipAddParam // copy struct value
+						loadBalancerVipAddParam := &p
 						go func() {
-							err := funcs.LoadbalancerVipAdd(ctx, loadbalancerVipAddParam)
+							err := funcs.LoadBalancerVipAdd(ctx, loadBalancerVipAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3179,63 +3179,63 @@ func init() {
 						return err
 					}
 
-					loadbalancerVipUpdateParam.ParamTemplate = c.String("param-template")
-					loadbalancerVipUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerVipUpdateParam)
+					loadBalancerVipUpdateParam.ParamTemplate = c.String("param-template")
+					loadBalancerVipUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerVipUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewVipUpdateLoadbalancerParam()
+						p := params.NewVipUpdateLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerVipUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerVipUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						loadbalancerVipUpdateParam.Index = c.Int("index")
+						loadBalancerVipUpdateParam.Index = c.Int("index")
 					}
 					if c.IsSet("vip") {
-						loadbalancerVipUpdateParam.Vip = c.String("vip")
+						loadBalancerVipUpdateParam.Vip = c.String("vip")
 					}
 					if c.IsSet("port") {
-						loadbalancerVipUpdateParam.Port = c.Int("port")
+						loadBalancerVipUpdateParam.Port = c.Int("port")
 					}
 					if c.IsSet("delay-loop") {
-						loadbalancerVipUpdateParam.DelayLoop = c.Int("delay-loop")
+						loadBalancerVipUpdateParam.DelayLoop = c.Int("delay-loop")
 					}
 					if c.IsSet("sorry-server") {
-						loadbalancerVipUpdateParam.SorryServer = c.String("sorry-server")
+						loadBalancerVipUpdateParam.SorryServer = c.String("sorry-server")
 					}
 					if c.IsSet("description") {
-						loadbalancerVipUpdateParam.Description = c.String("description")
+						loadBalancerVipUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("selector") {
-						loadbalancerVipUpdateParam.Selector = c.StringSlice("selector")
+						loadBalancerVipUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						loadbalancerVipUpdateParam.Assumeyes = c.Bool("assumeyes")
+						loadBalancerVipUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerVipUpdateParam.ParamTemplate = c.String("param-template")
+						loadBalancerVipUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerVipUpdateParam.Parameters = c.String("parameters")
+						loadBalancerVipUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerVipUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerVipUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerVipUpdateParam.ParameterFile = c.String("parameter-file")
+						loadBalancerVipUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerVipUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerVipUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						loadbalancerVipUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerVipUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3243,7 +3243,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerVipUpdateParam
+					var outputTypeHolder interface{} = loadBalancerVipUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3254,10 +3254,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerVipUpdateParam.GenerateSkeleton {
-						loadbalancerVipUpdateParam.GenerateSkeleton = false
-						loadbalancerVipUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerVipUpdateParam, "", "\t")
+					if loadBalancerVipUpdateParam.GenerateSkeleton {
+						loadBalancerVipUpdateParam.GenerateSkeleton = false
+						loadBalancerVipUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerVipUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3266,19 +3266,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerVipUpdateParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerVipUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerVipUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerVipUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerVipUpdateParam.Selector) == 0 {
+						if len(loadBalancerVipUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3286,13 +3286,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerVipUpdateParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerVipUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerVipUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerVipUpdateParam.Selector)
 						}
 
 					} else {
@@ -3313,8 +3313,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerVipUpdateParam.Selector) == 0 || hasTags(&v, loadbalancerVipUpdateParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerVipUpdateParam.Selector) == 0 || hasTags(&v, loadBalancerVipUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3335,7 +3335,7 @@ func init() {
 					}
 
 					// confirm
-					if !loadbalancerVipUpdateParam.Assumeyes {
+					if !loadBalancerVipUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3349,11 +3349,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerVipUpdateParam.SetId(id)
-						p := *loadbalancerVipUpdateParam // copy struct value
-						loadbalancerVipUpdateParam := &p
+						loadBalancerVipUpdateParam.SetId(id)
+						p := *loadBalancerVipUpdateParam // copy struct value
+						loadBalancerVipUpdateParam := &p
 						go func() {
-							err := funcs.LoadbalancerVipUpdate(ctx, loadbalancerVipUpdateParam)
+							err := funcs.LoadBalancerVipUpdate(ctx, loadBalancerVipUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3418,48 +3418,48 @@ func init() {
 						return err
 					}
 
-					loadbalancerVipDeleteParam.ParamTemplate = c.String("param-template")
-					loadbalancerVipDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerVipDeleteParam)
+					loadBalancerVipDeleteParam.ParamTemplate = c.String("param-template")
+					loadBalancerVipDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerVipDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewVipDeleteLoadbalancerParam()
+						p := params.NewVipDeleteLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerVipDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerVipDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						loadbalancerVipDeleteParam.Index = c.Int("index")
+						loadBalancerVipDeleteParam.Index = c.Int("index")
 					}
 					if c.IsSet("selector") {
-						loadbalancerVipDeleteParam.Selector = c.StringSlice("selector")
+						loadBalancerVipDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						loadbalancerVipDeleteParam.Assumeyes = c.Bool("assumeyes")
+						loadBalancerVipDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerVipDeleteParam.ParamTemplate = c.String("param-template")
+						loadBalancerVipDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerVipDeleteParam.Parameters = c.String("parameters")
+						loadBalancerVipDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerVipDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerVipDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerVipDeleteParam.ParameterFile = c.String("parameter-file")
+						loadBalancerVipDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerVipDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerVipDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						loadbalancerVipDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerVipDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3467,7 +3467,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerVipDeleteParam
+					var outputTypeHolder interface{} = loadBalancerVipDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3478,10 +3478,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerVipDeleteParam.GenerateSkeleton {
-						loadbalancerVipDeleteParam.GenerateSkeleton = false
-						loadbalancerVipDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerVipDeleteParam, "", "\t")
+					if loadBalancerVipDeleteParam.GenerateSkeleton {
+						loadBalancerVipDeleteParam.GenerateSkeleton = false
+						loadBalancerVipDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerVipDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3490,19 +3490,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerVipDeleteParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerVipDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerVipDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerVipDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerVipDeleteParam.Selector) == 0 {
+						if len(loadBalancerVipDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3510,13 +3510,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerVipDeleteParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerVipDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerVipDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerVipDeleteParam.Selector)
 						}
 
 					} else {
@@ -3537,8 +3537,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerVipDeleteParam.Selector) == 0 || hasTags(&v, loadbalancerVipDeleteParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerVipDeleteParam.Selector) == 0 || hasTags(&v, loadBalancerVipDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3559,7 +3559,7 @@ func init() {
 					}
 
 					// confirm
-					if !loadbalancerVipDeleteParam.Assumeyes {
+					if !loadBalancerVipDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3573,11 +3573,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerVipDeleteParam.SetId(id)
-						p := *loadbalancerVipDeleteParam // copy struct value
-						loadbalancerVipDeleteParam := &p
+						loadBalancerVipDeleteParam.SetId(id)
+						p := *loadBalancerVipDeleteParam // copy struct value
+						loadBalancerVipDeleteParam := &p
 						go func() {
-							err := funcs.LoadbalancerVipDelete(ctx, loadbalancerVipDeleteParam)
+							err := funcs.LoadBalancerVipDelete(ctx, loadBalancerVipDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3677,72 +3677,72 @@ func init() {
 						return err
 					}
 
-					loadbalancerServerInfoParam.ParamTemplate = c.String("param-template")
-					loadbalancerServerInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerServerInfoParam)
+					loadBalancerServerInfoParam.ParamTemplate = c.String("param-template")
+					loadBalancerServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerServerInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerInfoLoadbalancerParam()
+						p := params.NewServerInfoLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerServerInfoParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerServerInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("vip-index") {
-						loadbalancerServerInfoParam.VipIndex = c.Int("vip-index")
+						loadBalancerServerInfoParam.VipIndex = c.Int("vip-index")
 					}
 					if c.IsSet("vip") {
-						loadbalancerServerInfoParam.Vip = c.String("vip")
+						loadBalancerServerInfoParam.Vip = c.String("vip")
 					}
 					if c.IsSet("port") {
-						loadbalancerServerInfoParam.Port = c.Int("port")
+						loadBalancerServerInfoParam.Port = c.Int("port")
 					}
 					if c.IsSet("selector") {
-						loadbalancerServerInfoParam.Selector = c.StringSlice("selector")
+						loadBalancerServerInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerServerInfoParam.ParamTemplate = c.String("param-template")
+						loadBalancerServerInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerServerInfoParam.Parameters = c.String("parameters")
+						loadBalancerServerInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerServerInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerServerInfoParam.ParameterFile = c.String("parameter-file")
+						loadBalancerServerInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						loadbalancerServerInfoParam.OutputType = c.String("output-type")
+						loadBalancerServerInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						loadbalancerServerInfoParam.Column = c.StringSlice("column")
+						loadBalancerServerInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						loadbalancerServerInfoParam.Quiet = c.Bool("quiet")
+						loadBalancerServerInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						loadbalancerServerInfoParam.Format = c.String("format")
+						loadBalancerServerInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						loadbalancerServerInfoParam.FormatFile = c.String("format-file")
+						loadBalancerServerInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						loadbalancerServerInfoParam.Query = c.String("query")
+						loadBalancerServerInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						loadbalancerServerInfoParam.QueryFile = c.String("query-file")
+						loadBalancerServerInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						loadbalancerServerInfoParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerServerInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3750,7 +3750,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerServerInfoParam
+					var outputTypeHolder interface{} = loadBalancerServerInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3761,10 +3761,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerServerInfoParam.GenerateSkeleton {
-						loadbalancerServerInfoParam.GenerateSkeleton = false
-						loadbalancerServerInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerServerInfoParam, "", "\t")
+					if loadBalancerServerInfoParam.GenerateSkeleton {
+						loadBalancerServerInfoParam.GenerateSkeleton = false
+						loadBalancerServerInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerServerInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3773,19 +3773,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerServerInfoParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerServerInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerServerInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerServerInfoParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerServerInfoParam.Selector) == 0 {
+						if len(loadBalancerServerInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3793,13 +3793,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerServerInfoParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerServerInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerServerInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerServerInfoParam.Selector)
 						}
 
 					} else {
@@ -3820,8 +3820,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerServerInfoParam.Selector) == 0 || hasTags(&v, loadbalancerServerInfoParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerServerInfoParam.Selector) == 0 || hasTags(&v, loadBalancerServerInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3846,11 +3846,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerServerInfoParam.SetId(id)
-						p := *loadbalancerServerInfoParam // copy struct value
-						loadbalancerServerInfoParam := &p
+						loadBalancerServerInfoParam.SetId(id)
+						p := *loadBalancerServerInfoParam // copy struct value
+						loadBalancerServerInfoParam := &p
 						go func() {
-							err := funcs.LoadbalancerServerInfo(ctx, loadbalancerServerInfoParam)
+							err := funcs.LoadBalancerServerInfo(ctx, loadBalancerServerInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3945,69 +3945,69 @@ func init() {
 						return err
 					}
 
-					loadbalancerServerAddParam.ParamTemplate = c.String("param-template")
-					loadbalancerServerAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerServerAddParam)
+					loadBalancerServerAddParam.ParamTemplate = c.String("param-template")
+					loadBalancerServerAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerServerAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerAddLoadbalancerParam()
+						p := params.NewServerAddLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerServerAddParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerServerAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("vip-index") {
-						loadbalancerServerAddParam.VipIndex = c.Int("vip-index")
+						loadBalancerServerAddParam.VipIndex = c.Int("vip-index")
 					}
 					if c.IsSet("vip") {
-						loadbalancerServerAddParam.Vip = c.String("vip")
+						loadBalancerServerAddParam.Vip = c.String("vip")
 					}
 					if c.IsSet("port") {
-						loadbalancerServerAddParam.Port = c.Int("port")
+						loadBalancerServerAddParam.Port = c.Int("port")
 					}
 					if c.IsSet("ipaddress") {
-						loadbalancerServerAddParam.Ipaddress = c.String("ipaddress")
+						loadBalancerServerAddParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("protocol") {
-						loadbalancerServerAddParam.Protocol = c.String("protocol")
+						loadBalancerServerAddParam.Protocol = c.String("protocol")
 					}
 					if c.IsSet("path") {
-						loadbalancerServerAddParam.Path = c.String("path")
+						loadBalancerServerAddParam.Path = c.String("path")
 					}
 					if c.IsSet("response-code") {
-						loadbalancerServerAddParam.ResponseCode = c.Int("response-code")
+						loadBalancerServerAddParam.ResponseCode = c.Int("response-code")
 					}
 					if c.IsSet("disabled") {
-						loadbalancerServerAddParam.Disabled = c.Bool("disabled")
+						loadBalancerServerAddParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("selector") {
-						loadbalancerServerAddParam.Selector = c.StringSlice("selector")
+						loadBalancerServerAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						loadbalancerServerAddParam.Assumeyes = c.Bool("assumeyes")
+						loadBalancerServerAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerServerAddParam.ParamTemplate = c.String("param-template")
+						loadBalancerServerAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerServerAddParam.Parameters = c.String("parameters")
+						loadBalancerServerAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerServerAddParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerServerAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerServerAddParam.ParameterFile = c.String("parameter-file")
+						loadBalancerServerAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerServerAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerServerAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						loadbalancerServerAddParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerServerAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4015,7 +4015,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerServerAddParam
+					var outputTypeHolder interface{} = loadBalancerServerAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4026,10 +4026,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerServerAddParam.GenerateSkeleton {
-						loadbalancerServerAddParam.GenerateSkeleton = false
-						loadbalancerServerAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerServerAddParam, "", "\t")
+					if loadBalancerServerAddParam.GenerateSkeleton {
+						loadBalancerServerAddParam.GenerateSkeleton = false
+						loadBalancerServerAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerServerAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4038,19 +4038,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerServerAddParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerServerAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerServerAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerServerAddParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerServerAddParam.Selector) == 0 {
+						if len(loadBalancerServerAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4058,13 +4058,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerServerAddParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerServerAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerServerAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerServerAddParam.Selector)
 						}
 
 					} else {
@@ -4085,8 +4085,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerServerAddParam.Selector) == 0 || hasTags(&v, loadbalancerServerAddParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerServerAddParam.Selector) == 0 || hasTags(&v, loadBalancerServerAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4107,7 +4107,7 @@ func init() {
 					}
 
 					// confirm
-					if !loadbalancerServerAddParam.Assumeyes {
+					if !loadBalancerServerAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -4121,11 +4121,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerServerAddParam.SetId(id)
-						p := *loadbalancerServerAddParam // copy struct value
-						loadbalancerServerAddParam := &p
+						loadBalancerServerAddParam.SetId(id)
+						p := *loadBalancerServerAddParam // copy struct value
+						loadBalancerServerAddParam := &p
 						go func() {
-							err := funcs.LoadbalancerServerAdd(ctx, loadbalancerServerAddParam)
+							err := funcs.LoadBalancerServerAdd(ctx, loadBalancerServerAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4219,69 +4219,69 @@ func init() {
 						return err
 					}
 
-					loadbalancerServerUpdateParam.ParamTemplate = c.String("param-template")
-					loadbalancerServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerServerUpdateParam)
+					loadBalancerServerUpdateParam.ParamTemplate = c.String("param-template")
+					loadBalancerServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerServerUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerUpdateLoadbalancerParam()
+						p := params.NewServerUpdateLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerServerUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerServerUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("vip-index") {
-						loadbalancerServerUpdateParam.VipIndex = c.Int("vip-index")
+						loadBalancerServerUpdateParam.VipIndex = c.Int("vip-index")
 					}
 					if c.IsSet("vip") {
-						loadbalancerServerUpdateParam.Vip = c.String("vip")
+						loadBalancerServerUpdateParam.Vip = c.String("vip")
 					}
 					if c.IsSet("port") {
-						loadbalancerServerUpdateParam.Port = c.Int("port")
+						loadBalancerServerUpdateParam.Port = c.Int("port")
 					}
 					if c.IsSet("ipaddress") {
-						loadbalancerServerUpdateParam.Ipaddress = c.String("ipaddress")
+						loadBalancerServerUpdateParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("protocol") {
-						loadbalancerServerUpdateParam.Protocol = c.String("protocol")
+						loadBalancerServerUpdateParam.Protocol = c.String("protocol")
 					}
 					if c.IsSet("path") {
-						loadbalancerServerUpdateParam.Path = c.String("path")
+						loadBalancerServerUpdateParam.Path = c.String("path")
 					}
 					if c.IsSet("response-code") {
-						loadbalancerServerUpdateParam.ResponseCode = c.Int("response-code")
+						loadBalancerServerUpdateParam.ResponseCode = c.Int("response-code")
 					}
 					if c.IsSet("disabled") {
-						loadbalancerServerUpdateParam.Disabled = c.Bool("disabled")
+						loadBalancerServerUpdateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("selector") {
-						loadbalancerServerUpdateParam.Selector = c.StringSlice("selector")
+						loadBalancerServerUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						loadbalancerServerUpdateParam.Assumeyes = c.Bool("assumeyes")
+						loadBalancerServerUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerServerUpdateParam.ParamTemplate = c.String("param-template")
+						loadBalancerServerUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerServerUpdateParam.Parameters = c.String("parameters")
+						loadBalancerServerUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerServerUpdateParam.ParameterFile = c.String("parameter-file")
+						loadBalancerServerUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						loadbalancerServerUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerServerUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4289,7 +4289,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerServerUpdateParam
+					var outputTypeHolder interface{} = loadBalancerServerUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4300,10 +4300,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerServerUpdateParam.GenerateSkeleton {
-						loadbalancerServerUpdateParam.GenerateSkeleton = false
-						loadbalancerServerUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerServerUpdateParam, "", "\t")
+					if loadBalancerServerUpdateParam.GenerateSkeleton {
+						loadBalancerServerUpdateParam.GenerateSkeleton = false
+						loadBalancerServerUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerServerUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4312,19 +4312,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerServerUpdateParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerServerUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerServerUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerServerUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerServerUpdateParam.Selector) == 0 {
+						if len(loadBalancerServerUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4332,13 +4332,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerServerUpdateParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerServerUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerServerUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerServerUpdateParam.Selector)
 						}
 
 					} else {
@@ -4359,8 +4359,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerServerUpdateParam.Selector) == 0 || hasTags(&v, loadbalancerServerUpdateParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerServerUpdateParam.Selector) == 0 || hasTags(&v, loadBalancerServerUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4381,7 +4381,7 @@ func init() {
 					}
 
 					// confirm
-					if !loadbalancerServerUpdateParam.Assumeyes {
+					if !loadBalancerServerUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -4395,11 +4395,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerServerUpdateParam.SetId(id)
-						p := *loadbalancerServerUpdateParam // copy struct value
-						loadbalancerServerUpdateParam := &p
+						loadBalancerServerUpdateParam.SetId(id)
+						p := *loadBalancerServerUpdateParam // copy struct value
+						loadBalancerServerUpdateParam := &p
 						go func() {
-							err := funcs.LoadbalancerServerUpdate(ctx, loadbalancerServerUpdateParam)
+							err := funcs.LoadBalancerServerUpdate(ctx, loadBalancerServerUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4477,57 +4477,57 @@ func init() {
 						return err
 					}
 
-					loadbalancerServerDeleteParam.ParamTemplate = c.String("param-template")
-					loadbalancerServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerServerDeleteParam)
+					loadBalancerServerDeleteParam.ParamTemplate = c.String("param-template")
+					loadBalancerServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerServerDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerDeleteLoadbalancerParam()
+						p := params.NewServerDeleteLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerServerDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerServerDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("vip-index") {
-						loadbalancerServerDeleteParam.VipIndex = c.Int("vip-index")
+						loadBalancerServerDeleteParam.VipIndex = c.Int("vip-index")
 					}
 					if c.IsSet("vip") {
-						loadbalancerServerDeleteParam.Vip = c.String("vip")
+						loadBalancerServerDeleteParam.Vip = c.String("vip")
 					}
 					if c.IsSet("port") {
-						loadbalancerServerDeleteParam.Port = c.Int("port")
+						loadBalancerServerDeleteParam.Port = c.Int("port")
 					}
 					if c.IsSet("ipaddress") {
-						loadbalancerServerDeleteParam.Ipaddress = c.String("ipaddress")
+						loadBalancerServerDeleteParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("selector") {
-						loadbalancerServerDeleteParam.Selector = c.StringSlice("selector")
+						loadBalancerServerDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						loadbalancerServerDeleteParam.Assumeyes = c.Bool("assumeyes")
+						loadBalancerServerDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerServerDeleteParam.ParamTemplate = c.String("param-template")
+						loadBalancerServerDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerServerDeleteParam.Parameters = c.String("parameters")
+						loadBalancerServerDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerServerDeleteParam.ParameterFile = c.String("parameter-file")
+						loadBalancerServerDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerServerDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerServerDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						loadbalancerServerDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerServerDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4535,7 +4535,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerServerDeleteParam
+					var outputTypeHolder interface{} = loadBalancerServerDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4546,10 +4546,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerServerDeleteParam.GenerateSkeleton {
-						loadbalancerServerDeleteParam.GenerateSkeleton = false
-						loadbalancerServerDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerServerDeleteParam, "", "\t")
+					if loadBalancerServerDeleteParam.GenerateSkeleton {
+						loadBalancerServerDeleteParam.GenerateSkeleton = false
+						loadBalancerServerDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerServerDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4558,19 +4558,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerServerDeleteParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerServerDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerServerDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerServerDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerServerDeleteParam.Selector) == 0 {
+						if len(loadBalancerServerDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4578,13 +4578,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerServerDeleteParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerServerDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerServerDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerServerDeleteParam.Selector)
 						}
 
 					} else {
@@ -4605,8 +4605,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerServerDeleteParam.Selector) == 0 || hasTags(&v, loadbalancerServerDeleteParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerServerDeleteParam.Selector) == 0 || hasTags(&v, loadBalancerServerDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4627,7 +4627,7 @@ func init() {
 					}
 
 					// confirm
-					if !loadbalancerServerDeleteParam.Assumeyes {
+					if !loadBalancerServerDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -4641,11 +4641,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerServerDeleteParam.SetId(id)
-						p := *loadbalancerServerDeleteParam // copy struct value
-						loadbalancerServerDeleteParam := &p
+						loadBalancerServerDeleteParam.SetId(id)
+						p := *loadBalancerServerDeleteParam // copy struct value
+						loadBalancerServerDeleteParam := &p
 						go func() {
-							err := funcs.LoadbalancerServerDelete(ctx, loadbalancerServerDeleteParam)
+							err := funcs.LoadBalancerServerDelete(ctx, loadBalancerServerDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4659,7 +4659,7 @@ func init() {
 			},
 			{
 				Name:      "monitor",
-				Usage:     "Monitor Loadbalancer",
+				Usage:     "Monitor LoadBalancer",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -4746,72 +4746,72 @@ func init() {
 						return err
 					}
 
-					loadbalancerMonitorParam.ParamTemplate = c.String("param-template")
-					loadbalancerMonitorParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(loadbalancerMonitorParam)
+					loadBalancerMonitorParam.ParamTemplate = c.String("param-template")
+					loadBalancerMonitorParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(loadBalancerMonitorParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewMonitorLoadbalancerParam()
+						p := params.NewMonitorLoadBalancerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(loadbalancerMonitorParam, p, mergo.WithOverride)
+						mergo.Merge(loadBalancerMonitorParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						loadbalancerMonitorParam.Start = c.String("start")
+						loadBalancerMonitorParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						loadbalancerMonitorParam.End = c.String("end")
+						loadBalancerMonitorParam.End = c.String("end")
 					}
 					if c.IsSet("key-format") {
-						loadbalancerMonitorParam.KeyFormat = c.String("key-format")
+						loadBalancerMonitorParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						loadbalancerMonitorParam.Selector = c.StringSlice("selector")
+						loadBalancerMonitorParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						loadbalancerMonitorParam.ParamTemplate = c.String("param-template")
+						loadBalancerMonitorParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						loadbalancerMonitorParam.Parameters = c.String("parameters")
+						loadBalancerMonitorParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						loadbalancerMonitorParam.ParamTemplateFile = c.String("param-template-file")
+						loadBalancerMonitorParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						loadbalancerMonitorParam.ParameterFile = c.String("parameter-file")
+						loadBalancerMonitorParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						loadbalancerMonitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						loadBalancerMonitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						loadbalancerMonitorParam.OutputType = c.String("output-type")
+						loadBalancerMonitorParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						loadbalancerMonitorParam.Column = c.StringSlice("column")
+						loadBalancerMonitorParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						loadbalancerMonitorParam.Quiet = c.Bool("quiet")
+						loadBalancerMonitorParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						loadbalancerMonitorParam.Format = c.String("format")
+						loadBalancerMonitorParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						loadbalancerMonitorParam.FormatFile = c.String("format-file")
+						loadBalancerMonitorParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						loadbalancerMonitorParam.Query = c.String("query")
+						loadBalancerMonitorParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						loadbalancerMonitorParam.QueryFile = c.String("query-file")
+						loadBalancerMonitorParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						loadbalancerMonitorParam.Id = sacloud.ID(c.Int64("id"))
+						loadBalancerMonitorParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4819,7 +4819,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = loadbalancerMonitorParam
+					var outputTypeHolder interface{} = loadBalancerMonitorParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4830,10 +4830,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if loadbalancerMonitorParam.GenerateSkeleton {
-						loadbalancerMonitorParam.GenerateSkeleton = false
-						loadbalancerMonitorParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(loadbalancerMonitorParam, "", "\t")
+					if loadBalancerMonitorParam.GenerateSkeleton {
+						loadBalancerMonitorParam.GenerateSkeleton = false
+						loadBalancerMonitorParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(loadBalancerMonitorParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4842,19 +4842,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := loadbalancerMonitorParam.Validate(); len(errors) > 0 {
+					if errors := loadBalancerMonitorParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), loadbalancerMonitorParam)
+					ctx := command.NewContext(c, c.Args().Slice(), loadBalancerMonitorParam)
 
-					apiClient := ctx.GetAPIClient().Loadbalancer
+					apiClient := ctx.GetAPIClient().LoadBalancer
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(loadbalancerMonitorParam.Selector) == 0 {
+						if len(loadBalancerMonitorParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4862,13 +4862,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Loadbalancers {
-							if hasTags(&v, loadbalancerMonitorParam.Selector) {
+						for _, v := range res.LoadBalancers {
+							if hasTags(&v, loadBalancerMonitorParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadbalancerMonitorParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", loadBalancerMonitorParam.Selector)
 						}
 
 					} else {
@@ -4889,8 +4889,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Loadbalancers {
-										if len(loadbalancerMonitorParam.Selector) == 0 || hasTags(&v, loadbalancerMonitorParam.Selector) {
+									for _, v := range res.LoadBalancers {
+										if len(loadBalancerMonitorParam.Selector) == 0 || hasTags(&v, loadBalancerMonitorParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4915,11 +4915,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						loadbalancerMonitorParam.SetId(id)
-						p := *loadbalancerMonitorParam // copy struct value
-						loadbalancerMonitorParam := &p
+						loadBalancerMonitorParam.SetId(id)
+						p := *loadBalancerMonitorParam // copy struct value
+						loadBalancerMonitorParam := &p
 						go func() {
-							err := funcs.LoadbalancerMonitor(ctx, loadbalancerMonitorParam)
+							err := funcs.LoadBalancerMonitor(ctx, loadBalancerMonitorParam)
 							if err != nil {
 								errs = append(errs, err)
 							}

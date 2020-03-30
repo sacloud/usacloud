@@ -23,8 +23,8 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListProductlicenseParam is input parameters for the sacloud API
-type ListProductlicenseParam struct {
+// ListProductLicenseParam is input parameters for the sacloud API
+type ListProductLicenseParam struct {
 	Name              []string     `json:"name"`
 	Id                []sacloud.ID `json:"id"`
 	From              int          `json:"from"`
@@ -44,13 +44,13 @@ type ListProductlicenseParam struct {
 	QueryFile         string       `json:"query-file"`
 }
 
-// NewListProductlicenseParam return new ListProductlicenseParam
-func NewListProductlicenseParam() *ListProductlicenseParam {
-	return &ListProductlicenseParam{}
+// NewListProductLicenseParam return new ListProductLicenseParam
+func NewListProductLicenseParam() *ListProductLicenseParam {
+	return &ListProductLicenseParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListProductlicenseParam) FillValueToSkeleton() {
+func (p *ListProductLicenseParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -106,7 +106,7 @@ func (p *ListProductlicenseParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListProductlicenseParam) Validate() []error {
+func (p *ListProductLicenseParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
@@ -157,152 +157,152 @@ func (p *ListProductlicenseParam) Validate() []error {
 	return errors
 }
 
-func (p *ListProductlicenseParam) GetResourceDef() *schema.Resource {
+func (p *ListProductLicenseParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProductLicense"]
 }
 
-func (p *ListProductlicenseParam) GetCommandDef() *schema.Command {
+func (p *ListProductLicenseParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListProductlicenseParam) GetIncludeFields() []string {
+func (p *ListProductLicenseParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListProductlicenseParam) GetExcludeFields() []string {
+func (p *ListProductLicenseParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListProductlicenseParam) GetTableType() output.TableType {
+func (p *ListProductLicenseParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListProductlicenseParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListProductLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListProductlicenseParam) SetName(v []string) {
+func (p *ListProductLicenseParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListProductlicenseParam) GetName() []string {
+func (p *ListProductLicenseParam) GetName() []string {
 	return p.Name
 }
-func (p *ListProductlicenseParam) SetId(v []sacloud.ID) {
+func (p *ListProductLicenseParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListProductlicenseParam) GetId() []sacloud.ID {
+func (p *ListProductLicenseParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListProductlicenseParam) SetFrom(v int) {
+func (p *ListProductLicenseParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListProductlicenseParam) GetFrom() int {
+func (p *ListProductLicenseParam) GetFrom() int {
 	return p.From
 }
-func (p *ListProductlicenseParam) SetMax(v int) {
+func (p *ListProductLicenseParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListProductlicenseParam) GetMax() int {
+func (p *ListProductLicenseParam) GetMax() int {
 	return p.Max
 }
-func (p *ListProductlicenseParam) SetSort(v []string) {
+func (p *ListProductLicenseParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListProductlicenseParam) GetSort() []string {
+func (p *ListProductLicenseParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListProductlicenseParam) SetParamTemplate(v string) {
+func (p *ListProductLicenseParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListProductlicenseParam) GetParamTemplate() string {
+func (p *ListProductLicenseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListProductlicenseParam) SetParameters(v string) {
+func (p *ListProductLicenseParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ListProductlicenseParam) GetParameters() string {
+func (p *ListProductLicenseParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ListProductlicenseParam) SetParamTemplateFile(v string) {
+func (p *ListProductLicenseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListProductlicenseParam) GetParamTemplateFile() string {
+func (p *ListProductLicenseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListProductlicenseParam) SetParameterFile(v string) {
+func (p *ListProductLicenseParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ListProductlicenseParam) GetParameterFile() string {
+func (p *ListProductLicenseParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ListProductlicenseParam) SetGenerateSkeleton(v bool) {
+func (p *ListProductLicenseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListProductlicenseParam) GetGenerateSkeleton() bool {
+func (p *ListProductLicenseParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListProductlicenseParam) SetOutputType(v string) {
+func (p *ListProductLicenseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListProductlicenseParam) GetOutputType() string {
+func (p *ListProductLicenseParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListProductlicenseParam) SetColumn(v []string) {
+func (p *ListProductLicenseParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListProductlicenseParam) GetColumn() []string {
+func (p *ListProductLicenseParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ListProductlicenseParam) SetQuiet(v bool) {
+func (p *ListProductLicenseParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListProductlicenseParam) GetQuiet() bool {
+func (p *ListProductLicenseParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListProductlicenseParam) SetFormat(v string) {
+func (p *ListProductLicenseParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListProductlicenseParam) GetFormat() string {
+func (p *ListProductLicenseParam) GetFormat() string {
 	return p.Format
 }
-func (p *ListProductlicenseParam) SetFormatFile(v string) {
+func (p *ListProductLicenseParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListProductlicenseParam) GetFormatFile() string {
+func (p *ListProductLicenseParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListProductlicenseParam) SetQuery(v string) {
+func (p *ListProductLicenseParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListProductlicenseParam) GetQuery() string {
+func (p *ListProductLicenseParam) GetQuery() string {
 	return p.Query
 }
-func (p *ListProductlicenseParam) SetQueryFile(v string) {
+func (p *ListProductLicenseParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListProductlicenseParam) GetQueryFile() string {
+func (p *ListProductLicenseParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// ReadProductlicenseParam is input parameters for the sacloud API
-type ReadProductlicenseParam struct {
+// ReadProductLicenseParam is input parameters for the sacloud API
+type ReadProductLicenseParam struct {
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
 	Parameters        string     `json:"parameters"`
@@ -319,13 +319,13 @@ type ReadProductlicenseParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewReadProductlicenseParam return new ReadProductlicenseParam
-func NewReadProductlicenseParam() *ReadProductlicenseParam {
-	return &ReadProductlicenseParam{}
+// NewReadProductLicenseParam return new ReadProductLicenseParam
+func NewReadProductLicenseParam() *ReadProductLicenseParam {
+	return &ReadProductLicenseParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ReadProductlicenseParam) FillValueToSkeleton() {
+func (p *ReadProductLicenseParam) FillValueToSkeleton() {
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -372,7 +372,7 @@ func (p *ReadProductlicenseParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ReadProductlicenseParam) Validate() []error {
+func (p *ReadProductLicenseParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -412,125 +412,125 @@ func (p *ReadProductlicenseParam) Validate() []error {
 	return errors
 }
 
-func (p *ReadProductlicenseParam) GetResourceDef() *schema.Resource {
+func (p *ReadProductLicenseParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ProductLicense"]
 }
 
-func (p *ReadProductlicenseParam) GetCommandDef() *schema.Command {
+func (p *ReadProductLicenseParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["read"]
 }
 
-func (p *ReadProductlicenseParam) GetIncludeFields() []string {
+func (p *ReadProductLicenseParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ReadProductlicenseParam) GetExcludeFields() []string {
+func (p *ReadProductLicenseParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ReadProductlicenseParam) GetTableType() output.TableType {
+func (p *ReadProductLicenseParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ReadProductlicenseParam) GetColumnDefs() []output.ColumnDef {
+func (p *ReadProductLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReadProductlicenseParam) SetAssumeyes(v bool) {
+func (p *ReadProductLicenseParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ReadProductlicenseParam) GetAssumeyes() bool {
+func (p *ReadProductLicenseParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ReadProductlicenseParam) SetParamTemplate(v string) {
+func (p *ReadProductLicenseParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ReadProductlicenseParam) GetParamTemplate() string {
+func (p *ReadProductLicenseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ReadProductlicenseParam) SetParameters(v string) {
+func (p *ReadProductLicenseParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ReadProductlicenseParam) GetParameters() string {
+func (p *ReadProductLicenseParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ReadProductlicenseParam) SetParamTemplateFile(v string) {
+func (p *ReadProductLicenseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ReadProductlicenseParam) GetParamTemplateFile() string {
+func (p *ReadProductLicenseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ReadProductlicenseParam) SetParameterFile(v string) {
+func (p *ReadProductLicenseParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ReadProductlicenseParam) GetParameterFile() string {
+func (p *ReadProductLicenseParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ReadProductlicenseParam) SetGenerateSkeleton(v bool) {
+func (p *ReadProductLicenseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ReadProductlicenseParam) GetGenerateSkeleton() bool {
+func (p *ReadProductLicenseParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReadProductlicenseParam) SetOutputType(v string) {
+func (p *ReadProductLicenseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ReadProductlicenseParam) GetOutputType() string {
+func (p *ReadProductLicenseParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ReadProductlicenseParam) SetColumn(v []string) {
+func (p *ReadProductLicenseParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ReadProductlicenseParam) GetColumn() []string {
+func (p *ReadProductLicenseParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ReadProductlicenseParam) SetQuiet(v bool) {
+func (p *ReadProductLicenseParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ReadProductlicenseParam) GetQuiet() bool {
+func (p *ReadProductLicenseParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ReadProductlicenseParam) SetFormat(v string) {
+func (p *ReadProductLicenseParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ReadProductlicenseParam) GetFormat() string {
+func (p *ReadProductLicenseParam) GetFormat() string {
 	return p.Format
 }
-func (p *ReadProductlicenseParam) SetFormatFile(v string) {
+func (p *ReadProductLicenseParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ReadProductlicenseParam) GetFormatFile() string {
+func (p *ReadProductLicenseParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ReadProductlicenseParam) SetQuery(v string) {
+func (p *ReadProductLicenseParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ReadProductlicenseParam) GetQuery() string {
+func (p *ReadProductLicenseParam) GetQuery() string {
 	return p.Query
 }
-func (p *ReadProductlicenseParam) SetQueryFile(v string) {
+func (p *ReadProductLicenseParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ReadProductlicenseParam) GetQueryFile() string {
+func (p *ReadProductLicenseParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadProductlicenseParam) SetId(v sacloud.ID) {
+func (p *ReadProductLicenseParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadProductlicenseParam) GetId() sacloud.ID {
+func (p *ReadProductLicenseParam) GetId() sacloud.ID {
 	return p.Id
 }

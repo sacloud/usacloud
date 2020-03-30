@@ -25,19 +25,19 @@ import (
 )
 
 var (
-	privatehostListParam         = params.NewListPrivatehostParam()
-	privatehostCreateParam       = params.NewCreatePrivatehostParam()
-	privatehostReadParam         = params.NewReadPrivatehostParam()
-	privatehostUpdateParam       = params.NewUpdatePrivatehostParam()
-	privatehostDeleteParam       = params.NewDeletePrivatehostParam()
-	privatehostServerInfoParam   = params.NewServerInfoPrivatehostParam()
-	privatehostServerAddParam    = params.NewServerAddPrivatehostParam()
-	privatehostServerDeleteParam = params.NewServerDeletePrivatehostParam()
+	privateHostListParam         = params.NewListPrivateHostParam()
+	privateHostCreateParam       = params.NewCreatePrivateHostParam()
+	privateHostReadParam         = params.NewReadPrivateHostParam()
+	privateHostUpdateParam       = params.NewUpdatePrivateHostParam()
+	privateHostDeleteParam       = params.NewDeletePrivateHostParam()
+	privateHostServerInfoParam   = params.NewServerInfoPrivateHostParam()
+	privateHostServerAddParam    = params.NewServerAddPrivateHostParam()
+	privateHostServerDeleteParam = params.NewServerDeletePrivateHostParam()
 )
 
-// privatehostCmd represents the command to manage SAKURA Cloud PrivateHost
-var privatehostCmd = &cobra.Command{
-	Use:   "privatehost",
+// privateHostCmd represents the command to manage SAKURA Cloud PrivateHost
+var privateHostCmd = &cobra.Command{
+	Use:   "privateHost",
 	Short: "A manage commands of PrivateHost",
 	Long:  `A manage commands of PrivateHost`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -45,181 +45,181 @@ var privatehostCmd = &cobra.Command{
 	},
 }
 
-var privatehostListCmd = &cobra.Command{
+var privateHostListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Privatehost",
-	Long:    `List Privatehost`,
+	Short:   "List PrivateHost",
+	Long:    `List PrivateHost`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := privatehostListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := privateHostListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(privatehostListParam))
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(privateHostListParam))
 		return err
 	},
 }
 
-func privatehostListCmdInit() {
-	fs := privatehostListCmd.Flags()
-	fs.StringSliceVarP(&privatehostListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &privatehostListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&privatehostListParam.From, "from", "", 0, "set offset")
-	fs.IntVarP(&privatehostListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&privatehostListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&privatehostListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+func privateHostListCmdInit() {
+	fs := privateHostListCmd.Flags()
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &privateHostListParam.Id), "id", "", "set filter by id(s)")
+	fs.IntVarP(&privateHostListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&privateHostListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&privateHostListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&privateHostListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.StringSliceVarP(&privateHostListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 }
 
-var privatehostCreateCmd = &cobra.Command{
+var privateHostCreateCmd = &cobra.Command{
 	Use: "create",
 
-	Short: "Create Privatehost",
-	Long:  `Create Privatehost`,
+	Short: "Create PrivateHost",
+	Long:  `Create PrivateHost`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := privatehostCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := privateHostCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(privatehostCreateParam))
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(privateHostCreateParam))
 		return err
 	},
 }
 
-func privatehostCreateCmdInit() {
-	fs := privatehostCreateCmd.Flags()
-	fs.StringVarP(&privatehostCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&privatehostCreateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&privatehostCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &privatehostCreateParam.IconId), "icon-id", "", "set Icon ID")
+func privateHostCreateCmdInit() {
+	fs := privateHostCreateCmd.Flags()
+	fs.StringVarP(&privateHostCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&privateHostCreateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&privateHostCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &privateHostCreateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
-var privatehostReadCmd = &cobra.Command{
+var privateHostReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Privatehost",
-	Long:  `Read Privatehost`,
+	Short: "Read PrivateHost",
+	Long:  `Read PrivateHost`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := privatehostReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := privateHostReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(privatehostReadParam))
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(privateHostReadParam))
 		return err
 	},
 }
 
-func privatehostReadCmdInit() {
+func privateHostReadCmdInit() {
 }
 
-var privatehostUpdateCmd = &cobra.Command{
+var privateHostUpdateCmd = &cobra.Command{
 	Use: "update",
 
-	Short: "Update Privatehost",
-	Long:  `Update Privatehost`,
+	Short: "Update PrivateHost",
+	Long:  `Update PrivateHost`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := privatehostUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := privateHostUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(privatehostUpdateParam))
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(privateHostUpdateParam))
 		return err
 	},
 }
 
-func privatehostUpdateCmdInit() {
-	fs := privatehostUpdateCmd.Flags()
-	fs.StringVarP(&privatehostUpdateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&privatehostUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &privatehostUpdateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringVarP(&privatehostUpdateParam.Name, "name", "", "", "set resource display name")
+func privateHostUpdateCmdInit() {
+	fs := privateHostUpdateCmd.Flags()
+	fs.StringVarP(&privateHostUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&privateHostUpdateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&privateHostUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &privateHostUpdateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
-var privatehostDeleteCmd = &cobra.Command{
+var privateHostDeleteCmd = &cobra.Command{
 	Use:     "delete",
 	Aliases: []string{"rm"},
-	Short:   "Delete Privatehost",
-	Long:    `Delete Privatehost`,
+	Short:   "Delete PrivateHost",
+	Long:    `Delete PrivateHost`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := privatehostDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := privateHostDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(privatehostDeleteParam))
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(privateHostDeleteParam))
 		return err
 	},
 }
 
-func privatehostDeleteCmdInit() {
+func privateHostDeleteCmdInit() {
 }
 
-var privatehostServerInfoCmd = &cobra.Command{
+var privateHostServerInfoCmd = &cobra.Command{
 	Use:     "server-info",
 	Aliases: []string{"server-list"},
-	Short:   "ServerInfo Privatehost",
-	Long:    `ServerInfo Privatehost`,
+	Short:   "ServerInfo PrivateHost",
+	Long:    `ServerInfo PrivateHost`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := privatehostServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := privateHostServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("server-info parameter: \n%s\n", debugMarshalIndent(privatehostServerInfoParam))
+		fmt.Printf("server-info parameter: \n%s\n", debugMarshalIndent(privateHostServerInfoParam))
 		return err
 	},
 }
 
-func privatehostServerInfoCmdInit() {
+func privateHostServerInfoCmdInit() {
 }
 
-var privatehostServerAddCmd = &cobra.Command{
+var privateHostServerAddCmd = &cobra.Command{
 	Use: "server-add",
 
-	Short: "ServerAdd Privatehost",
-	Long:  `ServerAdd Privatehost`,
+	Short: "ServerAdd PrivateHost",
+	Long:  `ServerAdd PrivateHost`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := privatehostServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := privateHostServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("server-add parameter: \n%s\n", debugMarshalIndent(privatehostServerAddParam))
+		fmt.Printf("server-add parameter: \n%s\n", debugMarshalIndent(privateHostServerAddParam))
 		return err
 	},
 }
 
-func privatehostServerAddCmdInit() {
-	fs := privatehostServerAddCmd.Flags()
-	fs.VarP(newIDValue(0, &privatehostServerAddParam.ServerId), "server-id", "", "set server ID")
+func privateHostServerAddCmdInit() {
+	fs := privateHostServerAddCmd.Flags()
+	fs.VarP(newIDValue(0, &privateHostServerAddParam.ServerId), "server-id", "", "set server ID")
 }
 
-var privatehostServerDeleteCmd = &cobra.Command{
+var privateHostServerDeleteCmd = &cobra.Command{
 	Use: "server-delete",
 
-	Short: "ServerDelete Privatehost",
-	Long:  `ServerDelete Privatehost`,
+	Short: "ServerDelete PrivateHost",
+	Long:  `ServerDelete PrivateHost`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := privatehostServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := privateHostServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("server-delete parameter: \n%s\n", debugMarshalIndent(privatehostServerDeleteParam))
+		fmt.Printf("server-delete parameter: \n%s\n", debugMarshalIndent(privateHostServerDeleteParam))
 		return err
 	},
 }
 
-func privatehostServerDeleteCmdInit() {
-	fs := privatehostServerDeleteCmd.Flags()
-	fs.VarP(newIDValue(0, &privatehostServerDeleteParam.ServerId), "server-id", "", "set server ID")
+func privateHostServerDeleteCmdInit() {
+	fs := privateHostServerDeleteCmd.Flags()
+	fs.VarP(newIDValue(0, &privateHostServerDeleteParam.ServerId), "server-id", "", "set server ID")
 }
 
 func init() {
-	parent := privatehostCmd
+	parent := privateHostCmd
 
-	privatehostListCmdInit()
-	parent.AddCommand(privatehostListCmd)
+	privateHostListCmdInit()
+	parent.AddCommand(privateHostListCmd)
 
-	privatehostCreateCmdInit()
-	parent.AddCommand(privatehostCreateCmd)
+	privateHostCreateCmdInit()
+	parent.AddCommand(privateHostCreateCmd)
 
-	privatehostReadCmdInit()
-	parent.AddCommand(privatehostReadCmd)
+	privateHostReadCmdInit()
+	parent.AddCommand(privateHostReadCmd)
 
-	privatehostUpdateCmdInit()
-	parent.AddCommand(privatehostUpdateCmd)
+	privateHostUpdateCmdInit()
+	parent.AddCommand(privateHostUpdateCmd)
 
-	privatehostDeleteCmdInit()
-	parent.AddCommand(privatehostDeleteCmd)
+	privateHostDeleteCmdInit()
+	parent.AddCommand(privateHostDeleteCmd)
 
-	privatehostServerInfoCmdInit()
-	parent.AddCommand(privatehostServerInfoCmd)
+	privateHostServerInfoCmdInit()
+	parent.AddCommand(privateHostServerInfoCmd)
 
-	privatehostServerAddCmdInit()
-	parent.AddCommand(privatehostServerAddCmd)
+	privateHostServerAddCmdInit()
+	parent.AddCommand(privateHostServerAddCmd)
 
-	privatehostServerDeleteCmdInit()
-	parent.AddCommand(privatehostServerDeleteCmd)
+	privateHostServerDeleteCmdInit()
+	parent.AddCommand(privateHostServerDeleteCmd)
 
 	rootCmd.AddCommand(parent)
 }

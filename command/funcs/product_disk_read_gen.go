@@ -23,24 +23,24 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ProductdiskRead(ctx command.Context, params *params.ReadProductdiskParam) error {
+func ProductDiskRead(ctx command.Context, params *params.ReadProductDiskParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetProductdiskAPI()
+	api := client.GetProductDiskAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("ProductdiskRead is failed: %s", e)
+		return fmt.Errorf("ProductDiskRead is failed: %s", e)
 	}
 
 	// set params
 
 	// TODO Remove and implements here!!
-	return fmt.Errorf("Not Implements ProductdiskRead : %#v", p)
+	return fmt.Errorf("Not Implements ProductDiskRead : %#v", p)
 
 	// call manipurate functions
 	// res, err := api.XXXX(params.Id, p)
 	// if err != nil {
-	// 	return fmt.Errorf("ProductdiskRead is failed: %s", err)
+	// 	return fmt.Errorf("ProductDiskRead is failed: %s", err)
 	// }
 	// return ctx.GetOutput().Print(res)
 

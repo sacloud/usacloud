@@ -21,19 +21,19 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func InternetIpv6Disable(ctx command.Context, params *params.Ipv6DisableInternetParam) error {
+func InternetIPv6Disable(ctx command.Context, params *params.IPv6DisableInternetParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetInternetAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("InternetIpv6Disable is failed: %s", e)
+		return fmt.Errorf("InternetIPv6Disable is failed: %s", e)
 	}
 
 	// has switch?
 	sw := p.GetSwitch()
 	if sw == nil {
-		return fmt.Errorf("InternetIpv6Disable is failed: %s", "Invalid state: missing Switch resource")
+		return fmt.Errorf("InternetIPv6Disable is failed: %s", "Invalid state: missing Switch resource")
 	}
 
 	if len(sw.IPv6Nets) == 0 {
@@ -43,7 +43,7 @@ func InternetIpv6Disable(ctx command.Context, params *params.Ipv6DisableInternet
 
 	_, err := api.DisableIPv6(params.Id, sw.IPv6Nets[0].ID)
 	if err != nil {
-		return fmt.Errorf("InternetIpv6Disable is failed: %s", err)
+		return fmt.Errorf("InternetIPv6Disable is failed: %s", err)
 	}
 
 	return nil

@@ -25,16 +25,16 @@ import (
 )
 
 var (
-	startupscriptListParam   = params.NewListStartupscriptParam()
-	startupscriptCreateParam = params.NewCreateStartupscriptParam()
-	startupscriptReadParam   = params.NewReadStartupscriptParam()
-	startupscriptUpdateParam = params.NewUpdateStartupscriptParam()
-	startupscriptDeleteParam = params.NewDeleteStartupscriptParam()
+	startupScriptListParam   = params.NewListStartupScriptParam()
+	startupScriptCreateParam = params.NewCreateStartupScriptParam()
+	startupScriptReadParam   = params.NewReadStartupScriptParam()
+	startupScriptUpdateParam = params.NewUpdateStartupScriptParam()
+	startupScriptDeleteParam = params.NewDeleteStartupScriptParam()
 )
 
-// startupscriptCmd represents the command to manage SAKURA Cloud StartupScript
-var startupscriptCmd = &cobra.Command{
-	Use:   "startupscript",
+// startupScriptCmd represents the command to manage SAKURA Cloud StartupScript
+var startupScriptCmd = &cobra.Command{
+	Use:   "startupScript",
 	Short: "A manage commands of StartupScript",
 	Long:  `A manage commands of StartupScript`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -42,126 +42,126 @@ var startupscriptCmd = &cobra.Command{
 	},
 }
 
-var startupscriptListCmd = &cobra.Command{
+var startupScriptListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Startupscript",
-	Long:    `List Startupscript`,
+	Short:   "List StartupScript",
+	Long:    `List StartupScript`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := startupscriptListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := startupScriptListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(startupscriptListParam))
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(startupScriptListParam))
 		return err
 	},
 }
 
-func startupscriptListCmdInit() {
-	fs := startupscriptListCmd.Flags()
-	fs.StringSliceVarP(&startupscriptListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &startupscriptListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&startupscriptListParam.From, "from", "", 0, "set offset")
-	fs.IntVarP(&startupscriptListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&startupscriptListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringVarP(&startupscriptListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
-	fs.StringSliceVarP(&startupscriptListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
-	fs.StringSliceVarP(&startupscriptListParam.Class, "class", "", []string{}, "set filter by class(es)")
+func startupScriptListCmdInit() {
+	fs := startupScriptListCmd.Flags()
+	fs.StringSliceVarP(&startupScriptListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.StringSliceVarP(&startupScriptListParam.Class, "class", "", []string{}, "set filter by class(es)")
+	fs.IntVarP(&startupScriptListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&startupScriptListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&startupScriptListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &startupScriptListParam.Id), "id", "", "set filter by id(s)")
+	fs.IntVarP(&startupScriptListParam.From, "from", "", 0, "set offset")
+	fs.StringVarP(&startupScriptListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
 }
 
-var startupscriptCreateCmd = &cobra.Command{
+var startupScriptCreateCmd = &cobra.Command{
 	Use: "create",
 
-	Short: "Create Startupscript",
-	Long:  `Create Startupscript`,
+	Short: "Create StartupScript",
+	Long:  `Create StartupScript`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := startupscriptCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := startupScriptCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(startupscriptCreateParam))
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(startupScriptCreateParam))
 		return err
 	},
 }
 
-func startupscriptCreateCmdInit() {
-	fs := startupscriptCreateCmd.Flags()
-	fs.VarP(newIDValue(0, &startupscriptCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringVarP(&startupscriptCreateParam.ScriptContent, "script-content", "", "", "set script content")
-	fs.StringVarP(&startupscriptCreateParam.Script, "script", "", "", "set script from file")
-	fs.StringVarP(&startupscriptCreateParam.Class, "class", "", "shell", "set script class[shell/cloud-config-yaml]")
-	fs.StringVarP(&startupscriptCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringSliceVarP(&startupscriptCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+func startupScriptCreateCmdInit() {
+	fs := startupScriptCreateCmd.Flags()
+	fs.StringVarP(&startupScriptCreateParam.Script, "script", "", "", "set script from file")
+	fs.StringVarP(&startupScriptCreateParam.Class, "class", "", "shell", "set script class[shell/cloud-config-yaml]")
+	fs.StringVarP(&startupScriptCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringSliceVarP(&startupScriptCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &startupScriptCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringVarP(&startupScriptCreateParam.ScriptContent, "script-content", "", "", "set script content")
 }
 
-var startupscriptReadCmd = &cobra.Command{
+var startupScriptReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Startupscript",
-	Long:  `Read Startupscript`,
+	Short: "Read StartupScript",
+	Long:  `Read StartupScript`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := startupscriptReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := startupScriptReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(startupscriptReadParam))
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(startupScriptReadParam))
 		return err
 	},
 }
 
-func startupscriptReadCmdInit() {
+func startupScriptReadCmdInit() {
 }
 
-var startupscriptUpdateCmd = &cobra.Command{
+var startupScriptUpdateCmd = &cobra.Command{
 	Use: "update",
 
-	Short: "Update Startupscript",
-	Long:  `Update Startupscript`,
+	Short: "Update StartupScript",
+	Long:  `Update StartupScript`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := startupscriptUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := startupScriptUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(startupscriptUpdateParam))
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(startupScriptUpdateParam))
 		return err
 	},
 }
 
-func startupscriptUpdateCmdInit() {
-	fs := startupscriptUpdateCmd.Flags()
-	fs.StringVarP(&startupscriptUpdateParam.ScriptContent, "script-content", "", "", "set script content")
-	fs.StringVarP(&startupscriptUpdateParam.Script, "script", "", "", "set script from file")
-	fs.StringVarP(&startupscriptUpdateParam.Class, "class", "", "", "set script class[shell/cloud-config-yaml]")
-	fs.StringVarP(&startupscriptUpdateParam.Name, "name", "", "", "set resource display name")
-	fs.StringSliceVarP(&startupscriptUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &startupscriptUpdateParam.IconId), "icon-id", "", "set Icon ID")
+func startupScriptUpdateCmdInit() {
+	fs := startupScriptUpdateCmd.Flags()
+	fs.StringVarP(&startupScriptUpdateParam.Class, "class", "", "", "set script class[shell/cloud-config-yaml]")
+	fs.StringVarP(&startupScriptUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringSliceVarP(&startupScriptUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &startupScriptUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringVarP(&startupScriptUpdateParam.ScriptContent, "script-content", "", "", "set script content")
+	fs.StringVarP(&startupScriptUpdateParam.Script, "script", "", "", "set script from file")
 }
 
-var startupscriptDeleteCmd = &cobra.Command{
+var startupScriptDeleteCmd = &cobra.Command{
 	Use:     "delete",
 	Aliases: []string{"rm"},
-	Short:   "Delete Startupscript",
-	Long:    `Delete Startupscript`,
+	Short:   "Delete StartupScript",
+	Long:    `Delete StartupScript`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := startupscriptDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := startupScriptDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(startupscriptDeleteParam))
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(startupScriptDeleteParam))
 		return err
 	},
 }
 
-func startupscriptDeleteCmdInit() {
+func startupScriptDeleteCmdInit() {
 }
 
 func init() {
-	parent := startupscriptCmd
+	parent := startupScriptCmd
 
-	startupscriptListCmdInit()
-	parent.AddCommand(startupscriptListCmd)
+	startupScriptListCmdInit()
+	parent.AddCommand(startupScriptListCmd)
 
-	startupscriptCreateCmdInit()
-	parent.AddCommand(startupscriptCreateCmd)
+	startupScriptCreateCmdInit()
+	parent.AddCommand(startupScriptCreateCmd)
 
-	startupscriptReadCmdInit()
-	parent.AddCommand(startupscriptReadCmd)
+	startupScriptReadCmdInit()
+	parent.AddCommand(startupScriptReadCmd)
 
-	startupscriptUpdateCmdInit()
-	parent.AddCommand(startupscriptUpdateCmd)
+	startupScriptUpdateCmdInit()
+	parent.AddCommand(startupScriptUpdateCmd)
 
-	startupscriptDeleteCmdInit()
-	parent.AddCommand(startupscriptDeleteCmd)
+	startupScriptDeleteCmdInit()
+	parent.AddCommand(startupScriptDeleteCmd)
 
 	rootCmd.AddCommand(parent)
 }

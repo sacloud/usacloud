@@ -27,24 +27,24 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListPacketfilterParam is input parameters for the sacloud API
-type ListPacketfilterParam struct {
+// ListPacketFilterParam is input parameters for the sacloud API
+type ListPacketFilterParam struct {
+	Max  int
 	Sort []string
 	Name []string
 	Id   []sacloud.ID
 	From int
-	Max  int
 
 	input Input
 }
 
-// NewListPacketfilterParam return new ListPacketfilterParam
-func NewListPacketfilterParam() *ListPacketfilterParam {
-	return &ListPacketfilterParam{}
+// NewListPacketFilterParam return new ListPacketFilterParam
+func NewListPacketFilterParam() *ListPacketFilterParam {
+	return &ListPacketFilterParam{}
 }
 
-// Initialize init ListPacketfilterParam
-func (p *ListPacketfilterParam) Initialize(in Input) error {
+// Initialize init ListPacketFilterParam
+func (p *ListPacketFilterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -53,11 +53,14 @@ func (p *ListPacketfilterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ListPacketfilterParam) WriteSkeleton(writer io.Writer) error {
+func (p *ListPacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListPacketfilterParam) fillValueToSkeleton() {
+func (p *ListPacketFilterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
+	}
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
@@ -70,13 +73,10 @@ func (p *ListPacketfilterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
-	}
 
 }
 
-func (p *ListPacketfilterParam) validate() error {
+func (p *ListPacketFilterParam) validate() error {
 	var errors []error
 
 	{
@@ -109,81 +109,81 @@ func (p *ListPacketfilterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ListPacketfilterParam) ResourceDef() *schema.Resource {
+func (p *ListPacketFilterParam) ResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *ListPacketfilterParam) CommandDef() *schema.Command {
+func (p *ListPacketFilterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["list"]
 }
 
-func (p *ListPacketfilterParam) IncludeFields() []string {
+func (p *ListPacketFilterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ListPacketfilterParam) ExcludeFields() []string {
+func (p *ListPacketFilterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ListPacketfilterParam) TableType() output.TableType {
+func (p *ListPacketFilterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ListPacketfilterParam) ColumnDefs() []output.ColumnDef {
+func (p *ListPacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListPacketfilterParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListPacketfilterParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListPacketfilterParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListPacketfilterParam) GetName() []string {
-	return p.Name
-}
-func (p *ListPacketfilterParam) SetId(v []sacloud.ID) {
-	p.Id = v
-}
-
-func (p *ListPacketfilterParam) GetId() []sacloud.ID {
-	return p.Id
-}
-func (p *ListPacketfilterParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListPacketfilterParam) GetFrom() int {
-	return p.From
-}
-func (p *ListPacketfilterParam) SetMax(v int) {
+func (p *ListPacketFilterParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListPacketfilterParam) GetMax() int {
+func (p *ListPacketFilterParam) GetMax() int {
 	return p.Max
 }
+func (p *ListPacketFilterParam) SetSort(v []string) {
+	p.Sort = v
+}
 
-// CreatePacketfilterParam is input parameters for the sacloud API
-type CreatePacketfilterParam struct {
-	Description string
+func (p *ListPacketFilterParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListPacketFilterParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListPacketFilterParam) GetName() []string {
+	return p.Name
+}
+func (p *ListPacketFilterParam) SetId(v []sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ListPacketFilterParam) GetId() []sacloud.ID {
+	return p.Id
+}
+func (p *ListPacketFilterParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListPacketFilterParam) GetFrom() int {
+	return p.From
+}
+
+// CreatePacketFilterParam is input parameters for the sacloud API
+type CreatePacketFilterParam struct {
 	Name        string
+	Description string
 
 	input Input
 }
 
-// NewCreatePacketfilterParam return new CreatePacketfilterParam
-func NewCreatePacketfilterParam() *CreatePacketfilterParam {
-	return &CreatePacketfilterParam{}
+// NewCreatePacketFilterParam return new CreatePacketFilterParam
+func NewCreatePacketFilterParam() *CreatePacketFilterParam {
+	return &CreatePacketFilterParam{}
 }
 
-// Initialize init CreatePacketfilterParam
-func (p *CreatePacketfilterParam) Initialize(in Input) error {
+// Initialize init CreatePacketFilterParam
+func (p *CreatePacketFilterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -192,30 +192,22 @@ func (p *CreatePacketfilterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CreatePacketfilterParam) WriteSkeleton(writer io.Writer) error {
+func (p *CreatePacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreatePacketfilterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
+func (p *CreatePacketFilterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
 	}
 
 }
 
-func (p *CreatePacketfilterParam) validate() error {
+func (p *CreatePacketFilterParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["PacketFilter"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -232,156 +224,8 @@ func (p *CreatePacketfilterParam) validate() error {
 		}
 	}
 
-	return utils.FlattenErrors(errors)
-}
-
-func (p *CreatePacketfilterParam) ResourceDef() *schema.Resource {
-	return define.Resources["PacketFilter"]
-}
-
-func (p *CreatePacketfilterParam) CommandDef() *schema.Command {
-	return p.ResourceDef().Commands["create"]
-}
-
-func (p *CreatePacketfilterParam) IncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *CreatePacketfilterParam) ExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *CreatePacketfilterParam) TableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *CreatePacketfilterParam) ColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
-func (p *CreatePacketfilterParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *CreatePacketfilterParam) GetDescription() string {
-	return p.Description
-}
-func (p *CreatePacketfilterParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreatePacketfilterParam) GetName() string {
-	return p.Name
-}
-
-// ReadPacketfilterParam is input parameters for the sacloud API
-type ReadPacketfilterParam struct {
-	input Input
-}
-
-// NewReadPacketfilterParam return new ReadPacketfilterParam
-func NewReadPacketfilterParam() *ReadPacketfilterParam {
-	return &ReadPacketfilterParam{}
-}
-
-// Initialize init ReadPacketfilterParam
-func (p *ReadPacketfilterParam) Initialize(in Input) error {
-	p.input = in
-	if err := p.validate(); err != nil {
-		return err
-	}
-	return loadParameters(p)
-}
-
-// WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ReadPacketfilterParam) WriteSkeleton(writer io.Writer) error {
-	return writeSkeleton(p, writer)
-}
-
-func (p *ReadPacketfilterParam) fillValueToSkeleton() {
-
-}
-
-func (p *ReadPacketfilterParam) validate() error {
-	var errors []error
-
-	return utils.FlattenErrors(errors)
-}
-
-func (p *ReadPacketfilterParam) ResourceDef() *schema.Resource {
-	return define.Resources["PacketFilter"]
-}
-
-func (p *ReadPacketfilterParam) CommandDef() *schema.Command {
-	return p.ResourceDef().Commands["read"]
-}
-
-func (p *ReadPacketfilterParam) IncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ReadPacketfilterParam) ExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ReadPacketfilterParam) TableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ReadPacketfilterParam) ColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
-// UpdatePacketfilterParam is input parameters for the sacloud API
-type UpdatePacketfilterParam struct {
-	Name        string
-	Description string
-
-	input Input
-}
-
-// NewUpdatePacketfilterParam return new UpdatePacketfilterParam
-func NewUpdatePacketfilterParam() *UpdatePacketfilterParam {
-	return &UpdatePacketfilterParam{}
-}
-
-// Initialize init UpdatePacketfilterParam
-func (p *UpdatePacketfilterParam) Initialize(in Input) error {
-	p.input = in
-	if err := p.validate(); err != nil {
-		return err
-	}
-	return loadParameters(p)
-}
-
-// WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *UpdatePacketfilterParam) WriteSkeleton(writer io.Writer) error {
-	return writeSkeleton(p, writer)
-}
-
-func (p *UpdatePacketfilterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
-
-}
-
-func (p *UpdatePacketfilterParam) validate() error {
-	var errors []error
-
 	{
-		validator := define.Resources["PacketFilter"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["PacketFilter"].Commands["update"].Params["description"].ValidateFunc
+		validator := define.Resources["PacketFilter"].Commands["create"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -391,57 +235,57 @@ func (p *UpdatePacketfilterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *UpdatePacketfilterParam) ResourceDef() *schema.Resource {
+func (p *CreatePacketFilterParam) ResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *UpdatePacketfilterParam) CommandDef() *schema.Command {
-	return p.ResourceDef().Commands["update"]
+func (p *CreatePacketFilterParam) CommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
 }
 
-func (p *UpdatePacketfilterParam) IncludeFields() []string {
+func (p *CreatePacketFilterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *UpdatePacketfilterParam) ExcludeFields() []string {
+func (p *CreatePacketFilterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *UpdatePacketfilterParam) TableType() output.TableType {
+func (p *CreatePacketFilterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *UpdatePacketfilterParam) ColumnDefs() []output.ColumnDef {
+func (p *CreatePacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdatePacketfilterParam) SetName(v string) {
+func (p *CreatePacketFilterParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *UpdatePacketfilterParam) GetName() string {
+func (p *CreatePacketFilterParam) GetName() string {
 	return p.Name
 }
-func (p *UpdatePacketfilterParam) SetDescription(v string) {
+func (p *CreatePacketFilterParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdatePacketfilterParam) GetDescription() string {
+func (p *CreatePacketFilterParam) GetDescription() string {
 	return p.Description
 }
 
-// DeletePacketfilterParam is input parameters for the sacloud API
-type DeletePacketfilterParam struct {
+// ReadPacketFilterParam is input parameters for the sacloud API
+type ReadPacketFilterParam struct {
 	input Input
 }
 
-// NewDeletePacketfilterParam return new DeletePacketfilterParam
-func NewDeletePacketfilterParam() *DeletePacketfilterParam {
-	return &DeletePacketfilterParam{}
+// NewReadPacketFilterParam return new ReadPacketFilterParam
+func NewReadPacketFilterParam() *ReadPacketFilterParam {
+	return &ReadPacketFilterParam{}
 }
 
-// Initialize init DeletePacketfilterParam
-func (p *DeletePacketfilterParam) Initialize(in Input) error {
+// Initialize init ReadPacketFilterParam
+func (p *ReadPacketFilterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -450,56 +294,212 @@ func (p *DeletePacketfilterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DeletePacketfilterParam) WriteSkeleton(writer io.Writer) error {
+func (p *ReadPacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeletePacketfilterParam) fillValueToSkeleton() {
+func (p *ReadPacketFilterParam) fillValueToSkeleton() {
 
 }
 
-func (p *DeletePacketfilterParam) validate() error {
+func (p *ReadPacketFilterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DeletePacketfilterParam) ResourceDef() *schema.Resource {
+func (p *ReadPacketFilterParam) ResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *DeletePacketfilterParam) CommandDef() *schema.Command {
+func (p *ReadPacketFilterParam) CommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadPacketFilterParam) IncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadPacketFilterParam) ExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadPacketFilterParam) TableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadPacketFilterParam) ColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
+// UpdatePacketFilterParam is input parameters for the sacloud API
+type UpdatePacketFilterParam struct {
+	Description string
+	Name        string
+
+	input Input
+}
+
+// NewUpdatePacketFilterParam return new UpdatePacketFilterParam
+func NewUpdatePacketFilterParam() *UpdatePacketFilterParam {
+	return &UpdatePacketFilterParam{}
+}
+
+// Initialize init UpdatePacketFilterParam
+func (p *UpdatePacketFilterParam) Initialize(in Input) error {
+	p.input = in
+	if err := p.validate(); err != nil {
+		return err
+	}
+	return loadParameters(p)
+}
+
+// WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
+func (p *UpdatePacketFilterParam) WriteSkeleton(writer io.Writer) error {
+	return writeSkeleton(p, writer)
+}
+
+func (p *UpdatePacketFilterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
+
+}
+
+func (p *UpdatePacketFilterParam) validate() error {
+	var errors []error
+
+	{
+		validator := define.Resources["PacketFilter"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["PacketFilter"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return utils.FlattenErrors(errors)
+}
+
+func (p *UpdatePacketFilterParam) ResourceDef() *schema.Resource {
+	return define.Resources["PacketFilter"]
+}
+
+func (p *UpdatePacketFilterParam) CommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdatePacketFilterParam) IncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdatePacketFilterParam) ExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdatePacketFilterParam) TableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdatePacketFilterParam) ColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
+func (p *UpdatePacketFilterParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *UpdatePacketFilterParam) GetDescription() string {
+	return p.Description
+}
+func (p *UpdatePacketFilterParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdatePacketFilterParam) GetName() string {
+	return p.Name
+}
+
+// DeletePacketFilterParam is input parameters for the sacloud API
+type DeletePacketFilterParam struct {
+	input Input
+}
+
+// NewDeletePacketFilterParam return new DeletePacketFilterParam
+func NewDeletePacketFilterParam() *DeletePacketFilterParam {
+	return &DeletePacketFilterParam{}
+}
+
+// Initialize init DeletePacketFilterParam
+func (p *DeletePacketFilterParam) Initialize(in Input) error {
+	p.input = in
+	if err := p.validate(); err != nil {
+		return err
+	}
+	return loadParameters(p)
+}
+
+// WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
+func (p *DeletePacketFilterParam) WriteSkeleton(writer io.Writer) error {
+	return writeSkeleton(p, writer)
+}
+
+func (p *DeletePacketFilterParam) fillValueToSkeleton() {
+
+}
+
+func (p *DeletePacketFilterParam) validate() error {
+	var errors []error
+
+	return utils.FlattenErrors(errors)
+}
+
+func (p *DeletePacketFilterParam) ResourceDef() *schema.Resource {
+	return define.Resources["PacketFilter"]
+}
+
+func (p *DeletePacketFilterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["delete"]
 }
 
-func (p *DeletePacketfilterParam) IncludeFields() []string {
+func (p *DeletePacketFilterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DeletePacketfilterParam) ExcludeFields() []string {
+func (p *DeletePacketFilterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DeletePacketfilterParam) TableType() output.TableType {
+func (p *DeletePacketFilterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DeletePacketfilterParam) ColumnDefs() []output.ColumnDef {
+func (p *DeletePacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// RuleInfoPacketfilterParam is input parameters for the sacloud API
-type RuleInfoPacketfilterParam struct {
+// RuleInfoPacketFilterParam is input parameters for the sacloud API
+type RuleInfoPacketFilterParam struct {
 	input Input
 }
 
-// NewRuleInfoPacketfilterParam return new RuleInfoPacketfilterParam
-func NewRuleInfoPacketfilterParam() *RuleInfoPacketfilterParam {
-	return &RuleInfoPacketfilterParam{}
+// NewRuleInfoPacketFilterParam return new RuleInfoPacketFilterParam
+func NewRuleInfoPacketFilterParam() *RuleInfoPacketFilterParam {
+	return &RuleInfoPacketFilterParam{}
 }
 
-// Initialize init RuleInfoPacketfilterParam
-func (p *RuleInfoPacketfilterParam) Initialize(in Input) error {
+// Initialize init RuleInfoPacketFilterParam
+func (p *RuleInfoPacketFilterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -508,46 +508,46 @@ func (p *RuleInfoPacketfilterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *RuleInfoPacketfilterParam) WriteSkeleton(writer io.Writer) error {
+func (p *RuleInfoPacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RuleInfoPacketfilterParam) fillValueToSkeleton() {
+func (p *RuleInfoPacketFilterParam) fillValueToSkeleton() {
 
 }
 
-func (p *RuleInfoPacketfilterParam) validate() error {
+func (p *RuleInfoPacketFilterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *RuleInfoPacketfilterParam) ResourceDef() *schema.Resource {
+func (p *RuleInfoPacketFilterParam) ResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *RuleInfoPacketfilterParam) CommandDef() *schema.Command {
+func (p *RuleInfoPacketFilterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["rule-info"]
 }
 
-func (p *RuleInfoPacketfilterParam) IncludeFields() []string {
+func (p *RuleInfoPacketFilterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *RuleInfoPacketfilterParam) ExcludeFields() []string {
+func (p *RuleInfoPacketFilterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *RuleInfoPacketfilterParam) TableType() output.TableType {
+func (p *RuleInfoPacketFilterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *RuleInfoPacketfilterParam) ColumnDefs() []output.ColumnDef {
+func (p *RuleInfoPacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// RuleAddPacketfilterParam is input parameters for the sacloud API
-type RuleAddPacketfilterParam struct {
+// RuleAddPacketFilterParam is input parameters for the sacloud API
+type RuleAddPacketFilterParam struct {
 	Description     string
 	Index           int
 	Protocol        string
@@ -559,14 +559,14 @@ type RuleAddPacketfilterParam struct {
 	input Input
 }
 
-// NewRuleAddPacketfilterParam return new RuleAddPacketfilterParam
-func NewRuleAddPacketfilterParam() *RuleAddPacketfilterParam {
-	return &RuleAddPacketfilterParam{
+// NewRuleAddPacketFilterParam return new RuleAddPacketFilterParam
+func NewRuleAddPacketFilterParam() *RuleAddPacketFilterParam {
+	return &RuleAddPacketFilterParam{
 		Index: 1}
 }
 
-// Initialize init RuleAddPacketfilterParam
-func (p *RuleAddPacketfilterParam) Initialize(in Input) error {
+// Initialize init RuleAddPacketFilterParam
+func (p *RuleAddPacketFilterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -575,11 +575,11 @@ func (p *RuleAddPacketfilterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *RuleAddPacketfilterParam) WriteSkeleton(writer io.Writer) error {
+func (p *RuleAddPacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RuleAddPacketfilterParam) fillValueToSkeleton() {
+func (p *RuleAddPacketFilterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
@@ -604,7 +604,7 @@ func (p *RuleAddPacketfilterParam) fillValueToSkeleton() {
 
 }
 
-func (p *RuleAddPacketfilterParam) validate() error {
+func (p *RuleAddPacketFilterParam) validate() error {
 	var errors []error
 
 	{
@@ -658,100 +658,100 @@ func (p *RuleAddPacketfilterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *RuleAddPacketfilterParam) ResourceDef() *schema.Resource {
+func (p *RuleAddPacketFilterParam) ResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *RuleAddPacketfilterParam) CommandDef() *schema.Command {
+func (p *RuleAddPacketFilterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["rule-add"]
 }
 
-func (p *RuleAddPacketfilterParam) IncludeFields() []string {
+func (p *RuleAddPacketFilterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *RuleAddPacketfilterParam) ExcludeFields() []string {
+func (p *RuleAddPacketFilterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *RuleAddPacketfilterParam) TableType() output.TableType {
+func (p *RuleAddPacketFilterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *RuleAddPacketfilterParam) ColumnDefs() []output.ColumnDef {
+func (p *RuleAddPacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *RuleAddPacketfilterParam) SetDescription(v string) {
+func (p *RuleAddPacketFilterParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *RuleAddPacketfilterParam) GetDescription() string {
+func (p *RuleAddPacketFilterParam) GetDescription() string {
 	return p.Description
 }
-func (p *RuleAddPacketfilterParam) SetIndex(v int) {
+func (p *RuleAddPacketFilterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *RuleAddPacketfilterParam) GetIndex() int {
+func (p *RuleAddPacketFilterParam) GetIndex() int {
 	return p.Index
 }
-func (p *RuleAddPacketfilterParam) SetProtocol(v string) {
+func (p *RuleAddPacketFilterParam) SetProtocol(v string) {
 	p.Protocol = v
 }
 
-func (p *RuleAddPacketfilterParam) GetProtocol() string {
+func (p *RuleAddPacketFilterParam) GetProtocol() string {
 	return p.Protocol
 }
-func (p *RuleAddPacketfilterParam) SetSourceNetwork(v string) {
+func (p *RuleAddPacketFilterParam) SetSourceNetwork(v string) {
 	p.SourceNetwork = v
 }
 
-func (p *RuleAddPacketfilterParam) GetSourceNetwork() string {
+func (p *RuleAddPacketFilterParam) GetSourceNetwork() string {
 	return p.SourceNetwork
 }
-func (p *RuleAddPacketfilterParam) SetSourcePort(v string) {
+func (p *RuleAddPacketFilterParam) SetSourcePort(v string) {
 	p.SourcePort = v
 }
 
-func (p *RuleAddPacketfilterParam) GetSourcePort() string {
+func (p *RuleAddPacketFilterParam) GetSourcePort() string {
 	return p.SourcePort
 }
-func (p *RuleAddPacketfilterParam) SetDestinationPort(v string) {
+func (p *RuleAddPacketFilterParam) SetDestinationPort(v string) {
 	p.DestinationPort = v
 }
 
-func (p *RuleAddPacketfilterParam) GetDestinationPort() string {
+func (p *RuleAddPacketFilterParam) GetDestinationPort() string {
 	return p.DestinationPort
 }
-func (p *RuleAddPacketfilterParam) SetAction(v string) {
+func (p *RuleAddPacketFilterParam) SetAction(v string) {
 	p.Action = v
 }
 
-func (p *RuleAddPacketfilterParam) GetAction() string {
+func (p *RuleAddPacketFilterParam) GetAction() string {
 	return p.Action
 }
 
-// RuleUpdatePacketfilterParam is input parameters for the sacloud API
-type RuleUpdatePacketfilterParam struct {
+// RuleUpdatePacketFilterParam is input parameters for the sacloud API
+type RuleUpdatePacketFilterParam struct {
+	Index           int
+	Protocol        string
 	SourceNetwork   string
 	SourcePort      string
 	DestinationPort string
 	Action          string
 	Description     string
-	Index           int
-	Protocol        string
 
 	input Input
 }
 
-// NewRuleUpdatePacketfilterParam return new RuleUpdatePacketfilterParam
-func NewRuleUpdatePacketfilterParam() *RuleUpdatePacketfilterParam {
-	return &RuleUpdatePacketfilterParam{}
+// NewRuleUpdatePacketFilterParam return new RuleUpdatePacketFilterParam
+func NewRuleUpdatePacketFilterParam() *RuleUpdatePacketFilterParam {
+	return &RuleUpdatePacketFilterParam{}
 }
 
-// Initialize init RuleUpdatePacketfilterParam
-func (p *RuleUpdatePacketfilterParam) Initialize(in Input) error {
+// Initialize init RuleUpdatePacketFilterParam
+func (p *RuleUpdatePacketFilterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -760,11 +760,17 @@ func (p *RuleUpdatePacketfilterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *RuleUpdatePacketfilterParam) WriteSkeleton(writer io.Writer) error {
+func (p *RuleUpdatePacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RuleUpdatePacketfilterParam) fillValueToSkeleton() {
+func (p *RuleUpdatePacketFilterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Index) {
+		p.Index = 0
+	}
+	if utils.IsEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
 	if utils.IsEmpty(p.SourceNetwork) {
 		p.SourceNetwork = ""
 	}
@@ -780,17 +786,27 @@ func (p *RuleUpdatePacketfilterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Index) {
-		p.Index = 0
-	}
-	if utils.IsEmpty(p.Protocol) {
-		p.Protocol = ""
-	}
 
 }
 
-func (p *RuleUpdatePacketfilterParam) validate() error {
+func (p *RuleUpdatePacketFilterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["PacketFilter"].Commands["rule-update"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["PacketFilter"].Commands["rule-update"].Params["source-network"].ValidateFunc
@@ -832,113 +848,97 @@ func (p *RuleUpdatePacketfilterParam) validate() error {
 		}
 	}
 
-	{
-		validator := validateRequired
-		errs := validator("--index", p.Index)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["PacketFilter"].Commands["rule-update"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *RuleUpdatePacketfilterParam) ResourceDef() *schema.Resource {
+func (p *RuleUpdatePacketFilterParam) ResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *RuleUpdatePacketfilterParam) CommandDef() *schema.Command {
+func (p *RuleUpdatePacketFilterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["rule-update"]
 }
 
-func (p *RuleUpdatePacketfilterParam) IncludeFields() []string {
+func (p *RuleUpdatePacketFilterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *RuleUpdatePacketfilterParam) ExcludeFields() []string {
+func (p *RuleUpdatePacketFilterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *RuleUpdatePacketfilterParam) TableType() output.TableType {
+func (p *RuleUpdatePacketFilterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *RuleUpdatePacketfilterParam) ColumnDefs() []output.ColumnDef {
+func (p *RuleUpdatePacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *RuleUpdatePacketfilterParam) SetSourceNetwork(v string) {
-	p.SourceNetwork = v
-}
-
-func (p *RuleUpdatePacketfilterParam) GetSourceNetwork() string {
-	return p.SourceNetwork
-}
-func (p *RuleUpdatePacketfilterParam) SetSourcePort(v string) {
-	p.SourcePort = v
-}
-
-func (p *RuleUpdatePacketfilterParam) GetSourcePort() string {
-	return p.SourcePort
-}
-func (p *RuleUpdatePacketfilterParam) SetDestinationPort(v string) {
-	p.DestinationPort = v
-}
-
-func (p *RuleUpdatePacketfilterParam) GetDestinationPort() string {
-	return p.DestinationPort
-}
-func (p *RuleUpdatePacketfilterParam) SetAction(v string) {
-	p.Action = v
-}
-
-func (p *RuleUpdatePacketfilterParam) GetAction() string {
-	return p.Action
-}
-func (p *RuleUpdatePacketfilterParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *RuleUpdatePacketfilterParam) GetDescription() string {
-	return p.Description
-}
-func (p *RuleUpdatePacketfilterParam) SetIndex(v int) {
+func (p *RuleUpdatePacketFilterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetIndex() int {
+func (p *RuleUpdatePacketFilterParam) GetIndex() int {
 	return p.Index
 }
-func (p *RuleUpdatePacketfilterParam) SetProtocol(v string) {
+func (p *RuleUpdatePacketFilterParam) SetProtocol(v string) {
 	p.Protocol = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetProtocol() string {
+func (p *RuleUpdatePacketFilterParam) GetProtocol() string {
 	return p.Protocol
 }
+func (p *RuleUpdatePacketFilterParam) SetSourceNetwork(v string) {
+	p.SourceNetwork = v
+}
 
-// RuleDeletePacketfilterParam is input parameters for the sacloud API
-type RuleDeletePacketfilterParam struct {
+func (p *RuleUpdatePacketFilterParam) GetSourceNetwork() string {
+	return p.SourceNetwork
+}
+func (p *RuleUpdatePacketFilterParam) SetSourcePort(v string) {
+	p.SourcePort = v
+}
+
+func (p *RuleUpdatePacketFilterParam) GetSourcePort() string {
+	return p.SourcePort
+}
+func (p *RuleUpdatePacketFilterParam) SetDestinationPort(v string) {
+	p.DestinationPort = v
+}
+
+func (p *RuleUpdatePacketFilterParam) GetDestinationPort() string {
+	return p.DestinationPort
+}
+func (p *RuleUpdatePacketFilterParam) SetAction(v string) {
+	p.Action = v
+}
+
+func (p *RuleUpdatePacketFilterParam) GetAction() string {
+	return p.Action
+}
+func (p *RuleUpdatePacketFilterParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *RuleUpdatePacketFilterParam) GetDescription() string {
+	return p.Description
+}
+
+// RuleDeletePacketFilterParam is input parameters for the sacloud API
+type RuleDeletePacketFilterParam struct {
 	Index int
 
 	input Input
 }
 
-// NewRuleDeletePacketfilterParam return new RuleDeletePacketfilterParam
-func NewRuleDeletePacketfilterParam() *RuleDeletePacketfilterParam {
-	return &RuleDeletePacketfilterParam{}
+// NewRuleDeletePacketFilterParam return new RuleDeletePacketFilterParam
+func NewRuleDeletePacketFilterParam() *RuleDeletePacketFilterParam {
+	return &RuleDeletePacketFilterParam{}
 }
 
-// Initialize init RuleDeletePacketfilterParam
-func (p *RuleDeletePacketfilterParam) Initialize(in Input) error {
+// Initialize init RuleDeletePacketFilterParam
+func (p *RuleDeletePacketFilterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -947,18 +947,18 @@ func (p *RuleDeletePacketfilterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *RuleDeletePacketfilterParam) WriteSkeleton(writer io.Writer) error {
+func (p *RuleDeletePacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RuleDeletePacketfilterParam) fillValueToSkeleton() {
+func (p *RuleDeletePacketFilterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
 
 }
 
-func (p *RuleDeletePacketfilterParam) validate() error {
+func (p *RuleDeletePacketFilterParam) validate() error {
 	var errors []error
 
 	{
@@ -972,52 +972,52 @@ func (p *RuleDeletePacketfilterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *RuleDeletePacketfilterParam) ResourceDef() *schema.Resource {
+func (p *RuleDeletePacketFilterParam) ResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *RuleDeletePacketfilterParam) CommandDef() *schema.Command {
+func (p *RuleDeletePacketFilterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["rule-delete"]
 }
 
-func (p *RuleDeletePacketfilterParam) IncludeFields() []string {
+func (p *RuleDeletePacketFilterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *RuleDeletePacketfilterParam) ExcludeFields() []string {
+func (p *RuleDeletePacketFilterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *RuleDeletePacketfilterParam) TableType() output.TableType {
+func (p *RuleDeletePacketFilterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *RuleDeletePacketfilterParam) ColumnDefs() []output.ColumnDef {
+func (p *RuleDeletePacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *RuleDeletePacketfilterParam) SetIndex(v int) {
+func (p *RuleDeletePacketFilterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *RuleDeletePacketfilterParam) GetIndex() int {
+func (p *RuleDeletePacketFilterParam) GetIndex() int {
 	return p.Index
 }
 
-// InterfaceConnectPacketfilterParam is input parameters for the sacloud API
-type InterfaceConnectPacketfilterParam struct {
+// InterfaceConnectPacketFilterParam is input parameters for the sacloud API
+type InterfaceConnectPacketFilterParam struct {
 	InterfaceId sacloud.ID
 
 	input Input
 }
 
-// NewInterfaceConnectPacketfilterParam return new InterfaceConnectPacketfilterParam
-func NewInterfaceConnectPacketfilterParam() *InterfaceConnectPacketfilterParam {
-	return &InterfaceConnectPacketfilterParam{}
+// NewInterfaceConnectPacketFilterParam return new InterfaceConnectPacketFilterParam
+func NewInterfaceConnectPacketFilterParam() *InterfaceConnectPacketFilterParam {
+	return &InterfaceConnectPacketFilterParam{}
 }
 
-// Initialize init InterfaceConnectPacketfilterParam
-func (p *InterfaceConnectPacketfilterParam) Initialize(in Input) error {
+// Initialize init InterfaceConnectPacketFilterParam
+func (p *InterfaceConnectPacketFilterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1026,18 +1026,18 @@ func (p *InterfaceConnectPacketfilterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *InterfaceConnectPacketfilterParam) WriteSkeleton(writer io.Writer) error {
+func (p *InterfaceConnectPacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceConnectPacketfilterParam) fillValueToSkeleton() {
+func (p *InterfaceConnectPacketFilterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.InterfaceId) {
 		p.InterfaceId = sacloud.ID(0)
 	}
 
 }
 
-func (p *InterfaceConnectPacketfilterParam) validate() error {
+func (p *InterfaceConnectPacketFilterParam) validate() error {
 	var errors []error
 
 	{
@@ -1058,52 +1058,52 @@ func (p *InterfaceConnectPacketfilterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *InterfaceConnectPacketfilterParam) ResourceDef() *schema.Resource {
+func (p *InterfaceConnectPacketFilterParam) ResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *InterfaceConnectPacketfilterParam) CommandDef() *schema.Command {
+func (p *InterfaceConnectPacketFilterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["interface-connect"]
 }
 
-func (p *InterfaceConnectPacketfilterParam) IncludeFields() []string {
+func (p *InterfaceConnectPacketFilterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *InterfaceConnectPacketfilterParam) ExcludeFields() []string {
+func (p *InterfaceConnectPacketFilterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *InterfaceConnectPacketfilterParam) TableType() output.TableType {
+func (p *InterfaceConnectPacketFilterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *InterfaceConnectPacketfilterParam) ColumnDefs() []output.ColumnDef {
+func (p *InterfaceConnectPacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *InterfaceConnectPacketfilterParam) SetInterfaceId(v sacloud.ID) {
+func (p *InterfaceConnectPacketFilterParam) SetInterfaceId(v sacloud.ID) {
 	p.InterfaceId = v
 }
 
-func (p *InterfaceConnectPacketfilterParam) GetInterfaceId() sacloud.ID {
+func (p *InterfaceConnectPacketFilterParam) GetInterfaceId() sacloud.ID {
 	return p.InterfaceId
 }
 
-// InterfaceDisconnectPacketfilterParam is input parameters for the sacloud API
-type InterfaceDisconnectPacketfilterParam struct {
+// InterfaceDisconnectPacketFilterParam is input parameters for the sacloud API
+type InterfaceDisconnectPacketFilterParam struct {
 	InterfaceId sacloud.ID
 
 	input Input
 }
 
-// NewInterfaceDisconnectPacketfilterParam return new InterfaceDisconnectPacketfilterParam
-func NewInterfaceDisconnectPacketfilterParam() *InterfaceDisconnectPacketfilterParam {
-	return &InterfaceDisconnectPacketfilterParam{}
+// NewInterfaceDisconnectPacketFilterParam return new InterfaceDisconnectPacketFilterParam
+func NewInterfaceDisconnectPacketFilterParam() *InterfaceDisconnectPacketFilterParam {
+	return &InterfaceDisconnectPacketFilterParam{}
 }
 
-// Initialize init InterfaceDisconnectPacketfilterParam
-func (p *InterfaceDisconnectPacketfilterParam) Initialize(in Input) error {
+// Initialize init InterfaceDisconnectPacketFilterParam
+func (p *InterfaceDisconnectPacketFilterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1112,18 +1112,18 @@ func (p *InterfaceDisconnectPacketfilterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *InterfaceDisconnectPacketfilterParam) WriteSkeleton(writer io.Writer) error {
+func (p *InterfaceDisconnectPacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) fillValueToSkeleton() {
+func (p *InterfaceDisconnectPacketFilterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.InterfaceId) {
 		p.InterfaceId = sacloud.ID(0)
 	}
 
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) validate() error {
+func (p *InterfaceDisconnectPacketFilterParam) validate() error {
 	var errors []error
 
 	{
@@ -1144,34 +1144,34 @@ func (p *InterfaceDisconnectPacketfilterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) ResourceDef() *schema.Resource {
+func (p *InterfaceDisconnectPacketFilterParam) ResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) CommandDef() *schema.Command {
+func (p *InterfaceDisconnectPacketFilterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["interface-disconnect"]
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) IncludeFields() []string {
+func (p *InterfaceDisconnectPacketFilterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) ExcludeFields() []string {
+func (p *InterfaceDisconnectPacketFilterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) TableType() output.TableType {
+func (p *InterfaceDisconnectPacketFilterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) ColumnDefs() []output.ColumnDef {
+func (p *InterfaceDisconnectPacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) SetInterfaceId(v sacloud.ID) {
+func (p *InterfaceDisconnectPacketFilterParam) SetInterfaceId(v sacloud.ID) {
 	p.InterfaceId = v
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) GetInterfaceId() sacloud.ID {
+func (p *InterfaceDisconnectPacketFilterParam) GetInterfaceId() sacloud.ID {
 	return p.InterfaceId
 }

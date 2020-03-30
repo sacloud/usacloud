@@ -54,11 +54,11 @@ var regionListCmd = &cobra.Command{
 
 func regionListCmdInit() {
 	fs := regionListCmd.Flags()
-	fs.StringSliceVarP(&regionListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &regionListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&regionListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&regionListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&regionListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&regionListParam.Name, "name", "", []string{}, "set filter by name(s)")
 }
 
 var regionReadCmd = &cobra.Command{

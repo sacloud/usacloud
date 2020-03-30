@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func GslbRead(ctx command.Context, params *params.ReadGslbParam) error {
+func GSLBRead(ctx command.Context, params *params.ReadGSLBParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetGslbAPI()
+	api := client.GetGSLBAPI()
 
 	// set params
 
 	// call Read(id)
 	res, err := api.Read(params.Id)
 	if err != nil {
-		return fmt.Errorf("GslbRead is failed: %s", err)
+		return fmt.Errorf("GSLBRead is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

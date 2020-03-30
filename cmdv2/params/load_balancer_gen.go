@@ -27,25 +27,25 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListLoadbalancerParam is input parameters for the sacloud API
-type ListLoadbalancerParam struct {
-	Max  int
-	Sort []string
-	Tags []string
+// ListLoadBalancerParam is input parameters for the sacloud API
+type ListLoadBalancerParam struct {
 	Name []string
 	Id   []sacloud.ID
+	Tags []string
 	From int
+	Max  int
+	Sort []string
 
 	input Input
 }
 
-// NewListLoadbalancerParam return new ListLoadbalancerParam
-func NewListLoadbalancerParam() *ListLoadbalancerParam {
-	return &ListLoadbalancerParam{}
+// NewListLoadBalancerParam return new ListLoadBalancerParam
+func NewListLoadBalancerParam() *ListLoadBalancerParam {
+	return &ListLoadBalancerParam{}
 }
 
-// Initialize init ListLoadbalancerParam
-func (p *ListLoadbalancerParam) Initialize(in Input) error {
+// Initialize init ListLoadBalancerParam
+func (p *ListLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -54,42 +54,34 @@ func (p *ListLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ListLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *ListLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListLoadbalancerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
-	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
+func (p *ListLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
+	}
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
+	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
 	}
 
 }
 
-func (p *ListLoadbalancerParam) validate() error {
+func (p *ListLoadBalancerParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["list"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
@@ -118,102 +110,110 @@ func (p *ListLoadbalancerParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["LoadBalancer"].Commands["list"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ListLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *ListLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ListLoadbalancerParam) CommandDef() *schema.Command {
+func (p *ListLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["list"]
 }
 
-func (p *ListLoadbalancerParam) IncludeFields() []string {
+func (p *ListLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ListLoadbalancerParam) ExcludeFields() []string {
+func (p *ListLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ListLoadbalancerParam) TableType() output.TableType {
+func (p *ListLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ListLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *ListLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListLoadbalancerParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListLoadbalancerParam) GetMax() int {
-	return p.Max
-}
-func (p *ListLoadbalancerParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListLoadbalancerParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListLoadbalancerParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *ListLoadbalancerParam) GetTags() []string {
-	return p.Tags
-}
-func (p *ListLoadbalancerParam) SetName(v []string) {
+func (p *ListLoadBalancerParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListLoadbalancerParam) GetName() []string {
+func (p *ListLoadBalancerParam) GetName() []string {
 	return p.Name
 }
-func (p *ListLoadbalancerParam) SetId(v []sacloud.ID) {
+func (p *ListLoadBalancerParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListLoadbalancerParam) GetId() []sacloud.ID {
+func (p *ListLoadBalancerParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListLoadbalancerParam) SetFrom(v int) {
+func (p *ListLoadBalancerParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *ListLoadBalancerParam) GetTags() []string {
+	return p.Tags
+}
+func (p *ListLoadBalancerParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListLoadbalancerParam) GetFrom() int {
+func (p *ListLoadBalancerParam) GetFrom() int {
 	return p.From
 }
+func (p *ListLoadBalancerParam) SetMax(v int) {
+	p.Max = v
+}
 
-// CreateLoadbalancerParam is input parameters for the sacloud API
-type CreateLoadbalancerParam struct {
-	SwitchId         sacloud.ID
-	NwMaskLen        int
-	IconId           sacloud.ID
+func (p *ListLoadBalancerParam) GetMax() int {
+	return p.Max
+}
+func (p *ListLoadBalancerParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListLoadBalancerParam) GetSort() []string {
+	return p.Sort
+}
+
+// CreateLoadBalancerParam is input parameters for the sacloud API
+type CreateLoadBalancerParam struct {
 	Ipaddress2       string
-	DefaultRoute     string
-	Name             string
+	NwMaskLen        int
 	Description      string
+	Tags             []string
+	Plan             string
 	Vrid             int
 	HighAvailability bool
-	Plan             string
 	Ipaddress1       string
-	Tags             []string
+	DefaultRoute     string
+	Name             string
+	IconId           sacloud.ID
+	SwitchId         sacloud.ID
 
 	input Input
 }
 
-// NewCreateLoadbalancerParam return new CreateLoadbalancerParam
-func NewCreateLoadbalancerParam() *CreateLoadbalancerParam {
-	return &CreateLoadbalancerParam{
-		Vrid: 1, Plan: "standard"}
+// NewCreateLoadBalancerParam return new CreateLoadBalancerParam
+func NewCreateLoadBalancerParam() *CreateLoadBalancerParam {
+	return &CreateLoadBalancerParam{
+		Plan: "standard", Vrid: 1}
 }
 
-// Initialize init CreateLoadbalancerParam
-func (p *CreateLoadbalancerParam) Initialize(in Input) error {
+// Initialize init CreateLoadBalancerParam
+func (p *CreateLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -222,31 +222,25 @@ func (p *CreateLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CreateLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *CreateLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateLoadbalancerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.SwitchId) {
-		p.SwitchId = sacloud.ID(0)
+func (p *CreateLoadBalancerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Ipaddress2) {
+		p.Ipaddress2 = ""
 	}
 	if utils.IsEmpty(p.NwMaskLen) {
 		p.NwMaskLen = 0
 	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.Ipaddress2) {
-		p.Ipaddress2 = ""
-	}
-	if utils.IsEmpty(p.DefaultRoute) {
-		p.DefaultRoute = ""
-	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if utils.IsEmpty(p.Plan) {
+		p.Plan = ""
 	}
 	if utils.IsEmpty(p.Vrid) {
 		p.Vrid = 0
@@ -254,24 +248,30 @@ func (p *CreateLoadbalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.HighAvailability) {
 		p.HighAvailability = false
 	}
-	if utils.IsEmpty(p.Plan) {
-		p.Plan = ""
-	}
 	if utils.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
 	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
+	if utils.IsEmpty(p.DefaultRoute) {
+		p.DefaultRoute = ""
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.SwitchId) {
+		p.SwitchId = sacloud.ID(0)
 	}
 
 }
 
-func (p *CreateLoadbalancerParam) validate() error {
+func (p *CreateLoadBalancerParam) validate() error {
 	var errors []error
 
 	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["switch-id"].ValidateFunc
-		errs := validator("--switch-id", p.SwitchId)
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["ipaddress2"].ValidateFunc
+		errs := validator("--ipaddress-2", p.Ipaddress2)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -293,16 +293,54 @@ func (p *CreateLoadbalancerParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
 	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["ipaddress2"].ValidateFunc
-		errs := validator("--ipaddress-2", p.Ipaddress2)
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--plan", p.Plan)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["plan"].ValidateFunc
+		errs := validator("--plan", p.Plan)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--vrid", p.Vrid)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--ipaddress-1", p.Ipaddress1)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["ipaddress1"].ValidateFunc
+		errs := validator("--ipaddress-1", p.Ipaddress1)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -332,54 +370,16 @@ func (p *CreateLoadbalancerParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
 	{
-		validator := validateRequired
-		errs := validator("--vrid", p.Vrid)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["plan"].ValidateFunc
-		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--ipaddress-1", p.Ipaddress1)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["ipaddress1"].ValidateFunc
-		errs := validator("--ipaddress-1", p.Ipaddress1)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["switch-id"].ValidateFunc
+		errs := validator("--switch-id", p.SwitchId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -388,127 +388,127 @@ func (p *CreateLoadbalancerParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CreateLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *CreateLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *CreateLoadbalancerParam) CommandDef() *schema.Command {
+func (p *CreateLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["create"]
 }
 
-func (p *CreateLoadbalancerParam) IncludeFields() []string {
+func (p *CreateLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CreateLoadbalancerParam) ExcludeFields() []string {
+func (p *CreateLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CreateLoadbalancerParam) TableType() output.TableType {
+func (p *CreateLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CreateLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *CreateLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateLoadbalancerParam) SetSwitchId(v sacloud.ID) {
-	p.SwitchId = v
-}
-
-func (p *CreateLoadbalancerParam) GetSwitchId() sacloud.ID {
-	return p.SwitchId
-}
-func (p *CreateLoadbalancerParam) SetNwMaskLen(v int) {
-	p.NwMaskLen = v
-}
-
-func (p *CreateLoadbalancerParam) GetNwMaskLen() int {
-	return p.NwMaskLen
-}
-func (p *CreateLoadbalancerParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *CreateLoadbalancerParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
-func (p *CreateLoadbalancerParam) SetIpaddress2(v string) {
+func (p *CreateLoadBalancerParam) SetIpaddress2(v string) {
 	p.Ipaddress2 = v
 }
 
-func (p *CreateLoadbalancerParam) GetIpaddress2() string {
+func (p *CreateLoadBalancerParam) GetIpaddress2() string {
 	return p.Ipaddress2
 }
-func (p *CreateLoadbalancerParam) SetDefaultRoute(v string) {
-	p.DefaultRoute = v
+func (p *CreateLoadBalancerParam) SetNwMaskLen(v int) {
+	p.NwMaskLen = v
 }
 
-func (p *CreateLoadbalancerParam) GetDefaultRoute() string {
-	return p.DefaultRoute
+func (p *CreateLoadBalancerParam) GetNwMaskLen() int {
+	return p.NwMaskLen
 }
-func (p *CreateLoadbalancerParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateLoadbalancerParam) GetName() string {
-	return p.Name
-}
-func (p *CreateLoadbalancerParam) SetDescription(v string) {
+func (p *CreateLoadBalancerParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *CreateLoadbalancerParam) GetDescription() string {
+func (p *CreateLoadBalancerParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateLoadbalancerParam) SetVrid(v int) {
-	p.Vrid = v
-}
-
-func (p *CreateLoadbalancerParam) GetVrid() int {
-	return p.Vrid
-}
-func (p *CreateLoadbalancerParam) SetHighAvailability(v bool) {
-	p.HighAvailability = v
-}
-
-func (p *CreateLoadbalancerParam) GetHighAvailability() bool {
-	return p.HighAvailability
-}
-func (p *CreateLoadbalancerParam) SetPlan(v string) {
-	p.Plan = v
-}
-
-func (p *CreateLoadbalancerParam) GetPlan() string {
-	return p.Plan
-}
-func (p *CreateLoadbalancerParam) SetIpaddress1(v string) {
-	p.Ipaddress1 = v
-}
-
-func (p *CreateLoadbalancerParam) GetIpaddress1() string {
-	return p.Ipaddress1
-}
-func (p *CreateLoadbalancerParam) SetTags(v []string) {
+func (p *CreateLoadBalancerParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreateLoadbalancerParam) GetTags() []string {
+func (p *CreateLoadBalancerParam) GetTags() []string {
 	return p.Tags
 }
+func (p *CreateLoadBalancerParam) SetPlan(v string) {
+	p.Plan = v
+}
 
-// ReadLoadbalancerParam is input parameters for the sacloud API
-type ReadLoadbalancerParam struct {
+func (p *CreateLoadBalancerParam) GetPlan() string {
+	return p.Plan
+}
+func (p *CreateLoadBalancerParam) SetVrid(v int) {
+	p.Vrid = v
+}
+
+func (p *CreateLoadBalancerParam) GetVrid() int {
+	return p.Vrid
+}
+func (p *CreateLoadBalancerParam) SetHighAvailability(v bool) {
+	p.HighAvailability = v
+}
+
+func (p *CreateLoadBalancerParam) GetHighAvailability() bool {
+	return p.HighAvailability
+}
+func (p *CreateLoadBalancerParam) SetIpaddress1(v string) {
+	p.Ipaddress1 = v
+}
+
+func (p *CreateLoadBalancerParam) GetIpaddress1() string {
+	return p.Ipaddress1
+}
+func (p *CreateLoadBalancerParam) SetDefaultRoute(v string) {
+	p.DefaultRoute = v
+}
+
+func (p *CreateLoadBalancerParam) GetDefaultRoute() string {
+	return p.DefaultRoute
+}
+func (p *CreateLoadBalancerParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateLoadBalancerParam) GetName() string {
+	return p.Name
+}
+func (p *CreateLoadBalancerParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *CreateLoadBalancerParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+func (p *CreateLoadBalancerParam) SetSwitchId(v sacloud.ID) {
+	p.SwitchId = v
+}
+
+func (p *CreateLoadBalancerParam) GetSwitchId() sacloud.ID {
+	return p.SwitchId
+}
+
+// ReadLoadBalancerParam is input parameters for the sacloud API
+type ReadLoadBalancerParam struct {
 	input Input
 }
 
-// NewReadLoadbalancerParam return new ReadLoadbalancerParam
-func NewReadLoadbalancerParam() *ReadLoadbalancerParam {
-	return &ReadLoadbalancerParam{}
+// NewReadLoadBalancerParam return new ReadLoadBalancerParam
+func NewReadLoadBalancerParam() *ReadLoadBalancerParam {
+	return &ReadLoadBalancerParam{}
 }
 
-// Initialize init ReadLoadbalancerParam
-func (p *ReadLoadbalancerParam) Initialize(in Input) error {
+// Initialize init ReadLoadBalancerParam
+func (p *ReadLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -517,61 +517,61 @@ func (p *ReadLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ReadLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *ReadLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadLoadbalancerParam) fillValueToSkeleton() {
+func (p *ReadLoadBalancerParam) fillValueToSkeleton() {
 
 }
 
-func (p *ReadLoadbalancerParam) validate() error {
+func (p *ReadLoadBalancerParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ReadLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *ReadLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ReadLoadbalancerParam) CommandDef() *schema.Command {
+func (p *ReadLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["read"]
 }
 
-func (p *ReadLoadbalancerParam) IncludeFields() []string {
+func (p *ReadLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ReadLoadbalancerParam) ExcludeFields() []string {
+func (p *ReadLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ReadLoadbalancerParam) TableType() output.TableType {
+func (p *ReadLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ReadLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *ReadLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// UpdateLoadbalancerParam is input parameters for the sacloud API
-type UpdateLoadbalancerParam struct {
-	IconId      sacloud.ID
+// UpdateLoadBalancerParam is input parameters for the sacloud API
+type UpdateLoadBalancerParam struct {
 	Name        string
 	Description string
 	Tags        []string
+	IconId      sacloud.ID
 
 	input Input
 }
 
-// NewUpdateLoadbalancerParam return new UpdateLoadbalancerParam
-func NewUpdateLoadbalancerParam() *UpdateLoadbalancerParam {
-	return &UpdateLoadbalancerParam{}
+// NewUpdateLoadBalancerParam return new UpdateLoadBalancerParam
+func NewUpdateLoadBalancerParam() *UpdateLoadBalancerParam {
+	return &UpdateLoadBalancerParam{}
 }
 
-// Initialize init UpdateLoadbalancerParam
-func (p *UpdateLoadbalancerParam) Initialize(in Input) error {
+// Initialize init UpdateLoadBalancerParam
+func (p *UpdateLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -580,14 +580,11 @@ func (p *UpdateLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *UpdateLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *UpdateLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateLoadbalancerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
+func (p *UpdateLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -597,19 +594,14 @@ func (p *UpdateLoadbalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
 
 }
 
-func (p *UpdateLoadbalancerParam) validate() error {
+func (p *UpdateLoadBalancerParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["LoadBalancer"].Commands["update"].Params["name"].ValidateFunc
@@ -635,76 +627,84 @@ func (p *UpdateLoadbalancerParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["LoadBalancer"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
-func (p *UpdateLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *UpdateLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *UpdateLoadbalancerParam) CommandDef() *schema.Command {
+func (p *UpdateLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["update"]
 }
 
-func (p *UpdateLoadbalancerParam) IncludeFields() []string {
+func (p *UpdateLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *UpdateLoadbalancerParam) ExcludeFields() []string {
+func (p *UpdateLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *UpdateLoadbalancerParam) TableType() output.TableType {
+func (p *UpdateLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *UpdateLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *UpdateLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateLoadbalancerParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *UpdateLoadbalancerParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
-func (p *UpdateLoadbalancerParam) SetName(v string) {
+func (p *UpdateLoadBalancerParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *UpdateLoadbalancerParam) GetName() string {
+func (p *UpdateLoadBalancerParam) GetName() string {
 	return p.Name
 }
-func (p *UpdateLoadbalancerParam) SetDescription(v string) {
+func (p *UpdateLoadBalancerParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdateLoadbalancerParam) GetDescription() string {
+func (p *UpdateLoadBalancerParam) GetDescription() string {
 	return p.Description
 }
-func (p *UpdateLoadbalancerParam) SetTags(v []string) {
+func (p *UpdateLoadBalancerParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *UpdateLoadbalancerParam) GetTags() []string {
+func (p *UpdateLoadBalancerParam) GetTags() []string {
 	return p.Tags
 }
+func (p *UpdateLoadBalancerParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
 
-// DeleteLoadbalancerParam is input parameters for the sacloud API
-type DeleteLoadbalancerParam struct {
+func (p *UpdateLoadBalancerParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+
+// DeleteLoadBalancerParam is input parameters for the sacloud API
+type DeleteLoadBalancerParam struct {
 	Force bool
 
 	input Input
 }
 
-// NewDeleteLoadbalancerParam return new DeleteLoadbalancerParam
-func NewDeleteLoadbalancerParam() *DeleteLoadbalancerParam {
-	return &DeleteLoadbalancerParam{}
+// NewDeleteLoadBalancerParam return new DeleteLoadBalancerParam
+func NewDeleteLoadBalancerParam() *DeleteLoadBalancerParam {
+	return &DeleteLoadBalancerParam{}
 }
 
-// Initialize init DeleteLoadbalancerParam
-func (p *DeleteLoadbalancerParam) Initialize(in Input) error {
+// Initialize init DeleteLoadBalancerParam
+func (p *DeleteLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -713,67 +713,67 @@ func (p *DeleteLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DeleteLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *DeleteLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteLoadbalancerParam) fillValueToSkeleton() {
+func (p *DeleteLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Force) {
 		p.Force = false
 	}
 
 }
 
-func (p *DeleteLoadbalancerParam) validate() error {
+func (p *DeleteLoadBalancerParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DeleteLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *DeleteLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *DeleteLoadbalancerParam) CommandDef() *schema.Command {
+func (p *DeleteLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["delete"]
 }
 
-func (p *DeleteLoadbalancerParam) IncludeFields() []string {
+func (p *DeleteLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DeleteLoadbalancerParam) ExcludeFields() []string {
+func (p *DeleteLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DeleteLoadbalancerParam) TableType() output.TableType {
+func (p *DeleteLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DeleteLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *DeleteLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *DeleteLoadbalancerParam) SetForce(v bool) {
+func (p *DeleteLoadBalancerParam) SetForce(v bool) {
 	p.Force = v
 }
 
-func (p *DeleteLoadbalancerParam) GetForce() bool {
+func (p *DeleteLoadBalancerParam) GetForce() bool {
 	return p.Force
 }
 
-// BootLoadbalancerParam is input parameters for the sacloud API
-type BootLoadbalancerParam struct {
+// BootLoadBalancerParam is input parameters for the sacloud API
+type BootLoadBalancerParam struct {
 	input Input
 }
 
-// NewBootLoadbalancerParam return new BootLoadbalancerParam
-func NewBootLoadbalancerParam() *BootLoadbalancerParam {
-	return &BootLoadbalancerParam{}
+// NewBootLoadBalancerParam return new BootLoadBalancerParam
+func NewBootLoadBalancerParam() *BootLoadBalancerParam {
+	return &BootLoadBalancerParam{}
 }
 
-// Initialize init BootLoadbalancerParam
-func (p *BootLoadbalancerParam) Initialize(in Input) error {
+// Initialize init BootLoadBalancerParam
+func (p *BootLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -782,56 +782,56 @@ func (p *BootLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *BootLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *BootLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *BootLoadbalancerParam) fillValueToSkeleton() {
+func (p *BootLoadBalancerParam) fillValueToSkeleton() {
 
 }
 
-func (p *BootLoadbalancerParam) validate() error {
+func (p *BootLoadBalancerParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *BootLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *BootLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *BootLoadbalancerParam) CommandDef() *schema.Command {
+func (p *BootLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["boot"]
 }
 
-func (p *BootLoadbalancerParam) IncludeFields() []string {
+func (p *BootLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *BootLoadbalancerParam) ExcludeFields() []string {
+func (p *BootLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *BootLoadbalancerParam) TableType() output.TableType {
+func (p *BootLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *BootLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *BootLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// ShutdownLoadbalancerParam is input parameters for the sacloud API
-type ShutdownLoadbalancerParam struct {
+// ShutdownLoadBalancerParam is input parameters for the sacloud API
+type ShutdownLoadBalancerParam struct {
 	input Input
 }
 
-// NewShutdownLoadbalancerParam return new ShutdownLoadbalancerParam
-func NewShutdownLoadbalancerParam() *ShutdownLoadbalancerParam {
-	return &ShutdownLoadbalancerParam{}
+// NewShutdownLoadBalancerParam return new ShutdownLoadBalancerParam
+func NewShutdownLoadBalancerParam() *ShutdownLoadBalancerParam {
+	return &ShutdownLoadBalancerParam{}
 }
 
-// Initialize init ShutdownLoadbalancerParam
-func (p *ShutdownLoadbalancerParam) Initialize(in Input) error {
+// Initialize init ShutdownLoadBalancerParam
+func (p *ShutdownLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -840,56 +840,56 @@ func (p *ShutdownLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ShutdownLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *ShutdownLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ShutdownLoadbalancerParam) fillValueToSkeleton() {
+func (p *ShutdownLoadBalancerParam) fillValueToSkeleton() {
 
 }
 
-func (p *ShutdownLoadbalancerParam) validate() error {
+func (p *ShutdownLoadBalancerParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ShutdownLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *ShutdownLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ShutdownLoadbalancerParam) CommandDef() *schema.Command {
+func (p *ShutdownLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["shutdown"]
 }
 
-func (p *ShutdownLoadbalancerParam) IncludeFields() []string {
+func (p *ShutdownLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ShutdownLoadbalancerParam) ExcludeFields() []string {
+func (p *ShutdownLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ShutdownLoadbalancerParam) TableType() output.TableType {
+func (p *ShutdownLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ShutdownLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *ShutdownLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// ShutdownForceLoadbalancerParam is input parameters for the sacloud API
-type ShutdownForceLoadbalancerParam struct {
+// ShutdownForceLoadBalancerParam is input parameters for the sacloud API
+type ShutdownForceLoadBalancerParam struct {
 	input Input
 }
 
-// NewShutdownForceLoadbalancerParam return new ShutdownForceLoadbalancerParam
-func NewShutdownForceLoadbalancerParam() *ShutdownForceLoadbalancerParam {
-	return &ShutdownForceLoadbalancerParam{}
+// NewShutdownForceLoadBalancerParam return new ShutdownForceLoadBalancerParam
+func NewShutdownForceLoadBalancerParam() *ShutdownForceLoadBalancerParam {
+	return &ShutdownForceLoadBalancerParam{}
 }
 
-// Initialize init ShutdownForceLoadbalancerParam
-func (p *ShutdownForceLoadbalancerParam) Initialize(in Input) error {
+// Initialize init ShutdownForceLoadBalancerParam
+func (p *ShutdownForceLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -898,56 +898,56 @@ func (p *ShutdownForceLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ShutdownForceLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *ShutdownForceLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ShutdownForceLoadbalancerParam) fillValueToSkeleton() {
+func (p *ShutdownForceLoadBalancerParam) fillValueToSkeleton() {
 
 }
 
-func (p *ShutdownForceLoadbalancerParam) validate() error {
+func (p *ShutdownForceLoadBalancerParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ShutdownForceLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *ShutdownForceLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ShutdownForceLoadbalancerParam) CommandDef() *schema.Command {
+func (p *ShutdownForceLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["shutdown-force"]
 }
 
-func (p *ShutdownForceLoadbalancerParam) IncludeFields() []string {
+func (p *ShutdownForceLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ShutdownForceLoadbalancerParam) ExcludeFields() []string {
+func (p *ShutdownForceLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ShutdownForceLoadbalancerParam) TableType() output.TableType {
+func (p *ShutdownForceLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ShutdownForceLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *ShutdownForceLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// ResetLoadbalancerParam is input parameters for the sacloud API
-type ResetLoadbalancerParam struct {
+// ResetLoadBalancerParam is input parameters for the sacloud API
+type ResetLoadBalancerParam struct {
 	input Input
 }
 
-// NewResetLoadbalancerParam return new ResetLoadbalancerParam
-func NewResetLoadbalancerParam() *ResetLoadbalancerParam {
-	return &ResetLoadbalancerParam{}
+// NewResetLoadBalancerParam return new ResetLoadBalancerParam
+func NewResetLoadBalancerParam() *ResetLoadBalancerParam {
+	return &ResetLoadBalancerParam{}
 }
 
-// Initialize init ResetLoadbalancerParam
-func (p *ResetLoadbalancerParam) Initialize(in Input) error {
+// Initialize init ResetLoadBalancerParam
+func (p *ResetLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -956,56 +956,56 @@ func (p *ResetLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ResetLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *ResetLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ResetLoadbalancerParam) fillValueToSkeleton() {
+func (p *ResetLoadBalancerParam) fillValueToSkeleton() {
 
 }
 
-func (p *ResetLoadbalancerParam) validate() error {
+func (p *ResetLoadBalancerParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ResetLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *ResetLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ResetLoadbalancerParam) CommandDef() *schema.Command {
+func (p *ResetLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["reset"]
 }
 
-func (p *ResetLoadbalancerParam) IncludeFields() []string {
+func (p *ResetLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ResetLoadbalancerParam) ExcludeFields() []string {
+func (p *ResetLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ResetLoadbalancerParam) TableType() output.TableType {
+func (p *ResetLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ResetLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *ResetLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// WaitForBootLoadbalancerParam is input parameters for the sacloud API
-type WaitForBootLoadbalancerParam struct {
+// WaitForBootLoadBalancerParam is input parameters for the sacloud API
+type WaitForBootLoadBalancerParam struct {
 	input Input
 }
 
-// NewWaitForBootLoadbalancerParam return new WaitForBootLoadbalancerParam
-func NewWaitForBootLoadbalancerParam() *WaitForBootLoadbalancerParam {
-	return &WaitForBootLoadbalancerParam{}
+// NewWaitForBootLoadBalancerParam return new WaitForBootLoadBalancerParam
+func NewWaitForBootLoadBalancerParam() *WaitForBootLoadBalancerParam {
+	return &WaitForBootLoadBalancerParam{}
 }
 
-// Initialize init WaitForBootLoadbalancerParam
-func (p *WaitForBootLoadbalancerParam) Initialize(in Input) error {
+// Initialize init WaitForBootLoadBalancerParam
+func (p *WaitForBootLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1014,56 +1014,56 @@ func (p *WaitForBootLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *WaitForBootLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *WaitForBootLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *WaitForBootLoadbalancerParam) fillValueToSkeleton() {
+func (p *WaitForBootLoadBalancerParam) fillValueToSkeleton() {
 
 }
 
-func (p *WaitForBootLoadbalancerParam) validate() error {
+func (p *WaitForBootLoadBalancerParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *WaitForBootLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *WaitForBootLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *WaitForBootLoadbalancerParam) CommandDef() *schema.Command {
+func (p *WaitForBootLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["wait-for-boot"]
 }
 
-func (p *WaitForBootLoadbalancerParam) IncludeFields() []string {
+func (p *WaitForBootLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *WaitForBootLoadbalancerParam) ExcludeFields() []string {
+func (p *WaitForBootLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *WaitForBootLoadbalancerParam) TableType() output.TableType {
+func (p *WaitForBootLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *WaitForBootLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *WaitForBootLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// WaitForDownLoadbalancerParam is input parameters for the sacloud API
-type WaitForDownLoadbalancerParam struct {
+// WaitForDownLoadBalancerParam is input parameters for the sacloud API
+type WaitForDownLoadBalancerParam struct {
 	input Input
 }
 
-// NewWaitForDownLoadbalancerParam return new WaitForDownLoadbalancerParam
-func NewWaitForDownLoadbalancerParam() *WaitForDownLoadbalancerParam {
-	return &WaitForDownLoadbalancerParam{}
+// NewWaitForDownLoadBalancerParam return new WaitForDownLoadBalancerParam
+func NewWaitForDownLoadBalancerParam() *WaitForDownLoadBalancerParam {
+	return &WaitForDownLoadBalancerParam{}
 }
 
-// Initialize init WaitForDownLoadbalancerParam
-func (p *WaitForDownLoadbalancerParam) Initialize(in Input) error {
+// Initialize init WaitForDownLoadBalancerParam
+func (p *WaitForDownLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1072,56 +1072,56 @@ func (p *WaitForDownLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *WaitForDownLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *WaitForDownLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *WaitForDownLoadbalancerParam) fillValueToSkeleton() {
+func (p *WaitForDownLoadBalancerParam) fillValueToSkeleton() {
 
 }
 
-func (p *WaitForDownLoadbalancerParam) validate() error {
+func (p *WaitForDownLoadBalancerParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *WaitForDownLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *WaitForDownLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *WaitForDownLoadbalancerParam) CommandDef() *schema.Command {
+func (p *WaitForDownLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["wait-for-down"]
 }
 
-func (p *WaitForDownLoadbalancerParam) IncludeFields() []string {
+func (p *WaitForDownLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *WaitForDownLoadbalancerParam) ExcludeFields() []string {
+func (p *WaitForDownLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *WaitForDownLoadbalancerParam) TableType() output.TableType {
+func (p *WaitForDownLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *WaitForDownLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *WaitForDownLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// VipInfoLoadbalancerParam is input parameters for the sacloud API
-type VipInfoLoadbalancerParam struct {
+// VipInfoLoadBalancerParam is input parameters for the sacloud API
+type VipInfoLoadBalancerParam struct {
 	input Input
 }
 
-// NewVipInfoLoadbalancerParam return new VipInfoLoadbalancerParam
-func NewVipInfoLoadbalancerParam() *VipInfoLoadbalancerParam {
-	return &VipInfoLoadbalancerParam{}
+// NewVipInfoLoadBalancerParam return new VipInfoLoadBalancerParam
+func NewVipInfoLoadBalancerParam() *VipInfoLoadBalancerParam {
+	return &VipInfoLoadBalancerParam{}
 }
 
-// Initialize init VipInfoLoadbalancerParam
-func (p *VipInfoLoadbalancerParam) Initialize(in Input) error {
+// Initialize init VipInfoLoadBalancerParam
+func (p *VipInfoLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1130,46 +1130,46 @@ func (p *VipInfoLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *VipInfoLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *VipInfoLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *VipInfoLoadbalancerParam) fillValueToSkeleton() {
+func (p *VipInfoLoadBalancerParam) fillValueToSkeleton() {
 
 }
 
-func (p *VipInfoLoadbalancerParam) validate() error {
+func (p *VipInfoLoadBalancerParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *VipInfoLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *VipInfoLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *VipInfoLoadbalancerParam) CommandDef() *schema.Command {
+func (p *VipInfoLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["vip-info"]
 }
 
-func (p *VipInfoLoadbalancerParam) IncludeFields() []string {
+func (p *VipInfoLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *VipInfoLoadbalancerParam) ExcludeFields() []string {
+func (p *VipInfoLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *VipInfoLoadbalancerParam) TableType() output.TableType {
+func (p *VipInfoLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *VipInfoLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *VipInfoLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// VipAddLoadbalancerParam is input parameters for the sacloud API
-type VipAddLoadbalancerParam struct {
+// VipAddLoadBalancerParam is input parameters for the sacloud API
+type VipAddLoadBalancerParam struct {
 	Vip         string
 	Port        int
 	DelayLoop   int
@@ -1179,14 +1179,14 @@ type VipAddLoadbalancerParam struct {
 	input Input
 }
 
-// NewVipAddLoadbalancerParam return new VipAddLoadbalancerParam
-func NewVipAddLoadbalancerParam() *VipAddLoadbalancerParam {
-	return &VipAddLoadbalancerParam{
+// NewVipAddLoadBalancerParam return new VipAddLoadBalancerParam
+func NewVipAddLoadBalancerParam() *VipAddLoadBalancerParam {
+	return &VipAddLoadBalancerParam{
 		DelayLoop: 10}
 }
 
-// Initialize init VipAddLoadbalancerParam
-func (p *VipAddLoadbalancerParam) Initialize(in Input) error {
+// Initialize init VipAddLoadBalancerParam
+func (p *VipAddLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1195,11 +1195,11 @@ func (p *VipAddLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *VipAddLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *VipAddLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *VipAddLoadbalancerParam) fillValueToSkeleton() {
+func (p *VipAddLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Vip) {
 		p.Vip = ""
 	}
@@ -1218,7 +1218,7 @@ func (p *VipAddLoadbalancerParam) fillValueToSkeleton() {
 
 }
 
-func (p *VipAddLoadbalancerParam) validate() error {
+func (p *VipAddLoadBalancerParam) validate() error {
 	var errors []error
 
 	{
@@ -1270,86 +1270,86 @@ func (p *VipAddLoadbalancerParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *VipAddLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *VipAddLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *VipAddLoadbalancerParam) CommandDef() *schema.Command {
+func (p *VipAddLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["vip-add"]
 }
 
-func (p *VipAddLoadbalancerParam) IncludeFields() []string {
+func (p *VipAddLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *VipAddLoadbalancerParam) ExcludeFields() []string {
+func (p *VipAddLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *VipAddLoadbalancerParam) TableType() output.TableType {
+func (p *VipAddLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *VipAddLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *VipAddLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *VipAddLoadbalancerParam) SetVip(v string) {
+func (p *VipAddLoadBalancerParam) SetVip(v string) {
 	p.Vip = v
 }
 
-func (p *VipAddLoadbalancerParam) GetVip() string {
+func (p *VipAddLoadBalancerParam) GetVip() string {
 	return p.Vip
 }
-func (p *VipAddLoadbalancerParam) SetPort(v int) {
+func (p *VipAddLoadBalancerParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *VipAddLoadbalancerParam) GetPort() int {
+func (p *VipAddLoadBalancerParam) GetPort() int {
 	return p.Port
 }
-func (p *VipAddLoadbalancerParam) SetDelayLoop(v int) {
+func (p *VipAddLoadBalancerParam) SetDelayLoop(v int) {
 	p.DelayLoop = v
 }
 
-func (p *VipAddLoadbalancerParam) GetDelayLoop() int {
+func (p *VipAddLoadBalancerParam) GetDelayLoop() int {
 	return p.DelayLoop
 }
-func (p *VipAddLoadbalancerParam) SetSorryServer(v string) {
+func (p *VipAddLoadBalancerParam) SetSorryServer(v string) {
 	p.SorryServer = v
 }
 
-func (p *VipAddLoadbalancerParam) GetSorryServer() string {
+func (p *VipAddLoadBalancerParam) GetSorryServer() string {
 	return p.SorryServer
 }
-func (p *VipAddLoadbalancerParam) SetDescription(v string) {
+func (p *VipAddLoadBalancerParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *VipAddLoadbalancerParam) GetDescription() string {
+func (p *VipAddLoadBalancerParam) GetDescription() string {
 	return p.Description
 }
 
-// VipUpdateLoadbalancerParam is input parameters for the sacloud API
-type VipUpdateLoadbalancerParam struct {
+// VipUpdateLoadBalancerParam is input parameters for the sacloud API
+type VipUpdateLoadBalancerParam struct {
+	Description string
 	Index       int
 	Vip         string
 	Port        int
 	DelayLoop   int
 	SorryServer string
-	Description string
 
 	input Input
 }
 
-// NewVipUpdateLoadbalancerParam return new VipUpdateLoadbalancerParam
-func NewVipUpdateLoadbalancerParam() *VipUpdateLoadbalancerParam {
-	return &VipUpdateLoadbalancerParam{
+// NewVipUpdateLoadBalancerParam return new VipUpdateLoadBalancerParam
+func NewVipUpdateLoadBalancerParam() *VipUpdateLoadBalancerParam {
+	return &VipUpdateLoadBalancerParam{
 		DelayLoop: 10}
 }
 
-// Initialize init VipUpdateLoadbalancerParam
-func (p *VipUpdateLoadbalancerParam) Initialize(in Input) error {
+// Initialize init VipUpdateLoadBalancerParam
+func (p *VipUpdateLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1358,11 +1358,14 @@ func (p *VipUpdateLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *VipUpdateLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *VipUpdateLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *VipUpdateLoadbalancerParam) fillValueToSkeleton() {
+func (p *VipUpdateLoadBalancerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -1378,13 +1381,10 @@ func (p *VipUpdateLoadbalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.SorryServer) {
 		p.SorryServer = ""
 	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
 
 }
 
-func (p *VipUpdateLoadbalancerParam) validate() error {
+func (p *VipUpdateLoadBalancerParam) validate() error {
 	var errors []error
 
 	{
@@ -1430,87 +1430,87 @@ func (p *VipUpdateLoadbalancerParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *VipUpdateLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *VipUpdateLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *VipUpdateLoadbalancerParam) CommandDef() *schema.Command {
+func (p *VipUpdateLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["vip-update"]
 }
 
-func (p *VipUpdateLoadbalancerParam) IncludeFields() []string {
+func (p *VipUpdateLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *VipUpdateLoadbalancerParam) ExcludeFields() []string {
+func (p *VipUpdateLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *VipUpdateLoadbalancerParam) TableType() output.TableType {
+func (p *VipUpdateLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *VipUpdateLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *VipUpdateLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *VipUpdateLoadbalancerParam) SetIndex(v int) {
-	p.Index = v
-}
-
-func (p *VipUpdateLoadbalancerParam) GetIndex() int {
-	return p.Index
-}
-func (p *VipUpdateLoadbalancerParam) SetVip(v string) {
-	p.Vip = v
-}
-
-func (p *VipUpdateLoadbalancerParam) GetVip() string {
-	return p.Vip
-}
-func (p *VipUpdateLoadbalancerParam) SetPort(v int) {
-	p.Port = v
-}
-
-func (p *VipUpdateLoadbalancerParam) GetPort() int {
-	return p.Port
-}
-func (p *VipUpdateLoadbalancerParam) SetDelayLoop(v int) {
-	p.DelayLoop = v
-}
-
-func (p *VipUpdateLoadbalancerParam) GetDelayLoop() int {
-	return p.DelayLoop
-}
-func (p *VipUpdateLoadbalancerParam) SetSorryServer(v string) {
-	p.SorryServer = v
-}
-
-func (p *VipUpdateLoadbalancerParam) GetSorryServer() string {
-	return p.SorryServer
-}
-func (p *VipUpdateLoadbalancerParam) SetDescription(v string) {
+func (p *VipUpdateLoadBalancerParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *VipUpdateLoadbalancerParam) GetDescription() string {
+func (p *VipUpdateLoadBalancerParam) GetDescription() string {
 	return p.Description
 }
+func (p *VipUpdateLoadBalancerParam) SetIndex(v int) {
+	p.Index = v
+}
 
-// VipDeleteLoadbalancerParam is input parameters for the sacloud API
-type VipDeleteLoadbalancerParam struct {
+func (p *VipUpdateLoadBalancerParam) GetIndex() int {
+	return p.Index
+}
+func (p *VipUpdateLoadBalancerParam) SetVip(v string) {
+	p.Vip = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetVip() string {
+	return p.Vip
+}
+func (p *VipUpdateLoadBalancerParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetPort() int {
+	return p.Port
+}
+func (p *VipUpdateLoadBalancerParam) SetDelayLoop(v int) {
+	p.DelayLoop = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetDelayLoop() int {
+	return p.DelayLoop
+}
+func (p *VipUpdateLoadBalancerParam) SetSorryServer(v string) {
+	p.SorryServer = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetSorryServer() string {
+	return p.SorryServer
+}
+
+// VipDeleteLoadBalancerParam is input parameters for the sacloud API
+type VipDeleteLoadBalancerParam struct {
 	Index int
 
 	input Input
 }
 
-// NewVipDeleteLoadbalancerParam return new VipDeleteLoadbalancerParam
-func NewVipDeleteLoadbalancerParam() *VipDeleteLoadbalancerParam {
-	return &VipDeleteLoadbalancerParam{}
+// NewVipDeleteLoadBalancerParam return new VipDeleteLoadBalancerParam
+func NewVipDeleteLoadBalancerParam() *VipDeleteLoadBalancerParam {
+	return &VipDeleteLoadBalancerParam{}
 }
 
-// Initialize init VipDeleteLoadbalancerParam
-func (p *VipDeleteLoadbalancerParam) Initialize(in Input) error {
+// Initialize init VipDeleteLoadBalancerParam
+func (p *VipDeleteLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1519,18 +1519,18 @@ func (p *VipDeleteLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *VipDeleteLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *VipDeleteLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *VipDeleteLoadbalancerParam) fillValueToSkeleton() {
+func (p *VipDeleteLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
 
 }
 
-func (p *VipDeleteLoadbalancerParam) validate() error {
+func (p *VipDeleteLoadBalancerParam) validate() error {
 	var errors []error
 
 	{
@@ -1544,40 +1544,40 @@ func (p *VipDeleteLoadbalancerParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *VipDeleteLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *VipDeleteLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *VipDeleteLoadbalancerParam) CommandDef() *schema.Command {
+func (p *VipDeleteLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["vip-delete"]
 }
 
-func (p *VipDeleteLoadbalancerParam) IncludeFields() []string {
+func (p *VipDeleteLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *VipDeleteLoadbalancerParam) ExcludeFields() []string {
+func (p *VipDeleteLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *VipDeleteLoadbalancerParam) TableType() output.TableType {
+func (p *VipDeleteLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *VipDeleteLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *VipDeleteLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *VipDeleteLoadbalancerParam) SetIndex(v int) {
+func (p *VipDeleteLoadBalancerParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *VipDeleteLoadbalancerParam) GetIndex() int {
+func (p *VipDeleteLoadBalancerParam) GetIndex() int {
 	return p.Index
 }
 
-// ServerInfoLoadbalancerParam is input parameters for the sacloud API
-type ServerInfoLoadbalancerParam struct {
+// ServerInfoLoadBalancerParam is input parameters for the sacloud API
+type ServerInfoLoadBalancerParam struct {
 	VipIndex int
 	Vip      string
 	Port     int
@@ -1585,13 +1585,13 @@ type ServerInfoLoadbalancerParam struct {
 	input Input
 }
 
-// NewServerInfoLoadbalancerParam return new ServerInfoLoadbalancerParam
-func NewServerInfoLoadbalancerParam() *ServerInfoLoadbalancerParam {
-	return &ServerInfoLoadbalancerParam{}
+// NewServerInfoLoadBalancerParam return new ServerInfoLoadBalancerParam
+func NewServerInfoLoadBalancerParam() *ServerInfoLoadBalancerParam {
+	return &ServerInfoLoadBalancerParam{}
 }
 
-// Initialize init ServerInfoLoadbalancerParam
-func (p *ServerInfoLoadbalancerParam) Initialize(in Input) error {
+// Initialize init ServerInfoLoadBalancerParam
+func (p *ServerInfoLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1600,11 +1600,11 @@ func (p *ServerInfoLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ServerInfoLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *ServerInfoLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerInfoLoadbalancerParam) fillValueToSkeleton() {
+func (p *ServerInfoLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.VipIndex) {
 		p.VipIndex = 0
 	}
@@ -1617,7 +1617,7 @@ func (p *ServerInfoLoadbalancerParam) fillValueToSkeleton() {
 
 }
 
-func (p *ServerInfoLoadbalancerParam) validate() error {
+func (p *ServerInfoLoadBalancerParam) validate() error {
 	var errors []error
 
 	{
@@ -1668,74 +1668,74 @@ func (p *ServerInfoLoadbalancerParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ServerInfoLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *ServerInfoLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ServerInfoLoadbalancerParam) CommandDef() *schema.Command {
+func (p *ServerInfoLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["server-info"]
 }
 
-func (p *ServerInfoLoadbalancerParam) IncludeFields() []string {
+func (p *ServerInfoLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ServerInfoLoadbalancerParam) ExcludeFields() []string {
+func (p *ServerInfoLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ServerInfoLoadbalancerParam) TableType() output.TableType {
+func (p *ServerInfoLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ServerInfoLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *ServerInfoLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ServerInfoLoadbalancerParam) SetVipIndex(v int) {
+func (p *ServerInfoLoadBalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
 
-func (p *ServerInfoLoadbalancerParam) GetVipIndex() int {
+func (p *ServerInfoLoadBalancerParam) GetVipIndex() int {
 	return p.VipIndex
 }
-func (p *ServerInfoLoadbalancerParam) SetVip(v string) {
+func (p *ServerInfoLoadBalancerParam) SetVip(v string) {
 	p.Vip = v
 }
 
-func (p *ServerInfoLoadbalancerParam) GetVip() string {
+func (p *ServerInfoLoadBalancerParam) GetVip() string {
 	return p.Vip
 }
-func (p *ServerInfoLoadbalancerParam) SetPort(v int) {
+func (p *ServerInfoLoadBalancerParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *ServerInfoLoadbalancerParam) GetPort() int {
+func (p *ServerInfoLoadBalancerParam) GetPort() int {
 	return p.Port
 }
 
-// ServerAddLoadbalancerParam is input parameters for the sacloud API
-type ServerAddLoadbalancerParam struct {
-	Vip          string
-	Port         int
+// ServerAddLoadBalancerParam is input parameters for the sacloud API
+type ServerAddLoadBalancerParam struct {
 	Ipaddress    string
 	Protocol     string
 	Path         string
 	ResponseCode int
 	Disabled     bool
 	VipIndex     int
+	Vip          string
+	Port         int
 
 	input Input
 }
 
-// NewServerAddLoadbalancerParam return new ServerAddLoadbalancerParam
-func NewServerAddLoadbalancerParam() *ServerAddLoadbalancerParam {
-	return &ServerAddLoadbalancerParam{
+// NewServerAddLoadBalancerParam return new ServerAddLoadBalancerParam
+func NewServerAddLoadBalancerParam() *ServerAddLoadBalancerParam {
+	return &ServerAddLoadBalancerParam{
 		Protocol: "ping"}
 }
 
-// Initialize init ServerAddLoadbalancerParam
-func (p *ServerAddLoadbalancerParam) Initialize(in Input) error {
+// Initialize init ServerAddLoadBalancerParam
+func (p *ServerAddLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1744,17 +1744,11 @@ func (p *ServerAddLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ServerAddLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *ServerAddLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerAddLoadbalancerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Vip) {
-		p.Vip = ""
-	}
-	if utils.IsEmpty(p.Port) {
-		p.Port = 0
-	}
+func (p *ServerAddLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
@@ -1773,45 +1767,17 @@ func (p *ServerAddLoadbalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.VipIndex) {
 		p.VipIndex = 0
 	}
+	if utils.IsEmpty(p.Vip) {
+		p.Vip = ""
+	}
+	if utils.IsEmpty(p.Port) {
+		p.Port = 0
+	}
 
 }
 
-func (p *ServerAddLoadbalancerParam) validate() error {
+func (p *ServerAddLoadBalancerParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["server-add"].Params["vip"].ValidateFunc
-		errs := validator("--vip", p.Vip)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validation.ConflictsWith("--vip", p.Vip, map[string]interface{}{
-
-			"--vip-index": p.VipIndex,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["server-add"].Params["port"].ValidateFunc
-		errs := validator("--port", p.Port)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validation.ConflictsWith("--port", p.Port, map[string]interface{}{
-
-			"--vip-index": p.VipIndex,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -1854,111 +1820,145 @@ func (p *ServerAddLoadbalancerParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["LoadBalancer"].Commands["server-add"].Params["vip"].ValidateFunc
+		errs := validator("--vip", p.Vip)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validation.ConflictsWith("--vip", p.Vip, map[string]interface{}{
+
+			"--vip-index": p.VipIndex,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["server-add"].Params["port"].ValidateFunc
+		errs := validator("--port", p.Port)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validation.ConflictsWith("--port", p.Port, map[string]interface{}{
+
+			"--vip-index": p.VipIndex,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ServerAddLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *ServerAddLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ServerAddLoadbalancerParam) CommandDef() *schema.Command {
+func (p *ServerAddLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["server-add"]
 }
 
-func (p *ServerAddLoadbalancerParam) IncludeFields() []string {
+func (p *ServerAddLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ServerAddLoadbalancerParam) ExcludeFields() []string {
+func (p *ServerAddLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ServerAddLoadbalancerParam) TableType() output.TableType {
+func (p *ServerAddLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ServerAddLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *ServerAddLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ServerAddLoadbalancerParam) SetVip(v string) {
-	p.Vip = v
-}
-
-func (p *ServerAddLoadbalancerParam) GetVip() string {
-	return p.Vip
-}
-func (p *ServerAddLoadbalancerParam) SetPort(v int) {
-	p.Port = v
-}
-
-func (p *ServerAddLoadbalancerParam) GetPort() int {
-	return p.Port
-}
-func (p *ServerAddLoadbalancerParam) SetIpaddress(v string) {
+func (p *ServerAddLoadBalancerParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
 
-func (p *ServerAddLoadbalancerParam) GetIpaddress() string {
+func (p *ServerAddLoadBalancerParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *ServerAddLoadbalancerParam) SetProtocol(v string) {
+func (p *ServerAddLoadBalancerParam) SetProtocol(v string) {
 	p.Protocol = v
 }
 
-func (p *ServerAddLoadbalancerParam) GetProtocol() string {
+func (p *ServerAddLoadBalancerParam) GetProtocol() string {
 	return p.Protocol
 }
-func (p *ServerAddLoadbalancerParam) SetPath(v string) {
+func (p *ServerAddLoadBalancerParam) SetPath(v string) {
 	p.Path = v
 }
 
-func (p *ServerAddLoadbalancerParam) GetPath() string {
+func (p *ServerAddLoadBalancerParam) GetPath() string {
 	return p.Path
 }
-func (p *ServerAddLoadbalancerParam) SetResponseCode(v int) {
+func (p *ServerAddLoadBalancerParam) SetResponseCode(v int) {
 	p.ResponseCode = v
 }
 
-func (p *ServerAddLoadbalancerParam) GetResponseCode() int {
+func (p *ServerAddLoadBalancerParam) GetResponseCode() int {
 	return p.ResponseCode
 }
-func (p *ServerAddLoadbalancerParam) SetDisabled(v bool) {
+func (p *ServerAddLoadBalancerParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
 
-func (p *ServerAddLoadbalancerParam) GetDisabled() bool {
+func (p *ServerAddLoadBalancerParam) GetDisabled() bool {
 	return p.Disabled
 }
-func (p *ServerAddLoadbalancerParam) SetVipIndex(v int) {
+func (p *ServerAddLoadBalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
 
-func (p *ServerAddLoadbalancerParam) GetVipIndex() int {
+func (p *ServerAddLoadBalancerParam) GetVipIndex() int {
 	return p.VipIndex
 }
+func (p *ServerAddLoadBalancerParam) SetVip(v string) {
+	p.Vip = v
+}
 
-// ServerUpdateLoadbalancerParam is input parameters for the sacloud API
-type ServerUpdateLoadbalancerParam struct {
-	Port         int
-	Ipaddress    string
-	Protocol     string
-	Path         string
+func (p *ServerAddLoadBalancerParam) GetVip() string {
+	return p.Vip
+}
+func (p *ServerAddLoadBalancerParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *ServerAddLoadBalancerParam) GetPort() int {
+	return p.Port
+}
+
+// ServerUpdateLoadBalancerParam is input parameters for the sacloud API
+type ServerUpdateLoadBalancerParam struct {
 	ResponseCode int
 	Disabled     bool
 	VipIndex     int
 	Vip          string
+	Port         int
+	Ipaddress    string
+	Protocol     string
+	Path         string
 
 	input Input
 }
 
-// NewServerUpdateLoadbalancerParam return new ServerUpdateLoadbalancerParam
-func NewServerUpdateLoadbalancerParam() *ServerUpdateLoadbalancerParam {
-	return &ServerUpdateLoadbalancerParam{}
+// NewServerUpdateLoadBalancerParam return new ServerUpdateLoadBalancerParam
+func NewServerUpdateLoadBalancerParam() *ServerUpdateLoadBalancerParam {
+	return &ServerUpdateLoadBalancerParam{}
 }
 
-// Initialize init ServerUpdateLoadbalancerParam
-func (p *ServerUpdateLoadbalancerParam) Initialize(in Input) error {
+// Initialize init ServerUpdateLoadBalancerParam
+func (p *ServerUpdateLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1967,23 +1967,11 @@ func (p *ServerUpdateLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ServerUpdateLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *ServerUpdateLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerUpdateLoadbalancerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Port) {
-		p.Port = 0
-	}
-	if utils.IsEmpty(p.Ipaddress) {
-		p.Ipaddress = ""
-	}
-	if utils.IsEmpty(p.Protocol) {
-		p.Protocol = ""
-	}
-	if utils.IsEmpty(p.Path) {
-		p.Path = ""
-	}
+func (p *ServerUpdateLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.ResponseCode) {
 		p.ResponseCode = 0
 	}
@@ -1996,11 +1984,51 @@ func (p *ServerUpdateLoadbalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Vip) {
 		p.Vip = ""
 	}
+	if utils.IsEmpty(p.Port) {
+		p.Port = 0
+	}
+	if utils.IsEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
+	if utils.IsEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if utils.IsEmpty(p.Path) {
+		p.Path = ""
+	}
 
 }
 
-func (p *ServerUpdateLoadbalancerParam) validate() error {
+func (p *ServerUpdateLoadBalancerParam) validate() error {
 	var errors []error
+
+	{
+		errs := validation.ConflictsWith("--vip-index", p.VipIndex, map[string]interface{}{
+
+			"--port": p.Port,
+			"--vip":  p.Vip,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["server-update"].Params["vip"].ValidateFunc
+		errs := validator("--vip", p.Vip)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validation.ConflictsWith("--vip", p.Vip, map[string]interface{}{
+
+			"--vip-index": p.VipIndex,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["LoadBalancer"].Commands["server-update"].Params["port"].ValidateFunc
@@ -2042,135 +2070,107 @@ func (p *ServerUpdateLoadbalancerParam) validate() error {
 		}
 	}
 
-	{
-		errs := validation.ConflictsWith("--vip-index", p.VipIndex, map[string]interface{}{
-
-			"--port": p.Port,
-			"--vip":  p.Vip,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["server-update"].Params["vip"].ValidateFunc
-		errs := validator("--vip", p.Vip)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validation.ConflictsWith("--vip", p.Vip, map[string]interface{}{
-
-			"--vip-index": p.VipIndex,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ServerUpdateLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *ServerUpdateLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ServerUpdateLoadbalancerParam) CommandDef() *schema.Command {
+func (p *ServerUpdateLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["server-update"]
 }
 
-func (p *ServerUpdateLoadbalancerParam) IncludeFields() []string {
+func (p *ServerUpdateLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ServerUpdateLoadbalancerParam) ExcludeFields() []string {
+func (p *ServerUpdateLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ServerUpdateLoadbalancerParam) TableType() output.TableType {
+func (p *ServerUpdateLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ServerUpdateLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *ServerUpdateLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ServerUpdateLoadbalancerParam) SetPort(v int) {
-	p.Port = v
-}
-
-func (p *ServerUpdateLoadbalancerParam) GetPort() int {
-	return p.Port
-}
-func (p *ServerUpdateLoadbalancerParam) SetIpaddress(v string) {
-	p.Ipaddress = v
-}
-
-func (p *ServerUpdateLoadbalancerParam) GetIpaddress() string {
-	return p.Ipaddress
-}
-func (p *ServerUpdateLoadbalancerParam) SetProtocol(v string) {
-	p.Protocol = v
-}
-
-func (p *ServerUpdateLoadbalancerParam) GetProtocol() string {
-	return p.Protocol
-}
-func (p *ServerUpdateLoadbalancerParam) SetPath(v string) {
-	p.Path = v
-}
-
-func (p *ServerUpdateLoadbalancerParam) GetPath() string {
-	return p.Path
-}
-func (p *ServerUpdateLoadbalancerParam) SetResponseCode(v int) {
+func (p *ServerUpdateLoadBalancerParam) SetResponseCode(v int) {
 	p.ResponseCode = v
 }
 
-func (p *ServerUpdateLoadbalancerParam) GetResponseCode() int {
+func (p *ServerUpdateLoadBalancerParam) GetResponseCode() int {
 	return p.ResponseCode
 }
-func (p *ServerUpdateLoadbalancerParam) SetDisabled(v bool) {
+func (p *ServerUpdateLoadBalancerParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
 
-func (p *ServerUpdateLoadbalancerParam) GetDisabled() bool {
+func (p *ServerUpdateLoadBalancerParam) GetDisabled() bool {
 	return p.Disabled
 }
-func (p *ServerUpdateLoadbalancerParam) SetVipIndex(v int) {
+func (p *ServerUpdateLoadBalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
 
-func (p *ServerUpdateLoadbalancerParam) GetVipIndex() int {
+func (p *ServerUpdateLoadBalancerParam) GetVipIndex() int {
 	return p.VipIndex
 }
-func (p *ServerUpdateLoadbalancerParam) SetVip(v string) {
+func (p *ServerUpdateLoadBalancerParam) SetVip(v string) {
 	p.Vip = v
 }
 
-func (p *ServerUpdateLoadbalancerParam) GetVip() string {
+func (p *ServerUpdateLoadBalancerParam) GetVip() string {
 	return p.Vip
 }
+func (p *ServerUpdateLoadBalancerParam) SetPort(v int) {
+	p.Port = v
+}
 
-// ServerDeleteLoadbalancerParam is input parameters for the sacloud API
-type ServerDeleteLoadbalancerParam struct {
-	VipIndex  int
-	Vip       string
+func (p *ServerUpdateLoadBalancerParam) GetPort() int {
+	return p.Port
+}
+func (p *ServerUpdateLoadBalancerParam) SetIpaddress(v string) {
+	p.Ipaddress = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetIpaddress() string {
+	return p.Ipaddress
+}
+func (p *ServerUpdateLoadBalancerParam) SetProtocol(v string) {
+	p.Protocol = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetProtocol() string {
+	return p.Protocol
+}
+func (p *ServerUpdateLoadBalancerParam) SetPath(v string) {
+	p.Path = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetPath() string {
+	return p.Path
+}
+
+// ServerDeleteLoadBalancerParam is input parameters for the sacloud API
+type ServerDeleteLoadBalancerParam struct {
 	Port      int
 	Ipaddress string
+	VipIndex  int
+	Vip       string
 
 	input Input
 }
 
-// NewServerDeleteLoadbalancerParam return new ServerDeleteLoadbalancerParam
-func NewServerDeleteLoadbalancerParam() *ServerDeleteLoadbalancerParam {
-	return &ServerDeleteLoadbalancerParam{}
+// NewServerDeleteLoadBalancerParam return new ServerDeleteLoadBalancerParam
+func NewServerDeleteLoadBalancerParam() *ServerDeleteLoadBalancerParam {
+	return &ServerDeleteLoadBalancerParam{}
 }
 
-// Initialize init ServerDeleteLoadbalancerParam
-func (p *ServerDeleteLoadbalancerParam) Initialize(in Input) error {
+// Initialize init ServerDeleteLoadBalancerParam
+func (p *ServerDeleteLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2179,56 +2179,28 @@ func (p *ServerDeleteLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ServerDeleteLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *ServerDeleteLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerDeleteLoadbalancerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.VipIndex) {
-		p.VipIndex = 0
-	}
-	if utils.IsEmpty(p.Vip) {
-		p.Vip = ""
-	}
+func (p *ServerDeleteLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Port) {
 		p.Port = 0
 	}
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
+	if utils.IsEmpty(p.VipIndex) {
+		p.VipIndex = 0
+	}
+	if utils.IsEmpty(p.Vip) {
+		p.Vip = ""
+	}
 
 }
 
-func (p *ServerDeleteLoadbalancerParam) validate() error {
+func (p *ServerDeleteLoadBalancerParam) validate() error {
 	var errors []error
-
-	{
-		errs := validation.ConflictsWith("--vip-index", p.VipIndex, map[string]interface{}{
-
-			"--port": p.Port,
-			"--vip":  p.Vip,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["server-delete"].Params["vip"].ValidateFunc
-		errs := validator("--vip", p.Vip)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validation.ConflictsWith("--vip", p.Vip, map[string]interface{}{
-
-			"--vip-index": p.VipIndex,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["LoadBalancer"].Commands["server-delete"].Params["port"].ValidateFunc
@@ -2262,79 +2234,107 @@ func (p *ServerDeleteLoadbalancerParam) validate() error {
 		}
 	}
 
+	{
+		errs := validation.ConflictsWith("--vip-index", p.VipIndex, map[string]interface{}{
+
+			"--port": p.Port,
+			"--vip":  p.Vip,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["server-delete"].Params["vip"].ValidateFunc
+		errs := validator("--vip", p.Vip)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validation.ConflictsWith("--vip", p.Vip, map[string]interface{}{
+
+			"--vip-index": p.VipIndex,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ServerDeleteLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *ServerDeleteLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *ServerDeleteLoadbalancerParam) CommandDef() *schema.Command {
+func (p *ServerDeleteLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["server-delete"]
 }
 
-func (p *ServerDeleteLoadbalancerParam) IncludeFields() []string {
+func (p *ServerDeleteLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ServerDeleteLoadbalancerParam) ExcludeFields() []string {
+func (p *ServerDeleteLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ServerDeleteLoadbalancerParam) TableType() output.TableType {
+func (p *ServerDeleteLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ServerDeleteLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *ServerDeleteLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ServerDeleteLoadbalancerParam) SetVipIndex(v int) {
-	p.VipIndex = v
-}
-
-func (p *ServerDeleteLoadbalancerParam) GetVipIndex() int {
-	return p.VipIndex
-}
-func (p *ServerDeleteLoadbalancerParam) SetVip(v string) {
-	p.Vip = v
-}
-
-func (p *ServerDeleteLoadbalancerParam) GetVip() string {
-	return p.Vip
-}
-func (p *ServerDeleteLoadbalancerParam) SetPort(v int) {
+func (p *ServerDeleteLoadBalancerParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *ServerDeleteLoadbalancerParam) GetPort() int {
+func (p *ServerDeleteLoadBalancerParam) GetPort() int {
 	return p.Port
 }
-func (p *ServerDeleteLoadbalancerParam) SetIpaddress(v string) {
+func (p *ServerDeleteLoadBalancerParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
 
-func (p *ServerDeleteLoadbalancerParam) GetIpaddress() string {
+func (p *ServerDeleteLoadBalancerParam) GetIpaddress() string {
 	return p.Ipaddress
 }
+func (p *ServerDeleteLoadBalancerParam) SetVipIndex(v int) {
+	p.VipIndex = v
+}
 
-// MonitorLoadbalancerParam is input parameters for the sacloud API
-type MonitorLoadbalancerParam struct {
+func (p *ServerDeleteLoadBalancerParam) GetVipIndex() int {
+	return p.VipIndex
+}
+func (p *ServerDeleteLoadBalancerParam) SetVip(v string) {
+	p.Vip = v
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetVip() string {
+	return p.Vip
+}
+
+// MonitorLoadBalancerParam is input parameters for the sacloud API
+type MonitorLoadBalancerParam struct {
+	Start     string
 	End       string
 	KeyFormat string
-	Start     string
 
 	input Input
 }
 
-// NewMonitorLoadbalancerParam return new MonitorLoadbalancerParam
-func NewMonitorLoadbalancerParam() *MonitorLoadbalancerParam {
-	return &MonitorLoadbalancerParam{
+// NewMonitorLoadBalancerParam return new MonitorLoadBalancerParam
+func NewMonitorLoadBalancerParam() *MonitorLoadBalancerParam {
+	return &MonitorLoadBalancerParam{
 		KeyFormat: "sakuracloud.loadbalancer.{{.ID}}.nic"}
 }
 
-// Initialize init MonitorLoadbalancerParam
-func (p *MonitorLoadbalancerParam) Initialize(in Input) error {
+// Initialize init MonitorLoadBalancerParam
+func (p *MonitorLoadBalancerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2343,25 +2343,33 @@ func (p *MonitorLoadbalancerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *MonitorLoadbalancerParam) WriteSkeleton(writer io.Writer) error {
+func (p *MonitorLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *MonitorLoadbalancerParam) fillValueToSkeleton() {
+func (p *MonitorLoadBalancerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Start) {
+		p.Start = ""
+	}
 	if utils.IsEmpty(p.End) {
 		p.End = ""
 	}
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
-	if utils.IsEmpty(p.Start) {
-		p.Start = ""
-	}
 
 }
 
-func (p *MonitorLoadbalancerParam) validate() error {
+func (p *MonitorLoadBalancerParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["monitor"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["LoadBalancer"].Commands["monitor"].Params["end"].ValidateFunc
@@ -2379,59 +2387,51 @@ func (p *MonitorLoadbalancerParam) validate() error {
 		}
 	}
 
-	{
-		validator := define.Resources["LoadBalancer"].Commands["monitor"].Params["start"].ValidateFunc
-		errs := validator("--start", p.Start)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *MonitorLoadbalancerParam) ResourceDef() *schema.Resource {
+func (p *MonitorLoadBalancerParam) ResourceDef() *schema.Resource {
 	return define.Resources["LoadBalancer"]
 }
 
-func (p *MonitorLoadbalancerParam) CommandDef() *schema.Command {
+func (p *MonitorLoadBalancerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["monitor"]
 }
 
-func (p *MonitorLoadbalancerParam) IncludeFields() []string {
+func (p *MonitorLoadBalancerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *MonitorLoadbalancerParam) ExcludeFields() []string {
+func (p *MonitorLoadBalancerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *MonitorLoadbalancerParam) TableType() output.TableType {
+func (p *MonitorLoadBalancerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *MonitorLoadbalancerParam) ColumnDefs() []output.ColumnDef {
+func (p *MonitorLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *MonitorLoadbalancerParam) SetEnd(v string) {
-	p.End = v
-}
-
-func (p *MonitorLoadbalancerParam) GetEnd() string {
-	return p.End
-}
-func (p *MonitorLoadbalancerParam) SetKeyFormat(v string) {
-	p.KeyFormat = v
-}
-
-func (p *MonitorLoadbalancerParam) GetKeyFormat() string {
-	return p.KeyFormat
-}
-func (p *MonitorLoadbalancerParam) SetStart(v string) {
+func (p *MonitorLoadBalancerParam) SetStart(v string) {
 	p.Start = v
 }
 
-func (p *MonitorLoadbalancerParam) GetStart() string {
+func (p *MonitorLoadBalancerParam) GetStart() string {
 	return p.Start
+}
+func (p *MonitorLoadBalancerParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorLoadBalancerParam) GetEnd() string {
+	return p.End
+}
+func (p *MonitorLoadBalancerParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorLoadBalancerParam) GetKeyFormat() string {
+	return p.KeyFormat
 }

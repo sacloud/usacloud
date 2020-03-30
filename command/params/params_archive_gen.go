@@ -1958,8 +1958,8 @@ func (p *DownloadArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// FtpOpenArchiveParam is input parameters for the sacloud API
-type FtpOpenArchiveParam struct {
+// FTPOpenArchiveParam is input parameters for the sacloud API
+type FTPOpenArchiveParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -1977,13 +1977,13 @@ type FtpOpenArchiveParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewFtpOpenArchiveParam return new FtpOpenArchiveParam
-func NewFtpOpenArchiveParam() *FtpOpenArchiveParam {
-	return &FtpOpenArchiveParam{}
+// NewFTPOpenArchiveParam return new FTPOpenArchiveParam
+func NewFTPOpenArchiveParam() *FTPOpenArchiveParam {
+	return &FTPOpenArchiveParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *FtpOpenArchiveParam) FillValueToSkeleton() {
+func (p *FTPOpenArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2033,7 +2033,7 @@ func (p *FtpOpenArchiveParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *FtpOpenArchiveParam) Validate() []error {
+func (p *FTPOpenArchiveParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -2066,138 +2066,138 @@ func (p *FtpOpenArchiveParam) Validate() []error {
 	return errors
 }
 
-func (p *FtpOpenArchiveParam) GetResourceDef() *schema.Resource {
+func (p *FTPOpenArchiveParam) GetResourceDef() *schema.Resource {
 	return define.Resources["Archive"]
 }
 
-func (p *FtpOpenArchiveParam) GetCommandDef() *schema.Command {
+func (p *FTPOpenArchiveParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ftp-open"]
 }
 
-func (p *FtpOpenArchiveParam) GetIncludeFields() []string {
+func (p *FTPOpenArchiveParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *FtpOpenArchiveParam) GetExcludeFields() []string {
+func (p *FTPOpenArchiveParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *FtpOpenArchiveParam) GetTableType() output.TableType {
+func (p *FTPOpenArchiveParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *FtpOpenArchiveParam) GetColumnDefs() []output.ColumnDef {
+func (p *FTPOpenArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *FtpOpenArchiveParam) SetSelector(v []string) {
+func (p *FTPOpenArchiveParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *FtpOpenArchiveParam) GetSelector() []string {
+func (p *FTPOpenArchiveParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *FtpOpenArchiveParam) SetAssumeyes(v bool) {
+func (p *FTPOpenArchiveParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *FtpOpenArchiveParam) GetAssumeyes() bool {
+func (p *FTPOpenArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *FtpOpenArchiveParam) SetParamTemplate(v string) {
+func (p *FTPOpenArchiveParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *FtpOpenArchiveParam) GetParamTemplate() string {
+func (p *FTPOpenArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *FtpOpenArchiveParam) SetParameters(v string) {
+func (p *FTPOpenArchiveParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *FtpOpenArchiveParam) GetParameters() string {
+func (p *FTPOpenArchiveParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *FtpOpenArchiveParam) SetParamTemplateFile(v string) {
+func (p *FTPOpenArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *FtpOpenArchiveParam) GetParamTemplateFile() string {
+func (p *FTPOpenArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *FtpOpenArchiveParam) SetParameterFile(v string) {
+func (p *FTPOpenArchiveParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *FtpOpenArchiveParam) GetParameterFile() string {
+func (p *FTPOpenArchiveParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *FtpOpenArchiveParam) SetGenerateSkeleton(v bool) {
+func (p *FTPOpenArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *FtpOpenArchiveParam) GetGenerateSkeleton() bool {
+func (p *FTPOpenArchiveParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *FtpOpenArchiveParam) SetOutputType(v string) {
+func (p *FTPOpenArchiveParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *FtpOpenArchiveParam) GetOutputType() string {
+func (p *FTPOpenArchiveParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *FtpOpenArchiveParam) SetColumn(v []string) {
+func (p *FTPOpenArchiveParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *FtpOpenArchiveParam) GetColumn() []string {
+func (p *FTPOpenArchiveParam) GetColumn() []string {
 	return p.Column
 }
-func (p *FtpOpenArchiveParam) SetQuiet(v bool) {
+func (p *FTPOpenArchiveParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *FtpOpenArchiveParam) GetQuiet() bool {
+func (p *FTPOpenArchiveParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *FtpOpenArchiveParam) SetFormat(v string) {
+func (p *FTPOpenArchiveParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *FtpOpenArchiveParam) GetFormat() string {
+func (p *FTPOpenArchiveParam) GetFormat() string {
 	return p.Format
 }
-func (p *FtpOpenArchiveParam) SetFormatFile(v string) {
+func (p *FTPOpenArchiveParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *FtpOpenArchiveParam) GetFormatFile() string {
+func (p *FTPOpenArchiveParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *FtpOpenArchiveParam) SetQuery(v string) {
+func (p *FTPOpenArchiveParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *FtpOpenArchiveParam) GetQuery() string {
+func (p *FTPOpenArchiveParam) GetQuery() string {
 	return p.Query
 }
-func (p *FtpOpenArchiveParam) SetQueryFile(v string) {
+func (p *FTPOpenArchiveParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *FtpOpenArchiveParam) GetQueryFile() string {
+func (p *FTPOpenArchiveParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *FtpOpenArchiveParam) SetId(v sacloud.ID) {
+func (p *FTPOpenArchiveParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *FtpOpenArchiveParam) GetId() sacloud.ID {
+func (p *FTPOpenArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// FtpCloseArchiveParam is input parameters for the sacloud API
-type FtpCloseArchiveParam struct {
+// FTPCloseArchiveParam is input parameters for the sacloud API
+type FTPCloseArchiveParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -2208,13 +2208,13 @@ type FtpCloseArchiveParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewFtpCloseArchiveParam return new FtpCloseArchiveParam
-func NewFtpCloseArchiveParam() *FtpCloseArchiveParam {
-	return &FtpCloseArchiveParam{}
+// NewFTPCloseArchiveParam return new FTPCloseArchiveParam
+func NewFTPCloseArchiveParam() *FTPCloseArchiveParam {
+	return &FTPCloseArchiveParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *FtpCloseArchiveParam) FillValueToSkeleton() {
+func (p *FTPCloseArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2243,7 +2243,7 @@ func (p *FtpCloseArchiveParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *FtpCloseArchiveParam) Validate() []error {
+func (p *FTPCloseArchiveParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -2256,84 +2256,84 @@ func (p *FtpCloseArchiveParam) Validate() []error {
 	return errors
 }
 
-func (p *FtpCloseArchiveParam) GetResourceDef() *schema.Resource {
+func (p *FTPCloseArchiveParam) GetResourceDef() *schema.Resource {
 	return define.Resources["Archive"]
 }
 
-func (p *FtpCloseArchiveParam) GetCommandDef() *schema.Command {
+func (p *FTPCloseArchiveParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ftp-close"]
 }
 
-func (p *FtpCloseArchiveParam) GetIncludeFields() []string {
+func (p *FTPCloseArchiveParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *FtpCloseArchiveParam) GetExcludeFields() []string {
+func (p *FTPCloseArchiveParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *FtpCloseArchiveParam) GetTableType() output.TableType {
+func (p *FTPCloseArchiveParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *FtpCloseArchiveParam) GetColumnDefs() []output.ColumnDef {
+func (p *FTPCloseArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *FtpCloseArchiveParam) SetSelector(v []string) {
+func (p *FTPCloseArchiveParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *FtpCloseArchiveParam) GetSelector() []string {
+func (p *FTPCloseArchiveParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *FtpCloseArchiveParam) SetAssumeyes(v bool) {
+func (p *FTPCloseArchiveParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *FtpCloseArchiveParam) GetAssumeyes() bool {
+func (p *FTPCloseArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *FtpCloseArchiveParam) SetParamTemplate(v string) {
+func (p *FTPCloseArchiveParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *FtpCloseArchiveParam) GetParamTemplate() string {
+func (p *FTPCloseArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *FtpCloseArchiveParam) SetParameters(v string) {
+func (p *FTPCloseArchiveParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *FtpCloseArchiveParam) GetParameters() string {
+func (p *FTPCloseArchiveParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *FtpCloseArchiveParam) SetParamTemplateFile(v string) {
+func (p *FTPCloseArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *FtpCloseArchiveParam) GetParamTemplateFile() string {
+func (p *FTPCloseArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *FtpCloseArchiveParam) SetParameterFile(v string) {
+func (p *FTPCloseArchiveParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *FtpCloseArchiveParam) GetParameterFile() string {
+func (p *FTPCloseArchiveParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *FtpCloseArchiveParam) SetGenerateSkeleton(v bool) {
+func (p *FTPCloseArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *FtpCloseArchiveParam) GetGenerateSkeleton() bool {
+func (p *FTPCloseArchiveParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *FtpCloseArchiveParam) SetId(v sacloud.ID) {
+func (p *FTPCloseArchiveParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *FtpCloseArchiveParam) GetId() sacloud.ID {
+func (p *FTPCloseArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 

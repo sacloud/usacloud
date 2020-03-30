@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func SimplemonitorDelete(ctx command.Context, params *params.DeleteSimplemonitorParam) error {
+func SimpleMonitorDelete(ctx command.Context, params *params.DeleteSimpleMonitorParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetSimplemonitorAPI()
+	api := client.GetSimpleMonitorAPI()
 
 	// set params
 
 	// call Delete(id)
 	res, err := api.Delete(params.Id)
 	if err != nil {
-		return fmt.Errorf("SimplemonitorDelete is failed: %s", err)
+		return fmt.Errorf("SimpleMonitorDelete is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

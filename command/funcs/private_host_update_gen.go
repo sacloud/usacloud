@@ -23,13 +23,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func PrivatehostUpdate(ctx command.Context, params *params.UpdatePrivatehostParam) error {
+func PrivateHostUpdate(ctx command.Context, params *params.UpdatePrivateHostParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetPrivatehostAPI()
+	api := client.GetPrivateHostAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("PrivatehostUpdate is failed: %s", e)
+		return fmt.Errorf("PrivateHostUpdate is failed: %s", e)
 	}
 
 	// set params
@@ -50,7 +50,7 @@ func PrivatehostUpdate(ctx command.Context, params *params.UpdatePrivatehostPara
 	// call Update(id)
 	res, err := api.Update(params.Id, p)
 	if err != nil {
-		return fmt.Errorf("PrivatehostUpdate is failed: %s", err)
+		return fmt.Errorf("PrivateHostUpdate is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

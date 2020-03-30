@@ -21,13 +21,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ProxyLBAcmeInfo(ctx command.Context, params *params.AcmeInfoProxyLBParam) error {
+func ProxyLBACMEInfo(ctx command.Context, params *params.ACMEInfoProxyLBParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetProxyLBAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("ProxyLBAcmeInfo is failed: %s", e)
+		return fmt.Errorf("ProxyLBACMEInfo is failed: %s", e)
 	}
 
 	return ctx.GetOutput().Print(&p.Settings.ProxyLB.LetsEncrypt)

@@ -25,67 +25,67 @@ import (
 )
 
 var (
-	vpcrouterListParam                      = params.NewListVpcrouterParam()
-	vpcrouterCreateParam                    = params.NewCreateVpcrouterParam()
-	vpcrouterReadParam                      = params.NewReadVpcrouterParam()
-	vpcrouterUpdateParam                    = params.NewUpdateVpcrouterParam()
-	vpcrouterDeleteParam                    = params.NewDeleteVpcrouterParam()
-	vpcrouterBootParam                      = params.NewBootVpcrouterParam()
-	vpcrouterShutdownParam                  = params.NewShutdownVpcrouterParam()
-	vpcrouterShutdownForceParam             = params.NewShutdownForceVpcrouterParam()
-	vpcrouterResetParam                     = params.NewResetVpcrouterParam()
-	vpcrouterWaitForBootParam               = params.NewWaitForBootVpcrouterParam()
-	vpcrouterWaitForDownParam               = params.NewWaitForDownVpcrouterParam()
-	vpcrouterEnableInternetConnectionParam  = params.NewEnableInternetConnectionVpcrouterParam()
-	vpcrouterDisableInternetConnectionParam = params.NewDisableInternetConnectionVpcrouterParam()
-	vpcrouterInterfaceInfoParam             = params.NewInterfaceInfoVpcrouterParam()
-	vpcrouterInterfaceConnectParam          = params.NewInterfaceConnectVpcrouterParam()
-	vpcrouterInterfaceUpdateParam           = params.NewInterfaceUpdateVpcrouterParam()
-	vpcrouterInterfaceDisconnectParam       = params.NewInterfaceDisconnectVpcrouterParam()
-	vpcrouterStaticNatInfoParam             = params.NewStaticNatInfoVpcrouterParam()
-	vpcrouterStaticNatAddParam              = params.NewStaticNatAddVpcrouterParam()
-	vpcrouterStaticNatUpdateParam           = params.NewStaticNatUpdateVpcrouterParam()
-	vpcrouterStaticNatDeleteParam           = params.NewStaticNatDeleteVpcrouterParam()
-	vpcrouterPortForwardingInfoParam        = params.NewPortForwardingInfoVpcrouterParam()
-	vpcrouterPortForwardingAddParam         = params.NewPortForwardingAddVpcrouterParam()
-	vpcrouterPortForwardingUpdateParam      = params.NewPortForwardingUpdateVpcrouterParam()
-	vpcrouterPortForwardingDeleteParam      = params.NewPortForwardingDeleteVpcrouterParam()
-	vpcrouterFirewallInfoParam              = params.NewFirewallInfoVpcrouterParam()
-	vpcrouterFirewallAddParam               = params.NewFirewallAddVpcrouterParam()
-	vpcrouterFirewallUpdateParam            = params.NewFirewallUpdateVpcrouterParam()
-	vpcrouterFirewallDeleteParam            = params.NewFirewallDeleteVpcrouterParam()
-	vpcrouterDhcpServerInfoParam            = params.NewDhcpServerInfoVpcrouterParam()
-	vpcrouterDhcpServerAddParam             = params.NewDhcpServerAddVpcrouterParam()
-	vpcrouterDhcpServerUpdateParam          = params.NewDhcpServerUpdateVpcrouterParam()
-	vpcrouterDhcpServerDeleteParam          = params.NewDhcpServerDeleteVpcrouterParam()
-	vpcrouterDhcpStaticMappingInfoParam     = params.NewDhcpStaticMappingInfoVpcrouterParam()
-	vpcrouterDhcpStaticMappingAddParam      = params.NewDhcpStaticMappingAddVpcrouterParam()
-	vpcrouterDhcpStaticMappingUpdateParam   = params.NewDhcpStaticMappingUpdateVpcrouterParam()
-	vpcrouterDhcpStaticMappingDeleteParam   = params.NewDhcpStaticMappingDeleteVpcrouterParam()
-	vpcrouterPptpServerInfoParam            = params.NewPptpServerInfoVpcrouterParam()
-	vpcrouterPptpServerUpdateParam          = params.NewPptpServerUpdateVpcrouterParam()
-	vpcrouterL2tpServerInfoParam            = params.NewL2tpServerInfoVpcrouterParam()
-	vpcrouterL2tpServerUpdateParam          = params.NewL2tpServerUpdateVpcrouterParam()
-	vpcrouterUserInfoParam                  = params.NewUserInfoVpcrouterParam()
-	vpcrouterUserAddParam                   = params.NewUserAddVpcrouterParam()
-	vpcrouterUserUpdateParam                = params.NewUserUpdateVpcrouterParam()
-	vpcrouterUserDeleteParam                = params.NewUserDeleteVpcrouterParam()
-	vpcrouterSiteToSiteVpnInfoParam         = params.NewSiteToSiteVpnInfoVpcrouterParam()
-	vpcrouterSiteToSiteVpnAddParam          = params.NewSiteToSiteVpnAddVpcrouterParam()
-	vpcrouterSiteToSiteVpnUpdateParam       = params.NewSiteToSiteVpnUpdateVpcrouterParam()
-	vpcrouterSiteToSiteVpnDeleteParam       = params.NewSiteToSiteVpnDeleteVpcrouterParam()
-	vpcrouterSiteToSiteVpnPeersParam        = params.NewSiteToSiteVpnPeersVpcrouterParam()
-	vpcrouterStaticRouteInfoParam           = params.NewStaticRouteInfoVpcrouterParam()
-	vpcrouterStaticRouteAddParam            = params.NewStaticRouteAddVpcrouterParam()
-	vpcrouterStaticRouteUpdateParam         = params.NewStaticRouteUpdateVpcrouterParam()
-	vpcrouterStaticRouteDeleteParam         = params.NewStaticRouteDeleteVpcrouterParam()
-	vpcrouterMonitorParam                   = params.NewMonitorVpcrouterParam()
-	vpcrouterLogsParam                      = params.NewLogsVpcrouterParam()
+	vpcRouterListParam                      = params.NewListVPCRouterParam()
+	vpcRouterCreateParam                    = params.NewCreateVPCRouterParam()
+	vpcRouterReadParam                      = params.NewReadVPCRouterParam()
+	vpcRouterUpdateParam                    = params.NewUpdateVPCRouterParam()
+	vpcRouterDeleteParam                    = params.NewDeleteVPCRouterParam()
+	vpcRouterBootParam                      = params.NewBootVPCRouterParam()
+	vpcRouterShutdownParam                  = params.NewShutdownVPCRouterParam()
+	vpcRouterShutdownForceParam             = params.NewShutdownForceVPCRouterParam()
+	vpcRouterResetParam                     = params.NewResetVPCRouterParam()
+	vpcRouterWaitForBootParam               = params.NewWaitForBootVPCRouterParam()
+	vpcRouterWaitForDownParam               = params.NewWaitForDownVPCRouterParam()
+	vpcRouterEnableInternetConnectionParam  = params.NewEnableInternetConnectionVPCRouterParam()
+	vpcRouterDisableInternetConnectionParam = params.NewDisableInternetConnectionVPCRouterParam()
+	vpcRouterInterfaceInfoParam             = params.NewInterfaceInfoVPCRouterParam()
+	vpcRouterInterfaceConnectParam          = params.NewInterfaceConnectVPCRouterParam()
+	vpcRouterInterfaceUpdateParam           = params.NewInterfaceUpdateVPCRouterParam()
+	vpcRouterInterfaceDisconnectParam       = params.NewInterfaceDisconnectVPCRouterParam()
+	vpcRouterStaticNatInfoParam             = params.NewStaticNatInfoVPCRouterParam()
+	vpcRouterStaticNatAddParam              = params.NewStaticNatAddVPCRouterParam()
+	vpcRouterStaticNatUpdateParam           = params.NewStaticNatUpdateVPCRouterParam()
+	vpcRouterStaticNatDeleteParam           = params.NewStaticNatDeleteVPCRouterParam()
+	vpcRouterPortForwardingInfoParam        = params.NewPortForwardingInfoVPCRouterParam()
+	vpcRouterPortForwardingAddParam         = params.NewPortForwardingAddVPCRouterParam()
+	vpcRouterPortForwardingUpdateParam      = params.NewPortForwardingUpdateVPCRouterParam()
+	vpcRouterPortForwardingDeleteParam      = params.NewPortForwardingDeleteVPCRouterParam()
+	vpcRouterFirewallInfoParam              = params.NewFirewallInfoVPCRouterParam()
+	vpcRouterFirewallAddParam               = params.NewFirewallAddVPCRouterParam()
+	vpcRouterFirewallUpdateParam            = params.NewFirewallUpdateVPCRouterParam()
+	vpcRouterFirewallDeleteParam            = params.NewFirewallDeleteVPCRouterParam()
+	vpcRouterDhcpServerInfoParam            = params.NewDhcpServerInfoVPCRouterParam()
+	vpcRouterDhcpServerAddParam             = params.NewDhcpServerAddVPCRouterParam()
+	vpcRouterDhcpServerUpdateParam          = params.NewDhcpServerUpdateVPCRouterParam()
+	vpcRouterDhcpServerDeleteParam          = params.NewDhcpServerDeleteVPCRouterParam()
+	vpcRouterDhcpStaticMappingInfoParam     = params.NewDhcpStaticMappingInfoVPCRouterParam()
+	vpcRouterDhcpStaticMappingAddParam      = params.NewDhcpStaticMappingAddVPCRouterParam()
+	vpcRouterDhcpStaticMappingUpdateParam   = params.NewDhcpStaticMappingUpdateVPCRouterParam()
+	vpcRouterDhcpStaticMappingDeleteParam   = params.NewDhcpStaticMappingDeleteVPCRouterParam()
+	vpcRouterPptpServerInfoParam            = params.NewPptpServerInfoVPCRouterParam()
+	vpcRouterPptpServerUpdateParam          = params.NewPptpServerUpdateVPCRouterParam()
+	vpcRouterL2TPServerInfoParam            = params.NewL2TPServerInfoVPCRouterParam()
+	vpcRouterL2TPServerUpdateParam          = params.NewL2TPServerUpdateVPCRouterParam()
+	vpcRouterUserInfoParam                  = params.NewUserInfoVPCRouterParam()
+	vpcRouterUserAddParam                   = params.NewUserAddVPCRouterParam()
+	vpcRouterUserUpdateParam                = params.NewUserUpdateVPCRouterParam()
+	vpcRouterUserDeleteParam                = params.NewUserDeleteVPCRouterParam()
+	vpcRouterSiteToSiteVPNInfoParam         = params.NewSiteToSiteVPNInfoVPCRouterParam()
+	vpcRouterSiteToSiteVPNAddParam          = params.NewSiteToSiteVPNAddVPCRouterParam()
+	vpcRouterSiteToSiteVPNUpdateParam       = params.NewSiteToSiteVPNUpdateVPCRouterParam()
+	vpcRouterSiteToSiteVPNDeleteParam       = params.NewSiteToSiteVPNDeleteVPCRouterParam()
+	vpcRouterSiteToSiteVPNPeersParam        = params.NewSiteToSiteVPNPeersVPCRouterParam()
+	vpcRouterStaticRouteInfoParam           = params.NewStaticRouteInfoVPCRouterParam()
+	vpcRouterStaticRouteAddParam            = params.NewStaticRouteAddVPCRouterParam()
+	vpcRouterStaticRouteUpdateParam         = params.NewStaticRouteUpdateVPCRouterParam()
+	vpcRouterStaticRouteDeleteParam         = params.NewStaticRouteDeleteVPCRouterParam()
+	vpcRouterMonitorParam                   = params.NewMonitorVPCRouterParam()
+	vpcRouterLogsParam                      = params.NewLogsVPCRouterParam()
 )
 
-// vpcrouterCmd represents the command to manage SAKURA Cloud VPCRouter
-var vpcrouterCmd = &cobra.Command{
-	Use:   "vpcrouter",
+// vpcRouterCmd represents the command to manage SAKURA Cloud VPCRouter
+var vpcRouterCmd = &cobra.Command{
+	Use:   "vpcRouter",
 	Short: "A manage commands of VPCRouter",
 	Long:  `A manage commands of VPCRouter`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -93,1250 +93,1250 @@ var vpcrouterCmd = &cobra.Command{
 	},
 }
 
-var vpcrouterListCmd = &cobra.Command{
+var vpcRouterListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Vpcrouter",
-	Long:    `List Vpcrouter`,
+	Short:   "List VPCRouter",
+	Long:    `List VPCRouter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(vpcrouterListParam))
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(vpcRouterListParam))
 		return err
 	},
 }
 
-func vpcrouterListCmdInit() {
-	fs := vpcrouterListCmd.Flags()
-	fs.StringSliceVarP(&vpcrouterListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
-	fs.IntVarP(&vpcrouterListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&vpcrouterListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&vpcrouterListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &vpcrouterListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&vpcrouterListParam.From, "from", "", 0, "set offset")
+func vpcRouterListCmdInit() {
+	fs := vpcRouterListCmd.Flags()
+	fs.IntVarP(&vpcRouterListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&vpcRouterListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&vpcRouterListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&vpcRouterListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.StringSliceVarP(&vpcRouterListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &vpcRouterListParam.Id), "id", "", "set filter by id(s)")
 }
 
-var vpcrouterCreateCmd = &cobra.Command{
+var vpcRouterCreateCmd = &cobra.Command{
 	Use: "create",
 
-	Short: "Create Vpcrouter",
-	Long:  `Create Vpcrouter`,
+	Short: "Create VPCRouter",
+	Long:  `Create VPCRouter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(vpcrouterCreateParam))
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(vpcRouterCreateParam))
 		return err
 	},
 }
 
-func vpcrouterCreateCmdInit() {
-	fs := vpcrouterCreateCmd.Flags()
-	fs.BoolVarP(&vpcrouterCreateParam.DisableInternetConnection, "disable-internet-connection", "", false, "disable internet connection from VPCRouter")
-	fs.StringVarP(&vpcrouterCreateParam.Description, "description", "", "", "set resource description")
-	fs.VarP(newIDValue(0, &vpcrouterCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
-	fs.IntVarP(&vpcrouterCreateParam.Vrid, "vrid", "", 1, "set VRID")
-	fs.StringVarP(&vpcrouterCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
-	fs.StringVarP(&vpcrouterCreateParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
-	fs.StringSliceVarP(&vpcrouterCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &vpcrouterCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringVarP(&vpcrouterCreateParam.Plan, "plan", "", "standard", "set plan[standard/premium/highspec/highspec1600/highspec4000]")
-	fs.StringVarP(&vpcrouterCreateParam.Vip, "vip", "", "", "set virtual ipddress()")
-	fs.BoolVarP(&vpcrouterCreateParam.BootAfterCreate, "boot-after-create", "", false, "boot after create")
-	fs.StringVarP(&vpcrouterCreateParam.Name, "name", "", "", "set resource display name")
+func vpcRouterCreateCmdInit() {
+	fs := vpcRouterCreateCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.StringVarP(&vpcRouterCreateParam.Plan, "plan", "", "standard", "set plan[standard/premium/highspec/highspec1600/highspec4000]")
+	fs.IntVarP(&vpcRouterCreateParam.Vrid, "vrid", "", 1, "set VRID")
+	fs.StringVarP(&vpcRouterCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
+	fs.StringVarP(&vpcRouterCreateParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
+	fs.BoolVarP(&vpcRouterCreateParam.DisableInternetConnection, "disable-internet-connection", "", false, "disable internet connection from VPCRouter")
+	fs.StringVarP(&vpcRouterCreateParam.Description, "description", "", "", "set resource description")
+	fs.VarP(newIDValue(0, &vpcRouterCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
+	fs.StringVarP(&vpcRouterCreateParam.Vip, "vip", "", "", "set virtual ipddress()")
+	fs.BoolVarP(&vpcRouterCreateParam.BootAfterCreate, "boot-after-create", "", false, "boot after create")
+	fs.StringVarP(&vpcRouterCreateParam.Name, "name", "", "", "set resource display name")
+	fs.VarP(newIDValue(0, &vpcRouterCreateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
-var vpcrouterReadCmd = &cobra.Command{
+var vpcRouterReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Vpcrouter",
-	Long:  `Read Vpcrouter`,
+	Short: "Read VPCRouter",
+	Long:  `Read VPCRouter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(vpcrouterReadParam))
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(vpcRouterReadParam))
 		return err
 	},
 }
 
-func vpcrouterReadCmdInit() {
+func vpcRouterReadCmdInit() {
 }
 
-var vpcrouterUpdateCmd = &cobra.Command{
+var vpcRouterUpdateCmd = &cobra.Command{
 	Use: "update",
 
-	Short: "Update Vpcrouter",
-	Long:  `Update Vpcrouter`,
+	Short: "Update VPCRouter",
+	Long:  `Update VPCRouter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(vpcrouterUpdateParam))
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(vpcRouterUpdateParam))
 		return err
 	},
 }
 
-func vpcrouterUpdateCmdInit() {
-	fs := vpcrouterUpdateCmd.Flags()
-	fs.StringVarP(&vpcrouterUpdateParam.SyslogHost, "syslog-host", "", "", "set syslog host IPAddress")
-	fs.BoolVarP(&vpcrouterUpdateParam.InternetConnection, "internet-connection", "", false, "set internet connection from VPCRouter")
-	fs.StringVarP(&vpcrouterUpdateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&vpcrouterUpdateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&vpcrouterUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &vpcrouterUpdateParam.IconId), "icon-id", "", "set Icon ID")
+func vpcRouterUpdateCmdInit() {
+	fs := vpcRouterUpdateCmd.Flags()
+	fs.StringVarP(&vpcRouterUpdateParam.SyslogHost, "syslog-host", "", "", "set syslog host IPAddress")
+	fs.BoolVarP(&vpcRouterUpdateParam.InternetConnection, "internet-connection", "", false, "set internet connection from VPCRouter")
+	fs.StringVarP(&vpcRouterUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&vpcRouterUpdateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&vpcRouterUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &vpcRouterUpdateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
-var vpcrouterDeleteCmd = &cobra.Command{
+var vpcRouterDeleteCmd = &cobra.Command{
 	Use:     "delete",
 	Aliases: []string{"rm"},
-	Short:   "Delete Vpcrouter",
-	Long:    `Delete Vpcrouter`,
+	Short:   "Delete VPCRouter",
+	Long:    `Delete VPCRouter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(vpcrouterDeleteParam))
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(vpcRouterDeleteParam))
 		return err
 	},
 }
 
-func vpcrouterDeleteCmdInit() {
-	fs := vpcrouterDeleteCmd.Flags()
-	fs.BoolVarP(&vpcrouterDeleteParam.Force, "force", "f", false, "forced-shutdown flag if server is running")
+func vpcRouterDeleteCmdInit() {
+	fs := vpcRouterDeleteCmd.Flags()
+	fs.BoolVarP(&vpcRouterDeleteParam.Force, "force", "f", false, "forced-shutdown flag if server is running")
 }
 
-var vpcrouterBootCmd = &cobra.Command{
+var vpcRouterBootCmd = &cobra.Command{
 	Use:     "boot",
 	Aliases: []string{"power-on"},
-	Short:   "Boot Vpcrouter",
-	Long:    `Boot Vpcrouter`,
+	Short:   "Boot VPCRouter",
+	Long:    `Boot VPCRouter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterBootParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("boot parameter: \n%s\n", debugMarshalIndent(vpcrouterBootParam))
+		fmt.Printf("boot parameter: \n%s\n", debugMarshalIndent(vpcRouterBootParam))
 		return err
 	},
 }
 
-func vpcrouterBootCmdInit() {
+func vpcRouterBootCmdInit() {
 }
 
-var vpcrouterShutdownCmd = &cobra.Command{
+var vpcRouterShutdownCmd = &cobra.Command{
 	Use:     "shutdown",
 	Aliases: []string{"power-off"},
-	Short:   "Shutdown Vpcrouter",
-	Long:    `Shutdown Vpcrouter`,
+	Short:   "Shutdown VPCRouter",
+	Long:    `Shutdown VPCRouter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("shutdown parameter: \n%s\n", debugMarshalIndent(vpcrouterShutdownParam))
+		fmt.Printf("shutdown parameter: \n%s\n", debugMarshalIndent(vpcRouterShutdownParam))
 		return err
 	},
 }
 
-func vpcrouterShutdownCmdInit() {
+func vpcRouterShutdownCmdInit() {
 }
 
-var vpcrouterShutdownForceCmd = &cobra.Command{
+var vpcRouterShutdownForceCmd = &cobra.Command{
 	Use:     "shutdown-force",
 	Aliases: []string{"stop"},
-	Short:   "ShutdownForce Vpcrouter",
-	Long:    `ShutdownForce Vpcrouter`,
+	Short:   "ShutdownForce VPCRouter",
+	Long:    `ShutdownForce VPCRouter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("shutdown-force parameter: \n%s\n", debugMarshalIndent(vpcrouterShutdownForceParam))
+		fmt.Printf("shutdown-force parameter: \n%s\n", debugMarshalIndent(vpcRouterShutdownForceParam))
 		return err
 	},
 }
 
-func vpcrouterShutdownForceCmdInit() {
+func vpcRouterShutdownForceCmdInit() {
 }
 
-var vpcrouterResetCmd = &cobra.Command{
+var vpcRouterResetCmd = &cobra.Command{
 	Use: "reset",
 
-	Short: "Reset Vpcrouter",
-	Long:  `Reset Vpcrouter`,
+	Short: "Reset VPCRouter",
+	Long:  `Reset VPCRouter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterResetParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("reset parameter: \n%s\n", debugMarshalIndent(vpcrouterResetParam))
+		fmt.Printf("reset parameter: \n%s\n", debugMarshalIndent(vpcRouterResetParam))
 		return err
 	},
 }
 
-func vpcrouterResetCmdInit() {
+func vpcRouterResetCmdInit() {
 }
 
-var vpcrouterWaitForBootCmd = &cobra.Command{
+var vpcRouterWaitForBootCmd = &cobra.Command{
 	Use: "wait-for-boot",
 
 	Short: "Wait until boot is completed",
 	Long:  `Wait until boot is completed`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("wait-for-boot parameter: \n%s\n", debugMarshalIndent(vpcrouterWaitForBootParam))
+		fmt.Printf("wait-for-boot parameter: \n%s\n", debugMarshalIndent(vpcRouterWaitForBootParam))
 		return err
 	},
 }
 
-func vpcrouterWaitForBootCmdInit() {
+func vpcRouterWaitForBootCmdInit() {
 }
 
-var vpcrouterWaitForDownCmd = &cobra.Command{
+var vpcRouterWaitForDownCmd = &cobra.Command{
 	Use: "wait-for-down",
 
 	Short: "Wait until shutdown is completed",
 	Long:  `Wait until shutdown is completed`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("wait-for-down parameter: \n%s\n", debugMarshalIndent(vpcrouterWaitForDownParam))
+		fmt.Printf("wait-for-down parameter: \n%s\n", debugMarshalIndent(vpcRouterWaitForDownParam))
 		return err
 	},
 }
 
-func vpcrouterWaitForDownCmdInit() {
+func vpcRouterWaitForDownCmdInit() {
 }
 
-var vpcrouterEnableInternetConnectionCmd = &cobra.Command{
+var vpcRouterEnableInternetConnectionCmd = &cobra.Command{
 	Use: "enable-internet-connection",
 
 	Short: "Enable internet connection from VPCRouter",
 	Long:  `Enable internet connection from VPCRouter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterEnableInternetConnectionParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterEnableInternetConnectionParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("enable-internet-connection parameter: \n%s\n", debugMarshalIndent(vpcrouterEnableInternetConnectionParam))
+		fmt.Printf("enable-internet-connection parameter: \n%s\n", debugMarshalIndent(vpcRouterEnableInternetConnectionParam))
 		return err
 	},
 }
 
-func vpcrouterEnableInternetConnectionCmdInit() {
+func vpcRouterEnableInternetConnectionCmdInit() {
 }
 
-var vpcrouterDisableInternetConnectionCmd = &cobra.Command{
+var vpcRouterDisableInternetConnectionCmd = &cobra.Command{
 	Use: "disable-internet-connection",
 
 	Short: "Enable internet connection from VPCRouter",
 	Long:  `Enable internet connection from VPCRouter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterDisableInternetConnectionParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterDisableInternetConnectionParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("disable-internet-connection parameter: \n%s\n", debugMarshalIndent(vpcrouterDisableInternetConnectionParam))
+		fmt.Printf("disable-internet-connection parameter: \n%s\n", debugMarshalIndent(vpcRouterDisableInternetConnectionParam))
 		return err
 	},
 }
 
-func vpcrouterDisableInternetConnectionCmdInit() {
+func vpcRouterDisableInternetConnectionCmdInit() {
 }
 
-var vpcrouterInterfaceInfoCmd = &cobra.Command{
+var vpcRouterInterfaceInfoCmd = &cobra.Command{
 	Use:     "interface-info",
 	Aliases: []string{"interface-list"},
 	Short:   "Show information of NIC(s) connected to vpc-router",
 	Long:    `Show information of NIC(s) connected to vpc-router`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("interface-info parameter: \n%s\n", debugMarshalIndent(vpcrouterInterfaceInfoParam))
+		fmt.Printf("interface-info parameter: \n%s\n", debugMarshalIndent(vpcRouterInterfaceInfoParam))
 		return err
 	},
 }
 
-func vpcrouterInterfaceInfoCmdInit() {
+func vpcRouterInterfaceInfoCmdInit() {
 }
 
-var vpcrouterInterfaceConnectCmd = &cobra.Command{
+var vpcRouterInterfaceConnectCmd = &cobra.Command{
 	Use: "interface-connect",
 
 	Short: "Connected to switch",
 	Long:  `Connected to switch`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("interface-connect parameter: \n%s\n", debugMarshalIndent(vpcrouterInterfaceConnectParam))
+		fmt.Printf("interface-connect parameter: \n%s\n", debugMarshalIndent(vpcRouterInterfaceConnectParam))
 		return err
 	},
 }
 
-func vpcrouterInterfaceConnectCmdInit() {
-	fs := vpcrouterInterfaceConnectCmd.Flags()
-	fs.IntVarP(&vpcrouterInterfaceConnectParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress prefix")
-	fs.BoolVarP(&vpcrouterInterfaceConnectParam.WithReboot, "with-reboot", "", false, "reboot after connect")
-	fs.StringVarP(&vpcrouterInterfaceConnectParam.Interface, "interface", "", "", "index of target private-interface")
-	fs.VarP(newIDValue(0, &vpcrouterInterfaceConnectParam.SwitchId), "switch-id", "", "set connect switch ID")
-	fs.StringVarP(&vpcrouterInterfaceConnectParam.Ipaddress, "ipaddress", "", "", "set (virtual)ipaddress")
-	fs.StringVarP(&vpcrouterInterfaceConnectParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
-	fs.StringVarP(&vpcrouterInterfaceConnectParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
+func vpcRouterInterfaceConnectCmdInit() {
+	fs := vpcRouterInterfaceConnectCmd.Flags()
+	fs.StringVarP(&vpcRouterInterfaceConnectParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
+	fs.IntVarP(&vpcRouterInterfaceConnectParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress prefix")
+	fs.BoolVarP(&vpcRouterInterfaceConnectParam.WithReboot, "with-reboot", "", false, "reboot after connect")
+	fs.StringVarP(&vpcRouterInterfaceConnectParam.Interface, "interface", "", "", "index of target private-interface")
+	fs.VarP(newIDValue(0, &vpcRouterInterfaceConnectParam.SwitchId), "switch-id", "", "set connect switch ID")
+	fs.StringVarP(&vpcRouterInterfaceConnectParam.Ipaddress, "ipaddress", "", "", "set (virtual)ipaddress")
+	fs.StringVarP(&vpcRouterInterfaceConnectParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
 }
 
-var vpcrouterInterfaceUpdateCmd = &cobra.Command{
+var vpcRouterInterfaceUpdateCmd = &cobra.Command{
 	Use: "interface-update",
 
 	Short: "Update interface",
 	Long:  `Update interface`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterInterfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterInterfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("interface-update parameter: \n%s\n", debugMarshalIndent(vpcrouterInterfaceUpdateParam))
+		fmt.Printf("interface-update parameter: \n%s\n", debugMarshalIndent(vpcRouterInterfaceUpdateParam))
 		return err
 	},
 }
 
-func vpcrouterInterfaceUpdateCmdInit() {
-	fs := vpcrouterInterfaceUpdateCmd.Flags()
-	fs.BoolVarP(&vpcrouterInterfaceUpdateParam.WithReboot, "with-reboot", "", false, "reboot after connect")
-	fs.StringVarP(&vpcrouterInterfaceUpdateParam.Interface, "interface", "", "", "index of target interface")
-	fs.VarP(newIDValue(0, &vpcrouterInterfaceUpdateParam.SwitchId), "switch-id", "", "set connect switch ID")
-	fs.StringVarP(&vpcrouterInterfaceUpdateParam.Ipaddress, "ipaddress", "", "", "set (virtual)ipaddress")
-	fs.StringVarP(&vpcrouterInterfaceUpdateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
-	fs.StringVarP(&vpcrouterInterfaceUpdateParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
-	fs.StringSliceVarP(&vpcrouterInterfaceUpdateParam.Alias, "alias", "", []string{}, "set ip aliases")
-	fs.IntVarP(&vpcrouterInterfaceUpdateParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress prefix")
+func vpcRouterInterfaceUpdateCmdInit() {
+	fs := vpcRouterInterfaceUpdateCmd.Flags()
+	fs.StringVarP(&vpcRouterInterfaceUpdateParam.Interface, "interface", "", "", "index of target interface")
+	fs.VarP(newIDValue(0, &vpcRouterInterfaceUpdateParam.SwitchId), "switch-id", "", "set connect switch ID")
+	fs.StringVarP(&vpcRouterInterfaceUpdateParam.Ipaddress, "ipaddress", "", "", "set (virtual)ipaddress")
+	fs.StringVarP(&vpcRouterInterfaceUpdateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
+	fs.StringVarP(&vpcRouterInterfaceUpdateParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
+	fs.StringSliceVarP(&vpcRouterInterfaceUpdateParam.Alias, "alias", "", []string{}, "set ip aliases")
+	fs.IntVarP(&vpcRouterInterfaceUpdateParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress prefix")
+	fs.BoolVarP(&vpcRouterInterfaceUpdateParam.WithReboot, "with-reboot", "", false, "reboot after connect")
 }
 
-var vpcrouterInterfaceDisconnectCmd = &cobra.Command{
+var vpcRouterInterfaceDisconnectCmd = &cobra.Command{
 	Use: "interface-disconnect",
 
 	Short: "Disconnected to switch",
 	Long:  `Disconnected to switch`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("interface-disconnect parameter: \n%s\n", debugMarshalIndent(vpcrouterInterfaceDisconnectParam))
+		fmt.Printf("interface-disconnect parameter: \n%s\n", debugMarshalIndent(vpcRouterInterfaceDisconnectParam))
 		return err
 	},
 }
 
-func vpcrouterInterfaceDisconnectCmdInit() {
-	fs := vpcrouterInterfaceDisconnectCmd.Flags()
-	fs.StringVarP(&vpcrouterInterfaceDisconnectParam.Interface, "interface", "", "", "index of target private-interface")
-	fs.BoolVarP(&vpcrouterInterfaceDisconnectParam.WithReboot, "with-reboot", "", false, "reboot after connect")
+func vpcRouterInterfaceDisconnectCmdInit() {
+	fs := vpcRouterInterfaceDisconnectCmd.Flags()
+	fs.StringVarP(&vpcRouterInterfaceDisconnectParam.Interface, "interface", "", "", "index of target private-interface")
+	fs.BoolVarP(&vpcRouterInterfaceDisconnectParam.WithReboot, "with-reboot", "", false, "reboot after connect")
 }
 
-var vpcrouterStaticNatInfoCmd = &cobra.Command{
+var vpcRouterStaticNatInfoCmd = &cobra.Command{
 	Use:     "static-nat-info",
 	Aliases: []string{"static-nat-list"},
 	Short:   "Show information of static NAT settings",
 	Long:    `Show information of static NAT settings`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterStaticNatInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterStaticNatInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("static-nat-info parameter: \n%s\n", debugMarshalIndent(vpcrouterStaticNatInfoParam))
+		fmt.Printf("static-nat-info parameter: \n%s\n", debugMarshalIndent(vpcRouterStaticNatInfoParam))
 		return err
 	},
 }
 
-func vpcrouterStaticNatInfoCmdInit() {
+func vpcRouterStaticNatInfoCmdInit() {
 }
 
-var vpcrouterStaticNatAddCmd = &cobra.Command{
+var vpcRouterStaticNatAddCmd = &cobra.Command{
 	Use: "static-nat-add",
 
 	Short: "Add static NAT",
 	Long:  `Add static NAT`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterStaticNatAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterStaticNatAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("static-nat-add parameter: \n%s\n", debugMarshalIndent(vpcrouterStaticNatAddParam))
+		fmt.Printf("static-nat-add parameter: \n%s\n", debugMarshalIndent(vpcRouterStaticNatAddParam))
 		return err
 	},
 }
 
-func vpcrouterStaticNatAddCmdInit() {
-	fs := vpcrouterStaticNatAddCmd.Flags()
-	fs.StringVarP(&vpcrouterStaticNatAddParam.Global, "global", "", "", "set global ipaddress")
-	fs.StringVarP(&vpcrouterStaticNatAddParam.Private, "private", "", "", "set private ipaddress")
-	fs.StringVarP(&vpcrouterStaticNatAddParam.Description, "description", "", "", "set description")
+func vpcRouterStaticNatAddCmdInit() {
+	fs := vpcRouterStaticNatAddCmd.Flags()
+	fs.StringVarP(&vpcRouterStaticNatAddParam.Global, "global", "", "", "set global ipaddress")
+	fs.StringVarP(&vpcRouterStaticNatAddParam.Private, "private", "", "", "set private ipaddress")
+	fs.StringVarP(&vpcRouterStaticNatAddParam.Description, "description", "", "", "set description")
 }
 
-var vpcrouterStaticNatUpdateCmd = &cobra.Command{
+var vpcRouterStaticNatUpdateCmd = &cobra.Command{
 	Use: "static-nat-update",
 
 	Short: "Update static NAT",
 	Long:  `Update static NAT`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterStaticNatUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterStaticNatUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("static-nat-update parameter: \n%s\n", debugMarshalIndent(vpcrouterStaticNatUpdateParam))
+		fmt.Printf("static-nat-update parameter: \n%s\n", debugMarshalIndent(vpcRouterStaticNatUpdateParam))
 		return err
 	},
 }
 
-func vpcrouterStaticNatUpdateCmdInit() {
-	fs := vpcrouterStaticNatUpdateCmd.Flags()
-	fs.IntVarP(&vpcrouterStaticNatUpdateParam.Index, "index", "", 0, "index of target static NAT")
-	fs.StringVarP(&vpcrouterStaticNatUpdateParam.Global, "global", "", "", "set global ipaddress")
-	fs.StringVarP(&vpcrouterStaticNatUpdateParam.Private, "private", "", "", "set private ipaddress")
-	fs.StringVarP(&vpcrouterStaticNatUpdateParam.Description, "description", "", "", "set description")
+func vpcRouterStaticNatUpdateCmdInit() {
+	fs := vpcRouterStaticNatUpdateCmd.Flags()
+	fs.IntVarP(&vpcRouterStaticNatUpdateParam.Index, "index", "", 0, "index of target static NAT")
+	fs.StringVarP(&vpcRouterStaticNatUpdateParam.Global, "global", "", "", "set global ipaddress")
+	fs.StringVarP(&vpcRouterStaticNatUpdateParam.Private, "private", "", "", "set private ipaddress")
+	fs.StringVarP(&vpcRouterStaticNatUpdateParam.Description, "description", "", "", "set description")
 }
 
-var vpcrouterStaticNatDeleteCmd = &cobra.Command{
+var vpcRouterStaticNatDeleteCmd = &cobra.Command{
 	Use: "static-nat-delete",
 
 	Short: "Delete static NAT",
 	Long:  `Delete static NAT`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterStaticNatDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterStaticNatDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("static-nat-delete parameter: \n%s\n", debugMarshalIndent(vpcrouterStaticNatDeleteParam))
+		fmt.Printf("static-nat-delete parameter: \n%s\n", debugMarshalIndent(vpcRouterStaticNatDeleteParam))
 		return err
 	},
 }
 
-func vpcrouterStaticNatDeleteCmdInit() {
-	fs := vpcrouterStaticNatDeleteCmd.Flags()
-	fs.IntVarP(&vpcrouterStaticNatDeleteParam.Index, "index", "", 0, "index of target static NAT")
+func vpcRouterStaticNatDeleteCmdInit() {
+	fs := vpcRouterStaticNatDeleteCmd.Flags()
+	fs.IntVarP(&vpcRouterStaticNatDeleteParam.Index, "index", "", 0, "index of target static NAT")
 }
 
-var vpcrouterPortForwardingInfoCmd = &cobra.Command{
+var vpcRouterPortForwardingInfoCmd = &cobra.Command{
 	Use:     "port-forwarding-info",
 	Aliases: []string{"port-forwarding-list"},
 	Short:   "Show information of port-forwarding settings",
 	Long:    `Show information of port-forwarding settings`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterPortForwardingInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterPortForwardingInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("port-forwarding-info parameter: \n%s\n", debugMarshalIndent(vpcrouterPortForwardingInfoParam))
+		fmt.Printf("port-forwarding-info parameter: \n%s\n", debugMarshalIndent(vpcRouterPortForwardingInfoParam))
 		return err
 	},
 }
 
-func vpcrouterPortForwardingInfoCmdInit() {
+func vpcRouterPortForwardingInfoCmdInit() {
 }
 
-var vpcrouterPortForwardingAddCmd = &cobra.Command{
+var vpcRouterPortForwardingAddCmd = &cobra.Command{
 	Use: "port-forwarding-add",
 
 	Short: "Add port forwarding",
 	Long:  `Add port forwarding`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterPortForwardingAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterPortForwardingAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("port-forwarding-add parameter: \n%s\n", debugMarshalIndent(vpcrouterPortForwardingAddParam))
+		fmt.Printf("port-forwarding-add parameter: \n%s\n", debugMarshalIndent(vpcRouterPortForwardingAddParam))
 		return err
 	},
 }
 
-func vpcrouterPortForwardingAddCmdInit() {
-	fs := vpcrouterPortForwardingAddCmd.Flags()
-	fs.StringVarP(&vpcrouterPortForwardingAddParam.Protocol, "protocol", "", "", "set target protocol")
-	fs.IntVarP(&vpcrouterPortForwardingAddParam.GlobalPort, "global-port", "", 0, "set global ipaddress")
-	fs.StringVarP(&vpcrouterPortForwardingAddParam.PrivateIpaddress, "private-ipaddress", "", "", "set private ipaddress")
-	fs.IntVarP(&vpcrouterPortForwardingAddParam.PrivatePort, "private-port", "", 0, "set private ipaddress")
-	fs.StringVarP(&vpcrouterPortForwardingAddParam.Description, "description", "", "", "set description")
+func vpcRouterPortForwardingAddCmdInit() {
+	fs := vpcRouterPortForwardingAddCmd.Flags()
+	fs.StringVarP(&vpcRouterPortForwardingAddParam.Description, "description", "", "", "set description")
+	fs.StringVarP(&vpcRouterPortForwardingAddParam.Protocol, "protocol", "", "", "set target protocol")
+	fs.IntVarP(&vpcRouterPortForwardingAddParam.GlobalPort, "global-port", "", 0, "set global ipaddress")
+	fs.StringVarP(&vpcRouterPortForwardingAddParam.PrivateIpaddress, "private-ipaddress", "", "", "set private ipaddress")
+	fs.IntVarP(&vpcRouterPortForwardingAddParam.PrivatePort, "private-port", "", 0, "set private ipaddress")
 }
 
-var vpcrouterPortForwardingUpdateCmd = &cobra.Command{
+var vpcRouterPortForwardingUpdateCmd = &cobra.Command{
 	Use: "port-forwarding-update",
 
 	Short: "Update port forwarding",
 	Long:  `Update port forwarding`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterPortForwardingUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterPortForwardingUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("port-forwarding-update parameter: \n%s\n", debugMarshalIndent(vpcrouterPortForwardingUpdateParam))
+		fmt.Printf("port-forwarding-update parameter: \n%s\n", debugMarshalIndent(vpcRouterPortForwardingUpdateParam))
 		return err
 	},
 }
 
-func vpcrouterPortForwardingUpdateCmdInit() {
-	fs := vpcrouterPortForwardingUpdateCmd.Flags()
-	fs.IntVarP(&vpcrouterPortForwardingUpdateParam.PrivatePort, "private-port", "", 0, "set private ipaddress")
-	fs.StringVarP(&vpcrouterPortForwardingUpdateParam.Description, "description", "", "", "set description")
-	fs.IntVarP(&vpcrouterPortForwardingUpdateParam.Index, "index", "", 0, "index of target PortForward")
-	fs.StringVarP(&vpcrouterPortForwardingUpdateParam.Protocol, "protocol", "", "", "set target protocol")
-	fs.IntVarP(&vpcrouterPortForwardingUpdateParam.GlobalPort, "global-port", "", 0, "set global ipaddress")
-	fs.StringVarP(&vpcrouterPortForwardingUpdateParam.PrivateIpaddress, "private-ipaddress", "", "", "set private ipaddress")
+func vpcRouterPortForwardingUpdateCmdInit() {
+	fs := vpcRouterPortForwardingUpdateCmd.Flags()
+	fs.StringVarP(&vpcRouterPortForwardingUpdateParam.Protocol, "protocol", "", "", "set target protocol")
+	fs.IntVarP(&vpcRouterPortForwardingUpdateParam.GlobalPort, "global-port", "", 0, "set global ipaddress")
+	fs.StringVarP(&vpcRouterPortForwardingUpdateParam.PrivateIpaddress, "private-ipaddress", "", "", "set private ipaddress")
+	fs.IntVarP(&vpcRouterPortForwardingUpdateParam.PrivatePort, "private-port", "", 0, "set private ipaddress")
+	fs.StringVarP(&vpcRouterPortForwardingUpdateParam.Description, "description", "", "", "set description")
+	fs.IntVarP(&vpcRouterPortForwardingUpdateParam.Index, "index", "", 0, "index of target PortForward")
 }
 
-var vpcrouterPortForwardingDeleteCmd = &cobra.Command{
+var vpcRouterPortForwardingDeleteCmd = &cobra.Command{
 	Use: "port-forwarding-delete",
 
 	Short: "Delete port forwarding",
 	Long:  `Delete port forwarding`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterPortForwardingDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterPortForwardingDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("port-forwarding-delete parameter: \n%s\n", debugMarshalIndent(vpcrouterPortForwardingDeleteParam))
+		fmt.Printf("port-forwarding-delete parameter: \n%s\n", debugMarshalIndent(vpcRouterPortForwardingDeleteParam))
 		return err
 	},
 }
 
-func vpcrouterPortForwardingDeleteCmdInit() {
-	fs := vpcrouterPortForwardingDeleteCmd.Flags()
-	fs.IntVarP(&vpcrouterPortForwardingDeleteParam.Index, "index", "", 0, "index of target PortForward")
+func vpcRouterPortForwardingDeleteCmdInit() {
+	fs := vpcRouterPortForwardingDeleteCmd.Flags()
+	fs.IntVarP(&vpcRouterPortForwardingDeleteParam.Index, "index", "", 0, "index of target PortForward")
 }
 
-var vpcrouterFirewallInfoCmd = &cobra.Command{
+var vpcRouterFirewallInfoCmd = &cobra.Command{
 	Use:     "firewall-info",
 	Aliases: []string{"firewall-list"},
 	Short:   "Show information of firewall rules",
 	Long:    `Show information of firewall rules`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterFirewallInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterFirewallInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("firewall-info parameter: \n%s\n", debugMarshalIndent(vpcrouterFirewallInfoParam))
+		fmt.Printf("firewall-info parameter: \n%s\n", debugMarshalIndent(vpcRouterFirewallInfoParam))
 		return err
 	},
 }
 
-func vpcrouterFirewallInfoCmdInit() {
-	fs := vpcrouterFirewallInfoCmd.Flags()
-	fs.IntVarP(&vpcrouterFirewallInfoParam.Interface, "interface", "", 0, "set target NIC index")
-	fs.StringVarP(&vpcrouterFirewallInfoParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
+func vpcRouterFirewallInfoCmdInit() {
+	fs := vpcRouterFirewallInfoCmd.Flags()
+	fs.IntVarP(&vpcRouterFirewallInfoParam.Interface, "interface", "", 0, "set target NIC index")
+	fs.StringVarP(&vpcRouterFirewallInfoParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
 }
 
-var vpcrouterFirewallAddCmd = &cobra.Command{
+var vpcRouterFirewallAddCmd = &cobra.Command{
 	Use: "firewall-add",
 
 	Short: "Add firewall rule",
 	Long:  `Add firewall rule`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterFirewallAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterFirewallAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("firewall-add parameter: \n%s\n", debugMarshalIndent(vpcrouterFirewallAddParam))
+		fmt.Printf("firewall-add parameter: \n%s\n", debugMarshalIndent(vpcRouterFirewallAddParam))
 		return err
 	},
 }
 
-func vpcrouterFirewallAddCmdInit() {
-	fs := vpcrouterFirewallAddCmd.Flags()
-	fs.StringVarP(&vpcrouterFirewallAddParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
-	fs.StringVarP(&vpcrouterFirewallAddParam.SourceNetwork, "source-network", "", "", "set source ipaddress or network address")
-	fs.StringVarP(&vpcrouterFirewallAddParam.DestinationNetwork, "destination-network", "", "", "set destination ipaddress or network address")
-	fs.IntVarP(&vpcrouterFirewallAddParam.DestinationPort, "destination-port", "", 0, "set destination port")
-	fs.StringVarP(&vpcrouterFirewallAddParam.Action, "action", "", "deny", "set action[allow/deny]")
-	fs.BoolVarP(&vpcrouterFirewallAddParam.EnableLogging, "enable-logging", "", false, "enable logging")
-	fs.StringVarP(&vpcrouterFirewallAddParam.Description, "description", "", "", "set description")
-	fs.IntVarP(&vpcrouterFirewallAddParam.Interface, "interface", "", 0, "set target NIC index")
-	fs.IntVarP(&vpcrouterFirewallAddParam.SourcePort, "source-port", "", 0, "set source port")
-	fs.StringVarP(&vpcrouterFirewallAddParam.Protocol, "protocol", "", "", "set target protocol")
+func vpcRouterFirewallAddCmdInit() {
+	fs := vpcRouterFirewallAddCmd.Flags()
+	fs.IntVarP(&vpcRouterFirewallAddParam.Interface, "interface", "", 0, "set target NIC index")
+	fs.StringVarP(&vpcRouterFirewallAddParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
+	fs.IntVarP(&vpcRouterFirewallAddParam.SourcePort, "source-port", "", 0, "set source port")
+	fs.BoolVarP(&vpcRouterFirewallAddParam.EnableLogging, "enable-logging", "", false, "enable logging")
+	fs.StringVarP(&vpcRouterFirewallAddParam.Protocol, "protocol", "", "", "set target protocol")
+	fs.StringVarP(&vpcRouterFirewallAddParam.SourceNetwork, "source-network", "", "", "set source ipaddress or network address")
+	fs.StringVarP(&vpcRouterFirewallAddParam.DestinationNetwork, "destination-network", "", "", "set destination ipaddress or network address")
+	fs.IntVarP(&vpcRouterFirewallAddParam.DestinationPort, "destination-port", "", 0, "set destination port")
+	fs.StringVarP(&vpcRouterFirewallAddParam.Action, "action", "", "deny", "set action[allow/deny]")
+	fs.StringVarP(&vpcRouterFirewallAddParam.Description, "description", "", "", "set description")
 }
 
-var vpcrouterFirewallUpdateCmd = &cobra.Command{
+var vpcRouterFirewallUpdateCmd = &cobra.Command{
 	Use: "firewall-update",
 
 	Short: "Update firewall rule",
 	Long:  `Update firewall rule`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterFirewallUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterFirewallUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("firewall-update parameter: \n%s\n", debugMarshalIndent(vpcrouterFirewallUpdateParam))
+		fmt.Printf("firewall-update parameter: \n%s\n", debugMarshalIndent(vpcRouterFirewallUpdateParam))
 		return err
 	},
 }
 
-func vpcrouterFirewallUpdateCmdInit() {
-	fs := vpcrouterFirewallUpdateCmd.Flags()
-	fs.IntVarP(&vpcrouterFirewallUpdateParam.Interface, "interface", "", 0, "set target NIC index")
-	fs.IntVarP(&vpcrouterFirewallUpdateParam.Index, "index", "", 0, "index of target Firewall rule")
-	fs.StringVarP(&vpcrouterFirewallUpdateParam.Protocol, "protocol", "", "", "set target protocol")
-	fs.StringVarP(&vpcrouterFirewallUpdateParam.SourceNetwork, "source-network", "", "", "set source ipaddress or network address")
-	fs.StringVarP(&vpcrouterFirewallUpdateParam.DestinationNetwork, "destination-network", "", "", "set destination ipaddress or network address")
-	fs.StringVarP(&vpcrouterFirewallUpdateParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
-	fs.IntVarP(&vpcrouterFirewallUpdateParam.SourcePort, "source-port", "", 0, "set source port")
-	fs.IntVarP(&vpcrouterFirewallUpdateParam.DestinationPort, "destination-port", "", 0, "set destination port")
-	fs.StringVarP(&vpcrouterFirewallUpdateParam.Action, "action", "", "deny", "set action[allow/deny]")
-	fs.BoolVarP(&vpcrouterFirewallUpdateParam.EnableLogging, "enable-logging", "", false, "enable logging")
-	fs.StringVarP(&vpcrouterFirewallUpdateParam.Description, "description", "", "", "set description")
+func vpcRouterFirewallUpdateCmdInit() {
+	fs := vpcRouterFirewallUpdateCmd.Flags()
+	fs.IntVarP(&vpcRouterFirewallUpdateParam.SourcePort, "source-port", "", 0, "set source port")
+	fs.StringVarP(&vpcRouterFirewallUpdateParam.DestinationNetwork, "destination-network", "", "", "set destination ipaddress or network address")
+	fs.BoolVarP(&vpcRouterFirewallUpdateParam.EnableLogging, "enable-logging", "", false, "enable logging")
+	fs.IntVarP(&vpcRouterFirewallUpdateParam.Interface, "interface", "", 0, "set target NIC index")
+	fs.StringVarP(&vpcRouterFirewallUpdateParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
+	fs.IntVarP(&vpcRouterFirewallUpdateParam.Index, "index", "", 0, "index of target Firewall rule")
+	fs.StringVarP(&vpcRouterFirewallUpdateParam.Protocol, "protocol", "", "", "set target protocol")
+	fs.StringVarP(&vpcRouterFirewallUpdateParam.SourceNetwork, "source-network", "", "", "set source ipaddress or network address")
+	fs.StringVarP(&vpcRouterFirewallUpdateParam.Description, "description", "", "", "set description")
+	fs.IntVarP(&vpcRouterFirewallUpdateParam.DestinationPort, "destination-port", "", 0, "set destination port")
+	fs.StringVarP(&vpcRouterFirewallUpdateParam.Action, "action", "", "deny", "set action[allow/deny]")
 }
 
-var vpcrouterFirewallDeleteCmd = &cobra.Command{
+var vpcRouterFirewallDeleteCmd = &cobra.Command{
 	Use: "firewall-delete",
 
 	Short: "Delete firewall rule",
 	Long:  `Delete firewall rule`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterFirewallDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterFirewallDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("firewall-delete parameter: \n%s\n", debugMarshalIndent(vpcrouterFirewallDeleteParam))
+		fmt.Printf("firewall-delete parameter: \n%s\n", debugMarshalIndent(vpcRouterFirewallDeleteParam))
 		return err
 	},
 }
 
-func vpcrouterFirewallDeleteCmdInit() {
-	fs := vpcrouterFirewallDeleteCmd.Flags()
-	fs.IntVarP(&vpcrouterFirewallDeleteParam.Interface, "interface", "", 0, "set target NIC index")
-	fs.StringVarP(&vpcrouterFirewallDeleteParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
-	fs.IntVarP(&vpcrouterFirewallDeleteParam.Index, "index", "", 0, "index of target Firewall rule")
+func vpcRouterFirewallDeleteCmdInit() {
+	fs := vpcRouterFirewallDeleteCmd.Flags()
+	fs.IntVarP(&vpcRouterFirewallDeleteParam.Interface, "interface", "", 0, "set target NIC index")
+	fs.StringVarP(&vpcRouterFirewallDeleteParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
+	fs.IntVarP(&vpcRouterFirewallDeleteParam.Index, "index", "", 0, "index of target Firewall rule")
 }
 
-var vpcrouterDhcpServerInfoCmd = &cobra.Command{
+var vpcRouterDhcpServerInfoCmd = &cobra.Command{
 	Use:     "dhcp-server-info",
 	Aliases: []string{"dhcp-server-list"},
 	Short:   "Show information of DHCP servers",
 	Long:    `Show information of DHCP servers`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterDhcpServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterDhcpServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("dhcp-server-info parameter: \n%s\n", debugMarshalIndent(vpcrouterDhcpServerInfoParam))
+		fmt.Printf("dhcp-server-info parameter: \n%s\n", debugMarshalIndent(vpcRouterDhcpServerInfoParam))
 		return err
 	},
 }
 
-func vpcrouterDhcpServerInfoCmdInit() {
+func vpcRouterDhcpServerInfoCmdInit() {
 }
 
-var vpcrouterDhcpServerAddCmd = &cobra.Command{
+var vpcRouterDhcpServerAddCmd = &cobra.Command{
 	Use: "dhcp-server-add",
 
 	Short: "Add DHCP server",
 	Long:  `Add DHCP server`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterDhcpServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterDhcpServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("dhcp-server-add parameter: \n%s\n", debugMarshalIndent(vpcrouterDhcpServerAddParam))
+		fmt.Printf("dhcp-server-add parameter: \n%s\n", debugMarshalIndent(vpcRouterDhcpServerAddParam))
 		return err
 	},
 }
 
-func vpcrouterDhcpServerAddCmdInit() {
-	fs := vpcrouterDhcpServerAddCmd.Flags()
-	fs.IntVarP(&vpcrouterDhcpServerAddParam.Interface, "interface", "", 0, "set target NIC(private NIC index)")
-	fs.StringVarP(&vpcrouterDhcpServerAddParam.RangeStart, "range-start", "", "", "set DHCP IPAddress Range(start)")
-	fs.StringVarP(&vpcrouterDhcpServerAddParam.RangeStop, "range-stop", "", "", "set DHCP IPAddress Range(stop)")
-	fs.StringSliceVarP(&vpcrouterDhcpServerAddParam.DnsServers, "dns-servers", "", []string{}, "set DNS Server IPAddress")
+func vpcRouterDhcpServerAddCmdInit() {
+	fs := vpcRouterDhcpServerAddCmd.Flags()
+	fs.IntVarP(&vpcRouterDhcpServerAddParam.Interface, "interface", "", 0, "set target NIC(private NIC index)")
+	fs.StringVarP(&vpcRouterDhcpServerAddParam.RangeStart, "range-start", "", "", "set DHCP IPAddress Range(start)")
+	fs.StringVarP(&vpcRouterDhcpServerAddParam.RangeStop, "range-stop", "", "", "set DHCP IPAddress Range(stop)")
+	fs.StringSliceVarP(&vpcRouterDhcpServerAddParam.DNSServers, "dns-servers", "", []string{}, "set DNS Server IPAddress")
 }
 
-var vpcrouterDhcpServerUpdateCmd = &cobra.Command{
+var vpcRouterDhcpServerUpdateCmd = &cobra.Command{
 	Use: "dhcp-server-update",
 
 	Short: "Update DHCP server",
 	Long:  `Update DHCP server`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterDhcpServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterDhcpServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("dhcp-server-update parameter: \n%s\n", debugMarshalIndent(vpcrouterDhcpServerUpdateParam))
+		fmt.Printf("dhcp-server-update parameter: \n%s\n", debugMarshalIndent(vpcRouterDhcpServerUpdateParam))
 		return err
 	},
 }
 
-func vpcrouterDhcpServerUpdateCmdInit() {
-	fs := vpcrouterDhcpServerUpdateCmd.Flags()
-	fs.IntVarP(&vpcrouterDhcpServerUpdateParam.Interface, "interface", "", 0, "set target NIC(private NIC index)")
-	fs.StringVarP(&vpcrouterDhcpServerUpdateParam.RangeStart, "range-start", "", "", "set DHCP IPAddress Range(start)")
-	fs.StringVarP(&vpcrouterDhcpServerUpdateParam.RangeStop, "range-stop", "", "", "set DHCP IPAddress Range(stop)")
-	fs.StringSliceVarP(&vpcrouterDhcpServerUpdateParam.DnsServers, "dns-servers", "", []string{}, "set DNS Server IPAddress")
+func vpcRouterDhcpServerUpdateCmdInit() {
+	fs := vpcRouterDhcpServerUpdateCmd.Flags()
+	fs.IntVarP(&vpcRouterDhcpServerUpdateParam.Interface, "interface", "", 0, "set target NIC(private NIC index)")
+	fs.StringVarP(&vpcRouterDhcpServerUpdateParam.RangeStart, "range-start", "", "", "set DHCP IPAddress Range(start)")
+	fs.StringVarP(&vpcRouterDhcpServerUpdateParam.RangeStop, "range-stop", "", "", "set DHCP IPAddress Range(stop)")
+	fs.StringSliceVarP(&vpcRouterDhcpServerUpdateParam.DNSServers, "dns-servers", "", []string{}, "set DNS Server IPAddress")
 }
 
-var vpcrouterDhcpServerDeleteCmd = &cobra.Command{
+var vpcRouterDhcpServerDeleteCmd = &cobra.Command{
 	Use: "dhcp-server-delete",
 
 	Short: "Delete DHCP server",
 	Long:  `Delete DHCP server`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterDhcpServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterDhcpServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("dhcp-server-delete parameter: \n%s\n", debugMarshalIndent(vpcrouterDhcpServerDeleteParam))
+		fmt.Printf("dhcp-server-delete parameter: \n%s\n", debugMarshalIndent(vpcRouterDhcpServerDeleteParam))
 		return err
 	},
 }
 
-func vpcrouterDhcpServerDeleteCmdInit() {
-	fs := vpcrouterDhcpServerDeleteCmd.Flags()
-	fs.IntVarP(&vpcrouterDhcpServerDeleteParam.Interface, "interface", "", 0, "set target NIC(private NIC index)")
+func vpcRouterDhcpServerDeleteCmdInit() {
+	fs := vpcRouterDhcpServerDeleteCmd.Flags()
+	fs.IntVarP(&vpcRouterDhcpServerDeleteParam.Interface, "interface", "", 0, "set target NIC(private NIC index)")
 }
 
-var vpcrouterDhcpStaticMappingInfoCmd = &cobra.Command{
+var vpcRouterDhcpStaticMappingInfoCmd = &cobra.Command{
 	Use:     "dhcp-static-mapping-info",
 	Aliases: []string{"dhcp-static-mapping-list"},
 	Short:   "Show information of DHCP static mapping",
 	Long:    `Show information of DHCP static mapping`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterDhcpStaticMappingInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterDhcpStaticMappingInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("dhcp-static-mapping-info parameter: \n%s\n", debugMarshalIndent(vpcrouterDhcpStaticMappingInfoParam))
+		fmt.Printf("dhcp-static-mapping-info parameter: \n%s\n", debugMarshalIndent(vpcRouterDhcpStaticMappingInfoParam))
 		return err
 	},
 }
 
-func vpcrouterDhcpStaticMappingInfoCmdInit() {
+func vpcRouterDhcpStaticMappingInfoCmdInit() {
 }
 
-var vpcrouterDhcpStaticMappingAddCmd = &cobra.Command{
+var vpcRouterDhcpStaticMappingAddCmd = &cobra.Command{
 	Use: "dhcp-static-mapping-add",
 
 	Short: "Add DHCP static mapping",
 	Long:  `Add DHCP static mapping`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterDhcpStaticMappingAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterDhcpStaticMappingAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("dhcp-static-mapping-add parameter: \n%s\n", debugMarshalIndent(vpcrouterDhcpStaticMappingAddParam))
+		fmt.Printf("dhcp-static-mapping-add parameter: \n%s\n", debugMarshalIndent(vpcRouterDhcpStaticMappingAddParam))
 		return err
 	},
 }
 
-func vpcrouterDhcpStaticMappingAddCmdInit() {
-	fs := vpcrouterDhcpStaticMappingAddCmd.Flags()
-	fs.StringVarP(&vpcrouterDhcpStaticMappingAddParam.Macaddress, "macaddress", "", "", "set mac address")
-	fs.StringVarP(&vpcrouterDhcpStaticMappingAddParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
+func vpcRouterDhcpStaticMappingAddCmdInit() {
+	fs := vpcRouterDhcpStaticMappingAddCmd.Flags()
+	fs.StringVarP(&vpcRouterDhcpStaticMappingAddParam.Macaddress, "macaddress", "", "", "set mac address")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingAddParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
 }
 
-var vpcrouterDhcpStaticMappingUpdateCmd = &cobra.Command{
+var vpcRouterDhcpStaticMappingUpdateCmd = &cobra.Command{
 	Use: "dhcp-static-mapping-update",
 
 	Short: "Update DHCP static mapping",
 	Long:  `Update DHCP static mapping`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterDhcpStaticMappingUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterDhcpStaticMappingUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("dhcp-static-mapping-update parameter: \n%s\n", debugMarshalIndent(vpcrouterDhcpStaticMappingUpdateParam))
+		fmt.Printf("dhcp-static-mapping-update parameter: \n%s\n", debugMarshalIndent(vpcRouterDhcpStaticMappingUpdateParam))
 		return err
 	},
 }
 
-func vpcrouterDhcpStaticMappingUpdateCmdInit() {
-	fs := vpcrouterDhcpStaticMappingUpdateCmd.Flags()
-	fs.IntVarP(&vpcrouterDhcpStaticMappingUpdateParam.Index, "index", "", 0, "index of target DHCP static mapping")
-	fs.StringVarP(&vpcrouterDhcpStaticMappingUpdateParam.Macaddress, "macaddress", "", "", "set mac address")
-	fs.StringVarP(&vpcrouterDhcpStaticMappingUpdateParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
+func vpcRouterDhcpStaticMappingUpdateCmdInit() {
+	fs := vpcRouterDhcpStaticMappingUpdateCmd.Flags()
+	fs.IntVarP(&vpcRouterDhcpStaticMappingUpdateParam.Index, "index", "", 0, "index of target DHCP static mapping")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingUpdateParam.Macaddress, "macaddress", "", "", "set mac address")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingUpdateParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
 }
 
-var vpcrouterDhcpStaticMappingDeleteCmd = &cobra.Command{
+var vpcRouterDhcpStaticMappingDeleteCmd = &cobra.Command{
 	Use: "dhcp-static-mapping-delete",
 
 	Short: "Delete DHCP static mapping",
 	Long:  `Delete DHCP static mapping`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterDhcpStaticMappingDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterDhcpStaticMappingDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("dhcp-static-mapping-delete parameter: \n%s\n", debugMarshalIndent(vpcrouterDhcpStaticMappingDeleteParam))
+		fmt.Printf("dhcp-static-mapping-delete parameter: \n%s\n", debugMarshalIndent(vpcRouterDhcpStaticMappingDeleteParam))
 		return err
 	},
 }
 
-func vpcrouterDhcpStaticMappingDeleteCmdInit() {
-	fs := vpcrouterDhcpStaticMappingDeleteCmd.Flags()
-	fs.IntVarP(&vpcrouterDhcpStaticMappingDeleteParam.Index, "index", "", 0, "index of target DHCP static mapping")
+func vpcRouterDhcpStaticMappingDeleteCmdInit() {
+	fs := vpcRouterDhcpStaticMappingDeleteCmd.Flags()
+	fs.IntVarP(&vpcRouterDhcpStaticMappingDeleteParam.Index, "index", "", 0, "index of target DHCP static mapping")
 }
 
-var vpcrouterPptpServerInfoCmd = &cobra.Command{
+var vpcRouterPptpServerInfoCmd = &cobra.Command{
 	Use: "pptp-server-info",
 
 	Short: "Show information of PPTP server",
 	Long:  `Show information of PPTP server`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterPptpServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterPptpServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("pptp-server-info parameter: \n%s\n", debugMarshalIndent(vpcrouterPptpServerInfoParam))
+		fmt.Printf("pptp-server-info parameter: \n%s\n", debugMarshalIndent(vpcRouterPptpServerInfoParam))
 		return err
 	},
 }
 
-func vpcrouterPptpServerInfoCmdInit() {
+func vpcRouterPptpServerInfoCmdInit() {
 }
 
-var vpcrouterPptpServerUpdateCmd = &cobra.Command{
+var vpcRouterPptpServerUpdateCmd = &cobra.Command{
 	Use: "pptp-server-update",
 
 	Short: "Update PPTP server setting",
 	Long:  `Update PPTP server setting`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterPptpServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterPptpServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("pptp-server-update parameter: \n%s\n", debugMarshalIndent(vpcrouterPptpServerUpdateParam))
+		fmt.Printf("pptp-server-update parameter: \n%s\n", debugMarshalIndent(vpcRouterPptpServerUpdateParam))
 		return err
 	},
 }
 
-func vpcrouterPptpServerUpdateCmdInit() {
-	fs := vpcrouterPptpServerUpdateCmd.Flags()
-	fs.BoolVarP(&vpcrouterPptpServerUpdateParam.Disabled, "disabled", "", false, "enable/disable PPTP server")
-	fs.StringVarP(&vpcrouterPptpServerUpdateParam.RangeStart, "range-start", "", "", "set IPAddress Range(start)")
-	fs.StringVarP(&vpcrouterPptpServerUpdateParam.RangeStop, "range-stop", "", "", "set IPAddress Range(stop)")
+func vpcRouterPptpServerUpdateCmdInit() {
+	fs := vpcRouterPptpServerUpdateCmd.Flags()
+	fs.BoolVarP(&vpcRouterPptpServerUpdateParam.Disabled, "disabled", "", false, "enable/disable PPTP server")
+	fs.StringVarP(&vpcRouterPptpServerUpdateParam.RangeStart, "range-start", "", "", "set IPAddress Range(start)")
+	fs.StringVarP(&vpcRouterPptpServerUpdateParam.RangeStop, "range-stop", "", "", "set IPAddress Range(stop)")
 }
 
-var vpcrouterL2tpServerInfoCmd = &cobra.Command{
+var vpcRouterL2TPServerInfoCmd = &cobra.Command{
 	Use: "l2tp-server-info",
 
 	Short: "Show information of L2TP/IPSec server",
 	Long:  `Show information of L2TP/IPSec server`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterL2tpServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterL2TPServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("l2tp-server-info parameter: \n%s\n", debugMarshalIndent(vpcrouterL2tpServerInfoParam))
+		fmt.Printf("l2tp-server-info parameter: \n%s\n", debugMarshalIndent(vpcRouterL2TPServerInfoParam))
 		return err
 	},
 }
 
-func vpcrouterL2tpServerInfoCmdInit() {
+func vpcRouterL2TPServerInfoCmdInit() {
 }
 
-var vpcrouterL2tpServerUpdateCmd = &cobra.Command{
+var vpcRouterL2TPServerUpdateCmd = &cobra.Command{
 	Use: "l2tp-server-update",
 
 	Short: "Update L2TP/IPSec server setting",
 	Long:  `Update L2TP/IPSec server setting`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterL2tpServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterL2TPServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("l2tp-server-update parameter: \n%s\n", debugMarshalIndent(vpcrouterL2tpServerUpdateParam))
+		fmt.Printf("l2tp-server-update parameter: \n%s\n", debugMarshalIndent(vpcRouterL2TPServerUpdateParam))
 		return err
 	},
 }
 
-func vpcrouterL2tpServerUpdateCmdInit() {
-	fs := vpcrouterL2tpServerUpdateCmd.Flags()
-	fs.BoolVarP(&vpcrouterL2tpServerUpdateParam.Disabled, "disabled", "", false, "enable/disable PPTP server")
-	fs.StringVarP(&vpcrouterL2tpServerUpdateParam.RangeStart, "range-start", "", "", "set IPAddress Range(start)")
-	fs.StringVarP(&vpcrouterL2tpServerUpdateParam.RangeStop, "range-stop", "", "", "set IPAddress Range(stop)")
-	fs.StringVarP(&vpcrouterL2tpServerUpdateParam.PreSharedSecret, "pre-shared-secret", "", "", "set PreSharedSecret")
+func vpcRouterL2TPServerUpdateCmdInit() {
+	fs := vpcRouterL2TPServerUpdateCmd.Flags()
+	fs.StringVarP(&vpcRouterL2TPServerUpdateParam.RangeStop, "range-stop", "", "", "set IPAddress Range(stop)")
+	fs.StringVarP(&vpcRouterL2TPServerUpdateParam.PreSharedSecret, "pre-shared-secret", "", "", "set PreSharedSecret")
+	fs.BoolVarP(&vpcRouterL2TPServerUpdateParam.Disabled, "disabled", "", false, "enable/disable PPTP server")
+	fs.StringVarP(&vpcRouterL2TPServerUpdateParam.RangeStart, "range-start", "", "", "set IPAddress Range(start)")
 }
 
-var vpcrouterUserInfoCmd = &cobra.Command{
+var vpcRouterUserInfoCmd = &cobra.Command{
 	Use:     "user-info",
 	Aliases: []string{"user-list"},
 	Short:   "Show information of remote-access users",
 	Long:    `Show information of remote-access users`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterUserInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterUserInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("user-info parameter: \n%s\n", debugMarshalIndent(vpcrouterUserInfoParam))
+		fmt.Printf("user-info parameter: \n%s\n", debugMarshalIndent(vpcRouterUserInfoParam))
 		return err
 	},
 }
 
-func vpcrouterUserInfoCmdInit() {
+func vpcRouterUserInfoCmdInit() {
 }
 
-var vpcrouterUserAddCmd = &cobra.Command{
+var vpcRouterUserAddCmd = &cobra.Command{
 	Use: "user-add",
 
 	Short: "Add remote-access user",
 	Long:  `Add remote-access user`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterUserAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterUserAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("user-add parameter: \n%s\n", debugMarshalIndent(vpcrouterUserAddParam))
+		fmt.Printf("user-add parameter: \n%s\n", debugMarshalIndent(vpcRouterUserAddParam))
 		return err
 	},
 }
 
-func vpcrouterUserAddCmdInit() {
-	fs := vpcrouterUserAddCmd.Flags()
-	fs.StringVarP(&vpcrouterUserAddParam.Username, "username", "", "", "set remote-access username")
-	fs.StringVarP(&vpcrouterUserAddParam.Password, "password", "", "", "set remote-access password")
+func vpcRouterUserAddCmdInit() {
+	fs := vpcRouterUserAddCmd.Flags()
+	fs.StringVarP(&vpcRouterUserAddParam.Username, "username", "", "", "set remote-access username")
+	fs.StringVarP(&vpcRouterUserAddParam.Password, "password", "", "", "set remote-access password")
 }
 
-var vpcrouterUserUpdateCmd = &cobra.Command{
+var vpcRouterUserUpdateCmd = &cobra.Command{
 	Use: "user-update",
 
 	Short: "Update remote-access user",
 	Long:  `Update remote-access user`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterUserUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterUserUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("user-update parameter: \n%s\n", debugMarshalIndent(vpcrouterUserUpdateParam))
+		fmt.Printf("user-update parameter: \n%s\n", debugMarshalIndent(vpcRouterUserUpdateParam))
 		return err
 	},
 }
 
-func vpcrouterUserUpdateCmdInit() {
-	fs := vpcrouterUserUpdateCmd.Flags()
-	fs.IntVarP(&vpcrouterUserUpdateParam.Index, "index", "", 0, "index of target remote-access user")
-	fs.StringVarP(&vpcrouterUserUpdateParam.Username, "username", "", "", "set remote-access username")
-	fs.StringVarP(&vpcrouterUserUpdateParam.Password, "password", "", "", "set remote-access password")
+func vpcRouterUserUpdateCmdInit() {
+	fs := vpcRouterUserUpdateCmd.Flags()
+	fs.IntVarP(&vpcRouterUserUpdateParam.Index, "index", "", 0, "index of target remote-access user")
+	fs.StringVarP(&vpcRouterUserUpdateParam.Username, "username", "", "", "set remote-access username")
+	fs.StringVarP(&vpcRouterUserUpdateParam.Password, "password", "", "", "set remote-access password")
 }
 
-var vpcrouterUserDeleteCmd = &cobra.Command{
+var vpcRouterUserDeleteCmd = &cobra.Command{
 	Use: "user-delete",
 
 	Short: "Delete remote-access user",
 	Long:  `Delete remote-access user`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterUserDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterUserDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("user-delete parameter: \n%s\n", debugMarshalIndent(vpcrouterUserDeleteParam))
+		fmt.Printf("user-delete parameter: \n%s\n", debugMarshalIndent(vpcRouterUserDeleteParam))
 		return err
 	},
 }
 
-func vpcrouterUserDeleteCmdInit() {
-	fs := vpcrouterUserDeleteCmd.Flags()
-	fs.IntVarP(&vpcrouterUserDeleteParam.Index, "index", "", 0, "index of target remote-access user")
+func vpcRouterUserDeleteCmdInit() {
+	fs := vpcRouterUserDeleteCmd.Flags()
+	fs.IntVarP(&vpcRouterUserDeleteParam.Index, "index", "", 0, "index of target remote-access user")
 }
 
-var vpcrouterSiteToSiteVpnInfoCmd = &cobra.Command{
+var vpcRouterSiteToSiteVPNInfoCmd = &cobra.Command{
 	Use:     "site-to-site-vpn-info",
 	Aliases: []string{"site-to-site-vpn-list"},
 	Short:   "Show information of site-to-site IPSec VPN settings",
 	Long:    `Show information of site-to-site IPSec VPN settings`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterSiteToSiteVpnInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterSiteToSiteVPNInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("site-to-site-vpn-info parameter: \n%s\n", debugMarshalIndent(vpcrouterSiteToSiteVpnInfoParam))
+		fmt.Printf("site-to-site-vpn-info parameter: \n%s\n", debugMarshalIndent(vpcRouterSiteToSiteVPNInfoParam))
 		return err
 	},
 }
 
-func vpcrouterSiteToSiteVpnInfoCmdInit() {
+func vpcRouterSiteToSiteVPNInfoCmdInit() {
 }
 
-var vpcrouterSiteToSiteVpnAddCmd = &cobra.Command{
+var vpcRouterSiteToSiteVPNAddCmd = &cobra.Command{
 	Use: "site-to-site-vpn-add",
 
 	Short: "Add site-to-site IPSec VPN setting",
 	Long:  `Add site-to-site IPSec VPN setting`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterSiteToSiteVpnAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterSiteToSiteVPNAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("site-to-site-vpn-add parameter: \n%s\n", debugMarshalIndent(vpcrouterSiteToSiteVpnAddParam))
+		fmt.Printf("site-to-site-vpn-add parameter: \n%s\n", debugMarshalIndent(vpcRouterSiteToSiteVPNAddParam))
 		return err
 	},
 }
 
-func vpcrouterSiteToSiteVpnAddCmdInit() {
-	fs := vpcrouterSiteToSiteVpnAddCmd.Flags()
-	fs.StringVarP(&vpcrouterSiteToSiteVpnAddParam.Peer, "peer", "", "", "set peer address")
-	fs.StringVarP(&vpcrouterSiteToSiteVpnAddParam.RemoteId, "remote-id", "", "", "set remote-id")
-	fs.StringVarP(&vpcrouterSiteToSiteVpnAddParam.PreSharedSecret, "pre-shared-secret", "", "", "set pre-shared-secret")
-	fs.StringSliceVarP(&vpcrouterSiteToSiteVpnAddParam.Routes, "routes", "", []string{}, "set route list")
-	fs.StringSliceVarP(&vpcrouterSiteToSiteVpnAddParam.LocalPrefix, "local-prefix", "", []string{}, "set local prefix list")
+func vpcRouterSiteToSiteVPNAddCmdInit() {
+	fs := vpcRouterSiteToSiteVPNAddCmd.Flags()
+	fs.StringVarP(&vpcRouterSiteToSiteVPNAddParam.RemoteId, "remote-id", "", "", "set remote-id")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNAddParam.PreSharedSecret, "pre-shared-secret", "", "", "set pre-shared-secret")
+	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNAddParam.Routes, "routes", "", []string{}, "set route list")
+	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNAddParam.LocalPrefix, "local-prefix", "", []string{}, "set local prefix list")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNAddParam.Peer, "peer", "", "", "set peer address")
 }
 
-var vpcrouterSiteToSiteVpnUpdateCmd = &cobra.Command{
+var vpcRouterSiteToSiteVPNUpdateCmd = &cobra.Command{
 	Use: "site-to-site-vpn-update",
 
 	Short: "Update site-to-site IPSec VPN setting",
 	Long:  `Update site-to-site IPSec VPN setting`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterSiteToSiteVpnUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterSiteToSiteVPNUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("site-to-site-vpn-update parameter: \n%s\n", debugMarshalIndent(vpcrouterSiteToSiteVpnUpdateParam))
+		fmt.Printf("site-to-site-vpn-update parameter: \n%s\n", debugMarshalIndent(vpcRouterSiteToSiteVPNUpdateParam))
 		return err
 	},
 }
 
-func vpcrouterSiteToSiteVpnUpdateCmdInit() {
-	fs := vpcrouterSiteToSiteVpnUpdateCmd.Flags()
-	fs.StringSliceVarP(&vpcrouterSiteToSiteVpnUpdateParam.Routes, "routes", "", []string{}, "set route list")
-	fs.StringSliceVarP(&vpcrouterSiteToSiteVpnUpdateParam.LocalPrefix, "local-prefix", "", []string{}, "set local prefix list")
-	fs.IntVarP(&vpcrouterSiteToSiteVpnUpdateParam.Index, "index", "", 0, "index of target remote-access user")
-	fs.StringVarP(&vpcrouterSiteToSiteVpnUpdateParam.Peer, "peer", "", "", "set peer address")
-	fs.StringVarP(&vpcrouterSiteToSiteVpnUpdateParam.RemoteId, "remote-id", "", "", "set remote-id")
-	fs.StringVarP(&vpcrouterSiteToSiteVpnUpdateParam.PreSharedSecret, "pre-shared-secret", "", "", "set pre-shared-secret")
+func vpcRouterSiteToSiteVPNUpdateCmdInit() {
+	fs := vpcRouterSiteToSiteVPNUpdateCmd.Flags()
+	fs.StringVarP(&vpcRouterSiteToSiteVPNUpdateParam.PreSharedSecret, "pre-shared-secret", "", "", "set pre-shared-secret")
+	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNUpdateParam.Routes, "routes", "", []string{}, "set route list")
+	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNUpdateParam.LocalPrefix, "local-prefix", "", []string{}, "set local prefix list")
+	fs.IntVarP(&vpcRouterSiteToSiteVPNUpdateParam.Index, "index", "", 0, "index of target remote-access user")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNUpdateParam.Peer, "peer", "", "", "set peer address")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNUpdateParam.RemoteId, "remote-id", "", "", "set remote-id")
 }
 
-var vpcrouterSiteToSiteVpnDeleteCmd = &cobra.Command{
+var vpcRouterSiteToSiteVPNDeleteCmd = &cobra.Command{
 	Use: "site-to-site-vpn-delete",
 
 	Short: "Delete site-to-site IPSec VPN setting",
 	Long:  `Delete site-to-site IPSec VPN setting`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterSiteToSiteVpnDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterSiteToSiteVPNDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("site-to-site-vpn-delete parameter: \n%s\n", debugMarshalIndent(vpcrouterSiteToSiteVpnDeleteParam))
+		fmt.Printf("site-to-site-vpn-delete parameter: \n%s\n", debugMarshalIndent(vpcRouterSiteToSiteVPNDeleteParam))
 		return err
 	},
 }
 
-func vpcrouterSiteToSiteVpnDeleteCmdInit() {
-	fs := vpcrouterSiteToSiteVpnDeleteCmd.Flags()
-	fs.IntVarP(&vpcrouterSiteToSiteVpnDeleteParam.Index, "index", "", 0, "index of target remote-access user")
+func vpcRouterSiteToSiteVPNDeleteCmdInit() {
+	fs := vpcRouterSiteToSiteVPNDeleteCmd.Flags()
+	fs.IntVarP(&vpcRouterSiteToSiteVPNDeleteParam.Index, "index", "", 0, "index of target remote-access user")
 }
 
-var vpcrouterSiteToSiteVpnPeersCmd = &cobra.Command{
+var vpcRouterSiteToSiteVPNPeersCmd = &cobra.Command{
 	Use: "site-to-site-vpn-peers",
 
 	Short: "Show status of site-to-site IPSec VPN peers",
 	Long:  `Show status of site-to-site IPSec VPN peers`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterSiteToSiteVpnPeersParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterSiteToSiteVPNPeersParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("site-to-site-vpn-peers parameter: \n%s\n", debugMarshalIndent(vpcrouterSiteToSiteVpnPeersParam))
+		fmt.Printf("site-to-site-vpn-peers parameter: \n%s\n", debugMarshalIndent(vpcRouterSiteToSiteVPNPeersParam))
 		return err
 	},
 }
 
-func vpcrouterSiteToSiteVpnPeersCmdInit() {
+func vpcRouterSiteToSiteVPNPeersCmdInit() {
 }
 
-var vpcrouterStaticRouteInfoCmd = &cobra.Command{
+var vpcRouterStaticRouteInfoCmd = &cobra.Command{
 	Use:     "static-route-info",
 	Aliases: []string{"static-route-list"},
 	Short:   "Show information of static-routes",
 	Long:    `Show information of static-routes`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterStaticRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterStaticRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("static-route-info parameter: \n%s\n", debugMarshalIndent(vpcrouterStaticRouteInfoParam))
+		fmt.Printf("static-route-info parameter: \n%s\n", debugMarshalIndent(vpcRouterStaticRouteInfoParam))
 		return err
 	},
 }
 
-func vpcrouterStaticRouteInfoCmdInit() {
+func vpcRouterStaticRouteInfoCmdInit() {
 }
 
-var vpcrouterStaticRouteAddCmd = &cobra.Command{
+var vpcRouterStaticRouteAddCmd = &cobra.Command{
 	Use: "static-route-add",
 
 	Short: "Add static-route",
 	Long:  `Add static-route`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterStaticRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterStaticRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("static-route-add parameter: \n%s\n", debugMarshalIndent(vpcrouterStaticRouteAddParam))
+		fmt.Printf("static-route-add parameter: \n%s\n", debugMarshalIndent(vpcRouterStaticRouteAddParam))
 		return err
 	},
 }
 
-func vpcrouterStaticRouteAddCmdInit() {
-	fs := vpcrouterStaticRouteAddCmd.Flags()
-	fs.StringVarP(&vpcrouterStaticRouteAddParam.Prefix, "prefix", "", "", "set prefix")
-	fs.StringVarP(&vpcrouterStaticRouteAddParam.NextHop, "next-hop", "", "", "set next-hop")
+func vpcRouterStaticRouteAddCmdInit() {
+	fs := vpcRouterStaticRouteAddCmd.Flags()
+	fs.StringVarP(&vpcRouterStaticRouteAddParam.Prefix, "prefix", "", "", "set prefix")
+	fs.StringVarP(&vpcRouterStaticRouteAddParam.NextHop, "next-hop", "", "", "set next-hop")
 }
 
-var vpcrouterStaticRouteUpdateCmd = &cobra.Command{
+var vpcRouterStaticRouteUpdateCmd = &cobra.Command{
 	Use: "static-route-update",
 
 	Short: "Update static-route",
 	Long:  `Update static-route`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterStaticRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterStaticRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("static-route-update parameter: \n%s\n", debugMarshalIndent(vpcrouterStaticRouteUpdateParam))
+		fmt.Printf("static-route-update parameter: \n%s\n", debugMarshalIndent(vpcRouterStaticRouteUpdateParam))
 		return err
 	},
 }
 
-func vpcrouterStaticRouteUpdateCmdInit() {
-	fs := vpcrouterStaticRouteUpdateCmd.Flags()
-	fs.IntVarP(&vpcrouterStaticRouteUpdateParam.Index, "index", "", 0, "index of target static-route")
-	fs.StringVarP(&vpcrouterStaticRouteUpdateParam.Prefix, "prefix", "", "", "set prefix")
-	fs.StringVarP(&vpcrouterStaticRouteUpdateParam.NextHop, "next-hop", "", "", "set next-hop")
+func vpcRouterStaticRouteUpdateCmdInit() {
+	fs := vpcRouterStaticRouteUpdateCmd.Flags()
+	fs.StringVarP(&vpcRouterStaticRouteUpdateParam.NextHop, "next-hop", "", "", "set next-hop")
+	fs.IntVarP(&vpcRouterStaticRouteUpdateParam.Index, "index", "", 0, "index of target static-route")
+	fs.StringVarP(&vpcRouterStaticRouteUpdateParam.Prefix, "prefix", "", "", "set prefix")
 }
 
-var vpcrouterStaticRouteDeleteCmd = &cobra.Command{
+var vpcRouterStaticRouteDeleteCmd = &cobra.Command{
 	Use: "static-route-delete",
 
 	Short: "Delete static-route",
 	Long:  `Delete static-route`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterStaticRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterStaticRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("static-route-delete parameter: \n%s\n", debugMarshalIndent(vpcrouterStaticRouteDeleteParam))
+		fmt.Printf("static-route-delete parameter: \n%s\n", debugMarshalIndent(vpcRouterStaticRouteDeleteParam))
 		return err
 	},
 }
 
-func vpcrouterStaticRouteDeleteCmdInit() {
-	fs := vpcrouterStaticRouteDeleteCmd.Flags()
-	fs.IntVarP(&vpcrouterStaticRouteDeleteParam.Index, "index", "", 0, "index of target static-route")
+func vpcRouterStaticRouteDeleteCmdInit() {
+	fs := vpcRouterStaticRouteDeleteCmd.Flags()
+	fs.IntVarP(&vpcRouterStaticRouteDeleteParam.Index, "index", "", 0, "index of target static-route")
 }
 
-var vpcrouterMonitorCmd = &cobra.Command{
+var vpcRouterMonitorCmd = &cobra.Command{
 	Use: "monitor",
 
-	Short: "Monitor Vpcrouter",
-	Long:  `Monitor Vpcrouter`,
+	Short: "Monitor VPCRouter",
+	Long:  `Monitor VPCRouter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("monitor parameter: \n%s\n", debugMarshalIndent(vpcrouterMonitorParam))
+		fmt.Printf("monitor parameter: \n%s\n", debugMarshalIndent(vpcRouterMonitorParam))
 		return err
 	},
 }
 
-func vpcrouterMonitorCmdInit() {
-	fs := vpcrouterMonitorCmd.Flags()
-	fs.StringVarP(&vpcrouterMonitorParam.End, "end", "", "", "set end-time")
-	fs.StringVarP(&vpcrouterMonitorParam.KeyFormat, "key-format", "", "sakuracloud.vpcrouter.{{.ID}}.nic.{{.Index}}", "set monitoring value key-format")
-	fs.StringVarP(&vpcrouterMonitorParam.Interface, "interface", "", "0", "index of target interface")
-	fs.StringVarP(&vpcrouterMonitorParam.Start, "start", "", "", "set start-time")
+func vpcRouterMonitorCmdInit() {
+	fs := vpcRouterMonitorCmd.Flags()
+	fs.StringVarP(&vpcRouterMonitorParam.KeyFormat, "key-format", "", "sakuracloud.vpcrouter.{{.ID}}.nic.{{.Index}}", "set monitoring value key-format")
+	fs.StringVarP(&vpcRouterMonitorParam.Interface, "interface", "", "0", "index of target interface")
+	fs.StringVarP(&vpcRouterMonitorParam.Start, "start", "", "", "set start-time")
+	fs.StringVarP(&vpcRouterMonitorParam.End, "end", "", "", "set end-time")
 }
 
-var vpcrouterLogsCmd = &cobra.Command{
+var vpcRouterLogsCmd = &cobra.Command{
 	Use: "logs",
 
-	Short: "Logs Vpcrouter",
-	Long:  `Logs Vpcrouter`,
+	Short: "Logs VPCRouter",
+	Long:  `Logs VPCRouter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := vpcrouterLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := vpcRouterLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("logs parameter: \n%s\n", debugMarshalIndent(vpcrouterLogsParam))
+		fmt.Printf("logs parameter: \n%s\n", debugMarshalIndent(vpcRouterLogsParam))
 		return err
 	},
 }
 
-func vpcrouterLogsCmdInit() {
-	fs := vpcrouterLogsCmd.Flags()
-	fs.Int64VarP(&vpcrouterLogsParam.RefreshInterval, "refresh-interval", "", 3, "log refresh interval second")
-	fs.BoolVarP(&vpcrouterLogsParam.ListLogNames, "list-log-names", "", false, "show log-name list")
-	fs.StringVarP(&vpcrouterLogsParam.LogName, "log-name", "", "all", "set target logfile name")
-	fs.BoolVarP(&vpcrouterLogsParam.Follow, "follow", "f", false, "follow log output")
+func vpcRouterLogsCmdInit() {
+	fs := vpcRouterLogsCmd.Flags()
+	fs.StringVarP(&vpcRouterLogsParam.LogName, "log-name", "", "all", "set target logfile name")
+	fs.BoolVarP(&vpcRouterLogsParam.Follow, "follow", "f", false, "follow log output")
+	fs.Int64VarP(&vpcRouterLogsParam.RefreshInterval, "refresh-interval", "", 3, "log refresh interval second")
+	fs.BoolVarP(&vpcRouterLogsParam.ListLogNames, "list-log-names", "", false, "show log-name list")
 }
 
 func init() {
-	parent := vpcrouterCmd
+	parent := vpcRouterCmd
 
-	vpcrouterListCmdInit()
-	parent.AddCommand(vpcrouterListCmd)
+	vpcRouterListCmdInit()
+	parent.AddCommand(vpcRouterListCmd)
 
-	vpcrouterCreateCmdInit()
-	parent.AddCommand(vpcrouterCreateCmd)
+	vpcRouterCreateCmdInit()
+	parent.AddCommand(vpcRouterCreateCmd)
 
-	vpcrouterReadCmdInit()
-	parent.AddCommand(vpcrouterReadCmd)
+	vpcRouterReadCmdInit()
+	parent.AddCommand(vpcRouterReadCmd)
 
-	vpcrouterUpdateCmdInit()
-	parent.AddCommand(vpcrouterUpdateCmd)
+	vpcRouterUpdateCmdInit()
+	parent.AddCommand(vpcRouterUpdateCmd)
 
-	vpcrouterDeleteCmdInit()
-	parent.AddCommand(vpcrouterDeleteCmd)
+	vpcRouterDeleteCmdInit()
+	parent.AddCommand(vpcRouterDeleteCmd)
 
-	vpcrouterBootCmdInit()
-	parent.AddCommand(vpcrouterBootCmd)
+	vpcRouterBootCmdInit()
+	parent.AddCommand(vpcRouterBootCmd)
 
-	vpcrouterShutdownCmdInit()
-	parent.AddCommand(vpcrouterShutdownCmd)
+	vpcRouterShutdownCmdInit()
+	parent.AddCommand(vpcRouterShutdownCmd)
 
-	vpcrouterShutdownForceCmdInit()
-	parent.AddCommand(vpcrouterShutdownForceCmd)
+	vpcRouterShutdownForceCmdInit()
+	parent.AddCommand(vpcRouterShutdownForceCmd)
 
-	vpcrouterResetCmdInit()
-	parent.AddCommand(vpcrouterResetCmd)
+	vpcRouterResetCmdInit()
+	parent.AddCommand(vpcRouterResetCmd)
 
-	vpcrouterWaitForBootCmdInit()
-	parent.AddCommand(vpcrouterWaitForBootCmd)
+	vpcRouterWaitForBootCmdInit()
+	parent.AddCommand(vpcRouterWaitForBootCmd)
 
-	vpcrouterWaitForDownCmdInit()
-	parent.AddCommand(vpcrouterWaitForDownCmd)
+	vpcRouterWaitForDownCmdInit()
+	parent.AddCommand(vpcRouterWaitForDownCmd)
 
-	vpcrouterEnableInternetConnectionCmdInit()
-	parent.AddCommand(vpcrouterEnableInternetConnectionCmd)
+	vpcRouterEnableInternetConnectionCmdInit()
+	parent.AddCommand(vpcRouterEnableInternetConnectionCmd)
 
-	vpcrouterDisableInternetConnectionCmdInit()
-	parent.AddCommand(vpcrouterDisableInternetConnectionCmd)
+	vpcRouterDisableInternetConnectionCmdInit()
+	parent.AddCommand(vpcRouterDisableInternetConnectionCmd)
 
-	vpcrouterInterfaceInfoCmdInit()
-	parent.AddCommand(vpcrouterInterfaceInfoCmd)
+	vpcRouterInterfaceInfoCmdInit()
+	parent.AddCommand(vpcRouterInterfaceInfoCmd)
 
-	vpcrouterInterfaceConnectCmdInit()
-	parent.AddCommand(vpcrouterInterfaceConnectCmd)
+	vpcRouterInterfaceConnectCmdInit()
+	parent.AddCommand(vpcRouterInterfaceConnectCmd)
 
-	vpcrouterInterfaceUpdateCmdInit()
-	parent.AddCommand(vpcrouterInterfaceUpdateCmd)
+	vpcRouterInterfaceUpdateCmdInit()
+	parent.AddCommand(vpcRouterInterfaceUpdateCmd)
 
-	vpcrouterInterfaceDisconnectCmdInit()
-	parent.AddCommand(vpcrouterInterfaceDisconnectCmd)
+	vpcRouterInterfaceDisconnectCmdInit()
+	parent.AddCommand(vpcRouterInterfaceDisconnectCmd)
 
-	vpcrouterStaticNatInfoCmdInit()
-	parent.AddCommand(vpcrouterStaticNatInfoCmd)
+	vpcRouterStaticNatInfoCmdInit()
+	parent.AddCommand(vpcRouterStaticNatInfoCmd)
 
-	vpcrouterStaticNatAddCmdInit()
-	parent.AddCommand(vpcrouterStaticNatAddCmd)
+	vpcRouterStaticNatAddCmdInit()
+	parent.AddCommand(vpcRouterStaticNatAddCmd)
 
-	vpcrouterStaticNatUpdateCmdInit()
-	parent.AddCommand(vpcrouterStaticNatUpdateCmd)
+	vpcRouterStaticNatUpdateCmdInit()
+	parent.AddCommand(vpcRouterStaticNatUpdateCmd)
 
-	vpcrouterStaticNatDeleteCmdInit()
-	parent.AddCommand(vpcrouterStaticNatDeleteCmd)
+	vpcRouterStaticNatDeleteCmdInit()
+	parent.AddCommand(vpcRouterStaticNatDeleteCmd)
 
-	vpcrouterPortForwardingInfoCmdInit()
-	parent.AddCommand(vpcrouterPortForwardingInfoCmd)
+	vpcRouterPortForwardingInfoCmdInit()
+	parent.AddCommand(vpcRouterPortForwardingInfoCmd)
 
-	vpcrouterPortForwardingAddCmdInit()
-	parent.AddCommand(vpcrouterPortForwardingAddCmd)
+	vpcRouterPortForwardingAddCmdInit()
+	parent.AddCommand(vpcRouterPortForwardingAddCmd)
 
-	vpcrouterPortForwardingUpdateCmdInit()
-	parent.AddCommand(vpcrouterPortForwardingUpdateCmd)
+	vpcRouterPortForwardingUpdateCmdInit()
+	parent.AddCommand(vpcRouterPortForwardingUpdateCmd)
 
-	vpcrouterPortForwardingDeleteCmdInit()
-	parent.AddCommand(vpcrouterPortForwardingDeleteCmd)
+	vpcRouterPortForwardingDeleteCmdInit()
+	parent.AddCommand(vpcRouterPortForwardingDeleteCmd)
 
-	vpcrouterFirewallInfoCmdInit()
-	parent.AddCommand(vpcrouterFirewallInfoCmd)
+	vpcRouterFirewallInfoCmdInit()
+	parent.AddCommand(vpcRouterFirewallInfoCmd)
 
-	vpcrouterFirewallAddCmdInit()
-	parent.AddCommand(vpcrouterFirewallAddCmd)
+	vpcRouterFirewallAddCmdInit()
+	parent.AddCommand(vpcRouterFirewallAddCmd)
 
-	vpcrouterFirewallUpdateCmdInit()
-	parent.AddCommand(vpcrouterFirewallUpdateCmd)
+	vpcRouterFirewallUpdateCmdInit()
+	parent.AddCommand(vpcRouterFirewallUpdateCmd)
 
-	vpcrouterFirewallDeleteCmdInit()
-	parent.AddCommand(vpcrouterFirewallDeleteCmd)
+	vpcRouterFirewallDeleteCmdInit()
+	parent.AddCommand(vpcRouterFirewallDeleteCmd)
 
-	vpcrouterDhcpServerInfoCmdInit()
-	parent.AddCommand(vpcrouterDhcpServerInfoCmd)
+	vpcRouterDhcpServerInfoCmdInit()
+	parent.AddCommand(vpcRouterDhcpServerInfoCmd)
 
-	vpcrouterDhcpServerAddCmdInit()
-	parent.AddCommand(vpcrouterDhcpServerAddCmd)
+	vpcRouterDhcpServerAddCmdInit()
+	parent.AddCommand(vpcRouterDhcpServerAddCmd)
 
-	vpcrouterDhcpServerUpdateCmdInit()
-	parent.AddCommand(vpcrouterDhcpServerUpdateCmd)
+	vpcRouterDhcpServerUpdateCmdInit()
+	parent.AddCommand(vpcRouterDhcpServerUpdateCmd)
 
-	vpcrouterDhcpServerDeleteCmdInit()
-	parent.AddCommand(vpcrouterDhcpServerDeleteCmd)
+	vpcRouterDhcpServerDeleteCmdInit()
+	parent.AddCommand(vpcRouterDhcpServerDeleteCmd)
 
-	vpcrouterDhcpStaticMappingInfoCmdInit()
-	parent.AddCommand(vpcrouterDhcpStaticMappingInfoCmd)
+	vpcRouterDhcpStaticMappingInfoCmdInit()
+	parent.AddCommand(vpcRouterDhcpStaticMappingInfoCmd)
 
-	vpcrouterDhcpStaticMappingAddCmdInit()
-	parent.AddCommand(vpcrouterDhcpStaticMappingAddCmd)
+	vpcRouterDhcpStaticMappingAddCmdInit()
+	parent.AddCommand(vpcRouterDhcpStaticMappingAddCmd)
 
-	vpcrouterDhcpStaticMappingUpdateCmdInit()
-	parent.AddCommand(vpcrouterDhcpStaticMappingUpdateCmd)
+	vpcRouterDhcpStaticMappingUpdateCmdInit()
+	parent.AddCommand(vpcRouterDhcpStaticMappingUpdateCmd)
 
-	vpcrouterDhcpStaticMappingDeleteCmdInit()
-	parent.AddCommand(vpcrouterDhcpStaticMappingDeleteCmd)
+	vpcRouterDhcpStaticMappingDeleteCmdInit()
+	parent.AddCommand(vpcRouterDhcpStaticMappingDeleteCmd)
 
-	vpcrouterPptpServerInfoCmdInit()
-	parent.AddCommand(vpcrouterPptpServerInfoCmd)
+	vpcRouterPptpServerInfoCmdInit()
+	parent.AddCommand(vpcRouterPptpServerInfoCmd)
 
-	vpcrouterPptpServerUpdateCmdInit()
-	parent.AddCommand(vpcrouterPptpServerUpdateCmd)
+	vpcRouterPptpServerUpdateCmdInit()
+	parent.AddCommand(vpcRouterPptpServerUpdateCmd)
 
-	vpcrouterL2tpServerInfoCmdInit()
-	parent.AddCommand(vpcrouterL2tpServerInfoCmd)
+	vpcRouterL2TPServerInfoCmdInit()
+	parent.AddCommand(vpcRouterL2TPServerInfoCmd)
 
-	vpcrouterL2tpServerUpdateCmdInit()
-	parent.AddCommand(vpcrouterL2tpServerUpdateCmd)
+	vpcRouterL2TPServerUpdateCmdInit()
+	parent.AddCommand(vpcRouterL2TPServerUpdateCmd)
 
-	vpcrouterUserInfoCmdInit()
-	parent.AddCommand(vpcrouterUserInfoCmd)
+	vpcRouterUserInfoCmdInit()
+	parent.AddCommand(vpcRouterUserInfoCmd)
 
-	vpcrouterUserAddCmdInit()
-	parent.AddCommand(vpcrouterUserAddCmd)
+	vpcRouterUserAddCmdInit()
+	parent.AddCommand(vpcRouterUserAddCmd)
 
-	vpcrouterUserUpdateCmdInit()
-	parent.AddCommand(vpcrouterUserUpdateCmd)
+	vpcRouterUserUpdateCmdInit()
+	parent.AddCommand(vpcRouterUserUpdateCmd)
 
-	vpcrouterUserDeleteCmdInit()
-	parent.AddCommand(vpcrouterUserDeleteCmd)
+	vpcRouterUserDeleteCmdInit()
+	parent.AddCommand(vpcRouterUserDeleteCmd)
 
-	vpcrouterSiteToSiteVpnInfoCmdInit()
-	parent.AddCommand(vpcrouterSiteToSiteVpnInfoCmd)
+	vpcRouterSiteToSiteVPNInfoCmdInit()
+	parent.AddCommand(vpcRouterSiteToSiteVPNInfoCmd)
 
-	vpcrouterSiteToSiteVpnAddCmdInit()
-	parent.AddCommand(vpcrouterSiteToSiteVpnAddCmd)
+	vpcRouterSiteToSiteVPNAddCmdInit()
+	parent.AddCommand(vpcRouterSiteToSiteVPNAddCmd)
 
-	vpcrouterSiteToSiteVpnUpdateCmdInit()
-	parent.AddCommand(vpcrouterSiteToSiteVpnUpdateCmd)
+	vpcRouterSiteToSiteVPNUpdateCmdInit()
+	parent.AddCommand(vpcRouterSiteToSiteVPNUpdateCmd)
 
-	vpcrouterSiteToSiteVpnDeleteCmdInit()
-	parent.AddCommand(vpcrouterSiteToSiteVpnDeleteCmd)
+	vpcRouterSiteToSiteVPNDeleteCmdInit()
+	parent.AddCommand(vpcRouterSiteToSiteVPNDeleteCmd)
 
-	vpcrouterSiteToSiteVpnPeersCmdInit()
-	parent.AddCommand(vpcrouterSiteToSiteVpnPeersCmd)
+	vpcRouterSiteToSiteVPNPeersCmdInit()
+	parent.AddCommand(vpcRouterSiteToSiteVPNPeersCmd)
 
-	vpcrouterStaticRouteInfoCmdInit()
-	parent.AddCommand(vpcrouterStaticRouteInfoCmd)
+	vpcRouterStaticRouteInfoCmdInit()
+	parent.AddCommand(vpcRouterStaticRouteInfoCmd)
 
-	vpcrouterStaticRouteAddCmdInit()
-	parent.AddCommand(vpcrouterStaticRouteAddCmd)
+	vpcRouterStaticRouteAddCmdInit()
+	parent.AddCommand(vpcRouterStaticRouteAddCmd)
 
-	vpcrouterStaticRouteUpdateCmdInit()
-	parent.AddCommand(vpcrouterStaticRouteUpdateCmd)
+	vpcRouterStaticRouteUpdateCmdInit()
+	parent.AddCommand(vpcRouterStaticRouteUpdateCmd)
 
-	vpcrouterStaticRouteDeleteCmdInit()
-	parent.AddCommand(vpcrouterStaticRouteDeleteCmd)
+	vpcRouterStaticRouteDeleteCmdInit()
+	parent.AddCommand(vpcRouterStaticRouteDeleteCmd)
 
-	vpcrouterMonitorCmdInit()
-	parent.AddCommand(vpcrouterMonitorCmd)
+	vpcRouterMonitorCmdInit()
+	parent.AddCommand(vpcRouterMonitorCmd)
 
-	vpcrouterLogsCmdInit()
-	parent.AddCommand(vpcrouterLogsCmd)
+	vpcRouterLogsCmdInit()
+	parent.AddCommand(vpcRouterLogsCmd)
 
 	rootCmd.AddCommand(parent)
 }

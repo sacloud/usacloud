@@ -25,21 +25,21 @@ import (
 )
 
 var (
-	simListParam          = params.NewListSimParam()
-	simCreateParam        = params.NewCreateSimParam()
-	simReadParam          = params.NewReadSimParam()
-	simUpdateParam        = params.NewUpdateSimParam()
-	simDeleteParam        = params.NewDeleteSimParam()
-	simCarrierInfoParam   = params.NewCarrierInfoSimParam()
-	simCarrierUpdateParam = params.NewCarrierUpdateSimParam()
-	simActivateParam      = params.NewActivateSimParam()
-	simDeactivateParam    = params.NewDeactivateSimParam()
-	simImeiLockParam      = params.NewImeiLockSimParam()
-	simIpAddParam         = params.NewIpAddSimParam()
-	simImeiUnlockParam    = params.NewImeiUnlockSimParam()
-	simIpDeleteParam      = params.NewIpDeleteSimParam()
-	simLogsParam          = params.NewLogsSimParam()
-	simMonitorParam       = params.NewMonitorSimParam()
+	simListParam          = params.NewListSIMParam()
+	simCreateParam        = params.NewCreateSIMParam()
+	simReadParam          = params.NewReadSIMParam()
+	simUpdateParam        = params.NewUpdateSIMParam()
+	simDeleteParam        = params.NewDeleteSIMParam()
+	simCarrierInfoParam   = params.NewCarrierInfoSIMParam()
+	simCarrierUpdateParam = params.NewCarrierUpdateSIMParam()
+	simActivateParam      = params.NewActivateSIMParam()
+	simDeactivateParam    = params.NewDeactivateSIMParam()
+	simImeiLockParam      = params.NewImeiLockSIMParam()
+	simIpAddParam         = params.NewIpAddSIMParam()
+	simImeiUnlockParam    = params.NewImeiUnlockSIMParam()
+	simIpDeleteParam      = params.NewIpDeleteSIMParam()
+	simLogsParam          = params.NewLogsSIMParam()
+	simMonitorParam       = params.NewMonitorSIMParam()
 )
 
 // simCmd represents the command to manage SAKURA Cloud SIM
@@ -55,8 +55,8 @@ var simCmd = &cobra.Command{
 var simListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Sim",
-	Long:    `List Sim`,
+	Short:   "List SIM",
+	Long:    `List SIM`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := simListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -67,10 +67,10 @@ var simListCmd = &cobra.Command{
 
 func simListCmdInit() {
 	fs := simListCmd.Flags()
+	fs.StringSliceVarP(&simListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.StringSliceVarP(&simListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&simListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &simListParam.Id), "id", "", "set filter by id(s)")
-	fs.StringSliceVarP(&simListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.IntVarP(&simListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&simListParam.Max, "max", "", 0, "set limit")
 }
@@ -78,8 +78,8 @@ func simListCmdInit() {
 var simCreateCmd = &cobra.Command{
 	Use: "create",
 
-	Short: "Create Sim",
-	Long:  `Create Sim`,
+	Short: "Create SIM",
+	Long:  `Create SIM`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := simCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -90,22 +90,22 @@ var simCreateCmd = &cobra.Command{
 
 func simCreateCmdInit() {
 	fs := simCreateCmd.Flags()
-	fs.BoolVarP(&simCreateParam.Disabled, "disabled", "", false, "")
-	fs.StringSliceVarP(&simCreateParam.Carrier, "carrier", "", []string{}, "")
+	fs.StringVarP(&simCreateParam.Imei, "imei", "", "", "")
 	fs.StringVarP(&simCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&simCreateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&simCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.StringVarP(&simCreateParam.Iccid, "iccid", "", "", "")
-	fs.StringVarP(&simCreateParam.Passcode, "passcode", "", "", "")
-	fs.StringVarP(&simCreateParam.Imei, "imei", "", "", "")
 	fs.VarP(newIDValue(0, &simCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringVarP(&simCreateParam.Iccid, "iccid", "", "", "")
+	fs.BoolVarP(&simCreateParam.Disabled, "disabled", "", false, "")
+	fs.StringSliceVarP(&simCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.StringVarP(&simCreateParam.Passcode, "passcode", "", "", "")
+	fs.StringSliceVarP(&simCreateParam.Carrier, "carrier", "", []string{}, "")
 }
 
 var simReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Sim",
-	Long:  `Read Sim`,
+	Short: "Read SIM",
+	Long:  `Read SIM`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := simReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -120,8 +120,8 @@ func simReadCmdInit() {
 var simUpdateCmd = &cobra.Command{
 	Use: "update",
 
-	Short: "Update Sim",
-	Long:  `Update Sim`,
+	Short: "Update SIM",
+	Long:  `Update SIM`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := simUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -141,8 +141,8 @@ func simUpdateCmdInit() {
 var simDeleteCmd = &cobra.Command{
 	Use:     "delete",
 	Aliases: []string{"rm"},
-	Short:   "Delete Sim",
-	Long:    `Delete Sim`,
+	Short:   "Delete SIM",
+	Long:    `Delete SIM`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := simDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -159,8 +159,8 @@ func simDeleteCmdInit() {
 var simCarrierInfoCmd = &cobra.Command{
 	Use:     "carrier-info",
 	Aliases: []string{"carrier-list"},
-	Short:   "CarrierInfo Sim",
-	Long:    `CarrierInfo Sim`,
+	Short:   "CarrierInfo SIM",
+	Long:    `CarrierInfo SIM`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := simCarrierInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -175,8 +175,8 @@ func simCarrierInfoCmdInit() {
 var simCarrierUpdateCmd = &cobra.Command{
 	Use: "carrier-update",
 
-	Short: "CarrierUpdate Sim",
-	Long:  `CarrierUpdate Sim`,
+	Short: "CarrierUpdate SIM",
+	Long:  `CarrierUpdate SIM`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := simCarrierUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -193,8 +193,8 @@ func simCarrierUpdateCmdInit() {
 var simActivateCmd = &cobra.Command{
 	Use: "activate",
 
-	Short: "Activate Sim",
-	Long:  `Activate Sim`,
+	Short: "Activate SIM",
+	Long:  `Activate SIM`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := simActivateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -209,8 +209,8 @@ func simActivateCmdInit() {
 var simDeactivateCmd = &cobra.Command{
 	Use: "deactivate",
 
-	Short: "Deactivate Sim",
-	Long:  `Deactivate Sim`,
+	Short: "Deactivate SIM",
+	Long:  `Deactivate SIM`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := simDeactivateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -225,8 +225,8 @@ func simDeactivateCmdInit() {
 var simImeiLockCmd = &cobra.Command{
 	Use: "imei-lock",
 
-	Short: "ImeiLock Sim",
-	Long:  `ImeiLock Sim`,
+	Short: "ImeiLock SIM",
+	Long:  `ImeiLock SIM`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := simImeiLockParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -243,8 +243,8 @@ func simImeiLockCmdInit() {
 var simIpAddCmd = &cobra.Command{
 	Use: "ip-add",
 
-	Short: "IpAdd Sim",
-	Long:  `IpAdd Sim`,
+	Short: "IpAdd SIM",
+	Long:  `IpAdd SIM`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := simIpAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -261,8 +261,8 @@ func simIpAddCmdInit() {
 var simImeiUnlockCmd = &cobra.Command{
 	Use: "imei-unlock",
 
-	Short: "ImeiUnlock Sim",
-	Long:  `ImeiUnlock Sim`,
+	Short: "ImeiUnlock SIM",
+	Long:  `ImeiUnlock SIM`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := simImeiUnlockParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -277,8 +277,8 @@ func simImeiUnlockCmdInit() {
 var simIpDeleteCmd = &cobra.Command{
 	Use:     "ip-delete",
 	Aliases: []string{"ip-del"},
-	Short:   "IpDelete Sim",
-	Long:    `IpDelete Sim`,
+	Short:   "IpDelete SIM",
+	Long:    `IpDelete SIM`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := simIpDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -293,8 +293,8 @@ func simIpDeleteCmdInit() {
 var simLogsCmd = &cobra.Command{
 	Use: "logs",
 
-	Short: "Logs Sim",
-	Long:  `Logs Sim`,
+	Short: "Logs SIM",
+	Long:  `Logs SIM`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := simLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -312,8 +312,8 @@ func simLogsCmdInit() {
 var simMonitorCmd = &cobra.Command{
 	Use: "monitor",
 
-	Short: "Monitor Sim",
-	Long:  `Monitor Sim`,
+	Short: "Monitor SIM",
+	Long:  `Monitor SIM`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := simMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG

@@ -29,11 +29,11 @@ import (
 
 // ListInterfaceParam is input parameters for the sacloud API
 type ListInterfaceParam struct {
-	Max  int
-	Sort []string
 	Name []string
 	Id   []sacloud.ID
 	From int
+	Max  int
+	Sort []string
 
 	input Input
 }
@@ -58,12 +58,6 @@ func (p *ListInterfaceParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListInterfaceParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
-	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -72,6 +66,12 @@ func (p *ListInterfaceParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
+	}
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
+	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
 	}
 
 }
@@ -133,20 +133,6 @@ func (p *ListInterfaceParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListInterfaceParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListInterfaceParam) GetMax() int {
-	return p.Max
-}
-func (p *ListInterfaceParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListInterfaceParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListInterfaceParam) SetName(v []string) {
 	p.Name = v
 }
@@ -167,6 +153,20 @@ func (p *ListInterfaceParam) SetFrom(v int) {
 
 func (p *ListInterfaceParam) GetFrom() int {
 	return p.From
+}
+func (p *ListInterfaceParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListInterfaceParam) GetMax() int {
+	return p.Max
+}
+func (p *ListInterfaceParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListInterfaceParam) GetSort() []string {
+	return p.Sort
 }
 
 // PacketFilterConnectInterfaceParam is input parameters for the sacloud API

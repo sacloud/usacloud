@@ -23,7 +23,7 @@ github.com/hashicorp/go-cleanhttp
 github.com/hashicorp/go-retryablehttp
 # github.com/hnakamur/go-scp v0.0.0-20170731142846-05a5990ec145
 github.com/hnakamur/go-scp
-# github.com/huandu/xstrings v1.2.0
+# github.com/huandu/xstrings v1.3.0
 github.com/huandu/xstrings
 # github.com/imdario/mergo v0.3.6
 github.com/imdario/mergo
@@ -88,6 +88,7 @@ github.com/spf13/cobra
 github.com/spf13/pflag
 # github.com/stretchr/testify v1.3.0
 github.com/stretchr/testify/assert
+github.com/stretchr/testify/require
 # github.com/vaughan0/go-ini v0.0.0-20130923145212-a98ad7ee00ec
 github.com/vaughan0/go-ini
 # go.uber.org/ratelimit v0.0.0-20180316092928-c15da0234277

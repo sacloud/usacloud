@@ -27,24 +27,24 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListProductlicenseParam is input parameters for the sacloud API
-type ListProductlicenseParam struct {
+// ListProductLicenseParam is input parameters for the sacloud API
+type ListProductLicenseParam struct {
+	Max  int
 	Sort []string
 	Name []string
 	Id   []sacloud.ID
 	From int
-	Max  int
 
 	input Input
 }
 
-// NewListProductlicenseParam return new ListProductlicenseParam
-func NewListProductlicenseParam() *ListProductlicenseParam {
-	return &ListProductlicenseParam{}
+// NewListProductLicenseParam return new ListProductLicenseParam
+func NewListProductLicenseParam() *ListProductLicenseParam {
+	return &ListProductLicenseParam{}
 }
 
-// Initialize init ListProductlicenseParam
-func (p *ListProductlicenseParam) Initialize(in Input) error {
+// Initialize init ListProductLicenseParam
+func (p *ListProductLicenseParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -53,11 +53,14 @@ func (p *ListProductlicenseParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ListProductlicenseParam) WriteSkeleton(writer io.Writer) error {
+func (p *ListProductLicenseParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListProductlicenseParam) fillValueToSkeleton() {
+func (p *ListProductLicenseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
+	}
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
@@ -70,13 +73,10 @@ func (p *ListProductlicenseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
-	}
 
 }
 
-func (p *ListProductlicenseParam) validate() error {
+func (p *ListProductLicenseParam) validate() error {
 	var errors []error
 
 	{
@@ -109,80 +109,80 @@ func (p *ListProductlicenseParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ListProductlicenseParam) ResourceDef() *schema.Resource {
+func (p *ListProductLicenseParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProductLicense"]
 }
 
-func (p *ListProductlicenseParam) CommandDef() *schema.Command {
+func (p *ListProductLicenseParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["list"]
 }
 
-func (p *ListProductlicenseParam) IncludeFields() []string {
+func (p *ListProductLicenseParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ListProductlicenseParam) ExcludeFields() []string {
+func (p *ListProductLicenseParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ListProductlicenseParam) TableType() output.TableType {
+func (p *ListProductLicenseParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ListProductlicenseParam) ColumnDefs() []output.ColumnDef {
+func (p *ListProductLicenseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListProductlicenseParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListProductlicenseParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListProductlicenseParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListProductlicenseParam) GetName() []string {
-	return p.Name
-}
-func (p *ListProductlicenseParam) SetId(v []sacloud.ID) {
-	p.Id = v
-}
-
-func (p *ListProductlicenseParam) GetId() []sacloud.ID {
-	return p.Id
-}
-func (p *ListProductlicenseParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListProductlicenseParam) GetFrom() int {
-	return p.From
-}
-func (p *ListProductlicenseParam) SetMax(v int) {
+func (p *ListProductLicenseParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListProductlicenseParam) GetMax() int {
+func (p *ListProductLicenseParam) GetMax() int {
 	return p.Max
 }
+func (p *ListProductLicenseParam) SetSort(v []string) {
+	p.Sort = v
+}
 
-// ReadProductlicenseParam is input parameters for the sacloud API
-type ReadProductlicenseParam struct {
+func (p *ListProductLicenseParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListProductLicenseParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListProductLicenseParam) GetName() []string {
+	return p.Name
+}
+func (p *ListProductLicenseParam) SetId(v []sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ListProductLicenseParam) GetId() []sacloud.ID {
+	return p.Id
+}
+func (p *ListProductLicenseParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListProductLicenseParam) GetFrom() int {
+	return p.From
+}
+
+// ReadProductLicenseParam is input parameters for the sacloud API
+type ReadProductLicenseParam struct {
 	Id sacloud.ID
 
 	input Input
 }
 
-// NewReadProductlicenseParam return new ReadProductlicenseParam
-func NewReadProductlicenseParam() *ReadProductlicenseParam {
-	return &ReadProductlicenseParam{}
+// NewReadProductLicenseParam return new ReadProductLicenseParam
+func NewReadProductLicenseParam() *ReadProductLicenseParam {
+	return &ReadProductLicenseParam{}
 }
 
-// Initialize init ReadProductlicenseParam
-func (p *ReadProductlicenseParam) Initialize(in Input) error {
+// Initialize init ReadProductLicenseParam
+func (p *ReadProductLicenseParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -191,18 +191,18 @@ func (p *ReadProductlicenseParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ReadProductlicenseParam) WriteSkeleton(writer io.Writer) error {
+func (p *ReadProductLicenseParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadProductlicenseParam) fillValueToSkeleton() {
+func (p *ReadProductLicenseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
 }
 
-func (p *ReadProductlicenseParam) validate() error {
+func (p *ReadProductLicenseParam) validate() error {
 	var errors []error
 
 	{
@@ -223,34 +223,34 @@ func (p *ReadProductlicenseParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ReadProductlicenseParam) ResourceDef() *schema.Resource {
+func (p *ReadProductLicenseParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProductLicense"]
 }
 
-func (p *ReadProductlicenseParam) CommandDef() *schema.Command {
+func (p *ReadProductLicenseParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["read"]
 }
 
-func (p *ReadProductlicenseParam) IncludeFields() []string {
+func (p *ReadProductLicenseParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ReadProductlicenseParam) ExcludeFields() []string {
+func (p *ReadProductLicenseParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ReadProductlicenseParam) TableType() output.TableType {
+func (p *ReadProductLicenseParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ReadProductlicenseParam) ColumnDefs() []output.ColumnDef {
+func (p *ReadProductLicenseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ReadProductlicenseParam) SetId(v sacloud.ID) {
+func (p *ReadProductLicenseParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadProductlicenseParam) GetId() sacloud.ID {
+func (p *ReadProductLicenseParam) GetId() sacloud.ID {
 	return p.Id
 }

@@ -27,25 +27,25 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListPrivatehostParam is input parameters for the sacloud API
-type ListPrivatehostParam struct {
+// ListPrivateHostParam is input parameters for the sacloud API
+type ListPrivateHostParam struct {
+	Name []string
 	Id   []sacloud.ID
 	From int
 	Max  int
 	Sort []string
-	Name []string
 	Tags []string
 
 	input Input
 }
 
-// NewListPrivatehostParam return new ListPrivatehostParam
-func NewListPrivatehostParam() *ListPrivatehostParam {
-	return &ListPrivatehostParam{}
+// NewListPrivateHostParam return new ListPrivateHostParam
+func NewListPrivateHostParam() *ListPrivateHostParam {
+	return &ListPrivateHostParam{}
 }
 
-// Initialize init ListPrivatehostParam
-func (p *ListPrivatehostParam) Initialize(in Input) error {
+// Initialize init ListPrivateHostParam
+func (p *ListPrivateHostParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -54,11 +54,14 @@ func (p *ListPrivatehostParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ListPrivatehostParam) WriteSkeleton(writer io.Writer) error {
+func (p *ListPrivateHostParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListPrivatehostParam) fillValueToSkeleton() {
+func (p *ListPrivateHostParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
@@ -71,17 +74,24 @@ func (p *ListPrivatehostParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
 
 }
 
-func (p *ListPrivatehostParam) validate() error {
+func (p *ListPrivateHostParam) validate() error {
 	var errors []error
+
+	{
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["PrivateHost"].Commands["list"].Params["id"].ValidateFunc
@@ -101,16 +111,6 @@ func (p *ListPrivatehostParam) validate() error {
 	}
 
 	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
 		validator := define.Resources["PrivateHost"].Commands["list"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
 		if errs != nil {
@@ -121,90 +121,90 @@ func (p *ListPrivatehostParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ListPrivatehostParam) ResourceDef() *schema.Resource {
+func (p *ListPrivateHostParam) ResourceDef() *schema.Resource {
 	return define.Resources["PrivateHost"]
 }
 
-func (p *ListPrivatehostParam) CommandDef() *schema.Command {
+func (p *ListPrivateHostParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["list"]
 }
 
-func (p *ListPrivatehostParam) IncludeFields() []string {
+func (p *ListPrivateHostParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ListPrivatehostParam) ExcludeFields() []string {
+func (p *ListPrivateHostParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ListPrivatehostParam) TableType() output.TableType {
+func (p *ListPrivateHostParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ListPrivatehostParam) ColumnDefs() []output.ColumnDef {
+func (p *ListPrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListPrivatehostParam) SetId(v []sacloud.ID) {
-	p.Id = v
-}
-
-func (p *ListPrivatehostParam) GetId() []sacloud.ID {
-	return p.Id
-}
-func (p *ListPrivatehostParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListPrivatehostParam) GetFrom() int {
-	return p.From
-}
-func (p *ListPrivatehostParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListPrivatehostParam) GetMax() int {
-	return p.Max
-}
-func (p *ListPrivatehostParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListPrivatehostParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListPrivatehostParam) SetName(v []string) {
+func (p *ListPrivateHostParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListPrivatehostParam) GetName() []string {
+func (p *ListPrivateHostParam) GetName() []string {
 	return p.Name
 }
-func (p *ListPrivatehostParam) SetTags(v []string) {
+func (p *ListPrivateHostParam) SetId(v []sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ListPrivateHostParam) GetId() []sacloud.ID {
+	return p.Id
+}
+func (p *ListPrivateHostParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListPrivateHostParam) GetFrom() int {
+	return p.From
+}
+func (p *ListPrivateHostParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListPrivateHostParam) GetMax() int {
+	return p.Max
+}
+func (p *ListPrivateHostParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListPrivateHostParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListPrivateHostParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *ListPrivatehostParam) GetTags() []string {
+func (p *ListPrivateHostParam) GetTags() []string {
 	return p.Tags
 }
 
-// CreatePrivatehostParam is input parameters for the sacloud API
-type CreatePrivatehostParam struct {
-	Name        string
+// CreatePrivateHostParam is input parameters for the sacloud API
+type CreatePrivateHostParam struct {
 	Description string
 	Tags        []string
 	IconId      sacloud.ID
+	Name        string
 
 	input Input
 }
 
-// NewCreatePrivatehostParam return new CreatePrivatehostParam
-func NewCreatePrivatehostParam() *CreatePrivatehostParam {
-	return &CreatePrivatehostParam{}
+// NewCreatePrivateHostParam return new CreatePrivateHostParam
+func NewCreatePrivateHostParam() *CreatePrivateHostParam {
+	return &CreatePrivateHostParam{}
 }
 
-// Initialize init CreatePrivatehostParam
-func (p *CreatePrivatehostParam) Initialize(in Input) error {
+// Initialize init CreatePrivateHostParam
+func (p *CreatePrivateHostParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -213,14 +213,11 @@ func (p *CreatePrivatehostParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CreatePrivatehostParam) WriteSkeleton(writer io.Writer) error {
+func (p *CreatePrivateHostParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreatePrivatehostParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
+func (p *CreatePrivateHostParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
@@ -230,26 +227,14 @@ func (p *CreatePrivatehostParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
 
 }
 
-func (p *CreatePrivatehostParam) validate() error {
+func (p *CreatePrivateHostParam) validate() error {
 	var errors []error
-
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["PrivateHost"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["PrivateHost"].Commands["create"].Params["description"].ValidateFunc
@@ -275,74 +260,89 @@ func (p *CreatePrivatehostParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["PrivateHost"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CreatePrivatehostParam) ResourceDef() *schema.Resource {
+func (p *CreatePrivateHostParam) ResourceDef() *schema.Resource {
 	return define.Resources["PrivateHost"]
 }
 
-func (p *CreatePrivatehostParam) CommandDef() *schema.Command {
+func (p *CreatePrivateHostParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["create"]
 }
 
-func (p *CreatePrivatehostParam) IncludeFields() []string {
+func (p *CreatePrivateHostParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CreatePrivatehostParam) ExcludeFields() []string {
+func (p *CreatePrivateHostParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CreatePrivatehostParam) TableType() output.TableType {
+func (p *CreatePrivateHostParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CreatePrivatehostParam) ColumnDefs() []output.ColumnDef {
+func (p *CreatePrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreatePrivatehostParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreatePrivatehostParam) GetName() string {
-	return p.Name
-}
-func (p *CreatePrivatehostParam) SetDescription(v string) {
+func (p *CreatePrivateHostParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *CreatePrivatehostParam) GetDescription() string {
+func (p *CreatePrivateHostParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreatePrivatehostParam) SetTags(v []string) {
+func (p *CreatePrivateHostParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreatePrivatehostParam) GetTags() []string {
+func (p *CreatePrivateHostParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreatePrivatehostParam) SetIconId(v sacloud.ID) {
+func (p *CreatePrivateHostParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreatePrivatehostParam) GetIconId() sacloud.ID {
+func (p *CreatePrivateHostParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
+func (p *CreatePrivateHostParam) SetName(v string) {
+	p.Name = v
+}
 
-// ReadPrivatehostParam is input parameters for the sacloud API
-type ReadPrivatehostParam struct {
+func (p *CreatePrivateHostParam) GetName() string {
+	return p.Name
+}
+
+// ReadPrivateHostParam is input parameters for the sacloud API
+type ReadPrivateHostParam struct {
 	input Input
 }
 
-// NewReadPrivatehostParam return new ReadPrivatehostParam
-func NewReadPrivatehostParam() *ReadPrivatehostParam {
-	return &ReadPrivatehostParam{}
+// NewReadPrivateHostParam return new ReadPrivateHostParam
+func NewReadPrivateHostParam() *ReadPrivateHostParam {
+	return &ReadPrivateHostParam{}
 }
 
-// Initialize init ReadPrivatehostParam
-func (p *ReadPrivatehostParam) Initialize(in Input) error {
+// Initialize init ReadPrivateHostParam
+func (p *ReadPrivateHostParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -351,61 +351,61 @@ func (p *ReadPrivatehostParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ReadPrivatehostParam) WriteSkeleton(writer io.Writer) error {
+func (p *ReadPrivateHostParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadPrivatehostParam) fillValueToSkeleton() {
+func (p *ReadPrivateHostParam) fillValueToSkeleton() {
 
 }
 
-func (p *ReadPrivatehostParam) validate() error {
+func (p *ReadPrivateHostParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ReadPrivatehostParam) ResourceDef() *schema.Resource {
+func (p *ReadPrivateHostParam) ResourceDef() *schema.Resource {
 	return define.Resources["PrivateHost"]
 }
 
-func (p *ReadPrivatehostParam) CommandDef() *schema.Command {
+func (p *ReadPrivateHostParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["read"]
 }
 
-func (p *ReadPrivatehostParam) IncludeFields() []string {
+func (p *ReadPrivateHostParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ReadPrivatehostParam) ExcludeFields() []string {
+func (p *ReadPrivateHostParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ReadPrivatehostParam) TableType() output.TableType {
+func (p *ReadPrivateHostParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ReadPrivatehostParam) ColumnDefs() []output.ColumnDef {
+func (p *ReadPrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// UpdatePrivatehostParam is input parameters for the sacloud API
-type UpdatePrivatehostParam struct {
-	IconId      sacloud.ID
+// UpdatePrivateHostParam is input parameters for the sacloud API
+type UpdatePrivateHostParam struct {
 	Name        string
 	Description string
 	Tags        []string
+	IconId      sacloud.ID
 
 	input Input
 }
 
-// NewUpdatePrivatehostParam return new UpdatePrivatehostParam
-func NewUpdatePrivatehostParam() *UpdatePrivatehostParam {
-	return &UpdatePrivatehostParam{}
+// NewUpdatePrivateHostParam return new UpdatePrivateHostParam
+func NewUpdatePrivateHostParam() *UpdatePrivateHostParam {
+	return &UpdatePrivateHostParam{}
 }
 
-// Initialize init UpdatePrivatehostParam
-func (p *UpdatePrivatehostParam) Initialize(in Input) error {
+// Initialize init UpdatePrivateHostParam
+func (p *UpdatePrivateHostParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -414,14 +414,11 @@ func (p *UpdatePrivatehostParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *UpdatePrivatehostParam) WriteSkeleton(writer io.Writer) error {
+func (p *UpdatePrivateHostParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdatePrivatehostParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
+func (p *UpdatePrivateHostParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -431,19 +428,14 @@ func (p *UpdatePrivatehostParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
 
 }
 
-func (p *UpdatePrivatehostParam) validate() error {
+func (p *UpdatePrivateHostParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["PrivateHost"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["PrivateHost"].Commands["update"].Params["name"].ValidateFunc
@@ -469,74 +461,82 @@ func (p *UpdatePrivatehostParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["PrivateHost"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
-func (p *UpdatePrivatehostParam) ResourceDef() *schema.Resource {
+func (p *UpdatePrivateHostParam) ResourceDef() *schema.Resource {
 	return define.Resources["PrivateHost"]
 }
 
-func (p *UpdatePrivatehostParam) CommandDef() *schema.Command {
+func (p *UpdatePrivateHostParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["update"]
 }
 
-func (p *UpdatePrivatehostParam) IncludeFields() []string {
+func (p *UpdatePrivateHostParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *UpdatePrivatehostParam) ExcludeFields() []string {
+func (p *UpdatePrivateHostParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *UpdatePrivatehostParam) TableType() output.TableType {
+func (p *UpdatePrivateHostParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *UpdatePrivatehostParam) ColumnDefs() []output.ColumnDef {
+func (p *UpdatePrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdatePrivatehostParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *UpdatePrivatehostParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
-func (p *UpdatePrivatehostParam) SetName(v string) {
+func (p *UpdatePrivateHostParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *UpdatePrivatehostParam) GetName() string {
+func (p *UpdatePrivateHostParam) GetName() string {
 	return p.Name
 }
-func (p *UpdatePrivatehostParam) SetDescription(v string) {
+func (p *UpdatePrivateHostParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdatePrivatehostParam) GetDescription() string {
+func (p *UpdatePrivateHostParam) GetDescription() string {
 	return p.Description
 }
-func (p *UpdatePrivatehostParam) SetTags(v []string) {
+func (p *UpdatePrivateHostParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *UpdatePrivatehostParam) GetTags() []string {
+func (p *UpdatePrivateHostParam) GetTags() []string {
 	return p.Tags
 }
+func (p *UpdatePrivateHostParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
 
-// DeletePrivatehostParam is input parameters for the sacloud API
-type DeletePrivatehostParam struct {
+func (p *UpdatePrivateHostParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+
+// DeletePrivateHostParam is input parameters for the sacloud API
+type DeletePrivateHostParam struct {
 	input Input
 }
 
-// NewDeletePrivatehostParam return new DeletePrivatehostParam
-func NewDeletePrivatehostParam() *DeletePrivatehostParam {
-	return &DeletePrivatehostParam{}
+// NewDeletePrivateHostParam return new DeletePrivateHostParam
+func NewDeletePrivateHostParam() *DeletePrivateHostParam {
+	return &DeletePrivateHostParam{}
 }
 
-// Initialize init DeletePrivatehostParam
-func (p *DeletePrivatehostParam) Initialize(in Input) error {
+// Initialize init DeletePrivateHostParam
+func (p *DeletePrivateHostParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -545,56 +545,56 @@ func (p *DeletePrivatehostParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DeletePrivatehostParam) WriteSkeleton(writer io.Writer) error {
+func (p *DeletePrivateHostParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeletePrivatehostParam) fillValueToSkeleton() {
+func (p *DeletePrivateHostParam) fillValueToSkeleton() {
 
 }
 
-func (p *DeletePrivatehostParam) validate() error {
+func (p *DeletePrivateHostParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DeletePrivatehostParam) ResourceDef() *schema.Resource {
+func (p *DeletePrivateHostParam) ResourceDef() *schema.Resource {
 	return define.Resources["PrivateHost"]
 }
 
-func (p *DeletePrivatehostParam) CommandDef() *schema.Command {
+func (p *DeletePrivateHostParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["delete"]
 }
 
-func (p *DeletePrivatehostParam) IncludeFields() []string {
+func (p *DeletePrivateHostParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DeletePrivatehostParam) ExcludeFields() []string {
+func (p *DeletePrivateHostParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DeletePrivatehostParam) TableType() output.TableType {
+func (p *DeletePrivateHostParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DeletePrivatehostParam) ColumnDefs() []output.ColumnDef {
+func (p *DeletePrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// ServerInfoPrivatehostParam is input parameters for the sacloud API
-type ServerInfoPrivatehostParam struct {
+// ServerInfoPrivateHostParam is input parameters for the sacloud API
+type ServerInfoPrivateHostParam struct {
 	input Input
 }
 
-// NewServerInfoPrivatehostParam return new ServerInfoPrivatehostParam
-func NewServerInfoPrivatehostParam() *ServerInfoPrivatehostParam {
-	return &ServerInfoPrivatehostParam{}
+// NewServerInfoPrivateHostParam return new ServerInfoPrivateHostParam
+func NewServerInfoPrivateHostParam() *ServerInfoPrivateHostParam {
+	return &ServerInfoPrivateHostParam{}
 }
 
-// Initialize init ServerInfoPrivatehostParam
-func (p *ServerInfoPrivatehostParam) Initialize(in Input) error {
+// Initialize init ServerInfoPrivateHostParam
+func (p *ServerInfoPrivateHostParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -603,58 +603,58 @@ func (p *ServerInfoPrivatehostParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ServerInfoPrivatehostParam) WriteSkeleton(writer io.Writer) error {
+func (p *ServerInfoPrivateHostParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerInfoPrivatehostParam) fillValueToSkeleton() {
+func (p *ServerInfoPrivateHostParam) fillValueToSkeleton() {
 
 }
 
-func (p *ServerInfoPrivatehostParam) validate() error {
+func (p *ServerInfoPrivateHostParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ServerInfoPrivatehostParam) ResourceDef() *schema.Resource {
+func (p *ServerInfoPrivateHostParam) ResourceDef() *schema.Resource {
 	return define.Resources["PrivateHost"]
 }
 
-func (p *ServerInfoPrivatehostParam) CommandDef() *schema.Command {
+func (p *ServerInfoPrivateHostParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["server-info"]
 }
 
-func (p *ServerInfoPrivatehostParam) IncludeFields() []string {
+func (p *ServerInfoPrivateHostParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ServerInfoPrivatehostParam) ExcludeFields() []string {
+func (p *ServerInfoPrivateHostParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ServerInfoPrivatehostParam) TableType() output.TableType {
+func (p *ServerInfoPrivateHostParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ServerInfoPrivatehostParam) ColumnDefs() []output.ColumnDef {
+func (p *ServerInfoPrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// ServerAddPrivatehostParam is input parameters for the sacloud API
-type ServerAddPrivatehostParam struct {
+// ServerAddPrivateHostParam is input parameters for the sacloud API
+type ServerAddPrivateHostParam struct {
 	ServerId sacloud.ID
 
 	input Input
 }
 
-// NewServerAddPrivatehostParam return new ServerAddPrivatehostParam
-func NewServerAddPrivatehostParam() *ServerAddPrivatehostParam {
-	return &ServerAddPrivatehostParam{}
+// NewServerAddPrivateHostParam return new ServerAddPrivateHostParam
+func NewServerAddPrivateHostParam() *ServerAddPrivateHostParam {
+	return &ServerAddPrivateHostParam{}
 }
 
-// Initialize init ServerAddPrivatehostParam
-func (p *ServerAddPrivatehostParam) Initialize(in Input) error {
+// Initialize init ServerAddPrivateHostParam
+func (p *ServerAddPrivateHostParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -663,18 +663,18 @@ func (p *ServerAddPrivatehostParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ServerAddPrivatehostParam) WriteSkeleton(writer io.Writer) error {
+func (p *ServerAddPrivateHostParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerAddPrivatehostParam) fillValueToSkeleton() {
+func (p *ServerAddPrivateHostParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.ServerId) {
 		p.ServerId = sacloud.ID(0)
 	}
 
 }
 
-func (p *ServerAddPrivatehostParam) validate() error {
+func (p *ServerAddPrivateHostParam) validate() error {
 	var errors []error
 
 	{
@@ -695,52 +695,52 @@ func (p *ServerAddPrivatehostParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ServerAddPrivatehostParam) ResourceDef() *schema.Resource {
+func (p *ServerAddPrivateHostParam) ResourceDef() *schema.Resource {
 	return define.Resources["PrivateHost"]
 }
 
-func (p *ServerAddPrivatehostParam) CommandDef() *schema.Command {
+func (p *ServerAddPrivateHostParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["server-add"]
 }
 
-func (p *ServerAddPrivatehostParam) IncludeFields() []string {
+func (p *ServerAddPrivateHostParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ServerAddPrivatehostParam) ExcludeFields() []string {
+func (p *ServerAddPrivateHostParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ServerAddPrivatehostParam) TableType() output.TableType {
+func (p *ServerAddPrivateHostParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ServerAddPrivatehostParam) ColumnDefs() []output.ColumnDef {
+func (p *ServerAddPrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ServerAddPrivatehostParam) SetServerId(v sacloud.ID) {
+func (p *ServerAddPrivateHostParam) SetServerId(v sacloud.ID) {
 	p.ServerId = v
 }
 
-func (p *ServerAddPrivatehostParam) GetServerId() sacloud.ID {
+func (p *ServerAddPrivateHostParam) GetServerId() sacloud.ID {
 	return p.ServerId
 }
 
-// ServerDeletePrivatehostParam is input parameters for the sacloud API
-type ServerDeletePrivatehostParam struct {
+// ServerDeletePrivateHostParam is input parameters for the sacloud API
+type ServerDeletePrivateHostParam struct {
 	ServerId sacloud.ID
 
 	input Input
 }
 
-// NewServerDeletePrivatehostParam return new ServerDeletePrivatehostParam
-func NewServerDeletePrivatehostParam() *ServerDeletePrivatehostParam {
-	return &ServerDeletePrivatehostParam{}
+// NewServerDeletePrivateHostParam return new ServerDeletePrivateHostParam
+func NewServerDeletePrivateHostParam() *ServerDeletePrivateHostParam {
+	return &ServerDeletePrivateHostParam{}
 }
 
-// Initialize init ServerDeletePrivatehostParam
-func (p *ServerDeletePrivatehostParam) Initialize(in Input) error {
+// Initialize init ServerDeletePrivateHostParam
+func (p *ServerDeletePrivateHostParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -749,18 +749,18 @@ func (p *ServerDeletePrivatehostParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ServerDeletePrivatehostParam) WriteSkeleton(writer io.Writer) error {
+func (p *ServerDeletePrivateHostParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerDeletePrivatehostParam) fillValueToSkeleton() {
+func (p *ServerDeletePrivateHostParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.ServerId) {
 		p.ServerId = sacloud.ID(0)
 	}
 
 }
 
-func (p *ServerDeletePrivatehostParam) validate() error {
+func (p *ServerDeletePrivateHostParam) validate() error {
 	var errors []error
 
 	{
@@ -781,34 +781,34 @@ func (p *ServerDeletePrivatehostParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ServerDeletePrivatehostParam) ResourceDef() *schema.Resource {
+func (p *ServerDeletePrivateHostParam) ResourceDef() *schema.Resource {
 	return define.Resources["PrivateHost"]
 }
 
-func (p *ServerDeletePrivatehostParam) CommandDef() *schema.Command {
+func (p *ServerDeletePrivateHostParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["server-delete"]
 }
 
-func (p *ServerDeletePrivatehostParam) IncludeFields() []string {
+func (p *ServerDeletePrivateHostParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ServerDeletePrivatehostParam) ExcludeFields() []string {
+func (p *ServerDeletePrivateHostParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ServerDeletePrivatehostParam) TableType() output.TableType {
+func (p *ServerDeletePrivateHostParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ServerDeletePrivatehostParam) ColumnDefs() []output.ColumnDef {
+func (p *ServerDeletePrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ServerDeletePrivatehostParam) SetServerId(v sacloud.ID) {
+func (p *ServerDeletePrivateHostParam) SetServerId(v sacloud.ID) {
 	p.ServerId = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetServerId() sacloud.ID {
+func (p *ServerDeletePrivateHostParam) GetServerId() sacloud.ID {
 	return p.ServerId
 }

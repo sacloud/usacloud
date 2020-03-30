@@ -23,10 +23,10 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func PacketfilterList(ctx command.Context, params *params.ListPacketfilterParam) error {
+func PacketFilterList(ctx command.Context, params *params.ListPacketFilterParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetPacketfilterAPI()
+	finder := client.GetPacketFilterAPI()
 
 	finder.SetEmpty()
 
@@ -55,13 +55,13 @@ func PacketfilterList(ctx command.Context, params *params.ListPacketfilterParam)
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("PacketfilterList is failed: %s", err)
+		return fmt.Errorf("PacketFilterList is failed: %s", err)
 	}
 
 	list := []interface{}{}
-	for i := range res.Packetfilters {
+	for i := range res.PacketFilters {
 
-		list = append(list, &res.Packetfilters[i])
+		list = append(list, &res.PacketFilters[i])
 	}
 	return ctx.GetOutput().Print(list...)
 

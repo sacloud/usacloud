@@ -29,10 +29,10 @@ import (
 )
 
 func init() {
-	objectstorageListParam := params.NewListObjectstorageParam()
-	objectstoragePutParam := params.NewPutObjectstorageParam()
-	objectstorageGetParam := params.NewGetObjectstorageParam()
-	objectstorageDeleteParam := params.NewDeleteObjectstorageParam()
+	objectStorageListParam := params.NewListObjectStorageParam()
+	objectStoragePutParam := params.NewPutObjectStorageParam()
+	objectStorageGetParam := params.NewGetObjectStorageParam()
+	objectStorageDeleteParam := params.NewDeleteObjectStorageParam()
 
 	cliCommand := &cli.Command{
 		Name:    "object-storage",
@@ -42,7 +42,7 @@ func init() {
 			{
 				Name:      "list",
 				Aliases:   []string{"ls"},
-				Usage:     "List Objectstorage",
+				Usage:     "List ObjectStorage",
 				ArgsUsage: "<remote path>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -122,66 +122,66 @@ func init() {
 						return err
 					}
 
-					objectstorageListParam.ParamTemplate = c.String("param-template")
-					objectstorageListParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(objectstorageListParam)
+					objectStorageListParam.ParamTemplate = c.String("param-template")
+					objectStorageListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(objectStorageListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListObjectstorageParam()
+						p := params.NewListObjectStorageParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(objectstorageListParam, p, mergo.WithOverride)
+						mergo.Merge(objectStorageListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
-					if c.IsSet("access-key") || command.IsEmpty(objectstorageListParam.AccessKey) {
-						objectstorageListParam.AccessKey = c.String("access-key")
+					if c.IsSet("access-key") || command.IsEmpty(objectStorageListParam.AccessKey) {
+						objectStorageListParam.AccessKey = c.String("access-key")
 					}
-					if c.IsSet("secret-key") || command.IsEmpty(objectstorageListParam.SecretKey) {
-						objectstorageListParam.SecretKey = c.String("secret-key")
+					if c.IsSet("secret-key") || command.IsEmpty(objectStorageListParam.SecretKey) {
+						objectStorageListParam.SecretKey = c.String("secret-key")
 					}
-					if c.IsSet("bucket") || command.IsEmpty(objectstorageListParam.Bucket) {
-						objectstorageListParam.Bucket = c.String("bucket")
+					if c.IsSet("bucket") || command.IsEmpty(objectStorageListParam.Bucket) {
+						objectStorageListParam.Bucket = c.String("bucket")
 					}
 					if c.IsSet("param-template") {
-						objectstorageListParam.ParamTemplate = c.String("param-template")
+						objectStorageListParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						objectstorageListParam.Parameters = c.String("parameters")
+						objectStorageListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						objectstorageListParam.ParamTemplateFile = c.String("param-template-file")
+						objectStorageListParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						objectstorageListParam.ParameterFile = c.String("parameter-file")
+						objectStorageListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						objectstorageListParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						objectStorageListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						objectstorageListParam.OutputType = c.String("output-type")
+						objectStorageListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						objectstorageListParam.Column = c.StringSlice("column")
+						objectStorageListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						objectstorageListParam.Quiet = c.Bool("quiet")
+						objectStorageListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						objectstorageListParam.Format = c.String("format")
+						objectStorageListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						objectstorageListParam.FormatFile = c.String("format-file")
+						objectStorageListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						objectstorageListParam.Query = c.String("query")
+						objectStorageListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						objectstorageListParam.QueryFile = c.String("query-file")
+						objectStorageListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -189,7 +189,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = objectstorageListParam
+					var outputTypeHolder interface{} = objectStorageListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -200,10 +200,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if objectstorageListParam.GenerateSkeleton {
-						objectstorageListParam.GenerateSkeleton = false
-						objectstorageListParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(objectstorageListParam, "", "\t")
+					if objectStorageListParam.GenerateSkeleton {
+						objectStorageListParam.GenerateSkeleton = false
+						objectStorageListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(objectStorageListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -212,21 +212,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := objectstorageListParam.Validate(); len(errors) > 0 {
+					if errors := objectStorageListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), objectstorageListParam)
+					ctx := command.NewContext(c, c.Args().Slice(), objectStorageListParam)
 
 					// Run command with params
-					return funcs.ObjectstorageList(ctx, objectstorageListParam)
+					return funcs.ObjectStorageList(ctx, objectStorageListParam)
 
 				},
 			},
 			{
 				Name:      "put",
-				Usage:     "Put Objectstorage",
+				Usage:     "Put ObjectStorage",
 				ArgsUsage: "<local file/directory> <remote path>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -289,54 +289,54 @@ func init() {
 						return err
 					}
 
-					objectstoragePutParam.ParamTemplate = c.String("param-template")
-					objectstoragePutParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(objectstoragePutParam)
+					objectStoragePutParam.ParamTemplate = c.String("param-template")
+					objectStoragePutParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(objectStoragePutParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewPutObjectstorageParam()
+						p := params.NewPutObjectStorageParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(objectstoragePutParam, p, mergo.WithOverride)
+						mergo.Merge(objectStoragePutParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
-					if c.IsSet("access-key") || command.IsEmpty(objectstoragePutParam.AccessKey) {
-						objectstoragePutParam.AccessKey = c.String("access-key")
+					if c.IsSet("access-key") || command.IsEmpty(objectStoragePutParam.AccessKey) {
+						objectStoragePutParam.AccessKey = c.String("access-key")
 					}
 					if c.IsSet("content-type") {
-						objectstoragePutParam.ContentType = c.String("content-type")
+						objectStoragePutParam.ContentType = c.String("content-type")
 					}
 					if c.IsSet("recursive") {
-						objectstoragePutParam.Recursive = c.Bool("recursive")
+						objectStoragePutParam.Recursive = c.Bool("recursive")
 					}
-					if c.IsSet("secret-key") || command.IsEmpty(objectstoragePutParam.SecretKey) {
-						objectstoragePutParam.SecretKey = c.String("secret-key")
+					if c.IsSet("secret-key") || command.IsEmpty(objectStoragePutParam.SecretKey) {
+						objectStoragePutParam.SecretKey = c.String("secret-key")
 					}
-					if c.IsSet("bucket") || command.IsEmpty(objectstoragePutParam.Bucket) {
-						objectstoragePutParam.Bucket = c.String("bucket")
+					if c.IsSet("bucket") || command.IsEmpty(objectStoragePutParam.Bucket) {
+						objectStoragePutParam.Bucket = c.String("bucket")
 					}
 					if c.IsSet("assumeyes") {
-						objectstoragePutParam.Assumeyes = c.Bool("assumeyes")
+						objectStoragePutParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						objectstoragePutParam.ParamTemplate = c.String("param-template")
+						objectStoragePutParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						objectstoragePutParam.Parameters = c.String("parameters")
+						objectStoragePutParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						objectstoragePutParam.ParamTemplateFile = c.String("param-template-file")
+						objectStoragePutParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						objectstoragePutParam.ParameterFile = c.String("parameter-file")
+						objectStoragePutParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						objectstoragePutParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						objectStoragePutParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
 					// Validate global params
@@ -344,7 +344,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = objectstoragePutParam
+					var outputTypeHolder interface{} = objectStoragePutParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -355,10 +355,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if objectstoragePutParam.GenerateSkeleton {
-						objectstoragePutParam.GenerateSkeleton = false
-						objectstoragePutParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(objectstoragePutParam, "", "\t")
+					if objectStoragePutParam.GenerateSkeleton {
+						objectStoragePutParam.GenerateSkeleton = false
+						objectStoragePutParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(objectStoragePutParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -367,15 +367,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := objectstoragePutParam.Validate(); len(errors) > 0 {
+					if errors := objectStoragePutParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), objectstoragePutParam)
+					ctx := command.NewContext(c, c.Args().Slice(), objectStoragePutParam)
 
 					// confirm
-					if !objectstoragePutParam.Assumeyes {
+					if !objectStoragePutParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -385,13 +385,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.ObjectstoragePut(ctx, objectstoragePutParam)
+					return funcs.ObjectStoragePut(ctx, objectStoragePutParam)
 
 				},
 			},
 			{
 				Name:      "get",
-				Usage:     "Get Objectstorage",
+				Usage:     "Get ObjectStorage",
 				ArgsUsage: "<remote path> <local file/directory>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -444,48 +444,48 @@ func init() {
 						return err
 					}
 
-					objectstorageGetParam.ParamTemplate = c.String("param-template")
-					objectstorageGetParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(objectstorageGetParam)
+					objectStorageGetParam.ParamTemplate = c.String("param-template")
+					objectStorageGetParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(objectStorageGetParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewGetObjectstorageParam()
+						p := params.NewGetObjectStorageParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(objectstorageGetParam, p, mergo.WithOverride)
+						mergo.Merge(objectStorageGetParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
-					if c.IsSet("access-key") || command.IsEmpty(objectstorageGetParam.AccessKey) {
-						objectstorageGetParam.AccessKey = c.String("access-key")
+					if c.IsSet("access-key") || command.IsEmpty(objectStorageGetParam.AccessKey) {
+						objectStorageGetParam.AccessKey = c.String("access-key")
 					}
 					if c.IsSet("recursive") {
-						objectstorageGetParam.Recursive = c.Bool("recursive")
+						objectStorageGetParam.Recursive = c.Bool("recursive")
 					}
-					if c.IsSet("secret-key") || command.IsEmpty(objectstorageGetParam.SecretKey) {
-						objectstorageGetParam.SecretKey = c.String("secret-key")
+					if c.IsSet("secret-key") || command.IsEmpty(objectStorageGetParam.SecretKey) {
+						objectStorageGetParam.SecretKey = c.String("secret-key")
 					}
-					if c.IsSet("bucket") || command.IsEmpty(objectstorageGetParam.Bucket) {
-						objectstorageGetParam.Bucket = c.String("bucket")
+					if c.IsSet("bucket") || command.IsEmpty(objectStorageGetParam.Bucket) {
+						objectStorageGetParam.Bucket = c.String("bucket")
 					}
 					if c.IsSet("param-template") {
-						objectstorageGetParam.ParamTemplate = c.String("param-template")
+						objectStorageGetParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						objectstorageGetParam.Parameters = c.String("parameters")
+						objectStorageGetParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						objectstorageGetParam.ParamTemplateFile = c.String("param-template-file")
+						objectStorageGetParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						objectstorageGetParam.ParameterFile = c.String("parameter-file")
+						objectStorageGetParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						objectstorageGetParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						objectStorageGetParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
 					// Validate global params
@@ -493,7 +493,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = objectstorageGetParam
+					var outputTypeHolder interface{} = objectStorageGetParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -504,10 +504,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if objectstorageGetParam.GenerateSkeleton {
-						objectstorageGetParam.GenerateSkeleton = false
-						objectstorageGetParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(objectstorageGetParam, "", "\t")
+					if objectStorageGetParam.GenerateSkeleton {
+						objectStorageGetParam.GenerateSkeleton = false
+						objectStorageGetParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(objectStorageGetParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -516,22 +516,22 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := objectstorageGetParam.Validate(); len(errors) > 0 {
+					if errors := objectStorageGetParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), objectstorageGetParam)
+					ctx := command.NewContext(c, c.Args().Slice(), objectStorageGetParam)
 
 					// Run command with params
-					return funcs.ObjectstorageGet(ctx, objectstorageGetParam)
+					return funcs.ObjectStorageGet(ctx, objectStorageGetParam)
 
 				},
 			},
 			{
 				Name:      "delete",
 				Aliases:   []string{"rm", "del"},
-				Usage:     "Delete Objectstorage",
+				Usage:     "Delete ObjectStorage",
 				ArgsUsage: "<remote path>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -589,51 +589,51 @@ func init() {
 						return err
 					}
 
-					objectstorageDeleteParam.ParamTemplate = c.String("param-template")
-					objectstorageDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(objectstorageDeleteParam)
+					objectStorageDeleteParam.ParamTemplate = c.String("param-template")
+					objectStorageDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(objectStorageDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeleteObjectstorageParam()
+						p := params.NewDeleteObjectStorageParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(objectstorageDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(objectStorageDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
-					if c.IsSet("access-key") || command.IsEmpty(objectstorageDeleteParam.AccessKey) {
-						objectstorageDeleteParam.AccessKey = c.String("access-key")
+					if c.IsSet("access-key") || command.IsEmpty(objectStorageDeleteParam.AccessKey) {
+						objectStorageDeleteParam.AccessKey = c.String("access-key")
 					}
 					if c.IsSet("recursive") {
-						objectstorageDeleteParam.Recursive = c.Bool("recursive")
+						objectStorageDeleteParam.Recursive = c.Bool("recursive")
 					}
-					if c.IsSet("secret-key") || command.IsEmpty(objectstorageDeleteParam.SecretKey) {
-						objectstorageDeleteParam.SecretKey = c.String("secret-key")
+					if c.IsSet("secret-key") || command.IsEmpty(objectStorageDeleteParam.SecretKey) {
+						objectStorageDeleteParam.SecretKey = c.String("secret-key")
 					}
-					if c.IsSet("bucket") || command.IsEmpty(objectstorageDeleteParam.Bucket) {
-						objectstorageDeleteParam.Bucket = c.String("bucket")
+					if c.IsSet("bucket") || command.IsEmpty(objectStorageDeleteParam.Bucket) {
+						objectStorageDeleteParam.Bucket = c.String("bucket")
 					}
 					if c.IsSet("assumeyes") {
-						objectstorageDeleteParam.Assumeyes = c.Bool("assumeyes")
+						objectStorageDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						objectstorageDeleteParam.ParamTemplate = c.String("param-template")
+						objectStorageDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						objectstorageDeleteParam.Parameters = c.String("parameters")
+						objectStorageDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						objectstorageDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						objectStorageDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						objectstorageDeleteParam.ParameterFile = c.String("parameter-file")
+						objectStorageDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						objectstorageDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						objectStorageDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
 					// Validate global params
@@ -641,7 +641,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = objectstorageDeleteParam
+					var outputTypeHolder interface{} = objectStorageDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -652,10 +652,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if objectstorageDeleteParam.GenerateSkeleton {
-						objectstorageDeleteParam.GenerateSkeleton = false
-						objectstorageDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(objectstorageDeleteParam, "", "\t")
+					if objectStorageDeleteParam.GenerateSkeleton {
+						objectStorageDeleteParam.GenerateSkeleton = false
+						objectStorageDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(objectStorageDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -664,15 +664,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := objectstorageDeleteParam.Validate(); len(errors) > 0 {
+					if errors := objectStorageDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), objectstorageDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), objectStorageDeleteParam)
 
 					// confirm
-					if !objectstorageDeleteParam.Assumeyes {
+					if !objectStorageDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -682,7 +682,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.ObjectstorageDelete(ctx, objectstorageDeleteParam)
+					return funcs.ObjectStorageDelete(ctx, objectStorageDeleteParam)
 
 				},
 			},

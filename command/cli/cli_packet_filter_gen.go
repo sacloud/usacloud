@@ -32,17 +32,17 @@ import (
 )
 
 func init() {
-	packetfilterListParam := params.NewListPacketfilterParam()
-	packetfilterCreateParam := params.NewCreatePacketfilterParam()
-	packetfilterReadParam := params.NewReadPacketfilterParam()
-	packetfilterUpdateParam := params.NewUpdatePacketfilterParam()
-	packetfilterDeleteParam := params.NewDeletePacketfilterParam()
-	packetfilterRuleInfoParam := params.NewRuleInfoPacketfilterParam()
-	packetfilterRuleAddParam := params.NewRuleAddPacketfilterParam()
-	packetfilterRuleUpdateParam := params.NewRuleUpdatePacketfilterParam()
-	packetfilterRuleDeleteParam := params.NewRuleDeletePacketfilterParam()
-	packetfilterInterfaceConnectParam := params.NewInterfaceConnectPacketfilterParam()
-	packetfilterInterfaceDisconnectParam := params.NewInterfaceDisconnectPacketfilterParam()
+	packetFilterListParam := params.NewListPacketFilterParam()
+	packetFilterCreateParam := params.NewCreatePacketFilterParam()
+	packetFilterReadParam := params.NewReadPacketFilterParam()
+	packetFilterUpdateParam := params.NewUpdatePacketFilterParam()
+	packetFilterDeleteParam := params.NewDeletePacketFilterParam()
+	packetFilterRuleInfoParam := params.NewRuleInfoPacketFilterParam()
+	packetFilterRuleAddParam := params.NewRuleAddPacketFilterParam()
+	packetFilterRuleUpdateParam := params.NewRuleUpdatePacketFilterParam()
+	packetFilterRuleDeleteParam := params.NewRuleDeletePacketFilterParam()
+	packetFilterInterfaceConnectParam := params.NewInterfaceConnectPacketFilterParam()
+	packetFilterInterfaceDisconnectParam := params.NewInterfaceDisconnectPacketFilterParam()
 
 	cliCommand := &cli.Command{
 		Name:  "packet-filter",
@@ -51,7 +51,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find"},
-				Usage:   "List Packetfilter",
+				Usage:   "List PacketFilter",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -137,72 +137,72 @@ func init() {
 						return err
 					}
 
-					packetfilterListParam.ParamTemplate = c.String("param-template")
-					packetfilterListParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(packetfilterListParam)
+					packetFilterListParam.ParamTemplate = c.String("param-template")
+					packetFilterListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(packetFilterListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListPacketfilterParam()
+						p := params.NewListPacketFilterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(packetfilterListParam, p, mergo.WithOverride)
+						mergo.Merge(packetFilterListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						packetfilterListParam.Name = c.StringSlice("name")
+						packetFilterListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						packetfilterListParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						packetFilterListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("from") {
-						packetfilterListParam.From = c.Int("from")
+						packetFilterListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						packetfilterListParam.Max = c.Int("max")
+						packetFilterListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						packetfilterListParam.Sort = c.StringSlice("sort")
+						packetFilterListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						packetfilterListParam.ParamTemplate = c.String("param-template")
+						packetFilterListParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						packetfilterListParam.Parameters = c.String("parameters")
+						packetFilterListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						packetfilterListParam.ParamTemplateFile = c.String("param-template-file")
+						packetFilterListParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						packetfilterListParam.ParameterFile = c.String("parameter-file")
+						packetFilterListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						packetfilterListParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						packetFilterListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						packetfilterListParam.OutputType = c.String("output-type")
+						packetFilterListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						packetfilterListParam.Column = c.StringSlice("column")
+						packetFilterListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						packetfilterListParam.Quiet = c.Bool("quiet")
+						packetFilterListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						packetfilterListParam.Format = c.String("format")
+						packetFilterListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						packetfilterListParam.FormatFile = c.String("format-file")
+						packetFilterListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						packetfilterListParam.Query = c.String("query")
+						packetFilterListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						packetfilterListParam.QueryFile = c.String("query-file")
+						packetFilterListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -210,7 +210,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = packetfilterListParam
+					var outputTypeHolder interface{} = packetFilterListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -221,10 +221,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if packetfilterListParam.GenerateSkeleton {
-						packetfilterListParam.GenerateSkeleton = false
-						packetfilterListParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(packetfilterListParam, "", "\t")
+					if packetFilterListParam.GenerateSkeleton {
+						packetFilterListParam.GenerateSkeleton = false
+						packetFilterListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(packetFilterListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -233,21 +233,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := packetfilterListParam.Validate(); len(errors) > 0 {
+					if errors := packetFilterListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), packetfilterListParam)
+					ctx := command.NewContext(c, c.Args().Slice(), packetFilterListParam)
 
 					// Run command with params
-					return funcs.PacketfilterList(ctx, packetfilterListParam)
+					return funcs.PacketFilterList(ctx, packetFilterListParam)
 
 				},
 			},
 			{
 				Name:  "create",
-				Usage: "Create Packetfilter",
+				Usage: "Create PacketFilter",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "name",
@@ -325,66 +325,66 @@ func init() {
 						return err
 					}
 
-					packetfilterCreateParam.ParamTemplate = c.String("param-template")
-					packetfilterCreateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(packetfilterCreateParam)
+					packetFilterCreateParam.ParamTemplate = c.String("param-template")
+					packetFilterCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(packetFilterCreateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCreatePacketfilterParam()
+						p := params.NewCreatePacketFilterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(packetfilterCreateParam, p, mergo.WithOverride)
+						mergo.Merge(packetFilterCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						packetfilterCreateParam.Name = c.String("name")
+						packetFilterCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						packetfilterCreateParam.Description = c.String("description")
+						packetFilterCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("assumeyes") {
-						packetfilterCreateParam.Assumeyes = c.Bool("assumeyes")
+						packetFilterCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						packetfilterCreateParam.ParamTemplate = c.String("param-template")
+						packetFilterCreateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						packetfilterCreateParam.Parameters = c.String("parameters")
+						packetFilterCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						packetfilterCreateParam.ParamTemplateFile = c.String("param-template-file")
+						packetFilterCreateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						packetfilterCreateParam.ParameterFile = c.String("parameter-file")
+						packetFilterCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						packetfilterCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						packetFilterCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						packetfilterCreateParam.OutputType = c.String("output-type")
+						packetFilterCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						packetfilterCreateParam.Column = c.StringSlice("column")
+						packetFilterCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						packetfilterCreateParam.Quiet = c.Bool("quiet")
+						packetFilterCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						packetfilterCreateParam.Format = c.String("format")
+						packetFilterCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						packetfilterCreateParam.FormatFile = c.String("format-file")
+						packetFilterCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						packetfilterCreateParam.Query = c.String("query")
+						packetFilterCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						packetfilterCreateParam.QueryFile = c.String("query-file")
+						packetFilterCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -392,7 +392,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = packetfilterCreateParam
+					var outputTypeHolder interface{} = packetFilterCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -403,10 +403,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if packetfilterCreateParam.GenerateSkeleton {
-						packetfilterCreateParam.GenerateSkeleton = false
-						packetfilterCreateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(packetfilterCreateParam, "", "\t")
+					if packetFilterCreateParam.GenerateSkeleton {
+						packetFilterCreateParam.GenerateSkeleton = false
+						packetFilterCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(packetFilterCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -415,15 +415,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := packetfilterCreateParam.Validate(); len(errors) > 0 {
+					if errors := packetFilterCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), packetfilterCreateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), packetFilterCreateParam)
 
 					// confirm
-					if !packetfilterCreateParam.Assumeyes {
+					if !packetFilterCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -433,13 +433,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.PacketfilterCreate(ctx, packetfilterCreateParam)
+					return funcs.PacketFilterCreate(ctx, packetFilterCreateParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Packetfilter",
+				Usage:     "Read PacketFilter",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -509,60 +509,60 @@ func init() {
 						return err
 					}
 
-					packetfilterReadParam.ParamTemplate = c.String("param-template")
-					packetfilterReadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(packetfilterReadParam)
+					packetFilterReadParam.ParamTemplate = c.String("param-template")
+					packetFilterReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(packetFilterReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadPacketfilterParam()
+						p := params.NewReadPacketFilterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(packetfilterReadParam, p, mergo.WithOverride)
+						mergo.Merge(packetFilterReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						packetfilterReadParam.ParamTemplate = c.String("param-template")
+						packetFilterReadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						packetfilterReadParam.Parameters = c.String("parameters")
+						packetFilterReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						packetfilterReadParam.ParamTemplateFile = c.String("param-template-file")
+						packetFilterReadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						packetfilterReadParam.ParameterFile = c.String("parameter-file")
+						packetFilterReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						packetfilterReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						packetFilterReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						packetfilterReadParam.OutputType = c.String("output-type")
+						packetFilterReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						packetfilterReadParam.Column = c.StringSlice("column")
+						packetFilterReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						packetfilterReadParam.Quiet = c.Bool("quiet")
+						packetFilterReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						packetfilterReadParam.Format = c.String("format")
+						packetFilterReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						packetfilterReadParam.FormatFile = c.String("format-file")
+						packetFilterReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						packetfilterReadParam.Query = c.String("query")
+						packetFilterReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						packetfilterReadParam.QueryFile = c.String("query-file")
+						packetFilterReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						packetfilterReadParam.Id = sacloud.ID(c.Int64("id"))
+						packetFilterReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -570,7 +570,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = packetfilterReadParam
+					var outputTypeHolder interface{} = packetFilterReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -581,10 +581,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if packetfilterReadParam.GenerateSkeleton {
-						packetfilterReadParam.GenerateSkeleton = false
-						packetfilterReadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(packetfilterReadParam, "", "\t")
+					if packetFilterReadParam.GenerateSkeleton {
+						packetFilterReadParam.GenerateSkeleton = false
+						packetFilterReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(packetFilterReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -593,14 +593,14 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := packetfilterReadParam.Validate(); len(errors) > 0 {
+					if errors := packetFilterReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), packetfilterReadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), packetFilterReadParam)
 
-					apiClient := ctx.GetAPIClient().Packetfilter
+					apiClient := ctx.GetAPIClient().PacketFilter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -625,7 +625,7 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Packetfilters {
+									for _, v := range res.PacketFilters {
 
 										ids = append(ids, v.GetID())
 
@@ -651,11 +651,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						packetfilterReadParam.SetId(id)
-						p := *packetfilterReadParam // copy struct value
-						packetfilterReadParam := &p
+						packetFilterReadParam.SetId(id)
+						p := *packetFilterReadParam // copy struct value
+						packetFilterReadParam := &p
 						go func() {
-							err := funcs.PacketfilterRead(ctx, packetfilterReadParam)
+							err := funcs.PacketFilterRead(ctx, packetFilterReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -669,7 +669,7 @@ func init() {
 			},
 			{
 				Name:      "update",
-				Usage:     "Update Packetfilter",
+				Usage:     "Update PacketFilter",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -753,69 +753,69 @@ func init() {
 						return err
 					}
 
-					packetfilterUpdateParam.ParamTemplate = c.String("param-template")
-					packetfilterUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(packetfilterUpdateParam)
+					packetFilterUpdateParam.ParamTemplate = c.String("param-template")
+					packetFilterUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(packetFilterUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUpdatePacketfilterParam()
+						p := params.NewUpdatePacketFilterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(packetfilterUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(packetFilterUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						packetfilterUpdateParam.Name = c.String("name")
+						packetFilterUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						packetfilterUpdateParam.Description = c.String("description")
+						packetFilterUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("assumeyes") {
-						packetfilterUpdateParam.Assumeyes = c.Bool("assumeyes")
+						packetFilterUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						packetfilterUpdateParam.ParamTemplate = c.String("param-template")
+						packetFilterUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						packetfilterUpdateParam.Parameters = c.String("parameters")
+						packetFilterUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						packetfilterUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						packetFilterUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						packetfilterUpdateParam.ParameterFile = c.String("parameter-file")
+						packetFilterUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						packetfilterUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						packetFilterUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						packetfilterUpdateParam.OutputType = c.String("output-type")
+						packetFilterUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						packetfilterUpdateParam.Column = c.StringSlice("column")
+						packetFilterUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						packetfilterUpdateParam.Quiet = c.Bool("quiet")
+						packetFilterUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						packetfilterUpdateParam.Format = c.String("format")
+						packetFilterUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						packetfilterUpdateParam.FormatFile = c.String("format-file")
+						packetFilterUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						packetfilterUpdateParam.Query = c.String("query")
+						packetFilterUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						packetfilterUpdateParam.QueryFile = c.String("query-file")
+						packetFilterUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						packetfilterUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						packetFilterUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -823,7 +823,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = packetfilterUpdateParam
+					var outputTypeHolder interface{} = packetFilterUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -834,10 +834,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if packetfilterUpdateParam.GenerateSkeleton {
-						packetfilterUpdateParam.GenerateSkeleton = false
-						packetfilterUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(packetfilterUpdateParam, "", "\t")
+					if packetFilterUpdateParam.GenerateSkeleton {
+						packetFilterUpdateParam.GenerateSkeleton = false
+						packetFilterUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(packetFilterUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -846,14 +846,14 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := packetfilterUpdateParam.Validate(); len(errors) > 0 {
+					if errors := packetFilterUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), packetfilterUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), packetFilterUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Packetfilter
+					apiClient := ctx.GetAPIClient().PacketFilter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -878,7 +878,7 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Packetfilters {
+									for _, v := range res.PacketFilters {
 
 										ids = append(ids, v.GetID())
 
@@ -896,7 +896,7 @@ func init() {
 					}
 
 					// confirm
-					if !packetfilterUpdateParam.Assumeyes {
+					if !packetFilterUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -910,11 +910,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						packetfilterUpdateParam.SetId(id)
-						p := *packetfilterUpdateParam // copy struct value
-						packetfilterUpdateParam := &p
+						packetFilterUpdateParam.SetId(id)
+						p := *packetFilterUpdateParam // copy struct value
+						packetFilterUpdateParam := &p
 						go func() {
-							err := funcs.PacketfilterUpdate(ctx, packetfilterUpdateParam)
+							err := funcs.PacketFilterUpdate(ctx, packetFilterUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -929,7 +929,7 @@ func init() {
 			{
 				Name:      "delete",
 				Aliases:   []string{"rm"},
-				Usage:     "Delete Packetfilter",
+				Usage:     "Delete PacketFilter",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -1004,63 +1004,63 @@ func init() {
 						return err
 					}
 
-					packetfilterDeleteParam.ParamTemplate = c.String("param-template")
-					packetfilterDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(packetfilterDeleteParam)
+					packetFilterDeleteParam.ParamTemplate = c.String("param-template")
+					packetFilterDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(packetFilterDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeletePacketfilterParam()
+						p := params.NewDeletePacketFilterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(packetfilterDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(packetFilterDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("assumeyes") {
-						packetfilterDeleteParam.Assumeyes = c.Bool("assumeyes")
+						packetFilterDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						packetfilterDeleteParam.ParamTemplate = c.String("param-template")
+						packetFilterDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						packetfilterDeleteParam.Parameters = c.String("parameters")
+						packetFilterDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						packetfilterDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						packetFilterDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						packetfilterDeleteParam.ParameterFile = c.String("parameter-file")
+						packetFilterDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						packetfilterDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						packetFilterDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						packetfilterDeleteParam.OutputType = c.String("output-type")
+						packetFilterDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						packetfilterDeleteParam.Column = c.StringSlice("column")
+						packetFilterDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						packetfilterDeleteParam.Quiet = c.Bool("quiet")
+						packetFilterDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						packetfilterDeleteParam.Format = c.String("format")
+						packetFilterDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						packetfilterDeleteParam.FormatFile = c.String("format-file")
+						packetFilterDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						packetfilterDeleteParam.Query = c.String("query")
+						packetFilterDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						packetfilterDeleteParam.QueryFile = c.String("query-file")
+						packetFilterDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						packetfilterDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						packetFilterDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1068,7 +1068,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = packetfilterDeleteParam
+					var outputTypeHolder interface{} = packetFilterDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1079,10 +1079,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if packetfilterDeleteParam.GenerateSkeleton {
-						packetfilterDeleteParam.GenerateSkeleton = false
-						packetfilterDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(packetfilterDeleteParam, "", "\t")
+					if packetFilterDeleteParam.GenerateSkeleton {
+						packetFilterDeleteParam.GenerateSkeleton = false
+						packetFilterDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(packetFilterDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1091,14 +1091,14 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := packetfilterDeleteParam.Validate(); len(errors) > 0 {
+					if errors := packetFilterDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), packetfilterDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), packetFilterDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Packetfilter
+					apiClient := ctx.GetAPIClient().PacketFilter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1123,7 +1123,7 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Packetfilters {
+									for _, v := range res.PacketFilters {
 
 										ids = append(ids, v.GetID())
 
@@ -1141,7 +1141,7 @@ func init() {
 					}
 
 					// confirm
-					if !packetfilterDeleteParam.Assumeyes {
+					if !packetFilterDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1155,11 +1155,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						packetfilterDeleteParam.SetId(id)
-						p := *packetfilterDeleteParam // copy struct value
-						packetfilterDeleteParam := &p
+						packetFilterDeleteParam.SetId(id)
+						p := *packetFilterDeleteParam // copy struct value
+						packetFilterDeleteParam := &p
 						go func() {
-							err := funcs.PacketfilterDelete(ctx, packetfilterDeleteParam)
+							err := funcs.PacketFilterDelete(ctx, packetFilterDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1174,7 +1174,7 @@ func init() {
 			{
 				Name:      "rule-info",
 				Aliases:   []string{"rules", "rule-list"},
-				Usage:     "RuleInfo Packetfilter",
+				Usage:     "RuleInfo PacketFilter",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -1244,60 +1244,60 @@ func init() {
 						return err
 					}
 
-					packetfilterRuleInfoParam.ParamTemplate = c.String("param-template")
-					packetfilterRuleInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(packetfilterRuleInfoParam)
+					packetFilterRuleInfoParam.ParamTemplate = c.String("param-template")
+					packetFilterRuleInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(packetFilterRuleInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewRuleInfoPacketfilterParam()
+						p := params.NewRuleInfoPacketFilterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(packetfilterRuleInfoParam, p, mergo.WithOverride)
+						mergo.Merge(packetFilterRuleInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						packetfilterRuleInfoParam.ParamTemplate = c.String("param-template")
+						packetFilterRuleInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						packetfilterRuleInfoParam.Parameters = c.String("parameters")
+						packetFilterRuleInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						packetfilterRuleInfoParam.ParamTemplateFile = c.String("param-template-file")
+						packetFilterRuleInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						packetfilterRuleInfoParam.ParameterFile = c.String("parameter-file")
+						packetFilterRuleInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						packetfilterRuleInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						packetFilterRuleInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						packetfilterRuleInfoParam.OutputType = c.String("output-type")
+						packetFilterRuleInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						packetfilterRuleInfoParam.Column = c.StringSlice("column")
+						packetFilterRuleInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						packetfilterRuleInfoParam.Quiet = c.Bool("quiet")
+						packetFilterRuleInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						packetfilterRuleInfoParam.Format = c.String("format")
+						packetFilterRuleInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						packetfilterRuleInfoParam.FormatFile = c.String("format-file")
+						packetFilterRuleInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						packetfilterRuleInfoParam.Query = c.String("query")
+						packetFilterRuleInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						packetfilterRuleInfoParam.QueryFile = c.String("query-file")
+						packetFilterRuleInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						packetfilterRuleInfoParam.Id = sacloud.ID(c.Int64("id"))
+						packetFilterRuleInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1305,7 +1305,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = packetfilterRuleInfoParam
+					var outputTypeHolder interface{} = packetFilterRuleInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1316,10 +1316,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if packetfilterRuleInfoParam.GenerateSkeleton {
-						packetfilterRuleInfoParam.GenerateSkeleton = false
-						packetfilterRuleInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(packetfilterRuleInfoParam, "", "\t")
+					if packetFilterRuleInfoParam.GenerateSkeleton {
+						packetFilterRuleInfoParam.GenerateSkeleton = false
+						packetFilterRuleInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(packetFilterRuleInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1328,14 +1328,14 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := packetfilterRuleInfoParam.Validate(); len(errors) > 0 {
+					if errors := packetFilterRuleInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), packetfilterRuleInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), packetFilterRuleInfoParam)
 
-					apiClient := ctx.GetAPIClient().Packetfilter
+					apiClient := ctx.GetAPIClient().PacketFilter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1360,7 +1360,7 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Packetfilters {
+									for _, v := range res.PacketFilters {
 
 										ids = append(ids, v.GetID())
 
@@ -1382,11 +1382,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						packetfilterRuleInfoParam.SetId(id)
-						p := *packetfilterRuleInfoParam // copy struct value
-						packetfilterRuleInfoParam := &p
+						packetFilterRuleInfoParam.SetId(id)
+						p := *packetFilterRuleInfoParam // copy struct value
+						packetFilterRuleInfoParam := &p
 						go func() {
-							err := funcs.PacketfilterRuleInfo(ctx, packetfilterRuleInfoParam)
+							err := funcs.PacketFilterRuleInfo(ctx, packetFilterRuleInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1400,7 +1400,7 @@ func init() {
 			},
 			{
 				Name:      "rule-add",
-				Usage:     "RuleAdd Packetfilter",
+				Usage:     "RuleAdd PacketFilter",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -1506,84 +1506,84 @@ func init() {
 						return err
 					}
 
-					packetfilterRuleAddParam.ParamTemplate = c.String("param-template")
-					packetfilterRuleAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(packetfilterRuleAddParam)
+					packetFilterRuleAddParam.ParamTemplate = c.String("param-template")
+					packetFilterRuleAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(packetFilterRuleAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewRuleAddPacketfilterParam()
+						p := params.NewRuleAddPacketFilterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(packetfilterRuleAddParam, p, mergo.WithOverride)
+						mergo.Merge(packetFilterRuleAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						packetfilterRuleAddParam.Index = c.Int("index")
+						packetFilterRuleAddParam.Index = c.Int("index")
 					}
 					if c.IsSet("protocol") {
-						packetfilterRuleAddParam.Protocol = c.String("protocol")
+						packetFilterRuleAddParam.Protocol = c.String("protocol")
 					}
 					if c.IsSet("source-network") {
-						packetfilterRuleAddParam.SourceNetwork = c.String("source-network")
+						packetFilterRuleAddParam.SourceNetwork = c.String("source-network")
 					}
 					if c.IsSet("source-port") {
-						packetfilterRuleAddParam.SourcePort = c.String("source-port")
+						packetFilterRuleAddParam.SourcePort = c.String("source-port")
 					}
 					if c.IsSet("destination-port") {
-						packetfilterRuleAddParam.DestinationPort = c.String("destination-port")
+						packetFilterRuleAddParam.DestinationPort = c.String("destination-port")
 					}
 					if c.IsSet("action") {
-						packetfilterRuleAddParam.Action = c.String("action")
+						packetFilterRuleAddParam.Action = c.String("action")
 					}
 					if c.IsSet("description") {
-						packetfilterRuleAddParam.Description = c.String("description")
+						packetFilterRuleAddParam.Description = c.String("description")
 					}
 					if c.IsSet("assumeyes") {
-						packetfilterRuleAddParam.Assumeyes = c.Bool("assumeyes")
+						packetFilterRuleAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						packetfilterRuleAddParam.ParamTemplate = c.String("param-template")
+						packetFilterRuleAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						packetfilterRuleAddParam.Parameters = c.String("parameters")
+						packetFilterRuleAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						packetfilterRuleAddParam.ParamTemplateFile = c.String("param-template-file")
+						packetFilterRuleAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						packetfilterRuleAddParam.ParameterFile = c.String("parameter-file")
+						packetFilterRuleAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						packetfilterRuleAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						packetFilterRuleAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						packetfilterRuleAddParam.OutputType = c.String("output-type")
+						packetFilterRuleAddParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						packetfilterRuleAddParam.Column = c.StringSlice("column")
+						packetFilterRuleAddParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						packetfilterRuleAddParam.Quiet = c.Bool("quiet")
+						packetFilterRuleAddParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						packetfilterRuleAddParam.Format = c.String("format")
+						packetFilterRuleAddParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						packetfilterRuleAddParam.FormatFile = c.String("format-file")
+						packetFilterRuleAddParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						packetfilterRuleAddParam.Query = c.String("query")
+						packetFilterRuleAddParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						packetfilterRuleAddParam.QueryFile = c.String("query-file")
+						packetFilterRuleAddParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						packetfilterRuleAddParam.Id = sacloud.ID(c.Int64("id"))
+						packetFilterRuleAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1591,7 +1591,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = packetfilterRuleAddParam
+					var outputTypeHolder interface{} = packetFilterRuleAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1602,10 +1602,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if packetfilterRuleAddParam.GenerateSkeleton {
-						packetfilterRuleAddParam.GenerateSkeleton = false
-						packetfilterRuleAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(packetfilterRuleAddParam, "", "\t")
+					if packetFilterRuleAddParam.GenerateSkeleton {
+						packetFilterRuleAddParam.GenerateSkeleton = false
+						packetFilterRuleAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(packetFilterRuleAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1614,14 +1614,14 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := packetfilterRuleAddParam.Validate(); len(errors) > 0 {
+					if errors := packetFilterRuleAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), packetfilterRuleAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), packetFilterRuleAddParam)
 
-					apiClient := ctx.GetAPIClient().Packetfilter
+					apiClient := ctx.GetAPIClient().PacketFilter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1646,7 +1646,7 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Packetfilters {
+									for _, v := range res.PacketFilters {
 
 										ids = append(ids, v.GetID())
 
@@ -1668,7 +1668,7 @@ func init() {
 					}
 
 					// confirm
-					if !packetfilterRuleAddParam.Assumeyes {
+					if !packetFilterRuleAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1682,11 +1682,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						packetfilterRuleAddParam.SetId(id)
-						p := *packetfilterRuleAddParam // copy struct value
-						packetfilterRuleAddParam := &p
+						packetFilterRuleAddParam.SetId(id)
+						p := *packetFilterRuleAddParam // copy struct value
+						packetFilterRuleAddParam := &p
 						go func() {
-							err := funcs.PacketfilterRuleAdd(ctx, packetfilterRuleAddParam)
+							err := funcs.PacketFilterRuleAdd(ctx, packetFilterRuleAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1700,7 +1700,7 @@ func init() {
 			},
 			{
 				Name:      "rule-update",
-				Usage:     "RuleUpdate Packetfilter",
+				Usage:     "RuleUpdate PacketFilter",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -1805,84 +1805,84 @@ func init() {
 						return err
 					}
 
-					packetfilterRuleUpdateParam.ParamTemplate = c.String("param-template")
-					packetfilterRuleUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(packetfilterRuleUpdateParam)
+					packetFilterRuleUpdateParam.ParamTemplate = c.String("param-template")
+					packetFilterRuleUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(packetFilterRuleUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewRuleUpdatePacketfilterParam()
+						p := params.NewRuleUpdatePacketFilterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(packetfilterRuleUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(packetFilterRuleUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						packetfilterRuleUpdateParam.Index = c.Int("index")
+						packetFilterRuleUpdateParam.Index = c.Int("index")
 					}
 					if c.IsSet("protocol") {
-						packetfilterRuleUpdateParam.Protocol = c.String("protocol")
+						packetFilterRuleUpdateParam.Protocol = c.String("protocol")
 					}
 					if c.IsSet("source-network") {
-						packetfilterRuleUpdateParam.SourceNetwork = c.String("source-network")
+						packetFilterRuleUpdateParam.SourceNetwork = c.String("source-network")
 					}
 					if c.IsSet("source-port") {
-						packetfilterRuleUpdateParam.SourcePort = c.String("source-port")
+						packetFilterRuleUpdateParam.SourcePort = c.String("source-port")
 					}
 					if c.IsSet("destination-port") {
-						packetfilterRuleUpdateParam.DestinationPort = c.String("destination-port")
+						packetFilterRuleUpdateParam.DestinationPort = c.String("destination-port")
 					}
 					if c.IsSet("action") {
-						packetfilterRuleUpdateParam.Action = c.String("action")
+						packetFilterRuleUpdateParam.Action = c.String("action")
 					}
 					if c.IsSet("description") {
-						packetfilterRuleUpdateParam.Description = c.String("description")
+						packetFilterRuleUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("assumeyes") {
-						packetfilterRuleUpdateParam.Assumeyes = c.Bool("assumeyes")
+						packetFilterRuleUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						packetfilterRuleUpdateParam.ParamTemplate = c.String("param-template")
+						packetFilterRuleUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						packetfilterRuleUpdateParam.Parameters = c.String("parameters")
+						packetFilterRuleUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						packetfilterRuleUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						packetFilterRuleUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						packetfilterRuleUpdateParam.ParameterFile = c.String("parameter-file")
+						packetFilterRuleUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						packetfilterRuleUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						packetFilterRuleUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						packetfilterRuleUpdateParam.OutputType = c.String("output-type")
+						packetFilterRuleUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						packetfilterRuleUpdateParam.Column = c.StringSlice("column")
+						packetFilterRuleUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						packetfilterRuleUpdateParam.Quiet = c.Bool("quiet")
+						packetFilterRuleUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						packetfilterRuleUpdateParam.Format = c.String("format")
+						packetFilterRuleUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						packetfilterRuleUpdateParam.FormatFile = c.String("format-file")
+						packetFilterRuleUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						packetfilterRuleUpdateParam.Query = c.String("query")
+						packetFilterRuleUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						packetfilterRuleUpdateParam.QueryFile = c.String("query-file")
+						packetFilterRuleUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						packetfilterRuleUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						packetFilterRuleUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1890,7 +1890,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = packetfilterRuleUpdateParam
+					var outputTypeHolder interface{} = packetFilterRuleUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1901,10 +1901,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if packetfilterRuleUpdateParam.GenerateSkeleton {
-						packetfilterRuleUpdateParam.GenerateSkeleton = false
-						packetfilterRuleUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(packetfilterRuleUpdateParam, "", "\t")
+					if packetFilterRuleUpdateParam.GenerateSkeleton {
+						packetFilterRuleUpdateParam.GenerateSkeleton = false
+						packetFilterRuleUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(packetFilterRuleUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1913,14 +1913,14 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := packetfilterRuleUpdateParam.Validate(); len(errors) > 0 {
+					if errors := packetFilterRuleUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), packetfilterRuleUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), packetFilterRuleUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Packetfilter
+					apiClient := ctx.GetAPIClient().PacketFilter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1945,7 +1945,7 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Packetfilters {
+									for _, v := range res.PacketFilters {
 
 										ids = append(ids, v.GetID())
 
@@ -1967,7 +1967,7 @@ func init() {
 					}
 
 					// confirm
-					if !packetfilterRuleUpdateParam.Assumeyes {
+					if !packetFilterRuleUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1981,11 +1981,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						packetfilterRuleUpdateParam.SetId(id)
-						p := *packetfilterRuleUpdateParam // copy struct value
-						packetfilterRuleUpdateParam := &p
+						packetFilterRuleUpdateParam.SetId(id)
+						p := *packetFilterRuleUpdateParam // copy struct value
+						packetFilterRuleUpdateParam := &p
 						go func() {
-							err := funcs.PacketfilterRuleUpdate(ctx, packetfilterRuleUpdateParam)
+							err := funcs.PacketFilterRuleUpdate(ctx, packetFilterRuleUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1999,7 +1999,7 @@ func init() {
 			},
 			{
 				Name:      "rule-delete",
-				Usage:     "RuleDelete Packetfilter",
+				Usage:     "RuleDelete PacketFilter",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -2078,66 +2078,66 @@ func init() {
 						return err
 					}
 
-					packetfilterRuleDeleteParam.ParamTemplate = c.String("param-template")
-					packetfilterRuleDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(packetfilterRuleDeleteParam)
+					packetFilterRuleDeleteParam.ParamTemplate = c.String("param-template")
+					packetFilterRuleDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(packetFilterRuleDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewRuleDeletePacketfilterParam()
+						p := params.NewRuleDeletePacketFilterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(packetfilterRuleDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(packetFilterRuleDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						packetfilterRuleDeleteParam.Index = c.Int("index")
+						packetFilterRuleDeleteParam.Index = c.Int("index")
 					}
 					if c.IsSet("assumeyes") {
-						packetfilterRuleDeleteParam.Assumeyes = c.Bool("assumeyes")
+						packetFilterRuleDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						packetfilterRuleDeleteParam.ParamTemplate = c.String("param-template")
+						packetFilterRuleDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						packetfilterRuleDeleteParam.Parameters = c.String("parameters")
+						packetFilterRuleDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						packetfilterRuleDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						packetFilterRuleDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						packetfilterRuleDeleteParam.ParameterFile = c.String("parameter-file")
+						packetFilterRuleDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						packetfilterRuleDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						packetFilterRuleDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						packetfilterRuleDeleteParam.OutputType = c.String("output-type")
+						packetFilterRuleDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						packetfilterRuleDeleteParam.Column = c.StringSlice("column")
+						packetFilterRuleDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						packetfilterRuleDeleteParam.Quiet = c.Bool("quiet")
+						packetFilterRuleDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						packetfilterRuleDeleteParam.Format = c.String("format")
+						packetFilterRuleDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						packetfilterRuleDeleteParam.FormatFile = c.String("format-file")
+						packetFilterRuleDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						packetfilterRuleDeleteParam.Query = c.String("query")
+						packetFilterRuleDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						packetfilterRuleDeleteParam.QueryFile = c.String("query-file")
+						packetFilterRuleDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						packetfilterRuleDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						packetFilterRuleDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2145,7 +2145,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = packetfilterRuleDeleteParam
+					var outputTypeHolder interface{} = packetFilterRuleDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2156,10 +2156,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if packetfilterRuleDeleteParam.GenerateSkeleton {
-						packetfilterRuleDeleteParam.GenerateSkeleton = false
-						packetfilterRuleDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(packetfilterRuleDeleteParam, "", "\t")
+					if packetFilterRuleDeleteParam.GenerateSkeleton {
+						packetFilterRuleDeleteParam.GenerateSkeleton = false
+						packetFilterRuleDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(packetFilterRuleDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2168,14 +2168,14 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := packetfilterRuleDeleteParam.Validate(); len(errors) > 0 {
+					if errors := packetFilterRuleDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), packetfilterRuleDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), packetFilterRuleDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Packetfilter
+					apiClient := ctx.GetAPIClient().PacketFilter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -2200,7 +2200,7 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Packetfilters {
+									for _, v := range res.PacketFilters {
 
 										ids = append(ids, v.GetID())
 
@@ -2222,7 +2222,7 @@ func init() {
 					}
 
 					// confirm
-					if !packetfilterRuleDeleteParam.Assumeyes {
+					if !packetFilterRuleDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2236,11 +2236,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						packetfilterRuleDeleteParam.SetId(id)
-						p := *packetfilterRuleDeleteParam // copy struct value
-						packetfilterRuleDeleteParam := &p
+						packetFilterRuleDeleteParam.SetId(id)
+						p := *packetFilterRuleDeleteParam // copy struct value
+						packetFilterRuleDeleteParam := &p
 						go func() {
-							err := funcs.PacketfilterRuleDelete(ctx, packetfilterRuleDeleteParam)
+							err := funcs.PacketFilterRuleDelete(ctx, packetFilterRuleDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2254,7 +2254,7 @@ func init() {
 			},
 			{
 				Name:      "interface-connect",
-				Usage:     "InterfaceConnect Packetfilter",
+				Usage:     "InterfaceConnect PacketFilter",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -2301,45 +2301,45 @@ func init() {
 						return err
 					}
 
-					packetfilterInterfaceConnectParam.ParamTemplate = c.String("param-template")
-					packetfilterInterfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(packetfilterInterfaceConnectParam)
+					packetFilterInterfaceConnectParam.ParamTemplate = c.String("param-template")
+					packetFilterInterfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(packetFilterInterfaceConnectParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewInterfaceConnectPacketfilterParam()
+						p := params.NewInterfaceConnectPacketFilterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(packetfilterInterfaceConnectParam, p, mergo.WithOverride)
+						mergo.Merge(packetFilterInterfaceConnectParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("interface-id") {
-						packetfilterInterfaceConnectParam.InterfaceId = sacloud.ID(c.Int64("interface-id"))
+						packetFilterInterfaceConnectParam.InterfaceId = sacloud.ID(c.Int64("interface-id"))
 					}
 					if c.IsSet("assumeyes") {
-						packetfilterInterfaceConnectParam.Assumeyes = c.Bool("assumeyes")
+						packetFilterInterfaceConnectParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						packetfilterInterfaceConnectParam.ParamTemplate = c.String("param-template")
+						packetFilterInterfaceConnectParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						packetfilterInterfaceConnectParam.Parameters = c.String("parameters")
+						packetFilterInterfaceConnectParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						packetfilterInterfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
+						packetFilterInterfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						packetfilterInterfaceConnectParam.ParameterFile = c.String("parameter-file")
+						packetFilterInterfaceConnectParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						packetfilterInterfaceConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						packetFilterInterfaceConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						packetfilterInterfaceConnectParam.Id = sacloud.ID(c.Int64("id"))
+						packetFilterInterfaceConnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2347,7 +2347,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = packetfilterInterfaceConnectParam
+					var outputTypeHolder interface{} = packetFilterInterfaceConnectParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2358,10 +2358,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if packetfilterInterfaceConnectParam.GenerateSkeleton {
-						packetfilterInterfaceConnectParam.GenerateSkeleton = false
-						packetfilterInterfaceConnectParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(packetfilterInterfaceConnectParam, "", "\t")
+					if packetFilterInterfaceConnectParam.GenerateSkeleton {
+						packetFilterInterfaceConnectParam.GenerateSkeleton = false
+						packetFilterInterfaceConnectParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(packetFilterInterfaceConnectParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2370,14 +2370,14 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := packetfilterInterfaceConnectParam.Validate(); len(errors) > 0 {
+					if errors := packetFilterInterfaceConnectParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), packetfilterInterfaceConnectParam)
+					ctx := command.NewContext(c, c.Args().Slice(), packetFilterInterfaceConnectParam)
 
-					apiClient := ctx.GetAPIClient().Packetfilter
+					apiClient := ctx.GetAPIClient().PacketFilter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -2402,7 +2402,7 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Packetfilters {
+									for _, v := range res.PacketFilters {
 
 										ids = append(ids, v.GetID())
 
@@ -2424,7 +2424,7 @@ func init() {
 					}
 
 					// confirm
-					if !packetfilterInterfaceConnectParam.Assumeyes {
+					if !packetFilterInterfaceConnectParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2438,11 +2438,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						packetfilterInterfaceConnectParam.SetId(id)
-						p := *packetfilterInterfaceConnectParam // copy struct value
-						packetfilterInterfaceConnectParam := &p
+						packetFilterInterfaceConnectParam.SetId(id)
+						p := *packetFilterInterfaceConnectParam // copy struct value
+						packetFilterInterfaceConnectParam := &p
 						go func() {
-							err := funcs.PacketfilterInterfaceConnect(ctx, packetfilterInterfaceConnectParam)
+							err := funcs.PacketFilterInterfaceConnect(ctx, packetFilterInterfaceConnectParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2456,7 +2456,7 @@ func init() {
 			},
 			{
 				Name:      "interface-disconnect",
-				Usage:     "InterfaceDisconnect Packetfilter",
+				Usage:     "InterfaceDisconnect PacketFilter",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -2503,45 +2503,45 @@ func init() {
 						return err
 					}
 
-					packetfilterInterfaceDisconnectParam.ParamTemplate = c.String("param-template")
-					packetfilterInterfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(packetfilterInterfaceDisconnectParam)
+					packetFilterInterfaceDisconnectParam.ParamTemplate = c.String("param-template")
+					packetFilterInterfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(packetFilterInterfaceDisconnectParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewInterfaceDisconnectPacketfilterParam()
+						p := params.NewInterfaceDisconnectPacketFilterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(packetfilterInterfaceDisconnectParam, p, mergo.WithOverride)
+						mergo.Merge(packetFilterInterfaceDisconnectParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("interface-id") {
-						packetfilterInterfaceDisconnectParam.InterfaceId = sacloud.ID(c.Int64("interface-id"))
+						packetFilterInterfaceDisconnectParam.InterfaceId = sacloud.ID(c.Int64("interface-id"))
 					}
 					if c.IsSet("assumeyes") {
-						packetfilterInterfaceDisconnectParam.Assumeyes = c.Bool("assumeyes")
+						packetFilterInterfaceDisconnectParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						packetfilterInterfaceDisconnectParam.ParamTemplate = c.String("param-template")
+						packetFilterInterfaceDisconnectParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						packetfilterInterfaceDisconnectParam.Parameters = c.String("parameters")
+						packetFilterInterfaceDisconnectParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						packetfilterInterfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+						packetFilterInterfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						packetfilterInterfaceDisconnectParam.ParameterFile = c.String("parameter-file")
+						packetFilterInterfaceDisconnectParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						packetfilterInterfaceDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						packetFilterInterfaceDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						packetfilterInterfaceDisconnectParam.Id = sacloud.ID(c.Int64("id"))
+						packetFilterInterfaceDisconnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2549,7 +2549,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = packetfilterInterfaceDisconnectParam
+					var outputTypeHolder interface{} = packetFilterInterfaceDisconnectParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2560,10 +2560,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if packetfilterInterfaceDisconnectParam.GenerateSkeleton {
-						packetfilterInterfaceDisconnectParam.GenerateSkeleton = false
-						packetfilterInterfaceDisconnectParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(packetfilterInterfaceDisconnectParam, "", "\t")
+					if packetFilterInterfaceDisconnectParam.GenerateSkeleton {
+						packetFilterInterfaceDisconnectParam.GenerateSkeleton = false
+						packetFilterInterfaceDisconnectParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(packetFilterInterfaceDisconnectParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2572,14 +2572,14 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := packetfilterInterfaceDisconnectParam.Validate(); len(errors) > 0 {
+					if errors := packetFilterInterfaceDisconnectParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), packetfilterInterfaceDisconnectParam)
+					ctx := command.NewContext(c, c.Args().Slice(), packetFilterInterfaceDisconnectParam)
 
-					apiClient := ctx.GetAPIClient().Packetfilter
+					apiClient := ctx.GetAPIClient().PacketFilter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -2604,7 +2604,7 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Packetfilters {
+									for _, v := range res.PacketFilters {
 
 										ids = append(ids, v.GetID())
 
@@ -2626,7 +2626,7 @@ func init() {
 					}
 
 					// confirm
-					if !packetfilterInterfaceDisconnectParam.Assumeyes {
+					if !packetFilterInterfaceDisconnectParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2640,11 +2640,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						packetfilterInterfaceDisconnectParam.SetId(id)
-						p := *packetfilterInterfaceDisconnectParam // copy struct value
-						packetfilterInterfaceDisconnectParam := &p
+						packetFilterInterfaceDisconnectParam.SetId(id)
+						p := *packetFilterInterfaceDisconnectParam // copy struct value
+						packetFilterInterfaceDisconnectParam := &p
 						go func() {
-							err := funcs.PacketfilterInterfaceDisconnect(ctx, packetfilterInterfaceDisconnectParam)
+							err := funcs.PacketFilterInterfaceDisconnect(ctx, packetFilterInterfaceDisconnectParam)
 							if err != nil {
 								errs = append(errs, err)
 							}

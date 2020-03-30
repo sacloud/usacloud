@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func IsoimageDelete(ctx command.Context, params *params.DeleteIsoimageParam) error {
+func ISOImageDelete(ctx command.Context, params *params.DeleteISOImageParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetCDROMAPI()
@@ -33,7 +33,7 @@ func IsoimageDelete(ctx command.Context, params *params.DeleteIsoimageParam) err
 	// call Delete(id)
 	res, err := api.Delete(params.Id)
 	if err != nil {
-		return fmt.Errorf("IsoimageDelete is failed: %s", err)
+		return fmt.Errorf("ISOImageDelete is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

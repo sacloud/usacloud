@@ -86,10 +86,10 @@ func SimpleMonitorCreate(ctx command.Context, params *params.CreateSimpleMonitor
 		setHealchCheck(fmt.Sprintf("%d", params.Port))
 
 	case "dns":
-		if params.DnsQname == "" {
+		if params.DNSQname == "" {
 			return fmt.Errorf("dns-qname is required when protocol is dns")
 		}
-		p.SetHealthCheckDNS(params.DnsQname, params.DnsExcepted)
+		p.SetHealthCheckDNS(params.DNSQname, params.DNSExcepted)
 	case "ssl-certificate":
 		p.SetHealthCheckSSLCertificate(params.RemainingDays)
 	}

@@ -73,8 +73,8 @@ var billListCmd = &cobra.Command{
 
 func billListCmdInit() {
 	fs := billListCmd.Flags()
-	fs.IntVarP(&billListParam.Month, "month", "", 0, "set month")
 	fs.IntVarP(&billListParam.Year, "year", "", 0, "set year")
+	fs.IntVarP(&billListParam.Month, "month", "", 0, "set month")
 }
 
 func init() {

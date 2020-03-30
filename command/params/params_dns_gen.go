@@ -23,8 +23,8 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListDnsParam is input parameters for the sacloud API
-type ListDnsParam struct {
+// ListDNSParam is input parameters for the sacloud API
+type ListDNSParam struct {
 	Name              []string     `json:"name"`
 	Id                []sacloud.ID `json:"id"`
 	Tags              []string     `json:"tags"`
@@ -45,13 +45,13 @@ type ListDnsParam struct {
 	QueryFile         string       `json:"query-file"`
 }
 
-// NewListDnsParam return new ListDnsParam
-func NewListDnsParam() *ListDnsParam {
-	return &ListDnsParam{}
+// NewListDNSParam return new ListDNSParam
+func NewListDNSParam() *ListDNSParam {
+	return &ListDNSParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListDnsParam) FillValueToSkeleton() {
+func (p *ListDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -110,7 +110,7 @@ func (p *ListDnsParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListDnsParam) Validate() []error {
+func (p *ListDNSParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
@@ -168,159 +168,159 @@ func (p *ListDnsParam) Validate() []error {
 	return errors
 }
 
-func (p *ListDnsParam) GetResourceDef() *schema.Resource {
+func (p *ListDNSParam) GetResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *ListDnsParam) GetCommandDef() *schema.Command {
+func (p *ListDNSParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListDnsParam) GetIncludeFields() []string {
+func (p *ListDNSParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListDnsParam) GetExcludeFields() []string {
+func (p *ListDNSParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListDnsParam) GetTableType() output.TableType {
+func (p *ListDNSParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListDnsParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListDnsParam) SetName(v []string) {
+func (p *ListDNSParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListDnsParam) GetName() []string {
+func (p *ListDNSParam) GetName() []string {
 	return p.Name
 }
-func (p *ListDnsParam) SetId(v []sacloud.ID) {
+func (p *ListDNSParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListDnsParam) GetId() []sacloud.ID {
+func (p *ListDNSParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListDnsParam) SetTags(v []string) {
+func (p *ListDNSParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *ListDnsParam) GetTags() []string {
+func (p *ListDNSParam) GetTags() []string {
 	return p.Tags
 }
-func (p *ListDnsParam) SetFrom(v int) {
+func (p *ListDNSParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListDnsParam) GetFrom() int {
+func (p *ListDNSParam) GetFrom() int {
 	return p.From
 }
-func (p *ListDnsParam) SetMax(v int) {
+func (p *ListDNSParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListDnsParam) GetMax() int {
+func (p *ListDNSParam) GetMax() int {
 	return p.Max
 }
-func (p *ListDnsParam) SetSort(v []string) {
+func (p *ListDNSParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListDnsParam) GetSort() []string {
+func (p *ListDNSParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListDnsParam) SetParamTemplate(v string) {
+func (p *ListDNSParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListDnsParam) GetParamTemplate() string {
+func (p *ListDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListDnsParam) SetParameters(v string) {
+func (p *ListDNSParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ListDnsParam) GetParameters() string {
+func (p *ListDNSParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ListDnsParam) SetParamTemplateFile(v string) {
+func (p *ListDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListDnsParam) GetParamTemplateFile() string {
+func (p *ListDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListDnsParam) SetParameterFile(v string) {
+func (p *ListDNSParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ListDnsParam) GetParameterFile() string {
+func (p *ListDNSParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ListDnsParam) SetGenerateSkeleton(v bool) {
+func (p *ListDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListDnsParam) GetGenerateSkeleton() bool {
+func (p *ListDNSParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListDnsParam) SetOutputType(v string) {
+func (p *ListDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListDnsParam) GetOutputType() string {
+func (p *ListDNSParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListDnsParam) SetColumn(v []string) {
+func (p *ListDNSParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListDnsParam) GetColumn() []string {
+func (p *ListDNSParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ListDnsParam) SetQuiet(v bool) {
+func (p *ListDNSParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListDnsParam) GetQuiet() bool {
+func (p *ListDNSParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListDnsParam) SetFormat(v string) {
+func (p *ListDNSParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListDnsParam) GetFormat() string {
+func (p *ListDNSParam) GetFormat() string {
 	return p.Format
 }
-func (p *ListDnsParam) SetFormatFile(v string) {
+func (p *ListDNSParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListDnsParam) GetFormatFile() string {
+func (p *ListDNSParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListDnsParam) SetQuery(v string) {
+func (p *ListDNSParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListDnsParam) GetQuery() string {
+func (p *ListDNSParam) GetQuery() string {
 	return p.Query
 }
-func (p *ListDnsParam) SetQueryFile(v string) {
+func (p *ListDNSParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListDnsParam) GetQueryFile() string {
+func (p *ListDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// RecordInfoDnsParam is input parameters for the sacloud API
-type RecordInfoDnsParam struct {
+// RecordInfoDNSParam is input parameters for the sacloud API
+type RecordInfoDNSParam struct {
 	Name              string     `json:"name"`
 	Type              string     `json:"type"`
 	Selector          []string   `json:"selector"`
@@ -339,13 +339,13 @@ type RecordInfoDnsParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewRecordInfoDnsParam return new RecordInfoDnsParam
-func NewRecordInfoDnsParam() *RecordInfoDnsParam {
-	return &RecordInfoDnsParam{}
+// NewRecordInfoDNSParam return new RecordInfoDNSParam
+func NewRecordInfoDNSParam() *RecordInfoDNSParam {
+	return &RecordInfoDNSParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *RecordInfoDnsParam) FillValueToSkeleton() {
+func (p *RecordInfoDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -398,7 +398,7 @@ func (p *RecordInfoDnsParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *RecordInfoDnsParam) Validate() []error {
+func (p *RecordInfoDNSParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["DNS"].Commands["record-info"].Params["name"].ValidateFunc
@@ -445,145 +445,145 @@ func (p *RecordInfoDnsParam) Validate() []error {
 	return errors
 }
 
-func (p *RecordInfoDnsParam) GetResourceDef() *schema.Resource {
+func (p *RecordInfoDNSParam) GetResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *RecordInfoDnsParam) GetCommandDef() *schema.Command {
+func (p *RecordInfoDNSParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["record-info"]
 }
 
-func (p *RecordInfoDnsParam) GetIncludeFields() []string {
+func (p *RecordInfoDNSParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *RecordInfoDnsParam) GetExcludeFields() []string {
+func (p *RecordInfoDNSParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *RecordInfoDnsParam) GetTableType() output.TableType {
+func (p *RecordInfoDNSParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *RecordInfoDnsParam) GetColumnDefs() []output.ColumnDef {
+func (p *RecordInfoDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *RecordInfoDnsParam) SetName(v string) {
+func (p *RecordInfoDNSParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *RecordInfoDnsParam) GetName() string {
+func (p *RecordInfoDNSParam) GetName() string {
 	return p.Name
 }
-func (p *RecordInfoDnsParam) SetType(v string) {
+func (p *RecordInfoDNSParam) SetType(v string) {
 	p.Type = v
 }
 
-func (p *RecordInfoDnsParam) GetType() string {
+func (p *RecordInfoDNSParam) GetType() string {
 	return p.Type
 }
-func (p *RecordInfoDnsParam) SetSelector(v []string) {
+func (p *RecordInfoDNSParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *RecordInfoDnsParam) GetSelector() []string {
+func (p *RecordInfoDNSParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *RecordInfoDnsParam) SetParamTemplate(v string) {
+func (p *RecordInfoDNSParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *RecordInfoDnsParam) GetParamTemplate() string {
+func (p *RecordInfoDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *RecordInfoDnsParam) SetParameters(v string) {
+func (p *RecordInfoDNSParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *RecordInfoDnsParam) GetParameters() string {
+func (p *RecordInfoDNSParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *RecordInfoDnsParam) SetParamTemplateFile(v string) {
+func (p *RecordInfoDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *RecordInfoDnsParam) GetParamTemplateFile() string {
+func (p *RecordInfoDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *RecordInfoDnsParam) SetParameterFile(v string) {
+func (p *RecordInfoDNSParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *RecordInfoDnsParam) GetParameterFile() string {
+func (p *RecordInfoDNSParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *RecordInfoDnsParam) SetGenerateSkeleton(v bool) {
+func (p *RecordInfoDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *RecordInfoDnsParam) GetGenerateSkeleton() bool {
+func (p *RecordInfoDNSParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *RecordInfoDnsParam) SetOutputType(v string) {
+func (p *RecordInfoDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *RecordInfoDnsParam) GetOutputType() string {
+func (p *RecordInfoDNSParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *RecordInfoDnsParam) SetColumn(v []string) {
+func (p *RecordInfoDNSParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *RecordInfoDnsParam) GetColumn() []string {
+func (p *RecordInfoDNSParam) GetColumn() []string {
 	return p.Column
 }
-func (p *RecordInfoDnsParam) SetQuiet(v bool) {
+func (p *RecordInfoDNSParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *RecordInfoDnsParam) GetQuiet() bool {
+func (p *RecordInfoDNSParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *RecordInfoDnsParam) SetFormat(v string) {
+func (p *RecordInfoDNSParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *RecordInfoDnsParam) GetFormat() string {
+func (p *RecordInfoDNSParam) GetFormat() string {
 	return p.Format
 }
-func (p *RecordInfoDnsParam) SetFormatFile(v string) {
+func (p *RecordInfoDNSParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *RecordInfoDnsParam) GetFormatFile() string {
+func (p *RecordInfoDNSParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *RecordInfoDnsParam) SetQuery(v string) {
+func (p *RecordInfoDNSParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *RecordInfoDnsParam) GetQuery() string {
+func (p *RecordInfoDNSParam) GetQuery() string {
 	return p.Query
 }
-func (p *RecordInfoDnsParam) SetQueryFile(v string) {
+func (p *RecordInfoDNSParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *RecordInfoDnsParam) GetQueryFile() string {
+func (p *RecordInfoDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RecordInfoDnsParam) SetId(v sacloud.ID) {
+func (p *RecordInfoDNSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RecordInfoDnsParam) GetId() sacloud.ID {
+func (p *RecordInfoDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// RecordBulkUpdateDnsParam is input parameters for the sacloud API
-type RecordBulkUpdateDnsParam struct {
+// RecordBulkUpdateDNSParam is input parameters for the sacloud API
+type RecordBulkUpdateDNSParam struct {
 	File              string     `json:"file"`
 	Mode              string     `json:"mode"`
 	Selector          []string   `json:"selector"`
@@ -603,16 +603,16 @@ type RecordBulkUpdateDnsParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewRecordBulkUpdateDnsParam return new RecordBulkUpdateDnsParam
-func NewRecordBulkUpdateDnsParam() *RecordBulkUpdateDnsParam {
-	return &RecordBulkUpdateDnsParam{
+// NewRecordBulkUpdateDNSParam return new RecordBulkUpdateDNSParam
+func NewRecordBulkUpdateDNSParam() *RecordBulkUpdateDNSParam {
+	return &RecordBulkUpdateDNSParam{
 
 		Mode: "upsert-only",
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *RecordBulkUpdateDnsParam) FillValueToSkeleton() {
+func (p *RecordBulkUpdateDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.File) {
 		p.File = ""
 	}
@@ -668,7 +668,7 @@ func (p *RecordBulkUpdateDnsParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *RecordBulkUpdateDnsParam) Validate() []error {
+func (p *RecordBulkUpdateDNSParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -729,152 +729,152 @@ func (p *RecordBulkUpdateDnsParam) Validate() []error {
 	return errors
 }
 
-func (p *RecordBulkUpdateDnsParam) GetResourceDef() *schema.Resource {
+func (p *RecordBulkUpdateDNSParam) GetResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *RecordBulkUpdateDnsParam) GetCommandDef() *schema.Command {
+func (p *RecordBulkUpdateDNSParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["record-bulk-update"]
 }
 
-func (p *RecordBulkUpdateDnsParam) GetIncludeFields() []string {
+func (p *RecordBulkUpdateDNSParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *RecordBulkUpdateDnsParam) GetExcludeFields() []string {
+func (p *RecordBulkUpdateDNSParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *RecordBulkUpdateDnsParam) GetTableType() output.TableType {
+func (p *RecordBulkUpdateDNSParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *RecordBulkUpdateDnsParam) GetColumnDefs() []output.ColumnDef {
+func (p *RecordBulkUpdateDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *RecordBulkUpdateDnsParam) SetFile(v string) {
+func (p *RecordBulkUpdateDNSParam) SetFile(v string) {
 	p.File = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetFile() string {
+func (p *RecordBulkUpdateDNSParam) GetFile() string {
 	return p.File
 }
-func (p *RecordBulkUpdateDnsParam) SetMode(v string) {
+func (p *RecordBulkUpdateDNSParam) SetMode(v string) {
 	p.Mode = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetMode() string {
+func (p *RecordBulkUpdateDNSParam) GetMode() string {
 	return p.Mode
 }
-func (p *RecordBulkUpdateDnsParam) SetSelector(v []string) {
+func (p *RecordBulkUpdateDNSParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetSelector() []string {
+func (p *RecordBulkUpdateDNSParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *RecordBulkUpdateDnsParam) SetAssumeyes(v bool) {
+func (p *RecordBulkUpdateDNSParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetAssumeyes() bool {
+func (p *RecordBulkUpdateDNSParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *RecordBulkUpdateDnsParam) SetParamTemplate(v string) {
+func (p *RecordBulkUpdateDNSParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetParamTemplate() string {
+func (p *RecordBulkUpdateDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *RecordBulkUpdateDnsParam) SetParameters(v string) {
+func (p *RecordBulkUpdateDNSParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetParameters() string {
+func (p *RecordBulkUpdateDNSParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *RecordBulkUpdateDnsParam) SetParamTemplateFile(v string) {
+func (p *RecordBulkUpdateDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetParamTemplateFile() string {
+func (p *RecordBulkUpdateDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *RecordBulkUpdateDnsParam) SetParameterFile(v string) {
+func (p *RecordBulkUpdateDNSParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetParameterFile() string {
+func (p *RecordBulkUpdateDNSParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *RecordBulkUpdateDnsParam) SetGenerateSkeleton(v bool) {
+func (p *RecordBulkUpdateDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetGenerateSkeleton() bool {
+func (p *RecordBulkUpdateDNSParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *RecordBulkUpdateDnsParam) SetOutputType(v string) {
+func (p *RecordBulkUpdateDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetOutputType() string {
+func (p *RecordBulkUpdateDNSParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *RecordBulkUpdateDnsParam) SetColumn(v []string) {
+func (p *RecordBulkUpdateDNSParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetColumn() []string {
+func (p *RecordBulkUpdateDNSParam) GetColumn() []string {
 	return p.Column
 }
-func (p *RecordBulkUpdateDnsParam) SetQuiet(v bool) {
+func (p *RecordBulkUpdateDNSParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetQuiet() bool {
+func (p *RecordBulkUpdateDNSParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *RecordBulkUpdateDnsParam) SetFormat(v string) {
+func (p *RecordBulkUpdateDNSParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetFormat() string {
+func (p *RecordBulkUpdateDNSParam) GetFormat() string {
 	return p.Format
 }
-func (p *RecordBulkUpdateDnsParam) SetFormatFile(v string) {
+func (p *RecordBulkUpdateDNSParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetFormatFile() string {
+func (p *RecordBulkUpdateDNSParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *RecordBulkUpdateDnsParam) SetQuery(v string) {
+func (p *RecordBulkUpdateDNSParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetQuery() string {
+func (p *RecordBulkUpdateDNSParam) GetQuery() string {
 	return p.Query
 }
-func (p *RecordBulkUpdateDnsParam) SetQueryFile(v string) {
+func (p *RecordBulkUpdateDNSParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetQueryFile() string {
+func (p *RecordBulkUpdateDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RecordBulkUpdateDnsParam) SetId(v sacloud.ID) {
+func (p *RecordBulkUpdateDNSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetId() sacloud.ID {
+func (p *RecordBulkUpdateDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// CreateDnsParam is input parameters for the sacloud API
-type CreateDnsParam struct {
+// CreateDNSParam is input parameters for the sacloud API
+type CreateDNSParam struct {
 	Name              string     `json:"name"`
 	Description       string     `json:"description"`
 	Tags              []string   `json:"tags"`
@@ -894,13 +894,13 @@ type CreateDnsParam struct {
 	QueryFile         string     `json:"query-file"`
 }
 
-// NewCreateDnsParam return new CreateDnsParam
-func NewCreateDnsParam() *CreateDnsParam {
-	return &CreateDnsParam{}
+// NewCreateDNSParam return new CreateDNSParam
+func NewCreateDNSParam() *CreateDNSParam {
+	return &CreateDNSParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CreateDnsParam) FillValueToSkeleton() {
+func (p *CreateDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -956,7 +956,7 @@ func (p *CreateDnsParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CreateDnsParam) Validate() []error {
+func (p *CreateDNSParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -1017,152 +1017,152 @@ func (p *CreateDnsParam) Validate() []error {
 	return errors
 }
 
-func (p *CreateDnsParam) GetResourceDef() *schema.Resource {
+func (p *CreateDNSParam) GetResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *CreateDnsParam) GetCommandDef() *schema.Command {
+func (p *CreateDNSParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["create"]
 }
 
-func (p *CreateDnsParam) GetIncludeFields() []string {
+func (p *CreateDNSParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CreateDnsParam) GetExcludeFields() []string {
+func (p *CreateDNSParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CreateDnsParam) GetTableType() output.TableType {
+func (p *CreateDNSParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CreateDnsParam) GetColumnDefs() []output.ColumnDef {
+func (p *CreateDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CreateDnsParam) SetName(v string) {
+func (p *CreateDNSParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *CreateDnsParam) GetName() string {
+func (p *CreateDNSParam) GetName() string {
 	return p.Name
 }
-func (p *CreateDnsParam) SetDescription(v string) {
+func (p *CreateDNSParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *CreateDnsParam) GetDescription() string {
+func (p *CreateDNSParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateDnsParam) SetTags(v []string) {
+func (p *CreateDNSParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreateDnsParam) GetTags() []string {
+func (p *CreateDNSParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateDnsParam) SetIconId(v sacloud.ID) {
+func (p *CreateDNSParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateDnsParam) GetIconId() sacloud.ID {
+func (p *CreateDNSParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *CreateDnsParam) SetAssumeyes(v bool) {
+func (p *CreateDNSParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *CreateDnsParam) GetAssumeyes() bool {
+func (p *CreateDNSParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CreateDnsParam) SetParamTemplate(v string) {
+func (p *CreateDNSParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CreateDnsParam) GetParamTemplate() string {
+func (p *CreateDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CreateDnsParam) SetParameters(v string) {
+func (p *CreateDNSParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *CreateDnsParam) GetParameters() string {
+func (p *CreateDNSParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *CreateDnsParam) SetParamTemplateFile(v string) {
+func (p *CreateDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CreateDnsParam) GetParamTemplateFile() string {
+func (p *CreateDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CreateDnsParam) SetParameterFile(v string) {
+func (p *CreateDNSParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *CreateDnsParam) GetParameterFile() string {
+func (p *CreateDNSParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *CreateDnsParam) SetGenerateSkeleton(v bool) {
+func (p *CreateDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CreateDnsParam) GetGenerateSkeleton() bool {
+func (p *CreateDNSParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CreateDnsParam) SetOutputType(v string) {
+func (p *CreateDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CreateDnsParam) GetOutputType() string {
+func (p *CreateDNSParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CreateDnsParam) SetColumn(v []string) {
+func (p *CreateDNSParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CreateDnsParam) GetColumn() []string {
+func (p *CreateDNSParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CreateDnsParam) SetQuiet(v bool) {
+func (p *CreateDNSParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CreateDnsParam) GetQuiet() bool {
+func (p *CreateDNSParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CreateDnsParam) SetFormat(v string) {
+func (p *CreateDNSParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CreateDnsParam) GetFormat() string {
+func (p *CreateDNSParam) GetFormat() string {
 	return p.Format
 }
-func (p *CreateDnsParam) SetFormatFile(v string) {
+func (p *CreateDNSParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CreateDnsParam) GetFormatFile() string {
+func (p *CreateDNSParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CreateDnsParam) SetQuery(v string) {
+func (p *CreateDNSParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CreateDnsParam) GetQuery() string {
+func (p *CreateDNSParam) GetQuery() string {
 	return p.Query
 }
-func (p *CreateDnsParam) SetQueryFile(v string) {
+func (p *CreateDNSParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CreateDnsParam) GetQueryFile() string {
+func (p *CreateDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// RecordAddDnsParam is input parameters for the sacloud API
-type RecordAddDnsParam struct {
+// RecordAddDNSParam is input parameters for the sacloud API
+type RecordAddDNSParam struct {
 	Name              string     `json:"name"`
 	Type              string     `json:"type"`
 	Value             string     `json:"value"`
@@ -1189,9 +1189,9 @@ type RecordAddDnsParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewRecordAddDnsParam return new RecordAddDnsParam
-func NewRecordAddDnsParam() *RecordAddDnsParam {
-	return &RecordAddDnsParam{
+// NewRecordAddDNSParam return new RecordAddDNSParam
+func NewRecordAddDNSParam() *RecordAddDNSParam {
+	return &RecordAddDNSParam{
 
 		Ttl:        3600,
 		MxPriority: 10,
@@ -1199,7 +1199,7 @@ func NewRecordAddDnsParam() *RecordAddDnsParam {
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *RecordAddDnsParam) FillValueToSkeleton() {
+func (p *RecordAddDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -1276,7 +1276,7 @@ func (p *RecordAddDnsParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *RecordAddDnsParam) Validate() []error {
+func (p *RecordAddDNSParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -1379,201 +1379,201 @@ func (p *RecordAddDnsParam) Validate() []error {
 	return errors
 }
 
-func (p *RecordAddDnsParam) GetResourceDef() *schema.Resource {
+func (p *RecordAddDNSParam) GetResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *RecordAddDnsParam) GetCommandDef() *schema.Command {
+func (p *RecordAddDNSParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["record-add"]
 }
 
-func (p *RecordAddDnsParam) GetIncludeFields() []string {
+func (p *RecordAddDNSParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *RecordAddDnsParam) GetExcludeFields() []string {
+func (p *RecordAddDNSParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *RecordAddDnsParam) GetTableType() output.TableType {
+func (p *RecordAddDNSParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *RecordAddDnsParam) GetColumnDefs() []output.ColumnDef {
+func (p *RecordAddDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *RecordAddDnsParam) SetName(v string) {
+func (p *RecordAddDNSParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *RecordAddDnsParam) GetName() string {
+func (p *RecordAddDNSParam) GetName() string {
 	return p.Name
 }
-func (p *RecordAddDnsParam) SetType(v string) {
+func (p *RecordAddDNSParam) SetType(v string) {
 	p.Type = v
 }
 
-func (p *RecordAddDnsParam) GetType() string {
+func (p *RecordAddDNSParam) GetType() string {
 	return p.Type
 }
-func (p *RecordAddDnsParam) SetValue(v string) {
+func (p *RecordAddDNSParam) SetValue(v string) {
 	p.Value = v
 }
 
-func (p *RecordAddDnsParam) GetValue() string {
+func (p *RecordAddDNSParam) GetValue() string {
 	return p.Value
 }
-func (p *RecordAddDnsParam) SetTtl(v int) {
+func (p *RecordAddDNSParam) SetTtl(v int) {
 	p.Ttl = v
 }
 
-func (p *RecordAddDnsParam) GetTtl() int {
+func (p *RecordAddDNSParam) GetTtl() int {
 	return p.Ttl
 }
-func (p *RecordAddDnsParam) SetMxPriority(v int) {
+func (p *RecordAddDNSParam) SetMxPriority(v int) {
 	p.MxPriority = v
 }
 
-func (p *RecordAddDnsParam) GetMxPriority() int {
+func (p *RecordAddDNSParam) GetMxPriority() int {
 	return p.MxPriority
 }
-func (p *RecordAddDnsParam) SetSrvPriority(v int) {
+func (p *RecordAddDNSParam) SetSrvPriority(v int) {
 	p.SrvPriority = v
 }
 
-func (p *RecordAddDnsParam) GetSrvPriority() int {
+func (p *RecordAddDNSParam) GetSrvPriority() int {
 	return p.SrvPriority
 }
-func (p *RecordAddDnsParam) SetSrvWeight(v int) {
+func (p *RecordAddDNSParam) SetSrvWeight(v int) {
 	p.SrvWeight = v
 }
 
-func (p *RecordAddDnsParam) GetSrvWeight() int {
+func (p *RecordAddDNSParam) GetSrvWeight() int {
 	return p.SrvWeight
 }
-func (p *RecordAddDnsParam) SetSrvPort(v int) {
+func (p *RecordAddDNSParam) SetSrvPort(v int) {
 	p.SrvPort = v
 }
 
-func (p *RecordAddDnsParam) GetSrvPort() int {
+func (p *RecordAddDNSParam) GetSrvPort() int {
 	return p.SrvPort
 }
-func (p *RecordAddDnsParam) SetSrvTarget(v string) {
+func (p *RecordAddDNSParam) SetSrvTarget(v string) {
 	p.SrvTarget = v
 }
 
-func (p *RecordAddDnsParam) GetSrvTarget() string {
+func (p *RecordAddDNSParam) GetSrvTarget() string {
 	return p.SrvTarget
 }
-func (p *RecordAddDnsParam) SetSelector(v []string) {
+func (p *RecordAddDNSParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *RecordAddDnsParam) GetSelector() []string {
+func (p *RecordAddDNSParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *RecordAddDnsParam) SetAssumeyes(v bool) {
+func (p *RecordAddDNSParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *RecordAddDnsParam) GetAssumeyes() bool {
+func (p *RecordAddDNSParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *RecordAddDnsParam) SetParamTemplate(v string) {
+func (p *RecordAddDNSParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *RecordAddDnsParam) GetParamTemplate() string {
+func (p *RecordAddDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *RecordAddDnsParam) SetParameters(v string) {
+func (p *RecordAddDNSParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *RecordAddDnsParam) GetParameters() string {
+func (p *RecordAddDNSParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *RecordAddDnsParam) SetParamTemplateFile(v string) {
+func (p *RecordAddDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *RecordAddDnsParam) GetParamTemplateFile() string {
+func (p *RecordAddDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *RecordAddDnsParam) SetParameterFile(v string) {
+func (p *RecordAddDNSParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *RecordAddDnsParam) GetParameterFile() string {
+func (p *RecordAddDNSParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *RecordAddDnsParam) SetGenerateSkeleton(v bool) {
+func (p *RecordAddDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *RecordAddDnsParam) GetGenerateSkeleton() bool {
+func (p *RecordAddDNSParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *RecordAddDnsParam) SetOutputType(v string) {
+func (p *RecordAddDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *RecordAddDnsParam) GetOutputType() string {
+func (p *RecordAddDNSParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *RecordAddDnsParam) SetColumn(v []string) {
+func (p *RecordAddDNSParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *RecordAddDnsParam) GetColumn() []string {
+func (p *RecordAddDNSParam) GetColumn() []string {
 	return p.Column
 }
-func (p *RecordAddDnsParam) SetQuiet(v bool) {
+func (p *RecordAddDNSParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *RecordAddDnsParam) GetQuiet() bool {
+func (p *RecordAddDNSParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *RecordAddDnsParam) SetFormat(v string) {
+func (p *RecordAddDNSParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *RecordAddDnsParam) GetFormat() string {
+func (p *RecordAddDNSParam) GetFormat() string {
 	return p.Format
 }
-func (p *RecordAddDnsParam) SetFormatFile(v string) {
+func (p *RecordAddDNSParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *RecordAddDnsParam) GetFormatFile() string {
+func (p *RecordAddDNSParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *RecordAddDnsParam) SetQuery(v string) {
+func (p *RecordAddDNSParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *RecordAddDnsParam) GetQuery() string {
+func (p *RecordAddDNSParam) GetQuery() string {
 	return p.Query
 }
-func (p *RecordAddDnsParam) SetQueryFile(v string) {
+func (p *RecordAddDNSParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *RecordAddDnsParam) GetQueryFile() string {
+func (p *RecordAddDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RecordAddDnsParam) SetId(v sacloud.ID) {
+func (p *RecordAddDNSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RecordAddDnsParam) GetId() sacloud.ID {
+func (p *RecordAddDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ReadDnsParam is input parameters for the sacloud API
-type ReadDnsParam struct {
+// ReadDNSParam is input parameters for the sacloud API
+type ReadDNSParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
 	Parameters        string     `json:"parameters"`
@@ -1590,13 +1590,13 @@ type ReadDnsParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewReadDnsParam return new ReadDnsParam
-func NewReadDnsParam() *ReadDnsParam {
-	return &ReadDnsParam{}
+// NewReadDNSParam return new ReadDNSParam
+func NewReadDNSParam() *ReadDNSParam {
+	return &ReadDNSParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ReadDnsParam) FillValueToSkeleton() {
+func (p *ReadDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1643,7 +1643,7 @@ func (p *ReadDnsParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ReadDnsParam) Validate() []error {
+func (p *ReadDNSParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1676,131 +1676,131 @@ func (p *ReadDnsParam) Validate() []error {
 	return errors
 }
 
-func (p *ReadDnsParam) GetResourceDef() *schema.Resource {
+func (p *ReadDNSParam) GetResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *ReadDnsParam) GetCommandDef() *schema.Command {
+func (p *ReadDNSParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["read"]
 }
 
-func (p *ReadDnsParam) GetIncludeFields() []string {
+func (p *ReadDNSParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ReadDnsParam) GetExcludeFields() []string {
+func (p *ReadDNSParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ReadDnsParam) GetTableType() output.TableType {
+func (p *ReadDNSParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ReadDnsParam) GetColumnDefs() []output.ColumnDef {
+func (p *ReadDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReadDnsParam) SetSelector(v []string) {
+func (p *ReadDNSParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ReadDnsParam) GetSelector() []string {
+func (p *ReadDNSParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ReadDnsParam) SetParamTemplate(v string) {
+func (p *ReadDNSParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ReadDnsParam) GetParamTemplate() string {
+func (p *ReadDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ReadDnsParam) SetParameters(v string) {
+func (p *ReadDNSParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ReadDnsParam) GetParameters() string {
+func (p *ReadDNSParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ReadDnsParam) SetParamTemplateFile(v string) {
+func (p *ReadDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ReadDnsParam) GetParamTemplateFile() string {
+func (p *ReadDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ReadDnsParam) SetParameterFile(v string) {
+func (p *ReadDNSParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ReadDnsParam) GetParameterFile() string {
+func (p *ReadDNSParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ReadDnsParam) SetGenerateSkeleton(v bool) {
+func (p *ReadDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ReadDnsParam) GetGenerateSkeleton() bool {
+func (p *ReadDNSParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReadDnsParam) SetOutputType(v string) {
+func (p *ReadDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ReadDnsParam) GetOutputType() string {
+func (p *ReadDNSParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ReadDnsParam) SetColumn(v []string) {
+func (p *ReadDNSParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ReadDnsParam) GetColumn() []string {
+func (p *ReadDNSParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ReadDnsParam) SetQuiet(v bool) {
+func (p *ReadDNSParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ReadDnsParam) GetQuiet() bool {
+func (p *ReadDNSParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ReadDnsParam) SetFormat(v string) {
+func (p *ReadDNSParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ReadDnsParam) GetFormat() string {
+func (p *ReadDNSParam) GetFormat() string {
 	return p.Format
 }
-func (p *ReadDnsParam) SetFormatFile(v string) {
+func (p *ReadDNSParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ReadDnsParam) GetFormatFile() string {
+func (p *ReadDNSParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ReadDnsParam) SetQuery(v string) {
+func (p *ReadDNSParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ReadDnsParam) GetQuery() string {
+func (p *ReadDNSParam) GetQuery() string {
 	return p.Query
 }
-func (p *ReadDnsParam) SetQueryFile(v string) {
+func (p *ReadDNSParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ReadDnsParam) GetQueryFile() string {
+func (p *ReadDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadDnsParam) SetId(v sacloud.ID) {
+func (p *ReadDNSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadDnsParam) GetId() sacloud.ID {
+func (p *ReadDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// RecordUpdateDnsParam is input parameters for the sacloud API
-type RecordUpdateDnsParam struct {
+// RecordUpdateDNSParam is input parameters for the sacloud API
+type RecordUpdateDNSParam struct {
 	Index             int        `json:"index"`
 	Name              string     `json:"name"`
 	Type              string     `json:"type"`
@@ -1828,13 +1828,13 @@ type RecordUpdateDnsParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewRecordUpdateDnsParam return new RecordUpdateDnsParam
-func NewRecordUpdateDnsParam() *RecordUpdateDnsParam {
-	return &RecordUpdateDnsParam{}
+// NewRecordUpdateDNSParam return new RecordUpdateDNSParam
+func NewRecordUpdateDNSParam() *RecordUpdateDNSParam {
+	return &RecordUpdateDNSParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *RecordUpdateDnsParam) FillValueToSkeleton() {
+func (p *RecordUpdateDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -1914,7 +1914,7 @@ func (p *RecordUpdateDnsParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *RecordUpdateDnsParam) Validate() []error {
+func (p *RecordUpdateDNSParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -2010,208 +2010,208 @@ func (p *RecordUpdateDnsParam) Validate() []error {
 	return errors
 }
 
-func (p *RecordUpdateDnsParam) GetResourceDef() *schema.Resource {
+func (p *RecordUpdateDNSParam) GetResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *RecordUpdateDnsParam) GetCommandDef() *schema.Command {
+func (p *RecordUpdateDNSParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["record-update"]
 }
 
-func (p *RecordUpdateDnsParam) GetIncludeFields() []string {
+func (p *RecordUpdateDNSParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *RecordUpdateDnsParam) GetExcludeFields() []string {
+func (p *RecordUpdateDNSParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *RecordUpdateDnsParam) GetTableType() output.TableType {
+func (p *RecordUpdateDNSParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *RecordUpdateDnsParam) GetColumnDefs() []output.ColumnDef {
+func (p *RecordUpdateDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *RecordUpdateDnsParam) SetIndex(v int) {
+func (p *RecordUpdateDNSParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *RecordUpdateDnsParam) GetIndex() int {
+func (p *RecordUpdateDNSParam) GetIndex() int {
 	return p.Index
 }
-func (p *RecordUpdateDnsParam) SetName(v string) {
+func (p *RecordUpdateDNSParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *RecordUpdateDnsParam) GetName() string {
+func (p *RecordUpdateDNSParam) GetName() string {
 	return p.Name
 }
-func (p *RecordUpdateDnsParam) SetType(v string) {
+func (p *RecordUpdateDNSParam) SetType(v string) {
 	p.Type = v
 }
 
-func (p *RecordUpdateDnsParam) GetType() string {
+func (p *RecordUpdateDNSParam) GetType() string {
 	return p.Type
 }
-func (p *RecordUpdateDnsParam) SetValue(v string) {
+func (p *RecordUpdateDNSParam) SetValue(v string) {
 	p.Value = v
 }
 
-func (p *RecordUpdateDnsParam) GetValue() string {
+func (p *RecordUpdateDNSParam) GetValue() string {
 	return p.Value
 }
-func (p *RecordUpdateDnsParam) SetTtl(v int) {
+func (p *RecordUpdateDNSParam) SetTtl(v int) {
 	p.Ttl = v
 }
 
-func (p *RecordUpdateDnsParam) GetTtl() int {
+func (p *RecordUpdateDNSParam) GetTtl() int {
 	return p.Ttl
 }
-func (p *RecordUpdateDnsParam) SetMxPriority(v int) {
+func (p *RecordUpdateDNSParam) SetMxPriority(v int) {
 	p.MxPriority = v
 }
 
-func (p *RecordUpdateDnsParam) GetMxPriority() int {
+func (p *RecordUpdateDNSParam) GetMxPriority() int {
 	return p.MxPriority
 }
-func (p *RecordUpdateDnsParam) SetSrvPriority(v int) {
+func (p *RecordUpdateDNSParam) SetSrvPriority(v int) {
 	p.SrvPriority = v
 }
 
-func (p *RecordUpdateDnsParam) GetSrvPriority() int {
+func (p *RecordUpdateDNSParam) GetSrvPriority() int {
 	return p.SrvPriority
 }
-func (p *RecordUpdateDnsParam) SetSrvWeight(v int) {
+func (p *RecordUpdateDNSParam) SetSrvWeight(v int) {
 	p.SrvWeight = v
 }
 
-func (p *RecordUpdateDnsParam) GetSrvWeight() int {
+func (p *RecordUpdateDNSParam) GetSrvWeight() int {
 	return p.SrvWeight
 }
-func (p *RecordUpdateDnsParam) SetSrvPort(v int) {
+func (p *RecordUpdateDNSParam) SetSrvPort(v int) {
 	p.SrvPort = v
 }
 
-func (p *RecordUpdateDnsParam) GetSrvPort() int {
+func (p *RecordUpdateDNSParam) GetSrvPort() int {
 	return p.SrvPort
 }
-func (p *RecordUpdateDnsParam) SetSrvTarget(v string) {
+func (p *RecordUpdateDNSParam) SetSrvTarget(v string) {
 	p.SrvTarget = v
 }
 
-func (p *RecordUpdateDnsParam) GetSrvTarget() string {
+func (p *RecordUpdateDNSParam) GetSrvTarget() string {
 	return p.SrvTarget
 }
-func (p *RecordUpdateDnsParam) SetSelector(v []string) {
+func (p *RecordUpdateDNSParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *RecordUpdateDnsParam) GetSelector() []string {
+func (p *RecordUpdateDNSParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *RecordUpdateDnsParam) SetAssumeyes(v bool) {
+func (p *RecordUpdateDNSParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *RecordUpdateDnsParam) GetAssumeyes() bool {
+func (p *RecordUpdateDNSParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *RecordUpdateDnsParam) SetParamTemplate(v string) {
+func (p *RecordUpdateDNSParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *RecordUpdateDnsParam) GetParamTemplate() string {
+func (p *RecordUpdateDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *RecordUpdateDnsParam) SetParameters(v string) {
+func (p *RecordUpdateDNSParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *RecordUpdateDnsParam) GetParameters() string {
+func (p *RecordUpdateDNSParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *RecordUpdateDnsParam) SetParamTemplateFile(v string) {
+func (p *RecordUpdateDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *RecordUpdateDnsParam) GetParamTemplateFile() string {
+func (p *RecordUpdateDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *RecordUpdateDnsParam) SetParameterFile(v string) {
+func (p *RecordUpdateDNSParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *RecordUpdateDnsParam) GetParameterFile() string {
+func (p *RecordUpdateDNSParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *RecordUpdateDnsParam) SetGenerateSkeleton(v bool) {
+func (p *RecordUpdateDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *RecordUpdateDnsParam) GetGenerateSkeleton() bool {
+func (p *RecordUpdateDNSParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *RecordUpdateDnsParam) SetOutputType(v string) {
+func (p *RecordUpdateDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *RecordUpdateDnsParam) GetOutputType() string {
+func (p *RecordUpdateDNSParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *RecordUpdateDnsParam) SetColumn(v []string) {
+func (p *RecordUpdateDNSParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *RecordUpdateDnsParam) GetColumn() []string {
+func (p *RecordUpdateDNSParam) GetColumn() []string {
 	return p.Column
 }
-func (p *RecordUpdateDnsParam) SetQuiet(v bool) {
+func (p *RecordUpdateDNSParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *RecordUpdateDnsParam) GetQuiet() bool {
+func (p *RecordUpdateDNSParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *RecordUpdateDnsParam) SetFormat(v string) {
+func (p *RecordUpdateDNSParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *RecordUpdateDnsParam) GetFormat() string {
+func (p *RecordUpdateDNSParam) GetFormat() string {
 	return p.Format
 }
-func (p *RecordUpdateDnsParam) SetFormatFile(v string) {
+func (p *RecordUpdateDNSParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *RecordUpdateDnsParam) GetFormatFile() string {
+func (p *RecordUpdateDNSParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *RecordUpdateDnsParam) SetQuery(v string) {
+func (p *RecordUpdateDNSParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *RecordUpdateDnsParam) GetQuery() string {
+func (p *RecordUpdateDNSParam) GetQuery() string {
 	return p.Query
 }
-func (p *RecordUpdateDnsParam) SetQueryFile(v string) {
+func (p *RecordUpdateDNSParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *RecordUpdateDnsParam) GetQueryFile() string {
+func (p *RecordUpdateDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RecordUpdateDnsParam) SetId(v sacloud.ID) {
+func (p *RecordUpdateDNSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RecordUpdateDnsParam) GetId() sacloud.ID {
+func (p *RecordUpdateDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// RecordDeleteDnsParam is input parameters for the sacloud API
-type RecordDeleteDnsParam struct {
+// RecordDeleteDNSParam is input parameters for the sacloud API
+type RecordDeleteDNSParam struct {
 	Index             int        `json:"index"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
@@ -2230,13 +2230,13 @@ type RecordDeleteDnsParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewRecordDeleteDnsParam return new RecordDeleteDnsParam
-func NewRecordDeleteDnsParam() *RecordDeleteDnsParam {
-	return &RecordDeleteDnsParam{}
+// NewRecordDeleteDNSParam return new RecordDeleteDNSParam
+func NewRecordDeleteDNSParam() *RecordDeleteDNSParam {
+	return &RecordDeleteDNSParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *RecordDeleteDnsParam) FillValueToSkeleton() {
+func (p *RecordDeleteDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -2289,7 +2289,7 @@ func (p *RecordDeleteDnsParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *RecordDeleteDnsParam) Validate() []error {
+func (p *RecordDeleteDNSParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -2329,145 +2329,145 @@ func (p *RecordDeleteDnsParam) Validate() []error {
 	return errors
 }
 
-func (p *RecordDeleteDnsParam) GetResourceDef() *schema.Resource {
+func (p *RecordDeleteDNSParam) GetResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *RecordDeleteDnsParam) GetCommandDef() *schema.Command {
+func (p *RecordDeleteDNSParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["record-delete"]
 }
 
-func (p *RecordDeleteDnsParam) GetIncludeFields() []string {
+func (p *RecordDeleteDNSParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *RecordDeleteDnsParam) GetExcludeFields() []string {
+func (p *RecordDeleteDNSParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *RecordDeleteDnsParam) GetTableType() output.TableType {
+func (p *RecordDeleteDNSParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *RecordDeleteDnsParam) GetColumnDefs() []output.ColumnDef {
+func (p *RecordDeleteDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *RecordDeleteDnsParam) SetIndex(v int) {
+func (p *RecordDeleteDNSParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *RecordDeleteDnsParam) GetIndex() int {
+func (p *RecordDeleteDNSParam) GetIndex() int {
 	return p.Index
 }
-func (p *RecordDeleteDnsParam) SetSelector(v []string) {
+func (p *RecordDeleteDNSParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *RecordDeleteDnsParam) GetSelector() []string {
+func (p *RecordDeleteDNSParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *RecordDeleteDnsParam) SetAssumeyes(v bool) {
+func (p *RecordDeleteDNSParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *RecordDeleteDnsParam) GetAssumeyes() bool {
+func (p *RecordDeleteDNSParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *RecordDeleteDnsParam) SetParamTemplate(v string) {
+func (p *RecordDeleteDNSParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *RecordDeleteDnsParam) GetParamTemplate() string {
+func (p *RecordDeleteDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *RecordDeleteDnsParam) SetParameters(v string) {
+func (p *RecordDeleteDNSParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *RecordDeleteDnsParam) GetParameters() string {
+func (p *RecordDeleteDNSParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *RecordDeleteDnsParam) SetParamTemplateFile(v string) {
+func (p *RecordDeleteDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *RecordDeleteDnsParam) GetParamTemplateFile() string {
+func (p *RecordDeleteDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *RecordDeleteDnsParam) SetParameterFile(v string) {
+func (p *RecordDeleteDNSParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *RecordDeleteDnsParam) GetParameterFile() string {
+func (p *RecordDeleteDNSParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *RecordDeleteDnsParam) SetGenerateSkeleton(v bool) {
+func (p *RecordDeleteDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *RecordDeleteDnsParam) GetGenerateSkeleton() bool {
+func (p *RecordDeleteDNSParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *RecordDeleteDnsParam) SetOutputType(v string) {
+func (p *RecordDeleteDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *RecordDeleteDnsParam) GetOutputType() string {
+func (p *RecordDeleteDNSParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *RecordDeleteDnsParam) SetColumn(v []string) {
+func (p *RecordDeleteDNSParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *RecordDeleteDnsParam) GetColumn() []string {
+func (p *RecordDeleteDNSParam) GetColumn() []string {
 	return p.Column
 }
-func (p *RecordDeleteDnsParam) SetQuiet(v bool) {
+func (p *RecordDeleteDNSParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *RecordDeleteDnsParam) GetQuiet() bool {
+func (p *RecordDeleteDNSParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *RecordDeleteDnsParam) SetFormat(v string) {
+func (p *RecordDeleteDNSParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *RecordDeleteDnsParam) GetFormat() string {
+func (p *RecordDeleteDNSParam) GetFormat() string {
 	return p.Format
 }
-func (p *RecordDeleteDnsParam) SetFormatFile(v string) {
+func (p *RecordDeleteDNSParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *RecordDeleteDnsParam) GetFormatFile() string {
+func (p *RecordDeleteDNSParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *RecordDeleteDnsParam) SetQuery(v string) {
+func (p *RecordDeleteDNSParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *RecordDeleteDnsParam) GetQuery() string {
+func (p *RecordDeleteDNSParam) GetQuery() string {
 	return p.Query
 }
-func (p *RecordDeleteDnsParam) SetQueryFile(v string) {
+func (p *RecordDeleteDNSParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *RecordDeleteDnsParam) GetQueryFile() string {
+func (p *RecordDeleteDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RecordDeleteDnsParam) SetId(v sacloud.ID) {
+func (p *RecordDeleteDNSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RecordDeleteDnsParam) GetId() sacloud.ID {
+func (p *RecordDeleteDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// UpdateDnsParam is input parameters for the sacloud API
-type UpdateDnsParam struct {
+// UpdateDNSParam is input parameters for the sacloud API
+type UpdateDNSParam struct {
 	Selector          []string   `json:"selector"`
 	Description       string     `json:"description"`
 	Tags              []string   `json:"tags"`
@@ -2488,13 +2488,13 @@ type UpdateDnsParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewUpdateDnsParam return new UpdateDnsParam
-func NewUpdateDnsParam() *UpdateDnsParam {
-	return &UpdateDnsParam{}
+// NewUpdateDNSParam return new UpdateDNSParam
+func NewUpdateDNSParam() *UpdateDNSParam {
+	return &UpdateDNSParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *UpdateDnsParam) FillValueToSkeleton() {
+func (p *UpdateDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2553,7 +2553,7 @@ func (p *UpdateDnsParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *UpdateDnsParam) Validate() []error {
+func (p *UpdateDNSParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["DNS"].Commands["update"].Params["description"].ValidateFunc
@@ -2607,159 +2607,159 @@ func (p *UpdateDnsParam) Validate() []error {
 	return errors
 }
 
-func (p *UpdateDnsParam) GetResourceDef() *schema.Resource {
+func (p *UpdateDNSParam) GetResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *UpdateDnsParam) GetCommandDef() *schema.Command {
+func (p *UpdateDNSParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["update"]
 }
 
-func (p *UpdateDnsParam) GetIncludeFields() []string {
+func (p *UpdateDNSParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *UpdateDnsParam) GetExcludeFields() []string {
+func (p *UpdateDNSParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *UpdateDnsParam) GetTableType() output.TableType {
+func (p *UpdateDNSParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *UpdateDnsParam) GetColumnDefs() []output.ColumnDef {
+func (p *UpdateDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *UpdateDnsParam) SetSelector(v []string) {
+func (p *UpdateDNSParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *UpdateDnsParam) GetSelector() []string {
+func (p *UpdateDNSParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *UpdateDnsParam) SetDescription(v string) {
+func (p *UpdateDNSParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdateDnsParam) GetDescription() string {
+func (p *UpdateDNSParam) GetDescription() string {
 	return p.Description
 }
-func (p *UpdateDnsParam) SetTags(v []string) {
+func (p *UpdateDNSParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *UpdateDnsParam) GetTags() []string {
+func (p *UpdateDNSParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateDnsParam) SetIconId(v sacloud.ID) {
+func (p *UpdateDNSParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateDnsParam) GetIconId() sacloud.ID {
+func (p *UpdateDNSParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *UpdateDnsParam) SetAssumeyes(v bool) {
+func (p *UpdateDNSParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *UpdateDnsParam) GetAssumeyes() bool {
+func (p *UpdateDNSParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *UpdateDnsParam) SetParamTemplate(v string) {
+func (p *UpdateDNSParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *UpdateDnsParam) GetParamTemplate() string {
+func (p *UpdateDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *UpdateDnsParam) SetParameters(v string) {
+func (p *UpdateDNSParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *UpdateDnsParam) GetParameters() string {
+func (p *UpdateDNSParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *UpdateDnsParam) SetParamTemplateFile(v string) {
+func (p *UpdateDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *UpdateDnsParam) GetParamTemplateFile() string {
+func (p *UpdateDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *UpdateDnsParam) SetParameterFile(v string) {
+func (p *UpdateDNSParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *UpdateDnsParam) GetParameterFile() string {
+func (p *UpdateDNSParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *UpdateDnsParam) SetGenerateSkeleton(v bool) {
+func (p *UpdateDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *UpdateDnsParam) GetGenerateSkeleton() bool {
+func (p *UpdateDNSParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *UpdateDnsParam) SetOutputType(v string) {
+func (p *UpdateDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *UpdateDnsParam) GetOutputType() string {
+func (p *UpdateDNSParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *UpdateDnsParam) SetColumn(v []string) {
+func (p *UpdateDNSParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *UpdateDnsParam) GetColumn() []string {
+func (p *UpdateDNSParam) GetColumn() []string {
 	return p.Column
 }
-func (p *UpdateDnsParam) SetQuiet(v bool) {
+func (p *UpdateDNSParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *UpdateDnsParam) GetQuiet() bool {
+func (p *UpdateDNSParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *UpdateDnsParam) SetFormat(v string) {
+func (p *UpdateDNSParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *UpdateDnsParam) GetFormat() string {
+func (p *UpdateDNSParam) GetFormat() string {
 	return p.Format
 }
-func (p *UpdateDnsParam) SetFormatFile(v string) {
+func (p *UpdateDNSParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *UpdateDnsParam) GetFormatFile() string {
+func (p *UpdateDNSParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *UpdateDnsParam) SetQuery(v string) {
+func (p *UpdateDNSParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *UpdateDnsParam) GetQuery() string {
+func (p *UpdateDNSParam) GetQuery() string {
 	return p.Query
 }
-func (p *UpdateDnsParam) SetQueryFile(v string) {
+func (p *UpdateDNSParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *UpdateDnsParam) GetQueryFile() string {
+func (p *UpdateDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateDnsParam) SetId(v sacloud.ID) {
+func (p *UpdateDNSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateDnsParam) GetId() sacloud.ID {
+func (p *UpdateDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// DeleteDnsParam is input parameters for the sacloud API
-type DeleteDnsParam struct {
+// DeleteDNSParam is input parameters for the sacloud API
+type DeleteDNSParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -2777,13 +2777,13 @@ type DeleteDnsParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewDeleteDnsParam return new DeleteDnsParam
-func NewDeleteDnsParam() *DeleteDnsParam {
-	return &DeleteDnsParam{}
+// NewDeleteDNSParam return new DeleteDNSParam
+func NewDeleteDNSParam() *DeleteDNSParam {
+	return &DeleteDNSParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *DeleteDnsParam) FillValueToSkeleton() {
+func (p *DeleteDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2833,7 +2833,7 @@ func (p *DeleteDnsParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *DeleteDnsParam) Validate() []error {
+func (p *DeleteDNSParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -2866,132 +2866,132 @@ func (p *DeleteDnsParam) Validate() []error {
 	return errors
 }
 
-func (p *DeleteDnsParam) GetResourceDef() *schema.Resource {
+func (p *DeleteDNSParam) GetResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *DeleteDnsParam) GetCommandDef() *schema.Command {
+func (p *DeleteDNSParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["delete"]
 }
 
-func (p *DeleteDnsParam) GetIncludeFields() []string {
+func (p *DeleteDNSParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *DeleteDnsParam) GetExcludeFields() []string {
+func (p *DeleteDNSParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *DeleteDnsParam) GetTableType() output.TableType {
+func (p *DeleteDNSParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *DeleteDnsParam) GetColumnDefs() []output.ColumnDef {
+func (p *DeleteDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DeleteDnsParam) SetSelector(v []string) {
+func (p *DeleteDNSParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *DeleteDnsParam) GetSelector() []string {
+func (p *DeleteDNSParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *DeleteDnsParam) SetAssumeyes(v bool) {
+func (p *DeleteDNSParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *DeleteDnsParam) GetAssumeyes() bool {
+func (p *DeleteDNSParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeleteDnsParam) SetParamTemplate(v string) {
+func (p *DeleteDNSParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *DeleteDnsParam) GetParamTemplate() string {
+func (p *DeleteDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *DeleteDnsParam) SetParameters(v string) {
+func (p *DeleteDNSParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *DeleteDnsParam) GetParameters() string {
+func (p *DeleteDNSParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *DeleteDnsParam) SetParamTemplateFile(v string) {
+func (p *DeleteDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *DeleteDnsParam) GetParamTemplateFile() string {
+func (p *DeleteDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *DeleteDnsParam) SetParameterFile(v string) {
+func (p *DeleteDNSParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *DeleteDnsParam) GetParameterFile() string {
+func (p *DeleteDNSParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *DeleteDnsParam) SetGenerateSkeleton(v bool) {
+func (p *DeleteDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *DeleteDnsParam) GetGenerateSkeleton() bool {
+func (p *DeleteDNSParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DeleteDnsParam) SetOutputType(v string) {
+func (p *DeleteDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *DeleteDnsParam) GetOutputType() string {
+func (p *DeleteDNSParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *DeleteDnsParam) SetColumn(v []string) {
+func (p *DeleteDNSParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *DeleteDnsParam) GetColumn() []string {
+func (p *DeleteDNSParam) GetColumn() []string {
 	return p.Column
 }
-func (p *DeleteDnsParam) SetQuiet(v bool) {
+func (p *DeleteDNSParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *DeleteDnsParam) GetQuiet() bool {
+func (p *DeleteDNSParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *DeleteDnsParam) SetFormat(v string) {
+func (p *DeleteDNSParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *DeleteDnsParam) GetFormat() string {
+func (p *DeleteDNSParam) GetFormat() string {
 	return p.Format
 }
-func (p *DeleteDnsParam) SetFormatFile(v string) {
+func (p *DeleteDNSParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *DeleteDnsParam) GetFormatFile() string {
+func (p *DeleteDNSParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *DeleteDnsParam) SetQuery(v string) {
+func (p *DeleteDNSParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *DeleteDnsParam) GetQuery() string {
+func (p *DeleteDNSParam) GetQuery() string {
 	return p.Query
 }
-func (p *DeleteDnsParam) SetQueryFile(v string) {
+func (p *DeleteDNSParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *DeleteDnsParam) GetQueryFile() string {
+func (p *DeleteDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteDnsParam) SetId(v sacloud.ID) {
+func (p *DeleteDNSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteDnsParam) GetId() sacloud.ID {
+func (p *DeleteDNSParam) GetId() sacloud.ID {
 	return p.Id
 }

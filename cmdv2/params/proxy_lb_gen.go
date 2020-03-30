@@ -27,25 +27,25 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListProxylbParam is input parameters for the sacloud API
-type ListProxylbParam struct {
+// ListProxyLBParam is input parameters for the sacloud API
+type ListProxyLBParam struct {
 	Name []string
+	Tags []string
 	Id   []sacloud.ID
 	From int
 	Max  int
 	Sort []string
-	Tags []string
 
 	input Input
 }
 
-// NewListProxylbParam return new ListProxylbParam
-func NewListProxylbParam() *ListProxylbParam {
-	return &ListProxylbParam{}
+// NewListProxyLBParam return new ListProxyLBParam
+func NewListProxyLBParam() *ListProxyLBParam {
+	return &ListProxyLBParam{}
 }
 
-// Initialize init ListProxylbParam
-func (p *ListProxylbParam) Initialize(in Input) error {
+// Initialize init ListProxyLBParam
+func (p *ListProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -54,13 +54,16 @@ func (p *ListProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ListProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *ListProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListProxylbParam) fillValueToSkeleton() {
+func (p *ListProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
@@ -74,13 +77,10 @@ func (p *ListProxylbParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
 
 }
 
-func (p *ListProxylbParam) validate() error {
+func (p *ListProxyLBParam) validate() error {
 	var errors []error
 
 	{
@@ -88,6 +88,14 @@ func (p *ListProxylbParam) validate() error {
 
 			"--id": p.Id,
 		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["ProxyLB"].Commands["list"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -110,111 +118,103 @@ func (p *ListProxylbParam) validate() error {
 		}
 	}
 
-	{
-		validator := define.Resources["ProxyLB"].Commands["list"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ListProxylbParam) ResourceDef() *schema.Resource {
+func (p *ListProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ListProxylbParam) CommandDef() *schema.Command {
+func (p *ListProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["list"]
 }
 
-func (p *ListProxylbParam) IncludeFields() []string {
+func (p *ListProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ListProxylbParam) ExcludeFields() []string {
+func (p *ListProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ListProxylbParam) TableType() output.TableType {
+func (p *ListProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ListProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *ListProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListProxylbParam) SetName(v []string) {
+func (p *ListProxyLBParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListProxylbParam) GetName() []string {
+func (p *ListProxyLBParam) GetName() []string {
 	return p.Name
 }
-func (p *ListProxylbParam) SetId(v []sacloud.ID) {
-	p.Id = v
-}
-
-func (p *ListProxylbParam) GetId() []sacloud.ID {
-	return p.Id
-}
-func (p *ListProxylbParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListProxylbParam) GetFrom() int {
-	return p.From
-}
-func (p *ListProxylbParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListProxylbParam) GetMax() int {
-	return p.Max
-}
-func (p *ListProxylbParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListProxylbParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListProxylbParam) SetTags(v []string) {
+func (p *ListProxyLBParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *ListProxylbParam) GetTags() []string {
+func (p *ListProxyLBParam) GetTags() []string {
 	return p.Tags
 }
+func (p *ListProxyLBParam) SetId(v []sacloud.ID) {
+	p.Id = v
+}
 
-// CreateProxylbParam is input parameters for the sacloud API
-type CreateProxylbParam struct {
-	DelayLoop            int
-	StickySession        bool
-	SorryServerPort      int
+func (p *ListProxyLBParam) GetId() []sacloud.ID {
+	return p.Id
+}
+func (p *ListProxyLBParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListProxyLBParam) GetFrom() int {
+	return p.From
+}
+func (p *ListProxyLBParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListProxyLBParam) GetMax() int {
+	return p.Max
+}
+func (p *ListProxyLBParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListProxyLBParam) GetSort() []string {
+	return p.Sort
+}
+
+// CreateProxyLBParam is input parameters for the sacloud API
+type CreateProxyLBParam struct {
 	Description          string
 	Tags                 []string
-	Plan                 int
 	HostHeader           string
 	Path                 string
-	IconId               sacloud.ID
-	Name                 string
-	Protocol             string
+	DelayLoop            int
 	SorryServerIpaddress string
+	SorryServerPort      int
 	Timeout              int
+	Plan                 int
+	Protocol             string
+	StickySession        bool
+	Name                 string
+	IconId               sacloud.ID
 
 	input Input
 }
 
-// NewCreateProxylbParam return new CreateProxylbParam
-func NewCreateProxylbParam() *CreateProxylbParam {
-	return &CreateProxylbParam{
-		DelayLoop: 10, Plan: 1000, Path: "/", Protocol: "tcp", Timeout: 10}
+// NewCreateProxyLBParam return new CreateProxyLBParam
+func NewCreateProxyLBParam() *CreateProxyLBParam {
+	return &CreateProxyLBParam{
+		Path: "/", DelayLoop: 10, Timeout: 10, Plan: 1000, Protocol: "tcp"}
 }
 
-// Initialize init CreateProxylbParam
-func (p *CreateProxylbParam) Initialize(in Input) error {
+// Initialize init CreateProxyLBParam
+func (p *CreateProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -223,28 +223,16 @@ func (p *CreateProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CreateProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *CreateProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateProxylbParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.DelayLoop) {
-		p.DelayLoop = 0
-	}
-	if utils.IsEmpty(p.StickySession) {
-		p.StickySession = false
-	}
-	if utils.IsEmpty(p.SorryServerPort) {
-		p.SorryServerPort = 0
-	}
+func (p *CreateProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.Plan) {
-		p.Plan = 0
 	}
 	if utils.IsEmpty(p.HostHeader) {
 		p.HostHeader = ""
@@ -252,26 +240,54 @@ func (p *CreateProxylbParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Path) {
 		p.Path = ""
 	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
-	if utils.IsEmpty(p.Protocol) {
-		p.Protocol = ""
+	if utils.IsEmpty(p.DelayLoop) {
+		p.DelayLoop = 0
 	}
 	if utils.IsEmpty(p.SorryServerIpaddress) {
 		p.SorryServerIpaddress = ""
 	}
+	if utils.IsEmpty(p.SorryServerPort) {
+		p.SorryServerPort = 0
+	}
 	if utils.IsEmpty(p.Timeout) {
 		p.Timeout = 0
+	}
+	if utils.IsEmpty(p.Plan) {
+		p.Plan = 0
+	}
+	if utils.IsEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if utils.IsEmpty(p.StickySession) {
+		p.StickySession = false
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
 	}
 
 }
 
-func (p *CreateProxylbParam) validate() error {
+func (p *CreateProxyLBParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["ProxyLB"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["ProxyLB"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -297,16 +313,8 @@ func (p *CreateProxylbParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["ProxyLB"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["ProxyLB"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
+		validator := define.Resources["ProxyLB"].Commands["create"].Params["timeout"].ValidateFunc
+		errs := validator("--timeout", p.Timeout)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -315,29 +323,6 @@ func (p *CreateProxylbParam) validate() error {
 	{
 		validator := define.Resources["ProxyLB"].Commands["create"].Params["plan"].ValidateFunc
 		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["ProxyLB"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ProxyLB"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -359,8 +344,23 @@ func (p *CreateProxylbParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["ProxyLB"].Commands["create"].Params["timeout"].ValidateFunc
-		errs := validator("--timeout", p.Timeout)
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ProxyLB"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["ProxyLB"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -369,134 +369,134 @@ func (p *CreateProxylbParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CreateProxylbParam) ResourceDef() *schema.Resource {
+func (p *CreateProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *CreateProxylbParam) CommandDef() *schema.Command {
+func (p *CreateProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["create"]
 }
 
-func (p *CreateProxylbParam) IncludeFields() []string {
+func (p *CreateProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CreateProxylbParam) ExcludeFields() []string {
+func (p *CreateProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CreateProxylbParam) TableType() output.TableType {
+func (p *CreateProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CreateProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *CreateProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateProxylbParam) SetDelayLoop(v int) {
-	p.DelayLoop = v
-}
-
-func (p *CreateProxylbParam) GetDelayLoop() int {
-	return p.DelayLoop
-}
-func (p *CreateProxylbParam) SetStickySession(v bool) {
-	p.StickySession = v
-}
-
-func (p *CreateProxylbParam) GetStickySession() bool {
-	return p.StickySession
-}
-func (p *CreateProxylbParam) SetSorryServerPort(v int) {
-	p.SorryServerPort = v
-}
-
-func (p *CreateProxylbParam) GetSorryServerPort() int {
-	return p.SorryServerPort
-}
-func (p *CreateProxylbParam) SetDescription(v string) {
+func (p *CreateProxyLBParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *CreateProxylbParam) GetDescription() string {
+func (p *CreateProxyLBParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateProxylbParam) SetTags(v []string) {
+func (p *CreateProxyLBParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreateProxylbParam) GetTags() []string {
+func (p *CreateProxyLBParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateProxylbParam) SetPlan(v int) {
-	p.Plan = v
-}
-
-func (p *CreateProxylbParam) GetPlan() int {
-	return p.Plan
-}
-func (p *CreateProxylbParam) SetHostHeader(v string) {
+func (p *CreateProxyLBParam) SetHostHeader(v string) {
 	p.HostHeader = v
 }
 
-func (p *CreateProxylbParam) GetHostHeader() string {
+func (p *CreateProxyLBParam) GetHostHeader() string {
 	return p.HostHeader
 }
-func (p *CreateProxylbParam) SetPath(v string) {
+func (p *CreateProxyLBParam) SetPath(v string) {
 	p.Path = v
 }
 
-func (p *CreateProxylbParam) GetPath() string {
+func (p *CreateProxyLBParam) GetPath() string {
 	return p.Path
 }
-func (p *CreateProxylbParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
+func (p *CreateProxyLBParam) SetDelayLoop(v int) {
+	p.DelayLoop = v
 }
 
-func (p *CreateProxylbParam) GetIconId() sacloud.ID {
-	return p.IconId
+func (p *CreateProxyLBParam) GetDelayLoop() int {
+	return p.DelayLoop
 }
-func (p *CreateProxylbParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateProxylbParam) GetName() string {
-	return p.Name
-}
-func (p *CreateProxylbParam) SetProtocol(v string) {
-	p.Protocol = v
-}
-
-func (p *CreateProxylbParam) GetProtocol() string {
-	return p.Protocol
-}
-func (p *CreateProxylbParam) SetSorryServerIpaddress(v string) {
+func (p *CreateProxyLBParam) SetSorryServerIpaddress(v string) {
 	p.SorryServerIpaddress = v
 }
 
-func (p *CreateProxylbParam) GetSorryServerIpaddress() string {
+func (p *CreateProxyLBParam) GetSorryServerIpaddress() string {
 	return p.SorryServerIpaddress
 }
-func (p *CreateProxylbParam) SetTimeout(v int) {
+func (p *CreateProxyLBParam) SetSorryServerPort(v int) {
+	p.SorryServerPort = v
+}
+
+func (p *CreateProxyLBParam) GetSorryServerPort() int {
+	return p.SorryServerPort
+}
+func (p *CreateProxyLBParam) SetTimeout(v int) {
 	p.Timeout = v
 }
 
-func (p *CreateProxylbParam) GetTimeout() int {
+func (p *CreateProxyLBParam) GetTimeout() int {
 	return p.Timeout
 }
+func (p *CreateProxyLBParam) SetPlan(v int) {
+	p.Plan = v
+}
 
-// ReadProxylbParam is input parameters for the sacloud API
-type ReadProxylbParam struct {
+func (p *CreateProxyLBParam) GetPlan() int {
+	return p.Plan
+}
+func (p *CreateProxyLBParam) SetProtocol(v string) {
+	p.Protocol = v
+}
+
+func (p *CreateProxyLBParam) GetProtocol() string {
+	return p.Protocol
+}
+func (p *CreateProxyLBParam) SetStickySession(v bool) {
+	p.StickySession = v
+}
+
+func (p *CreateProxyLBParam) GetStickySession() bool {
+	return p.StickySession
+}
+func (p *CreateProxyLBParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateProxyLBParam) GetName() string {
+	return p.Name
+}
+func (p *CreateProxyLBParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *CreateProxyLBParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+
+// ReadProxyLBParam is input parameters for the sacloud API
+type ReadProxyLBParam struct {
 	input Input
 }
 
-// NewReadProxylbParam return new ReadProxylbParam
-func NewReadProxylbParam() *ReadProxylbParam {
-	return &ReadProxylbParam{}
+// NewReadProxyLBParam return new ReadProxyLBParam
+func NewReadProxyLBParam() *ReadProxyLBParam {
+	return &ReadProxyLBParam{}
 }
 
-// Initialize init ReadProxylbParam
-func (p *ReadProxylbParam) Initialize(in Input) error {
+// Initialize init ReadProxyLBParam
+func (p *ReadProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -505,70 +505,70 @@ func (p *ReadProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ReadProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *ReadProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadProxylbParam) fillValueToSkeleton() {
+func (p *ReadProxyLBParam) fillValueToSkeleton() {
 
 }
 
-func (p *ReadProxylbParam) validate() error {
+func (p *ReadProxyLBParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ReadProxylbParam) ResourceDef() *schema.Resource {
+func (p *ReadProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ReadProxylbParam) CommandDef() *schema.Command {
+func (p *ReadProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["read"]
 }
 
-func (p *ReadProxylbParam) IncludeFields() []string {
+func (p *ReadProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ReadProxylbParam) ExcludeFields() []string {
+func (p *ReadProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ReadProxylbParam) TableType() output.TableType {
+func (p *ReadProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ReadProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *ReadProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// UpdateProxylbParam is input parameters for the sacloud API
-type UpdateProxylbParam struct {
-	Name                 string
+// UpdateProxyLBParam is input parameters for the sacloud API
+type UpdateProxyLBParam struct {
 	Path                 string
-	Timeout              int
-	DelayLoop            int
-	StickySession        bool
 	SorryServerIpaddress string
 	SorryServerPort      int
-	Description          string
-	Tags                 []string
+	Timeout              int
+	Name                 string
+	IconId               sacloud.ID
 	Protocol             string
 	HostHeader           string
-	IconId               sacloud.ID
+	Description          string
+	Tags                 []string
+	DelayLoop            int
+	StickySession        bool
 
 	input Input
 }
 
-// NewUpdateProxylbParam return new UpdateProxylbParam
-func NewUpdateProxylbParam() *UpdateProxylbParam {
-	return &UpdateProxylbParam{
+// NewUpdateProxyLBParam return new UpdateProxyLBParam
+func NewUpdateProxyLBParam() *UpdateProxyLBParam {
+	return &UpdateProxyLBParam{
 		Timeout: 10}
 }
 
-// Initialize init UpdateProxylbParam
-func (p *UpdateProxylbParam) Initialize(in Input) error {
+// Initialize init UpdateProxyLBParam
+func (p *UpdateProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -577,25 +577,13 @@ func (p *UpdateProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *UpdateProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *UpdateProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateProxylbParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
+func (p *UpdateProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Path) {
 		p.Path = ""
-	}
-	if utils.IsEmpty(p.Timeout) {
-		p.Timeout = 0
-	}
-	if utils.IsEmpty(p.DelayLoop) {
-		p.DelayLoop = 0
-	}
-	if utils.IsEmpty(p.StickySession) {
-		p.StickySession = false
 	}
 	if utils.IsEmpty(p.SorryServerIpaddress) {
 		p.SorryServerIpaddress = ""
@@ -603,11 +591,14 @@ func (p *UpdateProxylbParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.SorryServerPort) {
 		p.SorryServerPort = 0
 	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
+	if utils.IsEmpty(p.Timeout) {
+		p.Timeout = 0
 	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
 	}
 	if utils.IsEmpty(p.Protocol) {
 		p.Protocol = ""
@@ -615,18 +606,27 @@ func (p *UpdateProxylbParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.HostHeader) {
 		p.HostHeader = ""
 	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if utils.IsEmpty(p.DelayLoop) {
+		p.DelayLoop = 0
+	}
+	if utils.IsEmpty(p.StickySession) {
+		p.StickySession = false
 	}
 
 }
 
-func (p *UpdateProxylbParam) validate() error {
+func (p *UpdateProxyLBParam) validate() error {
 	var errors []error
 
 	{
-		validator := define.Resources["ProxyLB"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
+		validator := define.Resources["ProxyLB"].Commands["update"].Params["sorry-server-port"].ValidateFunc
+		errs := validator("--sorry-server-port", p.SorryServerPort)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -641,16 +641,24 @@ func (p *UpdateProxylbParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["ProxyLB"].Commands["update"].Params["delay-loop"].ValidateFunc
-		errs := validator("--delay-loop", p.DelayLoop)
+		validator := define.Resources["ProxyLB"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
 	{
-		validator := define.Resources["ProxyLB"].Commands["update"].Params["sorry-server-port"].ValidateFunc
-		errs := validator("--sorry-server-port", p.SorryServerPort)
+		validator := define.Resources["ProxyLB"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["ProxyLB"].Commands["update"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -673,16 +681,8 @@ func (p *UpdateProxylbParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["ProxyLB"].Commands["update"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["ProxyLB"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
+		validator := define.Resources["ProxyLB"].Commands["update"].Params["delay-loop"].ValidateFunc
+		errs := validator("--delay-loop", p.DelayLoop)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -691,127 +691,127 @@ func (p *UpdateProxylbParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *UpdateProxylbParam) ResourceDef() *schema.Resource {
+func (p *UpdateProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *UpdateProxylbParam) CommandDef() *schema.Command {
+func (p *UpdateProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["update"]
 }
 
-func (p *UpdateProxylbParam) IncludeFields() []string {
+func (p *UpdateProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *UpdateProxylbParam) ExcludeFields() []string {
+func (p *UpdateProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *UpdateProxylbParam) TableType() output.TableType {
+func (p *UpdateProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *UpdateProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *UpdateProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateProxylbParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateProxylbParam) GetName() string {
-	return p.Name
-}
-func (p *UpdateProxylbParam) SetPath(v string) {
+func (p *UpdateProxyLBParam) SetPath(v string) {
 	p.Path = v
 }
 
-func (p *UpdateProxylbParam) GetPath() string {
+func (p *UpdateProxyLBParam) GetPath() string {
 	return p.Path
 }
-func (p *UpdateProxylbParam) SetTimeout(v int) {
-	p.Timeout = v
-}
-
-func (p *UpdateProxylbParam) GetTimeout() int {
-	return p.Timeout
-}
-func (p *UpdateProxylbParam) SetDelayLoop(v int) {
-	p.DelayLoop = v
-}
-
-func (p *UpdateProxylbParam) GetDelayLoop() int {
-	return p.DelayLoop
-}
-func (p *UpdateProxylbParam) SetStickySession(v bool) {
-	p.StickySession = v
-}
-
-func (p *UpdateProxylbParam) GetStickySession() bool {
-	return p.StickySession
-}
-func (p *UpdateProxylbParam) SetSorryServerIpaddress(v string) {
+func (p *UpdateProxyLBParam) SetSorryServerIpaddress(v string) {
 	p.SorryServerIpaddress = v
 }
 
-func (p *UpdateProxylbParam) GetSorryServerIpaddress() string {
+func (p *UpdateProxyLBParam) GetSorryServerIpaddress() string {
 	return p.SorryServerIpaddress
 }
-func (p *UpdateProxylbParam) SetSorryServerPort(v int) {
+func (p *UpdateProxyLBParam) SetSorryServerPort(v int) {
 	p.SorryServerPort = v
 }
 
-func (p *UpdateProxylbParam) GetSorryServerPort() int {
+func (p *UpdateProxyLBParam) GetSorryServerPort() int {
 	return p.SorryServerPort
 }
-func (p *UpdateProxylbParam) SetDescription(v string) {
-	p.Description = v
+func (p *UpdateProxyLBParam) SetTimeout(v int) {
+	p.Timeout = v
 }
 
-func (p *UpdateProxylbParam) GetDescription() string {
-	return p.Description
+func (p *UpdateProxyLBParam) GetTimeout() int {
+	return p.Timeout
 }
-func (p *UpdateProxylbParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *UpdateProxylbParam) GetTags() []string {
-	return p.Tags
-}
-func (p *UpdateProxylbParam) SetProtocol(v string) {
-	p.Protocol = v
+func (p *UpdateProxyLBParam) SetName(v string) {
+	p.Name = v
 }
 
-func (p *UpdateProxylbParam) GetProtocol() string {
-	return p.Protocol
+func (p *UpdateProxyLBParam) GetName() string {
+	return p.Name
 }
-func (p *UpdateProxylbParam) SetHostHeader(v string) {
-	p.HostHeader = v
-}
-
-func (p *UpdateProxylbParam) GetHostHeader() string {
-	return p.HostHeader
-}
-func (p *UpdateProxylbParam) SetIconId(v sacloud.ID) {
+func (p *UpdateProxyLBParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateProxylbParam) GetIconId() sacloud.ID {
+func (p *UpdateProxyLBParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
+func (p *UpdateProxyLBParam) SetProtocol(v string) {
+	p.Protocol = v
+}
 
-// DeleteProxylbParam is input parameters for the sacloud API
-type DeleteProxylbParam struct {
+func (p *UpdateProxyLBParam) GetProtocol() string {
+	return p.Protocol
+}
+func (p *UpdateProxyLBParam) SetHostHeader(v string) {
+	p.HostHeader = v
+}
+
+func (p *UpdateProxyLBParam) GetHostHeader() string {
+	return p.HostHeader
+}
+func (p *UpdateProxyLBParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *UpdateProxyLBParam) GetDescription() string {
+	return p.Description
+}
+func (p *UpdateProxyLBParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *UpdateProxyLBParam) GetTags() []string {
+	return p.Tags
+}
+func (p *UpdateProxyLBParam) SetDelayLoop(v int) {
+	p.DelayLoop = v
+}
+
+func (p *UpdateProxyLBParam) GetDelayLoop() int {
+	return p.DelayLoop
+}
+func (p *UpdateProxyLBParam) SetStickySession(v bool) {
+	p.StickySession = v
+}
+
+func (p *UpdateProxyLBParam) GetStickySession() bool {
+	return p.StickySession
+}
+
+// DeleteProxyLBParam is input parameters for the sacloud API
+type DeleteProxyLBParam struct {
 	input Input
 }
 
-// NewDeleteProxylbParam return new DeleteProxylbParam
-func NewDeleteProxylbParam() *DeleteProxylbParam {
-	return &DeleteProxylbParam{}
+// NewDeleteProxyLBParam return new DeleteProxyLBParam
+func NewDeleteProxyLBParam() *DeleteProxyLBParam {
+	return &DeleteProxyLBParam{}
 }
 
-// Initialize init DeleteProxylbParam
-func (p *DeleteProxylbParam) Initialize(in Input) error {
+// Initialize init DeleteProxyLBParam
+func (p *DeleteProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -820,58 +820,58 @@ func (p *DeleteProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DeleteProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *DeleteProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteProxylbParam) fillValueToSkeleton() {
+func (p *DeleteProxyLBParam) fillValueToSkeleton() {
 
 }
 
-func (p *DeleteProxylbParam) validate() error {
+func (p *DeleteProxyLBParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DeleteProxylbParam) ResourceDef() *schema.Resource {
+func (p *DeleteProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *DeleteProxylbParam) CommandDef() *schema.Command {
+func (p *DeleteProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["delete"]
 }
 
-func (p *DeleteProxylbParam) IncludeFields() []string {
+func (p *DeleteProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DeleteProxylbParam) ExcludeFields() []string {
+func (p *DeleteProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DeleteProxylbParam) TableType() output.TableType {
+func (p *DeleteProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DeleteProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *DeleteProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// PlanChangeProxylbParam is input parameters for the sacloud API
-type PlanChangeProxylbParam struct {
+// PlanChangeProxyLBParam is input parameters for the sacloud API
+type PlanChangeProxyLBParam struct {
 	Plan int
 
 	input Input
 }
 
-// NewPlanChangeProxylbParam return new PlanChangeProxylbParam
-func NewPlanChangeProxylbParam() *PlanChangeProxylbParam {
-	return &PlanChangeProxylbParam{}
+// NewPlanChangeProxyLBParam return new PlanChangeProxyLBParam
+func NewPlanChangeProxyLBParam() *PlanChangeProxyLBParam {
+	return &PlanChangeProxyLBParam{}
 }
 
-// Initialize init PlanChangeProxylbParam
-func (p *PlanChangeProxylbParam) Initialize(in Input) error {
+// Initialize init PlanChangeProxyLBParam
+func (p *PlanChangeProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -880,18 +880,18 @@ func (p *PlanChangeProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *PlanChangeProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *PlanChangeProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PlanChangeProxylbParam) fillValueToSkeleton() {
+func (p *PlanChangeProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Plan) {
 		p.Plan = 0
 	}
 
 }
 
-func (p *PlanChangeProxylbParam) validate() error {
+func (p *PlanChangeProxyLBParam) validate() error {
 	var errors []error
 
 	{
@@ -912,50 +912,50 @@ func (p *PlanChangeProxylbParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *PlanChangeProxylbParam) ResourceDef() *schema.Resource {
+func (p *PlanChangeProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *PlanChangeProxylbParam) CommandDef() *schema.Command {
+func (p *PlanChangeProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["plan-change"]
 }
 
-func (p *PlanChangeProxylbParam) IncludeFields() []string {
+func (p *PlanChangeProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *PlanChangeProxylbParam) ExcludeFields() []string {
+func (p *PlanChangeProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *PlanChangeProxylbParam) TableType() output.TableType {
+func (p *PlanChangeProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *PlanChangeProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *PlanChangeProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *PlanChangeProxylbParam) SetPlan(v int) {
+func (p *PlanChangeProxyLBParam) SetPlan(v int) {
 	p.Plan = v
 }
 
-func (p *PlanChangeProxylbParam) GetPlan() int {
+func (p *PlanChangeProxyLBParam) GetPlan() int {
 	return p.Plan
 }
 
-// BindPortInfoProxylbParam is input parameters for the sacloud API
-type BindPortInfoProxylbParam struct {
+// BindPortInfoProxyLBParam is input parameters for the sacloud API
+type BindPortInfoProxyLBParam struct {
 	input Input
 }
 
-// NewBindPortInfoProxylbParam return new BindPortInfoProxylbParam
-func NewBindPortInfoProxylbParam() *BindPortInfoProxylbParam {
-	return &BindPortInfoProxylbParam{}
+// NewBindPortInfoProxyLBParam return new BindPortInfoProxyLBParam
+func NewBindPortInfoProxyLBParam() *BindPortInfoProxyLBParam {
+	return &BindPortInfoProxyLBParam{}
 }
 
-// Initialize init BindPortInfoProxylbParam
-func (p *BindPortInfoProxylbParam) Initialize(in Input) error {
+// Initialize init BindPortInfoProxyLBParam
+func (p *BindPortInfoProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -964,46 +964,46 @@ func (p *BindPortInfoProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *BindPortInfoProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *BindPortInfoProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *BindPortInfoProxylbParam) fillValueToSkeleton() {
+func (p *BindPortInfoProxyLBParam) fillValueToSkeleton() {
 
 }
 
-func (p *BindPortInfoProxylbParam) validate() error {
+func (p *BindPortInfoProxyLBParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *BindPortInfoProxylbParam) ResourceDef() *schema.Resource {
+func (p *BindPortInfoProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *BindPortInfoProxylbParam) CommandDef() *schema.Command {
+func (p *BindPortInfoProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["bind-port-info"]
 }
 
-func (p *BindPortInfoProxylbParam) IncludeFields() []string {
+func (p *BindPortInfoProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *BindPortInfoProxylbParam) ExcludeFields() []string {
+func (p *BindPortInfoProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *BindPortInfoProxylbParam) TableType() output.TableType {
+func (p *BindPortInfoProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *BindPortInfoProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *BindPortInfoProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// BindPortAddProxylbParam is input parameters for the sacloud API
-type BindPortAddProxylbParam struct {
+// BindPortAddProxyLBParam is input parameters for the sacloud API
+type BindPortAddProxyLBParam struct {
 	Mode            string
 	Port            int
 	RedirectToHttps bool
@@ -1012,13 +1012,13 @@ type BindPortAddProxylbParam struct {
 	input Input
 }
 
-// NewBindPortAddProxylbParam return new BindPortAddProxylbParam
-func NewBindPortAddProxylbParam() *BindPortAddProxylbParam {
-	return &BindPortAddProxylbParam{}
+// NewBindPortAddProxyLBParam return new BindPortAddProxyLBParam
+func NewBindPortAddProxyLBParam() *BindPortAddProxyLBParam {
+	return &BindPortAddProxyLBParam{}
 }
 
-// Initialize init BindPortAddProxylbParam
-func (p *BindPortAddProxylbParam) Initialize(in Input) error {
+// Initialize init BindPortAddProxyLBParam
+func (p *BindPortAddProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1027,11 +1027,11 @@ func (p *BindPortAddProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *BindPortAddProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *BindPortAddProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *BindPortAddProxylbParam) fillValueToSkeleton() {
+func (p *BindPortAddProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Mode) {
 		p.Mode = ""
 	}
@@ -1047,7 +1047,7 @@ func (p *BindPortAddProxylbParam) fillValueToSkeleton() {
 
 }
 
-func (p *BindPortAddProxylbParam) validate() error {
+func (p *BindPortAddProxyLBParam) validate() error {
 	var errors []error
 
 	{
@@ -1083,77 +1083,77 @@ func (p *BindPortAddProxylbParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *BindPortAddProxylbParam) ResourceDef() *schema.Resource {
+func (p *BindPortAddProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *BindPortAddProxylbParam) CommandDef() *schema.Command {
+func (p *BindPortAddProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["bind-port-add"]
 }
 
-func (p *BindPortAddProxylbParam) IncludeFields() []string {
+func (p *BindPortAddProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *BindPortAddProxylbParam) ExcludeFields() []string {
+func (p *BindPortAddProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *BindPortAddProxylbParam) TableType() output.TableType {
+func (p *BindPortAddProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *BindPortAddProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *BindPortAddProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *BindPortAddProxylbParam) SetMode(v string) {
+func (p *BindPortAddProxyLBParam) SetMode(v string) {
 	p.Mode = v
 }
 
-func (p *BindPortAddProxylbParam) GetMode() string {
+func (p *BindPortAddProxyLBParam) GetMode() string {
 	return p.Mode
 }
-func (p *BindPortAddProxylbParam) SetPort(v int) {
+func (p *BindPortAddProxyLBParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *BindPortAddProxylbParam) GetPort() int {
+func (p *BindPortAddProxyLBParam) GetPort() int {
 	return p.Port
 }
-func (p *BindPortAddProxylbParam) SetRedirectToHttps(v bool) {
+func (p *BindPortAddProxyLBParam) SetRedirectToHttps(v bool) {
 	p.RedirectToHttps = v
 }
 
-func (p *BindPortAddProxylbParam) GetRedirectToHttps() bool {
+func (p *BindPortAddProxyLBParam) GetRedirectToHttps() bool {
 	return p.RedirectToHttps
 }
-func (p *BindPortAddProxylbParam) SetSupportHttp2(v bool) {
+func (p *BindPortAddProxyLBParam) SetSupportHttp2(v bool) {
 	p.SupportHttp2 = v
 }
 
-func (p *BindPortAddProxylbParam) GetSupportHttp2() bool {
+func (p *BindPortAddProxyLBParam) GetSupportHttp2() bool {
 	return p.SupportHttp2
 }
 
-// BindPortUpdateProxylbParam is input parameters for the sacloud API
-type BindPortUpdateProxylbParam struct {
+// BindPortUpdateProxyLBParam is input parameters for the sacloud API
+type BindPortUpdateProxyLBParam struct {
+	SupportHttp2    bool
 	Index           int
 	Mode            string
 	Port            int
 	RedirectToHttps bool
-	SupportHttp2    bool
 
 	input Input
 }
 
-// NewBindPortUpdateProxylbParam return new BindPortUpdateProxylbParam
-func NewBindPortUpdateProxylbParam() *BindPortUpdateProxylbParam {
-	return &BindPortUpdateProxylbParam{}
+// NewBindPortUpdateProxyLBParam return new BindPortUpdateProxyLBParam
+func NewBindPortUpdateProxyLBParam() *BindPortUpdateProxyLBParam {
+	return &BindPortUpdateProxyLBParam{}
 }
 
-// Initialize init BindPortUpdateProxylbParam
-func (p *BindPortUpdateProxylbParam) Initialize(in Input) error {
+// Initialize init BindPortUpdateProxyLBParam
+func (p *BindPortUpdateProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1162,11 +1162,14 @@ func (p *BindPortUpdateProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *BindPortUpdateProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *BindPortUpdateProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *BindPortUpdateProxylbParam) fillValueToSkeleton() {
+func (p *BindPortUpdateProxyLBParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.SupportHttp2) {
+		p.SupportHttp2 = false
+	}
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -1179,13 +1182,10 @@ func (p *BindPortUpdateProxylbParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.RedirectToHttps) {
 		p.RedirectToHttps = false
 	}
-	if utils.IsEmpty(p.SupportHttp2) {
-		p.SupportHttp2 = false
-	}
 
 }
 
-func (p *BindPortUpdateProxylbParam) validate() error {
+func (p *BindPortUpdateProxyLBParam) validate() error {
 	var errors []error
 
 	{
@@ -1215,80 +1215,80 @@ func (p *BindPortUpdateProxylbParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *BindPortUpdateProxylbParam) ResourceDef() *schema.Resource {
+func (p *BindPortUpdateProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *BindPortUpdateProxylbParam) CommandDef() *schema.Command {
+func (p *BindPortUpdateProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["bind-port-update"]
 }
 
-func (p *BindPortUpdateProxylbParam) IncludeFields() []string {
+func (p *BindPortUpdateProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *BindPortUpdateProxylbParam) ExcludeFields() []string {
+func (p *BindPortUpdateProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *BindPortUpdateProxylbParam) TableType() output.TableType {
+func (p *BindPortUpdateProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *BindPortUpdateProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *BindPortUpdateProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *BindPortUpdateProxylbParam) SetIndex(v int) {
-	p.Index = v
-}
-
-func (p *BindPortUpdateProxylbParam) GetIndex() int {
-	return p.Index
-}
-func (p *BindPortUpdateProxylbParam) SetMode(v string) {
-	p.Mode = v
-}
-
-func (p *BindPortUpdateProxylbParam) GetMode() string {
-	return p.Mode
-}
-func (p *BindPortUpdateProxylbParam) SetPort(v int) {
-	p.Port = v
-}
-
-func (p *BindPortUpdateProxylbParam) GetPort() int {
-	return p.Port
-}
-func (p *BindPortUpdateProxylbParam) SetRedirectToHttps(v bool) {
-	p.RedirectToHttps = v
-}
-
-func (p *BindPortUpdateProxylbParam) GetRedirectToHttps() bool {
-	return p.RedirectToHttps
-}
-func (p *BindPortUpdateProxylbParam) SetSupportHttp2(v bool) {
+func (p *BindPortUpdateProxyLBParam) SetSupportHttp2(v bool) {
 	p.SupportHttp2 = v
 }
 
-func (p *BindPortUpdateProxylbParam) GetSupportHttp2() bool {
+func (p *BindPortUpdateProxyLBParam) GetSupportHttp2() bool {
 	return p.SupportHttp2
 }
+func (p *BindPortUpdateProxyLBParam) SetIndex(v int) {
+	p.Index = v
+}
 
-// BindPortDeleteProxylbParam is input parameters for the sacloud API
-type BindPortDeleteProxylbParam struct {
+func (p *BindPortUpdateProxyLBParam) GetIndex() int {
+	return p.Index
+}
+func (p *BindPortUpdateProxyLBParam) SetMode(v string) {
+	p.Mode = v
+}
+
+func (p *BindPortUpdateProxyLBParam) GetMode() string {
+	return p.Mode
+}
+func (p *BindPortUpdateProxyLBParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *BindPortUpdateProxyLBParam) GetPort() int {
+	return p.Port
+}
+func (p *BindPortUpdateProxyLBParam) SetRedirectToHttps(v bool) {
+	p.RedirectToHttps = v
+}
+
+func (p *BindPortUpdateProxyLBParam) GetRedirectToHttps() bool {
+	return p.RedirectToHttps
+}
+
+// BindPortDeleteProxyLBParam is input parameters for the sacloud API
+type BindPortDeleteProxyLBParam struct {
 	Index int
 
 	input Input
 }
 
-// NewBindPortDeleteProxylbParam return new BindPortDeleteProxylbParam
-func NewBindPortDeleteProxylbParam() *BindPortDeleteProxylbParam {
-	return &BindPortDeleteProxylbParam{}
+// NewBindPortDeleteProxyLBParam return new BindPortDeleteProxyLBParam
+func NewBindPortDeleteProxyLBParam() *BindPortDeleteProxyLBParam {
+	return &BindPortDeleteProxyLBParam{}
 }
 
-// Initialize init BindPortDeleteProxylbParam
-func (p *BindPortDeleteProxylbParam) Initialize(in Input) error {
+// Initialize init BindPortDeleteProxyLBParam
+func (p *BindPortDeleteProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1297,18 +1297,18 @@ func (p *BindPortDeleteProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *BindPortDeleteProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *BindPortDeleteProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *BindPortDeleteProxylbParam) fillValueToSkeleton() {
+func (p *BindPortDeleteProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
 
 }
 
-func (p *BindPortDeleteProxylbParam) validate() error {
+func (p *BindPortDeleteProxyLBParam) validate() error {
 	var errors []error
 
 	{
@@ -1322,52 +1322,52 @@ func (p *BindPortDeleteProxylbParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *BindPortDeleteProxylbParam) ResourceDef() *schema.Resource {
+func (p *BindPortDeleteProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *BindPortDeleteProxylbParam) CommandDef() *schema.Command {
+func (p *BindPortDeleteProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["bind-port-delete"]
 }
 
-func (p *BindPortDeleteProxylbParam) IncludeFields() []string {
+func (p *BindPortDeleteProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *BindPortDeleteProxylbParam) ExcludeFields() []string {
+func (p *BindPortDeleteProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *BindPortDeleteProxylbParam) TableType() output.TableType {
+func (p *BindPortDeleteProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *BindPortDeleteProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *BindPortDeleteProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *BindPortDeleteProxylbParam) SetIndex(v int) {
+func (p *BindPortDeleteProxyLBParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *BindPortDeleteProxylbParam) GetIndex() int {
+func (p *BindPortDeleteProxyLBParam) GetIndex() int {
 	return p.Index
 }
 
-// ResponseHeaderInfoProxylbParam is input parameters for the sacloud API
-type ResponseHeaderInfoProxylbParam struct {
+// ResponseHeaderInfoProxyLBParam is input parameters for the sacloud API
+type ResponseHeaderInfoProxyLBParam struct {
 	PortIndex int
 
 	input Input
 }
 
-// NewResponseHeaderInfoProxylbParam return new ResponseHeaderInfoProxylbParam
-func NewResponseHeaderInfoProxylbParam() *ResponseHeaderInfoProxylbParam {
-	return &ResponseHeaderInfoProxylbParam{}
+// NewResponseHeaderInfoProxyLBParam return new ResponseHeaderInfoProxyLBParam
+func NewResponseHeaderInfoProxyLBParam() *ResponseHeaderInfoProxyLBParam {
+	return &ResponseHeaderInfoProxyLBParam{}
 }
 
-// Initialize init ResponseHeaderInfoProxylbParam
-func (p *ResponseHeaderInfoProxylbParam) Initialize(in Input) error {
+// Initialize init ResponseHeaderInfoProxyLBParam
+func (p *ResponseHeaderInfoProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1376,18 +1376,18 @@ func (p *ResponseHeaderInfoProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ResponseHeaderInfoProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *ResponseHeaderInfoProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ResponseHeaderInfoProxylbParam) fillValueToSkeleton() {
+func (p *ResponseHeaderInfoProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.PortIndex) {
 		p.PortIndex = 0
 	}
 
 }
 
-func (p *ResponseHeaderInfoProxylbParam) validate() error {
+func (p *ResponseHeaderInfoProxyLBParam) validate() error {
 	var errors []error
 
 	{
@@ -1401,40 +1401,40 @@ func (p *ResponseHeaderInfoProxylbParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ResponseHeaderInfoProxylbParam) ResourceDef() *schema.Resource {
+func (p *ResponseHeaderInfoProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ResponseHeaderInfoProxylbParam) CommandDef() *schema.Command {
+func (p *ResponseHeaderInfoProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["response-header-info"]
 }
 
-func (p *ResponseHeaderInfoProxylbParam) IncludeFields() []string {
+func (p *ResponseHeaderInfoProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ResponseHeaderInfoProxylbParam) ExcludeFields() []string {
+func (p *ResponseHeaderInfoProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ResponseHeaderInfoProxylbParam) TableType() output.TableType {
+func (p *ResponseHeaderInfoProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ResponseHeaderInfoProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *ResponseHeaderInfoProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ResponseHeaderInfoProxylbParam) SetPortIndex(v int) {
+func (p *ResponseHeaderInfoProxyLBParam) SetPortIndex(v int) {
 	p.PortIndex = v
 }
 
-func (p *ResponseHeaderInfoProxylbParam) GetPortIndex() int {
+func (p *ResponseHeaderInfoProxyLBParam) GetPortIndex() int {
 	return p.PortIndex
 }
 
-// ResponseHeaderAddProxylbParam is input parameters for the sacloud API
-type ResponseHeaderAddProxylbParam struct {
+// ResponseHeaderAddProxyLBParam is input parameters for the sacloud API
+type ResponseHeaderAddProxyLBParam struct {
 	PortIndex int
 	Header    string
 	Value     string
@@ -1442,13 +1442,13 @@ type ResponseHeaderAddProxylbParam struct {
 	input Input
 }
 
-// NewResponseHeaderAddProxylbParam return new ResponseHeaderAddProxylbParam
-func NewResponseHeaderAddProxylbParam() *ResponseHeaderAddProxylbParam {
-	return &ResponseHeaderAddProxylbParam{}
+// NewResponseHeaderAddProxyLBParam return new ResponseHeaderAddProxyLBParam
+func NewResponseHeaderAddProxyLBParam() *ResponseHeaderAddProxyLBParam {
+	return &ResponseHeaderAddProxyLBParam{}
 }
 
-// Initialize init ResponseHeaderAddProxylbParam
-func (p *ResponseHeaderAddProxylbParam) Initialize(in Input) error {
+// Initialize init ResponseHeaderAddProxyLBParam
+func (p *ResponseHeaderAddProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1457,11 +1457,11 @@ func (p *ResponseHeaderAddProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ResponseHeaderAddProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *ResponseHeaderAddProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ResponseHeaderAddProxylbParam) fillValueToSkeleton() {
+func (p *ResponseHeaderAddProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.PortIndex) {
 		p.PortIndex = 0
 	}
@@ -1474,7 +1474,7 @@ func (p *ResponseHeaderAddProxylbParam) fillValueToSkeleton() {
 
 }
 
-func (p *ResponseHeaderAddProxylbParam) validate() error {
+func (p *ResponseHeaderAddProxyLBParam) validate() error {
 	var errors []error
 
 	{
@@ -1504,69 +1504,69 @@ func (p *ResponseHeaderAddProxylbParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ResponseHeaderAddProxylbParam) ResourceDef() *schema.Resource {
+func (p *ResponseHeaderAddProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ResponseHeaderAddProxylbParam) CommandDef() *schema.Command {
+func (p *ResponseHeaderAddProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["response-header-add"]
 }
 
-func (p *ResponseHeaderAddProxylbParam) IncludeFields() []string {
+func (p *ResponseHeaderAddProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ResponseHeaderAddProxylbParam) ExcludeFields() []string {
+func (p *ResponseHeaderAddProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ResponseHeaderAddProxylbParam) TableType() output.TableType {
+func (p *ResponseHeaderAddProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ResponseHeaderAddProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *ResponseHeaderAddProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ResponseHeaderAddProxylbParam) SetPortIndex(v int) {
+func (p *ResponseHeaderAddProxyLBParam) SetPortIndex(v int) {
 	p.PortIndex = v
 }
 
-func (p *ResponseHeaderAddProxylbParam) GetPortIndex() int {
+func (p *ResponseHeaderAddProxyLBParam) GetPortIndex() int {
 	return p.PortIndex
 }
-func (p *ResponseHeaderAddProxylbParam) SetHeader(v string) {
+func (p *ResponseHeaderAddProxyLBParam) SetHeader(v string) {
 	p.Header = v
 }
 
-func (p *ResponseHeaderAddProxylbParam) GetHeader() string {
+func (p *ResponseHeaderAddProxyLBParam) GetHeader() string {
 	return p.Header
 }
-func (p *ResponseHeaderAddProxylbParam) SetValue(v string) {
+func (p *ResponseHeaderAddProxyLBParam) SetValue(v string) {
 	p.Value = v
 }
 
-func (p *ResponseHeaderAddProxylbParam) GetValue() string {
+func (p *ResponseHeaderAddProxyLBParam) GetValue() string {
 	return p.Value
 }
 
-// ResponseHeaderUpdateProxylbParam is input parameters for the sacloud API
-type ResponseHeaderUpdateProxylbParam struct {
-	Header    string
-	Value     string
+// ResponseHeaderUpdateProxyLBParam is input parameters for the sacloud API
+type ResponseHeaderUpdateProxyLBParam struct {
 	Index     int
 	PortIndex int
+	Header    string
+	Value     string
 
 	input Input
 }
 
-// NewResponseHeaderUpdateProxylbParam return new ResponseHeaderUpdateProxylbParam
-func NewResponseHeaderUpdateProxylbParam() *ResponseHeaderUpdateProxylbParam {
-	return &ResponseHeaderUpdateProxylbParam{}
+// NewResponseHeaderUpdateProxyLBParam return new ResponseHeaderUpdateProxyLBParam
+func NewResponseHeaderUpdateProxyLBParam() *ResponseHeaderUpdateProxyLBParam {
+	return &ResponseHeaderUpdateProxyLBParam{}
 }
 
-// Initialize init ResponseHeaderUpdateProxylbParam
-func (p *ResponseHeaderUpdateProxylbParam) Initialize(in Input) error {
+// Initialize init ResponseHeaderUpdateProxyLBParam
+func (p *ResponseHeaderUpdateProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1575,27 +1575,27 @@ func (p *ResponseHeaderUpdateProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ResponseHeaderUpdateProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *ResponseHeaderUpdateProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ResponseHeaderUpdateProxylbParam) fillValueToSkeleton() {
+func (p *ResponseHeaderUpdateProxyLBParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Index) {
+		p.Index = 0
+	}
+	if utils.IsEmpty(p.PortIndex) {
+		p.PortIndex = 0
+	}
 	if utils.IsEmpty(p.Header) {
 		p.Header = ""
 	}
 	if utils.IsEmpty(p.Value) {
 		p.Value = ""
 	}
-	if utils.IsEmpty(p.Index) {
-		p.Index = 0
-	}
-	if utils.IsEmpty(p.PortIndex) {
-		p.PortIndex = 0
-	}
 
 }
 
-func (p *ResponseHeaderUpdateProxylbParam) validate() error {
+func (p *ResponseHeaderUpdateProxyLBParam) validate() error {
 	var errors []error
 
 	{
@@ -1617,74 +1617,74 @@ func (p *ResponseHeaderUpdateProxylbParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ResponseHeaderUpdateProxylbParam) ResourceDef() *schema.Resource {
+func (p *ResponseHeaderUpdateProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ResponseHeaderUpdateProxylbParam) CommandDef() *schema.Command {
+func (p *ResponseHeaderUpdateProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["response-header-update"]
 }
 
-func (p *ResponseHeaderUpdateProxylbParam) IncludeFields() []string {
+func (p *ResponseHeaderUpdateProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ResponseHeaderUpdateProxylbParam) ExcludeFields() []string {
+func (p *ResponseHeaderUpdateProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ResponseHeaderUpdateProxylbParam) TableType() output.TableType {
+func (p *ResponseHeaderUpdateProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ResponseHeaderUpdateProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *ResponseHeaderUpdateProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ResponseHeaderUpdateProxylbParam) SetHeader(v string) {
-	p.Header = v
-}
-
-func (p *ResponseHeaderUpdateProxylbParam) GetHeader() string {
-	return p.Header
-}
-func (p *ResponseHeaderUpdateProxylbParam) SetValue(v string) {
-	p.Value = v
-}
-
-func (p *ResponseHeaderUpdateProxylbParam) GetValue() string {
-	return p.Value
-}
-func (p *ResponseHeaderUpdateProxylbParam) SetIndex(v int) {
+func (p *ResponseHeaderUpdateProxyLBParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *ResponseHeaderUpdateProxylbParam) GetIndex() int {
+func (p *ResponseHeaderUpdateProxyLBParam) GetIndex() int {
 	return p.Index
 }
-func (p *ResponseHeaderUpdateProxylbParam) SetPortIndex(v int) {
+func (p *ResponseHeaderUpdateProxyLBParam) SetPortIndex(v int) {
 	p.PortIndex = v
 }
 
-func (p *ResponseHeaderUpdateProxylbParam) GetPortIndex() int {
+func (p *ResponseHeaderUpdateProxyLBParam) GetPortIndex() int {
 	return p.PortIndex
 }
+func (p *ResponseHeaderUpdateProxyLBParam) SetHeader(v string) {
+	p.Header = v
+}
 
-// ResponseHeaderDeleteProxylbParam is input parameters for the sacloud API
-type ResponseHeaderDeleteProxylbParam struct {
+func (p *ResponseHeaderUpdateProxyLBParam) GetHeader() string {
+	return p.Header
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetValue(v string) {
+	p.Value = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetValue() string {
+	return p.Value
+}
+
+// ResponseHeaderDeleteProxyLBParam is input parameters for the sacloud API
+type ResponseHeaderDeleteProxyLBParam struct {
 	Index     int
 	PortIndex int
 
 	input Input
 }
 
-// NewResponseHeaderDeleteProxylbParam return new ResponseHeaderDeleteProxylbParam
-func NewResponseHeaderDeleteProxylbParam() *ResponseHeaderDeleteProxylbParam {
-	return &ResponseHeaderDeleteProxylbParam{}
+// NewResponseHeaderDeleteProxyLBParam return new ResponseHeaderDeleteProxyLBParam
+func NewResponseHeaderDeleteProxyLBParam() *ResponseHeaderDeleteProxyLBParam {
+	return &ResponseHeaderDeleteProxyLBParam{}
 }
 
-// Initialize init ResponseHeaderDeleteProxylbParam
-func (p *ResponseHeaderDeleteProxylbParam) Initialize(in Input) error {
+// Initialize init ResponseHeaderDeleteProxyLBParam
+func (p *ResponseHeaderDeleteProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1693,11 +1693,11 @@ func (p *ResponseHeaderDeleteProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ResponseHeaderDeleteProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *ResponseHeaderDeleteProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ResponseHeaderDeleteProxylbParam) fillValueToSkeleton() {
+func (p *ResponseHeaderDeleteProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -1707,7 +1707,7 @@ func (p *ResponseHeaderDeleteProxylbParam) fillValueToSkeleton() {
 
 }
 
-func (p *ResponseHeaderDeleteProxylbParam) validate() error {
+func (p *ResponseHeaderDeleteProxyLBParam) validate() error {
 	var errors []error
 
 	{
@@ -1729,57 +1729,57 @@ func (p *ResponseHeaderDeleteProxylbParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ResponseHeaderDeleteProxylbParam) ResourceDef() *schema.Resource {
+func (p *ResponseHeaderDeleteProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ResponseHeaderDeleteProxylbParam) CommandDef() *schema.Command {
+func (p *ResponseHeaderDeleteProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["response-header-delete"]
 }
 
-func (p *ResponseHeaderDeleteProxylbParam) IncludeFields() []string {
+func (p *ResponseHeaderDeleteProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ResponseHeaderDeleteProxylbParam) ExcludeFields() []string {
+func (p *ResponseHeaderDeleteProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ResponseHeaderDeleteProxylbParam) TableType() output.TableType {
+func (p *ResponseHeaderDeleteProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ResponseHeaderDeleteProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *ResponseHeaderDeleteProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ResponseHeaderDeleteProxylbParam) SetIndex(v int) {
+func (p *ResponseHeaderDeleteProxyLBParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *ResponseHeaderDeleteProxylbParam) GetIndex() int {
+func (p *ResponseHeaderDeleteProxyLBParam) GetIndex() int {
 	return p.Index
 }
-func (p *ResponseHeaderDeleteProxylbParam) SetPortIndex(v int) {
+func (p *ResponseHeaderDeleteProxyLBParam) SetPortIndex(v int) {
 	p.PortIndex = v
 }
 
-func (p *ResponseHeaderDeleteProxylbParam) GetPortIndex() int {
+func (p *ResponseHeaderDeleteProxyLBParam) GetPortIndex() int {
 	return p.PortIndex
 }
 
-// AcmeInfoProxylbParam is input parameters for the sacloud API
-type AcmeInfoProxylbParam struct {
+// ACMEInfoProxyLBParam is input parameters for the sacloud API
+type ACMEInfoProxyLBParam struct {
 	input Input
 }
 
-// NewAcmeInfoProxylbParam return new AcmeInfoProxylbParam
-func NewAcmeInfoProxylbParam() *AcmeInfoProxylbParam {
-	return &AcmeInfoProxylbParam{}
+// NewACMEInfoProxyLBParam return new ACMEInfoProxyLBParam
+func NewACMEInfoProxyLBParam() *ACMEInfoProxyLBParam {
+	return &ACMEInfoProxyLBParam{}
 }
 
-// Initialize init AcmeInfoProxylbParam
-func (p *AcmeInfoProxylbParam) Initialize(in Input) error {
+// Initialize init ACMEInfoProxyLBParam
+func (p *ACMEInfoProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1788,46 +1788,46 @@ func (p *AcmeInfoProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *AcmeInfoProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *ACMEInfoProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *AcmeInfoProxylbParam) fillValueToSkeleton() {
+func (p *ACMEInfoProxyLBParam) fillValueToSkeleton() {
 
 }
 
-func (p *AcmeInfoProxylbParam) validate() error {
+func (p *ACMEInfoProxyLBParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *AcmeInfoProxylbParam) ResourceDef() *schema.Resource {
+func (p *ACMEInfoProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *AcmeInfoProxylbParam) CommandDef() *schema.Command {
+func (p *ACMEInfoProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["acme-info"]
 }
 
-func (p *AcmeInfoProxylbParam) IncludeFields() []string {
+func (p *ACMEInfoProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *AcmeInfoProxylbParam) ExcludeFields() []string {
+func (p *ACMEInfoProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *AcmeInfoProxylbParam) TableType() output.TableType {
+func (p *ACMEInfoProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *AcmeInfoProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *ACMEInfoProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// AcmeSettingProxylbParam is input parameters for the sacloud API
-type AcmeSettingProxylbParam struct {
+// ACMESettingProxyLBParam is input parameters for the sacloud API
+type ACMESettingProxyLBParam struct {
 	AcceptTos  bool
 	CommonName string
 	Disable    bool
@@ -1835,13 +1835,13 @@ type AcmeSettingProxylbParam struct {
 	input Input
 }
 
-// NewAcmeSettingProxylbParam return new AcmeSettingProxylbParam
-func NewAcmeSettingProxylbParam() *AcmeSettingProxylbParam {
-	return &AcmeSettingProxylbParam{}
+// NewACMESettingProxyLBParam return new ACMESettingProxyLBParam
+func NewACMESettingProxyLBParam() *ACMESettingProxyLBParam {
+	return &ACMESettingProxyLBParam{}
 }
 
-// Initialize init AcmeSettingProxylbParam
-func (p *AcmeSettingProxylbParam) Initialize(in Input) error {
+// Initialize init ACMESettingProxyLBParam
+func (p *ACMESettingProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1850,11 +1850,11 @@ func (p *AcmeSettingProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *AcmeSettingProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *ACMESettingProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *AcmeSettingProxylbParam) fillValueToSkeleton() {
+func (p *ACMESettingProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.AcceptTos) {
 		p.AcceptTos = false
 	}
@@ -1867,70 +1867,70 @@ func (p *AcmeSettingProxylbParam) fillValueToSkeleton() {
 
 }
 
-func (p *AcmeSettingProxylbParam) validate() error {
+func (p *ACMESettingProxyLBParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *AcmeSettingProxylbParam) ResourceDef() *schema.Resource {
+func (p *ACMESettingProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *AcmeSettingProxylbParam) CommandDef() *schema.Command {
+func (p *ACMESettingProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["acme-setting"]
 }
 
-func (p *AcmeSettingProxylbParam) IncludeFields() []string {
+func (p *ACMESettingProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *AcmeSettingProxylbParam) ExcludeFields() []string {
+func (p *ACMESettingProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *AcmeSettingProxylbParam) TableType() output.TableType {
+func (p *ACMESettingProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *AcmeSettingProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *ACMESettingProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *AcmeSettingProxylbParam) SetAcceptTos(v bool) {
+func (p *ACMESettingProxyLBParam) SetAcceptTos(v bool) {
 	p.AcceptTos = v
 }
 
-func (p *AcmeSettingProxylbParam) GetAcceptTos() bool {
+func (p *ACMESettingProxyLBParam) GetAcceptTos() bool {
 	return p.AcceptTos
 }
-func (p *AcmeSettingProxylbParam) SetCommonName(v string) {
+func (p *ACMESettingProxyLBParam) SetCommonName(v string) {
 	p.CommonName = v
 }
 
-func (p *AcmeSettingProxylbParam) GetCommonName() string {
+func (p *ACMESettingProxyLBParam) GetCommonName() string {
 	return p.CommonName
 }
-func (p *AcmeSettingProxylbParam) SetDisable(v bool) {
+func (p *ACMESettingProxyLBParam) SetDisable(v bool) {
 	p.Disable = v
 }
 
-func (p *AcmeSettingProxylbParam) GetDisable() bool {
+func (p *ACMESettingProxyLBParam) GetDisable() bool {
 	return p.Disable
 }
 
-// AcmeRenewProxylbParam is input parameters for the sacloud API
-type AcmeRenewProxylbParam struct {
+// ACMERenewProxyLBParam is input parameters for the sacloud API
+type ACMERenewProxyLBParam struct {
 	input Input
 }
 
-// NewAcmeRenewProxylbParam return new AcmeRenewProxylbParam
-func NewAcmeRenewProxylbParam() *AcmeRenewProxylbParam {
-	return &AcmeRenewProxylbParam{}
+// NewACMERenewProxyLBParam return new ACMERenewProxyLBParam
+func NewACMERenewProxyLBParam() *ACMERenewProxyLBParam {
+	return &ACMERenewProxyLBParam{}
 }
 
-// Initialize init AcmeRenewProxylbParam
-func (p *AcmeRenewProxylbParam) Initialize(in Input) error {
+// Initialize init ACMERenewProxyLBParam
+func (p *ACMERenewProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1939,56 +1939,56 @@ func (p *AcmeRenewProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *AcmeRenewProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *ACMERenewProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *AcmeRenewProxylbParam) fillValueToSkeleton() {
+func (p *ACMERenewProxyLBParam) fillValueToSkeleton() {
 
 }
 
-func (p *AcmeRenewProxylbParam) validate() error {
+func (p *ACMERenewProxyLBParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *AcmeRenewProxylbParam) ResourceDef() *schema.Resource {
+func (p *ACMERenewProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *AcmeRenewProxylbParam) CommandDef() *schema.Command {
+func (p *ACMERenewProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["acme-renew"]
 }
 
-func (p *AcmeRenewProxylbParam) IncludeFields() []string {
+func (p *ACMERenewProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *AcmeRenewProxylbParam) ExcludeFields() []string {
+func (p *ACMERenewProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *AcmeRenewProxylbParam) TableType() output.TableType {
+func (p *ACMERenewProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *AcmeRenewProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *ACMERenewProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// ServerInfoProxylbParam is input parameters for the sacloud API
-type ServerInfoProxylbParam struct {
+// ServerInfoProxyLBParam is input parameters for the sacloud API
+type ServerInfoProxyLBParam struct {
 	input Input
 }
 
-// NewServerInfoProxylbParam return new ServerInfoProxylbParam
-func NewServerInfoProxylbParam() *ServerInfoProxylbParam {
-	return &ServerInfoProxylbParam{}
+// NewServerInfoProxyLBParam return new ServerInfoProxyLBParam
+func NewServerInfoProxyLBParam() *ServerInfoProxyLBParam {
+	return &ServerInfoProxyLBParam{}
 }
 
-// Initialize init ServerInfoProxylbParam
-func (p *ServerInfoProxylbParam) Initialize(in Input) error {
+// Initialize init ServerInfoProxyLBParam
+func (p *ServerInfoProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1997,46 +1997,46 @@ func (p *ServerInfoProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ServerInfoProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *ServerInfoProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerInfoProxylbParam) fillValueToSkeleton() {
+func (p *ServerInfoProxyLBParam) fillValueToSkeleton() {
 
 }
 
-func (p *ServerInfoProxylbParam) validate() error {
+func (p *ServerInfoProxyLBParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ServerInfoProxylbParam) ResourceDef() *schema.Resource {
+func (p *ServerInfoProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ServerInfoProxylbParam) CommandDef() *schema.Command {
+func (p *ServerInfoProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["server-info"]
 }
 
-func (p *ServerInfoProxylbParam) IncludeFields() []string {
+func (p *ServerInfoProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ServerInfoProxylbParam) ExcludeFields() []string {
+func (p *ServerInfoProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ServerInfoProxylbParam) TableType() output.TableType {
+func (p *ServerInfoProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ServerInfoProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *ServerInfoProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// ServerAddProxylbParam is input parameters for the sacloud API
-type ServerAddProxylbParam struct {
+// ServerAddProxyLBParam is input parameters for the sacloud API
+type ServerAddProxyLBParam struct {
 	Ipaddress string
 	Disabled  bool
 	Port      int
@@ -2044,13 +2044,13 @@ type ServerAddProxylbParam struct {
 	input Input
 }
 
-// NewServerAddProxylbParam return new ServerAddProxylbParam
-func NewServerAddProxylbParam() *ServerAddProxylbParam {
-	return &ServerAddProxylbParam{}
+// NewServerAddProxyLBParam return new ServerAddProxyLBParam
+func NewServerAddProxyLBParam() *ServerAddProxyLBParam {
+	return &ServerAddProxyLBParam{}
 }
 
-// Initialize init ServerAddProxylbParam
-func (p *ServerAddProxylbParam) Initialize(in Input) error {
+// Initialize init ServerAddProxyLBParam
+func (p *ServerAddProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2059,11 +2059,11 @@ func (p *ServerAddProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ServerAddProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *ServerAddProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerAddProxylbParam) fillValueToSkeleton() {
+func (p *ServerAddProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
@@ -2076,7 +2076,7 @@ func (p *ServerAddProxylbParam) fillValueToSkeleton() {
 
 }
 
-func (p *ServerAddProxylbParam) validate() error {
+func (p *ServerAddProxyLBParam) validate() error {
 	var errors []error
 
 	{
@@ -2112,69 +2112,69 @@ func (p *ServerAddProxylbParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ServerAddProxylbParam) ResourceDef() *schema.Resource {
+func (p *ServerAddProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ServerAddProxylbParam) CommandDef() *schema.Command {
+func (p *ServerAddProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["server-add"]
 }
 
-func (p *ServerAddProxylbParam) IncludeFields() []string {
+func (p *ServerAddProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ServerAddProxylbParam) ExcludeFields() []string {
+func (p *ServerAddProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ServerAddProxylbParam) TableType() output.TableType {
+func (p *ServerAddProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ServerAddProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *ServerAddProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ServerAddProxylbParam) SetIpaddress(v string) {
+func (p *ServerAddProxyLBParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
 
-func (p *ServerAddProxylbParam) GetIpaddress() string {
+func (p *ServerAddProxyLBParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *ServerAddProxylbParam) SetDisabled(v bool) {
+func (p *ServerAddProxyLBParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
 
-func (p *ServerAddProxylbParam) GetDisabled() bool {
+func (p *ServerAddProxyLBParam) GetDisabled() bool {
 	return p.Disabled
 }
-func (p *ServerAddProxylbParam) SetPort(v int) {
+func (p *ServerAddProxyLBParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *ServerAddProxylbParam) GetPort() int {
+func (p *ServerAddProxyLBParam) GetPort() int {
 	return p.Port
 }
 
-// ServerUpdateProxylbParam is input parameters for the sacloud API
-type ServerUpdateProxylbParam struct {
+// ServerUpdateProxyLBParam is input parameters for the sacloud API
+type ServerUpdateProxyLBParam struct {
+	Index     int
 	Ipaddress string
 	Disabled  bool
 	Port      int
-	Index     int
 
 	input Input
 }
 
-// NewServerUpdateProxylbParam return new ServerUpdateProxylbParam
-func NewServerUpdateProxylbParam() *ServerUpdateProxylbParam {
-	return &ServerUpdateProxylbParam{}
+// NewServerUpdateProxyLBParam return new ServerUpdateProxyLBParam
+func NewServerUpdateProxyLBParam() *ServerUpdateProxyLBParam {
+	return &ServerUpdateProxyLBParam{}
 }
 
-// Initialize init ServerUpdateProxylbParam
-func (p *ServerUpdateProxylbParam) Initialize(in Input) error {
+// Initialize init ServerUpdateProxyLBParam
+func (p *ServerUpdateProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2183,11 +2183,14 @@ func (p *ServerUpdateProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ServerUpdateProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *ServerUpdateProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerUpdateProxylbParam) fillValueToSkeleton() {
+func (p *ServerUpdateProxyLBParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Index) {
+		p.Index = 0
+	}
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
@@ -2197,14 +2200,19 @@ func (p *ServerUpdateProxylbParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Port) {
 		p.Port = 0
 	}
-	if utils.IsEmpty(p.Index) {
-		p.Index = 0
-	}
 
 }
 
-func (p *ServerUpdateProxylbParam) validate() error {
+func (p *ServerUpdateProxyLBParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["ProxyLB"].Commands["server-update"].Params["ipaddress"].ValidateFunc
@@ -2222,84 +2230,76 @@ func (p *ServerUpdateProxylbParam) validate() error {
 		}
 	}
 
-	{
-		validator := validateRequired
-		errs := validator("--index", p.Index)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ServerUpdateProxylbParam) ResourceDef() *schema.Resource {
+func (p *ServerUpdateProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ServerUpdateProxylbParam) CommandDef() *schema.Command {
+func (p *ServerUpdateProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["server-update"]
 }
 
-func (p *ServerUpdateProxylbParam) IncludeFields() []string {
+func (p *ServerUpdateProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ServerUpdateProxylbParam) ExcludeFields() []string {
+func (p *ServerUpdateProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ServerUpdateProxylbParam) TableType() output.TableType {
+func (p *ServerUpdateProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ServerUpdateProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *ServerUpdateProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ServerUpdateProxylbParam) SetIpaddress(v string) {
-	p.Ipaddress = v
-}
-
-func (p *ServerUpdateProxylbParam) GetIpaddress() string {
-	return p.Ipaddress
-}
-func (p *ServerUpdateProxylbParam) SetDisabled(v bool) {
-	p.Disabled = v
-}
-
-func (p *ServerUpdateProxylbParam) GetDisabled() bool {
-	return p.Disabled
-}
-func (p *ServerUpdateProxylbParam) SetPort(v int) {
-	p.Port = v
-}
-
-func (p *ServerUpdateProxylbParam) GetPort() int {
-	return p.Port
-}
-func (p *ServerUpdateProxylbParam) SetIndex(v int) {
+func (p *ServerUpdateProxyLBParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *ServerUpdateProxylbParam) GetIndex() int {
+func (p *ServerUpdateProxyLBParam) GetIndex() int {
 	return p.Index
 }
+func (p *ServerUpdateProxyLBParam) SetIpaddress(v string) {
+	p.Ipaddress = v
+}
 
-// ServerDeleteProxylbParam is input parameters for the sacloud API
-type ServerDeleteProxylbParam struct {
+func (p *ServerUpdateProxyLBParam) GetIpaddress() string {
+	return p.Ipaddress
+}
+func (p *ServerUpdateProxyLBParam) SetDisabled(v bool) {
+	p.Disabled = v
+}
+
+func (p *ServerUpdateProxyLBParam) GetDisabled() bool {
+	return p.Disabled
+}
+func (p *ServerUpdateProxyLBParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *ServerUpdateProxyLBParam) GetPort() int {
+	return p.Port
+}
+
+// ServerDeleteProxyLBParam is input parameters for the sacloud API
+type ServerDeleteProxyLBParam struct {
 	Index int
 
 	input Input
 }
 
-// NewServerDeleteProxylbParam return new ServerDeleteProxylbParam
-func NewServerDeleteProxylbParam() *ServerDeleteProxylbParam {
-	return &ServerDeleteProxylbParam{}
+// NewServerDeleteProxyLBParam return new ServerDeleteProxyLBParam
+func NewServerDeleteProxyLBParam() *ServerDeleteProxyLBParam {
+	return &ServerDeleteProxyLBParam{}
 }
 
-// Initialize init ServerDeleteProxylbParam
-func (p *ServerDeleteProxylbParam) Initialize(in Input) error {
+// Initialize init ServerDeleteProxyLBParam
+func (p *ServerDeleteProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2308,18 +2308,18 @@ func (p *ServerDeleteProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ServerDeleteProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *ServerDeleteProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerDeleteProxylbParam) fillValueToSkeleton() {
+func (p *ServerDeleteProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
 
 }
 
-func (p *ServerDeleteProxylbParam) validate() error {
+func (p *ServerDeleteProxyLBParam) validate() error {
 	var errors []error
 
 	{
@@ -2333,50 +2333,50 @@ func (p *ServerDeleteProxylbParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ServerDeleteProxylbParam) ResourceDef() *schema.Resource {
+func (p *ServerDeleteProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *ServerDeleteProxylbParam) CommandDef() *schema.Command {
+func (p *ServerDeleteProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["server-delete"]
 }
 
-func (p *ServerDeleteProxylbParam) IncludeFields() []string {
+func (p *ServerDeleteProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ServerDeleteProxylbParam) ExcludeFields() []string {
+func (p *ServerDeleteProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ServerDeleteProxylbParam) TableType() output.TableType {
+func (p *ServerDeleteProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ServerDeleteProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *ServerDeleteProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ServerDeleteProxylbParam) SetIndex(v int) {
+func (p *ServerDeleteProxyLBParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *ServerDeleteProxylbParam) GetIndex() int {
+func (p *ServerDeleteProxyLBParam) GetIndex() int {
 	return p.Index
 }
 
-// CertificateInfoProxylbParam is input parameters for the sacloud API
-type CertificateInfoProxylbParam struct {
+// CertificateInfoProxyLBParam is input parameters for the sacloud API
+type CertificateInfoProxyLBParam struct {
 	input Input
 }
 
-// NewCertificateInfoProxylbParam return new CertificateInfoProxylbParam
-func NewCertificateInfoProxylbParam() *CertificateInfoProxylbParam {
-	return &CertificateInfoProxylbParam{}
+// NewCertificateInfoProxyLBParam return new CertificateInfoProxyLBParam
+func NewCertificateInfoProxyLBParam() *CertificateInfoProxyLBParam {
+	return &CertificateInfoProxyLBParam{}
 }
 
-// Initialize init CertificateInfoProxylbParam
-func (p *CertificateInfoProxylbParam) Initialize(in Input) error {
+// Initialize init CertificateInfoProxyLBParam
+func (p *CertificateInfoProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2385,46 +2385,46 @@ func (p *CertificateInfoProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CertificateInfoProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *CertificateInfoProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CertificateInfoProxylbParam) fillValueToSkeleton() {
+func (p *CertificateInfoProxyLBParam) fillValueToSkeleton() {
 
 }
 
-func (p *CertificateInfoProxylbParam) validate() error {
+func (p *CertificateInfoProxyLBParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CertificateInfoProxylbParam) ResourceDef() *schema.Resource {
+func (p *CertificateInfoProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *CertificateInfoProxylbParam) CommandDef() *schema.Command {
+func (p *CertificateInfoProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["certificate-info"]
 }
 
-func (p *CertificateInfoProxylbParam) IncludeFields() []string {
+func (p *CertificateInfoProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CertificateInfoProxylbParam) ExcludeFields() []string {
+func (p *CertificateInfoProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CertificateInfoProxylbParam) TableType() output.TableType {
+func (p *CertificateInfoProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CertificateInfoProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *CertificateInfoProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// CertificateAddProxylbParam is input parameters for the sacloud API
-type CertificateAddProxylbParam struct {
+// CertificateAddProxyLBParam is input parameters for the sacloud API
+type CertificateAddProxyLBParam struct {
 	ServerCertificate       string
 	IntermediateCertificate string
 	PrivateKey              string
@@ -2432,13 +2432,13 @@ type CertificateAddProxylbParam struct {
 	input Input
 }
 
-// NewCertificateAddProxylbParam return new CertificateAddProxylbParam
-func NewCertificateAddProxylbParam() *CertificateAddProxylbParam {
-	return &CertificateAddProxylbParam{}
+// NewCertificateAddProxyLBParam return new CertificateAddProxyLBParam
+func NewCertificateAddProxyLBParam() *CertificateAddProxyLBParam {
+	return &CertificateAddProxyLBParam{}
 }
 
-// Initialize init CertificateAddProxylbParam
-func (p *CertificateAddProxylbParam) Initialize(in Input) error {
+// Initialize init CertificateAddProxyLBParam
+func (p *CertificateAddProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2447,11 +2447,11 @@ func (p *CertificateAddProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CertificateAddProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *CertificateAddProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CertificateAddProxylbParam) fillValueToSkeleton() {
+func (p *CertificateAddProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.ServerCertificate) {
 		p.ServerCertificate = ""
 	}
@@ -2464,7 +2464,7 @@ func (p *CertificateAddProxylbParam) fillValueToSkeleton() {
 
 }
 
-func (p *CertificateAddProxylbParam) validate() error {
+func (p *CertificateAddProxyLBParam) validate() error {
 	var errors []error
 
 	{
@@ -2486,68 +2486,68 @@ func (p *CertificateAddProxylbParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CertificateAddProxylbParam) ResourceDef() *schema.Resource {
+func (p *CertificateAddProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *CertificateAddProxylbParam) CommandDef() *schema.Command {
+func (p *CertificateAddProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["certificate-add"]
 }
 
-func (p *CertificateAddProxylbParam) IncludeFields() []string {
+func (p *CertificateAddProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CertificateAddProxylbParam) ExcludeFields() []string {
+func (p *CertificateAddProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CertificateAddProxylbParam) TableType() output.TableType {
+func (p *CertificateAddProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CertificateAddProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *CertificateAddProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CertificateAddProxylbParam) SetServerCertificate(v string) {
+func (p *CertificateAddProxyLBParam) SetServerCertificate(v string) {
 	p.ServerCertificate = v
 }
 
-func (p *CertificateAddProxylbParam) GetServerCertificate() string {
+func (p *CertificateAddProxyLBParam) GetServerCertificate() string {
 	return p.ServerCertificate
 }
-func (p *CertificateAddProxylbParam) SetIntermediateCertificate(v string) {
+func (p *CertificateAddProxyLBParam) SetIntermediateCertificate(v string) {
 	p.IntermediateCertificate = v
 }
 
-func (p *CertificateAddProxylbParam) GetIntermediateCertificate() string {
+func (p *CertificateAddProxyLBParam) GetIntermediateCertificate() string {
 	return p.IntermediateCertificate
 }
-func (p *CertificateAddProxylbParam) SetPrivateKey(v string) {
+func (p *CertificateAddProxyLBParam) SetPrivateKey(v string) {
 	p.PrivateKey = v
 }
 
-func (p *CertificateAddProxylbParam) GetPrivateKey() string {
+func (p *CertificateAddProxyLBParam) GetPrivateKey() string {
 	return p.PrivateKey
 }
 
-// CertificateUpdateProxylbParam is input parameters for the sacloud API
-type CertificateUpdateProxylbParam struct {
-	ServerCertificate       string
+// CertificateUpdateProxyLBParam is input parameters for the sacloud API
+type CertificateUpdateProxyLBParam struct {
 	IntermediateCertificate string
 	PrivateKey              string
+	ServerCertificate       string
 
 	input Input
 }
 
-// NewCertificateUpdateProxylbParam return new CertificateUpdateProxylbParam
-func NewCertificateUpdateProxylbParam() *CertificateUpdateProxylbParam {
-	return &CertificateUpdateProxylbParam{}
+// NewCertificateUpdateProxyLBParam return new CertificateUpdateProxyLBParam
+func NewCertificateUpdateProxyLBParam() *CertificateUpdateProxyLBParam {
+	return &CertificateUpdateProxyLBParam{}
 }
 
-// Initialize init CertificateUpdateProxylbParam
-func (p *CertificateUpdateProxylbParam) Initialize(in Input) error {
+// Initialize init CertificateUpdateProxyLBParam
+func (p *CertificateUpdateProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2556,87 +2556,87 @@ func (p *CertificateUpdateProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CertificateUpdateProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *CertificateUpdateProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CertificateUpdateProxylbParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.ServerCertificate) {
-		p.ServerCertificate = ""
-	}
+func (p *CertificateUpdateProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.IntermediateCertificate) {
 		p.IntermediateCertificate = ""
 	}
 	if utils.IsEmpty(p.PrivateKey) {
 		p.PrivateKey = ""
 	}
+	if utils.IsEmpty(p.ServerCertificate) {
+		p.ServerCertificate = ""
+	}
 
 }
 
-func (p *CertificateUpdateProxylbParam) validate() error {
+func (p *CertificateUpdateProxyLBParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CertificateUpdateProxylbParam) ResourceDef() *schema.Resource {
+func (p *CertificateUpdateProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *CertificateUpdateProxylbParam) CommandDef() *schema.Command {
+func (p *CertificateUpdateProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["certificate-update"]
 }
 
-func (p *CertificateUpdateProxylbParam) IncludeFields() []string {
+func (p *CertificateUpdateProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CertificateUpdateProxylbParam) ExcludeFields() []string {
+func (p *CertificateUpdateProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CertificateUpdateProxylbParam) TableType() output.TableType {
+func (p *CertificateUpdateProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CertificateUpdateProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *CertificateUpdateProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CertificateUpdateProxylbParam) SetServerCertificate(v string) {
-	p.ServerCertificate = v
-}
-
-func (p *CertificateUpdateProxylbParam) GetServerCertificate() string {
-	return p.ServerCertificate
-}
-func (p *CertificateUpdateProxylbParam) SetIntermediateCertificate(v string) {
+func (p *CertificateUpdateProxyLBParam) SetIntermediateCertificate(v string) {
 	p.IntermediateCertificate = v
 }
 
-func (p *CertificateUpdateProxylbParam) GetIntermediateCertificate() string {
+func (p *CertificateUpdateProxyLBParam) GetIntermediateCertificate() string {
 	return p.IntermediateCertificate
 }
-func (p *CertificateUpdateProxylbParam) SetPrivateKey(v string) {
+func (p *CertificateUpdateProxyLBParam) SetPrivateKey(v string) {
 	p.PrivateKey = v
 }
 
-func (p *CertificateUpdateProxylbParam) GetPrivateKey() string {
+func (p *CertificateUpdateProxyLBParam) GetPrivateKey() string {
 	return p.PrivateKey
 }
+func (p *CertificateUpdateProxyLBParam) SetServerCertificate(v string) {
+	p.ServerCertificate = v
+}
 
-// CertificateDeleteProxylbParam is input parameters for the sacloud API
-type CertificateDeleteProxylbParam struct {
+func (p *CertificateUpdateProxyLBParam) GetServerCertificate() string {
+	return p.ServerCertificate
+}
+
+// CertificateDeleteProxyLBParam is input parameters for the sacloud API
+type CertificateDeleteProxyLBParam struct {
 	input Input
 }
 
-// NewCertificateDeleteProxylbParam return new CertificateDeleteProxylbParam
-func NewCertificateDeleteProxylbParam() *CertificateDeleteProxylbParam {
-	return &CertificateDeleteProxylbParam{}
+// NewCertificateDeleteProxyLBParam return new CertificateDeleteProxyLBParam
+func NewCertificateDeleteProxyLBParam() *CertificateDeleteProxyLBParam {
+	return &CertificateDeleteProxyLBParam{}
 }
 
-// Initialize init CertificateDeleteProxylbParam
-func (p *CertificateDeleteProxylbParam) Initialize(in Input) error {
+// Initialize init CertificateDeleteProxyLBParam
+func (p *CertificateDeleteProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2645,61 +2645,61 @@ func (p *CertificateDeleteProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CertificateDeleteProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *CertificateDeleteProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CertificateDeleteProxylbParam) fillValueToSkeleton() {
+func (p *CertificateDeleteProxyLBParam) fillValueToSkeleton() {
 
 }
 
-func (p *CertificateDeleteProxylbParam) validate() error {
+func (p *CertificateDeleteProxyLBParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CertificateDeleteProxylbParam) ResourceDef() *schema.Resource {
+func (p *CertificateDeleteProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *CertificateDeleteProxylbParam) CommandDef() *schema.Command {
+func (p *CertificateDeleteProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["certificate-delete"]
 }
 
-func (p *CertificateDeleteProxylbParam) IncludeFields() []string {
+func (p *CertificateDeleteProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CertificateDeleteProxylbParam) ExcludeFields() []string {
+func (p *CertificateDeleteProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CertificateDeleteProxylbParam) TableType() output.TableType {
+func (p *CertificateDeleteProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CertificateDeleteProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *CertificateDeleteProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// MonitorProxylbParam is input parameters for the sacloud API
-type MonitorProxylbParam struct {
+// MonitorProxyLBParam is input parameters for the sacloud API
+type MonitorProxyLBParam struct {
+	Start     string
 	End       string
 	KeyFormat string
-	Start     string
 
 	input Input
 }
 
-// NewMonitorProxylbParam return new MonitorProxylbParam
-func NewMonitorProxylbParam() *MonitorProxylbParam {
-	return &MonitorProxylbParam{
+// NewMonitorProxyLBParam return new MonitorProxyLBParam
+func NewMonitorProxyLBParam() *MonitorProxyLBParam {
+	return &MonitorProxyLBParam{
 		KeyFormat: "sakuracloud.proxylb.{{.ID}}"}
 }
 
-// Initialize init MonitorProxylbParam
-func (p *MonitorProxylbParam) Initialize(in Input) error {
+// Initialize init MonitorProxyLBParam
+func (p *MonitorProxyLBParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2708,25 +2708,33 @@ func (p *MonitorProxylbParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *MonitorProxylbParam) WriteSkeleton(writer io.Writer) error {
+func (p *MonitorProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *MonitorProxylbParam) fillValueToSkeleton() {
+func (p *MonitorProxyLBParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Start) {
+		p.Start = ""
+	}
 	if utils.IsEmpty(p.End) {
 		p.End = ""
 	}
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
-	if utils.IsEmpty(p.Start) {
-		p.Start = ""
-	}
 
 }
 
-func (p *MonitorProxylbParam) validate() error {
+func (p *MonitorProxyLBParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["ProxyLB"].Commands["monitor"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["ProxyLB"].Commands["monitor"].Params["end"].ValidateFunc
@@ -2744,59 +2752,51 @@ func (p *MonitorProxylbParam) validate() error {
 		}
 	}
 
-	{
-		validator := define.Resources["ProxyLB"].Commands["monitor"].Params["start"].ValidateFunc
-		errs := validator("--start", p.Start)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *MonitorProxylbParam) ResourceDef() *schema.Resource {
+func (p *MonitorProxyLBParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProxyLB"]
 }
 
-func (p *MonitorProxylbParam) CommandDef() *schema.Command {
+func (p *MonitorProxyLBParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["monitor"]
 }
 
-func (p *MonitorProxylbParam) IncludeFields() []string {
+func (p *MonitorProxyLBParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *MonitorProxylbParam) ExcludeFields() []string {
+func (p *MonitorProxyLBParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *MonitorProxylbParam) TableType() output.TableType {
+func (p *MonitorProxyLBParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *MonitorProxylbParam) ColumnDefs() []output.ColumnDef {
+func (p *MonitorProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *MonitorProxylbParam) SetEnd(v string) {
-	p.End = v
-}
-
-func (p *MonitorProxylbParam) GetEnd() string {
-	return p.End
-}
-func (p *MonitorProxylbParam) SetKeyFormat(v string) {
-	p.KeyFormat = v
-}
-
-func (p *MonitorProxylbParam) GetKeyFormat() string {
-	return p.KeyFormat
-}
-func (p *MonitorProxylbParam) SetStart(v string) {
+func (p *MonitorProxyLBParam) SetStart(v string) {
 	p.Start = v
 }
 
-func (p *MonitorProxylbParam) GetStart() string {
+func (p *MonitorProxyLBParam) GetStart() string {
 	return p.Start
+}
+func (p *MonitorProxyLBParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorProxyLBParam) GetEnd() string {
+	return p.End
+}
+func (p *MonitorProxyLBParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorProxyLBParam) GetKeyFormat() string {
+	return p.KeyFormat
 }

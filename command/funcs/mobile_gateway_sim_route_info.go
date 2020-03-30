@@ -21,7 +21,7 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func MobileGatewaySimRouteInfo(ctx command.Context, params *params.SimRouteInfoMobileGatewayParam) error {
+func MobileGatewaySIMRouteInfo(ctx command.Context, params *params.SIMRouteInfoMobileGatewayParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetMobileGatewayAPI()

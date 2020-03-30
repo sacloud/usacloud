@@ -21,7 +21,7 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func Ipv6PtrAdd(ctx command.Context, params *params.PtrAddIpv6Param) error {
+func IPv6PtrAdd(ctx command.Context, params *params.PtrAddIPv6Param) error {
 	client := ctx.GetAPIClient()
 	api := client.GetIPv6AddrAPI()
 

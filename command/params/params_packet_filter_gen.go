@@ -23,8 +23,8 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListPacketfilterParam is input parameters for the sacloud API
-type ListPacketfilterParam struct {
+// ListPacketFilterParam is input parameters for the sacloud API
+type ListPacketFilterParam struct {
 	Name              []string     `json:"name"`
 	Id                []sacloud.ID `json:"id"`
 	From              int          `json:"from"`
@@ -44,13 +44,13 @@ type ListPacketfilterParam struct {
 	QueryFile         string       `json:"query-file"`
 }
 
-// NewListPacketfilterParam return new ListPacketfilterParam
-func NewListPacketfilterParam() *ListPacketfilterParam {
-	return &ListPacketfilterParam{}
+// NewListPacketFilterParam return new ListPacketFilterParam
+func NewListPacketFilterParam() *ListPacketFilterParam {
+	return &ListPacketFilterParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListPacketfilterParam) FillValueToSkeleton() {
+func (p *ListPacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -106,7 +106,7 @@ func (p *ListPacketfilterParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListPacketfilterParam) Validate() []error {
+func (p *ListPacketFilterParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
@@ -157,152 +157,152 @@ func (p *ListPacketfilterParam) Validate() []error {
 	return errors
 }
 
-func (p *ListPacketfilterParam) GetResourceDef() *schema.Resource {
+func (p *ListPacketFilterParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *ListPacketfilterParam) GetCommandDef() *schema.Command {
+func (p *ListPacketFilterParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListPacketfilterParam) GetIncludeFields() []string {
+func (p *ListPacketFilterParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListPacketfilterParam) GetExcludeFields() []string {
+func (p *ListPacketFilterParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListPacketfilterParam) GetTableType() output.TableType {
+func (p *ListPacketFilterParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListPacketfilterParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListPacketfilterParam) SetName(v []string) {
+func (p *ListPacketFilterParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListPacketfilterParam) GetName() []string {
+func (p *ListPacketFilterParam) GetName() []string {
 	return p.Name
 }
-func (p *ListPacketfilterParam) SetId(v []sacloud.ID) {
+func (p *ListPacketFilterParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListPacketfilterParam) GetId() []sacloud.ID {
+func (p *ListPacketFilterParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListPacketfilterParam) SetFrom(v int) {
+func (p *ListPacketFilterParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListPacketfilterParam) GetFrom() int {
+func (p *ListPacketFilterParam) GetFrom() int {
 	return p.From
 }
-func (p *ListPacketfilterParam) SetMax(v int) {
+func (p *ListPacketFilterParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListPacketfilterParam) GetMax() int {
+func (p *ListPacketFilterParam) GetMax() int {
 	return p.Max
 }
-func (p *ListPacketfilterParam) SetSort(v []string) {
+func (p *ListPacketFilterParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListPacketfilterParam) GetSort() []string {
+func (p *ListPacketFilterParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListPacketfilterParam) SetParamTemplate(v string) {
+func (p *ListPacketFilterParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListPacketfilterParam) GetParamTemplate() string {
+func (p *ListPacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListPacketfilterParam) SetParameters(v string) {
+func (p *ListPacketFilterParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ListPacketfilterParam) GetParameters() string {
+func (p *ListPacketFilterParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ListPacketfilterParam) SetParamTemplateFile(v string) {
+func (p *ListPacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListPacketfilterParam) GetParamTemplateFile() string {
+func (p *ListPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListPacketfilterParam) SetParameterFile(v string) {
+func (p *ListPacketFilterParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ListPacketfilterParam) GetParameterFile() string {
+func (p *ListPacketFilterParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ListPacketfilterParam) SetGenerateSkeleton(v bool) {
+func (p *ListPacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListPacketfilterParam) GetGenerateSkeleton() bool {
+func (p *ListPacketFilterParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListPacketfilterParam) SetOutputType(v string) {
+func (p *ListPacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListPacketfilterParam) GetOutputType() string {
+func (p *ListPacketFilterParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListPacketfilterParam) SetColumn(v []string) {
+func (p *ListPacketFilterParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListPacketfilterParam) GetColumn() []string {
+func (p *ListPacketFilterParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ListPacketfilterParam) SetQuiet(v bool) {
+func (p *ListPacketFilterParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListPacketfilterParam) GetQuiet() bool {
+func (p *ListPacketFilterParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListPacketfilterParam) SetFormat(v string) {
+func (p *ListPacketFilterParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListPacketfilterParam) GetFormat() string {
+func (p *ListPacketFilterParam) GetFormat() string {
 	return p.Format
 }
-func (p *ListPacketfilterParam) SetFormatFile(v string) {
+func (p *ListPacketFilterParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListPacketfilterParam) GetFormatFile() string {
+func (p *ListPacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListPacketfilterParam) SetQuery(v string) {
+func (p *ListPacketFilterParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListPacketfilterParam) GetQuery() string {
+func (p *ListPacketFilterParam) GetQuery() string {
 	return p.Query
 }
-func (p *ListPacketfilterParam) SetQueryFile(v string) {
+func (p *ListPacketFilterParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListPacketfilterParam) GetQueryFile() string {
+func (p *ListPacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// CreatePacketfilterParam is input parameters for the sacloud API
-type CreatePacketfilterParam struct {
+// CreatePacketFilterParam is input parameters for the sacloud API
+type CreatePacketFilterParam struct {
 	Name              string   `json:"name"`
 	Description       string   `json:"description"`
 	Assumeyes         bool     `json:"assumeyes"`
@@ -320,13 +320,13 @@ type CreatePacketfilterParam struct {
 	QueryFile         string   `json:"query-file"`
 }
 
-// NewCreatePacketfilterParam return new CreatePacketfilterParam
-func NewCreatePacketfilterParam() *CreatePacketfilterParam {
-	return &CreatePacketfilterParam{}
+// NewCreatePacketFilterParam return new CreatePacketFilterParam
+func NewCreatePacketFilterParam() *CreatePacketFilterParam {
+	return &CreatePacketFilterParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CreatePacketfilterParam) FillValueToSkeleton() {
+func (p *CreatePacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -376,7 +376,7 @@ func (p *CreatePacketfilterParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CreatePacketfilterParam) Validate() []error {
+func (p *CreatePacketFilterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -423,138 +423,138 @@ func (p *CreatePacketfilterParam) Validate() []error {
 	return errors
 }
 
-func (p *CreatePacketfilterParam) GetResourceDef() *schema.Resource {
+func (p *CreatePacketFilterParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *CreatePacketfilterParam) GetCommandDef() *schema.Command {
+func (p *CreatePacketFilterParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["create"]
 }
 
-func (p *CreatePacketfilterParam) GetIncludeFields() []string {
+func (p *CreatePacketFilterParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CreatePacketfilterParam) GetExcludeFields() []string {
+func (p *CreatePacketFilterParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CreatePacketfilterParam) GetTableType() output.TableType {
+func (p *CreatePacketFilterParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CreatePacketfilterParam) GetColumnDefs() []output.ColumnDef {
+func (p *CreatePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CreatePacketfilterParam) SetName(v string) {
+func (p *CreatePacketFilterParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *CreatePacketfilterParam) GetName() string {
+func (p *CreatePacketFilterParam) GetName() string {
 	return p.Name
 }
-func (p *CreatePacketfilterParam) SetDescription(v string) {
+func (p *CreatePacketFilterParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *CreatePacketfilterParam) GetDescription() string {
+func (p *CreatePacketFilterParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreatePacketfilterParam) SetAssumeyes(v bool) {
+func (p *CreatePacketFilterParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *CreatePacketfilterParam) GetAssumeyes() bool {
+func (p *CreatePacketFilterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CreatePacketfilterParam) SetParamTemplate(v string) {
+func (p *CreatePacketFilterParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CreatePacketfilterParam) GetParamTemplate() string {
+func (p *CreatePacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CreatePacketfilterParam) SetParameters(v string) {
+func (p *CreatePacketFilterParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *CreatePacketfilterParam) GetParameters() string {
+func (p *CreatePacketFilterParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *CreatePacketfilterParam) SetParamTemplateFile(v string) {
+func (p *CreatePacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CreatePacketfilterParam) GetParamTemplateFile() string {
+func (p *CreatePacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CreatePacketfilterParam) SetParameterFile(v string) {
+func (p *CreatePacketFilterParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *CreatePacketfilterParam) GetParameterFile() string {
+func (p *CreatePacketFilterParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *CreatePacketfilterParam) SetGenerateSkeleton(v bool) {
+func (p *CreatePacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CreatePacketfilterParam) GetGenerateSkeleton() bool {
+func (p *CreatePacketFilterParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CreatePacketfilterParam) SetOutputType(v string) {
+func (p *CreatePacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CreatePacketfilterParam) GetOutputType() string {
+func (p *CreatePacketFilterParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CreatePacketfilterParam) SetColumn(v []string) {
+func (p *CreatePacketFilterParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CreatePacketfilterParam) GetColumn() []string {
+func (p *CreatePacketFilterParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CreatePacketfilterParam) SetQuiet(v bool) {
+func (p *CreatePacketFilterParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CreatePacketfilterParam) GetQuiet() bool {
+func (p *CreatePacketFilterParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CreatePacketfilterParam) SetFormat(v string) {
+func (p *CreatePacketFilterParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CreatePacketfilterParam) GetFormat() string {
+func (p *CreatePacketFilterParam) GetFormat() string {
 	return p.Format
 }
-func (p *CreatePacketfilterParam) SetFormatFile(v string) {
+func (p *CreatePacketFilterParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CreatePacketfilterParam) GetFormatFile() string {
+func (p *CreatePacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CreatePacketfilterParam) SetQuery(v string) {
+func (p *CreatePacketFilterParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CreatePacketfilterParam) GetQuery() string {
+func (p *CreatePacketFilterParam) GetQuery() string {
 	return p.Query
 }
-func (p *CreatePacketfilterParam) SetQueryFile(v string) {
+func (p *CreatePacketFilterParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CreatePacketfilterParam) GetQueryFile() string {
+func (p *CreatePacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// ReadPacketfilterParam is input parameters for the sacloud API
-type ReadPacketfilterParam struct {
+// ReadPacketFilterParam is input parameters for the sacloud API
+type ReadPacketFilterParam struct {
 	ParamTemplate     string     `json:"param-template"`
 	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
@@ -570,13 +570,13 @@ type ReadPacketfilterParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewReadPacketfilterParam return new ReadPacketfilterParam
-func NewReadPacketfilterParam() *ReadPacketfilterParam {
-	return &ReadPacketfilterParam{}
+// NewReadPacketFilterParam return new ReadPacketFilterParam
+func NewReadPacketFilterParam() *ReadPacketFilterParam {
+	return &ReadPacketFilterParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ReadPacketfilterParam) FillValueToSkeleton() {
+func (p *ReadPacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -620,7 +620,7 @@ func (p *ReadPacketfilterParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ReadPacketfilterParam) Validate() []error {
+func (p *ReadPacketFilterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -653,124 +653,124 @@ func (p *ReadPacketfilterParam) Validate() []error {
 	return errors
 }
 
-func (p *ReadPacketfilterParam) GetResourceDef() *schema.Resource {
+func (p *ReadPacketFilterParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *ReadPacketfilterParam) GetCommandDef() *schema.Command {
+func (p *ReadPacketFilterParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["read"]
 }
 
-func (p *ReadPacketfilterParam) GetIncludeFields() []string {
+func (p *ReadPacketFilterParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ReadPacketfilterParam) GetExcludeFields() []string {
+func (p *ReadPacketFilterParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ReadPacketfilterParam) GetTableType() output.TableType {
+func (p *ReadPacketFilterParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ReadPacketfilterParam) GetColumnDefs() []output.ColumnDef {
+func (p *ReadPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReadPacketfilterParam) SetParamTemplate(v string) {
+func (p *ReadPacketFilterParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ReadPacketfilterParam) GetParamTemplate() string {
+func (p *ReadPacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ReadPacketfilterParam) SetParameters(v string) {
+func (p *ReadPacketFilterParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ReadPacketfilterParam) GetParameters() string {
+func (p *ReadPacketFilterParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ReadPacketfilterParam) SetParamTemplateFile(v string) {
+func (p *ReadPacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ReadPacketfilterParam) GetParamTemplateFile() string {
+func (p *ReadPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ReadPacketfilterParam) SetParameterFile(v string) {
+func (p *ReadPacketFilterParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ReadPacketfilterParam) GetParameterFile() string {
+func (p *ReadPacketFilterParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ReadPacketfilterParam) SetGenerateSkeleton(v bool) {
+func (p *ReadPacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ReadPacketfilterParam) GetGenerateSkeleton() bool {
+func (p *ReadPacketFilterParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReadPacketfilterParam) SetOutputType(v string) {
+func (p *ReadPacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ReadPacketfilterParam) GetOutputType() string {
+func (p *ReadPacketFilterParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ReadPacketfilterParam) SetColumn(v []string) {
+func (p *ReadPacketFilterParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ReadPacketfilterParam) GetColumn() []string {
+func (p *ReadPacketFilterParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ReadPacketfilterParam) SetQuiet(v bool) {
+func (p *ReadPacketFilterParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ReadPacketfilterParam) GetQuiet() bool {
+func (p *ReadPacketFilterParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ReadPacketfilterParam) SetFormat(v string) {
+func (p *ReadPacketFilterParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ReadPacketfilterParam) GetFormat() string {
+func (p *ReadPacketFilterParam) GetFormat() string {
 	return p.Format
 }
-func (p *ReadPacketfilterParam) SetFormatFile(v string) {
+func (p *ReadPacketFilterParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ReadPacketfilterParam) GetFormatFile() string {
+func (p *ReadPacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ReadPacketfilterParam) SetQuery(v string) {
+func (p *ReadPacketFilterParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ReadPacketfilterParam) GetQuery() string {
+func (p *ReadPacketFilterParam) GetQuery() string {
 	return p.Query
 }
-func (p *ReadPacketfilterParam) SetQueryFile(v string) {
+func (p *ReadPacketFilterParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ReadPacketfilterParam) GetQueryFile() string {
+func (p *ReadPacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadPacketfilterParam) SetId(v sacloud.ID) {
+func (p *ReadPacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadPacketfilterParam) GetId() sacloud.ID {
+func (p *ReadPacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// UpdatePacketfilterParam is input parameters for the sacloud API
-type UpdatePacketfilterParam struct {
+// UpdatePacketFilterParam is input parameters for the sacloud API
+type UpdatePacketFilterParam struct {
 	Name              string     `json:"name"`
 	Description       string     `json:"description"`
 	Assumeyes         bool       `json:"assumeyes"`
@@ -789,13 +789,13 @@ type UpdatePacketfilterParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewUpdatePacketfilterParam return new UpdatePacketfilterParam
-func NewUpdatePacketfilterParam() *UpdatePacketfilterParam {
-	return &UpdatePacketfilterParam{}
+// NewUpdatePacketFilterParam return new UpdatePacketFilterParam
+func NewUpdatePacketFilterParam() *UpdatePacketFilterParam {
+	return &UpdatePacketFilterParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *UpdatePacketfilterParam) FillValueToSkeleton() {
+func (p *UpdatePacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -848,7 +848,7 @@ func (p *UpdatePacketfilterParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *UpdatePacketfilterParam) Validate() []error {
+func (p *UpdatePacketFilterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["PacketFilter"].Commands["update"].Params["name"].ValidateFunc
@@ -895,145 +895,145 @@ func (p *UpdatePacketfilterParam) Validate() []error {
 	return errors
 }
 
-func (p *UpdatePacketfilterParam) GetResourceDef() *schema.Resource {
+func (p *UpdatePacketFilterParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *UpdatePacketfilterParam) GetCommandDef() *schema.Command {
+func (p *UpdatePacketFilterParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["update"]
 }
 
-func (p *UpdatePacketfilterParam) GetIncludeFields() []string {
+func (p *UpdatePacketFilterParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *UpdatePacketfilterParam) GetExcludeFields() []string {
+func (p *UpdatePacketFilterParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *UpdatePacketfilterParam) GetTableType() output.TableType {
+func (p *UpdatePacketFilterParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *UpdatePacketfilterParam) GetColumnDefs() []output.ColumnDef {
+func (p *UpdatePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *UpdatePacketfilterParam) SetName(v string) {
+func (p *UpdatePacketFilterParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *UpdatePacketfilterParam) GetName() string {
+func (p *UpdatePacketFilterParam) GetName() string {
 	return p.Name
 }
-func (p *UpdatePacketfilterParam) SetDescription(v string) {
+func (p *UpdatePacketFilterParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdatePacketfilterParam) GetDescription() string {
+func (p *UpdatePacketFilterParam) GetDescription() string {
 	return p.Description
 }
-func (p *UpdatePacketfilterParam) SetAssumeyes(v bool) {
+func (p *UpdatePacketFilterParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *UpdatePacketfilterParam) GetAssumeyes() bool {
+func (p *UpdatePacketFilterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *UpdatePacketfilterParam) SetParamTemplate(v string) {
+func (p *UpdatePacketFilterParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *UpdatePacketfilterParam) GetParamTemplate() string {
+func (p *UpdatePacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *UpdatePacketfilterParam) SetParameters(v string) {
+func (p *UpdatePacketFilterParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *UpdatePacketfilterParam) GetParameters() string {
+func (p *UpdatePacketFilterParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *UpdatePacketfilterParam) SetParamTemplateFile(v string) {
+func (p *UpdatePacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *UpdatePacketfilterParam) GetParamTemplateFile() string {
+func (p *UpdatePacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *UpdatePacketfilterParam) SetParameterFile(v string) {
+func (p *UpdatePacketFilterParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *UpdatePacketfilterParam) GetParameterFile() string {
+func (p *UpdatePacketFilterParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *UpdatePacketfilterParam) SetGenerateSkeleton(v bool) {
+func (p *UpdatePacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *UpdatePacketfilterParam) GetGenerateSkeleton() bool {
+func (p *UpdatePacketFilterParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *UpdatePacketfilterParam) SetOutputType(v string) {
+func (p *UpdatePacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *UpdatePacketfilterParam) GetOutputType() string {
+func (p *UpdatePacketFilterParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *UpdatePacketfilterParam) SetColumn(v []string) {
+func (p *UpdatePacketFilterParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *UpdatePacketfilterParam) GetColumn() []string {
+func (p *UpdatePacketFilterParam) GetColumn() []string {
 	return p.Column
 }
-func (p *UpdatePacketfilterParam) SetQuiet(v bool) {
+func (p *UpdatePacketFilterParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *UpdatePacketfilterParam) GetQuiet() bool {
+func (p *UpdatePacketFilterParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *UpdatePacketfilterParam) SetFormat(v string) {
+func (p *UpdatePacketFilterParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *UpdatePacketfilterParam) GetFormat() string {
+func (p *UpdatePacketFilterParam) GetFormat() string {
 	return p.Format
 }
-func (p *UpdatePacketfilterParam) SetFormatFile(v string) {
+func (p *UpdatePacketFilterParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *UpdatePacketfilterParam) GetFormatFile() string {
+func (p *UpdatePacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *UpdatePacketfilterParam) SetQuery(v string) {
+func (p *UpdatePacketFilterParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *UpdatePacketfilterParam) GetQuery() string {
+func (p *UpdatePacketFilterParam) GetQuery() string {
 	return p.Query
 }
-func (p *UpdatePacketfilterParam) SetQueryFile(v string) {
+func (p *UpdatePacketFilterParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *UpdatePacketfilterParam) GetQueryFile() string {
+func (p *UpdatePacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdatePacketfilterParam) SetId(v sacloud.ID) {
+func (p *UpdatePacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdatePacketfilterParam) GetId() sacloud.ID {
+func (p *UpdatePacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// DeletePacketfilterParam is input parameters for the sacloud API
-type DeletePacketfilterParam struct {
+// DeletePacketFilterParam is input parameters for the sacloud API
+type DeletePacketFilterParam struct {
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
 	Parameters        string     `json:"parameters"`
@@ -1050,13 +1050,13 @@ type DeletePacketfilterParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewDeletePacketfilterParam return new DeletePacketfilterParam
-func NewDeletePacketfilterParam() *DeletePacketfilterParam {
-	return &DeletePacketfilterParam{}
+// NewDeletePacketFilterParam return new DeletePacketFilterParam
+func NewDeletePacketFilterParam() *DeletePacketFilterParam {
+	return &DeletePacketFilterParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *DeletePacketfilterParam) FillValueToSkeleton() {
+func (p *DeletePacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1103,7 +1103,7 @@ func (p *DeletePacketfilterParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *DeletePacketfilterParam) Validate() []error {
+func (p *DeletePacketFilterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1136,131 +1136,131 @@ func (p *DeletePacketfilterParam) Validate() []error {
 	return errors
 }
 
-func (p *DeletePacketfilterParam) GetResourceDef() *schema.Resource {
+func (p *DeletePacketFilterParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *DeletePacketfilterParam) GetCommandDef() *schema.Command {
+func (p *DeletePacketFilterParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["delete"]
 }
 
-func (p *DeletePacketfilterParam) GetIncludeFields() []string {
+func (p *DeletePacketFilterParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *DeletePacketfilterParam) GetExcludeFields() []string {
+func (p *DeletePacketFilterParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *DeletePacketfilterParam) GetTableType() output.TableType {
+func (p *DeletePacketFilterParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *DeletePacketfilterParam) GetColumnDefs() []output.ColumnDef {
+func (p *DeletePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DeletePacketfilterParam) SetAssumeyes(v bool) {
+func (p *DeletePacketFilterParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *DeletePacketfilterParam) GetAssumeyes() bool {
+func (p *DeletePacketFilterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeletePacketfilterParam) SetParamTemplate(v string) {
+func (p *DeletePacketFilterParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *DeletePacketfilterParam) GetParamTemplate() string {
+func (p *DeletePacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *DeletePacketfilterParam) SetParameters(v string) {
+func (p *DeletePacketFilterParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *DeletePacketfilterParam) GetParameters() string {
+func (p *DeletePacketFilterParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *DeletePacketfilterParam) SetParamTemplateFile(v string) {
+func (p *DeletePacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *DeletePacketfilterParam) GetParamTemplateFile() string {
+func (p *DeletePacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *DeletePacketfilterParam) SetParameterFile(v string) {
+func (p *DeletePacketFilterParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *DeletePacketfilterParam) GetParameterFile() string {
+func (p *DeletePacketFilterParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *DeletePacketfilterParam) SetGenerateSkeleton(v bool) {
+func (p *DeletePacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *DeletePacketfilterParam) GetGenerateSkeleton() bool {
+func (p *DeletePacketFilterParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DeletePacketfilterParam) SetOutputType(v string) {
+func (p *DeletePacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *DeletePacketfilterParam) GetOutputType() string {
+func (p *DeletePacketFilterParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *DeletePacketfilterParam) SetColumn(v []string) {
+func (p *DeletePacketFilterParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *DeletePacketfilterParam) GetColumn() []string {
+func (p *DeletePacketFilterParam) GetColumn() []string {
 	return p.Column
 }
-func (p *DeletePacketfilterParam) SetQuiet(v bool) {
+func (p *DeletePacketFilterParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *DeletePacketfilterParam) GetQuiet() bool {
+func (p *DeletePacketFilterParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *DeletePacketfilterParam) SetFormat(v string) {
+func (p *DeletePacketFilterParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *DeletePacketfilterParam) GetFormat() string {
+func (p *DeletePacketFilterParam) GetFormat() string {
 	return p.Format
 }
-func (p *DeletePacketfilterParam) SetFormatFile(v string) {
+func (p *DeletePacketFilterParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *DeletePacketfilterParam) GetFormatFile() string {
+func (p *DeletePacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *DeletePacketfilterParam) SetQuery(v string) {
+func (p *DeletePacketFilterParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *DeletePacketfilterParam) GetQuery() string {
+func (p *DeletePacketFilterParam) GetQuery() string {
 	return p.Query
 }
-func (p *DeletePacketfilterParam) SetQueryFile(v string) {
+func (p *DeletePacketFilterParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *DeletePacketfilterParam) GetQueryFile() string {
+func (p *DeletePacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeletePacketfilterParam) SetId(v sacloud.ID) {
+func (p *DeletePacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeletePacketfilterParam) GetId() sacloud.ID {
+func (p *DeletePacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// RuleInfoPacketfilterParam is input parameters for the sacloud API
-type RuleInfoPacketfilterParam struct {
+// RuleInfoPacketFilterParam is input parameters for the sacloud API
+type RuleInfoPacketFilterParam struct {
 	ParamTemplate     string     `json:"param-template"`
 	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
@@ -1276,13 +1276,13 @@ type RuleInfoPacketfilterParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewRuleInfoPacketfilterParam return new RuleInfoPacketfilterParam
-func NewRuleInfoPacketfilterParam() *RuleInfoPacketfilterParam {
-	return &RuleInfoPacketfilterParam{}
+// NewRuleInfoPacketFilterParam return new RuleInfoPacketFilterParam
+func NewRuleInfoPacketFilterParam() *RuleInfoPacketFilterParam {
+	return &RuleInfoPacketFilterParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *RuleInfoPacketfilterParam) FillValueToSkeleton() {
+func (p *RuleInfoPacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -1326,7 +1326,7 @@ func (p *RuleInfoPacketfilterParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *RuleInfoPacketfilterParam) Validate() []error {
+func (p *RuleInfoPacketFilterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1359,124 +1359,124 @@ func (p *RuleInfoPacketfilterParam) Validate() []error {
 	return errors
 }
 
-func (p *RuleInfoPacketfilterParam) GetResourceDef() *schema.Resource {
+func (p *RuleInfoPacketFilterParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *RuleInfoPacketfilterParam) GetCommandDef() *schema.Command {
+func (p *RuleInfoPacketFilterParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["rule-info"]
 }
 
-func (p *RuleInfoPacketfilterParam) GetIncludeFields() []string {
+func (p *RuleInfoPacketFilterParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *RuleInfoPacketfilterParam) GetExcludeFields() []string {
+func (p *RuleInfoPacketFilterParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *RuleInfoPacketfilterParam) GetTableType() output.TableType {
+func (p *RuleInfoPacketFilterParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *RuleInfoPacketfilterParam) GetColumnDefs() []output.ColumnDef {
+func (p *RuleInfoPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *RuleInfoPacketfilterParam) SetParamTemplate(v string) {
+func (p *RuleInfoPacketFilterParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *RuleInfoPacketfilterParam) GetParamTemplate() string {
+func (p *RuleInfoPacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *RuleInfoPacketfilterParam) SetParameters(v string) {
+func (p *RuleInfoPacketFilterParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *RuleInfoPacketfilterParam) GetParameters() string {
+func (p *RuleInfoPacketFilterParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *RuleInfoPacketfilterParam) SetParamTemplateFile(v string) {
+func (p *RuleInfoPacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *RuleInfoPacketfilterParam) GetParamTemplateFile() string {
+func (p *RuleInfoPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *RuleInfoPacketfilterParam) SetParameterFile(v string) {
+func (p *RuleInfoPacketFilterParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *RuleInfoPacketfilterParam) GetParameterFile() string {
+func (p *RuleInfoPacketFilterParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *RuleInfoPacketfilterParam) SetGenerateSkeleton(v bool) {
+func (p *RuleInfoPacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *RuleInfoPacketfilterParam) GetGenerateSkeleton() bool {
+func (p *RuleInfoPacketFilterParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *RuleInfoPacketfilterParam) SetOutputType(v string) {
+func (p *RuleInfoPacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *RuleInfoPacketfilterParam) GetOutputType() string {
+func (p *RuleInfoPacketFilterParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *RuleInfoPacketfilterParam) SetColumn(v []string) {
+func (p *RuleInfoPacketFilterParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *RuleInfoPacketfilterParam) GetColumn() []string {
+func (p *RuleInfoPacketFilterParam) GetColumn() []string {
 	return p.Column
 }
-func (p *RuleInfoPacketfilterParam) SetQuiet(v bool) {
+func (p *RuleInfoPacketFilterParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *RuleInfoPacketfilterParam) GetQuiet() bool {
+func (p *RuleInfoPacketFilterParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *RuleInfoPacketfilterParam) SetFormat(v string) {
+func (p *RuleInfoPacketFilterParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *RuleInfoPacketfilterParam) GetFormat() string {
+func (p *RuleInfoPacketFilterParam) GetFormat() string {
 	return p.Format
 }
-func (p *RuleInfoPacketfilterParam) SetFormatFile(v string) {
+func (p *RuleInfoPacketFilterParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *RuleInfoPacketfilterParam) GetFormatFile() string {
+func (p *RuleInfoPacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *RuleInfoPacketfilterParam) SetQuery(v string) {
+func (p *RuleInfoPacketFilterParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *RuleInfoPacketfilterParam) GetQuery() string {
+func (p *RuleInfoPacketFilterParam) GetQuery() string {
 	return p.Query
 }
-func (p *RuleInfoPacketfilterParam) SetQueryFile(v string) {
+func (p *RuleInfoPacketFilterParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *RuleInfoPacketfilterParam) GetQueryFile() string {
+func (p *RuleInfoPacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RuleInfoPacketfilterParam) SetId(v sacloud.ID) {
+func (p *RuleInfoPacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RuleInfoPacketfilterParam) GetId() sacloud.ID {
+func (p *RuleInfoPacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// RuleAddPacketfilterParam is input parameters for the sacloud API
-type RuleAddPacketfilterParam struct {
+// RuleAddPacketFilterParam is input parameters for the sacloud API
+type RuleAddPacketFilterParam struct {
 	Index             int        `json:"index"`
 	Protocol          string     `json:"protocol"`
 	SourceNetwork     string     `json:"source-network"`
@@ -1500,16 +1500,16 @@ type RuleAddPacketfilterParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewRuleAddPacketfilterParam return new RuleAddPacketfilterParam
-func NewRuleAddPacketfilterParam() *RuleAddPacketfilterParam {
-	return &RuleAddPacketfilterParam{
+// NewRuleAddPacketFilterParam return new RuleAddPacketFilterParam
+func NewRuleAddPacketFilterParam() *RuleAddPacketFilterParam {
+	return &RuleAddPacketFilterParam{
 
 		Index: 1,
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *RuleAddPacketfilterParam) FillValueToSkeleton() {
+func (p *RuleAddPacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -1577,7 +1577,7 @@ func (p *RuleAddPacketfilterParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *RuleAddPacketfilterParam) Validate() []error {
+func (p *RuleAddPacketFilterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["protocol"].ValidateFunc
@@ -1652,180 +1652,180 @@ func (p *RuleAddPacketfilterParam) Validate() []error {
 	return errors
 }
 
-func (p *RuleAddPacketfilterParam) GetResourceDef() *schema.Resource {
+func (p *RuleAddPacketFilterParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *RuleAddPacketfilterParam) GetCommandDef() *schema.Command {
+func (p *RuleAddPacketFilterParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["rule-add"]
 }
 
-func (p *RuleAddPacketfilterParam) GetIncludeFields() []string {
+func (p *RuleAddPacketFilterParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *RuleAddPacketfilterParam) GetExcludeFields() []string {
+func (p *RuleAddPacketFilterParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *RuleAddPacketfilterParam) GetTableType() output.TableType {
+func (p *RuleAddPacketFilterParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *RuleAddPacketfilterParam) GetColumnDefs() []output.ColumnDef {
+func (p *RuleAddPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *RuleAddPacketfilterParam) SetIndex(v int) {
+func (p *RuleAddPacketFilterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *RuleAddPacketfilterParam) GetIndex() int {
+func (p *RuleAddPacketFilterParam) GetIndex() int {
 	return p.Index
 }
-func (p *RuleAddPacketfilterParam) SetProtocol(v string) {
+func (p *RuleAddPacketFilterParam) SetProtocol(v string) {
 	p.Protocol = v
 }
 
-func (p *RuleAddPacketfilterParam) GetProtocol() string {
+func (p *RuleAddPacketFilterParam) GetProtocol() string {
 	return p.Protocol
 }
-func (p *RuleAddPacketfilterParam) SetSourceNetwork(v string) {
+func (p *RuleAddPacketFilterParam) SetSourceNetwork(v string) {
 	p.SourceNetwork = v
 }
 
-func (p *RuleAddPacketfilterParam) GetSourceNetwork() string {
+func (p *RuleAddPacketFilterParam) GetSourceNetwork() string {
 	return p.SourceNetwork
 }
-func (p *RuleAddPacketfilterParam) SetSourcePort(v string) {
+func (p *RuleAddPacketFilterParam) SetSourcePort(v string) {
 	p.SourcePort = v
 }
 
-func (p *RuleAddPacketfilterParam) GetSourcePort() string {
+func (p *RuleAddPacketFilterParam) GetSourcePort() string {
 	return p.SourcePort
 }
-func (p *RuleAddPacketfilterParam) SetDestinationPort(v string) {
+func (p *RuleAddPacketFilterParam) SetDestinationPort(v string) {
 	p.DestinationPort = v
 }
 
-func (p *RuleAddPacketfilterParam) GetDestinationPort() string {
+func (p *RuleAddPacketFilterParam) GetDestinationPort() string {
 	return p.DestinationPort
 }
-func (p *RuleAddPacketfilterParam) SetAction(v string) {
+func (p *RuleAddPacketFilterParam) SetAction(v string) {
 	p.Action = v
 }
 
-func (p *RuleAddPacketfilterParam) GetAction() string {
+func (p *RuleAddPacketFilterParam) GetAction() string {
 	return p.Action
 }
-func (p *RuleAddPacketfilterParam) SetDescription(v string) {
+func (p *RuleAddPacketFilterParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *RuleAddPacketfilterParam) GetDescription() string {
+func (p *RuleAddPacketFilterParam) GetDescription() string {
 	return p.Description
 }
-func (p *RuleAddPacketfilterParam) SetAssumeyes(v bool) {
+func (p *RuleAddPacketFilterParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *RuleAddPacketfilterParam) GetAssumeyes() bool {
+func (p *RuleAddPacketFilterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *RuleAddPacketfilterParam) SetParamTemplate(v string) {
+func (p *RuleAddPacketFilterParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *RuleAddPacketfilterParam) GetParamTemplate() string {
+func (p *RuleAddPacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *RuleAddPacketfilterParam) SetParameters(v string) {
+func (p *RuleAddPacketFilterParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *RuleAddPacketfilterParam) GetParameters() string {
+func (p *RuleAddPacketFilterParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *RuleAddPacketfilterParam) SetParamTemplateFile(v string) {
+func (p *RuleAddPacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *RuleAddPacketfilterParam) GetParamTemplateFile() string {
+func (p *RuleAddPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *RuleAddPacketfilterParam) SetParameterFile(v string) {
+func (p *RuleAddPacketFilterParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *RuleAddPacketfilterParam) GetParameterFile() string {
+func (p *RuleAddPacketFilterParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *RuleAddPacketfilterParam) SetGenerateSkeleton(v bool) {
+func (p *RuleAddPacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *RuleAddPacketfilterParam) GetGenerateSkeleton() bool {
+func (p *RuleAddPacketFilterParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *RuleAddPacketfilterParam) SetOutputType(v string) {
+func (p *RuleAddPacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *RuleAddPacketfilterParam) GetOutputType() string {
+func (p *RuleAddPacketFilterParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *RuleAddPacketfilterParam) SetColumn(v []string) {
+func (p *RuleAddPacketFilterParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *RuleAddPacketfilterParam) GetColumn() []string {
+func (p *RuleAddPacketFilterParam) GetColumn() []string {
 	return p.Column
 }
-func (p *RuleAddPacketfilterParam) SetQuiet(v bool) {
+func (p *RuleAddPacketFilterParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *RuleAddPacketfilterParam) GetQuiet() bool {
+func (p *RuleAddPacketFilterParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *RuleAddPacketfilterParam) SetFormat(v string) {
+func (p *RuleAddPacketFilterParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *RuleAddPacketfilterParam) GetFormat() string {
+func (p *RuleAddPacketFilterParam) GetFormat() string {
 	return p.Format
 }
-func (p *RuleAddPacketfilterParam) SetFormatFile(v string) {
+func (p *RuleAddPacketFilterParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *RuleAddPacketfilterParam) GetFormatFile() string {
+func (p *RuleAddPacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *RuleAddPacketfilterParam) SetQuery(v string) {
+func (p *RuleAddPacketFilterParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *RuleAddPacketfilterParam) GetQuery() string {
+func (p *RuleAddPacketFilterParam) GetQuery() string {
 	return p.Query
 }
-func (p *RuleAddPacketfilterParam) SetQueryFile(v string) {
+func (p *RuleAddPacketFilterParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *RuleAddPacketfilterParam) GetQueryFile() string {
+func (p *RuleAddPacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RuleAddPacketfilterParam) SetId(v sacloud.ID) {
+func (p *RuleAddPacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RuleAddPacketfilterParam) GetId() sacloud.ID {
+func (p *RuleAddPacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// RuleUpdatePacketfilterParam is input parameters for the sacloud API
-type RuleUpdatePacketfilterParam struct {
+// RuleUpdatePacketFilterParam is input parameters for the sacloud API
+type RuleUpdatePacketFilterParam struct {
 	Index             int        `json:"index"`
 	Protocol          string     `json:"protocol"`
 	SourceNetwork     string     `json:"source-network"`
@@ -1849,13 +1849,13 @@ type RuleUpdatePacketfilterParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewRuleUpdatePacketfilterParam return new RuleUpdatePacketfilterParam
-func NewRuleUpdatePacketfilterParam() *RuleUpdatePacketfilterParam {
-	return &RuleUpdatePacketfilterParam{}
+// NewRuleUpdatePacketFilterParam return new RuleUpdatePacketFilterParam
+func NewRuleUpdatePacketFilterParam() *RuleUpdatePacketFilterParam {
+	return &RuleUpdatePacketFilterParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *RuleUpdatePacketfilterParam) FillValueToSkeleton() {
+func (p *RuleUpdatePacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -1923,7 +1923,7 @@ func (p *RuleUpdatePacketfilterParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *RuleUpdatePacketfilterParam) Validate() []error {
+func (p *RuleUpdatePacketFilterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -2005,180 +2005,180 @@ func (p *RuleUpdatePacketfilterParam) Validate() []error {
 	return errors
 }
 
-func (p *RuleUpdatePacketfilterParam) GetResourceDef() *schema.Resource {
+func (p *RuleUpdatePacketFilterParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *RuleUpdatePacketfilterParam) GetCommandDef() *schema.Command {
+func (p *RuleUpdatePacketFilterParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["rule-update"]
 }
 
-func (p *RuleUpdatePacketfilterParam) GetIncludeFields() []string {
+func (p *RuleUpdatePacketFilterParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *RuleUpdatePacketfilterParam) GetExcludeFields() []string {
+func (p *RuleUpdatePacketFilterParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *RuleUpdatePacketfilterParam) GetTableType() output.TableType {
+func (p *RuleUpdatePacketFilterParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *RuleUpdatePacketfilterParam) GetColumnDefs() []output.ColumnDef {
+func (p *RuleUpdatePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *RuleUpdatePacketfilterParam) SetIndex(v int) {
+func (p *RuleUpdatePacketFilterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetIndex() int {
+func (p *RuleUpdatePacketFilterParam) GetIndex() int {
 	return p.Index
 }
-func (p *RuleUpdatePacketfilterParam) SetProtocol(v string) {
+func (p *RuleUpdatePacketFilterParam) SetProtocol(v string) {
 	p.Protocol = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetProtocol() string {
+func (p *RuleUpdatePacketFilterParam) GetProtocol() string {
 	return p.Protocol
 }
-func (p *RuleUpdatePacketfilterParam) SetSourceNetwork(v string) {
+func (p *RuleUpdatePacketFilterParam) SetSourceNetwork(v string) {
 	p.SourceNetwork = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetSourceNetwork() string {
+func (p *RuleUpdatePacketFilterParam) GetSourceNetwork() string {
 	return p.SourceNetwork
 }
-func (p *RuleUpdatePacketfilterParam) SetSourcePort(v string) {
+func (p *RuleUpdatePacketFilterParam) SetSourcePort(v string) {
 	p.SourcePort = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetSourcePort() string {
+func (p *RuleUpdatePacketFilterParam) GetSourcePort() string {
 	return p.SourcePort
 }
-func (p *RuleUpdatePacketfilterParam) SetDestinationPort(v string) {
+func (p *RuleUpdatePacketFilterParam) SetDestinationPort(v string) {
 	p.DestinationPort = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetDestinationPort() string {
+func (p *RuleUpdatePacketFilterParam) GetDestinationPort() string {
 	return p.DestinationPort
 }
-func (p *RuleUpdatePacketfilterParam) SetAction(v string) {
+func (p *RuleUpdatePacketFilterParam) SetAction(v string) {
 	p.Action = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetAction() string {
+func (p *RuleUpdatePacketFilterParam) GetAction() string {
 	return p.Action
 }
-func (p *RuleUpdatePacketfilterParam) SetDescription(v string) {
+func (p *RuleUpdatePacketFilterParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetDescription() string {
+func (p *RuleUpdatePacketFilterParam) GetDescription() string {
 	return p.Description
 }
-func (p *RuleUpdatePacketfilterParam) SetAssumeyes(v bool) {
+func (p *RuleUpdatePacketFilterParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetAssumeyes() bool {
+func (p *RuleUpdatePacketFilterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *RuleUpdatePacketfilterParam) SetParamTemplate(v string) {
+func (p *RuleUpdatePacketFilterParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetParamTemplate() string {
+func (p *RuleUpdatePacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *RuleUpdatePacketfilterParam) SetParameters(v string) {
+func (p *RuleUpdatePacketFilterParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetParameters() string {
+func (p *RuleUpdatePacketFilterParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *RuleUpdatePacketfilterParam) SetParamTemplateFile(v string) {
+func (p *RuleUpdatePacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetParamTemplateFile() string {
+func (p *RuleUpdatePacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *RuleUpdatePacketfilterParam) SetParameterFile(v string) {
+func (p *RuleUpdatePacketFilterParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetParameterFile() string {
+func (p *RuleUpdatePacketFilterParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *RuleUpdatePacketfilterParam) SetGenerateSkeleton(v bool) {
+func (p *RuleUpdatePacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetGenerateSkeleton() bool {
+func (p *RuleUpdatePacketFilterParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *RuleUpdatePacketfilterParam) SetOutputType(v string) {
+func (p *RuleUpdatePacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetOutputType() string {
+func (p *RuleUpdatePacketFilterParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *RuleUpdatePacketfilterParam) SetColumn(v []string) {
+func (p *RuleUpdatePacketFilterParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetColumn() []string {
+func (p *RuleUpdatePacketFilterParam) GetColumn() []string {
 	return p.Column
 }
-func (p *RuleUpdatePacketfilterParam) SetQuiet(v bool) {
+func (p *RuleUpdatePacketFilterParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetQuiet() bool {
+func (p *RuleUpdatePacketFilterParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *RuleUpdatePacketfilterParam) SetFormat(v string) {
+func (p *RuleUpdatePacketFilterParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetFormat() string {
+func (p *RuleUpdatePacketFilterParam) GetFormat() string {
 	return p.Format
 }
-func (p *RuleUpdatePacketfilterParam) SetFormatFile(v string) {
+func (p *RuleUpdatePacketFilterParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetFormatFile() string {
+func (p *RuleUpdatePacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *RuleUpdatePacketfilterParam) SetQuery(v string) {
+func (p *RuleUpdatePacketFilterParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetQuery() string {
+func (p *RuleUpdatePacketFilterParam) GetQuery() string {
 	return p.Query
 }
-func (p *RuleUpdatePacketfilterParam) SetQueryFile(v string) {
+func (p *RuleUpdatePacketFilterParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetQueryFile() string {
+func (p *RuleUpdatePacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RuleUpdatePacketfilterParam) SetId(v sacloud.ID) {
+func (p *RuleUpdatePacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RuleUpdatePacketfilterParam) GetId() sacloud.ID {
+func (p *RuleUpdatePacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// RuleDeletePacketfilterParam is input parameters for the sacloud API
-type RuleDeletePacketfilterParam struct {
+// RuleDeletePacketFilterParam is input parameters for the sacloud API
+type RuleDeletePacketFilterParam struct {
 	Index             int        `json:"index"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -2196,13 +2196,13 @@ type RuleDeletePacketfilterParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewRuleDeletePacketfilterParam return new RuleDeletePacketfilterParam
-func NewRuleDeletePacketfilterParam() *RuleDeletePacketfilterParam {
-	return &RuleDeletePacketfilterParam{}
+// NewRuleDeletePacketFilterParam return new RuleDeletePacketFilterParam
+func NewRuleDeletePacketFilterParam() *RuleDeletePacketFilterParam {
+	return &RuleDeletePacketFilterParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *RuleDeletePacketfilterParam) FillValueToSkeleton() {
+func (p *RuleDeletePacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -2252,7 +2252,7 @@ func (p *RuleDeletePacketfilterParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *RuleDeletePacketfilterParam) Validate() []error {
+func (p *RuleDeletePacketFilterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -2292,138 +2292,138 @@ func (p *RuleDeletePacketfilterParam) Validate() []error {
 	return errors
 }
 
-func (p *RuleDeletePacketfilterParam) GetResourceDef() *schema.Resource {
+func (p *RuleDeletePacketFilterParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *RuleDeletePacketfilterParam) GetCommandDef() *schema.Command {
+func (p *RuleDeletePacketFilterParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["rule-delete"]
 }
 
-func (p *RuleDeletePacketfilterParam) GetIncludeFields() []string {
+func (p *RuleDeletePacketFilterParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *RuleDeletePacketfilterParam) GetExcludeFields() []string {
+func (p *RuleDeletePacketFilterParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *RuleDeletePacketfilterParam) GetTableType() output.TableType {
+func (p *RuleDeletePacketFilterParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *RuleDeletePacketfilterParam) GetColumnDefs() []output.ColumnDef {
+func (p *RuleDeletePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *RuleDeletePacketfilterParam) SetIndex(v int) {
+func (p *RuleDeletePacketFilterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *RuleDeletePacketfilterParam) GetIndex() int {
+func (p *RuleDeletePacketFilterParam) GetIndex() int {
 	return p.Index
 }
-func (p *RuleDeletePacketfilterParam) SetAssumeyes(v bool) {
+func (p *RuleDeletePacketFilterParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *RuleDeletePacketfilterParam) GetAssumeyes() bool {
+func (p *RuleDeletePacketFilterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *RuleDeletePacketfilterParam) SetParamTemplate(v string) {
+func (p *RuleDeletePacketFilterParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *RuleDeletePacketfilterParam) GetParamTemplate() string {
+func (p *RuleDeletePacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *RuleDeletePacketfilterParam) SetParameters(v string) {
+func (p *RuleDeletePacketFilterParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *RuleDeletePacketfilterParam) GetParameters() string {
+func (p *RuleDeletePacketFilterParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *RuleDeletePacketfilterParam) SetParamTemplateFile(v string) {
+func (p *RuleDeletePacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *RuleDeletePacketfilterParam) GetParamTemplateFile() string {
+func (p *RuleDeletePacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *RuleDeletePacketfilterParam) SetParameterFile(v string) {
+func (p *RuleDeletePacketFilterParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *RuleDeletePacketfilterParam) GetParameterFile() string {
+func (p *RuleDeletePacketFilterParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *RuleDeletePacketfilterParam) SetGenerateSkeleton(v bool) {
+func (p *RuleDeletePacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *RuleDeletePacketfilterParam) GetGenerateSkeleton() bool {
+func (p *RuleDeletePacketFilterParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *RuleDeletePacketfilterParam) SetOutputType(v string) {
+func (p *RuleDeletePacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *RuleDeletePacketfilterParam) GetOutputType() string {
+func (p *RuleDeletePacketFilterParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *RuleDeletePacketfilterParam) SetColumn(v []string) {
+func (p *RuleDeletePacketFilterParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *RuleDeletePacketfilterParam) GetColumn() []string {
+func (p *RuleDeletePacketFilterParam) GetColumn() []string {
 	return p.Column
 }
-func (p *RuleDeletePacketfilterParam) SetQuiet(v bool) {
+func (p *RuleDeletePacketFilterParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *RuleDeletePacketfilterParam) GetQuiet() bool {
+func (p *RuleDeletePacketFilterParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *RuleDeletePacketfilterParam) SetFormat(v string) {
+func (p *RuleDeletePacketFilterParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *RuleDeletePacketfilterParam) GetFormat() string {
+func (p *RuleDeletePacketFilterParam) GetFormat() string {
 	return p.Format
 }
-func (p *RuleDeletePacketfilterParam) SetFormatFile(v string) {
+func (p *RuleDeletePacketFilterParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *RuleDeletePacketfilterParam) GetFormatFile() string {
+func (p *RuleDeletePacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *RuleDeletePacketfilterParam) SetQuery(v string) {
+func (p *RuleDeletePacketFilterParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *RuleDeletePacketfilterParam) GetQuery() string {
+func (p *RuleDeletePacketFilterParam) GetQuery() string {
 	return p.Query
 }
-func (p *RuleDeletePacketfilterParam) SetQueryFile(v string) {
+func (p *RuleDeletePacketFilterParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *RuleDeletePacketfilterParam) GetQueryFile() string {
+func (p *RuleDeletePacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RuleDeletePacketfilterParam) SetId(v sacloud.ID) {
+func (p *RuleDeletePacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RuleDeletePacketfilterParam) GetId() sacloud.ID {
+func (p *RuleDeletePacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// InterfaceConnectPacketfilterParam is input parameters for the sacloud API
-type InterfaceConnectPacketfilterParam struct {
+// InterfaceConnectPacketFilterParam is input parameters for the sacloud API
+type InterfaceConnectPacketFilterParam struct {
 	InterfaceId       sacloud.ID `json:"interface-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -2434,13 +2434,13 @@ type InterfaceConnectPacketfilterParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewInterfaceConnectPacketfilterParam return new InterfaceConnectPacketfilterParam
-func NewInterfaceConnectPacketfilterParam() *InterfaceConnectPacketfilterParam {
-	return &InterfaceConnectPacketfilterParam{}
+// NewInterfaceConnectPacketFilterParam return new InterfaceConnectPacketFilterParam
+func NewInterfaceConnectPacketFilterParam() *InterfaceConnectPacketFilterParam {
+	return &InterfaceConnectPacketFilterParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *InterfaceConnectPacketfilterParam) FillValueToSkeleton() {
+func (p *InterfaceConnectPacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.InterfaceId) {
 		p.InterfaceId = sacloud.ID(0)
 	}
@@ -2469,7 +2469,7 @@ func (p *InterfaceConnectPacketfilterParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *InterfaceConnectPacketfilterParam) Validate() []error {
+func (p *InterfaceConnectPacketFilterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -2496,89 +2496,89 @@ func (p *InterfaceConnectPacketfilterParam) Validate() []error {
 	return errors
 }
 
-func (p *InterfaceConnectPacketfilterParam) GetResourceDef() *schema.Resource {
+func (p *InterfaceConnectPacketFilterParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *InterfaceConnectPacketfilterParam) GetCommandDef() *schema.Command {
+func (p *InterfaceConnectPacketFilterParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["interface-connect"]
 }
 
-func (p *InterfaceConnectPacketfilterParam) GetIncludeFields() []string {
+func (p *InterfaceConnectPacketFilterParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *InterfaceConnectPacketfilterParam) GetExcludeFields() []string {
+func (p *InterfaceConnectPacketFilterParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *InterfaceConnectPacketfilterParam) GetTableType() output.TableType {
+func (p *InterfaceConnectPacketFilterParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *InterfaceConnectPacketfilterParam) GetColumnDefs() []output.ColumnDef {
+func (p *InterfaceConnectPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *InterfaceConnectPacketfilterParam) SetInterfaceId(v sacloud.ID) {
+func (p *InterfaceConnectPacketFilterParam) SetInterfaceId(v sacloud.ID) {
 	p.InterfaceId = v
 }
 
-func (p *InterfaceConnectPacketfilterParam) GetInterfaceId() sacloud.ID {
+func (p *InterfaceConnectPacketFilterParam) GetInterfaceId() sacloud.ID {
 	return p.InterfaceId
 }
-func (p *InterfaceConnectPacketfilterParam) SetAssumeyes(v bool) {
+func (p *InterfaceConnectPacketFilterParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *InterfaceConnectPacketfilterParam) GetAssumeyes() bool {
+func (p *InterfaceConnectPacketFilterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *InterfaceConnectPacketfilterParam) SetParamTemplate(v string) {
+func (p *InterfaceConnectPacketFilterParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *InterfaceConnectPacketfilterParam) GetParamTemplate() string {
+func (p *InterfaceConnectPacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *InterfaceConnectPacketfilterParam) SetParameters(v string) {
+func (p *InterfaceConnectPacketFilterParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *InterfaceConnectPacketfilterParam) GetParameters() string {
+func (p *InterfaceConnectPacketFilterParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *InterfaceConnectPacketfilterParam) SetParamTemplateFile(v string) {
+func (p *InterfaceConnectPacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *InterfaceConnectPacketfilterParam) GetParamTemplateFile() string {
+func (p *InterfaceConnectPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *InterfaceConnectPacketfilterParam) SetParameterFile(v string) {
+func (p *InterfaceConnectPacketFilterParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *InterfaceConnectPacketfilterParam) GetParameterFile() string {
+func (p *InterfaceConnectPacketFilterParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *InterfaceConnectPacketfilterParam) SetGenerateSkeleton(v bool) {
+func (p *InterfaceConnectPacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *InterfaceConnectPacketfilterParam) GetGenerateSkeleton() bool {
+func (p *InterfaceConnectPacketFilterParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *InterfaceConnectPacketfilterParam) SetId(v sacloud.ID) {
+func (p *InterfaceConnectPacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *InterfaceConnectPacketfilterParam) GetId() sacloud.ID {
+func (p *InterfaceConnectPacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// InterfaceDisconnectPacketfilterParam is input parameters for the sacloud API
-type InterfaceDisconnectPacketfilterParam struct {
+// InterfaceDisconnectPacketFilterParam is input parameters for the sacloud API
+type InterfaceDisconnectPacketFilterParam struct {
 	InterfaceId       sacloud.ID `json:"interface-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -2589,13 +2589,13 @@ type InterfaceDisconnectPacketfilterParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewInterfaceDisconnectPacketfilterParam return new InterfaceDisconnectPacketfilterParam
-func NewInterfaceDisconnectPacketfilterParam() *InterfaceDisconnectPacketfilterParam {
-	return &InterfaceDisconnectPacketfilterParam{}
+// NewInterfaceDisconnectPacketFilterParam return new InterfaceDisconnectPacketFilterParam
+func NewInterfaceDisconnectPacketFilterParam() *InterfaceDisconnectPacketFilterParam {
+	return &InterfaceDisconnectPacketFilterParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *InterfaceDisconnectPacketfilterParam) FillValueToSkeleton() {
+func (p *InterfaceDisconnectPacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.InterfaceId) {
 		p.InterfaceId = sacloud.ID(0)
 	}
@@ -2624,7 +2624,7 @@ func (p *InterfaceDisconnectPacketfilterParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *InterfaceDisconnectPacketfilterParam) Validate() []error {
+func (p *InterfaceDisconnectPacketFilterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -2651,83 +2651,83 @@ func (p *InterfaceDisconnectPacketfilterParam) Validate() []error {
 	return errors
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) GetResourceDef() *schema.Resource {
+func (p *InterfaceDisconnectPacketFilterParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) GetCommandDef() *schema.Command {
+func (p *InterfaceDisconnectPacketFilterParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["interface-disconnect"]
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) GetIncludeFields() []string {
+func (p *InterfaceDisconnectPacketFilterParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) GetExcludeFields() []string {
+func (p *InterfaceDisconnectPacketFilterParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) GetTableType() output.TableType {
+func (p *InterfaceDisconnectPacketFilterParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) GetColumnDefs() []output.ColumnDef {
+func (p *InterfaceDisconnectPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) SetInterfaceId(v sacloud.ID) {
+func (p *InterfaceDisconnectPacketFilterParam) SetInterfaceId(v sacloud.ID) {
 	p.InterfaceId = v
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) GetInterfaceId() sacloud.ID {
+func (p *InterfaceDisconnectPacketFilterParam) GetInterfaceId() sacloud.ID {
 	return p.InterfaceId
 }
-func (p *InterfaceDisconnectPacketfilterParam) SetAssumeyes(v bool) {
+func (p *InterfaceDisconnectPacketFilterParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) GetAssumeyes() bool {
+func (p *InterfaceDisconnectPacketFilterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *InterfaceDisconnectPacketfilterParam) SetParamTemplate(v string) {
+func (p *InterfaceDisconnectPacketFilterParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) GetParamTemplate() string {
+func (p *InterfaceDisconnectPacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *InterfaceDisconnectPacketfilterParam) SetParameters(v string) {
+func (p *InterfaceDisconnectPacketFilterParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) GetParameters() string {
+func (p *InterfaceDisconnectPacketFilterParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *InterfaceDisconnectPacketfilterParam) SetParamTemplateFile(v string) {
+func (p *InterfaceDisconnectPacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) GetParamTemplateFile() string {
+func (p *InterfaceDisconnectPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *InterfaceDisconnectPacketfilterParam) SetParameterFile(v string) {
+func (p *InterfaceDisconnectPacketFilterParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) GetParameterFile() string {
+func (p *InterfaceDisconnectPacketFilterParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *InterfaceDisconnectPacketfilterParam) SetGenerateSkeleton(v bool) {
+func (p *InterfaceDisconnectPacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) GetGenerateSkeleton() bool {
+func (p *InterfaceDisconnectPacketFilterParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *InterfaceDisconnectPacketfilterParam) SetId(v sacloud.ID) {
+func (p *InterfaceDisconnectPacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *InterfaceDisconnectPacketfilterParam) GetId() sacloud.ID {
+func (p *InterfaceDisconnectPacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }

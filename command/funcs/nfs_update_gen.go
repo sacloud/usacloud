@@ -23,13 +23,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func NfsUpdate(ctx command.Context, params *params.UpdateNfsParam) error {
+func NFSUpdate(ctx command.Context, params *params.UpdateNFSParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetNfsAPI()
+	api := client.GetNFSAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("NfsUpdate is failed: %s", e)
+		return fmt.Errorf("NFSUpdate is failed: %s", e)
 	}
 
 	// set params
@@ -50,7 +50,7 @@ func NfsUpdate(ctx command.Context, params *params.UpdateNfsParam) error {
 	// call Update(id)
 	res, err := api.Update(params.Id, p)
 	if err != nil {
-		return fmt.Errorf("NfsUpdate is failed: %s", err)
+		return fmt.Errorf("NFSUpdate is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

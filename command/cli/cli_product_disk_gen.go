@@ -30,8 +30,8 @@ import (
 )
 
 func init() {
-	productdiskListParam := params.NewListProductdiskParam()
-	productdiskReadParam := params.NewReadProductdiskParam()
+	productDiskListParam := params.NewListProductDiskParam()
+	productDiskReadParam := params.NewReadProductDiskParam()
 
 	cliCommand := &cli.Command{
 		Name:    "product-disk",
@@ -124,7 +124,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find"},
-				Usage:   "List Productdisk (default)",
+				Usage:   "List ProductDisk (default)",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -210,72 +210,72 @@ func init() {
 						return err
 					}
 
-					productdiskListParam.ParamTemplate = c.String("param-template")
-					productdiskListParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(productdiskListParam)
+					productDiskListParam.ParamTemplate = c.String("param-template")
+					productDiskListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(productDiskListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListProductdiskParam()
+						p := params.NewListProductDiskParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(productdiskListParam, p, mergo.WithOverride)
+						mergo.Merge(productDiskListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						productdiskListParam.Name = c.StringSlice("name")
+						productDiskListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						productdiskListParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						productDiskListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("from") {
-						productdiskListParam.From = c.Int("from")
+						productDiskListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						productdiskListParam.Max = c.Int("max")
+						productDiskListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						productdiskListParam.Sort = c.StringSlice("sort")
+						productDiskListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						productdiskListParam.ParamTemplate = c.String("param-template")
+						productDiskListParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						productdiskListParam.Parameters = c.String("parameters")
+						productDiskListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						productdiskListParam.ParamTemplateFile = c.String("param-template-file")
+						productDiskListParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						productdiskListParam.ParameterFile = c.String("parameter-file")
+						productDiskListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						productdiskListParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						productDiskListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						productdiskListParam.OutputType = c.String("output-type")
+						productDiskListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						productdiskListParam.Column = c.StringSlice("column")
+						productDiskListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						productdiskListParam.Quiet = c.Bool("quiet")
+						productDiskListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						productdiskListParam.Format = c.String("format")
+						productDiskListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						productdiskListParam.FormatFile = c.String("format-file")
+						productDiskListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						productdiskListParam.Query = c.String("query")
+						productDiskListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						productdiskListParam.QueryFile = c.String("query-file")
+						productDiskListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -283,7 +283,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = productdiskListParam
+					var outputTypeHolder interface{} = productDiskListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -294,10 +294,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if productdiskListParam.GenerateSkeleton {
-						productdiskListParam.GenerateSkeleton = false
-						productdiskListParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(productdiskListParam, "", "\t")
+					if productDiskListParam.GenerateSkeleton {
+						productDiskListParam.GenerateSkeleton = false
+						productDiskListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(productDiskListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -306,21 +306,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := productdiskListParam.Validate(); len(errors) > 0 {
+					if errors := productDiskListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), productdiskListParam)
+					ctx := command.NewContext(c, c.Args().Slice(), productDiskListParam)
 
 					// Run command with params
-					return funcs.ProductdiskList(ctx, productdiskListParam)
+					return funcs.ProductDiskList(ctx, productDiskListParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Productdisk",
+				Usage:     "Read ProductDisk",
 				ArgsUsage: "<ID>",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -395,63 +395,63 @@ func init() {
 						return err
 					}
 
-					productdiskReadParam.ParamTemplate = c.String("param-template")
-					productdiskReadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(productdiskReadParam)
+					productDiskReadParam.ParamTemplate = c.String("param-template")
+					productDiskReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(productDiskReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadProductdiskParam()
+						p := params.NewReadProductDiskParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(productdiskReadParam, p, mergo.WithOverride)
+						mergo.Merge(productDiskReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("assumeyes") {
-						productdiskReadParam.Assumeyes = c.Bool("assumeyes")
+						productDiskReadParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						productdiskReadParam.ParamTemplate = c.String("param-template")
+						productDiskReadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						productdiskReadParam.Parameters = c.String("parameters")
+						productDiskReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						productdiskReadParam.ParamTemplateFile = c.String("param-template-file")
+						productDiskReadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						productdiskReadParam.ParameterFile = c.String("parameter-file")
+						productDiskReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						productdiskReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						productDiskReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						productdiskReadParam.OutputType = c.String("output-type")
+						productDiskReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						productdiskReadParam.Column = c.StringSlice("column")
+						productDiskReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						productdiskReadParam.Quiet = c.Bool("quiet")
+						productDiskReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						productdiskReadParam.Format = c.String("format")
+						productDiskReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						productdiskReadParam.FormatFile = c.String("format-file")
+						productDiskReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						productdiskReadParam.Query = c.String("query")
+						productDiskReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						productdiskReadParam.QueryFile = c.String("query-file")
+						productDiskReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						productdiskReadParam.Id = sacloud.ID(c.Int64("id"))
+						productDiskReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -459,7 +459,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = productdiskReadParam
+					var outputTypeHolder interface{} = productDiskReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -470,10 +470,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if productdiskReadParam.GenerateSkeleton {
-						productdiskReadParam.GenerateSkeleton = false
-						productdiskReadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(productdiskReadParam, "", "\t")
+					if productDiskReadParam.GenerateSkeleton {
+						productDiskReadParam.GenerateSkeleton = false
+						productDiskReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(productDiskReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -485,18 +485,18 @@ func init() {
 						return fmt.Errorf("ID argument is required")
 					}
 					c.Set("id", c.Args().First())
-					productdiskReadParam.SetId(sacloud.ID(c.Int64("id")))
+					productDiskReadParam.SetId(sacloud.ID(c.Int64("id")))
 
 					// Validate specific for each command params
-					if errors := productdiskReadParam.Validate(); len(errors) > 0 {
+					if errors := productDiskReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), productdiskReadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), productDiskReadParam)
 
 					// confirm
-					if !productdiskReadParam.Assumeyes {
+					if !productDiskReadParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -506,7 +506,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.ProductdiskRead(ctx, productdiskReadParam)
+					return funcs.ProductDiskRead(ctx, productDiskReadParam)
 
 				},
 			},

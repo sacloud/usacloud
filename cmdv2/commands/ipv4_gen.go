@@ -25,11 +25,11 @@ import (
 )
 
 var (
-	ipv4ListParam      = params.NewListIpv4Param()
-	ipv4PtrAddParam    = params.NewPtrAddIpv4Param()
-	ipv4PtrReadParam   = params.NewPtrReadIpv4Param()
-	ipv4PtrUpdateParam = params.NewPtrUpdateIpv4Param()
-	ipv4PtrDeleteParam = params.NewPtrDeleteIpv4Param()
+	ipv4ListParam      = params.NewListIPv4Param()
+	ipv4PtrAddParam    = params.NewPtrAddIPv4Param()
+	ipv4PtrReadParam   = params.NewPtrReadIPv4Param()
+	ipv4PtrUpdateParam = params.NewPtrUpdateIPv4Param()
+	ipv4PtrDeleteParam = params.NewPtrDeleteIPv4Param()
 )
 
 // ipv4Cmd represents the command to manage SAKURA Cloud IPv4
@@ -45,8 +45,8 @@ var ipv4Cmd = &cobra.Command{
 var ipv4ListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find"},
-	Short:   "List Ipv4",
-	Long:    `List Ipv4`,
+	Short:   "List IPv4",
+	Long:    `List IPv4`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := ipv4ListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -67,8 +67,8 @@ func ipv4ListCmdInit() {
 var ipv4PtrAddCmd = &cobra.Command{
 	Use: "ptr-add",
 
-	Short: "PtrAdd Ipv4",
-	Long:  `PtrAdd Ipv4`,
+	Short: "PtrAdd IPv4",
+	Long:  `PtrAdd IPv4`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := ipv4PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -85,8 +85,8 @@ func ipv4PtrAddCmdInit() {
 var ipv4PtrReadCmd = &cobra.Command{
 	Use: "ptr-read",
 
-	Short: "PtrRead Ipv4",
-	Long:  `PtrRead Ipv4`,
+	Short: "PtrRead IPv4",
+	Long:  `PtrRead IPv4`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := ipv4PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -101,8 +101,8 @@ func ipv4PtrReadCmdInit() {
 var ipv4PtrUpdateCmd = &cobra.Command{
 	Use: "ptr-update",
 
-	Short: "PtrUpdate Ipv4",
-	Long:  `PtrUpdate Ipv4`,
+	Short: "PtrUpdate IPv4",
+	Long:  `PtrUpdate IPv4`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := ipv4PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -119,8 +119,8 @@ func ipv4PtrUpdateCmdInit() {
 var ipv4PtrDeleteCmd = &cobra.Command{
 	Use: "ptr-delete",
 
-	Short: "PtrDelete Ipv4",
-	Long:  `PtrDelete Ipv4`,
+	Short: "PtrDelete IPv4",
+	Long:  `PtrDelete IPv4`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := ipv4PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG

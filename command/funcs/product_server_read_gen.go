@@ -23,24 +23,24 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ProductserverRead(ctx command.Context, params *params.ReadProductserverParam) error {
+func ProductServerRead(ctx command.Context, params *params.ReadProductServerParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetProductserverAPI()
+	api := client.GetProductServerAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("ProductserverRead is failed: %s", e)
+		return fmt.Errorf("ProductServerRead is failed: %s", e)
 	}
 
 	// set params
 
 	// TODO Remove and implements here!!
-	return fmt.Errorf("Not Implements ProductserverRead : %#v", p)
+	return fmt.Errorf("Not Implements ProductServerRead : %#v", p)
 
 	// call manipurate functions
 	// res, err := api.XXXX(params.Id, p)
 	// if err != nil {
-	// 	return fmt.Errorf("ProductserverRead is failed: %s", err)
+	// 	return fmt.Errorf("ProductServerRead is failed: %s", err)
 	// }
 	// return ctx.GetOutput().Print(res)
 

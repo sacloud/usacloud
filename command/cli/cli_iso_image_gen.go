@@ -32,15 +32,15 @@ import (
 )
 
 func init() {
-	isoimageListParam := params.NewListIsoimageParam()
-	isoimageCreateParam := params.NewCreateIsoimageParam()
-	isoimageReadParam := params.NewReadIsoimageParam()
-	isoimageUpdateParam := params.NewUpdateIsoimageParam()
-	isoimageDeleteParam := params.NewDeleteIsoimageParam()
-	isoimageUploadParam := params.NewUploadIsoimageParam()
-	isoimageDownloadParam := params.NewDownloadIsoimageParam()
-	isoimageFtpOpenParam := params.NewFtpOpenIsoimageParam()
-	isoimageFtpCloseParam := params.NewFtpCloseIsoimageParam()
+	isoImageListParam := params.NewListISOImageParam()
+	isoImageCreateParam := params.NewCreateISOImageParam()
+	isoImageReadParam := params.NewReadISOImageParam()
+	isoImageUpdateParam := params.NewUpdateISOImageParam()
+	isoImageDeleteParam := params.NewDeleteISOImageParam()
+	isoImageUploadParam := params.NewUploadISOImageParam()
+	isoImageDownloadParam := params.NewDownloadISOImageParam()
+	isoImageFTPOpenParam := params.NewFTPOpenISOImageParam()
+	isoImageFTPCloseParam := params.NewFTPCloseISOImageParam()
 
 	cliCommand := &cli.Command{
 		Name:  "iso-image",
@@ -49,7 +49,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find", "selector"},
-				Usage:   "List Isoimage",
+				Usage:   "List ISOImage",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -144,78 +144,78 @@ func init() {
 						return err
 					}
 
-					isoimageListParam.ParamTemplate = c.String("param-template")
-					isoimageListParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(isoimageListParam)
+					isoImageListParam.ParamTemplate = c.String("param-template")
+					isoImageListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(isoImageListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListIsoimageParam()
+						p := params.NewListISOImageParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(isoimageListParam, p, mergo.WithOverride)
+						mergo.Merge(isoImageListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						isoimageListParam.Name = c.StringSlice("name")
+						isoImageListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						isoimageListParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						isoImageListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("scope") {
-						isoimageListParam.Scope = c.String("scope")
+						isoImageListParam.Scope = c.String("scope")
 					}
 					if c.IsSet("tags") {
-						isoimageListParam.Tags = c.StringSlice("tags")
+						isoImageListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("from") {
-						isoimageListParam.From = c.Int("from")
+						isoImageListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						isoimageListParam.Max = c.Int("max")
+						isoImageListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						isoimageListParam.Sort = c.StringSlice("sort")
+						isoImageListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						isoimageListParam.ParamTemplate = c.String("param-template")
+						isoImageListParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						isoimageListParam.Parameters = c.String("parameters")
+						isoImageListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						isoimageListParam.ParamTemplateFile = c.String("param-template-file")
+						isoImageListParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						isoimageListParam.ParameterFile = c.String("parameter-file")
+						isoImageListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						isoimageListParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						isoImageListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						isoimageListParam.OutputType = c.String("output-type")
+						isoImageListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						isoimageListParam.Column = c.StringSlice("column")
+						isoImageListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						isoimageListParam.Quiet = c.Bool("quiet")
+						isoImageListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						isoimageListParam.Format = c.String("format")
+						isoImageListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						isoimageListParam.FormatFile = c.String("format-file")
+						isoImageListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						isoimageListParam.Query = c.String("query")
+						isoImageListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						isoimageListParam.QueryFile = c.String("query-file")
+						isoImageListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -223,7 +223,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = isoimageListParam
+					var outputTypeHolder interface{} = isoImageListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -234,10 +234,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if isoimageListParam.GenerateSkeleton {
-						isoimageListParam.GenerateSkeleton = false
-						isoimageListParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(isoimageListParam, "", "\t")
+					if isoImageListParam.GenerateSkeleton {
+						isoImageListParam.GenerateSkeleton = false
+						isoImageListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(isoImageListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -246,21 +246,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := isoimageListParam.Validate(); len(errors) > 0 {
+					if errors := isoImageListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), isoimageListParam)
+					ctx := command.NewContext(c, c.Args().Slice(), isoImageListParam)
 
 					// Run command with params
-					return funcs.IsoimageList(ctx, isoimageListParam)
+					return funcs.ISOImageList(ctx, isoImageListParam)
 
 				},
 			},
 			{
 				Name:  "create",
-				Usage: "Create Isoimage",
+				Usage: "Create ISOImage",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
 						Name:  "size",
@@ -355,78 +355,78 @@ func init() {
 						return err
 					}
 
-					isoimageCreateParam.ParamTemplate = c.String("param-template")
-					isoimageCreateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(isoimageCreateParam)
+					isoImageCreateParam.ParamTemplate = c.String("param-template")
+					isoImageCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(isoImageCreateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCreateIsoimageParam()
+						p := params.NewCreateISOImageParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(isoimageCreateParam, p, mergo.WithOverride)
+						mergo.Merge(isoImageCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("size") {
-						isoimageCreateParam.Size = c.Int("size")
+						isoImageCreateParam.Size = c.Int("size")
 					}
 					if c.IsSet("iso-file") {
-						isoimageCreateParam.IsoFile = c.String("iso-file")
+						isoImageCreateParam.ISOFile = c.String("iso-file")
 					}
 					if c.IsSet("name") {
-						isoimageCreateParam.Name = c.String("name")
+						isoImageCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						isoimageCreateParam.Description = c.String("description")
+						isoImageCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						isoimageCreateParam.Tags = c.StringSlice("tags")
+						isoImageCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						isoimageCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						isoImageCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						isoimageCreateParam.Assumeyes = c.Bool("assumeyes")
+						isoImageCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						isoimageCreateParam.ParamTemplate = c.String("param-template")
+						isoImageCreateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						isoimageCreateParam.Parameters = c.String("parameters")
+						isoImageCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						isoimageCreateParam.ParamTemplateFile = c.String("param-template-file")
+						isoImageCreateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						isoimageCreateParam.ParameterFile = c.String("parameter-file")
+						isoImageCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						isoimageCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						isoImageCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						isoimageCreateParam.OutputType = c.String("output-type")
+						isoImageCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						isoimageCreateParam.Column = c.StringSlice("column")
+						isoImageCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						isoimageCreateParam.Quiet = c.Bool("quiet")
+						isoImageCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						isoimageCreateParam.Format = c.String("format")
+						isoImageCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						isoimageCreateParam.FormatFile = c.String("format-file")
+						isoImageCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						isoimageCreateParam.Query = c.String("query")
+						isoImageCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						isoimageCreateParam.QueryFile = c.String("query-file")
+						isoImageCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -434,7 +434,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = isoimageCreateParam
+					var outputTypeHolder interface{} = isoImageCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -445,10 +445,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if isoimageCreateParam.GenerateSkeleton {
-						isoimageCreateParam.GenerateSkeleton = false
-						isoimageCreateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(isoimageCreateParam, "", "\t")
+					if isoImageCreateParam.GenerateSkeleton {
+						isoImageCreateParam.GenerateSkeleton = false
+						isoImageCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(isoImageCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -457,15 +457,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := isoimageCreateParam.Validate(); len(errors) > 0 {
+					if errors := isoImageCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), isoimageCreateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), isoImageCreateParam)
 
 					// confirm
-					if !isoimageCreateParam.Assumeyes {
+					if !isoImageCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -475,13 +475,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.IsoimageCreate(ctx, isoimageCreateParam)
+					return funcs.ISOImageCreate(ctx, isoImageCreateParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Isoimage",
+				Usage:     "Read ISOImage",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -555,63 +555,63 @@ func init() {
 						return err
 					}
 
-					isoimageReadParam.ParamTemplate = c.String("param-template")
-					isoimageReadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(isoimageReadParam)
+					isoImageReadParam.ParamTemplate = c.String("param-template")
+					isoImageReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(isoImageReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadIsoimageParam()
+						p := params.NewReadISOImageParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(isoimageReadParam, p, mergo.WithOverride)
+						mergo.Merge(isoImageReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						isoimageReadParam.Selector = c.StringSlice("selector")
+						isoImageReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						isoimageReadParam.ParamTemplate = c.String("param-template")
+						isoImageReadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						isoimageReadParam.Parameters = c.String("parameters")
+						isoImageReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						isoimageReadParam.ParamTemplateFile = c.String("param-template-file")
+						isoImageReadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						isoimageReadParam.ParameterFile = c.String("parameter-file")
+						isoImageReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						isoimageReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						isoImageReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						isoimageReadParam.OutputType = c.String("output-type")
+						isoImageReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						isoimageReadParam.Column = c.StringSlice("column")
+						isoImageReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						isoimageReadParam.Quiet = c.Bool("quiet")
+						isoImageReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						isoimageReadParam.Format = c.String("format")
+						isoImageReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						isoimageReadParam.FormatFile = c.String("format-file")
+						isoImageReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						isoimageReadParam.Query = c.String("query")
+						isoImageReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						isoimageReadParam.QueryFile = c.String("query-file")
+						isoImageReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						isoimageReadParam.Id = sacloud.ID(c.Int64("id"))
+						isoImageReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -619,7 +619,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = isoimageReadParam
+					var outputTypeHolder interface{} = isoImageReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -630,10 +630,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if isoimageReadParam.GenerateSkeleton {
-						isoimageReadParam.GenerateSkeleton = false
-						isoimageReadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(isoimageReadParam, "", "\t")
+					if isoImageReadParam.GenerateSkeleton {
+						isoImageReadParam.GenerateSkeleton = false
+						isoImageReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(isoImageReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -642,19 +642,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := isoimageReadParam.Validate(); len(errors) > 0 {
+					if errors := isoImageReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), isoimageReadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), isoImageReadParam)
 
 					apiClient := ctx.GetAPIClient().CDROM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(isoimageReadParam.Selector) == 0 {
+						if len(isoImageReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -663,12 +663,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CDROMs {
-							if hasTags(&v, isoimageReadParam.Selector) {
+							if hasTags(&v, isoImageReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoimageReadParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoImageReadParam.Selector)
 						}
 
 					} else {
@@ -690,7 +690,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CDROMs {
-										if len(isoimageReadParam.Selector) == 0 || hasTags(&v, isoimageReadParam.Selector) {
+										if len(isoImageReadParam.Selector) == 0 || hasTags(&v, isoImageReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -715,11 +715,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						isoimageReadParam.SetId(id)
-						p := *isoimageReadParam // copy struct value
-						isoimageReadParam := &p
+						isoImageReadParam.SetId(id)
+						p := *isoImageReadParam // copy struct value
+						isoImageReadParam := &p
 						go func() {
-							err := funcs.IsoimageRead(ctx, isoimageReadParam)
+							err := funcs.ISOImageRead(ctx, isoImageReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -733,7 +733,7 @@ func init() {
 			},
 			{
 				Name:      "update",
-				Usage:     "Update Isoimage",
+				Usage:     "Update ISOImage",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -829,78 +829,78 @@ func init() {
 						return err
 					}
 
-					isoimageUpdateParam.ParamTemplate = c.String("param-template")
-					isoimageUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(isoimageUpdateParam)
+					isoImageUpdateParam.ParamTemplate = c.String("param-template")
+					isoImageUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(isoImageUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUpdateIsoimageParam()
+						p := params.NewUpdateISOImageParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(isoimageUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(isoImageUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						isoimageUpdateParam.Selector = c.StringSlice("selector")
+						isoImageUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
-						isoimageUpdateParam.Name = c.String("name")
+						isoImageUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						isoimageUpdateParam.Description = c.String("description")
+						isoImageUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						isoimageUpdateParam.Tags = c.StringSlice("tags")
+						isoImageUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						isoimageUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						isoImageUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						isoimageUpdateParam.Assumeyes = c.Bool("assumeyes")
+						isoImageUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						isoimageUpdateParam.ParamTemplate = c.String("param-template")
+						isoImageUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						isoimageUpdateParam.Parameters = c.String("parameters")
+						isoImageUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						isoimageUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						isoImageUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						isoimageUpdateParam.ParameterFile = c.String("parameter-file")
+						isoImageUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						isoimageUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						isoImageUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						isoimageUpdateParam.OutputType = c.String("output-type")
+						isoImageUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						isoimageUpdateParam.Column = c.StringSlice("column")
+						isoImageUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						isoimageUpdateParam.Quiet = c.Bool("quiet")
+						isoImageUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						isoimageUpdateParam.Format = c.String("format")
+						isoImageUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						isoimageUpdateParam.FormatFile = c.String("format-file")
+						isoImageUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						isoimageUpdateParam.Query = c.String("query")
+						isoImageUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						isoimageUpdateParam.QueryFile = c.String("query-file")
+						isoImageUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						isoimageUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						isoImageUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -908,7 +908,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = isoimageUpdateParam
+					var outputTypeHolder interface{} = isoImageUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -919,10 +919,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if isoimageUpdateParam.GenerateSkeleton {
-						isoimageUpdateParam.GenerateSkeleton = false
-						isoimageUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(isoimageUpdateParam, "", "\t")
+					if isoImageUpdateParam.GenerateSkeleton {
+						isoImageUpdateParam.GenerateSkeleton = false
+						isoImageUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(isoImageUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -931,19 +931,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := isoimageUpdateParam.Validate(); len(errors) > 0 {
+					if errors := isoImageUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), isoimageUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), isoImageUpdateParam)
 
 					apiClient := ctx.GetAPIClient().CDROM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(isoimageUpdateParam.Selector) == 0 {
+						if len(isoImageUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -952,12 +952,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CDROMs {
-							if hasTags(&v, isoimageUpdateParam.Selector) {
+							if hasTags(&v, isoImageUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoimageUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoImageUpdateParam.Selector)
 						}
 
 					} else {
@@ -979,7 +979,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CDROMs {
-										if len(isoimageUpdateParam.Selector) == 0 || hasTags(&v, isoimageUpdateParam.Selector) {
+										if len(isoImageUpdateParam.Selector) == 0 || hasTags(&v, isoImageUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -996,7 +996,7 @@ func init() {
 					}
 
 					// confirm
-					if !isoimageUpdateParam.Assumeyes {
+					if !isoImageUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1010,11 +1010,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						isoimageUpdateParam.SetId(id)
-						p := *isoimageUpdateParam // copy struct value
-						isoimageUpdateParam := &p
+						isoImageUpdateParam.SetId(id)
+						p := *isoImageUpdateParam // copy struct value
+						isoImageUpdateParam := &p
 						go func() {
-							err := funcs.IsoimageUpdate(ctx, isoimageUpdateParam)
+							err := funcs.ISOImageUpdate(ctx, isoImageUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1029,7 +1029,7 @@ func init() {
 			{
 				Name:      "delete",
 				Aliases:   []string{"rm"},
-				Usage:     "Delete Isoimage",
+				Usage:     "Delete ISOImage",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1108,66 +1108,66 @@ func init() {
 						return err
 					}
 
-					isoimageDeleteParam.ParamTemplate = c.String("param-template")
-					isoimageDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(isoimageDeleteParam)
+					isoImageDeleteParam.ParamTemplate = c.String("param-template")
+					isoImageDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(isoImageDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeleteIsoimageParam()
+						p := params.NewDeleteISOImageParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(isoimageDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(isoImageDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						isoimageDeleteParam.Selector = c.StringSlice("selector")
+						isoImageDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						isoimageDeleteParam.Assumeyes = c.Bool("assumeyes")
+						isoImageDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						isoimageDeleteParam.ParamTemplate = c.String("param-template")
+						isoImageDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						isoimageDeleteParam.Parameters = c.String("parameters")
+						isoImageDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						isoimageDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						isoImageDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						isoimageDeleteParam.ParameterFile = c.String("parameter-file")
+						isoImageDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						isoimageDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						isoImageDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						isoimageDeleteParam.OutputType = c.String("output-type")
+						isoImageDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						isoimageDeleteParam.Column = c.StringSlice("column")
+						isoImageDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						isoimageDeleteParam.Quiet = c.Bool("quiet")
+						isoImageDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						isoimageDeleteParam.Format = c.String("format")
+						isoImageDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						isoimageDeleteParam.FormatFile = c.String("format-file")
+						isoImageDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						isoimageDeleteParam.Query = c.String("query")
+						isoImageDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						isoimageDeleteParam.QueryFile = c.String("query-file")
+						isoImageDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						isoimageDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						isoImageDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1175,7 +1175,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = isoimageDeleteParam
+					var outputTypeHolder interface{} = isoImageDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1186,10 +1186,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if isoimageDeleteParam.GenerateSkeleton {
-						isoimageDeleteParam.GenerateSkeleton = false
-						isoimageDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(isoimageDeleteParam, "", "\t")
+					if isoImageDeleteParam.GenerateSkeleton {
+						isoImageDeleteParam.GenerateSkeleton = false
+						isoImageDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(isoImageDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1198,19 +1198,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := isoimageDeleteParam.Validate(); len(errors) > 0 {
+					if errors := isoImageDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), isoimageDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), isoImageDeleteParam)
 
 					apiClient := ctx.GetAPIClient().CDROM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(isoimageDeleteParam.Selector) == 0 {
+						if len(isoImageDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1219,12 +1219,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CDROMs {
-							if hasTags(&v, isoimageDeleteParam.Selector) {
+							if hasTags(&v, isoImageDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoimageDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoImageDeleteParam.Selector)
 						}
 
 					} else {
@@ -1246,7 +1246,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CDROMs {
-										if len(isoimageDeleteParam.Selector) == 0 || hasTags(&v, isoimageDeleteParam.Selector) {
+										if len(isoImageDeleteParam.Selector) == 0 || hasTags(&v, isoImageDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1263,7 +1263,7 @@ func init() {
 					}
 
 					// confirm
-					if !isoimageDeleteParam.Assumeyes {
+					if !isoImageDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1277,11 +1277,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						isoimageDeleteParam.SetId(id)
-						p := *isoimageDeleteParam // copy struct value
-						isoimageDeleteParam := &p
+						isoImageDeleteParam.SetId(id)
+						p := *isoImageDeleteParam // copy struct value
+						isoImageDeleteParam := &p
 						go func() {
-							err := funcs.IsoimageDelete(ctx, isoimageDeleteParam)
+							err := funcs.ISOImageDelete(ctx, isoImageDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1295,7 +1295,7 @@ func init() {
 			},
 			{
 				Name:      "upload",
-				Usage:     "Upload Isoimage",
+				Usage:     "Upload ISOImage",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -1378,69 +1378,69 @@ func init() {
 						return err
 					}
 
-					isoimageUploadParam.ParamTemplate = c.String("param-template")
-					isoimageUploadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(isoimageUploadParam)
+					isoImageUploadParam.ParamTemplate = c.String("param-template")
+					isoImageUploadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(isoImageUploadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUploadIsoimageParam()
+						p := params.NewUploadISOImageParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(isoimageUploadParam, p, mergo.WithOverride)
+						mergo.Merge(isoImageUploadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("iso-file") {
-						isoimageUploadParam.IsoFile = c.String("iso-file")
+						isoImageUploadParam.ISOFile = c.String("iso-file")
 					}
 					if c.IsSet("selector") {
-						isoimageUploadParam.Selector = c.StringSlice("selector")
+						isoImageUploadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						isoimageUploadParam.Assumeyes = c.Bool("assumeyes")
+						isoImageUploadParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						isoimageUploadParam.ParamTemplate = c.String("param-template")
+						isoImageUploadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						isoimageUploadParam.Parameters = c.String("parameters")
+						isoImageUploadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						isoimageUploadParam.ParamTemplateFile = c.String("param-template-file")
+						isoImageUploadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						isoimageUploadParam.ParameterFile = c.String("parameter-file")
+						isoImageUploadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						isoimageUploadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						isoImageUploadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						isoimageUploadParam.OutputType = c.String("output-type")
+						isoImageUploadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						isoimageUploadParam.Column = c.StringSlice("column")
+						isoImageUploadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						isoimageUploadParam.Quiet = c.Bool("quiet")
+						isoImageUploadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						isoimageUploadParam.Format = c.String("format")
+						isoImageUploadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						isoimageUploadParam.FormatFile = c.String("format-file")
+						isoImageUploadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						isoimageUploadParam.Query = c.String("query")
+						isoImageUploadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						isoimageUploadParam.QueryFile = c.String("query-file")
+						isoImageUploadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						isoimageUploadParam.Id = sacloud.ID(c.Int64("id"))
+						isoImageUploadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1448,7 +1448,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = isoimageUploadParam
+					var outputTypeHolder interface{} = isoImageUploadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1459,10 +1459,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if isoimageUploadParam.GenerateSkeleton {
-						isoimageUploadParam.GenerateSkeleton = false
-						isoimageUploadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(isoimageUploadParam, "", "\t")
+					if isoImageUploadParam.GenerateSkeleton {
+						isoImageUploadParam.GenerateSkeleton = false
+						isoImageUploadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(isoImageUploadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1471,19 +1471,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := isoimageUploadParam.Validate(); len(errors) > 0 {
+					if errors := isoImageUploadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), isoimageUploadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), isoImageUploadParam)
 
 					apiClient := ctx.GetAPIClient().CDROM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(isoimageUploadParam.Selector) == 0 {
+						if len(isoImageUploadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1492,12 +1492,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CDROMs {
-							if hasTags(&v, isoimageUploadParam.Selector) {
+							if hasTags(&v, isoImageUploadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoimageUploadParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoImageUploadParam.Selector)
 						}
 
 					} else {
@@ -1519,7 +1519,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CDROMs {
-										if len(isoimageUploadParam.Selector) == 0 || hasTags(&v, isoimageUploadParam.Selector) {
+										if len(isoImageUploadParam.Selector) == 0 || hasTags(&v, isoImageUploadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1540,7 +1540,7 @@ func init() {
 					}
 
 					// confirm
-					if !isoimageUploadParam.Assumeyes {
+					if !isoImageUploadParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1554,11 +1554,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						isoimageUploadParam.SetId(id)
-						p := *isoimageUploadParam // copy struct value
-						isoimageUploadParam := &p
+						isoImageUploadParam.SetId(id)
+						p := *isoImageUploadParam // copy struct value
+						isoImageUploadParam := &p
 						go func() {
-							err := funcs.IsoimageUpload(ctx, isoimageUploadParam)
+							err := funcs.ISOImageUpload(ctx, isoImageUploadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1572,7 +1572,7 @@ func init() {
 			},
 			{
 				Name:      "download",
-				Usage:     "Download Isoimage",
+				Usage:     "Download ISOImage",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -1623,48 +1623,48 @@ func init() {
 						return err
 					}
 
-					isoimageDownloadParam.ParamTemplate = c.String("param-template")
-					isoimageDownloadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(isoimageDownloadParam)
+					isoImageDownloadParam.ParamTemplate = c.String("param-template")
+					isoImageDownloadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(isoImageDownloadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDownloadIsoimageParam()
+						p := params.NewDownloadISOImageParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(isoimageDownloadParam, p, mergo.WithOverride)
+						mergo.Merge(isoImageDownloadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("file-destination") {
-						isoimageDownloadParam.FileDestination = c.String("file-destination")
+						isoImageDownloadParam.FileDestination = c.String("file-destination")
 					}
 					if c.IsSet("selector") {
-						isoimageDownloadParam.Selector = c.StringSlice("selector")
+						isoImageDownloadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						isoimageDownloadParam.Assumeyes = c.Bool("assumeyes")
+						isoImageDownloadParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						isoimageDownloadParam.ParamTemplate = c.String("param-template")
+						isoImageDownloadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						isoimageDownloadParam.Parameters = c.String("parameters")
+						isoImageDownloadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						isoimageDownloadParam.ParamTemplateFile = c.String("param-template-file")
+						isoImageDownloadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						isoimageDownloadParam.ParameterFile = c.String("parameter-file")
+						isoImageDownloadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						isoimageDownloadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						isoImageDownloadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						isoimageDownloadParam.Id = sacloud.ID(c.Int64("id"))
+						isoImageDownloadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1672,7 +1672,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = isoimageDownloadParam
+					var outputTypeHolder interface{} = isoImageDownloadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1683,10 +1683,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if isoimageDownloadParam.GenerateSkeleton {
-						isoimageDownloadParam.GenerateSkeleton = false
-						isoimageDownloadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(isoimageDownloadParam, "", "\t")
+					if isoImageDownloadParam.GenerateSkeleton {
+						isoImageDownloadParam.GenerateSkeleton = false
+						isoImageDownloadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(isoImageDownloadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1695,19 +1695,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := isoimageDownloadParam.Validate(); len(errors) > 0 {
+					if errors := isoImageDownloadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), isoimageDownloadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), isoImageDownloadParam)
 
 					apiClient := ctx.GetAPIClient().CDROM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(isoimageDownloadParam.Selector) == 0 {
+						if len(isoImageDownloadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1716,12 +1716,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CDROMs {
-							if hasTags(&v, isoimageDownloadParam.Selector) {
+							if hasTags(&v, isoImageDownloadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoimageDownloadParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoImageDownloadParam.Selector)
 						}
 
 					} else {
@@ -1743,7 +1743,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CDROMs {
-										if len(isoimageDownloadParam.Selector) == 0 || hasTags(&v, isoimageDownloadParam.Selector) {
+										if len(isoImageDownloadParam.Selector) == 0 || hasTags(&v, isoImageDownloadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1764,7 +1764,7 @@ func init() {
 					}
 
 					// confirm
-					if !isoimageDownloadParam.Assumeyes {
+					if !isoImageDownloadParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1778,11 +1778,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						isoimageDownloadParam.SetId(id)
-						p := *isoimageDownloadParam // copy struct value
-						isoimageDownloadParam := &p
+						isoImageDownloadParam.SetId(id)
+						p := *isoImageDownloadParam // copy struct value
+						isoImageDownloadParam := &p
 						go func() {
-							err := funcs.IsoimageDownload(ctx, isoimageDownloadParam)
+							err := funcs.ISOImageDownload(ctx, isoImageDownloadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1796,7 +1796,7 @@ func init() {
 			},
 			{
 				Name:      "ftp-open",
-				Usage:     "FtpOpen Isoimage",
+				Usage:     "FTPOpen ISOImage",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1875,66 +1875,66 @@ func init() {
 						return err
 					}
 
-					isoimageFtpOpenParam.ParamTemplate = c.String("param-template")
-					isoimageFtpOpenParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(isoimageFtpOpenParam)
+					isoImageFTPOpenParam.ParamTemplate = c.String("param-template")
+					isoImageFTPOpenParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(isoImageFTPOpenParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewFtpOpenIsoimageParam()
+						p := params.NewFTPOpenISOImageParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(isoimageFtpOpenParam, p, mergo.WithOverride)
+						mergo.Merge(isoImageFTPOpenParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						isoimageFtpOpenParam.Selector = c.StringSlice("selector")
+						isoImageFTPOpenParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						isoimageFtpOpenParam.Assumeyes = c.Bool("assumeyes")
+						isoImageFTPOpenParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						isoimageFtpOpenParam.ParamTemplate = c.String("param-template")
+						isoImageFTPOpenParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						isoimageFtpOpenParam.Parameters = c.String("parameters")
+						isoImageFTPOpenParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						isoimageFtpOpenParam.ParamTemplateFile = c.String("param-template-file")
+						isoImageFTPOpenParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						isoimageFtpOpenParam.ParameterFile = c.String("parameter-file")
+						isoImageFTPOpenParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						isoimageFtpOpenParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						isoImageFTPOpenParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						isoimageFtpOpenParam.OutputType = c.String("output-type")
+						isoImageFTPOpenParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						isoimageFtpOpenParam.Column = c.StringSlice("column")
+						isoImageFTPOpenParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						isoimageFtpOpenParam.Quiet = c.Bool("quiet")
+						isoImageFTPOpenParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						isoimageFtpOpenParam.Format = c.String("format")
+						isoImageFTPOpenParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						isoimageFtpOpenParam.FormatFile = c.String("format-file")
+						isoImageFTPOpenParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						isoimageFtpOpenParam.Query = c.String("query")
+						isoImageFTPOpenParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						isoimageFtpOpenParam.QueryFile = c.String("query-file")
+						isoImageFTPOpenParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						isoimageFtpOpenParam.Id = sacloud.ID(c.Int64("id"))
+						isoImageFTPOpenParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1942,7 +1942,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = isoimageFtpOpenParam
+					var outputTypeHolder interface{} = isoImageFTPOpenParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1953,10 +1953,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if isoimageFtpOpenParam.GenerateSkeleton {
-						isoimageFtpOpenParam.GenerateSkeleton = false
-						isoimageFtpOpenParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(isoimageFtpOpenParam, "", "\t")
+					if isoImageFTPOpenParam.GenerateSkeleton {
+						isoImageFTPOpenParam.GenerateSkeleton = false
+						isoImageFTPOpenParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(isoImageFTPOpenParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1965,19 +1965,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := isoimageFtpOpenParam.Validate(); len(errors) > 0 {
+					if errors := isoImageFTPOpenParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), isoimageFtpOpenParam)
+					ctx := command.NewContext(c, c.Args().Slice(), isoImageFTPOpenParam)
 
 					apiClient := ctx.GetAPIClient().CDROM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(isoimageFtpOpenParam.Selector) == 0 {
+						if len(isoImageFTPOpenParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1986,12 +1986,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CDROMs {
-							if hasTags(&v, isoimageFtpOpenParam.Selector) {
+							if hasTags(&v, isoImageFTPOpenParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoimageFtpOpenParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoImageFTPOpenParam.Selector)
 						}
 
 					} else {
@@ -2013,7 +2013,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CDROMs {
-										if len(isoimageFtpOpenParam.Selector) == 0 || hasTags(&v, isoimageFtpOpenParam.Selector) {
+										if len(isoImageFTPOpenParam.Selector) == 0 || hasTags(&v, isoImageFTPOpenParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2030,7 +2030,7 @@ func init() {
 					}
 
 					// confirm
-					if !isoimageFtpOpenParam.Assumeyes {
+					if !isoImageFTPOpenParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2044,11 +2044,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						isoimageFtpOpenParam.SetId(id)
-						p := *isoimageFtpOpenParam // copy struct value
-						isoimageFtpOpenParam := &p
+						isoImageFTPOpenParam.SetId(id)
+						p := *isoImageFTPOpenParam // copy struct value
+						isoImageFTPOpenParam := &p
 						go func() {
-							err := funcs.IsoimageFtpOpen(ctx, isoimageFtpOpenParam)
+							err := funcs.ISOImageFTPOpen(ctx, isoImageFTPOpenParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2062,7 +2062,7 @@ func init() {
 			},
 			{
 				Name:      "ftp-close",
-				Usage:     "FtpClose Isoimage",
+				Usage:     "FTPClose ISOImage",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2109,45 +2109,45 @@ func init() {
 						return err
 					}
 
-					isoimageFtpCloseParam.ParamTemplate = c.String("param-template")
-					isoimageFtpCloseParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(isoimageFtpCloseParam)
+					isoImageFTPCloseParam.ParamTemplate = c.String("param-template")
+					isoImageFTPCloseParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(isoImageFTPCloseParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewFtpCloseIsoimageParam()
+						p := params.NewFTPCloseISOImageParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(isoimageFtpCloseParam, p, mergo.WithOverride)
+						mergo.Merge(isoImageFTPCloseParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						isoimageFtpCloseParam.Selector = c.StringSlice("selector")
+						isoImageFTPCloseParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						isoimageFtpCloseParam.Assumeyes = c.Bool("assumeyes")
+						isoImageFTPCloseParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						isoimageFtpCloseParam.ParamTemplate = c.String("param-template")
+						isoImageFTPCloseParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						isoimageFtpCloseParam.Parameters = c.String("parameters")
+						isoImageFTPCloseParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						isoimageFtpCloseParam.ParamTemplateFile = c.String("param-template-file")
+						isoImageFTPCloseParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						isoimageFtpCloseParam.ParameterFile = c.String("parameter-file")
+						isoImageFTPCloseParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						isoimageFtpCloseParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						isoImageFTPCloseParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						isoimageFtpCloseParam.Id = sacloud.ID(c.Int64("id"))
+						isoImageFTPCloseParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2155,7 +2155,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = isoimageFtpCloseParam
+					var outputTypeHolder interface{} = isoImageFTPCloseParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2166,10 +2166,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if isoimageFtpCloseParam.GenerateSkeleton {
-						isoimageFtpCloseParam.GenerateSkeleton = false
-						isoimageFtpCloseParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(isoimageFtpCloseParam, "", "\t")
+					if isoImageFTPCloseParam.GenerateSkeleton {
+						isoImageFTPCloseParam.GenerateSkeleton = false
+						isoImageFTPCloseParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(isoImageFTPCloseParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2178,19 +2178,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := isoimageFtpCloseParam.Validate(); len(errors) > 0 {
+					if errors := isoImageFTPCloseParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), isoimageFtpCloseParam)
+					ctx := command.NewContext(c, c.Args().Slice(), isoImageFTPCloseParam)
 
 					apiClient := ctx.GetAPIClient().CDROM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(isoimageFtpCloseParam.Selector) == 0 {
+						if len(isoImageFTPCloseParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2199,12 +2199,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CDROMs {
-							if hasTags(&v, isoimageFtpCloseParam.Selector) {
+							if hasTags(&v, isoImageFTPCloseParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoimageFtpCloseParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoImageFTPCloseParam.Selector)
 						}
 
 					} else {
@@ -2226,7 +2226,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CDROMs {
-										if len(isoimageFtpCloseParam.Selector) == 0 || hasTags(&v, isoimageFtpCloseParam.Selector) {
+										if len(isoImageFTPCloseParam.Selector) == 0 || hasTags(&v, isoImageFTPCloseParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2243,7 +2243,7 @@ func init() {
 					}
 
 					// confirm
-					if !isoimageFtpCloseParam.Assumeyes {
+					if !isoImageFTPCloseParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2257,11 +2257,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						isoimageFtpCloseParam.SetId(id)
-						p := *isoimageFtpCloseParam // copy struct value
-						isoimageFtpCloseParam := &p
+						isoImageFTPCloseParam.SetId(id)
+						p := *isoImageFTPCloseParam // copy struct value
+						isoImageFTPCloseParam := &p
 						go func() {
-							err := funcs.IsoimageFtpClose(ctx, isoimageFtpCloseParam)
+							err := funcs.ISOImageFTPClose(ctx, isoImageFTPCloseParam)
 							if err != nil {
 								errs = append(errs, err)
 							}

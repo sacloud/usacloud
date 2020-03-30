@@ -121,8 +121,8 @@ var resourceCounters = []*resourceCounter{
 		paid:        true,
 	},
 	{
-		displayName: "SimpleMonitor",
-		finder:      countSimpleMonitor,
+		displayName: "SIMpleMonitor",
+		finder:      countSIMpleMonitor,
 		global:      true,
 		paid:        true,
 	},
@@ -292,7 +292,7 @@ func countDNS(client *api.Client) (int, error) {
 	return int(res.Total), nil
 }
 
-func countSimpleMonitor(client *api.Client) (int, error) {
+func countSIMpleMonitor(client *api.Client) (int, error) {
 	res, err := client.GetSimpleMonitorAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err

@@ -90,10 +90,10 @@ var configEditCmd = &cobra.Command{
 
 func configEditCmdInit() {
 	fs := configEditCmd.Flags()
-	fs.StringVarP(&configEditParam.DefaultOutputType, "default-output-type", "", "", "Default output format type")
 	fs.StringVarP(&configEditParam.Token, "token", "", "", "API Token of SakuraCloud")
 	fs.StringVarP(&configEditParam.Secret, "secret", "", "", "API Secret of SakuraCloud")
 	fs.StringVarP(&configEditParam.Zone, "zone", "", "", "Target zone of SakuraCloud")
+	fs.StringVarP(&configEditParam.DefaultOutputType, "default-output-type", "", "", "Default output format type")
 }
 
 var configListCmd = &cobra.Command{

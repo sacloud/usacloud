@@ -42,9 +42,9 @@ func init() {
 	internetSubnetAddParam := params.NewSubnetAddInternetParam()
 	internetSubnetDeleteParam := params.NewSubnetDeleteInternetParam()
 	internetSubnetUpdateParam := params.NewSubnetUpdateInternetParam()
-	internetIpv6InfoParam := params.NewIpv6InfoInternetParam()
-	internetIpv6EnableParam := params.NewIpv6EnableInternetParam()
-	internetIpv6DisableParam := params.NewIpv6DisableInternetParam()
+	internetIPv6InfoParam := params.NewIPv6InfoInternetParam()
+	internetIPv6EnableParam := params.NewIPv6EnableInternetParam()
+	internetIPv6DisableParam := params.NewIPv6DisableInternetParam()
 	internetMonitorParam := params.NewMonitorInternetParam()
 
 	cliCommand := &cli.Command{
@@ -2606,7 +2606,7 @@ func init() {
 			},
 			{
 				Name:      "ipv6-info",
-				Usage:     "Ipv6Info Internet",
+				Usage:     "IPv6Info Internet",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2680,63 +2680,63 @@ func init() {
 						return err
 					}
 
-					internetIpv6InfoParam.ParamTemplate = c.String("param-template")
-					internetIpv6InfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(internetIpv6InfoParam)
+					internetIPv6InfoParam.ParamTemplate = c.String("param-template")
+					internetIPv6InfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetIPv6InfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewIpv6InfoInternetParam()
+						p := params.NewIPv6InfoInternetParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(internetIpv6InfoParam, p, mergo.WithOverride)
+						mergo.Merge(internetIPv6InfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						internetIpv6InfoParam.Selector = c.StringSlice("selector")
+						internetIPv6InfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						internetIpv6InfoParam.ParamTemplate = c.String("param-template")
+						internetIPv6InfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						internetIpv6InfoParam.Parameters = c.String("parameters")
+						internetIPv6InfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						internetIpv6InfoParam.ParamTemplateFile = c.String("param-template-file")
+						internetIPv6InfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						internetIpv6InfoParam.ParameterFile = c.String("parameter-file")
+						internetIPv6InfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						internetIpv6InfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetIPv6InfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						internetIpv6InfoParam.OutputType = c.String("output-type")
+						internetIPv6InfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						internetIpv6InfoParam.Column = c.StringSlice("column")
+						internetIPv6InfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						internetIpv6InfoParam.Quiet = c.Bool("quiet")
+						internetIPv6InfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						internetIpv6InfoParam.Format = c.String("format")
+						internetIPv6InfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						internetIpv6InfoParam.FormatFile = c.String("format-file")
+						internetIPv6InfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						internetIpv6InfoParam.Query = c.String("query")
+						internetIPv6InfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						internetIpv6InfoParam.QueryFile = c.String("query-file")
+						internetIPv6InfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						internetIpv6InfoParam.Id = sacloud.ID(c.Int64("id"))
+						internetIPv6InfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2744,7 +2744,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = internetIpv6InfoParam
+					var outputTypeHolder interface{} = internetIPv6InfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2755,10 +2755,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if internetIpv6InfoParam.GenerateSkeleton {
-						internetIpv6InfoParam.GenerateSkeleton = false
-						internetIpv6InfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(internetIpv6InfoParam, "", "\t")
+					if internetIPv6InfoParam.GenerateSkeleton {
+						internetIPv6InfoParam.GenerateSkeleton = false
+						internetIPv6InfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetIPv6InfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2767,19 +2767,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := internetIpv6InfoParam.Validate(); len(errors) > 0 {
+					if errors := internetIPv6InfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), internetIpv6InfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetIPv6InfoParam)
 
 					apiClient := ctx.GetAPIClient().Internet
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(internetIpv6InfoParam.Selector) == 0 {
+						if len(internetIPv6InfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2788,12 +2788,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Internet {
-							if hasTags(&v, internetIpv6InfoParam.Selector) {
+							if hasTags(&v, internetIPv6InfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetIpv6InfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetIPv6InfoParam.Selector)
 						}
 
 					} else {
@@ -2815,7 +2815,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Internet {
-										if len(internetIpv6InfoParam.Selector) == 0 || hasTags(&v, internetIpv6InfoParam.Selector) {
+										if len(internetIPv6InfoParam.Selector) == 0 || hasTags(&v, internetIPv6InfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2836,11 +2836,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						internetIpv6InfoParam.SetId(id)
-						p := *internetIpv6InfoParam // copy struct value
-						internetIpv6InfoParam := &p
+						internetIPv6InfoParam.SetId(id)
+						p := *internetIPv6InfoParam // copy struct value
+						internetIPv6InfoParam := &p
 						go func() {
-							err := funcs.InternetIpv6Info(ctx, internetIpv6InfoParam)
+							err := funcs.InternetIPv6Info(ctx, internetIPv6InfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2854,7 +2854,7 @@ func init() {
 			},
 			{
 				Name:      "ipv6-enable",
-				Usage:     "Ipv6Enable Internet",
+				Usage:     "IPv6Enable Internet",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2933,66 +2933,66 @@ func init() {
 						return err
 					}
 
-					internetIpv6EnableParam.ParamTemplate = c.String("param-template")
-					internetIpv6EnableParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(internetIpv6EnableParam)
+					internetIPv6EnableParam.ParamTemplate = c.String("param-template")
+					internetIPv6EnableParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetIPv6EnableParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewIpv6EnableInternetParam()
+						p := params.NewIPv6EnableInternetParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(internetIpv6EnableParam, p, mergo.WithOverride)
+						mergo.Merge(internetIPv6EnableParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						internetIpv6EnableParam.Selector = c.StringSlice("selector")
+						internetIPv6EnableParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						internetIpv6EnableParam.Assumeyes = c.Bool("assumeyes")
+						internetIPv6EnableParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						internetIpv6EnableParam.ParamTemplate = c.String("param-template")
+						internetIPv6EnableParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						internetIpv6EnableParam.Parameters = c.String("parameters")
+						internetIPv6EnableParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						internetIpv6EnableParam.ParamTemplateFile = c.String("param-template-file")
+						internetIPv6EnableParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						internetIpv6EnableParam.ParameterFile = c.String("parameter-file")
+						internetIPv6EnableParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						internetIpv6EnableParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetIPv6EnableParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						internetIpv6EnableParam.OutputType = c.String("output-type")
+						internetIPv6EnableParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						internetIpv6EnableParam.Column = c.StringSlice("column")
+						internetIPv6EnableParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						internetIpv6EnableParam.Quiet = c.Bool("quiet")
+						internetIPv6EnableParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						internetIpv6EnableParam.Format = c.String("format")
+						internetIPv6EnableParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						internetIpv6EnableParam.FormatFile = c.String("format-file")
+						internetIPv6EnableParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						internetIpv6EnableParam.Query = c.String("query")
+						internetIPv6EnableParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						internetIpv6EnableParam.QueryFile = c.String("query-file")
+						internetIPv6EnableParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						internetIpv6EnableParam.Id = sacloud.ID(c.Int64("id"))
+						internetIPv6EnableParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3000,7 +3000,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = internetIpv6EnableParam
+					var outputTypeHolder interface{} = internetIPv6EnableParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3011,10 +3011,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if internetIpv6EnableParam.GenerateSkeleton {
-						internetIpv6EnableParam.GenerateSkeleton = false
-						internetIpv6EnableParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(internetIpv6EnableParam, "", "\t")
+					if internetIPv6EnableParam.GenerateSkeleton {
+						internetIPv6EnableParam.GenerateSkeleton = false
+						internetIPv6EnableParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetIPv6EnableParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3023,19 +3023,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := internetIpv6EnableParam.Validate(); len(errors) > 0 {
+					if errors := internetIPv6EnableParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), internetIpv6EnableParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetIPv6EnableParam)
 
 					apiClient := ctx.GetAPIClient().Internet
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(internetIpv6EnableParam.Selector) == 0 {
+						if len(internetIPv6EnableParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3044,12 +3044,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Internet {
-							if hasTags(&v, internetIpv6EnableParam.Selector) {
+							if hasTags(&v, internetIPv6EnableParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetIpv6EnableParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetIPv6EnableParam.Selector)
 						}
 
 					} else {
@@ -3071,7 +3071,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Internet {
-										if len(internetIpv6EnableParam.Selector) == 0 || hasTags(&v, internetIpv6EnableParam.Selector) {
+										if len(internetIPv6EnableParam.Selector) == 0 || hasTags(&v, internetIPv6EnableParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3088,11 +3088,11 @@ func init() {
 					}
 
 					// confirm
-					if !internetIpv6EnableParam.Assumeyes {
+					if !internetIPv6EnableParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("ipv-6-enable", ids...) {
+						if !command.ConfirmContinue("ipv6-enable", ids...) {
 							return nil
 						}
 					}
@@ -3102,11 +3102,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						internetIpv6EnableParam.SetId(id)
-						p := *internetIpv6EnableParam // copy struct value
-						internetIpv6EnableParam := &p
+						internetIPv6EnableParam.SetId(id)
+						p := *internetIPv6EnableParam // copy struct value
+						internetIPv6EnableParam := &p
 						go func() {
-							err := funcs.InternetIpv6Enable(ctx, internetIpv6EnableParam)
+							err := funcs.InternetIPv6Enable(ctx, internetIPv6EnableParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3120,7 +3120,7 @@ func init() {
 			},
 			{
 				Name:      "ipv6-disable",
-				Usage:     "Ipv6Disable Internet",
+				Usage:     "IPv6Disable Internet",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -3167,45 +3167,45 @@ func init() {
 						return err
 					}
 
-					internetIpv6DisableParam.ParamTemplate = c.String("param-template")
-					internetIpv6DisableParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(internetIpv6DisableParam)
+					internetIPv6DisableParam.ParamTemplate = c.String("param-template")
+					internetIPv6DisableParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetIPv6DisableParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewIpv6DisableInternetParam()
+						p := params.NewIPv6DisableInternetParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(internetIpv6DisableParam, p, mergo.WithOverride)
+						mergo.Merge(internetIPv6DisableParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						internetIpv6DisableParam.Selector = c.StringSlice("selector")
+						internetIPv6DisableParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						internetIpv6DisableParam.Assumeyes = c.Bool("assumeyes")
+						internetIPv6DisableParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						internetIpv6DisableParam.ParamTemplate = c.String("param-template")
+						internetIPv6DisableParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						internetIpv6DisableParam.Parameters = c.String("parameters")
+						internetIPv6DisableParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						internetIpv6DisableParam.ParamTemplateFile = c.String("param-template-file")
+						internetIPv6DisableParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						internetIpv6DisableParam.ParameterFile = c.String("parameter-file")
+						internetIPv6DisableParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						internetIpv6DisableParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetIPv6DisableParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						internetIpv6DisableParam.Id = sacloud.ID(c.Int64("id"))
+						internetIPv6DisableParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3213,7 +3213,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = internetIpv6DisableParam
+					var outputTypeHolder interface{} = internetIPv6DisableParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3224,10 +3224,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if internetIpv6DisableParam.GenerateSkeleton {
-						internetIpv6DisableParam.GenerateSkeleton = false
-						internetIpv6DisableParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(internetIpv6DisableParam, "", "\t")
+					if internetIPv6DisableParam.GenerateSkeleton {
+						internetIPv6DisableParam.GenerateSkeleton = false
+						internetIPv6DisableParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetIPv6DisableParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3236,19 +3236,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := internetIpv6DisableParam.Validate(); len(errors) > 0 {
+					if errors := internetIPv6DisableParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), internetIpv6DisableParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetIPv6DisableParam)
 
 					apiClient := ctx.GetAPIClient().Internet
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(internetIpv6DisableParam.Selector) == 0 {
+						if len(internetIPv6DisableParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3257,12 +3257,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Internet {
-							if hasTags(&v, internetIpv6DisableParam.Selector) {
+							if hasTags(&v, internetIPv6DisableParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetIpv6DisableParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetIPv6DisableParam.Selector)
 						}
 
 					} else {
@@ -3284,7 +3284,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Internet {
-										if len(internetIpv6DisableParam.Selector) == 0 || hasTags(&v, internetIpv6DisableParam.Selector) {
+										if len(internetIPv6DisableParam.Selector) == 0 || hasTags(&v, internetIPv6DisableParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3301,11 +3301,11 @@ func init() {
 					}
 
 					// confirm
-					if !internetIpv6DisableParam.Assumeyes {
+					if !internetIPv6DisableParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("ipv-6-disable", ids...) {
+						if !command.ConfirmContinue("ipv6-disable", ids...) {
 							return nil
 						}
 					}
@@ -3315,11 +3315,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						internetIpv6DisableParam.SetId(id)
-						p := *internetIpv6DisableParam // copy struct value
-						internetIpv6DisableParam := &p
+						internetIPv6DisableParam.SetId(id)
+						p := *internetIPv6DisableParam // copy struct value
+						internetIPv6DisableParam := &p
 						go func() {
-							err := funcs.InternetIpv6Disable(ctx, internetIpv6DisableParam)
+							err := funcs.InternetIPv6Disable(ctx, internetIPv6DisableParam)
 							if err != nil {
 								errs = append(errs, err)
 							}

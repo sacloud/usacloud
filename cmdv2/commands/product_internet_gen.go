@@ -25,13 +25,13 @@ import (
 )
 
 var (
-	productinternetListParam = params.NewListProductinternetParam()
-	productinternetReadParam = params.NewReadProductinternetParam()
+	productInternetListParam = params.NewListProductInternetParam()
+	productInternetReadParam = params.NewReadProductInternetParam()
 )
 
-// productinternetCmd represents the command to manage SAKURA Cloud ProductInternet
-var productinternetCmd = &cobra.Command{
-	Use:   "productinternet",
+// productInternetCmd represents the command to manage SAKURA Cloud ProductInternet
+var productInternetCmd = &cobra.Command{
+	Use:   "productInternet",
 	Short: "A manage commands of ProductInternet",
 	Long:  `A manage commands of ProductInternet`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -39,54 +39,54 @@ var productinternetCmd = &cobra.Command{
 	},
 }
 
-var productinternetListCmd = &cobra.Command{
+var productInternetListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find"},
-	Short:   "List Productinternet (default)",
-	Long:    `List Productinternet (default)`,
+	Short:   "List ProductInternet (default)",
+	Long:    `List ProductInternet (default)`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := productinternetListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := productInternetListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(productinternetListParam))
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(productInternetListParam))
 		return err
 	},
 }
 
-func productinternetListCmdInit() {
-	fs := productinternetListCmd.Flags()
-	fs.IntVarP(&productinternetListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&productinternetListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&productinternetListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &productinternetListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&productinternetListParam.From, "from", "", 0, "set offset")
+func productInternetListCmdInit() {
+	fs := productInternetListCmd.Flags()
+	fs.StringSliceVarP(&productInternetListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &productInternetListParam.Id), "id", "", "set filter by id(s)")
+	fs.IntVarP(&productInternetListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&productInternetListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&productInternetListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 }
 
-var productinternetReadCmd = &cobra.Command{
+var productInternetReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Productinternet",
-	Long:  `Read Productinternet`,
+	Short: "Read ProductInternet",
+	Long:  `Read ProductInternet`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := productinternetReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := productInternetReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(productinternetReadParam))
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(productInternetReadParam))
 		return err
 	},
 }
 
-func productinternetReadCmdInit() {
-	fs := productinternetReadCmd.Flags()
-	fs.VarP(newIDValue(0, &productinternetReadParam.Id), "id", "", "set resource ID")
+func productInternetReadCmdInit() {
+	fs := productInternetReadCmd.Flags()
+	fs.VarP(newIDValue(0, &productInternetReadParam.Id), "id", "", "set resource ID")
 }
 
 func init() {
-	parent := productinternetCmd
+	parent := productInternetCmd
 
-	productinternetListCmdInit()
-	parent.AddCommand(productinternetListCmd)
+	productInternetListCmdInit()
+	parent.AddCommand(productInternetListCmd)
 
-	productinternetReadCmdInit()
-	parent.AddCommand(productinternetReadCmd)
+	productInternetReadCmdInit()
+	parent.AddCommand(productInternetReadCmd)
 
 	rootCmd.AddCommand(parent)
 }

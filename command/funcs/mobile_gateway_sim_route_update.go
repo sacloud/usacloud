@@ -22,18 +22,18 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func MobileGatewaySimRouteUpdate(ctx command.Context, params *params.SimRouteUpdateMobileGatewayParam) error {
+func MobileGatewaySIMRouteUpdate(ctx command.Context, params *params.SIMRouteUpdateMobileGatewayParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetMobileGatewayAPI()
 	_, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("MobileGatewaySimRouteUpdate is failed: %s", e)
+		return fmt.Errorf("MobileGatewaySIMRouteUpdate is failed: %s", e)
 	}
 
 	routes, err := api.GetSIMRoutes(params.Id)
 	if err != nil {
-		return fmt.Errorf("MobileGatewaySimRouteUpdate is failed: %s", err)
+		return fmt.Errorf("MobileGatewaySIMRouteUpdate is failed: %s", err)
 	}
 
 	if len(routes) == 0 {
@@ -51,7 +51,7 @@ func MobileGatewaySimRouteUpdate(ctx command.Context, params *params.SimRouteUpd
 		route.Prefix = params.Prefix
 	}
 	if ctx.IsSet("sim") {
-		route.ResourceID = fmt.Sprintf("%d", params.Sim)
+		route.ResourceID = fmt.Sprintf("%d", params.SIM)
 	}
 
 	simRoutes := &sacloud.MobileGatewaySIMRoutes{

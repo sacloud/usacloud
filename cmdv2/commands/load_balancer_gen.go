@@ -25,31 +25,31 @@ import (
 )
 
 var (
-	loadbalancerListParam          = params.NewListLoadbalancerParam()
-	loadbalancerCreateParam        = params.NewCreateLoadbalancerParam()
-	loadbalancerReadParam          = params.NewReadLoadbalancerParam()
-	loadbalancerUpdateParam        = params.NewUpdateLoadbalancerParam()
-	loadbalancerDeleteParam        = params.NewDeleteLoadbalancerParam()
-	loadbalancerBootParam          = params.NewBootLoadbalancerParam()
-	loadbalancerShutdownParam      = params.NewShutdownLoadbalancerParam()
-	loadbalancerShutdownForceParam = params.NewShutdownForceLoadbalancerParam()
-	loadbalancerResetParam         = params.NewResetLoadbalancerParam()
-	loadbalancerWaitForBootParam   = params.NewWaitForBootLoadbalancerParam()
-	loadbalancerWaitForDownParam   = params.NewWaitForDownLoadbalancerParam()
-	loadbalancerVipInfoParam       = params.NewVipInfoLoadbalancerParam()
-	loadbalancerVipAddParam        = params.NewVipAddLoadbalancerParam()
-	loadbalancerVipUpdateParam     = params.NewVipUpdateLoadbalancerParam()
-	loadbalancerVipDeleteParam     = params.NewVipDeleteLoadbalancerParam()
-	loadbalancerServerInfoParam    = params.NewServerInfoLoadbalancerParam()
-	loadbalancerServerAddParam     = params.NewServerAddLoadbalancerParam()
-	loadbalancerServerUpdateParam  = params.NewServerUpdateLoadbalancerParam()
-	loadbalancerServerDeleteParam  = params.NewServerDeleteLoadbalancerParam()
-	loadbalancerMonitorParam       = params.NewMonitorLoadbalancerParam()
+	loadBalancerListParam          = params.NewListLoadBalancerParam()
+	loadBalancerCreateParam        = params.NewCreateLoadBalancerParam()
+	loadBalancerReadParam          = params.NewReadLoadBalancerParam()
+	loadBalancerUpdateParam        = params.NewUpdateLoadBalancerParam()
+	loadBalancerDeleteParam        = params.NewDeleteLoadBalancerParam()
+	loadBalancerBootParam          = params.NewBootLoadBalancerParam()
+	loadBalancerShutdownParam      = params.NewShutdownLoadBalancerParam()
+	loadBalancerShutdownForceParam = params.NewShutdownForceLoadBalancerParam()
+	loadBalancerResetParam         = params.NewResetLoadBalancerParam()
+	loadBalancerWaitForBootParam   = params.NewWaitForBootLoadBalancerParam()
+	loadBalancerWaitForDownParam   = params.NewWaitForDownLoadBalancerParam()
+	loadBalancerVipInfoParam       = params.NewVipInfoLoadBalancerParam()
+	loadBalancerVipAddParam        = params.NewVipAddLoadBalancerParam()
+	loadBalancerVipUpdateParam     = params.NewVipUpdateLoadBalancerParam()
+	loadBalancerVipDeleteParam     = params.NewVipDeleteLoadBalancerParam()
+	loadBalancerServerInfoParam    = params.NewServerInfoLoadBalancerParam()
+	loadBalancerServerAddParam     = params.NewServerAddLoadBalancerParam()
+	loadBalancerServerUpdateParam  = params.NewServerUpdateLoadBalancerParam()
+	loadBalancerServerDeleteParam  = params.NewServerDeleteLoadBalancerParam()
+	loadBalancerMonitorParam       = params.NewMonitorLoadBalancerParam()
 )
 
-// loadbalancerCmd represents the command to manage SAKURA Cloud LoadBalancer
-var loadbalancerCmd = &cobra.Command{
-	Use:   "loadbalancer",
+// loadBalancerCmd represents the command to manage SAKURA Cloud LoadBalancer
+var loadBalancerCmd = &cobra.Command{
+	Use:   "loadBalancer",
 	Short: "A manage commands of LoadBalancer",
 	Long:  `A manage commands of LoadBalancer`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -57,461 +57,461 @@ var loadbalancerCmd = &cobra.Command{
 	},
 }
 
-var loadbalancerListCmd = &cobra.Command{
+var loadBalancerListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Loadbalancer",
-	Long:    `List Loadbalancer`,
+	Short:   "List LoadBalancer",
+	Long:    `List LoadBalancer`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(loadbalancerListParam))
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(loadBalancerListParam))
 		return err
 	},
 }
 
-func loadbalancerListCmdInit() {
-	fs := loadbalancerListCmd.Flags()
-	fs.StringSliceVarP(&loadbalancerListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &loadbalancerListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&loadbalancerListParam.From, "from", "", 0, "set offset")
-	fs.IntVarP(&loadbalancerListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&loadbalancerListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&loadbalancerListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+func loadBalancerListCmdInit() {
+	fs := loadBalancerListCmd.Flags()
+	fs.IntVarP(&loadBalancerListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&loadBalancerListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&loadBalancerListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&loadBalancerListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.StringSliceVarP(&loadBalancerListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &loadBalancerListParam.Id), "id", "", "set filter by id(s)")
 }
 
-var loadbalancerCreateCmd = &cobra.Command{
+var loadBalancerCreateCmd = &cobra.Command{
 	Use: "create",
 
-	Short: "Create Loadbalancer",
-	Long:  `Create Loadbalancer`,
+	Short: "Create LoadBalancer",
+	Long:  `Create LoadBalancer`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(loadbalancerCreateParam))
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(loadBalancerCreateParam))
 		return err
 	},
 }
 
-func loadbalancerCreateCmdInit() {
-	fs := loadbalancerCreateCmd.Flags()
-	fs.StringVarP(&loadbalancerCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
-	fs.IntVarP(&loadbalancerCreateParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
-	fs.StringVarP(&loadbalancerCreateParam.DefaultRoute, "default-route", "", "", "set default route")
-	fs.StringVarP(&loadbalancerCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&loadbalancerCreateParam.Description, "description", "", "", "set resource description")
-	fs.VarP(newIDValue(0, &loadbalancerCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
-	fs.BoolVarP(&loadbalancerCreateParam.HighAvailability, "high-availability", "", false, "use HA(High-Availability) mode")
-	fs.StringVarP(&loadbalancerCreateParam.Plan, "plan", "", "standard", "set plan[standard/highspec]")
-	fs.StringVarP(&loadbalancerCreateParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
-	fs.StringSliceVarP(&loadbalancerCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &loadbalancerCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.IntVarP(&loadbalancerCreateParam.Vrid, "vrid", "", 1, "set VRID")
+func loadBalancerCreateCmdInit() {
+	fs := loadBalancerCreateCmd.Flags()
+	fs.StringSliceVarP(&loadBalancerCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.IntVarP(&loadBalancerCreateParam.Vrid, "vrid", "", 1, "set VRID")
+	fs.BoolVarP(&loadBalancerCreateParam.HighAvailability, "high-availability", "", false, "use HA(High-Availability) mode")
+	fs.StringVarP(&loadBalancerCreateParam.Plan, "plan", "", "standard", "set plan[standard/highspec]")
+	fs.StringVarP(&loadBalancerCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
+	fs.StringVarP(&loadBalancerCreateParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
+	fs.IntVarP(&loadBalancerCreateParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
+	fs.StringVarP(&loadBalancerCreateParam.Description, "description", "", "", "set resource description")
+	fs.VarP(newIDValue(0, &loadBalancerCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
+	fs.StringVarP(&loadBalancerCreateParam.DefaultRoute, "default-route", "", "", "set default route")
+	fs.StringVarP(&loadBalancerCreateParam.Name, "name", "", "", "set resource display name")
+	fs.VarP(newIDValue(0, &loadBalancerCreateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
-var loadbalancerReadCmd = &cobra.Command{
+var loadBalancerReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Loadbalancer",
-	Long:  `Read Loadbalancer`,
+	Short: "Read LoadBalancer",
+	Long:  `Read LoadBalancer`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(loadbalancerReadParam))
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(loadBalancerReadParam))
 		return err
 	},
 }
 
-func loadbalancerReadCmdInit() {
+func loadBalancerReadCmdInit() {
 }
 
-var loadbalancerUpdateCmd = &cobra.Command{
+var loadBalancerUpdateCmd = &cobra.Command{
 	Use: "update",
 
-	Short: "Update Loadbalancer",
-	Long:  `Update Loadbalancer`,
+	Short: "Update LoadBalancer",
+	Long:  `Update LoadBalancer`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(loadbalancerUpdateParam))
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(loadBalancerUpdateParam))
 		return err
 	},
 }
 
-func loadbalancerUpdateCmdInit() {
-	fs := loadbalancerUpdateCmd.Flags()
-	fs.StringVarP(&loadbalancerUpdateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&loadbalancerUpdateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&loadbalancerUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &loadbalancerUpdateParam.IconId), "icon-id", "", "set Icon ID")
+func loadBalancerUpdateCmdInit() {
+	fs := loadBalancerUpdateCmd.Flags()
+	fs.StringVarP(&loadBalancerUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&loadBalancerUpdateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&loadBalancerUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &loadBalancerUpdateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
-var loadbalancerDeleteCmd = &cobra.Command{
+var loadBalancerDeleteCmd = &cobra.Command{
 	Use:     "delete",
 	Aliases: []string{"rm"},
-	Short:   "Delete Loadbalancer",
-	Long:    `Delete Loadbalancer`,
+	Short:   "Delete LoadBalancer",
+	Long:    `Delete LoadBalancer`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(loadbalancerDeleteParam))
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(loadBalancerDeleteParam))
 		return err
 	},
 }
 
-func loadbalancerDeleteCmdInit() {
-	fs := loadbalancerDeleteCmd.Flags()
-	fs.BoolVarP(&loadbalancerDeleteParam.Force, "force", "f", false, "forced-shutdown flag if load-balancer is running")
+func loadBalancerDeleteCmdInit() {
+	fs := loadBalancerDeleteCmd.Flags()
+	fs.BoolVarP(&loadBalancerDeleteParam.Force, "force", "f", false, "forced-shutdown flag if load-balancer is running")
 }
 
-var loadbalancerBootCmd = &cobra.Command{
+var loadBalancerBootCmd = &cobra.Command{
 	Use:     "boot",
 	Aliases: []string{"power-on"},
-	Short:   "Boot Loadbalancer",
-	Long:    `Boot Loadbalancer`,
+	Short:   "Boot LoadBalancer",
+	Long:    `Boot LoadBalancer`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerBootParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("boot parameter: \n%s\n", debugMarshalIndent(loadbalancerBootParam))
+		fmt.Printf("boot parameter: \n%s\n", debugMarshalIndent(loadBalancerBootParam))
 		return err
 	},
 }
 
-func loadbalancerBootCmdInit() {
+func loadBalancerBootCmdInit() {
 }
 
-var loadbalancerShutdownCmd = &cobra.Command{
+var loadBalancerShutdownCmd = &cobra.Command{
 	Use:     "shutdown",
 	Aliases: []string{"power-off"},
-	Short:   "Shutdown Loadbalancer",
-	Long:    `Shutdown Loadbalancer`,
+	Short:   "Shutdown LoadBalancer",
+	Long:    `Shutdown LoadBalancer`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("shutdown parameter: \n%s\n", debugMarshalIndent(loadbalancerShutdownParam))
+		fmt.Printf("shutdown parameter: \n%s\n", debugMarshalIndent(loadBalancerShutdownParam))
 		return err
 	},
 }
 
-func loadbalancerShutdownCmdInit() {
+func loadBalancerShutdownCmdInit() {
 }
 
-var loadbalancerShutdownForceCmd = &cobra.Command{
+var loadBalancerShutdownForceCmd = &cobra.Command{
 	Use:     "shutdown-force",
 	Aliases: []string{"stop"},
-	Short:   "ShutdownForce Loadbalancer",
-	Long:    `ShutdownForce Loadbalancer`,
+	Short:   "ShutdownForce LoadBalancer",
+	Long:    `ShutdownForce LoadBalancer`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("shutdown-force parameter: \n%s\n", debugMarshalIndent(loadbalancerShutdownForceParam))
+		fmt.Printf("shutdown-force parameter: \n%s\n", debugMarshalIndent(loadBalancerShutdownForceParam))
 		return err
 	},
 }
 
-func loadbalancerShutdownForceCmdInit() {
+func loadBalancerShutdownForceCmdInit() {
 }
 
-var loadbalancerResetCmd = &cobra.Command{
+var loadBalancerResetCmd = &cobra.Command{
 	Use: "reset",
 
-	Short: "Reset Loadbalancer",
-	Long:  `Reset Loadbalancer`,
+	Short: "Reset LoadBalancer",
+	Long:  `Reset LoadBalancer`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerResetParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("reset parameter: \n%s\n", debugMarshalIndent(loadbalancerResetParam))
+		fmt.Printf("reset parameter: \n%s\n", debugMarshalIndent(loadBalancerResetParam))
 		return err
 	},
 }
 
-func loadbalancerResetCmdInit() {
+func loadBalancerResetCmdInit() {
 }
 
-var loadbalancerWaitForBootCmd = &cobra.Command{
+var loadBalancerWaitForBootCmd = &cobra.Command{
 	Use: "wait-for-boot",
 
 	Short: "Wait until boot is completed",
 	Long:  `Wait until boot is completed`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("wait-for-boot parameter: \n%s\n", debugMarshalIndent(loadbalancerWaitForBootParam))
+		fmt.Printf("wait-for-boot parameter: \n%s\n", debugMarshalIndent(loadBalancerWaitForBootParam))
 		return err
 	},
 }
 
-func loadbalancerWaitForBootCmdInit() {
+func loadBalancerWaitForBootCmdInit() {
 }
 
-var loadbalancerWaitForDownCmd = &cobra.Command{
+var loadBalancerWaitForDownCmd = &cobra.Command{
 	Use: "wait-for-down",
 
 	Short: "Wait until shutdown is completed",
 	Long:  `Wait until shutdown is completed`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("wait-for-down parameter: \n%s\n", debugMarshalIndent(loadbalancerWaitForDownParam))
+		fmt.Printf("wait-for-down parameter: \n%s\n", debugMarshalIndent(loadBalancerWaitForDownParam))
 		return err
 	},
 }
 
-func loadbalancerWaitForDownCmdInit() {
+func loadBalancerWaitForDownCmdInit() {
 }
 
-var loadbalancerVipInfoCmd = &cobra.Command{
+var loadBalancerVipInfoCmd = &cobra.Command{
 	Use: "vip-info",
 
 	Short: "Show information of VIP(s)",
 	Long:  `Show information of VIP(s)`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerVipInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerVipInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("vip-info parameter: \n%s\n", debugMarshalIndent(loadbalancerVipInfoParam))
+		fmt.Printf("vip-info parameter: \n%s\n", debugMarshalIndent(loadBalancerVipInfoParam))
 		return err
 	},
 }
 
-func loadbalancerVipInfoCmdInit() {
+func loadBalancerVipInfoCmdInit() {
 }
 
-var loadbalancerVipAddCmd = &cobra.Command{
+var loadBalancerVipAddCmd = &cobra.Command{
 	Use: "vip-add",
 
 	Short: "Add VIP to LoadBalancer",
 	Long:  `Add VIP to LoadBalancer`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerVipAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerVipAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("vip-add parameter: \n%s\n", debugMarshalIndent(loadbalancerVipAddParam))
+		fmt.Printf("vip-add parameter: \n%s\n", debugMarshalIndent(loadBalancerVipAddParam))
 		return err
 	},
 }
 
-func loadbalancerVipAddCmdInit() {
-	fs := loadbalancerVipAddCmd.Flags()
-	fs.StringVarP(&loadbalancerVipAddParam.Description, "description", "", "", "set Description of VIP")
-	fs.StringVarP(&loadbalancerVipAddParam.Vip, "vip", "", "", "set VirtualIPAddress")
-	fs.IntVarP(&loadbalancerVipAddParam.Port, "port", "", 0, "set port")
-	fs.IntVarP(&loadbalancerVipAddParam.DelayLoop, "delay-loop", "", 10, "set delay-loop")
-	fs.StringVarP(&loadbalancerVipAddParam.SorryServer, "sorry-server", "", "", "set IPAddress of sorry-server")
+func loadBalancerVipAddCmdInit() {
+	fs := loadBalancerVipAddCmd.Flags()
+	fs.IntVarP(&loadBalancerVipAddParam.DelayLoop, "delay-loop", "", 10, "set delay-loop")
+	fs.StringVarP(&loadBalancerVipAddParam.SorryServer, "sorry-server", "", "", "set IPAddress of sorry-server")
+	fs.StringVarP(&loadBalancerVipAddParam.Description, "description", "", "", "set Description of VIP")
+	fs.StringVarP(&loadBalancerVipAddParam.Vip, "vip", "", "", "set VirtualIPAddress")
+	fs.IntVarP(&loadBalancerVipAddParam.Port, "port", "", 0, "set port")
 }
 
-var loadbalancerVipUpdateCmd = &cobra.Command{
+var loadBalancerVipUpdateCmd = &cobra.Command{
 	Use: "vip-update",
 
 	Short: "Update VIP",
 	Long:  `Update VIP`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerVipUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerVipUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("vip-update parameter: \n%s\n", debugMarshalIndent(loadbalancerVipUpdateParam))
+		fmt.Printf("vip-update parameter: \n%s\n", debugMarshalIndent(loadBalancerVipUpdateParam))
 		return err
 	},
 }
 
-func loadbalancerVipUpdateCmdInit() {
-	fs := loadbalancerVipUpdateCmd.Flags()
-	fs.StringVarP(&loadbalancerVipUpdateParam.Description, "description", "", "", "set Description of VIP")
-	fs.IntVarP(&loadbalancerVipUpdateParam.Index, "index", "", 0, "index of target VIP")
-	fs.StringVarP(&loadbalancerVipUpdateParam.Vip, "vip", "", "", "set VirtualIPAddress")
-	fs.IntVarP(&loadbalancerVipUpdateParam.Port, "port", "", 0, "set port")
-	fs.IntVarP(&loadbalancerVipUpdateParam.DelayLoop, "delay-loop", "", 10, "set delay-loop")
-	fs.StringVarP(&loadbalancerVipUpdateParam.SorryServer, "sorry-server", "", "", "set IPAddress of sorry-server")
+func loadBalancerVipUpdateCmdInit() {
+	fs := loadBalancerVipUpdateCmd.Flags()
+	fs.IntVarP(&loadBalancerVipUpdateParam.DelayLoop, "delay-loop", "", 10, "set delay-loop")
+	fs.StringVarP(&loadBalancerVipUpdateParam.SorryServer, "sorry-server", "", "", "set IPAddress of sorry-server")
+	fs.StringVarP(&loadBalancerVipUpdateParam.Description, "description", "", "", "set Description of VIP")
+	fs.IntVarP(&loadBalancerVipUpdateParam.Index, "index", "", 0, "index of target VIP")
+	fs.StringVarP(&loadBalancerVipUpdateParam.Vip, "vip", "", "", "set VirtualIPAddress")
+	fs.IntVarP(&loadBalancerVipUpdateParam.Port, "port", "", 0, "set port")
 }
 
-var loadbalancerVipDeleteCmd = &cobra.Command{
+var loadBalancerVipDeleteCmd = &cobra.Command{
 	Use: "vip-delete",
 
 	Short: "Delete VIP from LoadBalancer",
 	Long:  `Delete VIP from LoadBalancer`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerVipDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerVipDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("vip-delete parameter: \n%s\n", debugMarshalIndent(loadbalancerVipDeleteParam))
+		fmt.Printf("vip-delete parameter: \n%s\n", debugMarshalIndent(loadBalancerVipDeleteParam))
 		return err
 	},
 }
 
-func loadbalancerVipDeleteCmdInit() {
-	fs := loadbalancerVipDeleteCmd.Flags()
-	fs.IntVarP(&loadbalancerVipDeleteParam.Index, "index", "", 0, "index of target VIP")
+func loadBalancerVipDeleteCmdInit() {
+	fs := loadBalancerVipDeleteCmd.Flags()
+	fs.IntVarP(&loadBalancerVipDeleteParam.Index, "index", "", 0, "index of target VIP")
 }
 
-var loadbalancerServerInfoCmd = &cobra.Command{
+var loadBalancerServerInfoCmd = &cobra.Command{
 	Use: "server-info",
 
 	Short: "Show servers under VIP(s)",
 	Long:  `Show servers under VIP(s)`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("server-info parameter: \n%s\n", debugMarshalIndent(loadbalancerServerInfoParam))
+		fmt.Printf("server-info parameter: \n%s\n", debugMarshalIndent(loadBalancerServerInfoParam))
 		return err
 	},
 }
 
-func loadbalancerServerInfoCmdInit() {
-	fs := loadbalancerServerInfoCmd.Flags()
-	fs.StringVarP(&loadbalancerServerInfoParam.Vip, "vip", "", "", "set VirtualIPAddress")
-	fs.IntVarP(&loadbalancerServerInfoParam.Port, "port", "", 0, "set port")
-	fs.IntVarP(&loadbalancerServerInfoParam.VipIndex, "vip-index", "", 0, "index of target VIP")
+func loadBalancerServerInfoCmdInit() {
+	fs := loadBalancerServerInfoCmd.Flags()
+	fs.IntVarP(&loadBalancerServerInfoParam.VipIndex, "vip-index", "", 0, "index of target VIP")
+	fs.StringVarP(&loadBalancerServerInfoParam.Vip, "vip", "", "", "set VirtualIPAddress")
+	fs.IntVarP(&loadBalancerServerInfoParam.Port, "port", "", 0, "set port")
 }
 
-var loadbalancerServerAddCmd = &cobra.Command{
+var loadBalancerServerAddCmd = &cobra.Command{
 	Use: "server-add",
 
 	Short: "Add server under VIP(s)",
 	Long:  `Add server under VIP(s)`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("server-add parameter: \n%s\n", debugMarshalIndent(loadbalancerServerAddParam))
+		fmt.Printf("server-add parameter: \n%s\n", debugMarshalIndent(loadBalancerServerAddParam))
 		return err
 	},
 }
 
-func loadbalancerServerAddCmdInit() {
-	fs := loadbalancerServerAddCmd.Flags()
-	fs.IntVarP(&loadbalancerServerAddParam.Port, "port", "", 0, "set port")
-	fs.StringVarP(&loadbalancerServerAddParam.Ipaddress, "ipaddress", "", "", "set real server IPAddress")
-	fs.StringVarP(&loadbalancerServerAddParam.Protocol, "protocol", "", "ping", "set health check protocol[http/https/ping/tcp]")
-	fs.StringVarP(&loadbalancerServerAddParam.Path, "path", "", "", "set path of http/https health check request")
-	fs.IntVarP(&loadbalancerServerAddParam.ResponseCode, "response-code", "", 0, "set expect response-code of http/https health check request")
-	fs.BoolVarP(&loadbalancerServerAddParam.Disabled, "disabled", "", false, "set disable")
-	fs.IntVarP(&loadbalancerServerAddParam.VipIndex, "vip-index", "", 0, "index of target VIP")
-	fs.StringVarP(&loadbalancerServerAddParam.Vip, "vip", "", "", "set VirtualIPAddress")
+func loadBalancerServerAddCmdInit() {
+	fs := loadBalancerServerAddCmd.Flags()
+	fs.IntVarP(&loadBalancerServerAddParam.Port, "port", "", 0, "set port")
+	fs.StringVarP(&loadBalancerServerAddParam.Ipaddress, "ipaddress", "", "", "set real server IPAddress")
+	fs.StringVarP(&loadBalancerServerAddParam.Protocol, "protocol", "", "ping", "set health check protocol[http/https/ping/tcp]")
+	fs.StringVarP(&loadBalancerServerAddParam.Path, "path", "", "", "set path of http/https health check request")
+	fs.IntVarP(&loadBalancerServerAddParam.ResponseCode, "response-code", "", 0, "set expect response-code of http/https health check request")
+	fs.BoolVarP(&loadBalancerServerAddParam.Disabled, "disabled", "", false, "set disable")
+	fs.IntVarP(&loadBalancerServerAddParam.VipIndex, "vip-index", "", 0, "index of target VIP")
+	fs.StringVarP(&loadBalancerServerAddParam.Vip, "vip", "", "", "set VirtualIPAddress")
 }
 
-var loadbalancerServerUpdateCmd = &cobra.Command{
+var loadBalancerServerUpdateCmd = &cobra.Command{
 	Use: "server-update",
 
 	Short: "Update server under VIP(s)",
 	Long:  `Update server under VIP(s)`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("server-update parameter: \n%s\n", debugMarshalIndent(loadbalancerServerUpdateParam))
+		fmt.Printf("server-update parameter: \n%s\n", debugMarshalIndent(loadBalancerServerUpdateParam))
 		return err
 	},
 }
 
-func loadbalancerServerUpdateCmdInit() {
-	fs := loadbalancerServerUpdateCmd.Flags()
-	fs.StringVarP(&loadbalancerServerUpdateParam.Vip, "vip", "", "", "set VirtualIPAddress")
-	fs.IntVarP(&loadbalancerServerUpdateParam.Port, "port", "", 0, "set port")
-	fs.StringVarP(&loadbalancerServerUpdateParam.Ipaddress, "ipaddress", "", "", "set real server IPAddress")
-	fs.StringVarP(&loadbalancerServerUpdateParam.Protocol, "protocol", "", "", "set health check protocol[http/https/ping/tcp]")
-	fs.StringVarP(&loadbalancerServerUpdateParam.Path, "path", "", "", "set path of http/https health check request")
-	fs.IntVarP(&loadbalancerServerUpdateParam.ResponseCode, "response-code", "", 0, "set expect response-code of http/https health check request")
-	fs.BoolVarP(&loadbalancerServerUpdateParam.Disabled, "disabled", "", false, "set enable/disable")
-	fs.IntVarP(&loadbalancerServerUpdateParam.VipIndex, "vip-index", "", 0, "index of target VIP")
+func loadBalancerServerUpdateCmdInit() {
+	fs := loadBalancerServerUpdateCmd.Flags()
+	fs.StringVarP(&loadBalancerServerUpdateParam.Vip, "vip", "", "", "set VirtualIPAddress")
+	fs.IntVarP(&loadBalancerServerUpdateParam.Port, "port", "", 0, "set port")
+	fs.StringVarP(&loadBalancerServerUpdateParam.Ipaddress, "ipaddress", "", "", "set real server IPAddress")
+	fs.StringVarP(&loadBalancerServerUpdateParam.Protocol, "protocol", "", "", "set health check protocol[http/https/ping/tcp]")
+	fs.StringVarP(&loadBalancerServerUpdateParam.Path, "path", "", "", "set path of http/https health check request")
+	fs.IntVarP(&loadBalancerServerUpdateParam.ResponseCode, "response-code", "", 0, "set expect response-code of http/https health check request")
+	fs.BoolVarP(&loadBalancerServerUpdateParam.Disabled, "disabled", "", false, "set enable/disable")
+	fs.IntVarP(&loadBalancerServerUpdateParam.VipIndex, "vip-index", "", 0, "index of target VIP")
 }
 
-var loadbalancerServerDeleteCmd = &cobra.Command{
+var loadBalancerServerDeleteCmd = &cobra.Command{
 	Use: "server-delete",
 
 	Short: "Delete server under VIP(s)",
 	Long:  `Delete server under VIP(s)`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("server-delete parameter: \n%s\n", debugMarshalIndent(loadbalancerServerDeleteParam))
+		fmt.Printf("server-delete parameter: \n%s\n", debugMarshalIndent(loadBalancerServerDeleteParam))
 		return err
 	},
 }
 
-func loadbalancerServerDeleteCmdInit() {
-	fs := loadbalancerServerDeleteCmd.Flags()
-	fs.StringVarP(&loadbalancerServerDeleteParam.Ipaddress, "ipaddress", "", "", "set real server IPAddress")
-	fs.IntVarP(&loadbalancerServerDeleteParam.VipIndex, "vip-index", "", 0, "index of target VIP")
-	fs.StringVarP(&loadbalancerServerDeleteParam.Vip, "vip", "", "", "set VirtualIPAddress")
-	fs.IntVarP(&loadbalancerServerDeleteParam.Port, "port", "", 0, "set port")
+func loadBalancerServerDeleteCmdInit() {
+	fs := loadBalancerServerDeleteCmd.Flags()
+	fs.IntVarP(&loadBalancerServerDeleteParam.Port, "port", "", 0, "set port")
+	fs.StringVarP(&loadBalancerServerDeleteParam.Ipaddress, "ipaddress", "", "", "set real server IPAddress")
+	fs.IntVarP(&loadBalancerServerDeleteParam.VipIndex, "vip-index", "", 0, "index of target VIP")
+	fs.StringVarP(&loadBalancerServerDeleteParam.Vip, "vip", "", "", "set VirtualIPAddress")
 }
 
-var loadbalancerMonitorCmd = &cobra.Command{
+var loadBalancerMonitorCmd = &cobra.Command{
 	Use: "monitor",
 
-	Short: "Monitor Loadbalancer",
-	Long:  `Monitor Loadbalancer`,
+	Short: "Monitor LoadBalancer",
+	Long:  `Monitor LoadBalancer`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadbalancerMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := loadBalancerMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("monitor parameter: \n%s\n", debugMarshalIndent(loadbalancerMonitorParam))
+		fmt.Printf("monitor parameter: \n%s\n", debugMarshalIndent(loadBalancerMonitorParam))
 		return err
 	},
 }
 
-func loadbalancerMonitorCmdInit() {
-	fs := loadbalancerMonitorCmd.Flags()
-	fs.StringVarP(&loadbalancerMonitorParam.End, "end", "", "", "set end-time")
-	fs.StringVarP(&loadbalancerMonitorParam.KeyFormat, "key-format", "", "sakuracloud.loadbalancer.{{.ID}}.nic", "set monitoring value key-format")
-	fs.StringVarP(&loadbalancerMonitorParam.Start, "start", "", "", "set start-time")
+func loadBalancerMonitorCmdInit() {
+	fs := loadBalancerMonitorCmd.Flags()
+	fs.StringVarP(&loadBalancerMonitorParam.Start, "start", "", "", "set start-time")
+	fs.StringVarP(&loadBalancerMonitorParam.End, "end", "", "", "set end-time")
+	fs.StringVarP(&loadBalancerMonitorParam.KeyFormat, "key-format", "", "sakuracloud.loadbalancer.{{.ID}}.nic", "set monitoring value key-format")
 }
 
 func init() {
-	parent := loadbalancerCmd
+	parent := loadBalancerCmd
 
-	loadbalancerListCmdInit()
-	parent.AddCommand(loadbalancerListCmd)
+	loadBalancerListCmdInit()
+	parent.AddCommand(loadBalancerListCmd)
 
-	loadbalancerCreateCmdInit()
-	parent.AddCommand(loadbalancerCreateCmd)
+	loadBalancerCreateCmdInit()
+	parent.AddCommand(loadBalancerCreateCmd)
 
-	loadbalancerReadCmdInit()
-	parent.AddCommand(loadbalancerReadCmd)
+	loadBalancerReadCmdInit()
+	parent.AddCommand(loadBalancerReadCmd)
 
-	loadbalancerUpdateCmdInit()
-	parent.AddCommand(loadbalancerUpdateCmd)
+	loadBalancerUpdateCmdInit()
+	parent.AddCommand(loadBalancerUpdateCmd)
 
-	loadbalancerDeleteCmdInit()
-	parent.AddCommand(loadbalancerDeleteCmd)
+	loadBalancerDeleteCmdInit()
+	parent.AddCommand(loadBalancerDeleteCmd)
 
-	loadbalancerBootCmdInit()
-	parent.AddCommand(loadbalancerBootCmd)
+	loadBalancerBootCmdInit()
+	parent.AddCommand(loadBalancerBootCmd)
 
-	loadbalancerShutdownCmdInit()
-	parent.AddCommand(loadbalancerShutdownCmd)
+	loadBalancerShutdownCmdInit()
+	parent.AddCommand(loadBalancerShutdownCmd)
 
-	loadbalancerShutdownForceCmdInit()
-	parent.AddCommand(loadbalancerShutdownForceCmd)
+	loadBalancerShutdownForceCmdInit()
+	parent.AddCommand(loadBalancerShutdownForceCmd)
 
-	loadbalancerResetCmdInit()
-	parent.AddCommand(loadbalancerResetCmd)
+	loadBalancerResetCmdInit()
+	parent.AddCommand(loadBalancerResetCmd)
 
-	loadbalancerWaitForBootCmdInit()
-	parent.AddCommand(loadbalancerWaitForBootCmd)
+	loadBalancerWaitForBootCmdInit()
+	parent.AddCommand(loadBalancerWaitForBootCmd)
 
-	loadbalancerWaitForDownCmdInit()
-	parent.AddCommand(loadbalancerWaitForDownCmd)
+	loadBalancerWaitForDownCmdInit()
+	parent.AddCommand(loadBalancerWaitForDownCmd)
 
-	loadbalancerVipInfoCmdInit()
-	parent.AddCommand(loadbalancerVipInfoCmd)
+	loadBalancerVipInfoCmdInit()
+	parent.AddCommand(loadBalancerVipInfoCmd)
 
-	loadbalancerVipAddCmdInit()
-	parent.AddCommand(loadbalancerVipAddCmd)
+	loadBalancerVipAddCmdInit()
+	parent.AddCommand(loadBalancerVipAddCmd)
 
-	loadbalancerVipUpdateCmdInit()
-	parent.AddCommand(loadbalancerVipUpdateCmd)
+	loadBalancerVipUpdateCmdInit()
+	parent.AddCommand(loadBalancerVipUpdateCmd)
 
-	loadbalancerVipDeleteCmdInit()
-	parent.AddCommand(loadbalancerVipDeleteCmd)
+	loadBalancerVipDeleteCmdInit()
+	parent.AddCommand(loadBalancerVipDeleteCmd)
 
-	loadbalancerServerInfoCmdInit()
-	parent.AddCommand(loadbalancerServerInfoCmd)
+	loadBalancerServerInfoCmdInit()
+	parent.AddCommand(loadBalancerServerInfoCmd)
 
-	loadbalancerServerAddCmdInit()
-	parent.AddCommand(loadbalancerServerAddCmd)
+	loadBalancerServerAddCmdInit()
+	parent.AddCommand(loadBalancerServerAddCmd)
 
-	loadbalancerServerUpdateCmdInit()
-	parent.AddCommand(loadbalancerServerUpdateCmd)
+	loadBalancerServerUpdateCmdInit()
+	parent.AddCommand(loadBalancerServerUpdateCmd)
 
-	loadbalancerServerDeleteCmdInit()
-	parent.AddCommand(loadbalancerServerDeleteCmd)
+	loadBalancerServerDeleteCmdInit()
+	parent.AddCommand(loadBalancerServerDeleteCmd)
 
-	loadbalancerMonitorCmdInit()
-	parent.AddCommand(loadbalancerMonitorCmd)
+	loadBalancerMonitorCmdInit()
+	parent.AddCommand(loadBalancerMonitorCmd)
 
 	rootCmd.AddCommand(parent)
 }

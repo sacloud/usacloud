@@ -21,6 +21,7 @@ import (
 	"fmt"
 
 	"github.com/imdario/mergo"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/command/params"
@@ -29,20 +30,20 @@ import (
 )
 
 func init() {
-	ipv4ListParam := params.NewListIpv4Param()
-	ipv4PtrAddParam := params.NewPtrAddIpv4Param()
-	ipv4PtrReadParam := params.NewPtrReadIpv4Param()
-	ipv4PtrUpdateParam := params.NewPtrUpdateIpv4Param()
-	ipv4PtrDeleteParam := params.NewPtrDeleteIpv4Param()
+	ipv6ListParam := params.NewListIPv6Param()
+	ipv6PtrAddParam := params.NewPtrAddIPv6Param()
+	ipv6PtrReadParam := params.NewPtrReadIPv6Param()
+	ipv6PtrUpdateParam := params.NewPtrUpdateIPv6Param()
+	ipv6PtrDeleteParam := params.NewPtrDeleteIPv6Param()
 
 	cliCommand := &cli.Command{
-		Name:  "ipv-4",
-		Usage: "A manage commands of IPv4",
+		Name:  "ipv6",
+		Usage: "A manage commands of IPv6",
 		Subcommands: []*cli.Command{
 			{
 				Name:      "list",
 				Aliases:   []string{"ls", "find"},
-				Usage:     "List Ipv4",
+				Usage:     "List IPv6",
 				ArgsUsage: "IPAddress",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -52,6 +53,14 @@ func init() {
 					&cli.Int64SliceFlag{
 						Name:  "id",
 						Usage: "set filter by id(s)",
+					},
+					&cli.Int64Flag{
+						Name:  "ipv6net-id",
+						Usage: "set filter by ipv6net-id",
+					},
+					&cli.Int64Flag{
+						Name:  "internet-id",
+						Usage: "set filter by internet-id",
 					},
 					&cli.IntFlag{
 						Name:    "from",
@@ -129,72 +138,78 @@ func init() {
 						return err
 					}
 
-					ipv4ListParam.ParamTemplate = c.String("param-template")
-					ipv4ListParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(ipv4ListParam)
+					ipv6ListParam.ParamTemplate = c.String("param-template")
+					ipv6ListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ipv6ListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListIpv4Param()
+						p := params.NewListIPv6Param()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(ipv4ListParam, p, mergo.WithOverride)
+						mergo.Merge(ipv6ListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						ipv4ListParam.Name = c.StringSlice("name")
+						ipv6ListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						ipv4ListParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						ipv6ListParam.Id = toSakuraIDs(c.Int64Slice("id"))
+					}
+					if c.IsSet("ipv6net-id") {
+						ipv6ListParam.IPv6netId = sacloud.ID(c.Int64("ipv6net-id"))
+					}
+					if c.IsSet("internet-id") {
+						ipv6ListParam.InternetId = sacloud.ID(c.Int64("internet-id"))
 					}
 					if c.IsSet("from") {
-						ipv4ListParam.From = c.Int("from")
+						ipv6ListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						ipv4ListParam.Max = c.Int("max")
+						ipv6ListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						ipv4ListParam.Sort = c.StringSlice("sort")
+						ipv6ListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						ipv4ListParam.ParamTemplate = c.String("param-template")
+						ipv6ListParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						ipv4ListParam.Parameters = c.String("parameters")
+						ipv6ListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						ipv4ListParam.ParamTemplateFile = c.String("param-template-file")
+						ipv6ListParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						ipv4ListParam.ParameterFile = c.String("parameter-file")
+						ipv6ListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						ipv4ListParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						ipv6ListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						ipv4ListParam.OutputType = c.String("output-type")
+						ipv6ListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						ipv4ListParam.Column = c.StringSlice("column")
+						ipv6ListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						ipv4ListParam.Quiet = c.Bool("quiet")
+						ipv6ListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						ipv4ListParam.Format = c.String("format")
+						ipv6ListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						ipv4ListParam.FormatFile = c.String("format-file")
+						ipv6ListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						ipv4ListParam.Query = c.String("query")
+						ipv6ListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						ipv4ListParam.QueryFile = c.String("query-file")
+						ipv6ListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -202,7 +217,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = ipv4ListParam
+					var outputTypeHolder interface{} = ipv6ListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -213,10 +228,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if ipv4ListParam.GenerateSkeleton {
-						ipv4ListParam.GenerateSkeleton = false
-						ipv4ListParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(ipv4ListParam, "", "\t")
+					if ipv6ListParam.GenerateSkeleton {
+						ipv6ListParam.GenerateSkeleton = false
+						ipv6ListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(ipv6ListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -225,21 +240,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ipv4ListParam.Validate(); len(errors) > 0 {
+					if errors := ipv6ListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), ipv4ListParam)
+					ctx := command.NewContext(c, c.Args().Slice(), ipv6ListParam)
 
 					// Run command with params
-					return funcs.Ipv4List(ctx, ipv4ListParam)
+					return funcs.IPv6List(ctx, ipv6ListParam)
 
 				},
 			},
 			{
 				Name:      "ptr-add",
-				Usage:     "PtrAdd Ipv4",
+				Usage:     "PtrAdd IPv6",
 				ArgsUsage: "IPAddress",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -313,63 +328,63 @@ func init() {
 						return err
 					}
 
-					ipv4PtrAddParam.ParamTemplate = c.String("param-template")
-					ipv4PtrAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(ipv4PtrAddParam)
+					ipv6PtrAddParam.ParamTemplate = c.String("param-template")
+					ipv6PtrAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ipv6PtrAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewPtrAddIpv4Param()
+						p := params.NewPtrAddIPv6Param()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(ipv4PtrAddParam, p, mergo.WithOverride)
+						mergo.Merge(ipv6PtrAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("hostname") {
-						ipv4PtrAddParam.Hostname = c.String("hostname")
+						ipv6PtrAddParam.Hostname = c.String("hostname")
 					}
 					if c.IsSet("assumeyes") {
-						ipv4PtrAddParam.Assumeyes = c.Bool("assumeyes")
+						ipv6PtrAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						ipv4PtrAddParam.ParamTemplate = c.String("param-template")
+						ipv6PtrAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						ipv4PtrAddParam.Parameters = c.String("parameters")
+						ipv6PtrAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						ipv4PtrAddParam.ParamTemplateFile = c.String("param-template-file")
+						ipv6PtrAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						ipv4PtrAddParam.ParameterFile = c.String("parameter-file")
+						ipv6PtrAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						ipv4PtrAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						ipv6PtrAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						ipv4PtrAddParam.OutputType = c.String("output-type")
+						ipv6PtrAddParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						ipv4PtrAddParam.Column = c.StringSlice("column")
+						ipv6PtrAddParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						ipv4PtrAddParam.Quiet = c.Bool("quiet")
+						ipv6PtrAddParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						ipv4PtrAddParam.Format = c.String("format")
+						ipv6PtrAddParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						ipv4PtrAddParam.FormatFile = c.String("format-file")
+						ipv6PtrAddParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						ipv4PtrAddParam.Query = c.String("query")
+						ipv6PtrAddParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						ipv4PtrAddParam.QueryFile = c.String("query-file")
+						ipv6PtrAddParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -377,7 +392,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = ipv4PtrAddParam
+					var outputTypeHolder interface{} = ipv6PtrAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -388,10 +403,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if ipv4PtrAddParam.GenerateSkeleton {
-						ipv4PtrAddParam.GenerateSkeleton = false
-						ipv4PtrAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(ipv4PtrAddParam, "", "\t")
+					if ipv6PtrAddParam.GenerateSkeleton {
+						ipv6PtrAddParam.GenerateSkeleton = false
+						ipv6PtrAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(ipv6PtrAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -400,15 +415,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ipv4PtrAddParam.Validate(); len(errors) > 0 {
+					if errors := ipv6PtrAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), ipv4PtrAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), ipv6PtrAddParam)
 
 					// confirm
-					if !ipv4PtrAddParam.Assumeyes {
+					if !ipv6PtrAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -418,13 +433,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.Ipv4PtrAdd(ctx, ipv4PtrAddParam)
+					return funcs.IPv6PtrAdd(ctx, ipv6PtrAddParam)
 
 				},
 			},
 			{
 				Name:      "ptr-read",
-				Usage:     "PtrRead Ipv4",
+				Usage:     "PtrRead IPv6",
 				ArgsUsage: "IPAddress",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -489,57 +504,57 @@ func init() {
 						return err
 					}
 
-					ipv4PtrReadParam.ParamTemplate = c.String("param-template")
-					ipv4PtrReadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(ipv4PtrReadParam)
+					ipv6PtrReadParam.ParamTemplate = c.String("param-template")
+					ipv6PtrReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ipv6PtrReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewPtrReadIpv4Param()
+						p := params.NewPtrReadIPv6Param()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(ipv4PtrReadParam, p, mergo.WithOverride)
+						mergo.Merge(ipv6PtrReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						ipv4PtrReadParam.ParamTemplate = c.String("param-template")
+						ipv6PtrReadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						ipv4PtrReadParam.Parameters = c.String("parameters")
+						ipv6PtrReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						ipv4PtrReadParam.ParamTemplateFile = c.String("param-template-file")
+						ipv6PtrReadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						ipv4PtrReadParam.ParameterFile = c.String("parameter-file")
+						ipv6PtrReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						ipv4PtrReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						ipv6PtrReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						ipv4PtrReadParam.OutputType = c.String("output-type")
+						ipv6PtrReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						ipv4PtrReadParam.Column = c.StringSlice("column")
+						ipv6PtrReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						ipv4PtrReadParam.Quiet = c.Bool("quiet")
+						ipv6PtrReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						ipv4PtrReadParam.Format = c.String("format")
+						ipv6PtrReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						ipv4PtrReadParam.FormatFile = c.String("format-file")
+						ipv6PtrReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						ipv4PtrReadParam.Query = c.String("query")
+						ipv6PtrReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						ipv4PtrReadParam.QueryFile = c.String("query-file")
+						ipv6PtrReadParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -547,7 +562,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = ipv4PtrReadParam
+					var outputTypeHolder interface{} = ipv6PtrReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -558,10 +573,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if ipv4PtrReadParam.GenerateSkeleton {
-						ipv4PtrReadParam.GenerateSkeleton = false
-						ipv4PtrReadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(ipv4PtrReadParam, "", "\t")
+					if ipv6PtrReadParam.GenerateSkeleton {
+						ipv6PtrReadParam.GenerateSkeleton = false
+						ipv6PtrReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(ipv6PtrReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -570,21 +585,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ipv4PtrReadParam.Validate(); len(errors) > 0 {
+					if errors := ipv6PtrReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), ipv4PtrReadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), ipv6PtrReadParam)
 
 					// Run command with params
-					return funcs.Ipv4PtrRead(ctx, ipv4PtrReadParam)
+					return funcs.IPv6PtrRead(ctx, ipv6PtrReadParam)
 
 				},
 			},
 			{
 				Name:      "ptr-update",
-				Usage:     "PtrUpdate Ipv4",
+				Usage:     "PtrUpdate IPv6",
 				ArgsUsage: "IPAddress",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -658,63 +673,63 @@ func init() {
 						return err
 					}
 
-					ipv4PtrUpdateParam.ParamTemplate = c.String("param-template")
-					ipv4PtrUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(ipv4PtrUpdateParam)
+					ipv6PtrUpdateParam.ParamTemplate = c.String("param-template")
+					ipv6PtrUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ipv6PtrUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewPtrUpdateIpv4Param()
+						p := params.NewPtrUpdateIPv6Param()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(ipv4PtrUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(ipv6PtrUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("hostname") {
-						ipv4PtrUpdateParam.Hostname = c.String("hostname")
+						ipv6PtrUpdateParam.Hostname = c.String("hostname")
 					}
 					if c.IsSet("assumeyes") {
-						ipv4PtrUpdateParam.Assumeyes = c.Bool("assumeyes")
+						ipv6PtrUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						ipv4PtrUpdateParam.ParamTemplate = c.String("param-template")
+						ipv6PtrUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						ipv4PtrUpdateParam.Parameters = c.String("parameters")
+						ipv6PtrUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						ipv4PtrUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						ipv6PtrUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						ipv4PtrUpdateParam.ParameterFile = c.String("parameter-file")
+						ipv6PtrUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						ipv4PtrUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						ipv6PtrUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						ipv4PtrUpdateParam.OutputType = c.String("output-type")
+						ipv6PtrUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						ipv4PtrUpdateParam.Column = c.StringSlice("column")
+						ipv6PtrUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						ipv4PtrUpdateParam.Quiet = c.Bool("quiet")
+						ipv6PtrUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						ipv4PtrUpdateParam.Format = c.String("format")
+						ipv6PtrUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						ipv4PtrUpdateParam.FormatFile = c.String("format-file")
+						ipv6PtrUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						ipv4PtrUpdateParam.Query = c.String("query")
+						ipv6PtrUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						ipv4PtrUpdateParam.QueryFile = c.String("query-file")
+						ipv6PtrUpdateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -722,7 +737,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = ipv4PtrUpdateParam
+					var outputTypeHolder interface{} = ipv6PtrUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -733,10 +748,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if ipv4PtrUpdateParam.GenerateSkeleton {
-						ipv4PtrUpdateParam.GenerateSkeleton = false
-						ipv4PtrUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(ipv4PtrUpdateParam, "", "\t")
+					if ipv6PtrUpdateParam.GenerateSkeleton {
+						ipv6PtrUpdateParam.GenerateSkeleton = false
+						ipv6PtrUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(ipv6PtrUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -745,15 +760,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ipv4PtrUpdateParam.Validate(); len(errors) > 0 {
+					if errors := ipv6PtrUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), ipv4PtrUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), ipv6PtrUpdateParam)
 
 					// confirm
-					if !ipv4PtrUpdateParam.Assumeyes {
+					if !ipv6PtrUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -763,13 +778,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.Ipv4PtrUpdate(ctx, ipv4PtrUpdateParam)
+					return funcs.IPv6PtrUpdate(ctx, ipv6PtrUpdateParam)
 
 				},
 			},
 			{
 				Name:      "ptr-delete",
-				Usage:     "PtrDelete Ipv4",
+				Usage:     "PtrDelete IPv6",
 				ArgsUsage: "IPAddress",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -839,60 +854,60 @@ func init() {
 						return err
 					}
 
-					ipv4PtrDeleteParam.ParamTemplate = c.String("param-template")
-					ipv4PtrDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(ipv4PtrDeleteParam)
+					ipv6PtrDeleteParam.ParamTemplate = c.String("param-template")
+					ipv6PtrDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ipv6PtrDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewPtrDeleteIpv4Param()
+						p := params.NewPtrDeleteIPv6Param()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(ipv4PtrDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(ipv6PtrDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("assumeyes") {
-						ipv4PtrDeleteParam.Assumeyes = c.Bool("assumeyes")
+						ipv6PtrDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						ipv4PtrDeleteParam.ParamTemplate = c.String("param-template")
+						ipv6PtrDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						ipv4PtrDeleteParam.Parameters = c.String("parameters")
+						ipv6PtrDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						ipv4PtrDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						ipv6PtrDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						ipv4PtrDeleteParam.ParameterFile = c.String("parameter-file")
+						ipv6PtrDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						ipv4PtrDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						ipv6PtrDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						ipv4PtrDeleteParam.OutputType = c.String("output-type")
+						ipv6PtrDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						ipv4PtrDeleteParam.Column = c.StringSlice("column")
+						ipv6PtrDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						ipv4PtrDeleteParam.Quiet = c.Bool("quiet")
+						ipv6PtrDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						ipv4PtrDeleteParam.Format = c.String("format")
+						ipv6PtrDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						ipv4PtrDeleteParam.FormatFile = c.String("format-file")
+						ipv6PtrDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						ipv4PtrDeleteParam.Query = c.String("query")
+						ipv6PtrDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						ipv4PtrDeleteParam.QueryFile = c.String("query-file")
+						ipv6PtrDeleteParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -900,7 +915,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = ipv4PtrDeleteParam
+					var outputTypeHolder interface{} = ipv6PtrDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -911,10 +926,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if ipv4PtrDeleteParam.GenerateSkeleton {
-						ipv4PtrDeleteParam.GenerateSkeleton = false
-						ipv4PtrDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(ipv4PtrDeleteParam, "", "\t")
+					if ipv6PtrDeleteParam.GenerateSkeleton {
+						ipv6PtrDeleteParam.GenerateSkeleton = false
+						ipv6PtrDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(ipv6PtrDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -923,15 +938,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ipv4PtrDeleteParam.Validate(); len(errors) > 0 {
+					if errors := ipv6PtrDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), ipv4PtrDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), ipv6PtrDeleteParam)
 
 					// confirm
-					if !ipv4PtrDeleteParam.Assumeyes {
+					if !ipv6PtrDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -941,7 +956,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.Ipv4PtrDelete(ctx, ipv4PtrDeleteParam)
+					return funcs.IPv6PtrDelete(ctx, ipv6PtrDeleteParam)
 
 				},
 			},
@@ -949,7 +964,7 @@ func init() {
 	}
 
 	// build Category-Resource mapping
-	AppendResourceCategoryMap("ipv-4", &schema.Category{
+	AppendResourceCategoryMap("ipv6", &schema.Category{
 		Key:         "networking",
 		DisplayName: "Networking",
 		Order:       30,
@@ -957,27 +972,27 @@ func init() {
 
 	// build Category-Command mapping
 
-	AppendCommandCategoryMap("ipv-4", "list", &schema.Category{
+	AppendCommandCategoryMap("ipv6", "list", &schema.Category{
 		Key:         "basics",
 		DisplayName: "Basics",
 		Order:       1,
 	})
-	AppendCommandCategoryMap("ipv-4", "ptr-add", &schema.Category{
+	AppendCommandCategoryMap("ipv6", "ptr-add", &schema.Category{
 		Key:         "basics",
 		DisplayName: "Basics",
 		Order:       1,
 	})
-	AppendCommandCategoryMap("ipv-4", "ptr-delete", &schema.Category{
+	AppendCommandCategoryMap("ipv6", "ptr-delete", &schema.Category{
 		Key:         "basics",
 		DisplayName: "Basics",
 		Order:       1,
 	})
-	AppendCommandCategoryMap("ipv-4", "ptr-read", &schema.Category{
+	AppendCommandCategoryMap("ipv6", "ptr-read", &schema.Category{
 		Key:         "basics",
 		DisplayName: "Basics",
 		Order:       1,
 	})
-	AppendCommandCategoryMap("ipv-4", "ptr-update", &schema.Category{
+	AppendCommandCategoryMap("ipv6", "ptr-update", &schema.Category{
 		Key:         "basics",
 		DisplayName: "Basics",
 		Order:       1,
@@ -985,352 +1000,362 @@ func init() {
 
 	// build Category-Param mapping
 
-	AppendFlagCategoryMap("ipv-4", "list", "column", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "column", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "list", "format", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "format", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "list", "format-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "format-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "list", "from", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "from", &schema.Category{
 		Key:         "limit-offset",
 		DisplayName: "Limit/Offset options",
 		Order:       2147483597,
 	})
-	AppendFlagCategoryMap("ipv-4", "list", "generate-skeleton", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "list", "id", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "id", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,
 	})
-	AppendFlagCategoryMap("ipv-4", "list", "max", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "internet-id", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("ipv6", "list", "ipv6net-id", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("ipv6", "list", "max", &schema.Category{
 		Key:         "limit-offset",
 		DisplayName: "Limit/Offset options",
 		Order:       2147483597,
 	})
-	AppendFlagCategoryMap("ipv-4", "list", "name", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "name", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,
 	})
-	AppendFlagCategoryMap("ipv-4", "list", "output-type", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "output-type", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "list", "param-template", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "param-template", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "list", "param-template-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "param-template-file", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "list", "parameter-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "parameter-file", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "list", "parameters", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "list", "query", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "list", "query-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "list", "quiet", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "list", "sort", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "list", "sort", &schema.Category{
 		Key:         "sort",
 		DisplayName: "Sort options",
 		Order:       2147483607,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-add", "assumeyes", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-add", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-add", "column", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-add", "column", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-add", "format", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-add", "format", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-add", "format-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-add", "format-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-add", "generate-skeleton", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-add", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-add", "hostname", &schema.Category{
-		Key:         "ipv4",
-		DisplayName: "Ipv4 options",
+	AppendFlagCategoryMap("ipv6", "ptr-add", "hostname", &schema.Category{
+		Key:         "ipv6",
+		DisplayName: "Ipv6 options",
 		Order:       1,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-add", "output-type", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-add", "output-type", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-add", "param-template", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-add", "param-template", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-add", "param-template-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-add", "param-template-file", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-add", "parameter-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-add", "parameter-file", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-add", "parameters", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-add", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-add", "query", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-add", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-add", "query-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-add", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-add", "quiet", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-add", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-delete", "assumeyes", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-delete", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-delete", "column", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-delete", "column", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-delete", "format", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-delete", "format", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-delete", "format-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-delete", "format-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-delete", "generate-skeleton", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-delete", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-delete", "output-type", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-delete", "output-type", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-delete", "param-template", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-delete", "param-template", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-delete", "param-template-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-delete", "param-template-file", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-delete", "parameter-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-delete", "parameter-file", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-delete", "parameters", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-delete", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-delete", "query", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-delete", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-delete", "query-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-delete", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-delete", "quiet", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-delete", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-read", "column", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-read", "column", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-read", "format", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-read", "format", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-read", "format-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-read", "format-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-read", "generate-skeleton", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-read", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-read", "output-type", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-read", "output-type", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-read", "param-template", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-read", "param-template", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-read", "param-template-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-read", "param-template-file", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-read", "parameter-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-read", "parameter-file", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-read", "parameters", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-read", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-read", "query", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-read", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-read", "query-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-read", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-read", "quiet", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-read", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-update", "assumeyes", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-update", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-update", "column", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-update", "column", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-update", "format", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-update", "format", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-update", "format-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-update", "format-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-update", "generate-skeleton", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-update", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-update", "hostname", &schema.Category{
-		Key:         "ipv4",
-		DisplayName: "Ipv4 options",
+	AppendFlagCategoryMap("ipv6", "ptr-update", "hostname", &schema.Category{
+		Key:         "ipv6",
+		DisplayName: "Ipv6 options",
 		Order:       1,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-update", "output-type", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-update", "output-type", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-update", "param-template", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-update", "param-template", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-update", "param-template-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-update", "param-template-file", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-update", "parameter-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-update", "parameter-file", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-update", "parameters", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-update", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-update", "query", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-update", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-update", "query-file", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-update", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("ipv-4", "ptr-update", "quiet", &schema.Category{
+	AppendFlagCategoryMap("ipv6", "ptr-update", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,

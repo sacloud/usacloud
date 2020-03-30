@@ -25,17 +25,17 @@ import (
 )
 
 var (
-	simplemonitorListParam   = params.NewListSimplemonitorParam()
-	simplemonitorCreateParam = params.NewCreateSimplemonitorParam()
-	simplemonitorReadParam   = params.NewReadSimplemonitorParam()
-	simplemonitorUpdateParam = params.NewUpdateSimplemonitorParam()
-	simplemonitorDeleteParam = params.NewDeleteSimplemonitorParam()
-	simplemonitorHealthParam = params.NewHealthSimplemonitorParam()
+	simpleMonitorListParam   = params.NewListSimpleMonitorParam()
+	simpleMonitorCreateParam = params.NewCreateSimpleMonitorParam()
+	simpleMonitorReadParam   = params.NewReadSimpleMonitorParam()
+	simpleMonitorUpdateParam = params.NewUpdateSimpleMonitorParam()
+	simpleMonitorDeleteParam = params.NewDeleteSimpleMonitorParam()
+	simpleMonitorHealthParam = params.NewHealthSimpleMonitorParam()
 )
 
-// simplemonitorCmd represents the command to manage SAKURA Cloud SimpleMonitor
-var simplemonitorCmd = &cobra.Command{
-	Use:   "simplemonitor",
+// simpleMonitorCmd represents the command to manage SAKURA Cloud SimpleMonitor
+var simpleMonitorCmd = &cobra.Command{
+	Use:   "simpleMonitor",
 	Short: "A manage commands of SimpleMonitor",
 	Long:  `A manage commands of SimpleMonitor`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -43,173 +43,173 @@ var simplemonitorCmd = &cobra.Command{
 	},
 }
 
-var simplemonitorListCmd = &cobra.Command{
+var simpleMonitorListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Simplemonitor",
-	Long:    `List Simplemonitor`,
+	Short:   "List SimpleMonitor",
+	Long:    `List SimpleMonitor`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simplemonitorListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := simpleMonitorListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(simplemonitorListParam))
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(simpleMonitorListParam))
 		return err
 	},
 }
 
-func simplemonitorListCmdInit() {
-	fs := simplemonitorListCmd.Flags()
-	fs.IntVarP(&simplemonitorListParam.From, "from", "", 0, "set offset")
-	fs.StringSliceVarP(&simplemonitorListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
-	fs.StringVarP(&simplemonitorListParam.Health, "health", "", "", "set filter by HealthCheck Status('up' or 'down' or 'unknown')")
-	fs.IntVarP(&simplemonitorListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&simplemonitorListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&simplemonitorListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &simplemonitorListParam.Id), "id", "", "set filter by id(s)")
+func simpleMonitorListCmdInit() {
+	fs := simpleMonitorListCmd.Flags()
+	fs.StringSliceVarP(&simpleMonitorListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.StringVarP(&simpleMonitorListParam.Health, "health", "", "", "set filter by HealthCheck Status('up' or 'down' or 'unknown')")
+	fs.IntVarP(&simpleMonitorListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&simpleMonitorListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&simpleMonitorListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &simpleMonitorListParam.Id), "id", "", "set filter by id(s)")
+	fs.IntVarP(&simpleMonitorListParam.From, "from", "", 0, "set offset")
 }
 
-var simplemonitorCreateCmd = &cobra.Command{
+var simpleMonitorCreateCmd = &cobra.Command{
 	Use: "create",
 
-	Short: "Create Simplemonitor",
-	Long:  `Create Simplemonitor`,
+	Short: "Create SimpleMonitor",
+	Long:  `Create SimpleMonitor`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simplemonitorCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := simpleMonitorCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(simplemonitorCreateParam))
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(simpleMonitorCreateParam))
 		return err
 	},
 }
 
-func simplemonitorCreateCmdInit() {
-	fs := simplemonitorCreateCmd.Flags()
-	fs.StringVarP(&simplemonitorCreateParam.DnsQname, "dns-qname", "", "", "set DNS query target name")
-	fs.StringVarP(&simplemonitorCreateParam.DnsExcepted, "dns-excepted", "", "", "set DNS query excepted value")
-	fs.IntVarP(&simplemonitorCreateParam.RemainingDays, "remaining-days", "", 30, "set SSL-Certificate remaining days")
-	fs.StringVarP(&simplemonitorCreateParam.SlackWebhook, "slack-webhook", "", "", "set slack-webhook URL")
-	fs.VarP(newIDValue(0, &simplemonitorCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.BoolVarP(&simplemonitorCreateParam.Disabled, "disabled", "", false, "set monitoring disable")
-	fs.IntVarP(&simplemonitorCreateParam.DelayLoop, "delay-loop", "", 1, "set delay-loop of monitoring(minute)")
-	fs.StringVarP(&simplemonitorCreateParam.Path, "path", "", "", "set path of http/https monitoring request")
-	fs.BoolVarP(&simplemonitorCreateParam.Sni, "sni", "", false, "enable SNI support for https monitoring")
-	fs.StringVarP(&simplemonitorCreateParam.Username, "username", "", "", "set Basic Auth user name")
-	fs.StringVarP(&simplemonitorCreateParam.Description, "description", "", "", "set resource description")
-	fs.StringVarP(&simplemonitorCreateParam.Target, "target", "", "", "set monitoring target IP or Hostname")
-	fs.IntVarP(&simplemonitorCreateParam.NotifyInterval, "notify-interval", "", 2, "set notify-interval(hours)")
-	fs.StringVarP(&simplemonitorCreateParam.Protocol, "protocol", "", "ping", "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3/ssl-certificate]")
-	fs.StringVarP(&simplemonitorCreateParam.HostHeader, "host-header", "", "", "set host header of http/https monitoring request")
-	fs.IntVarP(&simplemonitorCreateParam.ResponseCode, "response-code", "", 0, "set response-code of http/https monitoring request")
-	fs.StringVarP(&simplemonitorCreateParam.Password, "password", "", "", "set Basic Auth password")
-	fs.BoolVarP(&simplemonitorCreateParam.NotifyEmail, "notify-email", "", true, "enable e-mail notification")
-	fs.StringVarP(&simplemonitorCreateParam.EmailType, "email-type", "", "text", "set e-mail type")
-	fs.StringSliceVarP(&simplemonitorCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.IntVarP(&simplemonitorCreateParam.Port, "port", "", 0, "set port of tcp monitoring")
+func simpleMonitorCreateCmdInit() {
+	fs := simpleMonitorCreateCmd.Flags()
+	fs.IntVarP(&simpleMonitorCreateParam.DelayLoop, "delay-loop", "", 1, "set delay-loop of monitoring(minute)")
+	fs.StringVarP(&simpleMonitorCreateParam.HostHeader, "host-header", "", "", "set host header of http/https monitoring request")
+	fs.StringVarP(&simpleMonitorCreateParam.Path, "path", "", "", "set path of http/https monitoring request")
+	fs.IntVarP(&simpleMonitorCreateParam.ResponseCode, "response-code", "", 0, "set response-code of http/https monitoring request")
+	fs.BoolVarP(&simpleMonitorCreateParam.Sni, "sni", "", false, "enable SNI support for https monitoring")
+	fs.StringVarP(&simpleMonitorCreateParam.EmailType, "email-type", "", "text", "set e-mail type")
+	fs.StringVarP(&simpleMonitorCreateParam.Target, "target", "", "", "set monitoring target IP or Hostname")
+	fs.StringVarP(&simpleMonitorCreateParam.DNSExcepted, "dns-excepted", "", "", "set DNS query excepted value")
+	fs.IntVarP(&simpleMonitorCreateParam.RemainingDays, "remaining-days", "", 30, "set SSL-Certificate remaining days")
+	fs.StringVarP(&simpleMonitorCreateParam.SlackWebhook, "slack-webhook", "", "", "set slack-webhook URL")
+	fs.StringSliceVarP(&simpleMonitorCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.StringVarP(&simpleMonitorCreateParam.Protocol, "protocol", "", "ping", "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3/ssl-certificate]")
+	fs.BoolVarP(&simpleMonitorCreateParam.Disabled, "disabled", "", false, "set monitoring disable")
+	fs.StringVarP(&simpleMonitorCreateParam.Password, "password", "", "", "set Basic Auth password")
+	fs.IntVarP(&simpleMonitorCreateParam.Port, "port", "", 0, "set port of tcp monitoring")
+	fs.StringVarP(&simpleMonitorCreateParam.Username, "username", "", "", "set Basic Auth user name")
+	fs.StringVarP(&simpleMonitorCreateParam.DNSQname, "dns-qname", "", "", "set DNS query target name")
+	fs.BoolVarP(&simpleMonitorCreateParam.NotifyEmail, "notify-email", "", true, "enable e-mail notification")
+	fs.IntVarP(&simpleMonitorCreateParam.NotifyInterval, "notify-interval", "", 2, "set notify-interval(hours)")
+	fs.StringVarP(&simpleMonitorCreateParam.Description, "description", "", "", "set resource description")
+	fs.VarP(newIDValue(0, &simpleMonitorCreateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
-var simplemonitorReadCmd = &cobra.Command{
+var simpleMonitorReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Simplemonitor",
-	Long:  `Read Simplemonitor`,
+	Short: "Read SimpleMonitor",
+	Long:  `Read SimpleMonitor`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simplemonitorReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := simpleMonitorReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(simplemonitorReadParam))
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(simpleMonitorReadParam))
 		return err
 	},
 }
 
-func simplemonitorReadCmdInit() {
+func simpleMonitorReadCmdInit() {
 }
 
-var simplemonitorUpdateCmd = &cobra.Command{
+var simpleMonitorUpdateCmd = &cobra.Command{
 	Use: "update",
 
-	Short: "Update Simplemonitor",
-	Long:  `Update Simplemonitor`,
+	Short: "Update SimpleMonitor",
+	Long:  `Update SimpleMonitor`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simplemonitorUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := simpleMonitorUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(simplemonitorUpdateParam))
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(simpleMonitorUpdateParam))
 		return err
 	},
 }
 
-func simplemonitorUpdateCmdInit() {
-	fs := simplemonitorUpdateCmd.Flags()
-	fs.IntVarP(&simplemonitorUpdateParam.Port, "port", "", 0, "set port of tcp monitoring")
-	fs.BoolVarP(&simplemonitorUpdateParam.Sni, "sni", "", false, "enable SNI support for https monitoring")
-	fs.StringVarP(&simplemonitorUpdateParam.DnsQname, "dns-qname", "", "", "set DNS query target name")
-	fs.StringVarP(&simplemonitorUpdateParam.Path, "path", "", "", "set path of http/https monitoring request")
-	fs.IntVarP(&simplemonitorUpdateParam.RemainingDays, "remaining-days", "", 0, "set SSL-Certificate remaining days")
-	fs.StringVarP(&simplemonitorUpdateParam.EmailType, "email-type", "", "", "set e-mail type")
-	fs.IntVarP(&simplemonitorUpdateParam.NotifyInterval, "notify-interval", "", 2, "set notify-interval(hours)")
-	fs.StringSliceVarP(&simplemonitorUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.StringVarP(&simplemonitorUpdateParam.Password, "password", "", "", "set Basic Auth password")
-	fs.StringVarP(&simplemonitorUpdateParam.SlackWebhook, "slack-webhook", "", "", "set slack-webhook URL")
-	fs.StringVarP(&simplemonitorUpdateParam.Protocol, "protocol", "", "", "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3/ssl-certificate]")
-	fs.IntVarP(&simplemonitorUpdateParam.DelayLoop, "delay-loop", "", 0, "set delay-loop of monitoring(minute)")
-	fs.BoolVarP(&simplemonitorUpdateParam.Disabled, "disabled", "", false, "set monitoring enable/disable")
-	fs.StringVarP(&simplemonitorUpdateParam.HostHeader, "host-header", "", "", "set host header of http/https monitoring request")
-	fs.IntVarP(&simplemonitorUpdateParam.ResponseCode, "response-code", "", 0, "set response-code of http/https monitoring request")
-	fs.StringVarP(&simplemonitorUpdateParam.Username, "username", "", "", "set Basic Auth user name")
-	fs.StringVarP(&simplemonitorUpdateParam.DnsExcepted, "dns-excepted", "", "", "set DNS query excepted value")
-	fs.BoolVarP(&simplemonitorUpdateParam.NotifyEmail, "notify-email", "", false, "enable e-mail notification")
-	fs.StringVarP(&simplemonitorUpdateParam.Description, "description", "", "", "set resource description")
-	fs.VarP(newIDValue(0, &simplemonitorUpdateParam.IconId), "icon-id", "", "set Icon ID")
+func simpleMonitorUpdateCmdInit() {
+	fs := simpleMonitorUpdateCmd.Flags()
+	fs.IntVarP(&simpleMonitorUpdateParam.NotifyInterval, "notify-interval", "", 2, "set notify-interval(hours)")
+	fs.StringVarP(&simpleMonitorUpdateParam.DNSExcepted, "dns-excepted", "", "", "set DNS query excepted value")
+	fs.StringVarP(&simpleMonitorUpdateParam.HostHeader, "host-header", "", "", "set host header of http/https monitoring request")
+	fs.IntVarP(&simpleMonitorUpdateParam.ResponseCode, "response-code", "", 0, "set response-code of http/https monitoring request")
+	fs.BoolVarP(&simpleMonitorUpdateParam.Sni, "sni", "", false, "enable SNI support for https monitoring")
+	fs.StringVarP(&simpleMonitorUpdateParam.Password, "password", "", "", "set Basic Auth password")
+	fs.StringVarP(&simpleMonitorUpdateParam.SlackWebhook, "slack-webhook", "", "", "set slack-webhook URL")
+	fs.IntVarP(&simpleMonitorUpdateParam.Port, "port", "", 0, "set port of tcp monitoring")
+	fs.BoolVarP(&simpleMonitorUpdateParam.Disabled, "disabled", "", false, "set monitoring enable/disable")
+	fs.StringVarP(&simpleMonitorUpdateParam.Protocol, "protocol", "", "", "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3/ssl-certificate]")
+	fs.StringVarP(&simpleMonitorUpdateParam.Path, "path", "", "", "set path of http/https monitoring request")
+	fs.StringVarP(&simpleMonitorUpdateParam.Username, "username", "", "", "set Basic Auth user name")
+	fs.StringVarP(&simpleMonitorUpdateParam.DNSQname, "dns-qname", "", "", "set DNS query target name")
+	fs.IntVarP(&simpleMonitorUpdateParam.RemainingDays, "remaining-days", "", 0, "set SSL-Certificate remaining days")
+	fs.BoolVarP(&simpleMonitorUpdateParam.NotifyEmail, "notify-email", "", false, "enable e-mail notification")
+	fs.StringVarP(&simpleMonitorUpdateParam.EmailType, "email-type", "", "", "set e-mail type")
+	fs.StringVarP(&simpleMonitorUpdateParam.Description, "description", "", "", "set resource description")
+	fs.IntVarP(&simpleMonitorUpdateParam.DelayLoop, "delay-loop", "", 0, "set delay-loop of monitoring(minute)")
+	fs.VarP(newIDValue(0, &simpleMonitorUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringSliceVarP(&simpleMonitorUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 }
 
-var simplemonitorDeleteCmd = &cobra.Command{
+var simpleMonitorDeleteCmd = &cobra.Command{
 	Use:     "delete",
 	Aliases: []string{"rm"},
-	Short:   "Delete Simplemonitor",
-	Long:    `Delete Simplemonitor`,
+	Short:   "Delete SimpleMonitor",
+	Long:    `Delete SimpleMonitor`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simplemonitorDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := simpleMonitorDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(simplemonitorDeleteParam))
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(simpleMonitorDeleteParam))
 		return err
 	},
 }
 
-func simplemonitorDeleteCmdInit() {
+func simpleMonitorDeleteCmdInit() {
 }
 
-var simplemonitorHealthCmd = &cobra.Command{
+var simpleMonitorHealthCmd = &cobra.Command{
 	Use: "health",
 
-	Short: "Health Simplemonitor",
-	Long:  `Health Simplemonitor`,
+	Short: "Health SimpleMonitor",
+	Long:  `Health SimpleMonitor`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simplemonitorHealthParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := simpleMonitorHealthParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("health parameter: \n%s\n", debugMarshalIndent(simplemonitorHealthParam))
+		fmt.Printf("health parameter: \n%s\n", debugMarshalIndent(simpleMonitorHealthParam))
 		return err
 	},
 }
 
-func simplemonitorHealthCmdInit() {
+func simpleMonitorHealthCmdInit() {
 }
 
 func init() {
-	parent := simplemonitorCmd
+	parent := simpleMonitorCmd
 
-	simplemonitorListCmdInit()
-	parent.AddCommand(simplemonitorListCmd)
+	simpleMonitorListCmdInit()
+	parent.AddCommand(simpleMonitorListCmd)
 
-	simplemonitorCreateCmdInit()
-	parent.AddCommand(simplemonitorCreateCmd)
+	simpleMonitorCreateCmdInit()
+	parent.AddCommand(simpleMonitorCreateCmd)
 
-	simplemonitorReadCmdInit()
-	parent.AddCommand(simplemonitorReadCmd)
+	simpleMonitorReadCmdInit()
+	parent.AddCommand(simpleMonitorReadCmd)
 
-	simplemonitorUpdateCmdInit()
-	parent.AddCommand(simplemonitorUpdateCmd)
+	simpleMonitorUpdateCmdInit()
+	parent.AddCommand(simpleMonitorUpdateCmd)
 
-	simplemonitorDeleteCmdInit()
-	parent.AddCommand(simplemonitorDeleteCmd)
+	simpleMonitorDeleteCmdInit()
+	parent.AddCommand(simpleMonitorDeleteCmd)
 
-	simplemonitorHealthCmdInit()
-	parent.AddCommand(simplemonitorHealthCmd)
+	simpleMonitorHealthCmdInit()
+	parent.AddCommand(simpleMonitorHealthCmd)
 
 	rootCmd.AddCommand(parent)
 }

@@ -21,7 +21,7 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func Ipv4List(ctx command.Context, params *params.ListIpv4Param) error {
+func IPv4List(ctx command.Context, params *params.ListIPv4Param) error {
 
 	client := ctx.GetAPIClient()
 	finder := client.GetIPAddressAPI()

@@ -39,35 +39,77 @@ func Sformat(buf []byte) []byte {
 }
 
 var normalizationWords = map[string]string{
-	"IP": "ip",
+	"Acme": "ACME",
+	"Dns":  "DNS",
+	"Gslb": "GSLB",
+
+	"Ipv4":   "IPv4",
+	"Ipv6":   "IPv6",
+	"iPv4":   "ipv4",
+	"iPv6":   "ipv6",
+	"i_pv_4": "ipv4",
+	"i_pv_6": "ipv6",
+	"ipv_4":  "ipv4",
+	"ipv_6":  "ipv6",
+	"i-pv-4": "ipv4",
+	"i-pv-6": "ipv6",
+	"ipv-4":  "ipv4",
+	"ipv-6":  "ipv6",
+
+	"Iso": "ISO",
+	"Cpu": "CPU",
+	"Ftp": "FTP",
+	"Nfs": "NFS",
+
+	"Lb": "LB",
+
+	"Sim": "SIM",
+	"Ssh": "SSH",
+	"Vpc": "VPC",
+	"Vpn": "VPN",
+
+	"L2tp":  "L2TP",
+	"l_2tp": "l2tp",
+	"l-2tp": "l2tp",
+
+	"Ipsec": "IPsec",
 }
 
-func NormalizeResourceName(name string) string {
+var normalizationIgnoreWords = []string{"Simple", "simple"}
+
+func isIncludeInNormalizationIgnoreWords(w string) bool {
+	for _, v := range normalizationIgnoreWords {
+		if strings.Contains(w, v) {
+			return true
+		}
+	}
+	return false
+}
+
+func NormalizeName(name string) string {
 	n := name
 	for k, v := range normalizationWords {
-		if strings.HasPrefix(name, k) {
-			n = strings.Replace(name, k, v, -1)
-			break
+		if strings.Contains(n, k) && !isIncludeInNormalizationIgnoreWords(n) {
+			n = strings.Replace(n, k, v, -1)
 		}
 	}
 	return n
 }
 
 func ToSnakeCaseName(name string) string {
-	return strings.Replace(xstrings.ToSnakeCase(NormalizeResourceName(name)), "-", "_", -1)
+	return NormalizeName(xstrings.ToSnakeCase(name))
 }
 
 func ToDashedName(name string) string {
-	// From "CamelCase" to "dash-case"
-	return strings.Replace(xstrings.ToSnakeCase(NormalizeResourceName(name)), "_", "-", -1)
+	return NormalizeName(xstrings.ToKebabCase(name))
 }
 
 func ToCamelCaseName(name string) string {
-	return xstrings.ToCamelCase(strings.Replace(NormalizeResourceName(name), "-", "_", -1))
+	return NormalizeName(xstrings.ToCamelCase(xstrings.ToSnakeCase(name)))
 }
 
 func ToCamelWithFirstLower(name string) string {
-	return xstrings.FirstRuneToLower(xstrings.ToCamelCase(strings.Replace(NormalizeResourceName(name), "-", "_", -1)))
+	return NormalizeName(xstrings.FirstRuneToLower(xstrings.ToCamelCase(xstrings.ToSnakeCase(name))))
 }
 
 func ToCLIFlagName(name string) string {

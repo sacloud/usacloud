@@ -57,7 +57,7 @@ func ServerBuild(ctx command.Context, params *params.BuildServerParam) error {
 
 	// store private key if ssh-key was generated
 	if len(res.Disks) > 0 && res.Disks[0].GeneratedSSHKey != nil {
-		path := params.SshKeyPrivateKeyOutput
+		path := params.SSHKeyPrivateKeyOutput
 		if path == "" {
 			p, err := getSSHPrivateKeyStorePath(res.Server.ID)
 			if err != nil {
@@ -73,7 +73,7 @@ func ServerBuild(ctx command.Context, params *params.BuildServerParam) error {
 
 		err = ioutil.WriteFile(path, []byte(pKey), os.FileMode(0600))
 		if err != nil {
-			return fmt.Errorf("ServerCreate is failed: Writing private key to %s is failed:%s", params.SshKeyPrivateKeyOutput, err)
+			return fmt.Errorf("ServerCreate is failed: Writing private key to %s is failed:%s", params.SSHKeyPrivateKeyOutput, err)
 		}
 	}
 
@@ -188,27 +188,27 @@ func handleDiskEditParams(sb serverBuilder, ctx command.Context, params *params.
 		sb.SetNotesEphemeral(params.StartupScriptsEphemeral)
 
 		// SSH Key generate params
-		switch params.SshKeyMode {
+		switch params.SSHKeyMode {
 		case "id":
-			for _, v := range params.SshKeyIds {
+			for _, v := range params.SSHKeyIds {
 				sb.AddSSHKeyID(v)
 			}
 		case "generate":
-			keyName := params.SshKeyName
+			keyName := params.SSHKeyName
 			if keyName == "" {
 				keyName = fmt.Sprintf("generated-%d", time.Now().UnixNano())
 			}
 			sb.SetGenerateSSHKeyName(keyName)
-			sb.SetGenerateSSHKeyPassPhrase(params.SshKeyPassPhrase)
-			sb.SetGenerateSSHKeyDescription(params.SshKeyDescription)
-			sb.SetSSHKeysEphemeral(params.SshKeyEphemeral)
+			sb.SetGenerateSSHKeyPassPhrase(params.SSHKeyPassPhrase)
+			sb.SetGenerateSSHKeyDescription(params.SSHKeyDescription)
+			sb.SetSSHKeysEphemeral(params.SSHKeyEphemeral)
 		case "upload":
 			// pubkey(text)
-			for _, v := range params.SshKeyPublicKeys {
+			for _, v := range params.SSHKeyPublicKeys {
 				sb.AddSSHKey(v)
 			}
 			// pubkey(from file)
-			for _, v := range params.SshKeyPublicKeyFiles {
+			for _, v := range params.SSHKeyPublicKeyFiles {
 				b, err := ioutil.ReadFile(v)
 				if err != nil {
 					return fmt.Errorf("ServerCreate is failed: %s", err)
@@ -216,7 +216,7 @@ func handleDiskEditParams(sb serverBuilder, ctx command.Context, params *params.
 				sb.AddSSHKey(string(b))
 
 			}
-			sb.SetSSHKeysEphemeral(params.SshKeyEphemeral)
+			sb.SetSSHKeysEphemeral(params.SSHKeyEphemeral)
 		}
 
 	}
@@ -252,7 +252,7 @@ func handleServerCommonParams(sb serverBuilder, ctx command.Context, params *par
 	sb.SetTags(tags)
 	sb.SetIconID(params.IconId)
 	sb.SetBootAfterCreate(!params.DisableBootAfterCreate)
-	sb.SetISOImageID(params.GetIsoImageId())
+	sb.SetISOImageID(params.GetISOImageId())
 	sb.SetInterfaceDriver(sacloud.EInterfaceDriver(params.InterfaceDriver))
 	return nil
 }
@@ -450,24 +450,24 @@ func validateServerDiskEditParams(sb serverBuilder, ctx command.Context, params 
 
 	if sb.HasDiskEditProperty() {
 		// SSH Key generate params
-		switch params.SshKeyMode {
+		switch params.SSHKeyMode {
 		case "id":
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-name", params.SshKeyName)
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-pass-phrase", params.SshKeyPassPhrase)
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-description", params.SshKeyDescription)
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-private-key-output", params.SshKeyPrivateKeyOutput)
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-public-keys", params.SshKeyPublicKeys)
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-public-key-files", params.SshKeyPublicKeyFiles)
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-ephemeral", params.SshKeyEphemeral)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-name", params.SSHKeyName)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-pass-phrase", params.SSHKeyPassPhrase)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-description", params.SSHKeyDescription)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-private-key-output", params.SSHKeyPrivateKeyOutput)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-public-keys", params.SSHKeyPublicKeys)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-public-key-files", params.SSHKeyPublicKeyFiles)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-ephemeral", params.SSHKeyEphemeral)
 		case "generate":
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-ids", params.SshKeyIds)
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-private-key-output", params.SshKeyPrivateKeyOutput)
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-public-keys", params.SshKeyPublicKeys)
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-public-key-files", params.SshKeyPublicKeyFiles)
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-ephemeral", params.SshKeyEphemeral)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-ids", params.SSHKeyIds)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-private-key-output", params.SSHKeyPrivateKeyOutput)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-public-keys", params.SSHKeyPublicKeys)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-public-key-files", params.SSHKeyPublicKeyFiles)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-ephemeral", params.SSHKeyEphemeral)
 		case "upload":
 
-			if len(params.SshKeyPublicKeys) == 0 && len(params.SshKeyPublicKeyFiles) == 0 {
+			if len(params.SSHKeyPublicKeys) == 0 && len(params.SSHKeyPublicKeyFiles) == 0 {
 				errs = append(errs,
 					fmt.Errorf("%q or %q is required when %q is %q",
 						"ssh-key-public-keys",
@@ -476,21 +476,21 @@ func validateServerDiskEditParams(sb serverBuilder, ctx command.Context, params 
 						"upload",
 					))
 			}
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-ids", params.SshKeyIds)
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-name", params.SshKeyName)
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-pass-phrase", params.SshKeyPassPhrase)
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-description", params.SshKeyDescription)
-			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-private-key-output", params.SshKeyPrivateKeyOutput)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-ids", params.SSHKeyIds)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-name", params.SSHKeyName)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-pass-phrase", params.SSHKeyPassPhrase)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-description", params.SSHKeyDescription)
+			validateIfCtxIsSet("ssh-key-mode", params.SSHKeyMode, "ssh-key-private-key-output", params.SSHKeyPrivateKeyOutput)
 		case "none":
-			validateProhibitedIfCtxIsSet("ssh-key-mode", params.SshKeyMode)
-			validateProhibitedIfCtxIsSet("ssh-key-ids", params.SshKeyIds)
-			validateProhibitedIfCtxIsSet("ssh-key-name", params.SshKeyName)
-			validateProhibitedIfCtxIsSet("ssh-key-pass-phrase", params.SshKeyPassPhrase)
-			validateProhibitedIfCtxIsSet("ssh-key-description", params.SshKeyDescription)
-			validateProhibitedIfCtxIsSet("ssh-key-private-key-output", params.SshKeyPrivateKeyOutput)
-			validateProhibitedIfCtxIsSet("ssh-key-public-keys", params.SshKeyPublicKeys)
-			validateProhibitedIfCtxIsSet("ssh-key-public-key-files", params.SshKeyPublicKeyFiles)
-			validateProhibitedIfCtxIsSet("ssh-key-ephemeral", params.SshKeyEphemeral)
+			validateProhibitedIfCtxIsSet("ssh-key-mode", params.SSHKeyMode)
+			validateProhibitedIfCtxIsSet("ssh-key-ids", params.SSHKeyIds)
+			validateProhibitedIfCtxIsSet("ssh-key-name", params.SSHKeyName)
+			validateProhibitedIfCtxIsSet("ssh-key-pass-phrase", params.SSHKeyPassPhrase)
+			validateProhibitedIfCtxIsSet("ssh-key-description", params.SSHKeyDescription)
+			validateProhibitedIfCtxIsSet("ssh-key-private-key-output", params.SSHKeyPrivateKeyOutput)
+			validateProhibitedIfCtxIsSet("ssh-key-public-keys", params.SSHKeyPublicKeys)
+			validateProhibitedIfCtxIsSet("ssh-key-public-key-files", params.SSHKeyPublicKeyFiles)
+			validateProhibitedIfCtxIsSet("ssh-key-ephemeral", params.SSHKeyEphemeral)
 		}
 
 	} else {
@@ -500,15 +500,15 @@ func validateServerDiskEditParams(sb serverBuilder, ctx command.Context, params 
 		validateProhibitedIfCtxIsSet("startup-script-ids", params.StartupScriptIds)
 		validateProhibitedIfCtxIsSet("startup-scripts", params.StartupScripts)
 		validateProhibitedIfCtxIsSet("startup-scripts-ephemeral", params.StartupScriptsEphemeral)
-		validateProhibitedIfCtxIsSet("ssh-key-mode", params.SshKeyMode)
-		validateProhibitedIfCtxIsSet("ssh-key-ids", params.SshKeyIds)
-		validateProhibitedIfCtxIsSet("ssh-key-name", params.SshKeyName)
-		validateProhibitedIfCtxIsSet("ssh-key-pass-phrase", params.SshKeyPassPhrase)
-		validateProhibitedIfCtxIsSet("ssh-key-description", params.SshKeyDescription)
-		validateProhibitedIfCtxIsSet("ssh-key-private-key-output", params.SshKeyPrivateKeyOutput)
-		validateProhibitedIfCtxIsSet("ssh-key-public-keys", params.SshKeyPublicKeys)
-		validateProhibitedIfCtxIsSet("ssh-key-public-key-files", params.SshKeyPublicKeyFiles)
-		validateProhibitedIfCtxIsSet("ssh-key-ephemeral", params.SshKeyEphemeral)
+		validateProhibitedIfCtxIsSet("ssh-key-mode", params.SSHKeyMode)
+		validateProhibitedIfCtxIsSet("ssh-key-ids", params.SSHKeyIds)
+		validateProhibitedIfCtxIsSet("ssh-key-name", params.SSHKeyName)
+		validateProhibitedIfCtxIsSet("ssh-key-pass-phrase", params.SSHKeyPassPhrase)
+		validateProhibitedIfCtxIsSet("ssh-key-description", params.SSHKeyDescription)
+		validateProhibitedIfCtxIsSet("ssh-key-private-key-output", params.SSHKeyPrivateKeyOutput)
+		validateProhibitedIfCtxIsSet("ssh-key-public-keys", params.SSHKeyPublicKeys)
+		validateProhibitedIfCtxIsSet("ssh-key-public-key-files", params.SSHKeyPublicKeyFiles)
+		validateProhibitedIfCtxIsSet("ssh-key-ephemeral", params.SSHKeyEphemeral)
 	}
 
 	return errs

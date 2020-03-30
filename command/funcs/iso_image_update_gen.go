@@ -23,13 +23,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func IsoimageUpdate(ctx command.Context, params *params.UpdateIsoimageParam) error {
+func ISOImageUpdate(ctx command.Context, params *params.UpdateISOImageParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetCDROMAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("IsoimageUpdate is failed: %s", e)
+		return fmt.Errorf("ISOImageUpdate is failed: %s", e)
 	}
 
 	// set params
@@ -50,7 +50,7 @@ func IsoimageUpdate(ctx command.Context, params *params.UpdateIsoimageParam) err
 	// call Update(id)
 	res, err := api.Update(params.Id, p)
 	if err != nil {
-		return fmt.Errorf("IsoimageUpdate is failed: %s", err)
+		return fmt.Errorf("ISOImageUpdate is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

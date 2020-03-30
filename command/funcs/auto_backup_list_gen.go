@@ -23,10 +23,10 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func AutobackupList(ctx command.Context, params *params.ListAutobackupParam) error {
+func AutoBackupList(ctx command.Context, params *params.ListAutoBackupParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetAutobackupAPI()
+	finder := client.GetAutoBackupAPI()
 
 	finder.SetEmpty()
 
@@ -55,7 +55,7 @@ func AutobackupList(ctx command.Context, params *params.ListAutobackupParam) err
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("AutobackupList is failed: %s", err)
+		return fmt.Errorf("AutoBackupList is failed: %s", err)
 	}
 
 	list := []interface{}{}

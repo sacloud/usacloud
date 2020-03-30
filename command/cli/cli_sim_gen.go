@@ -32,21 +32,21 @@ import (
 )
 
 func init() {
-	simListParam := params.NewListSimParam()
-	simCreateParam := params.NewCreateSimParam()
-	simReadParam := params.NewReadSimParam()
-	simUpdateParam := params.NewUpdateSimParam()
-	simDeleteParam := params.NewDeleteSimParam()
-	simCarrierInfoParam := params.NewCarrierInfoSimParam()
-	simCarrierUpdateParam := params.NewCarrierUpdateSimParam()
-	simActivateParam := params.NewActivateSimParam()
-	simDeactivateParam := params.NewDeactivateSimParam()
-	simImeiLockParam := params.NewImeiLockSimParam()
-	simIpAddParam := params.NewIpAddSimParam()
-	simImeiUnlockParam := params.NewImeiUnlockSimParam()
-	simIpDeleteParam := params.NewIpDeleteSimParam()
-	simLogsParam := params.NewLogsSimParam()
-	simMonitorParam := params.NewMonitorSimParam()
+	simListParam := params.NewListSIMParam()
+	simCreateParam := params.NewCreateSIMParam()
+	simReadParam := params.NewReadSIMParam()
+	simUpdateParam := params.NewUpdateSIMParam()
+	simDeleteParam := params.NewDeleteSIMParam()
+	simCarrierInfoParam := params.NewCarrierInfoSIMParam()
+	simCarrierUpdateParam := params.NewCarrierUpdateSIMParam()
+	simActivateParam := params.NewActivateSIMParam()
+	simDeactivateParam := params.NewDeactivateSIMParam()
+	simImeiLockParam := params.NewImeiLockSIMParam()
+	simIpAddParam := params.NewIpAddSIMParam()
+	simImeiUnlockParam := params.NewImeiUnlockSIMParam()
+	simIpDeleteParam := params.NewIpDeleteSIMParam()
+	simLogsParam := params.NewLogsSIMParam()
+	simMonitorParam := params.NewMonitorSIMParam()
 
 	cliCommand := &cli.Command{
 		Name:  "sim",
@@ -55,7 +55,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find", "selector"},
-				Usage:   "List Sim",
+				Usage:   "List SIM",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -153,7 +153,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListSimParam()
+						p := params.NewListSIMParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -253,13 +253,13 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), simListParam)
 
 					// Run command with params
-					return funcs.SimList(ctx, simListParam)
+					return funcs.SIMList(ctx, simListParam)
 
 				},
 			},
 			{
 				Name:  "create",
-				Usage: "Create Sim",
+				Usage: "Create SIM",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "iccid",
@@ -371,7 +371,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCreateSimParam()
+						p := params.NewCreateSIMParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -493,13 +493,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.SimCreate(ctx, simCreateParam)
+					return funcs.SIMCreate(ctx, simCreateParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Sim",
+				Usage:     "Read SIM",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -580,7 +580,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadSimParam()
+						p := params.NewReadSIMParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -667,7 +667,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), simReadParam)
 
-					apiClient := ctx.GetAPIClient().Sim
+					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -737,7 +737,7 @@ func init() {
 						p := *simReadParam // copy struct value
 						simReadParam := &p
 						go func() {
-							err := funcs.SimRead(ctx, simReadParam)
+							err := funcs.SIMRead(ctx, simReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -751,7 +751,7 @@ func init() {
 			},
 			{
 				Name:      "update",
-				Usage:     "Update Sim",
+				Usage:     "Update SIM",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -854,7 +854,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUpdateSimParam()
+						p := params.NewUpdateSIMParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -956,7 +956,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), simUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Sim
+					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1032,7 +1032,7 @@ func init() {
 						p := *simUpdateParam // copy struct value
 						simUpdateParam := &p
 						go func() {
-							err := funcs.SimUpdate(ctx, simUpdateParam)
+							err := funcs.SIMUpdate(ctx, simUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1047,7 +1047,7 @@ func init() {
 			{
 				Name:      "delete",
 				Aliases:   []string{"rm"},
-				Usage:     "Delete Sim",
+				Usage:     "Delete SIM",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -1106,7 +1106,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeleteSimParam()
+						p := params.NewDeleteSIMParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -1178,7 +1178,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), simDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Sim
+					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1254,7 +1254,7 @@ func init() {
 						p := *simDeleteParam // copy struct value
 						simDeleteParam := &p
 						go func() {
-							err := funcs.SimDelete(ctx, simDeleteParam)
+							err := funcs.SIMDelete(ctx, simDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1269,7 +1269,7 @@ func init() {
 			{
 				Name:      "carrier-info",
 				Aliases:   []string{"carrier-list"},
-				Usage:     "CarrierInfo Sim",
+				Usage:     "CarrierInfo SIM",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1350,7 +1350,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCarrierInfoSimParam()
+						p := params.NewCarrierInfoSIMParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -1437,7 +1437,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), simCarrierInfoParam)
 
-					apiClient := ctx.GetAPIClient().Sim
+					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1507,7 +1507,7 @@ func init() {
 						p := *simCarrierInfoParam // copy struct value
 						simCarrierInfoParam := &p
 						go func() {
-							err := funcs.SimCarrierInfo(ctx, simCarrierInfoParam)
+							err := funcs.SIMCarrierInfo(ctx, simCarrierInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1521,7 +1521,7 @@ func init() {
 			},
 			{
 				Name:      "carrier-update",
-				Usage:     "CarrierUpdate Sim",
+				Usage:     "CarrierUpdate SIM",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1579,7 +1579,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCarrierUpdateSimParam()
+						p := params.NewCarrierUpdateSIMParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -1651,7 +1651,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), simCarrierUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Sim
+					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1727,7 +1727,7 @@ func init() {
 						p := *simCarrierUpdateParam // copy struct value
 						simCarrierUpdateParam := &p
 						go func() {
-							err := funcs.SimCarrierUpdate(ctx, simCarrierUpdateParam)
+							err := funcs.SIMCarrierUpdate(ctx, simCarrierUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1741,7 +1741,7 @@ func init() {
 			},
 			{
 				Name:      "activate",
-				Usage:     "Activate Sim",
+				Usage:     "Activate SIM",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1795,7 +1795,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewActivateSimParam()
+						p := params.NewActivateSIMParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -1864,7 +1864,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), simActivateParam)
 
-					apiClient := ctx.GetAPIClient().Sim
+					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1940,7 +1940,7 @@ func init() {
 						p := *simActivateParam // copy struct value
 						simActivateParam := &p
 						go func() {
-							err := funcs.SimActivate(ctx, simActivateParam)
+							err := funcs.SIMActivate(ctx, simActivateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1954,7 +1954,7 @@ func init() {
 			},
 			{
 				Name:      "deactivate",
-				Usage:     "Deactivate Sim",
+				Usage:     "Deactivate SIM",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2008,7 +2008,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeactivateSimParam()
+						p := params.NewDeactivateSIMParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -2077,7 +2077,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), simDeactivateParam)
 
-					apiClient := ctx.GetAPIClient().Sim
+					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -2153,7 +2153,7 @@ func init() {
 						p := *simDeactivateParam // copy struct value
 						simDeactivateParam := &p
 						go func() {
-							err := funcs.SimDeactivate(ctx, simDeactivateParam)
+							err := funcs.SIMDeactivate(ctx, simDeactivateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2167,7 +2167,7 @@ func init() {
 			},
 			{
 				Name:      "imei-lock",
-				Usage:     "ImeiLock Sim",
+				Usage:     "ImeiLock SIM",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2225,7 +2225,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewImeiLockSimParam()
+						p := params.NewImeiLockSIMParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -2297,7 +2297,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), simImeiLockParam)
 
-					apiClient := ctx.GetAPIClient().Sim
+					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -2373,7 +2373,7 @@ func init() {
 						p := *simImeiLockParam // copy struct value
 						simImeiLockParam := &p
 						go func() {
-							err := funcs.SimImeiLock(ctx, simImeiLockParam)
+							err := funcs.SIMImeiLock(ctx, simImeiLockParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2387,7 +2387,7 @@ func init() {
 			},
 			{
 				Name:      "ip-add",
-				Usage:     "IpAdd Sim",
+				Usage:     "IpAdd SIM",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2445,7 +2445,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewIpAddSimParam()
+						p := params.NewIpAddSIMParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -2517,7 +2517,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), simIpAddParam)
 
-					apiClient := ctx.GetAPIClient().Sim
+					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -2597,7 +2597,7 @@ func init() {
 						p := *simIpAddParam // copy struct value
 						simIpAddParam := &p
 						go func() {
-							err := funcs.SimIpAdd(ctx, simIpAddParam)
+							err := funcs.SIMIpAdd(ctx, simIpAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2611,7 +2611,7 @@ func init() {
 			},
 			{
 				Name:      "imei-unlock",
-				Usage:     "ImeiUnlock Sim",
+				Usage:     "ImeiUnlock SIM",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2665,7 +2665,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewImeiUnlockSimParam()
+						p := params.NewImeiUnlockSIMParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -2734,7 +2734,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), simImeiUnlockParam)
 
-					apiClient := ctx.GetAPIClient().Sim
+					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -2810,7 +2810,7 @@ func init() {
 						p := *simImeiUnlockParam // copy struct value
 						simImeiUnlockParam := &p
 						go func() {
-							err := funcs.SimImeiUnlock(ctx, simImeiUnlockParam)
+							err := funcs.SIMImeiUnlock(ctx, simImeiUnlockParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2825,7 +2825,7 @@ func init() {
 			{
 				Name:      "ip-delete",
 				Aliases:   []string{"ip-del"},
-				Usage:     "IpDelete Sim",
+				Usage:     "IpDelete SIM",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2879,7 +2879,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewIpDeleteSimParam()
+						p := params.NewIpDeleteSIMParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -2948,7 +2948,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), simIpDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Sim
+					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -3028,7 +3028,7 @@ func init() {
 						p := *simIpDeleteParam // copy struct value
 						simIpDeleteParam := &p
 						go func() {
-							err := funcs.SimIpDelete(ctx, simIpDeleteParam)
+							err := funcs.SIMIpDelete(ctx, simIpDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3042,7 +3042,7 @@ func init() {
 			},
 			{
 				Name:      "logs",
-				Usage:     "Logs Sim",
+				Usage:     "Logs SIM",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -3133,7 +3133,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewLogsSimParam()
+						p := params.NewLogsSIMParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -3226,7 +3226,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), simLogsParam)
 
-					apiClient := ctx.GetAPIClient().Sim
+					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -3296,7 +3296,7 @@ func init() {
 						p := *simLogsParam // copy struct value
 						simLogsParam := &p
 						go func() {
-							err := funcs.SimLogs(ctx, simLogsParam)
+							err := funcs.SIMLogs(ctx, simLogsParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3310,7 +3310,7 @@ func init() {
 			},
 			{
 				Name:      "monitor",
-				Usage:     "Monitor Sim",
+				Usage:     "Monitor SIM",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -3404,7 +3404,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewMonitorSimParam()
+						p := params.NewMonitorSIMParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -3500,7 +3500,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), simMonitorParam)
 
-					apiClient := ctx.GetAPIClient().Sim
+					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -3570,7 +3570,7 @@ func init() {
 						p := *simMonitorParam // copy struct value
 						simMonitorParam := &p
 						go func() {
-							err := funcs.SimMonitor(ctx, simMonitorParam)
+							err := funcs.SIMMonitor(ctx, simMonitorParam)
 							if err != nil {
 								errs = append(errs, err)
 							}

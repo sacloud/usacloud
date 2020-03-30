@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func SimplemonitorRead(ctx command.Context, params *params.ReadSimplemonitorParam) error {
+func SimpleMonitorRead(ctx command.Context, params *params.ReadSimpleMonitorParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetSimplemonitorAPI()
+	api := client.GetSimpleMonitorAPI()
 
 	// set params
 
 	// call Read(id)
 	res, err := api.Read(params.Id)
 	if err != nil {
-		return fmt.Errorf("SimplemonitorRead is failed: %s", err)
+		return fmt.Errorf("SimpleMonitorRead is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

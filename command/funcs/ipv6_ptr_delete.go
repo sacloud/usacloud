@@ -21,7 +21,7 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func Ipv6PtrDelete(ctx command.Context, params *params.PtrDeleteIpv6Param) error {
+func IPv6PtrDelete(ctx command.Context, params *params.PtrDeleteIPv6Param) error {
 	client := ctx.GetAPIClient()
 	api := client.GetIPv6AddrAPI()
 

@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func NfsRead(ctx command.Context, params *params.ReadNfsParam) error {
+func NFSRead(ctx command.Context, params *params.ReadNFSParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetNfsAPI()
+	api := client.GetNFSAPI()
 
 	// set params
 
 	// call Read(id)
 	res, err := api.Read(params.Id)
 	if err != nil {
-		return fmt.Errorf("NfsRead is failed: %s", err)
+		return fmt.Errorf("NFSRead is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

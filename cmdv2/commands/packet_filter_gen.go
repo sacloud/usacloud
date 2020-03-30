@@ -25,22 +25,22 @@ import (
 )
 
 var (
-	packetfilterListParam                = params.NewListPacketfilterParam()
-	packetfilterCreateParam              = params.NewCreatePacketfilterParam()
-	packetfilterReadParam                = params.NewReadPacketfilterParam()
-	packetfilterUpdateParam              = params.NewUpdatePacketfilterParam()
-	packetfilterDeleteParam              = params.NewDeletePacketfilterParam()
-	packetfilterRuleInfoParam            = params.NewRuleInfoPacketfilterParam()
-	packetfilterRuleAddParam             = params.NewRuleAddPacketfilterParam()
-	packetfilterRuleUpdateParam          = params.NewRuleUpdatePacketfilterParam()
-	packetfilterRuleDeleteParam          = params.NewRuleDeletePacketfilterParam()
-	packetfilterInterfaceConnectParam    = params.NewInterfaceConnectPacketfilterParam()
-	packetfilterInterfaceDisconnectParam = params.NewInterfaceDisconnectPacketfilterParam()
+	packetFilterListParam                = params.NewListPacketFilterParam()
+	packetFilterCreateParam              = params.NewCreatePacketFilterParam()
+	packetFilterReadParam                = params.NewReadPacketFilterParam()
+	packetFilterUpdateParam              = params.NewUpdatePacketFilterParam()
+	packetFilterDeleteParam              = params.NewDeletePacketFilterParam()
+	packetFilterRuleInfoParam            = params.NewRuleInfoPacketFilterParam()
+	packetFilterRuleAddParam             = params.NewRuleAddPacketFilterParam()
+	packetFilterRuleUpdateParam          = params.NewRuleUpdatePacketFilterParam()
+	packetFilterRuleDeleteParam          = params.NewRuleDeletePacketFilterParam()
+	packetFilterInterfaceConnectParam    = params.NewInterfaceConnectPacketFilterParam()
+	packetFilterInterfaceDisconnectParam = params.NewInterfaceDisconnectPacketFilterParam()
 )
 
-// packetfilterCmd represents the command to manage SAKURA Cloud PacketFilter
-var packetfilterCmd = &cobra.Command{
-	Use:   "packetfilter",
+// packetFilterCmd represents the command to manage SAKURA Cloud PacketFilter
+var packetFilterCmd = &cobra.Command{
+	Use:   "packetFilter",
 	Short: "A manage commands of PacketFilter",
 	Long:  `A manage commands of PacketFilter`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -48,251 +48,251 @@ var packetfilterCmd = &cobra.Command{
 	},
 }
 
-var packetfilterListCmd = &cobra.Command{
+var packetFilterListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find"},
-	Short:   "List Packetfilter",
-	Long:    `List Packetfilter`,
+	Short:   "List PacketFilter",
+	Long:    `List PacketFilter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetfilterListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := packetFilterListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(packetfilterListParam))
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(packetFilterListParam))
 		return err
 	},
 }
 
-func packetfilterListCmdInit() {
-	fs := packetfilterListCmd.Flags()
-	fs.IntVarP(&packetfilterListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&packetfilterListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&packetfilterListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &packetfilterListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&packetfilterListParam.From, "from", "", 0, "set offset")
+func packetFilterListCmdInit() {
+	fs := packetFilterListCmd.Flags()
+	fs.StringSliceVarP(&packetFilterListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &packetFilterListParam.Id), "id", "", "set filter by id(s)")
+	fs.IntVarP(&packetFilterListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&packetFilterListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&packetFilterListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 }
 
-var packetfilterCreateCmd = &cobra.Command{
+var packetFilterCreateCmd = &cobra.Command{
 	Use: "create",
 
-	Short: "Create Packetfilter",
-	Long:  `Create Packetfilter`,
+	Short: "Create PacketFilter",
+	Long:  `Create PacketFilter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetfilterCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := packetFilterCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(packetfilterCreateParam))
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(packetFilterCreateParam))
 		return err
 	},
 }
 
-func packetfilterCreateCmdInit() {
-	fs := packetfilterCreateCmd.Flags()
-	fs.StringVarP(&packetfilterCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&packetfilterCreateParam.Description, "description", "", "", "set resource description")
+func packetFilterCreateCmdInit() {
+	fs := packetFilterCreateCmd.Flags()
+	fs.StringVarP(&packetFilterCreateParam.Description, "description", "", "", "set resource description")
+	fs.StringVarP(&packetFilterCreateParam.Name, "name", "", "", "set resource display name")
 }
 
-var packetfilterReadCmd = &cobra.Command{
+var packetFilterReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Packetfilter",
-	Long:  `Read Packetfilter`,
+	Short: "Read PacketFilter",
+	Long:  `Read PacketFilter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetfilterReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := packetFilterReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(packetfilterReadParam))
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(packetFilterReadParam))
 		return err
 	},
 }
 
-func packetfilterReadCmdInit() {
+func packetFilterReadCmdInit() {
 }
 
-var packetfilterUpdateCmd = &cobra.Command{
+var packetFilterUpdateCmd = &cobra.Command{
 	Use: "update",
 
-	Short: "Update Packetfilter",
-	Long:  `Update Packetfilter`,
+	Short: "Update PacketFilter",
+	Long:  `Update PacketFilter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetfilterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := packetFilterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(packetfilterUpdateParam))
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(packetFilterUpdateParam))
 		return err
 	},
 }
 
-func packetfilterUpdateCmdInit() {
-	fs := packetfilterUpdateCmd.Flags()
-	fs.StringVarP(&packetfilterUpdateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&packetfilterUpdateParam.Description, "description", "", "", "set resource description")
+func packetFilterUpdateCmdInit() {
+	fs := packetFilterUpdateCmd.Flags()
+	fs.StringVarP(&packetFilterUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&packetFilterUpdateParam.Description, "description", "", "", "set resource description")
 }
 
-var packetfilterDeleteCmd = &cobra.Command{
+var packetFilterDeleteCmd = &cobra.Command{
 	Use:     "delete",
 	Aliases: []string{"rm"},
-	Short:   "Delete Packetfilter",
-	Long:    `Delete Packetfilter`,
+	Short:   "Delete PacketFilter",
+	Long:    `Delete PacketFilter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetfilterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := packetFilterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(packetfilterDeleteParam))
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(packetFilterDeleteParam))
 		return err
 	},
 }
 
-func packetfilterDeleteCmdInit() {
+func packetFilterDeleteCmdInit() {
 }
 
-var packetfilterRuleInfoCmd = &cobra.Command{
+var packetFilterRuleInfoCmd = &cobra.Command{
 	Use:     "rule-info",
 	Aliases: []string{"rules", "rule-list"},
-	Short:   "RuleInfo Packetfilter",
-	Long:    `RuleInfo Packetfilter`,
+	Short:   "RuleInfo PacketFilter",
+	Long:    `RuleInfo PacketFilter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetfilterRuleInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := packetFilterRuleInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("rule-info parameter: \n%s\n", debugMarshalIndent(packetfilterRuleInfoParam))
+		fmt.Printf("rule-info parameter: \n%s\n", debugMarshalIndent(packetFilterRuleInfoParam))
 		return err
 	},
 }
 
-func packetfilterRuleInfoCmdInit() {
+func packetFilterRuleInfoCmdInit() {
 }
 
-var packetfilterRuleAddCmd = &cobra.Command{
+var packetFilterRuleAddCmd = &cobra.Command{
 	Use: "rule-add",
 
-	Short: "RuleAdd Packetfilter",
-	Long:  `RuleAdd Packetfilter`,
+	Short: "RuleAdd PacketFilter",
+	Long:  `RuleAdd PacketFilter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetfilterRuleAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := packetFilterRuleAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("rule-add parameter: \n%s\n", debugMarshalIndent(packetfilterRuleAddParam))
+		fmt.Printf("rule-add parameter: \n%s\n", debugMarshalIndent(packetFilterRuleAddParam))
 		return err
 	},
 }
 
-func packetfilterRuleAddCmdInit() {
-	fs := packetfilterRuleAddCmd.Flags()
-	fs.StringVarP(&packetfilterRuleAddParam.SourceNetwork, "source-network", "", "", "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]")
-	fs.StringVarP(&packetfilterRuleAddParam.SourcePort, "source-port", "", "", "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]")
-	fs.StringVarP(&packetfilterRuleAddParam.DestinationPort, "destination-port", "", "", "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]")
-	fs.StringVarP(&packetfilterRuleAddParam.Action, "action", "", "", "set action[allow/deny]")
-	fs.StringVarP(&packetfilterRuleAddParam.Description, "description", "", "", "set resource description")
-	fs.IntVarP(&packetfilterRuleAddParam.Index, "index", "", 1, "index to insert rule into")
-	fs.StringVarP(&packetfilterRuleAddParam.Protocol, "protocol", "", "", "set target protocol[tcp/udp/icmp/fragment/ip]")
+func packetFilterRuleAddCmdInit() {
+	fs := packetFilterRuleAddCmd.Flags()
+	fs.IntVarP(&packetFilterRuleAddParam.Index, "index", "", 1, "index to insert rule into")
+	fs.StringVarP(&packetFilterRuleAddParam.Protocol, "protocol", "", "", "set target protocol[tcp/udp/icmp/fragment/ip]")
+	fs.StringVarP(&packetFilterRuleAddParam.SourceNetwork, "source-network", "", "", "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]")
+	fs.StringVarP(&packetFilterRuleAddParam.SourcePort, "source-port", "", "", "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]")
+	fs.StringVarP(&packetFilterRuleAddParam.DestinationPort, "destination-port", "", "", "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]")
+	fs.StringVarP(&packetFilterRuleAddParam.Action, "action", "", "", "set action[allow/deny]")
+	fs.StringVarP(&packetFilterRuleAddParam.Description, "description", "", "", "set resource description")
 }
 
-var packetfilterRuleUpdateCmd = &cobra.Command{
+var packetFilterRuleUpdateCmd = &cobra.Command{
 	Use: "rule-update",
 
-	Short: "RuleUpdate Packetfilter",
-	Long:  `RuleUpdate Packetfilter`,
+	Short: "RuleUpdate PacketFilter",
+	Long:  `RuleUpdate PacketFilter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetfilterRuleUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := packetFilterRuleUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("rule-update parameter: \n%s\n", debugMarshalIndent(packetfilterRuleUpdateParam))
+		fmt.Printf("rule-update parameter: \n%s\n", debugMarshalIndent(packetFilterRuleUpdateParam))
 		return err
 	},
 }
 
-func packetfilterRuleUpdateCmdInit() {
-	fs := packetfilterRuleUpdateCmd.Flags()
-	fs.StringVarP(&packetfilterRuleUpdateParam.Action, "action", "", "", "set action[allow/deny]")
-	fs.StringVarP(&packetfilterRuleUpdateParam.Description, "description", "", "", "set resource description")
-	fs.IntVarP(&packetfilterRuleUpdateParam.Index, "index", "", 0, "index of target rule")
-	fs.StringVarP(&packetfilterRuleUpdateParam.Protocol, "protocol", "", "", "set target protocol[tcp/udp/icmp/fragment/ip]")
-	fs.StringVarP(&packetfilterRuleUpdateParam.SourceNetwork, "source-network", "", "", "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]")
-	fs.StringVarP(&packetfilterRuleUpdateParam.SourcePort, "source-port", "", "", "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]")
-	fs.StringVarP(&packetfilterRuleUpdateParam.DestinationPort, "destination-port", "", "", "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]")
+func packetFilterRuleUpdateCmdInit() {
+	fs := packetFilterRuleUpdateCmd.Flags()
+	fs.StringVarP(&packetFilterRuleUpdateParam.Action, "action", "", "", "set action[allow/deny]")
+	fs.StringVarP(&packetFilterRuleUpdateParam.Description, "description", "", "", "set resource description")
+	fs.IntVarP(&packetFilterRuleUpdateParam.Index, "index", "", 0, "index of target rule")
+	fs.StringVarP(&packetFilterRuleUpdateParam.Protocol, "protocol", "", "", "set target protocol[tcp/udp/icmp/fragment/ip]")
+	fs.StringVarP(&packetFilterRuleUpdateParam.SourceNetwork, "source-network", "", "", "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]")
+	fs.StringVarP(&packetFilterRuleUpdateParam.SourcePort, "source-port", "", "", "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]")
+	fs.StringVarP(&packetFilterRuleUpdateParam.DestinationPort, "destination-port", "", "", "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]")
 }
 
-var packetfilterRuleDeleteCmd = &cobra.Command{
+var packetFilterRuleDeleteCmd = &cobra.Command{
 	Use: "rule-delete",
 
-	Short: "RuleDelete Packetfilter",
-	Long:  `RuleDelete Packetfilter`,
+	Short: "RuleDelete PacketFilter",
+	Long:  `RuleDelete PacketFilter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetfilterRuleDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := packetFilterRuleDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("rule-delete parameter: \n%s\n", debugMarshalIndent(packetfilterRuleDeleteParam))
+		fmt.Printf("rule-delete parameter: \n%s\n", debugMarshalIndent(packetFilterRuleDeleteParam))
 		return err
 	},
 }
 
-func packetfilterRuleDeleteCmdInit() {
-	fs := packetfilterRuleDeleteCmd.Flags()
-	fs.IntVarP(&packetfilterRuleDeleteParam.Index, "index", "", 0, "index of target rule")
+func packetFilterRuleDeleteCmdInit() {
+	fs := packetFilterRuleDeleteCmd.Flags()
+	fs.IntVarP(&packetFilterRuleDeleteParam.Index, "index", "", 0, "index of target rule")
 }
 
-var packetfilterInterfaceConnectCmd = &cobra.Command{
+var packetFilterInterfaceConnectCmd = &cobra.Command{
 	Use: "interface-connect",
 
-	Short: "InterfaceConnect Packetfilter",
-	Long:  `InterfaceConnect Packetfilter`,
+	Short: "InterfaceConnect PacketFilter",
+	Long:  `InterfaceConnect PacketFilter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetfilterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := packetFilterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("interface-connect parameter: \n%s\n", debugMarshalIndent(packetfilterInterfaceConnectParam))
+		fmt.Printf("interface-connect parameter: \n%s\n", debugMarshalIndent(packetFilterInterfaceConnectParam))
 		return err
 	},
 }
 
-func packetfilterInterfaceConnectCmdInit() {
-	fs := packetfilterInterfaceConnectCmd.Flags()
-	fs.VarP(newIDValue(0, &packetfilterInterfaceConnectParam.InterfaceId), "interface-id", "", "set interface ID")
+func packetFilterInterfaceConnectCmdInit() {
+	fs := packetFilterInterfaceConnectCmd.Flags()
+	fs.VarP(newIDValue(0, &packetFilterInterfaceConnectParam.InterfaceId), "interface-id", "", "set interface ID")
 }
 
-var packetfilterInterfaceDisconnectCmd = &cobra.Command{
+var packetFilterInterfaceDisconnectCmd = &cobra.Command{
 	Use: "interface-disconnect",
 
-	Short: "InterfaceDisconnect Packetfilter",
-	Long:  `InterfaceDisconnect Packetfilter`,
+	Short: "InterfaceDisconnect PacketFilter",
+	Long:  `InterfaceDisconnect PacketFilter`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetfilterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := packetFilterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("interface-disconnect parameter: \n%s\n", debugMarshalIndent(packetfilterInterfaceDisconnectParam))
+		fmt.Printf("interface-disconnect parameter: \n%s\n", debugMarshalIndent(packetFilterInterfaceDisconnectParam))
 		return err
 	},
 }
 
-func packetfilterInterfaceDisconnectCmdInit() {
-	fs := packetfilterInterfaceDisconnectCmd.Flags()
-	fs.VarP(newIDValue(0, &packetfilterInterfaceDisconnectParam.InterfaceId), "interface-id", "", "set interface ID")
+func packetFilterInterfaceDisconnectCmdInit() {
+	fs := packetFilterInterfaceDisconnectCmd.Flags()
+	fs.VarP(newIDValue(0, &packetFilterInterfaceDisconnectParam.InterfaceId), "interface-id", "", "set interface ID")
 }
 
 func init() {
-	parent := packetfilterCmd
+	parent := packetFilterCmd
 
-	packetfilterListCmdInit()
-	parent.AddCommand(packetfilterListCmd)
+	packetFilterListCmdInit()
+	parent.AddCommand(packetFilterListCmd)
 
-	packetfilterCreateCmdInit()
-	parent.AddCommand(packetfilterCreateCmd)
+	packetFilterCreateCmdInit()
+	parent.AddCommand(packetFilterCreateCmd)
 
-	packetfilterReadCmdInit()
-	parent.AddCommand(packetfilterReadCmd)
+	packetFilterReadCmdInit()
+	parent.AddCommand(packetFilterReadCmd)
 
-	packetfilterUpdateCmdInit()
-	parent.AddCommand(packetfilterUpdateCmd)
+	packetFilterUpdateCmdInit()
+	parent.AddCommand(packetFilterUpdateCmd)
 
-	packetfilterDeleteCmdInit()
-	parent.AddCommand(packetfilterDeleteCmd)
+	packetFilterDeleteCmdInit()
+	parent.AddCommand(packetFilterDeleteCmd)
 
-	packetfilterRuleInfoCmdInit()
-	parent.AddCommand(packetfilterRuleInfoCmd)
+	packetFilterRuleInfoCmdInit()
+	parent.AddCommand(packetFilterRuleInfoCmd)
 
-	packetfilterRuleAddCmdInit()
-	parent.AddCommand(packetfilterRuleAddCmd)
+	packetFilterRuleAddCmdInit()
+	parent.AddCommand(packetFilterRuleAddCmd)
 
-	packetfilterRuleUpdateCmdInit()
-	parent.AddCommand(packetfilterRuleUpdateCmd)
+	packetFilterRuleUpdateCmdInit()
+	parent.AddCommand(packetFilterRuleUpdateCmd)
 
-	packetfilterRuleDeleteCmdInit()
-	parent.AddCommand(packetfilterRuleDeleteCmd)
+	packetFilterRuleDeleteCmdInit()
+	parent.AddCommand(packetFilterRuleDeleteCmd)
 
-	packetfilterInterfaceConnectCmdInit()
-	parent.AddCommand(packetfilterInterfaceConnectCmd)
+	packetFilterInterfaceConnectCmdInit()
+	parent.AddCommand(packetFilterInterfaceConnectCmd)
 
-	packetfilterInterfaceDisconnectCmdInit()
-	parent.AddCommand(packetfilterInterfaceDisconnectCmd)
+	packetFilterInterfaceDisconnectCmdInit()
+	parent.AddCommand(packetFilterInterfaceDisconnectCmd)
 
 	rootCmd.AddCommand(parent)
 }

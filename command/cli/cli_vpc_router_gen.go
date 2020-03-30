@@ -32,62 +32,62 @@ import (
 )
 
 func init() {
-	vpcrouterListParam := params.NewListVpcrouterParam()
-	vpcrouterCreateParam := params.NewCreateVpcrouterParam()
-	vpcrouterReadParam := params.NewReadVpcrouterParam()
-	vpcrouterUpdateParam := params.NewUpdateVpcrouterParam()
-	vpcrouterDeleteParam := params.NewDeleteVpcrouterParam()
-	vpcrouterBootParam := params.NewBootVpcrouterParam()
-	vpcrouterShutdownParam := params.NewShutdownVpcrouterParam()
-	vpcrouterShutdownForceParam := params.NewShutdownForceVpcrouterParam()
-	vpcrouterResetParam := params.NewResetVpcrouterParam()
-	vpcrouterWaitForBootParam := params.NewWaitForBootVpcrouterParam()
-	vpcrouterWaitForDownParam := params.NewWaitForDownVpcrouterParam()
-	vpcrouterEnableInternetConnectionParam := params.NewEnableInternetConnectionVpcrouterParam()
-	vpcrouterDisableInternetConnectionParam := params.NewDisableInternetConnectionVpcrouterParam()
-	vpcrouterInterfaceInfoParam := params.NewInterfaceInfoVpcrouterParam()
-	vpcrouterInterfaceConnectParam := params.NewInterfaceConnectVpcrouterParam()
-	vpcrouterInterfaceUpdateParam := params.NewInterfaceUpdateVpcrouterParam()
-	vpcrouterInterfaceDisconnectParam := params.NewInterfaceDisconnectVpcrouterParam()
-	vpcrouterStaticNatInfoParam := params.NewStaticNatInfoVpcrouterParam()
-	vpcrouterStaticNatAddParam := params.NewStaticNatAddVpcrouterParam()
-	vpcrouterStaticNatUpdateParam := params.NewStaticNatUpdateVpcrouterParam()
-	vpcrouterStaticNatDeleteParam := params.NewStaticNatDeleteVpcrouterParam()
-	vpcrouterPortForwardingInfoParam := params.NewPortForwardingInfoVpcrouterParam()
-	vpcrouterPortForwardingAddParam := params.NewPortForwardingAddVpcrouterParam()
-	vpcrouterPortForwardingUpdateParam := params.NewPortForwardingUpdateVpcrouterParam()
-	vpcrouterPortForwardingDeleteParam := params.NewPortForwardingDeleteVpcrouterParam()
-	vpcrouterFirewallInfoParam := params.NewFirewallInfoVpcrouterParam()
-	vpcrouterFirewallAddParam := params.NewFirewallAddVpcrouterParam()
-	vpcrouterFirewallUpdateParam := params.NewFirewallUpdateVpcrouterParam()
-	vpcrouterFirewallDeleteParam := params.NewFirewallDeleteVpcrouterParam()
-	vpcrouterDhcpServerInfoParam := params.NewDhcpServerInfoVpcrouterParam()
-	vpcrouterDhcpServerAddParam := params.NewDhcpServerAddVpcrouterParam()
-	vpcrouterDhcpServerUpdateParam := params.NewDhcpServerUpdateVpcrouterParam()
-	vpcrouterDhcpServerDeleteParam := params.NewDhcpServerDeleteVpcrouterParam()
-	vpcrouterDhcpStaticMappingInfoParam := params.NewDhcpStaticMappingInfoVpcrouterParam()
-	vpcrouterDhcpStaticMappingAddParam := params.NewDhcpStaticMappingAddVpcrouterParam()
-	vpcrouterDhcpStaticMappingUpdateParam := params.NewDhcpStaticMappingUpdateVpcrouterParam()
-	vpcrouterDhcpStaticMappingDeleteParam := params.NewDhcpStaticMappingDeleteVpcrouterParam()
-	vpcrouterPptpServerInfoParam := params.NewPptpServerInfoVpcrouterParam()
-	vpcrouterPptpServerUpdateParam := params.NewPptpServerUpdateVpcrouterParam()
-	vpcrouterL2tpServerInfoParam := params.NewL2tpServerInfoVpcrouterParam()
-	vpcrouterL2tpServerUpdateParam := params.NewL2tpServerUpdateVpcrouterParam()
-	vpcrouterUserInfoParam := params.NewUserInfoVpcrouterParam()
-	vpcrouterUserAddParam := params.NewUserAddVpcrouterParam()
-	vpcrouterUserUpdateParam := params.NewUserUpdateVpcrouterParam()
-	vpcrouterUserDeleteParam := params.NewUserDeleteVpcrouterParam()
-	vpcrouterSiteToSiteVpnInfoParam := params.NewSiteToSiteVpnInfoVpcrouterParam()
-	vpcrouterSiteToSiteVpnAddParam := params.NewSiteToSiteVpnAddVpcrouterParam()
-	vpcrouterSiteToSiteVpnUpdateParam := params.NewSiteToSiteVpnUpdateVpcrouterParam()
-	vpcrouterSiteToSiteVpnDeleteParam := params.NewSiteToSiteVpnDeleteVpcrouterParam()
-	vpcrouterSiteToSiteVpnPeersParam := params.NewSiteToSiteVpnPeersVpcrouterParam()
-	vpcrouterStaticRouteInfoParam := params.NewStaticRouteInfoVpcrouterParam()
-	vpcrouterStaticRouteAddParam := params.NewStaticRouteAddVpcrouterParam()
-	vpcrouterStaticRouteUpdateParam := params.NewStaticRouteUpdateVpcrouterParam()
-	vpcrouterStaticRouteDeleteParam := params.NewStaticRouteDeleteVpcrouterParam()
-	vpcrouterMonitorParam := params.NewMonitorVpcrouterParam()
-	vpcrouterLogsParam := params.NewLogsVpcrouterParam()
+	vpcRouterListParam := params.NewListVPCRouterParam()
+	vpcRouterCreateParam := params.NewCreateVPCRouterParam()
+	vpcRouterReadParam := params.NewReadVPCRouterParam()
+	vpcRouterUpdateParam := params.NewUpdateVPCRouterParam()
+	vpcRouterDeleteParam := params.NewDeleteVPCRouterParam()
+	vpcRouterBootParam := params.NewBootVPCRouterParam()
+	vpcRouterShutdownParam := params.NewShutdownVPCRouterParam()
+	vpcRouterShutdownForceParam := params.NewShutdownForceVPCRouterParam()
+	vpcRouterResetParam := params.NewResetVPCRouterParam()
+	vpcRouterWaitForBootParam := params.NewWaitForBootVPCRouterParam()
+	vpcRouterWaitForDownParam := params.NewWaitForDownVPCRouterParam()
+	vpcRouterEnableInternetConnectionParam := params.NewEnableInternetConnectionVPCRouterParam()
+	vpcRouterDisableInternetConnectionParam := params.NewDisableInternetConnectionVPCRouterParam()
+	vpcRouterInterfaceInfoParam := params.NewInterfaceInfoVPCRouterParam()
+	vpcRouterInterfaceConnectParam := params.NewInterfaceConnectVPCRouterParam()
+	vpcRouterInterfaceUpdateParam := params.NewInterfaceUpdateVPCRouterParam()
+	vpcRouterInterfaceDisconnectParam := params.NewInterfaceDisconnectVPCRouterParam()
+	vpcRouterStaticNatInfoParam := params.NewStaticNatInfoVPCRouterParam()
+	vpcRouterStaticNatAddParam := params.NewStaticNatAddVPCRouterParam()
+	vpcRouterStaticNatUpdateParam := params.NewStaticNatUpdateVPCRouterParam()
+	vpcRouterStaticNatDeleteParam := params.NewStaticNatDeleteVPCRouterParam()
+	vpcRouterPortForwardingInfoParam := params.NewPortForwardingInfoVPCRouterParam()
+	vpcRouterPortForwardingAddParam := params.NewPortForwardingAddVPCRouterParam()
+	vpcRouterPortForwardingUpdateParam := params.NewPortForwardingUpdateVPCRouterParam()
+	vpcRouterPortForwardingDeleteParam := params.NewPortForwardingDeleteVPCRouterParam()
+	vpcRouterFirewallInfoParam := params.NewFirewallInfoVPCRouterParam()
+	vpcRouterFirewallAddParam := params.NewFirewallAddVPCRouterParam()
+	vpcRouterFirewallUpdateParam := params.NewFirewallUpdateVPCRouterParam()
+	vpcRouterFirewallDeleteParam := params.NewFirewallDeleteVPCRouterParam()
+	vpcRouterDhcpServerInfoParam := params.NewDhcpServerInfoVPCRouterParam()
+	vpcRouterDhcpServerAddParam := params.NewDhcpServerAddVPCRouterParam()
+	vpcRouterDhcpServerUpdateParam := params.NewDhcpServerUpdateVPCRouterParam()
+	vpcRouterDhcpServerDeleteParam := params.NewDhcpServerDeleteVPCRouterParam()
+	vpcRouterDhcpStaticMappingInfoParam := params.NewDhcpStaticMappingInfoVPCRouterParam()
+	vpcRouterDhcpStaticMappingAddParam := params.NewDhcpStaticMappingAddVPCRouterParam()
+	vpcRouterDhcpStaticMappingUpdateParam := params.NewDhcpStaticMappingUpdateVPCRouterParam()
+	vpcRouterDhcpStaticMappingDeleteParam := params.NewDhcpStaticMappingDeleteVPCRouterParam()
+	vpcRouterPptpServerInfoParam := params.NewPptpServerInfoVPCRouterParam()
+	vpcRouterPptpServerUpdateParam := params.NewPptpServerUpdateVPCRouterParam()
+	vpcRouterL2TPServerInfoParam := params.NewL2TPServerInfoVPCRouterParam()
+	vpcRouterL2TPServerUpdateParam := params.NewL2TPServerUpdateVPCRouterParam()
+	vpcRouterUserInfoParam := params.NewUserInfoVPCRouterParam()
+	vpcRouterUserAddParam := params.NewUserAddVPCRouterParam()
+	vpcRouterUserUpdateParam := params.NewUserUpdateVPCRouterParam()
+	vpcRouterUserDeleteParam := params.NewUserDeleteVPCRouterParam()
+	vpcRouterSiteToSiteVPNInfoParam := params.NewSiteToSiteVPNInfoVPCRouterParam()
+	vpcRouterSiteToSiteVPNAddParam := params.NewSiteToSiteVPNAddVPCRouterParam()
+	vpcRouterSiteToSiteVPNUpdateParam := params.NewSiteToSiteVPNUpdateVPCRouterParam()
+	vpcRouterSiteToSiteVPNDeleteParam := params.NewSiteToSiteVPNDeleteVPCRouterParam()
+	vpcRouterSiteToSiteVPNPeersParam := params.NewSiteToSiteVPNPeersVPCRouterParam()
+	vpcRouterStaticRouteInfoParam := params.NewStaticRouteInfoVPCRouterParam()
+	vpcRouterStaticRouteAddParam := params.NewStaticRouteAddVPCRouterParam()
+	vpcRouterStaticRouteUpdateParam := params.NewStaticRouteUpdateVPCRouterParam()
+	vpcRouterStaticRouteDeleteParam := params.NewStaticRouteDeleteVPCRouterParam()
+	vpcRouterMonitorParam := params.NewMonitorVPCRouterParam()
+	vpcRouterLogsParam := params.NewLogsVPCRouterParam()
 
 	cliCommand := &cli.Command{
 		Name:  "vpc-router",
@@ -96,7 +96,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find", "selector"},
-				Usage:   "List Vpcrouter",
+				Usage:   "List VPCRouter",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -187,75 +187,75 @@ func init() {
 						return err
 					}
 
-					vpcrouterListParam.ParamTemplate = c.String("param-template")
-					vpcrouterListParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterListParam)
+					vpcRouterListParam.ParamTemplate = c.String("param-template")
+					vpcRouterListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListVpcrouterParam()
+						p := params.NewListVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterListParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						vpcrouterListParam.Name = c.StringSlice("name")
+						vpcRouterListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						vpcrouterListParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						vpcRouterListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
-						vpcrouterListParam.Tags = c.StringSlice("tags")
+						vpcRouterListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("from") {
-						vpcrouterListParam.From = c.Int("from")
+						vpcRouterListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						vpcrouterListParam.Max = c.Int("max")
+						vpcRouterListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						vpcrouterListParam.Sort = c.StringSlice("sort")
+						vpcRouterListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterListParam.ParamTemplate = c.String("param-template")
+						vpcRouterListParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterListParam.Parameters = c.String("parameters")
+						vpcRouterListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterListParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterListParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterListParam.ParameterFile = c.String("parameter-file")
+						vpcRouterListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterListParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterListParam.OutputType = c.String("output-type")
+						vpcRouterListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterListParam.Column = c.StringSlice("column")
+						vpcRouterListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterListParam.Quiet = c.Bool("quiet")
+						vpcRouterListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterListParam.Format = c.String("format")
+						vpcRouterListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterListParam.FormatFile = c.String("format-file")
+						vpcRouterListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterListParam.Query = c.String("query")
+						vpcRouterListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterListParam.QueryFile = c.String("query-file")
+						vpcRouterListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -263,7 +263,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterListParam
+					var outputTypeHolder interface{} = vpcRouterListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -274,10 +274,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterListParam.GenerateSkeleton {
-						vpcrouterListParam.GenerateSkeleton = false
-						vpcrouterListParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterListParam, "", "\t")
+					if vpcRouterListParam.GenerateSkeleton {
+						vpcRouterListParam.GenerateSkeleton = false
+						vpcRouterListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -286,21 +286,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterListParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterListParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterListParam)
 
 					// Run command with params
-					return funcs.VpcrouterList(ctx, vpcrouterListParam)
+					return funcs.VPCRouterList(ctx, vpcRouterListParam)
 
 				},
 			},
 			{
 				Name:  "create",
-				Usage: "Create Vpcrouter",
+				Usage: "Create VPCRouter",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "plan",
@@ -424,96 +424,96 @@ func init() {
 						return err
 					}
 
-					vpcrouterCreateParam.ParamTemplate = c.String("param-template")
-					vpcrouterCreateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterCreateParam)
+					vpcRouterCreateParam.ParamTemplate = c.String("param-template")
+					vpcRouterCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterCreateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCreateVpcrouterParam()
+						p := params.NewCreateVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterCreateParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("plan") {
-						vpcrouterCreateParam.Plan = c.String("plan")
+						vpcRouterCreateParam.Plan = c.String("plan")
 					}
 					if c.IsSet("switch-id") {
-						vpcrouterCreateParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
+						vpcRouterCreateParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
 					}
 					if c.IsSet("vrid") {
-						vpcrouterCreateParam.Vrid = c.Int("vrid")
+						vpcRouterCreateParam.Vrid = c.Int("vrid")
 					}
 					if c.IsSet("vip") {
-						vpcrouterCreateParam.Vip = c.String("vip")
+						vpcRouterCreateParam.Vip = c.String("vip")
 					}
 					if c.IsSet("ipaddress-1") {
-						vpcrouterCreateParam.Ipaddress1 = c.String("ipaddress-1")
+						vpcRouterCreateParam.Ipaddress1 = c.String("ipaddress-1")
 					}
 					if c.IsSet("ipaddress-2") {
-						vpcrouterCreateParam.Ipaddress2 = c.String("ipaddress-2")
+						vpcRouterCreateParam.Ipaddress2 = c.String("ipaddress-2")
 					}
 					if c.IsSet("disable-internet-connection") {
-						vpcrouterCreateParam.DisableInternetConnection = c.Bool("disable-internet-connection")
+						vpcRouterCreateParam.DisableInternetConnection = c.Bool("disable-internet-connection")
 					}
 					if c.IsSet("boot-after-create") {
-						vpcrouterCreateParam.BootAfterCreate = c.Bool("boot-after-create")
+						vpcRouterCreateParam.BootAfterCreate = c.Bool("boot-after-create")
 					}
 					if c.IsSet("name") {
-						vpcrouterCreateParam.Name = c.String("name")
+						vpcRouterCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						vpcrouterCreateParam.Description = c.String("description")
+						vpcRouterCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						vpcrouterCreateParam.Tags = c.StringSlice("tags")
+						vpcRouterCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						vpcrouterCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						vpcRouterCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterCreateParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterCreateParam.ParamTemplate = c.String("param-template")
+						vpcRouterCreateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterCreateParam.Parameters = c.String("parameters")
+						vpcRouterCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterCreateParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterCreateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterCreateParam.ParameterFile = c.String("parameter-file")
+						vpcRouterCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterCreateParam.OutputType = c.String("output-type")
+						vpcRouterCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterCreateParam.Column = c.StringSlice("column")
+						vpcRouterCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterCreateParam.Quiet = c.Bool("quiet")
+						vpcRouterCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterCreateParam.Format = c.String("format")
+						vpcRouterCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterCreateParam.FormatFile = c.String("format-file")
+						vpcRouterCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterCreateParam.Query = c.String("query")
+						vpcRouterCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterCreateParam.QueryFile = c.String("query-file")
+						vpcRouterCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -521,7 +521,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterCreateParam
+					var outputTypeHolder interface{} = vpcRouterCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -532,10 +532,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterCreateParam.GenerateSkeleton {
-						vpcrouterCreateParam.GenerateSkeleton = false
-						vpcrouterCreateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterCreateParam, "", "\t")
+					if vpcRouterCreateParam.GenerateSkeleton {
+						vpcRouterCreateParam.GenerateSkeleton = false
+						vpcRouterCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -544,15 +544,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterCreateParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterCreateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterCreateParam)
 
 					// confirm
-					if !vpcrouterCreateParam.Assumeyes {
+					if !vpcRouterCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -562,13 +562,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.VpcrouterCreate(ctx, vpcrouterCreateParam)
+					return funcs.VPCRouterCreate(ctx, vpcRouterCreateParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Vpcrouter",
+				Usage:     "Read VPCRouter",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -642,63 +642,63 @@ func init() {
 						return err
 					}
 
-					vpcrouterReadParam.ParamTemplate = c.String("param-template")
-					vpcrouterReadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterReadParam)
+					vpcRouterReadParam.ParamTemplate = c.String("param-template")
+					vpcRouterReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadVpcrouterParam()
+						p := params.NewReadVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterReadParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterReadParam.Selector = c.StringSlice("selector")
+						vpcRouterReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterReadParam.ParamTemplate = c.String("param-template")
+						vpcRouterReadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterReadParam.Parameters = c.String("parameters")
+						vpcRouterReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterReadParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterReadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterReadParam.ParameterFile = c.String("parameter-file")
+						vpcRouterReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterReadParam.OutputType = c.String("output-type")
+						vpcRouterReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterReadParam.Column = c.StringSlice("column")
+						vpcRouterReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterReadParam.Quiet = c.Bool("quiet")
+						vpcRouterReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterReadParam.Format = c.String("format")
+						vpcRouterReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterReadParam.FormatFile = c.String("format-file")
+						vpcRouterReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterReadParam.Query = c.String("query")
+						vpcRouterReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterReadParam.QueryFile = c.String("query-file")
+						vpcRouterReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vpcrouterReadParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -706,7 +706,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterReadParam
+					var outputTypeHolder interface{} = vpcRouterReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -717,10 +717,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterReadParam.GenerateSkeleton {
-						vpcrouterReadParam.GenerateSkeleton = false
-						vpcrouterReadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterReadParam, "", "\t")
+					if vpcRouterReadParam.GenerateSkeleton {
+						vpcRouterReadParam.GenerateSkeleton = false
+						vpcRouterReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -729,19 +729,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterReadParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterReadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterReadParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterReadParam.Selector) == 0 {
+						if len(vpcRouterReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -749,13 +749,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterReadParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterReadParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterReadParam.Selector)
 						}
 
 					} else {
@@ -776,8 +776,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterReadParam.Selector) == 0 || hasTags(&v, vpcrouterReadParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterReadParam.Selector) == 0 || hasTags(&v, vpcRouterReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -802,11 +802,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterReadParam.SetId(id)
-						p := *vpcrouterReadParam // copy struct value
-						vpcrouterReadParam := &p
+						vpcRouterReadParam.SetId(id)
+						p := *vpcRouterReadParam // copy struct value
+						vpcRouterReadParam := &p
 						go func() {
-							err := funcs.VpcrouterRead(ctx, vpcrouterReadParam)
+							err := funcs.VPCRouterRead(ctx, vpcRouterReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -820,7 +820,7 @@ func init() {
 			},
 			{
 				Name:      "update",
-				Usage:     "Update Vpcrouter",
+				Usage:     "Update VPCRouter",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -924,84 +924,84 @@ func init() {
 						return err
 					}
 
-					vpcrouterUpdateParam.ParamTemplate = c.String("param-template")
-					vpcrouterUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterUpdateParam)
+					vpcRouterUpdateParam.ParamTemplate = c.String("param-template")
+					vpcRouterUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUpdateVpcrouterParam()
+						p := params.NewUpdateVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("syslog-host") {
-						vpcrouterUpdateParam.SyslogHost = c.String("syslog-host")
+						vpcRouterUpdateParam.SyslogHost = c.String("syslog-host")
 					}
 					if c.IsSet("internet-connection") {
-						vpcrouterUpdateParam.InternetConnection = c.Bool("internet-connection")
+						vpcRouterUpdateParam.InternetConnection = c.Bool("internet-connection")
 					}
 					if c.IsSet("selector") {
-						vpcrouterUpdateParam.Selector = c.StringSlice("selector")
+						vpcRouterUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
-						vpcrouterUpdateParam.Name = c.String("name")
+						vpcRouterUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						vpcrouterUpdateParam.Description = c.String("description")
+						vpcRouterUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						vpcrouterUpdateParam.Tags = c.StringSlice("tags")
+						vpcRouterUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						vpcrouterUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						vpcRouterUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterUpdateParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterUpdateParam.ParamTemplate = c.String("param-template")
+						vpcRouterUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterUpdateParam.Parameters = c.String("parameters")
+						vpcRouterUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterUpdateParam.ParameterFile = c.String("parameter-file")
+						vpcRouterUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterUpdateParam.OutputType = c.String("output-type")
+						vpcRouterUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterUpdateParam.Column = c.StringSlice("column")
+						vpcRouterUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterUpdateParam.Quiet = c.Bool("quiet")
+						vpcRouterUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterUpdateParam.Format = c.String("format")
+						vpcRouterUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterUpdateParam.FormatFile = c.String("format-file")
+						vpcRouterUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterUpdateParam.Query = c.String("query")
+						vpcRouterUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterUpdateParam.QueryFile = c.String("query-file")
+						vpcRouterUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vpcrouterUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1009,7 +1009,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterUpdateParam
+					var outputTypeHolder interface{} = vpcRouterUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1020,10 +1020,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterUpdateParam.GenerateSkeleton {
-						vpcrouterUpdateParam.GenerateSkeleton = false
-						vpcrouterUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterUpdateParam, "", "\t")
+					if vpcRouterUpdateParam.GenerateSkeleton {
+						vpcRouterUpdateParam.GenerateSkeleton = false
+						vpcRouterUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1032,19 +1032,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterUpdateParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterUpdateParam.Selector) == 0 {
+						if len(vpcRouterUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1052,13 +1052,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterUpdateParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterUpdateParam.Selector)
 						}
 
 					} else {
@@ -1079,8 +1079,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterUpdateParam.Selector) == 0 || hasTags(&v, vpcrouterUpdateParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterUpdateParam.Selector) == 0 || hasTags(&v, vpcRouterUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1097,7 +1097,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterUpdateParam.Assumeyes {
+					if !vpcRouterUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1111,11 +1111,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterUpdateParam.SetId(id)
-						p := *vpcrouterUpdateParam // copy struct value
-						vpcrouterUpdateParam := &p
+						vpcRouterUpdateParam.SetId(id)
+						p := *vpcRouterUpdateParam // copy struct value
+						vpcRouterUpdateParam := &p
 						go func() {
-							err := funcs.VpcrouterUpdate(ctx, vpcrouterUpdateParam)
+							err := funcs.VPCRouterUpdate(ctx, vpcRouterUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1130,7 +1130,7 @@ func init() {
 			{
 				Name:      "delete",
 				Aliases:   []string{"rm"},
-				Usage:     "Delete Vpcrouter",
+				Usage:     "Delete VPCRouter",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -1214,69 +1214,69 @@ func init() {
 						return err
 					}
 
-					vpcrouterDeleteParam.ParamTemplate = c.String("param-template")
-					vpcrouterDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterDeleteParam)
+					vpcRouterDeleteParam.ParamTemplate = c.String("param-template")
+					vpcRouterDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeleteVpcrouterParam()
+						p := params.NewDeleteVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("force") {
-						vpcrouterDeleteParam.Force = c.Bool("force")
+						vpcRouterDeleteParam.Force = c.Bool("force")
 					}
 					if c.IsSet("selector") {
-						vpcrouterDeleteParam.Selector = c.StringSlice("selector")
+						vpcRouterDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterDeleteParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterDeleteParam.ParamTemplate = c.String("param-template")
+						vpcRouterDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterDeleteParam.Parameters = c.String("parameters")
+						vpcRouterDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterDeleteParam.ParameterFile = c.String("parameter-file")
+						vpcRouterDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterDeleteParam.OutputType = c.String("output-type")
+						vpcRouterDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterDeleteParam.Column = c.StringSlice("column")
+						vpcRouterDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterDeleteParam.Quiet = c.Bool("quiet")
+						vpcRouterDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterDeleteParam.Format = c.String("format")
+						vpcRouterDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterDeleteParam.FormatFile = c.String("format-file")
+						vpcRouterDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterDeleteParam.Query = c.String("query")
+						vpcRouterDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterDeleteParam.QueryFile = c.String("query-file")
+						vpcRouterDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vpcrouterDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1284,7 +1284,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterDeleteParam
+					var outputTypeHolder interface{} = vpcRouterDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1295,10 +1295,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterDeleteParam.GenerateSkeleton {
-						vpcrouterDeleteParam.GenerateSkeleton = false
-						vpcrouterDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterDeleteParam, "", "\t")
+					if vpcRouterDeleteParam.GenerateSkeleton {
+						vpcRouterDeleteParam.GenerateSkeleton = false
+						vpcRouterDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1307,19 +1307,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterDeleteParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterDeleteParam.Selector) == 0 {
+						if len(vpcRouterDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1327,13 +1327,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterDeleteParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterDeleteParam.Selector)
 						}
 
 					} else {
@@ -1354,8 +1354,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterDeleteParam.Selector) == 0 || hasTags(&v, vpcrouterDeleteParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterDeleteParam.Selector) == 0 || hasTags(&v, vpcRouterDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1372,7 +1372,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterDeleteParam.Assumeyes {
+					if !vpcRouterDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1386,11 +1386,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterDeleteParam.SetId(id)
-						p := *vpcrouterDeleteParam // copy struct value
-						vpcrouterDeleteParam := &p
+						vpcRouterDeleteParam.SetId(id)
+						p := *vpcRouterDeleteParam // copy struct value
+						vpcRouterDeleteParam := &p
 						go func() {
-							err := funcs.VpcrouterDelete(ctx, vpcrouterDeleteParam)
+							err := funcs.VPCRouterDelete(ctx, vpcRouterDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1405,7 +1405,7 @@ func init() {
 			{
 				Name:      "boot",
 				Aliases:   []string{"power-on"},
-				Usage:     "Boot Vpcrouter",
+				Usage:     "Boot VPCRouter",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1452,45 +1452,45 @@ func init() {
 						return err
 					}
 
-					vpcrouterBootParam.ParamTemplate = c.String("param-template")
-					vpcrouterBootParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterBootParam)
+					vpcRouterBootParam.ParamTemplate = c.String("param-template")
+					vpcRouterBootParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterBootParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewBootVpcrouterParam()
+						p := params.NewBootVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterBootParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterBootParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterBootParam.Selector = c.StringSlice("selector")
+						vpcRouterBootParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterBootParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterBootParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterBootParam.ParamTemplate = c.String("param-template")
+						vpcRouterBootParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterBootParam.Parameters = c.String("parameters")
+						vpcRouterBootParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterBootParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterBootParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterBootParam.ParameterFile = c.String("parameter-file")
+						vpcRouterBootParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterBootParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterBootParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1498,7 +1498,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterBootParam
+					var outputTypeHolder interface{} = vpcRouterBootParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1509,10 +1509,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterBootParam.GenerateSkeleton {
-						vpcrouterBootParam.GenerateSkeleton = false
-						vpcrouterBootParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterBootParam, "", "\t")
+					if vpcRouterBootParam.GenerateSkeleton {
+						vpcRouterBootParam.GenerateSkeleton = false
+						vpcRouterBootParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterBootParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1521,19 +1521,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterBootParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterBootParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterBootParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterBootParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterBootParam.Selector) == 0 {
+						if len(vpcRouterBootParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1541,13 +1541,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterBootParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterBootParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterBootParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterBootParam.Selector)
 						}
 
 					} else {
@@ -1568,8 +1568,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterBootParam.Selector) == 0 || hasTags(&v, vpcrouterBootParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterBootParam.Selector) == 0 || hasTags(&v, vpcRouterBootParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1586,7 +1586,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterBootParam.Assumeyes {
+					if !vpcRouterBootParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1600,11 +1600,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterBootParam.SetId(id)
-						p := *vpcrouterBootParam // copy struct value
-						vpcrouterBootParam := &p
+						vpcRouterBootParam.SetId(id)
+						p := *vpcRouterBootParam // copy struct value
+						vpcRouterBootParam := &p
 						go func() {
-							err := funcs.VpcrouterBoot(ctx, vpcrouterBootParam)
+							err := funcs.VPCRouterBoot(ctx, vpcRouterBootParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1619,7 +1619,7 @@ func init() {
 			{
 				Name:      "shutdown",
 				Aliases:   []string{"power-off"},
-				Usage:     "Shutdown Vpcrouter",
+				Usage:     "Shutdown VPCRouter",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1666,45 +1666,45 @@ func init() {
 						return err
 					}
 
-					vpcrouterShutdownParam.ParamTemplate = c.String("param-template")
-					vpcrouterShutdownParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterShutdownParam)
+					vpcRouterShutdownParam.ParamTemplate = c.String("param-template")
+					vpcRouterShutdownParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterShutdownParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewShutdownVpcrouterParam()
+						p := params.NewShutdownVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterShutdownParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterShutdownParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterShutdownParam.Selector = c.StringSlice("selector")
+						vpcRouterShutdownParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterShutdownParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterShutdownParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterShutdownParam.ParamTemplate = c.String("param-template")
+						vpcRouterShutdownParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterShutdownParam.Parameters = c.String("parameters")
+						vpcRouterShutdownParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterShutdownParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterShutdownParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterShutdownParam.ParameterFile = c.String("parameter-file")
+						vpcRouterShutdownParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterShutdownParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterShutdownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterShutdownParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterShutdownParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1712,7 +1712,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterShutdownParam
+					var outputTypeHolder interface{} = vpcRouterShutdownParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1723,10 +1723,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterShutdownParam.GenerateSkeleton {
-						vpcrouterShutdownParam.GenerateSkeleton = false
-						vpcrouterShutdownParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterShutdownParam, "", "\t")
+					if vpcRouterShutdownParam.GenerateSkeleton {
+						vpcRouterShutdownParam.GenerateSkeleton = false
+						vpcRouterShutdownParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterShutdownParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1735,19 +1735,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterShutdownParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterShutdownParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterShutdownParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterShutdownParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterShutdownParam.Selector) == 0 {
+						if len(vpcRouterShutdownParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1755,13 +1755,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterShutdownParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterShutdownParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterShutdownParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterShutdownParam.Selector)
 						}
 
 					} else {
@@ -1782,8 +1782,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterShutdownParam.Selector) == 0 || hasTags(&v, vpcrouterShutdownParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterShutdownParam.Selector) == 0 || hasTags(&v, vpcRouterShutdownParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1800,7 +1800,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterShutdownParam.Assumeyes {
+					if !vpcRouterShutdownParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1814,11 +1814,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterShutdownParam.SetId(id)
-						p := *vpcrouterShutdownParam // copy struct value
-						vpcrouterShutdownParam := &p
+						vpcRouterShutdownParam.SetId(id)
+						p := *vpcRouterShutdownParam // copy struct value
+						vpcRouterShutdownParam := &p
 						go func() {
-							err := funcs.VpcrouterShutdown(ctx, vpcrouterShutdownParam)
+							err := funcs.VPCRouterShutdown(ctx, vpcRouterShutdownParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1833,7 +1833,7 @@ func init() {
 			{
 				Name:      "shutdown-force",
 				Aliases:   []string{"stop"},
-				Usage:     "ShutdownForce Vpcrouter",
+				Usage:     "ShutdownForce VPCRouter",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1880,45 +1880,45 @@ func init() {
 						return err
 					}
 
-					vpcrouterShutdownForceParam.ParamTemplate = c.String("param-template")
-					vpcrouterShutdownForceParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterShutdownForceParam)
+					vpcRouterShutdownForceParam.ParamTemplate = c.String("param-template")
+					vpcRouterShutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterShutdownForceParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewShutdownForceVpcrouterParam()
+						p := params.NewShutdownForceVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterShutdownForceParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterShutdownForceParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterShutdownForceParam.Selector = c.StringSlice("selector")
+						vpcRouterShutdownForceParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterShutdownForceParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterShutdownForceParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterShutdownForceParam.ParamTemplate = c.String("param-template")
+						vpcRouterShutdownForceParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterShutdownForceParam.Parameters = c.String("parameters")
+						vpcRouterShutdownForceParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterShutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterShutdownForceParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterShutdownForceParam.ParameterFile = c.String("parameter-file")
+						vpcRouterShutdownForceParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterShutdownForceParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterShutdownForceParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterShutdownForceParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterShutdownForceParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1926,7 +1926,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterShutdownForceParam
+					var outputTypeHolder interface{} = vpcRouterShutdownForceParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1937,10 +1937,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterShutdownForceParam.GenerateSkeleton {
-						vpcrouterShutdownForceParam.GenerateSkeleton = false
-						vpcrouterShutdownForceParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterShutdownForceParam, "", "\t")
+					if vpcRouterShutdownForceParam.GenerateSkeleton {
+						vpcRouterShutdownForceParam.GenerateSkeleton = false
+						vpcRouterShutdownForceParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterShutdownForceParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1949,19 +1949,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterShutdownForceParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterShutdownForceParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterShutdownForceParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterShutdownForceParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterShutdownForceParam.Selector) == 0 {
+						if len(vpcRouterShutdownForceParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1969,13 +1969,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterShutdownForceParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterShutdownForceParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterShutdownForceParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterShutdownForceParam.Selector)
 						}
 
 					} else {
@@ -1996,8 +1996,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterShutdownForceParam.Selector) == 0 || hasTags(&v, vpcrouterShutdownForceParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterShutdownForceParam.Selector) == 0 || hasTags(&v, vpcRouterShutdownForceParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2014,7 +2014,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterShutdownForceParam.Assumeyes {
+					if !vpcRouterShutdownForceParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2028,11 +2028,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterShutdownForceParam.SetId(id)
-						p := *vpcrouterShutdownForceParam // copy struct value
-						vpcrouterShutdownForceParam := &p
+						vpcRouterShutdownForceParam.SetId(id)
+						p := *vpcRouterShutdownForceParam // copy struct value
+						vpcRouterShutdownForceParam := &p
 						go func() {
-							err := funcs.VpcrouterShutdownForce(ctx, vpcrouterShutdownForceParam)
+							err := funcs.VPCRouterShutdownForce(ctx, vpcRouterShutdownForceParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2046,7 +2046,7 @@ func init() {
 			},
 			{
 				Name:      "reset",
-				Usage:     "Reset Vpcrouter",
+				Usage:     "Reset VPCRouter",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2093,45 +2093,45 @@ func init() {
 						return err
 					}
 
-					vpcrouterResetParam.ParamTemplate = c.String("param-template")
-					vpcrouterResetParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterResetParam)
+					vpcRouterResetParam.ParamTemplate = c.String("param-template")
+					vpcRouterResetParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterResetParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewResetVpcrouterParam()
+						p := params.NewResetVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterResetParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterResetParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterResetParam.Selector = c.StringSlice("selector")
+						vpcRouterResetParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterResetParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterResetParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterResetParam.ParamTemplate = c.String("param-template")
+						vpcRouterResetParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterResetParam.Parameters = c.String("parameters")
+						vpcRouterResetParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterResetParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterResetParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterResetParam.ParameterFile = c.String("parameter-file")
+						vpcRouterResetParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterResetParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterResetParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterResetParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterResetParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2139,7 +2139,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterResetParam
+					var outputTypeHolder interface{} = vpcRouterResetParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2150,10 +2150,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterResetParam.GenerateSkeleton {
-						vpcrouterResetParam.GenerateSkeleton = false
-						vpcrouterResetParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterResetParam, "", "\t")
+					if vpcRouterResetParam.GenerateSkeleton {
+						vpcRouterResetParam.GenerateSkeleton = false
+						vpcRouterResetParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterResetParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2162,19 +2162,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterResetParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterResetParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterResetParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterResetParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterResetParam.Selector) == 0 {
+						if len(vpcRouterResetParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2182,13 +2182,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterResetParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterResetParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterResetParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterResetParam.Selector)
 						}
 
 					} else {
@@ -2209,8 +2209,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterResetParam.Selector) == 0 || hasTags(&v, vpcrouterResetParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterResetParam.Selector) == 0 || hasTags(&v, vpcRouterResetParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2227,7 +2227,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterResetParam.Assumeyes {
+					if !vpcRouterResetParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2241,11 +2241,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterResetParam.SetId(id)
-						p := *vpcrouterResetParam // copy struct value
-						vpcrouterResetParam := &p
+						vpcRouterResetParam.SetId(id)
+						p := *vpcRouterResetParam // copy struct value
+						vpcRouterResetParam := &p
 						go func() {
-							err := funcs.VpcrouterReset(ctx, vpcrouterResetParam)
+							err := funcs.VPCRouterReset(ctx, vpcRouterResetParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2301,42 +2301,42 @@ func init() {
 						return err
 					}
 
-					vpcrouterWaitForBootParam.ParamTemplate = c.String("param-template")
-					vpcrouterWaitForBootParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterWaitForBootParam)
+					vpcRouterWaitForBootParam.ParamTemplate = c.String("param-template")
+					vpcRouterWaitForBootParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterWaitForBootParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewWaitForBootVpcrouterParam()
+						p := params.NewWaitForBootVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterWaitForBootParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterWaitForBootParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterWaitForBootParam.Selector = c.StringSlice("selector")
+						vpcRouterWaitForBootParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterWaitForBootParam.ParamTemplate = c.String("param-template")
+						vpcRouterWaitForBootParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterWaitForBootParam.Parameters = c.String("parameters")
+						vpcRouterWaitForBootParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterWaitForBootParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterWaitForBootParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterWaitForBootParam.ParameterFile = c.String("parameter-file")
+						vpcRouterWaitForBootParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterWaitForBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterWaitForBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterWaitForBootParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterWaitForBootParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2344,7 +2344,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterWaitForBootParam
+					var outputTypeHolder interface{} = vpcRouterWaitForBootParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2355,10 +2355,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterWaitForBootParam.GenerateSkeleton {
-						vpcrouterWaitForBootParam.GenerateSkeleton = false
-						vpcrouterWaitForBootParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterWaitForBootParam, "", "\t")
+					if vpcRouterWaitForBootParam.GenerateSkeleton {
+						vpcRouterWaitForBootParam.GenerateSkeleton = false
+						vpcRouterWaitForBootParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterWaitForBootParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2367,19 +2367,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterWaitForBootParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterWaitForBootParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterWaitForBootParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterWaitForBootParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterWaitForBootParam.Selector) == 0 {
+						if len(vpcRouterWaitForBootParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2387,13 +2387,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterWaitForBootParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterWaitForBootParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterWaitForBootParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterWaitForBootParam.Selector)
 						}
 
 					} else {
@@ -2414,8 +2414,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterWaitForBootParam.Selector) == 0 || hasTags(&v, vpcrouterWaitForBootParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterWaitForBootParam.Selector) == 0 || hasTags(&v, vpcRouterWaitForBootParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2436,11 +2436,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterWaitForBootParam.SetId(id)
-						p := *vpcrouterWaitForBootParam // copy struct value
-						vpcrouterWaitForBootParam := &p
+						vpcRouterWaitForBootParam.SetId(id)
+						p := *vpcRouterWaitForBootParam // copy struct value
+						vpcRouterWaitForBootParam := &p
 						go func() {
-							err := funcs.VpcrouterWaitForBoot(ctx, vpcrouterWaitForBootParam)
+							err := funcs.VPCRouterWaitForBoot(ctx, vpcRouterWaitForBootParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2496,42 +2496,42 @@ func init() {
 						return err
 					}
 
-					vpcrouterWaitForDownParam.ParamTemplate = c.String("param-template")
-					vpcrouterWaitForDownParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterWaitForDownParam)
+					vpcRouterWaitForDownParam.ParamTemplate = c.String("param-template")
+					vpcRouterWaitForDownParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterWaitForDownParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewWaitForDownVpcrouterParam()
+						p := params.NewWaitForDownVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterWaitForDownParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterWaitForDownParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterWaitForDownParam.Selector = c.StringSlice("selector")
+						vpcRouterWaitForDownParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterWaitForDownParam.ParamTemplate = c.String("param-template")
+						vpcRouterWaitForDownParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterWaitForDownParam.Parameters = c.String("parameters")
+						vpcRouterWaitForDownParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterWaitForDownParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterWaitForDownParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterWaitForDownParam.ParameterFile = c.String("parameter-file")
+						vpcRouterWaitForDownParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterWaitForDownParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterWaitForDownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterWaitForDownParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterWaitForDownParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2539,7 +2539,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterWaitForDownParam
+					var outputTypeHolder interface{} = vpcRouterWaitForDownParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2550,10 +2550,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterWaitForDownParam.GenerateSkeleton {
-						vpcrouterWaitForDownParam.GenerateSkeleton = false
-						vpcrouterWaitForDownParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterWaitForDownParam, "", "\t")
+					if vpcRouterWaitForDownParam.GenerateSkeleton {
+						vpcRouterWaitForDownParam.GenerateSkeleton = false
+						vpcRouterWaitForDownParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterWaitForDownParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2562,19 +2562,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterWaitForDownParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterWaitForDownParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterWaitForDownParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterWaitForDownParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterWaitForDownParam.Selector) == 0 {
+						if len(vpcRouterWaitForDownParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2582,13 +2582,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterWaitForDownParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterWaitForDownParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterWaitForDownParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterWaitForDownParam.Selector)
 						}
 
 					} else {
@@ -2609,8 +2609,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterWaitForDownParam.Selector) == 0 || hasTags(&v, vpcrouterWaitForDownParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterWaitForDownParam.Selector) == 0 || hasTags(&v, vpcRouterWaitForDownParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2631,11 +2631,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterWaitForDownParam.SetId(id)
-						p := *vpcrouterWaitForDownParam // copy struct value
-						vpcrouterWaitForDownParam := &p
+						vpcRouterWaitForDownParam.SetId(id)
+						p := *vpcRouterWaitForDownParam // copy struct value
+						vpcRouterWaitForDownParam := &p
 						go func() {
-							err := funcs.VpcrouterWaitForDown(ctx, vpcrouterWaitForDownParam)
+							err := funcs.VPCRouterWaitForDown(ctx, vpcRouterWaitForDownParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2696,45 +2696,45 @@ func init() {
 						return err
 					}
 
-					vpcrouterEnableInternetConnectionParam.ParamTemplate = c.String("param-template")
-					vpcrouterEnableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterEnableInternetConnectionParam)
+					vpcRouterEnableInternetConnectionParam.ParamTemplate = c.String("param-template")
+					vpcRouterEnableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterEnableInternetConnectionParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewEnableInternetConnectionVpcrouterParam()
+						p := params.NewEnableInternetConnectionVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterEnableInternetConnectionParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterEnableInternetConnectionParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterEnableInternetConnectionParam.Selector = c.StringSlice("selector")
+						vpcRouterEnableInternetConnectionParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterEnableInternetConnectionParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterEnableInternetConnectionParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterEnableInternetConnectionParam.ParamTemplate = c.String("param-template")
+						vpcRouterEnableInternetConnectionParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterEnableInternetConnectionParam.Parameters = c.String("parameters")
+						vpcRouterEnableInternetConnectionParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterEnableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterEnableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterEnableInternetConnectionParam.ParameterFile = c.String("parameter-file")
+						vpcRouterEnableInternetConnectionParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterEnableInternetConnectionParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterEnableInternetConnectionParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterEnableInternetConnectionParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterEnableInternetConnectionParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2742,7 +2742,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterEnableInternetConnectionParam
+					var outputTypeHolder interface{} = vpcRouterEnableInternetConnectionParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2753,10 +2753,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterEnableInternetConnectionParam.GenerateSkeleton {
-						vpcrouterEnableInternetConnectionParam.GenerateSkeleton = false
-						vpcrouterEnableInternetConnectionParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterEnableInternetConnectionParam, "", "\t")
+					if vpcRouterEnableInternetConnectionParam.GenerateSkeleton {
+						vpcRouterEnableInternetConnectionParam.GenerateSkeleton = false
+						vpcRouterEnableInternetConnectionParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterEnableInternetConnectionParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2765,19 +2765,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterEnableInternetConnectionParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterEnableInternetConnectionParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterEnableInternetConnectionParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterEnableInternetConnectionParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterEnableInternetConnectionParam.Selector) == 0 {
+						if len(vpcRouterEnableInternetConnectionParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2785,13 +2785,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterEnableInternetConnectionParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterEnableInternetConnectionParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterEnableInternetConnectionParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterEnableInternetConnectionParam.Selector)
 						}
 
 					} else {
@@ -2812,8 +2812,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterEnableInternetConnectionParam.Selector) == 0 || hasTags(&v, vpcrouterEnableInternetConnectionParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterEnableInternetConnectionParam.Selector) == 0 || hasTags(&v, vpcRouterEnableInternetConnectionParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2834,7 +2834,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterEnableInternetConnectionParam.Assumeyes {
+					if !vpcRouterEnableInternetConnectionParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2848,11 +2848,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterEnableInternetConnectionParam.SetId(id)
-						p := *vpcrouterEnableInternetConnectionParam // copy struct value
-						vpcrouterEnableInternetConnectionParam := &p
+						vpcRouterEnableInternetConnectionParam.SetId(id)
+						p := *vpcRouterEnableInternetConnectionParam // copy struct value
+						vpcRouterEnableInternetConnectionParam := &p
 						go func() {
-							err := funcs.VpcrouterEnableInternetConnection(ctx, vpcrouterEnableInternetConnectionParam)
+							err := funcs.VPCRouterEnableInternetConnection(ctx, vpcRouterEnableInternetConnectionParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2913,45 +2913,45 @@ func init() {
 						return err
 					}
 
-					vpcrouterDisableInternetConnectionParam.ParamTemplate = c.String("param-template")
-					vpcrouterDisableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterDisableInternetConnectionParam)
+					vpcRouterDisableInternetConnectionParam.ParamTemplate = c.String("param-template")
+					vpcRouterDisableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterDisableInternetConnectionParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDisableInternetConnectionVpcrouterParam()
+						p := params.NewDisableInternetConnectionVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterDisableInternetConnectionParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterDisableInternetConnectionParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterDisableInternetConnectionParam.Selector = c.StringSlice("selector")
+						vpcRouterDisableInternetConnectionParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterDisableInternetConnectionParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterDisableInternetConnectionParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterDisableInternetConnectionParam.ParamTemplate = c.String("param-template")
+						vpcRouterDisableInternetConnectionParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterDisableInternetConnectionParam.Parameters = c.String("parameters")
+						vpcRouterDisableInternetConnectionParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterDisableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterDisableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterDisableInternetConnectionParam.ParameterFile = c.String("parameter-file")
+						vpcRouterDisableInternetConnectionParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterDisableInternetConnectionParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterDisableInternetConnectionParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterDisableInternetConnectionParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterDisableInternetConnectionParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2959,7 +2959,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterDisableInternetConnectionParam
+					var outputTypeHolder interface{} = vpcRouterDisableInternetConnectionParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2970,10 +2970,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterDisableInternetConnectionParam.GenerateSkeleton {
-						vpcrouterDisableInternetConnectionParam.GenerateSkeleton = false
-						vpcrouterDisableInternetConnectionParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterDisableInternetConnectionParam, "", "\t")
+					if vpcRouterDisableInternetConnectionParam.GenerateSkeleton {
+						vpcRouterDisableInternetConnectionParam.GenerateSkeleton = false
+						vpcRouterDisableInternetConnectionParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterDisableInternetConnectionParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2982,19 +2982,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterDisableInternetConnectionParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterDisableInternetConnectionParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterDisableInternetConnectionParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterDisableInternetConnectionParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterDisableInternetConnectionParam.Selector) == 0 {
+						if len(vpcRouterDisableInternetConnectionParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3002,13 +3002,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterDisableInternetConnectionParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterDisableInternetConnectionParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterDisableInternetConnectionParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterDisableInternetConnectionParam.Selector)
 						}
 
 					} else {
@@ -3029,8 +3029,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterDisableInternetConnectionParam.Selector) == 0 || hasTags(&v, vpcrouterDisableInternetConnectionParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterDisableInternetConnectionParam.Selector) == 0 || hasTags(&v, vpcRouterDisableInternetConnectionParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3051,7 +3051,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterDisableInternetConnectionParam.Assumeyes {
+					if !vpcRouterDisableInternetConnectionParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3065,11 +3065,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterDisableInternetConnectionParam.SetId(id)
-						p := *vpcrouterDisableInternetConnectionParam // copy struct value
-						vpcrouterDisableInternetConnectionParam := &p
+						vpcRouterDisableInternetConnectionParam.SetId(id)
+						p := *vpcRouterDisableInternetConnectionParam // copy struct value
+						vpcRouterDisableInternetConnectionParam := &p
 						go func() {
-							err := funcs.VpcrouterDisableInternetConnection(ctx, vpcrouterDisableInternetConnectionParam)
+							err := funcs.VPCRouterDisableInternetConnection(ctx, vpcRouterDisableInternetConnectionParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3158,63 +3158,63 @@ func init() {
 						return err
 					}
 
-					vpcrouterInterfaceInfoParam.ParamTemplate = c.String("param-template")
-					vpcrouterInterfaceInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterInterfaceInfoParam)
+					vpcRouterInterfaceInfoParam.ParamTemplate = c.String("param-template")
+					vpcRouterInterfaceInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterInterfaceInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewInterfaceInfoVpcrouterParam()
+						p := params.NewInterfaceInfoVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterInterfaceInfoParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterInterfaceInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterInterfaceInfoParam.Selector = c.StringSlice("selector")
+						vpcRouterInterfaceInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterInterfaceInfoParam.ParamTemplate = c.String("param-template")
+						vpcRouterInterfaceInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterInterfaceInfoParam.Parameters = c.String("parameters")
+						vpcRouterInterfaceInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterInterfaceInfoParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterInterfaceInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterInterfaceInfoParam.ParameterFile = c.String("parameter-file")
+						vpcRouterInterfaceInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterInterfaceInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterInterfaceInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterInterfaceInfoParam.OutputType = c.String("output-type")
+						vpcRouterInterfaceInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterInterfaceInfoParam.Column = c.StringSlice("column")
+						vpcRouterInterfaceInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterInterfaceInfoParam.Quiet = c.Bool("quiet")
+						vpcRouterInterfaceInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterInterfaceInfoParam.Format = c.String("format")
+						vpcRouterInterfaceInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterInterfaceInfoParam.FormatFile = c.String("format-file")
+						vpcRouterInterfaceInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterInterfaceInfoParam.Query = c.String("query")
+						vpcRouterInterfaceInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterInterfaceInfoParam.QueryFile = c.String("query-file")
+						vpcRouterInterfaceInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vpcrouterInterfaceInfoParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterInterfaceInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3222,7 +3222,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterInterfaceInfoParam
+					var outputTypeHolder interface{} = vpcRouterInterfaceInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3233,10 +3233,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterInterfaceInfoParam.GenerateSkeleton {
-						vpcrouterInterfaceInfoParam.GenerateSkeleton = false
-						vpcrouterInterfaceInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterInterfaceInfoParam, "", "\t")
+					if vpcRouterInterfaceInfoParam.GenerateSkeleton {
+						vpcRouterInterfaceInfoParam.GenerateSkeleton = false
+						vpcRouterInterfaceInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterInterfaceInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3245,19 +3245,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterInterfaceInfoParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterInterfaceInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterInterfaceInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterInterfaceInfoParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterInterfaceInfoParam.Selector) == 0 {
+						if len(vpcRouterInterfaceInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3265,13 +3265,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterInterfaceInfoParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterInterfaceInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterInterfaceInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterInterfaceInfoParam.Selector)
 						}
 
 					} else {
@@ -3292,8 +3292,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterInterfaceInfoParam.Selector) == 0 || hasTags(&v, vpcrouterInterfaceInfoParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterInterfaceInfoParam.Selector) == 0 || hasTags(&v, vpcRouterInterfaceInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3318,11 +3318,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterInterfaceInfoParam.SetId(id)
-						p := *vpcrouterInterfaceInfoParam // copy struct value
-						vpcrouterInterfaceInfoParam := &p
+						vpcRouterInterfaceInfoParam.SetId(id)
+						p := *vpcRouterInterfaceInfoParam // copy struct value
+						vpcRouterInterfaceInfoParam := &p
 						go func() {
-							err := funcs.VpcrouterInterfaceInfo(ctx, vpcrouterInterfaceInfoParam)
+							err := funcs.VPCRouterInterfaceInfo(ctx, vpcRouterInterfaceInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3416,66 +3416,66 @@ func init() {
 						return err
 					}
 
-					vpcrouterInterfaceConnectParam.ParamTemplate = c.String("param-template")
-					vpcrouterInterfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterInterfaceConnectParam)
+					vpcRouterInterfaceConnectParam.ParamTemplate = c.String("param-template")
+					vpcRouterInterfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterInterfaceConnectParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewInterfaceConnectVpcrouterParam()
+						p := params.NewInterfaceConnectVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterInterfaceConnectParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterInterfaceConnectParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("interface") {
-						vpcrouterInterfaceConnectParam.Interface = c.String("interface")
+						vpcRouterInterfaceConnectParam.Interface = c.String("interface")
 					}
 					if c.IsSet("ipaddress") {
-						vpcrouterInterfaceConnectParam.Ipaddress = c.String("ipaddress")
+						vpcRouterInterfaceConnectParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("with-reboot") {
-						vpcrouterInterfaceConnectParam.WithReboot = c.Bool("with-reboot")
+						vpcRouterInterfaceConnectParam.WithReboot = c.Bool("with-reboot")
 					}
 					if c.IsSet("ipaddress-1") {
-						vpcrouterInterfaceConnectParam.Ipaddress1 = c.String("ipaddress-1")
+						vpcRouterInterfaceConnectParam.Ipaddress1 = c.String("ipaddress-1")
 					}
 					if c.IsSet("switch-id") {
-						vpcrouterInterfaceConnectParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
+						vpcRouterInterfaceConnectParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
 					}
 					if c.IsSet("ipaddress-2") {
-						vpcrouterInterfaceConnectParam.Ipaddress2 = c.String("ipaddress-2")
+						vpcRouterInterfaceConnectParam.Ipaddress2 = c.String("ipaddress-2")
 					}
 					if c.IsSet("nw-masklen") {
-						vpcrouterInterfaceConnectParam.NwMasklen = c.Int("nw-masklen")
+						vpcRouterInterfaceConnectParam.NwMasklen = c.Int("nw-masklen")
 					}
 					if c.IsSet("selector") {
-						vpcrouterInterfaceConnectParam.Selector = c.StringSlice("selector")
+						vpcRouterInterfaceConnectParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterInterfaceConnectParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterInterfaceConnectParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterInterfaceConnectParam.ParamTemplate = c.String("param-template")
+						vpcRouterInterfaceConnectParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterInterfaceConnectParam.Parameters = c.String("parameters")
+						vpcRouterInterfaceConnectParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterInterfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterInterfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterInterfaceConnectParam.ParameterFile = c.String("parameter-file")
+						vpcRouterInterfaceConnectParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterInterfaceConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterInterfaceConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterInterfaceConnectParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterInterfaceConnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3483,7 +3483,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterInterfaceConnectParam
+					var outputTypeHolder interface{} = vpcRouterInterfaceConnectParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3494,10 +3494,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterInterfaceConnectParam.GenerateSkeleton {
-						vpcrouterInterfaceConnectParam.GenerateSkeleton = false
-						vpcrouterInterfaceConnectParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterInterfaceConnectParam, "", "\t")
+					if vpcRouterInterfaceConnectParam.GenerateSkeleton {
+						vpcRouterInterfaceConnectParam.GenerateSkeleton = false
+						vpcRouterInterfaceConnectParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterInterfaceConnectParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3506,19 +3506,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterInterfaceConnectParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterInterfaceConnectParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterInterfaceConnectParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterInterfaceConnectParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterInterfaceConnectParam.Selector) == 0 {
+						if len(vpcRouterInterfaceConnectParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3526,13 +3526,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterInterfaceConnectParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterInterfaceConnectParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterInterfaceConnectParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterInterfaceConnectParam.Selector)
 						}
 
 					} else {
@@ -3553,8 +3553,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterInterfaceConnectParam.Selector) == 0 || hasTags(&v, vpcrouterInterfaceConnectParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterInterfaceConnectParam.Selector) == 0 || hasTags(&v, vpcRouterInterfaceConnectParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3575,7 +3575,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterInterfaceConnectParam.Assumeyes {
+					if !vpcRouterInterfaceConnectParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3589,11 +3589,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterInterfaceConnectParam.SetId(id)
-						p := *vpcrouterInterfaceConnectParam // copy struct value
-						vpcrouterInterfaceConnectParam := &p
+						vpcRouterInterfaceConnectParam.SetId(id)
+						p := *vpcRouterInterfaceConnectParam // copy struct value
+						vpcRouterInterfaceConnectParam := &p
 						go func() {
-							err := funcs.VpcrouterInterfaceConnect(ctx, vpcrouterInterfaceConnectParam)
+							err := funcs.VPCRouterInterfaceConnect(ctx, vpcRouterInterfaceConnectParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3691,69 +3691,69 @@ func init() {
 						return err
 					}
 
-					vpcrouterInterfaceUpdateParam.ParamTemplate = c.String("param-template")
-					vpcrouterInterfaceUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterInterfaceUpdateParam)
+					vpcRouterInterfaceUpdateParam.ParamTemplate = c.String("param-template")
+					vpcRouterInterfaceUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterInterfaceUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewInterfaceUpdateVpcrouterParam()
+						p := params.NewInterfaceUpdateVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterInterfaceUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterInterfaceUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("interface") {
-						vpcrouterInterfaceUpdateParam.Interface = c.String("interface")
+						vpcRouterInterfaceUpdateParam.Interface = c.String("interface")
 					}
 					if c.IsSet("ipaddress") {
-						vpcrouterInterfaceUpdateParam.Ipaddress = c.String("ipaddress")
+						vpcRouterInterfaceUpdateParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("with-reboot") {
-						vpcrouterInterfaceUpdateParam.WithReboot = c.Bool("with-reboot")
+						vpcRouterInterfaceUpdateParam.WithReboot = c.Bool("with-reboot")
 					}
 					if c.IsSet("ipaddress-1") {
-						vpcrouterInterfaceUpdateParam.Ipaddress1 = c.String("ipaddress-1")
+						vpcRouterInterfaceUpdateParam.Ipaddress1 = c.String("ipaddress-1")
 					}
 					if c.IsSet("switch-id") {
-						vpcrouterInterfaceUpdateParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
+						vpcRouterInterfaceUpdateParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
 					}
 					if c.IsSet("ipaddress-2") {
-						vpcrouterInterfaceUpdateParam.Ipaddress2 = c.String("ipaddress-2")
+						vpcRouterInterfaceUpdateParam.Ipaddress2 = c.String("ipaddress-2")
 					}
 					if c.IsSet("alias") {
-						vpcrouterInterfaceUpdateParam.Alias = c.StringSlice("alias")
+						vpcRouterInterfaceUpdateParam.Alias = c.StringSlice("alias")
 					}
 					if c.IsSet("nw-masklen") {
-						vpcrouterInterfaceUpdateParam.NwMasklen = c.Int("nw-masklen")
+						vpcRouterInterfaceUpdateParam.NwMasklen = c.Int("nw-masklen")
 					}
 					if c.IsSet("selector") {
-						vpcrouterInterfaceUpdateParam.Selector = c.StringSlice("selector")
+						vpcRouterInterfaceUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterInterfaceUpdateParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterInterfaceUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterInterfaceUpdateParam.ParamTemplate = c.String("param-template")
+						vpcRouterInterfaceUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterInterfaceUpdateParam.Parameters = c.String("parameters")
+						vpcRouterInterfaceUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterInterfaceUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterInterfaceUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterInterfaceUpdateParam.ParameterFile = c.String("parameter-file")
+						vpcRouterInterfaceUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterInterfaceUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterInterfaceUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterInterfaceUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterInterfaceUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3761,7 +3761,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterInterfaceUpdateParam
+					var outputTypeHolder interface{} = vpcRouterInterfaceUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3772,10 +3772,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterInterfaceUpdateParam.GenerateSkeleton {
-						vpcrouterInterfaceUpdateParam.GenerateSkeleton = false
-						vpcrouterInterfaceUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterInterfaceUpdateParam, "", "\t")
+					if vpcRouterInterfaceUpdateParam.GenerateSkeleton {
+						vpcRouterInterfaceUpdateParam.GenerateSkeleton = false
+						vpcRouterInterfaceUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterInterfaceUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3784,19 +3784,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterInterfaceUpdateParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterInterfaceUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterInterfaceUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterInterfaceUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterInterfaceUpdateParam.Selector) == 0 {
+						if len(vpcRouterInterfaceUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3804,13 +3804,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterInterfaceUpdateParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterInterfaceUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterInterfaceUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterInterfaceUpdateParam.Selector)
 						}
 
 					} else {
@@ -3831,8 +3831,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterInterfaceUpdateParam.Selector) == 0 || hasTags(&v, vpcrouterInterfaceUpdateParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterInterfaceUpdateParam.Selector) == 0 || hasTags(&v, vpcRouterInterfaceUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3853,7 +3853,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterInterfaceUpdateParam.Assumeyes {
+					if !vpcRouterInterfaceUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3867,11 +3867,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterInterfaceUpdateParam.SetId(id)
-						p := *vpcrouterInterfaceUpdateParam // copy struct value
-						vpcrouterInterfaceUpdateParam := &p
+						vpcRouterInterfaceUpdateParam.SetId(id)
+						p := *vpcRouterInterfaceUpdateParam // copy struct value
+						vpcRouterInterfaceUpdateParam := &p
 						go func() {
-							err := funcs.VpcrouterInterfaceUpdate(ctx, vpcrouterInterfaceUpdateParam)
+							err := funcs.VPCRouterInterfaceUpdate(ctx, vpcRouterInterfaceUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3940,51 +3940,51 @@ func init() {
 						return err
 					}
 
-					vpcrouterInterfaceDisconnectParam.ParamTemplate = c.String("param-template")
-					vpcrouterInterfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterInterfaceDisconnectParam)
+					vpcRouterInterfaceDisconnectParam.ParamTemplate = c.String("param-template")
+					vpcRouterInterfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterInterfaceDisconnectParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewInterfaceDisconnectVpcrouterParam()
+						p := params.NewInterfaceDisconnectVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterInterfaceDisconnectParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterInterfaceDisconnectParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("interface") {
-						vpcrouterInterfaceDisconnectParam.Interface = c.String("interface")
+						vpcRouterInterfaceDisconnectParam.Interface = c.String("interface")
 					}
 					if c.IsSet("with-reboot") {
-						vpcrouterInterfaceDisconnectParam.WithReboot = c.Bool("with-reboot")
+						vpcRouterInterfaceDisconnectParam.WithReboot = c.Bool("with-reboot")
 					}
 					if c.IsSet("selector") {
-						vpcrouterInterfaceDisconnectParam.Selector = c.StringSlice("selector")
+						vpcRouterInterfaceDisconnectParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterInterfaceDisconnectParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterInterfaceDisconnectParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterInterfaceDisconnectParam.ParamTemplate = c.String("param-template")
+						vpcRouterInterfaceDisconnectParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterInterfaceDisconnectParam.Parameters = c.String("parameters")
+						vpcRouterInterfaceDisconnectParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterInterfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterInterfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterInterfaceDisconnectParam.ParameterFile = c.String("parameter-file")
+						vpcRouterInterfaceDisconnectParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterInterfaceDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterInterfaceDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterInterfaceDisconnectParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterInterfaceDisconnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3992,7 +3992,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterInterfaceDisconnectParam
+					var outputTypeHolder interface{} = vpcRouterInterfaceDisconnectParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4003,10 +4003,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterInterfaceDisconnectParam.GenerateSkeleton {
-						vpcrouterInterfaceDisconnectParam.GenerateSkeleton = false
-						vpcrouterInterfaceDisconnectParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterInterfaceDisconnectParam, "", "\t")
+					if vpcRouterInterfaceDisconnectParam.GenerateSkeleton {
+						vpcRouterInterfaceDisconnectParam.GenerateSkeleton = false
+						vpcRouterInterfaceDisconnectParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterInterfaceDisconnectParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4015,19 +4015,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterInterfaceDisconnectParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterInterfaceDisconnectParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterInterfaceDisconnectParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterInterfaceDisconnectParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterInterfaceDisconnectParam.Selector) == 0 {
+						if len(vpcRouterInterfaceDisconnectParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4035,13 +4035,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterInterfaceDisconnectParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterInterfaceDisconnectParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterInterfaceDisconnectParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterInterfaceDisconnectParam.Selector)
 						}
 
 					} else {
@@ -4062,8 +4062,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterInterfaceDisconnectParam.Selector) == 0 || hasTags(&v, vpcrouterInterfaceDisconnectParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterInterfaceDisconnectParam.Selector) == 0 || hasTags(&v, vpcRouterInterfaceDisconnectParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4084,7 +4084,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterInterfaceDisconnectParam.Assumeyes {
+					if !vpcRouterInterfaceDisconnectParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -4098,11 +4098,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterInterfaceDisconnectParam.SetId(id)
-						p := *vpcrouterInterfaceDisconnectParam // copy struct value
-						vpcrouterInterfaceDisconnectParam := &p
+						vpcRouterInterfaceDisconnectParam.SetId(id)
+						p := *vpcRouterInterfaceDisconnectParam // copy struct value
+						vpcRouterInterfaceDisconnectParam := &p
 						go func() {
-							err := funcs.VpcrouterInterfaceDisconnect(ctx, vpcrouterInterfaceDisconnectParam)
+							err := funcs.VPCRouterInterfaceDisconnect(ctx, vpcRouterInterfaceDisconnectParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4191,63 +4191,63 @@ func init() {
 						return err
 					}
 
-					vpcrouterStaticNatInfoParam.ParamTemplate = c.String("param-template")
-					vpcrouterStaticNatInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterStaticNatInfoParam)
+					vpcRouterStaticNatInfoParam.ParamTemplate = c.String("param-template")
+					vpcRouterStaticNatInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterStaticNatInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewStaticNatInfoVpcrouterParam()
+						p := params.NewStaticNatInfoVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterStaticNatInfoParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterStaticNatInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterStaticNatInfoParam.Selector = c.StringSlice("selector")
+						vpcRouterStaticNatInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterStaticNatInfoParam.ParamTemplate = c.String("param-template")
+						vpcRouterStaticNatInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterStaticNatInfoParam.Parameters = c.String("parameters")
+						vpcRouterStaticNatInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterStaticNatInfoParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterStaticNatInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterStaticNatInfoParam.ParameterFile = c.String("parameter-file")
+						vpcRouterStaticNatInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterStaticNatInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterStaticNatInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterStaticNatInfoParam.OutputType = c.String("output-type")
+						vpcRouterStaticNatInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterStaticNatInfoParam.Column = c.StringSlice("column")
+						vpcRouterStaticNatInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterStaticNatInfoParam.Quiet = c.Bool("quiet")
+						vpcRouterStaticNatInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterStaticNatInfoParam.Format = c.String("format")
+						vpcRouterStaticNatInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterStaticNatInfoParam.FormatFile = c.String("format-file")
+						vpcRouterStaticNatInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterStaticNatInfoParam.Query = c.String("query")
+						vpcRouterStaticNatInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterStaticNatInfoParam.QueryFile = c.String("query-file")
+						vpcRouterStaticNatInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vpcrouterStaticNatInfoParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterStaticNatInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4255,7 +4255,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterStaticNatInfoParam
+					var outputTypeHolder interface{} = vpcRouterStaticNatInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4266,10 +4266,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterStaticNatInfoParam.GenerateSkeleton {
-						vpcrouterStaticNatInfoParam.GenerateSkeleton = false
-						vpcrouterStaticNatInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterStaticNatInfoParam, "", "\t")
+					if vpcRouterStaticNatInfoParam.GenerateSkeleton {
+						vpcRouterStaticNatInfoParam.GenerateSkeleton = false
+						vpcRouterStaticNatInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterStaticNatInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4278,19 +4278,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterStaticNatInfoParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterStaticNatInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterStaticNatInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterStaticNatInfoParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterStaticNatInfoParam.Selector) == 0 {
+						if len(vpcRouterStaticNatInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4298,13 +4298,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterStaticNatInfoParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterStaticNatInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterStaticNatInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterStaticNatInfoParam.Selector)
 						}
 
 					} else {
@@ -4325,8 +4325,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterStaticNatInfoParam.Selector) == 0 || hasTags(&v, vpcrouterStaticNatInfoParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterStaticNatInfoParam.Selector) == 0 || hasTags(&v, vpcRouterStaticNatInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4351,11 +4351,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterStaticNatInfoParam.SetId(id)
-						p := *vpcrouterStaticNatInfoParam // copy struct value
-						vpcrouterStaticNatInfoParam := &p
+						vpcRouterStaticNatInfoParam.SetId(id)
+						p := *vpcRouterStaticNatInfoParam // copy struct value
+						vpcRouterStaticNatInfoParam := &p
 						go func() {
-							err := funcs.VpcrouterStaticNatInfo(ctx, vpcrouterStaticNatInfoParam)
+							err := funcs.VPCRouterStaticNatInfo(ctx, vpcRouterStaticNatInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4431,54 +4431,54 @@ func init() {
 						return err
 					}
 
-					vpcrouterStaticNatAddParam.ParamTemplate = c.String("param-template")
-					vpcrouterStaticNatAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterStaticNatAddParam)
+					vpcRouterStaticNatAddParam.ParamTemplate = c.String("param-template")
+					vpcRouterStaticNatAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterStaticNatAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewStaticNatAddVpcrouterParam()
+						p := params.NewStaticNatAddVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterStaticNatAddParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterStaticNatAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("global") {
-						vpcrouterStaticNatAddParam.Global = c.String("global")
+						vpcRouterStaticNatAddParam.Global = c.String("global")
 					}
 					if c.IsSet("private") {
-						vpcrouterStaticNatAddParam.Private = c.String("private")
+						vpcRouterStaticNatAddParam.Private = c.String("private")
 					}
 					if c.IsSet("description") {
-						vpcrouterStaticNatAddParam.Description = c.String("description")
+						vpcRouterStaticNatAddParam.Description = c.String("description")
 					}
 					if c.IsSet("selector") {
-						vpcrouterStaticNatAddParam.Selector = c.StringSlice("selector")
+						vpcRouterStaticNatAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterStaticNatAddParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterStaticNatAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterStaticNatAddParam.ParamTemplate = c.String("param-template")
+						vpcRouterStaticNatAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterStaticNatAddParam.Parameters = c.String("parameters")
+						vpcRouterStaticNatAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterStaticNatAddParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterStaticNatAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterStaticNatAddParam.ParameterFile = c.String("parameter-file")
+						vpcRouterStaticNatAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterStaticNatAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterStaticNatAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterStaticNatAddParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterStaticNatAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4486,7 +4486,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterStaticNatAddParam
+					var outputTypeHolder interface{} = vpcRouterStaticNatAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4497,10 +4497,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterStaticNatAddParam.GenerateSkeleton {
-						vpcrouterStaticNatAddParam.GenerateSkeleton = false
-						vpcrouterStaticNatAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterStaticNatAddParam, "", "\t")
+					if vpcRouterStaticNatAddParam.GenerateSkeleton {
+						vpcRouterStaticNatAddParam.GenerateSkeleton = false
+						vpcRouterStaticNatAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterStaticNatAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4509,19 +4509,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterStaticNatAddParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterStaticNatAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterStaticNatAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterStaticNatAddParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterStaticNatAddParam.Selector) == 0 {
+						if len(vpcRouterStaticNatAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4529,13 +4529,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterStaticNatAddParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterStaticNatAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterStaticNatAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterStaticNatAddParam.Selector)
 						}
 
 					} else {
@@ -4556,8 +4556,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterStaticNatAddParam.Selector) == 0 || hasTags(&v, vpcrouterStaticNatAddParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterStaticNatAddParam.Selector) == 0 || hasTags(&v, vpcRouterStaticNatAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4578,7 +4578,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterStaticNatAddParam.Assumeyes {
+					if !vpcRouterStaticNatAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -4592,11 +4592,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterStaticNatAddParam.SetId(id)
-						p := *vpcrouterStaticNatAddParam // copy struct value
-						vpcrouterStaticNatAddParam := &p
+						vpcRouterStaticNatAddParam.SetId(id)
+						p := *vpcRouterStaticNatAddParam // copy struct value
+						vpcRouterStaticNatAddParam := &p
 						go func() {
-							err := funcs.VpcrouterStaticNatAdd(ctx, vpcrouterStaticNatAddParam)
+							err := funcs.VPCRouterStaticNatAdd(ctx, vpcRouterStaticNatAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4676,57 +4676,57 @@ func init() {
 						return err
 					}
 
-					vpcrouterStaticNatUpdateParam.ParamTemplate = c.String("param-template")
-					vpcrouterStaticNatUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterStaticNatUpdateParam)
+					vpcRouterStaticNatUpdateParam.ParamTemplate = c.String("param-template")
+					vpcRouterStaticNatUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterStaticNatUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewStaticNatUpdateVpcrouterParam()
+						p := params.NewStaticNatUpdateVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterStaticNatUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterStaticNatUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						vpcrouterStaticNatUpdateParam.Index = c.Int("index")
+						vpcRouterStaticNatUpdateParam.Index = c.Int("index")
 					}
 					if c.IsSet("global") {
-						vpcrouterStaticNatUpdateParam.Global = c.String("global")
+						vpcRouterStaticNatUpdateParam.Global = c.String("global")
 					}
 					if c.IsSet("private") {
-						vpcrouterStaticNatUpdateParam.Private = c.String("private")
+						vpcRouterStaticNatUpdateParam.Private = c.String("private")
 					}
 					if c.IsSet("description") {
-						vpcrouterStaticNatUpdateParam.Description = c.String("description")
+						vpcRouterStaticNatUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("selector") {
-						vpcrouterStaticNatUpdateParam.Selector = c.StringSlice("selector")
+						vpcRouterStaticNatUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterStaticNatUpdateParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterStaticNatUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterStaticNatUpdateParam.ParamTemplate = c.String("param-template")
+						vpcRouterStaticNatUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterStaticNatUpdateParam.Parameters = c.String("parameters")
+						vpcRouterStaticNatUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterStaticNatUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterStaticNatUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterStaticNatUpdateParam.ParameterFile = c.String("parameter-file")
+						vpcRouterStaticNatUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterStaticNatUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterStaticNatUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterStaticNatUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterStaticNatUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4734,7 +4734,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterStaticNatUpdateParam
+					var outputTypeHolder interface{} = vpcRouterStaticNatUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4745,10 +4745,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterStaticNatUpdateParam.GenerateSkeleton {
-						vpcrouterStaticNatUpdateParam.GenerateSkeleton = false
-						vpcrouterStaticNatUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterStaticNatUpdateParam, "", "\t")
+					if vpcRouterStaticNatUpdateParam.GenerateSkeleton {
+						vpcRouterStaticNatUpdateParam.GenerateSkeleton = false
+						vpcRouterStaticNatUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterStaticNatUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4757,19 +4757,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterStaticNatUpdateParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterStaticNatUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterStaticNatUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterStaticNatUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterStaticNatUpdateParam.Selector) == 0 {
+						if len(vpcRouterStaticNatUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4777,13 +4777,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterStaticNatUpdateParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterStaticNatUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterStaticNatUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterStaticNatUpdateParam.Selector)
 						}
 
 					} else {
@@ -4804,8 +4804,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterStaticNatUpdateParam.Selector) == 0 || hasTags(&v, vpcrouterStaticNatUpdateParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterStaticNatUpdateParam.Selector) == 0 || hasTags(&v, vpcRouterStaticNatUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4826,7 +4826,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterStaticNatUpdateParam.Assumeyes {
+					if !vpcRouterStaticNatUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -4840,11 +4840,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterStaticNatUpdateParam.SetId(id)
-						p := *vpcrouterStaticNatUpdateParam // copy struct value
-						vpcrouterStaticNatUpdateParam := &p
+						vpcRouterStaticNatUpdateParam.SetId(id)
+						p := *vpcRouterStaticNatUpdateParam // copy struct value
+						vpcRouterStaticNatUpdateParam := &p
 						go func() {
-							err := funcs.VpcrouterStaticNatUpdate(ctx, vpcrouterStaticNatUpdateParam)
+							err := funcs.VPCRouterStaticNatUpdate(ctx, vpcRouterStaticNatUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4909,48 +4909,48 @@ func init() {
 						return err
 					}
 
-					vpcrouterStaticNatDeleteParam.ParamTemplate = c.String("param-template")
-					vpcrouterStaticNatDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterStaticNatDeleteParam)
+					vpcRouterStaticNatDeleteParam.ParamTemplate = c.String("param-template")
+					vpcRouterStaticNatDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterStaticNatDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewStaticNatDeleteVpcrouterParam()
+						p := params.NewStaticNatDeleteVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterStaticNatDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterStaticNatDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						vpcrouterStaticNatDeleteParam.Index = c.Int("index")
+						vpcRouterStaticNatDeleteParam.Index = c.Int("index")
 					}
 					if c.IsSet("selector") {
-						vpcrouterStaticNatDeleteParam.Selector = c.StringSlice("selector")
+						vpcRouterStaticNatDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterStaticNatDeleteParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterStaticNatDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterStaticNatDeleteParam.ParamTemplate = c.String("param-template")
+						vpcRouterStaticNatDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterStaticNatDeleteParam.Parameters = c.String("parameters")
+						vpcRouterStaticNatDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterStaticNatDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterStaticNatDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterStaticNatDeleteParam.ParameterFile = c.String("parameter-file")
+						vpcRouterStaticNatDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterStaticNatDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterStaticNatDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterStaticNatDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterStaticNatDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4958,7 +4958,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterStaticNatDeleteParam
+					var outputTypeHolder interface{} = vpcRouterStaticNatDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4969,10 +4969,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterStaticNatDeleteParam.GenerateSkeleton {
-						vpcrouterStaticNatDeleteParam.GenerateSkeleton = false
-						vpcrouterStaticNatDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterStaticNatDeleteParam, "", "\t")
+					if vpcRouterStaticNatDeleteParam.GenerateSkeleton {
+						vpcRouterStaticNatDeleteParam.GenerateSkeleton = false
+						vpcRouterStaticNatDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterStaticNatDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4981,19 +4981,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterStaticNatDeleteParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterStaticNatDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterStaticNatDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterStaticNatDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterStaticNatDeleteParam.Selector) == 0 {
+						if len(vpcRouterStaticNatDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5001,13 +5001,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterStaticNatDeleteParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterStaticNatDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterStaticNatDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterStaticNatDeleteParam.Selector)
 						}
 
 					} else {
@@ -5028,8 +5028,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterStaticNatDeleteParam.Selector) == 0 || hasTags(&v, vpcrouterStaticNatDeleteParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterStaticNatDeleteParam.Selector) == 0 || hasTags(&v, vpcRouterStaticNatDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5050,7 +5050,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterStaticNatDeleteParam.Assumeyes {
+					if !vpcRouterStaticNatDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -5064,11 +5064,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterStaticNatDeleteParam.SetId(id)
-						p := *vpcrouterStaticNatDeleteParam // copy struct value
-						vpcrouterStaticNatDeleteParam := &p
+						vpcRouterStaticNatDeleteParam.SetId(id)
+						p := *vpcRouterStaticNatDeleteParam // copy struct value
+						vpcRouterStaticNatDeleteParam := &p
 						go func() {
-							err := funcs.VpcrouterStaticNatDelete(ctx, vpcrouterStaticNatDeleteParam)
+							err := funcs.VPCRouterStaticNatDelete(ctx, vpcRouterStaticNatDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5157,63 +5157,63 @@ func init() {
 						return err
 					}
 
-					vpcrouterPortForwardingInfoParam.ParamTemplate = c.String("param-template")
-					vpcrouterPortForwardingInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterPortForwardingInfoParam)
+					vpcRouterPortForwardingInfoParam.ParamTemplate = c.String("param-template")
+					vpcRouterPortForwardingInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterPortForwardingInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewPortForwardingInfoVpcrouterParam()
+						p := params.NewPortForwardingInfoVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterPortForwardingInfoParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterPortForwardingInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterPortForwardingInfoParam.Selector = c.StringSlice("selector")
+						vpcRouterPortForwardingInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterPortForwardingInfoParam.ParamTemplate = c.String("param-template")
+						vpcRouterPortForwardingInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterPortForwardingInfoParam.Parameters = c.String("parameters")
+						vpcRouterPortForwardingInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterPortForwardingInfoParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterPortForwardingInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterPortForwardingInfoParam.ParameterFile = c.String("parameter-file")
+						vpcRouterPortForwardingInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterPortForwardingInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterPortForwardingInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterPortForwardingInfoParam.OutputType = c.String("output-type")
+						vpcRouterPortForwardingInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterPortForwardingInfoParam.Column = c.StringSlice("column")
+						vpcRouterPortForwardingInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterPortForwardingInfoParam.Quiet = c.Bool("quiet")
+						vpcRouterPortForwardingInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterPortForwardingInfoParam.Format = c.String("format")
+						vpcRouterPortForwardingInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterPortForwardingInfoParam.FormatFile = c.String("format-file")
+						vpcRouterPortForwardingInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterPortForwardingInfoParam.Query = c.String("query")
+						vpcRouterPortForwardingInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterPortForwardingInfoParam.QueryFile = c.String("query-file")
+						vpcRouterPortForwardingInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vpcrouterPortForwardingInfoParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterPortForwardingInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5221,7 +5221,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterPortForwardingInfoParam
+					var outputTypeHolder interface{} = vpcRouterPortForwardingInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5232,10 +5232,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterPortForwardingInfoParam.GenerateSkeleton {
-						vpcrouterPortForwardingInfoParam.GenerateSkeleton = false
-						vpcrouterPortForwardingInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterPortForwardingInfoParam, "", "\t")
+					if vpcRouterPortForwardingInfoParam.GenerateSkeleton {
+						vpcRouterPortForwardingInfoParam.GenerateSkeleton = false
+						vpcRouterPortForwardingInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterPortForwardingInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5244,19 +5244,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterPortForwardingInfoParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterPortForwardingInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterPortForwardingInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterPortForwardingInfoParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterPortForwardingInfoParam.Selector) == 0 {
+						if len(vpcRouterPortForwardingInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5264,13 +5264,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterPortForwardingInfoParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterPortForwardingInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterPortForwardingInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterPortForwardingInfoParam.Selector)
 						}
 
 					} else {
@@ -5291,8 +5291,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterPortForwardingInfoParam.Selector) == 0 || hasTags(&v, vpcrouterPortForwardingInfoParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterPortForwardingInfoParam.Selector) == 0 || hasTags(&v, vpcRouterPortForwardingInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5317,11 +5317,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterPortForwardingInfoParam.SetId(id)
-						p := *vpcrouterPortForwardingInfoParam // copy struct value
-						vpcrouterPortForwardingInfoParam := &p
+						vpcRouterPortForwardingInfoParam.SetId(id)
+						p := *vpcRouterPortForwardingInfoParam // copy struct value
+						vpcRouterPortForwardingInfoParam := &p
 						go func() {
-							err := funcs.VpcrouterPortForwardingInfo(ctx, vpcrouterPortForwardingInfoParam)
+							err := funcs.VPCRouterPortForwardingInfo(ctx, vpcRouterPortForwardingInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5404,60 +5404,60 @@ func init() {
 						return err
 					}
 
-					vpcrouterPortForwardingAddParam.ParamTemplate = c.String("param-template")
-					vpcrouterPortForwardingAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterPortForwardingAddParam)
+					vpcRouterPortForwardingAddParam.ParamTemplate = c.String("param-template")
+					vpcRouterPortForwardingAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterPortForwardingAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewPortForwardingAddVpcrouterParam()
+						p := params.NewPortForwardingAddVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterPortForwardingAddParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterPortForwardingAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("protocol") {
-						vpcrouterPortForwardingAddParam.Protocol = c.String("protocol")
+						vpcRouterPortForwardingAddParam.Protocol = c.String("protocol")
 					}
 					if c.IsSet("global-port") {
-						vpcrouterPortForwardingAddParam.GlobalPort = c.Int("global-port")
+						vpcRouterPortForwardingAddParam.GlobalPort = c.Int("global-port")
 					}
 					if c.IsSet("private-ipaddress") {
-						vpcrouterPortForwardingAddParam.PrivateIpaddress = c.String("private-ipaddress")
+						vpcRouterPortForwardingAddParam.PrivateIpaddress = c.String("private-ipaddress")
 					}
 					if c.IsSet("private-port") {
-						vpcrouterPortForwardingAddParam.PrivatePort = c.Int("private-port")
+						vpcRouterPortForwardingAddParam.PrivatePort = c.Int("private-port")
 					}
 					if c.IsSet("description") {
-						vpcrouterPortForwardingAddParam.Description = c.String("description")
+						vpcRouterPortForwardingAddParam.Description = c.String("description")
 					}
 					if c.IsSet("selector") {
-						vpcrouterPortForwardingAddParam.Selector = c.StringSlice("selector")
+						vpcRouterPortForwardingAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterPortForwardingAddParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterPortForwardingAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterPortForwardingAddParam.ParamTemplate = c.String("param-template")
+						vpcRouterPortForwardingAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterPortForwardingAddParam.Parameters = c.String("parameters")
+						vpcRouterPortForwardingAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterPortForwardingAddParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterPortForwardingAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterPortForwardingAddParam.ParameterFile = c.String("parameter-file")
+						vpcRouterPortForwardingAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterPortForwardingAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterPortForwardingAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterPortForwardingAddParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterPortForwardingAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5465,7 +5465,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterPortForwardingAddParam
+					var outputTypeHolder interface{} = vpcRouterPortForwardingAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5476,10 +5476,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterPortForwardingAddParam.GenerateSkeleton {
-						vpcrouterPortForwardingAddParam.GenerateSkeleton = false
-						vpcrouterPortForwardingAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterPortForwardingAddParam, "", "\t")
+					if vpcRouterPortForwardingAddParam.GenerateSkeleton {
+						vpcRouterPortForwardingAddParam.GenerateSkeleton = false
+						vpcRouterPortForwardingAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterPortForwardingAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5488,19 +5488,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterPortForwardingAddParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterPortForwardingAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterPortForwardingAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterPortForwardingAddParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterPortForwardingAddParam.Selector) == 0 {
+						if len(vpcRouterPortForwardingAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5508,13 +5508,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterPortForwardingAddParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterPortForwardingAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterPortForwardingAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterPortForwardingAddParam.Selector)
 						}
 
 					} else {
@@ -5535,8 +5535,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterPortForwardingAddParam.Selector) == 0 || hasTags(&v, vpcrouterPortForwardingAddParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterPortForwardingAddParam.Selector) == 0 || hasTags(&v, vpcRouterPortForwardingAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5557,7 +5557,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterPortForwardingAddParam.Assumeyes {
+					if !vpcRouterPortForwardingAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -5571,11 +5571,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterPortForwardingAddParam.SetId(id)
-						p := *vpcrouterPortForwardingAddParam // copy struct value
-						vpcrouterPortForwardingAddParam := &p
+						vpcRouterPortForwardingAddParam.SetId(id)
+						p := *vpcRouterPortForwardingAddParam // copy struct value
+						vpcRouterPortForwardingAddParam := &p
 						go func() {
-							err := funcs.VpcrouterPortForwardingAdd(ctx, vpcrouterPortForwardingAddParam)
+							err := funcs.VPCRouterPortForwardingAdd(ctx, vpcRouterPortForwardingAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5662,63 +5662,63 @@ func init() {
 						return err
 					}
 
-					vpcrouterPortForwardingUpdateParam.ParamTemplate = c.String("param-template")
-					vpcrouterPortForwardingUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterPortForwardingUpdateParam)
+					vpcRouterPortForwardingUpdateParam.ParamTemplate = c.String("param-template")
+					vpcRouterPortForwardingUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterPortForwardingUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewPortForwardingUpdateVpcrouterParam()
+						p := params.NewPortForwardingUpdateVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterPortForwardingUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterPortForwardingUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						vpcrouterPortForwardingUpdateParam.Index = c.Int("index")
+						vpcRouterPortForwardingUpdateParam.Index = c.Int("index")
 					}
 					if c.IsSet("protocol") {
-						vpcrouterPortForwardingUpdateParam.Protocol = c.String("protocol")
+						vpcRouterPortForwardingUpdateParam.Protocol = c.String("protocol")
 					}
 					if c.IsSet("global-port") {
-						vpcrouterPortForwardingUpdateParam.GlobalPort = c.Int("global-port")
+						vpcRouterPortForwardingUpdateParam.GlobalPort = c.Int("global-port")
 					}
 					if c.IsSet("private-ipaddress") {
-						vpcrouterPortForwardingUpdateParam.PrivateIpaddress = c.String("private-ipaddress")
+						vpcRouterPortForwardingUpdateParam.PrivateIpaddress = c.String("private-ipaddress")
 					}
 					if c.IsSet("private-port") {
-						vpcrouterPortForwardingUpdateParam.PrivatePort = c.Int("private-port")
+						vpcRouterPortForwardingUpdateParam.PrivatePort = c.Int("private-port")
 					}
 					if c.IsSet("description") {
-						vpcrouterPortForwardingUpdateParam.Description = c.String("description")
+						vpcRouterPortForwardingUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("selector") {
-						vpcrouterPortForwardingUpdateParam.Selector = c.StringSlice("selector")
+						vpcRouterPortForwardingUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterPortForwardingUpdateParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterPortForwardingUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterPortForwardingUpdateParam.ParamTemplate = c.String("param-template")
+						vpcRouterPortForwardingUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterPortForwardingUpdateParam.Parameters = c.String("parameters")
+						vpcRouterPortForwardingUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterPortForwardingUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterPortForwardingUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterPortForwardingUpdateParam.ParameterFile = c.String("parameter-file")
+						vpcRouterPortForwardingUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterPortForwardingUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterPortForwardingUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterPortForwardingUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterPortForwardingUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5726,7 +5726,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterPortForwardingUpdateParam
+					var outputTypeHolder interface{} = vpcRouterPortForwardingUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5737,10 +5737,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterPortForwardingUpdateParam.GenerateSkeleton {
-						vpcrouterPortForwardingUpdateParam.GenerateSkeleton = false
-						vpcrouterPortForwardingUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterPortForwardingUpdateParam, "", "\t")
+					if vpcRouterPortForwardingUpdateParam.GenerateSkeleton {
+						vpcRouterPortForwardingUpdateParam.GenerateSkeleton = false
+						vpcRouterPortForwardingUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterPortForwardingUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5749,19 +5749,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterPortForwardingUpdateParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterPortForwardingUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterPortForwardingUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterPortForwardingUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterPortForwardingUpdateParam.Selector) == 0 {
+						if len(vpcRouterPortForwardingUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5769,13 +5769,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterPortForwardingUpdateParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterPortForwardingUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterPortForwardingUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterPortForwardingUpdateParam.Selector)
 						}
 
 					} else {
@@ -5796,8 +5796,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterPortForwardingUpdateParam.Selector) == 0 || hasTags(&v, vpcrouterPortForwardingUpdateParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterPortForwardingUpdateParam.Selector) == 0 || hasTags(&v, vpcRouterPortForwardingUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5818,7 +5818,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterPortForwardingUpdateParam.Assumeyes {
+					if !vpcRouterPortForwardingUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -5832,11 +5832,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterPortForwardingUpdateParam.SetId(id)
-						p := *vpcrouterPortForwardingUpdateParam // copy struct value
-						vpcrouterPortForwardingUpdateParam := &p
+						vpcRouterPortForwardingUpdateParam.SetId(id)
+						p := *vpcRouterPortForwardingUpdateParam // copy struct value
+						vpcRouterPortForwardingUpdateParam := &p
 						go func() {
-							err := funcs.VpcrouterPortForwardingUpdate(ctx, vpcrouterPortForwardingUpdateParam)
+							err := funcs.VPCRouterPortForwardingUpdate(ctx, vpcRouterPortForwardingUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5901,48 +5901,48 @@ func init() {
 						return err
 					}
 
-					vpcrouterPortForwardingDeleteParam.ParamTemplate = c.String("param-template")
-					vpcrouterPortForwardingDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterPortForwardingDeleteParam)
+					vpcRouterPortForwardingDeleteParam.ParamTemplate = c.String("param-template")
+					vpcRouterPortForwardingDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterPortForwardingDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewPortForwardingDeleteVpcrouterParam()
+						p := params.NewPortForwardingDeleteVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterPortForwardingDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterPortForwardingDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						vpcrouterPortForwardingDeleteParam.Index = c.Int("index")
+						vpcRouterPortForwardingDeleteParam.Index = c.Int("index")
 					}
 					if c.IsSet("selector") {
-						vpcrouterPortForwardingDeleteParam.Selector = c.StringSlice("selector")
+						vpcRouterPortForwardingDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterPortForwardingDeleteParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterPortForwardingDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterPortForwardingDeleteParam.ParamTemplate = c.String("param-template")
+						vpcRouterPortForwardingDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterPortForwardingDeleteParam.Parameters = c.String("parameters")
+						vpcRouterPortForwardingDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterPortForwardingDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterPortForwardingDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterPortForwardingDeleteParam.ParameterFile = c.String("parameter-file")
+						vpcRouterPortForwardingDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterPortForwardingDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterPortForwardingDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterPortForwardingDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterPortForwardingDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5950,7 +5950,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterPortForwardingDeleteParam
+					var outputTypeHolder interface{} = vpcRouterPortForwardingDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5961,10 +5961,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterPortForwardingDeleteParam.GenerateSkeleton {
-						vpcrouterPortForwardingDeleteParam.GenerateSkeleton = false
-						vpcrouterPortForwardingDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterPortForwardingDeleteParam, "", "\t")
+					if vpcRouterPortForwardingDeleteParam.GenerateSkeleton {
+						vpcRouterPortForwardingDeleteParam.GenerateSkeleton = false
+						vpcRouterPortForwardingDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterPortForwardingDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5973,19 +5973,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterPortForwardingDeleteParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterPortForwardingDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterPortForwardingDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterPortForwardingDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterPortForwardingDeleteParam.Selector) == 0 {
+						if len(vpcRouterPortForwardingDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5993,13 +5993,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterPortForwardingDeleteParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterPortForwardingDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterPortForwardingDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterPortForwardingDeleteParam.Selector)
 						}
 
 					} else {
@@ -6020,8 +6020,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterPortForwardingDeleteParam.Selector) == 0 || hasTags(&v, vpcrouterPortForwardingDeleteParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterPortForwardingDeleteParam.Selector) == 0 || hasTags(&v, vpcRouterPortForwardingDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6042,7 +6042,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterPortForwardingDeleteParam.Assumeyes {
+					if !vpcRouterPortForwardingDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -6056,11 +6056,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterPortForwardingDeleteParam.SetId(id)
-						p := *vpcrouterPortForwardingDeleteParam // copy struct value
-						vpcrouterPortForwardingDeleteParam := &p
+						vpcRouterPortForwardingDeleteParam.SetId(id)
+						p := *vpcRouterPortForwardingDeleteParam // copy struct value
+						vpcRouterPortForwardingDeleteParam := &p
 						go func() {
-							err := funcs.VpcrouterPortForwardingDelete(ctx, vpcrouterPortForwardingDeleteParam)
+							err := funcs.VPCRouterPortForwardingDelete(ctx, vpcRouterPortForwardingDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6159,69 +6159,69 @@ func init() {
 						return err
 					}
 
-					vpcrouterFirewallInfoParam.ParamTemplate = c.String("param-template")
-					vpcrouterFirewallInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterFirewallInfoParam)
+					vpcRouterFirewallInfoParam.ParamTemplate = c.String("param-template")
+					vpcRouterFirewallInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterFirewallInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewFirewallInfoVpcrouterParam()
+						p := params.NewFirewallInfoVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterFirewallInfoParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterFirewallInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("interface") {
-						vpcrouterFirewallInfoParam.Interface = c.Int("interface")
+						vpcRouterFirewallInfoParam.Interface = c.Int("interface")
 					}
 					if c.IsSet("direction") {
-						vpcrouterFirewallInfoParam.Direction = c.String("direction")
+						vpcRouterFirewallInfoParam.Direction = c.String("direction")
 					}
 					if c.IsSet("selector") {
-						vpcrouterFirewallInfoParam.Selector = c.StringSlice("selector")
+						vpcRouterFirewallInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterFirewallInfoParam.ParamTemplate = c.String("param-template")
+						vpcRouterFirewallInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterFirewallInfoParam.Parameters = c.String("parameters")
+						vpcRouterFirewallInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterFirewallInfoParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterFirewallInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterFirewallInfoParam.ParameterFile = c.String("parameter-file")
+						vpcRouterFirewallInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterFirewallInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterFirewallInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterFirewallInfoParam.OutputType = c.String("output-type")
+						vpcRouterFirewallInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterFirewallInfoParam.Column = c.StringSlice("column")
+						vpcRouterFirewallInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterFirewallInfoParam.Quiet = c.Bool("quiet")
+						vpcRouterFirewallInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterFirewallInfoParam.Format = c.String("format")
+						vpcRouterFirewallInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterFirewallInfoParam.FormatFile = c.String("format-file")
+						vpcRouterFirewallInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterFirewallInfoParam.Query = c.String("query")
+						vpcRouterFirewallInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterFirewallInfoParam.QueryFile = c.String("query-file")
+						vpcRouterFirewallInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vpcrouterFirewallInfoParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterFirewallInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6229,7 +6229,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterFirewallInfoParam
+					var outputTypeHolder interface{} = vpcRouterFirewallInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6240,10 +6240,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterFirewallInfoParam.GenerateSkeleton {
-						vpcrouterFirewallInfoParam.GenerateSkeleton = false
-						vpcrouterFirewallInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterFirewallInfoParam, "", "\t")
+					if vpcRouterFirewallInfoParam.GenerateSkeleton {
+						vpcRouterFirewallInfoParam.GenerateSkeleton = false
+						vpcRouterFirewallInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterFirewallInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6252,19 +6252,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterFirewallInfoParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterFirewallInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterFirewallInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterFirewallInfoParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterFirewallInfoParam.Selector) == 0 {
+						if len(vpcRouterFirewallInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6272,13 +6272,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterFirewallInfoParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterFirewallInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterFirewallInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterFirewallInfoParam.Selector)
 						}
 
 					} else {
@@ -6299,8 +6299,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterFirewallInfoParam.Selector) == 0 || hasTags(&v, vpcrouterFirewallInfoParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterFirewallInfoParam.Selector) == 0 || hasTags(&v, vpcRouterFirewallInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6325,11 +6325,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterFirewallInfoParam.SetId(id)
-						p := *vpcrouterFirewallInfoParam // copy struct value
-						vpcrouterFirewallInfoParam := &p
+						vpcRouterFirewallInfoParam.SetId(id)
+						p := *vpcRouterFirewallInfoParam // copy struct value
+						vpcRouterFirewallInfoParam := &p
 						go func() {
-							err := funcs.VpcrouterFirewallInfo(ctx, vpcrouterFirewallInfoParam)
+							err := funcs.VPCRouterFirewallInfo(ctx, vpcRouterFirewallInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6436,75 +6436,75 @@ func init() {
 						return err
 					}
 
-					vpcrouterFirewallAddParam.ParamTemplate = c.String("param-template")
-					vpcrouterFirewallAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterFirewallAddParam)
+					vpcRouterFirewallAddParam.ParamTemplate = c.String("param-template")
+					vpcRouterFirewallAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterFirewallAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewFirewallAddVpcrouterParam()
+						p := params.NewFirewallAddVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterFirewallAddParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterFirewallAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("interface") {
-						vpcrouterFirewallAddParam.Interface = c.Int("interface")
+						vpcRouterFirewallAddParam.Interface = c.Int("interface")
 					}
 					if c.IsSet("direction") {
-						vpcrouterFirewallAddParam.Direction = c.String("direction")
+						vpcRouterFirewallAddParam.Direction = c.String("direction")
 					}
 					if c.IsSet("protocol") {
-						vpcrouterFirewallAddParam.Protocol = c.String("protocol")
+						vpcRouterFirewallAddParam.Protocol = c.String("protocol")
 					}
 					if c.IsSet("source-network") {
-						vpcrouterFirewallAddParam.SourceNetwork = c.String("source-network")
+						vpcRouterFirewallAddParam.SourceNetwork = c.String("source-network")
 					}
 					if c.IsSet("source-port") {
-						vpcrouterFirewallAddParam.SourcePort = c.Int("source-port")
+						vpcRouterFirewallAddParam.SourcePort = c.Int("source-port")
 					}
 					if c.IsSet("destination-network") {
-						vpcrouterFirewallAddParam.DestinationNetwork = c.String("destination-network")
+						vpcRouterFirewallAddParam.DestinationNetwork = c.String("destination-network")
 					}
 					if c.IsSet("destination-port") {
-						vpcrouterFirewallAddParam.DestinationPort = c.Int("destination-port")
+						vpcRouterFirewallAddParam.DestinationPort = c.Int("destination-port")
 					}
 					if c.IsSet("action") {
-						vpcrouterFirewallAddParam.Action = c.String("action")
+						vpcRouterFirewallAddParam.Action = c.String("action")
 					}
 					if c.IsSet("enable-logging") {
-						vpcrouterFirewallAddParam.EnableLogging = c.Bool("enable-logging")
+						vpcRouterFirewallAddParam.EnableLogging = c.Bool("enable-logging")
 					}
 					if c.IsSet("description") {
-						vpcrouterFirewallAddParam.Description = c.String("description")
+						vpcRouterFirewallAddParam.Description = c.String("description")
 					}
 					if c.IsSet("selector") {
-						vpcrouterFirewallAddParam.Selector = c.StringSlice("selector")
+						vpcRouterFirewallAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterFirewallAddParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterFirewallAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterFirewallAddParam.ParamTemplate = c.String("param-template")
+						vpcRouterFirewallAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterFirewallAddParam.Parameters = c.String("parameters")
+						vpcRouterFirewallAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterFirewallAddParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterFirewallAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterFirewallAddParam.ParameterFile = c.String("parameter-file")
+						vpcRouterFirewallAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterFirewallAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterFirewallAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterFirewallAddParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterFirewallAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6512,7 +6512,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterFirewallAddParam
+					var outputTypeHolder interface{} = vpcRouterFirewallAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6523,10 +6523,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterFirewallAddParam.GenerateSkeleton {
-						vpcrouterFirewallAddParam.GenerateSkeleton = false
-						vpcrouterFirewallAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterFirewallAddParam, "", "\t")
+					if vpcRouterFirewallAddParam.GenerateSkeleton {
+						vpcRouterFirewallAddParam.GenerateSkeleton = false
+						vpcRouterFirewallAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterFirewallAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6535,19 +6535,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterFirewallAddParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterFirewallAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterFirewallAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterFirewallAddParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterFirewallAddParam.Selector) == 0 {
+						if len(vpcRouterFirewallAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6555,13 +6555,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterFirewallAddParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterFirewallAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterFirewallAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterFirewallAddParam.Selector)
 						}
 
 					} else {
@@ -6582,8 +6582,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterFirewallAddParam.Selector) == 0 || hasTags(&v, vpcrouterFirewallAddParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterFirewallAddParam.Selector) == 0 || hasTags(&v, vpcRouterFirewallAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6604,7 +6604,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterFirewallAddParam.Assumeyes {
+					if !vpcRouterFirewallAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -6618,11 +6618,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterFirewallAddParam.SetId(id)
-						p := *vpcrouterFirewallAddParam // copy struct value
-						vpcrouterFirewallAddParam := &p
+						vpcRouterFirewallAddParam.SetId(id)
+						p := *vpcRouterFirewallAddParam // copy struct value
+						vpcRouterFirewallAddParam := &p
 						go func() {
-							err := funcs.VpcrouterFirewallAdd(ctx, vpcrouterFirewallAddParam)
+							err := funcs.VPCRouterFirewallAdd(ctx, vpcRouterFirewallAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6733,78 +6733,78 @@ func init() {
 						return err
 					}
 
-					vpcrouterFirewallUpdateParam.ParamTemplate = c.String("param-template")
-					vpcrouterFirewallUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterFirewallUpdateParam)
+					vpcRouterFirewallUpdateParam.ParamTemplate = c.String("param-template")
+					vpcRouterFirewallUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterFirewallUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewFirewallUpdateVpcrouterParam()
+						p := params.NewFirewallUpdateVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterFirewallUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterFirewallUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("interface") {
-						vpcrouterFirewallUpdateParam.Interface = c.Int("interface")
+						vpcRouterFirewallUpdateParam.Interface = c.Int("interface")
 					}
 					if c.IsSet("direction") {
-						vpcrouterFirewallUpdateParam.Direction = c.String("direction")
+						vpcRouterFirewallUpdateParam.Direction = c.String("direction")
 					}
 					if c.IsSet("index") {
-						vpcrouterFirewallUpdateParam.Index = c.Int("index")
+						vpcRouterFirewallUpdateParam.Index = c.Int("index")
 					}
 					if c.IsSet("protocol") {
-						vpcrouterFirewallUpdateParam.Protocol = c.String("protocol")
+						vpcRouterFirewallUpdateParam.Protocol = c.String("protocol")
 					}
 					if c.IsSet("source-network") {
-						vpcrouterFirewallUpdateParam.SourceNetwork = c.String("source-network")
+						vpcRouterFirewallUpdateParam.SourceNetwork = c.String("source-network")
 					}
 					if c.IsSet("source-port") {
-						vpcrouterFirewallUpdateParam.SourcePort = c.Int("source-port")
+						vpcRouterFirewallUpdateParam.SourcePort = c.Int("source-port")
 					}
 					if c.IsSet("destination-network") {
-						vpcrouterFirewallUpdateParam.DestinationNetwork = c.String("destination-network")
+						vpcRouterFirewallUpdateParam.DestinationNetwork = c.String("destination-network")
 					}
 					if c.IsSet("destination-port") {
-						vpcrouterFirewallUpdateParam.DestinationPort = c.Int("destination-port")
+						vpcRouterFirewallUpdateParam.DestinationPort = c.Int("destination-port")
 					}
 					if c.IsSet("action") {
-						vpcrouterFirewallUpdateParam.Action = c.String("action")
+						vpcRouterFirewallUpdateParam.Action = c.String("action")
 					}
 					if c.IsSet("enable-logging") {
-						vpcrouterFirewallUpdateParam.EnableLogging = c.Bool("enable-logging")
+						vpcRouterFirewallUpdateParam.EnableLogging = c.Bool("enable-logging")
 					}
 					if c.IsSet("description") {
-						vpcrouterFirewallUpdateParam.Description = c.String("description")
+						vpcRouterFirewallUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("selector") {
-						vpcrouterFirewallUpdateParam.Selector = c.StringSlice("selector")
+						vpcRouterFirewallUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterFirewallUpdateParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterFirewallUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterFirewallUpdateParam.ParamTemplate = c.String("param-template")
+						vpcRouterFirewallUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterFirewallUpdateParam.Parameters = c.String("parameters")
+						vpcRouterFirewallUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterFirewallUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterFirewallUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterFirewallUpdateParam.ParameterFile = c.String("parameter-file")
+						vpcRouterFirewallUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterFirewallUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterFirewallUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterFirewallUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterFirewallUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6812,7 +6812,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterFirewallUpdateParam
+					var outputTypeHolder interface{} = vpcRouterFirewallUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6823,10 +6823,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterFirewallUpdateParam.GenerateSkeleton {
-						vpcrouterFirewallUpdateParam.GenerateSkeleton = false
-						vpcrouterFirewallUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterFirewallUpdateParam, "", "\t")
+					if vpcRouterFirewallUpdateParam.GenerateSkeleton {
+						vpcRouterFirewallUpdateParam.GenerateSkeleton = false
+						vpcRouterFirewallUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterFirewallUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6835,19 +6835,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterFirewallUpdateParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterFirewallUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterFirewallUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterFirewallUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterFirewallUpdateParam.Selector) == 0 {
+						if len(vpcRouterFirewallUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6855,13 +6855,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterFirewallUpdateParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterFirewallUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterFirewallUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterFirewallUpdateParam.Selector)
 						}
 
 					} else {
@@ -6882,8 +6882,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterFirewallUpdateParam.Selector) == 0 || hasTags(&v, vpcrouterFirewallUpdateParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterFirewallUpdateParam.Selector) == 0 || hasTags(&v, vpcRouterFirewallUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6904,7 +6904,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterFirewallUpdateParam.Assumeyes {
+					if !vpcRouterFirewallUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -6918,11 +6918,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterFirewallUpdateParam.SetId(id)
-						p := *vpcrouterFirewallUpdateParam // copy struct value
-						vpcrouterFirewallUpdateParam := &p
+						vpcRouterFirewallUpdateParam.SetId(id)
+						p := *vpcRouterFirewallUpdateParam // copy struct value
+						vpcRouterFirewallUpdateParam := &p
 						go func() {
-							err := funcs.VpcrouterFirewallUpdate(ctx, vpcrouterFirewallUpdateParam)
+							err := funcs.VPCRouterFirewallUpdate(ctx, vpcRouterFirewallUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6997,54 +6997,54 @@ func init() {
 						return err
 					}
 
-					vpcrouterFirewallDeleteParam.ParamTemplate = c.String("param-template")
-					vpcrouterFirewallDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterFirewallDeleteParam)
+					vpcRouterFirewallDeleteParam.ParamTemplate = c.String("param-template")
+					vpcRouterFirewallDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterFirewallDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewFirewallDeleteVpcrouterParam()
+						p := params.NewFirewallDeleteVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterFirewallDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterFirewallDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("interface") {
-						vpcrouterFirewallDeleteParam.Interface = c.Int("interface")
+						vpcRouterFirewallDeleteParam.Interface = c.Int("interface")
 					}
 					if c.IsSet("direction") {
-						vpcrouterFirewallDeleteParam.Direction = c.String("direction")
+						vpcRouterFirewallDeleteParam.Direction = c.String("direction")
 					}
 					if c.IsSet("index") {
-						vpcrouterFirewallDeleteParam.Index = c.Int("index")
+						vpcRouterFirewallDeleteParam.Index = c.Int("index")
 					}
 					if c.IsSet("selector") {
-						vpcrouterFirewallDeleteParam.Selector = c.StringSlice("selector")
+						vpcRouterFirewallDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterFirewallDeleteParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterFirewallDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterFirewallDeleteParam.ParamTemplate = c.String("param-template")
+						vpcRouterFirewallDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterFirewallDeleteParam.Parameters = c.String("parameters")
+						vpcRouterFirewallDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterFirewallDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterFirewallDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterFirewallDeleteParam.ParameterFile = c.String("parameter-file")
+						vpcRouterFirewallDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterFirewallDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterFirewallDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterFirewallDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterFirewallDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -7052,7 +7052,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterFirewallDeleteParam
+					var outputTypeHolder interface{} = vpcRouterFirewallDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -7063,10 +7063,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterFirewallDeleteParam.GenerateSkeleton {
-						vpcrouterFirewallDeleteParam.GenerateSkeleton = false
-						vpcrouterFirewallDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterFirewallDeleteParam, "", "\t")
+					if vpcRouterFirewallDeleteParam.GenerateSkeleton {
+						vpcRouterFirewallDeleteParam.GenerateSkeleton = false
+						vpcRouterFirewallDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterFirewallDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -7075,19 +7075,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterFirewallDeleteParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterFirewallDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterFirewallDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterFirewallDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterFirewallDeleteParam.Selector) == 0 {
+						if len(vpcRouterFirewallDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -7095,13 +7095,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterFirewallDeleteParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterFirewallDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterFirewallDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterFirewallDeleteParam.Selector)
 						}
 
 					} else {
@@ -7122,8 +7122,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterFirewallDeleteParam.Selector) == 0 || hasTags(&v, vpcrouterFirewallDeleteParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterFirewallDeleteParam.Selector) == 0 || hasTags(&v, vpcRouterFirewallDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -7144,7 +7144,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterFirewallDeleteParam.Assumeyes {
+					if !vpcRouterFirewallDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -7158,11 +7158,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterFirewallDeleteParam.SetId(id)
-						p := *vpcrouterFirewallDeleteParam // copy struct value
-						vpcrouterFirewallDeleteParam := &p
+						vpcRouterFirewallDeleteParam.SetId(id)
+						p := *vpcRouterFirewallDeleteParam // copy struct value
+						vpcRouterFirewallDeleteParam := &p
 						go func() {
-							err := funcs.VpcrouterFirewallDelete(ctx, vpcrouterFirewallDeleteParam)
+							err := funcs.VPCRouterFirewallDelete(ctx, vpcRouterFirewallDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -7251,63 +7251,63 @@ func init() {
 						return err
 					}
 
-					vpcrouterDhcpServerInfoParam.ParamTemplate = c.String("param-template")
-					vpcrouterDhcpServerInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterDhcpServerInfoParam)
+					vpcRouterDhcpServerInfoParam.ParamTemplate = c.String("param-template")
+					vpcRouterDhcpServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterDhcpServerInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDhcpServerInfoVpcrouterParam()
+						p := params.NewDhcpServerInfoVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterDhcpServerInfoParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterDhcpServerInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterDhcpServerInfoParam.Selector = c.StringSlice("selector")
+						vpcRouterDhcpServerInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterDhcpServerInfoParam.ParamTemplate = c.String("param-template")
+						vpcRouterDhcpServerInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterDhcpServerInfoParam.Parameters = c.String("parameters")
+						vpcRouterDhcpServerInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterDhcpServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterDhcpServerInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterDhcpServerInfoParam.ParameterFile = c.String("parameter-file")
+						vpcRouterDhcpServerInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterDhcpServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterDhcpServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterDhcpServerInfoParam.OutputType = c.String("output-type")
+						vpcRouterDhcpServerInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterDhcpServerInfoParam.Column = c.StringSlice("column")
+						vpcRouterDhcpServerInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterDhcpServerInfoParam.Quiet = c.Bool("quiet")
+						vpcRouterDhcpServerInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterDhcpServerInfoParam.Format = c.String("format")
+						vpcRouterDhcpServerInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterDhcpServerInfoParam.FormatFile = c.String("format-file")
+						vpcRouterDhcpServerInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterDhcpServerInfoParam.Query = c.String("query")
+						vpcRouterDhcpServerInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterDhcpServerInfoParam.QueryFile = c.String("query-file")
+						vpcRouterDhcpServerInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vpcrouterDhcpServerInfoParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterDhcpServerInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -7315,7 +7315,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterDhcpServerInfoParam
+					var outputTypeHolder interface{} = vpcRouterDhcpServerInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -7326,10 +7326,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterDhcpServerInfoParam.GenerateSkeleton {
-						vpcrouterDhcpServerInfoParam.GenerateSkeleton = false
-						vpcrouterDhcpServerInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterDhcpServerInfoParam, "", "\t")
+					if vpcRouterDhcpServerInfoParam.GenerateSkeleton {
+						vpcRouterDhcpServerInfoParam.GenerateSkeleton = false
+						vpcRouterDhcpServerInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterDhcpServerInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -7338,19 +7338,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterDhcpServerInfoParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterDhcpServerInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterDhcpServerInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterDhcpServerInfoParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterDhcpServerInfoParam.Selector) == 0 {
+						if len(vpcRouterDhcpServerInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -7358,13 +7358,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterDhcpServerInfoParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterDhcpServerInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterDhcpServerInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterDhcpServerInfoParam.Selector)
 						}
 
 					} else {
@@ -7385,8 +7385,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterDhcpServerInfoParam.Selector) == 0 || hasTags(&v, vpcrouterDhcpServerInfoParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterDhcpServerInfoParam.Selector) == 0 || hasTags(&v, vpcRouterDhcpServerInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -7411,11 +7411,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterDhcpServerInfoParam.SetId(id)
-						p := *vpcrouterDhcpServerInfoParam // copy struct value
-						vpcrouterDhcpServerInfoParam := &p
+						vpcRouterDhcpServerInfoParam.SetId(id)
+						p := *vpcRouterDhcpServerInfoParam // copy struct value
+						vpcRouterDhcpServerInfoParam := &p
 						go func() {
-							err := funcs.VpcrouterDhcpServerInfo(ctx, vpcrouterDhcpServerInfoParam)
+							err := funcs.VPCRouterDhcpServerInfo(ctx, vpcRouterDhcpServerInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -7493,57 +7493,57 @@ func init() {
 						return err
 					}
 
-					vpcrouterDhcpServerAddParam.ParamTemplate = c.String("param-template")
-					vpcrouterDhcpServerAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterDhcpServerAddParam)
+					vpcRouterDhcpServerAddParam.ParamTemplate = c.String("param-template")
+					vpcRouterDhcpServerAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterDhcpServerAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDhcpServerAddVpcrouterParam()
+						p := params.NewDhcpServerAddVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterDhcpServerAddParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterDhcpServerAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("interface") {
-						vpcrouterDhcpServerAddParam.Interface = c.Int("interface")
+						vpcRouterDhcpServerAddParam.Interface = c.Int("interface")
 					}
 					if c.IsSet("range-start") {
-						vpcrouterDhcpServerAddParam.RangeStart = c.String("range-start")
+						vpcRouterDhcpServerAddParam.RangeStart = c.String("range-start")
 					}
 					if c.IsSet("range-stop") {
-						vpcrouterDhcpServerAddParam.RangeStop = c.String("range-stop")
+						vpcRouterDhcpServerAddParam.RangeStop = c.String("range-stop")
 					}
 					if c.IsSet("dns-servers") {
-						vpcrouterDhcpServerAddParam.DnsServers = c.StringSlice("dns-servers")
+						vpcRouterDhcpServerAddParam.DNSServers = c.StringSlice("dns-servers")
 					}
 					if c.IsSet("selector") {
-						vpcrouterDhcpServerAddParam.Selector = c.StringSlice("selector")
+						vpcRouterDhcpServerAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterDhcpServerAddParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterDhcpServerAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterDhcpServerAddParam.ParamTemplate = c.String("param-template")
+						vpcRouterDhcpServerAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterDhcpServerAddParam.Parameters = c.String("parameters")
+						vpcRouterDhcpServerAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterDhcpServerAddParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterDhcpServerAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterDhcpServerAddParam.ParameterFile = c.String("parameter-file")
+						vpcRouterDhcpServerAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterDhcpServerAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterDhcpServerAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterDhcpServerAddParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterDhcpServerAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -7551,7 +7551,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterDhcpServerAddParam
+					var outputTypeHolder interface{} = vpcRouterDhcpServerAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -7562,10 +7562,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterDhcpServerAddParam.GenerateSkeleton {
-						vpcrouterDhcpServerAddParam.GenerateSkeleton = false
-						vpcrouterDhcpServerAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterDhcpServerAddParam, "", "\t")
+					if vpcRouterDhcpServerAddParam.GenerateSkeleton {
+						vpcRouterDhcpServerAddParam.GenerateSkeleton = false
+						vpcRouterDhcpServerAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterDhcpServerAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -7574,19 +7574,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterDhcpServerAddParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterDhcpServerAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterDhcpServerAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterDhcpServerAddParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterDhcpServerAddParam.Selector) == 0 {
+						if len(vpcRouterDhcpServerAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -7594,13 +7594,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterDhcpServerAddParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterDhcpServerAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterDhcpServerAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterDhcpServerAddParam.Selector)
 						}
 
 					} else {
@@ -7621,8 +7621,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterDhcpServerAddParam.Selector) == 0 || hasTags(&v, vpcrouterDhcpServerAddParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterDhcpServerAddParam.Selector) == 0 || hasTags(&v, vpcRouterDhcpServerAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -7643,7 +7643,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterDhcpServerAddParam.Assumeyes {
+					if !vpcRouterDhcpServerAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -7657,11 +7657,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterDhcpServerAddParam.SetId(id)
-						p := *vpcrouterDhcpServerAddParam // copy struct value
-						vpcrouterDhcpServerAddParam := &p
+						vpcRouterDhcpServerAddParam.SetId(id)
+						p := *vpcRouterDhcpServerAddParam // copy struct value
+						vpcRouterDhcpServerAddParam := &p
 						go func() {
-							err := funcs.VpcrouterDhcpServerAdd(ctx, vpcrouterDhcpServerAddParam)
+							err := funcs.VPCRouterDhcpServerAdd(ctx, vpcRouterDhcpServerAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -7739,57 +7739,57 @@ func init() {
 						return err
 					}
 
-					vpcrouterDhcpServerUpdateParam.ParamTemplate = c.String("param-template")
-					vpcrouterDhcpServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterDhcpServerUpdateParam)
+					vpcRouterDhcpServerUpdateParam.ParamTemplate = c.String("param-template")
+					vpcRouterDhcpServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterDhcpServerUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDhcpServerUpdateVpcrouterParam()
+						p := params.NewDhcpServerUpdateVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterDhcpServerUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterDhcpServerUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("interface") {
-						vpcrouterDhcpServerUpdateParam.Interface = c.Int("interface")
+						vpcRouterDhcpServerUpdateParam.Interface = c.Int("interface")
 					}
 					if c.IsSet("range-start") {
-						vpcrouterDhcpServerUpdateParam.RangeStart = c.String("range-start")
+						vpcRouterDhcpServerUpdateParam.RangeStart = c.String("range-start")
 					}
 					if c.IsSet("range-stop") {
-						vpcrouterDhcpServerUpdateParam.RangeStop = c.String("range-stop")
+						vpcRouterDhcpServerUpdateParam.RangeStop = c.String("range-stop")
 					}
 					if c.IsSet("dns-servers") {
-						vpcrouterDhcpServerUpdateParam.DnsServers = c.StringSlice("dns-servers")
+						vpcRouterDhcpServerUpdateParam.DNSServers = c.StringSlice("dns-servers")
 					}
 					if c.IsSet("selector") {
-						vpcrouterDhcpServerUpdateParam.Selector = c.StringSlice("selector")
+						vpcRouterDhcpServerUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterDhcpServerUpdateParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterDhcpServerUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterDhcpServerUpdateParam.ParamTemplate = c.String("param-template")
+						vpcRouterDhcpServerUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterDhcpServerUpdateParam.Parameters = c.String("parameters")
+						vpcRouterDhcpServerUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterDhcpServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterDhcpServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterDhcpServerUpdateParam.ParameterFile = c.String("parameter-file")
+						vpcRouterDhcpServerUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterDhcpServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterDhcpServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterDhcpServerUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterDhcpServerUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -7797,7 +7797,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterDhcpServerUpdateParam
+					var outputTypeHolder interface{} = vpcRouterDhcpServerUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -7808,10 +7808,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterDhcpServerUpdateParam.GenerateSkeleton {
-						vpcrouterDhcpServerUpdateParam.GenerateSkeleton = false
-						vpcrouterDhcpServerUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterDhcpServerUpdateParam, "", "\t")
+					if vpcRouterDhcpServerUpdateParam.GenerateSkeleton {
+						vpcRouterDhcpServerUpdateParam.GenerateSkeleton = false
+						vpcRouterDhcpServerUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterDhcpServerUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -7820,19 +7820,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterDhcpServerUpdateParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterDhcpServerUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterDhcpServerUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterDhcpServerUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterDhcpServerUpdateParam.Selector) == 0 {
+						if len(vpcRouterDhcpServerUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -7840,13 +7840,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterDhcpServerUpdateParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterDhcpServerUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterDhcpServerUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterDhcpServerUpdateParam.Selector)
 						}
 
 					} else {
@@ -7867,8 +7867,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterDhcpServerUpdateParam.Selector) == 0 || hasTags(&v, vpcrouterDhcpServerUpdateParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterDhcpServerUpdateParam.Selector) == 0 || hasTags(&v, vpcRouterDhcpServerUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -7889,7 +7889,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterDhcpServerUpdateParam.Assumeyes {
+					if !vpcRouterDhcpServerUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -7903,11 +7903,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterDhcpServerUpdateParam.SetId(id)
-						p := *vpcrouterDhcpServerUpdateParam // copy struct value
-						vpcrouterDhcpServerUpdateParam := &p
+						vpcRouterDhcpServerUpdateParam.SetId(id)
+						p := *vpcRouterDhcpServerUpdateParam // copy struct value
+						vpcRouterDhcpServerUpdateParam := &p
 						go func() {
-							err := funcs.VpcrouterDhcpServerUpdate(ctx, vpcrouterDhcpServerUpdateParam)
+							err := funcs.VPCRouterDhcpServerUpdate(ctx, vpcRouterDhcpServerUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -7972,48 +7972,48 @@ func init() {
 						return err
 					}
 
-					vpcrouterDhcpServerDeleteParam.ParamTemplate = c.String("param-template")
-					vpcrouterDhcpServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterDhcpServerDeleteParam)
+					vpcRouterDhcpServerDeleteParam.ParamTemplate = c.String("param-template")
+					vpcRouterDhcpServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterDhcpServerDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDhcpServerDeleteVpcrouterParam()
+						p := params.NewDhcpServerDeleteVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterDhcpServerDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterDhcpServerDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("interface") {
-						vpcrouterDhcpServerDeleteParam.Interface = c.Int("interface")
+						vpcRouterDhcpServerDeleteParam.Interface = c.Int("interface")
 					}
 					if c.IsSet("selector") {
-						vpcrouterDhcpServerDeleteParam.Selector = c.StringSlice("selector")
+						vpcRouterDhcpServerDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterDhcpServerDeleteParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterDhcpServerDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterDhcpServerDeleteParam.ParamTemplate = c.String("param-template")
+						vpcRouterDhcpServerDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterDhcpServerDeleteParam.Parameters = c.String("parameters")
+						vpcRouterDhcpServerDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterDhcpServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterDhcpServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterDhcpServerDeleteParam.ParameterFile = c.String("parameter-file")
+						vpcRouterDhcpServerDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterDhcpServerDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterDhcpServerDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterDhcpServerDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterDhcpServerDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -8021,7 +8021,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterDhcpServerDeleteParam
+					var outputTypeHolder interface{} = vpcRouterDhcpServerDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -8032,10 +8032,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterDhcpServerDeleteParam.GenerateSkeleton {
-						vpcrouterDhcpServerDeleteParam.GenerateSkeleton = false
-						vpcrouterDhcpServerDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterDhcpServerDeleteParam, "", "\t")
+					if vpcRouterDhcpServerDeleteParam.GenerateSkeleton {
+						vpcRouterDhcpServerDeleteParam.GenerateSkeleton = false
+						vpcRouterDhcpServerDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterDhcpServerDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -8044,19 +8044,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterDhcpServerDeleteParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterDhcpServerDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterDhcpServerDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterDhcpServerDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterDhcpServerDeleteParam.Selector) == 0 {
+						if len(vpcRouterDhcpServerDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -8064,13 +8064,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterDhcpServerDeleteParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterDhcpServerDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterDhcpServerDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterDhcpServerDeleteParam.Selector)
 						}
 
 					} else {
@@ -8091,8 +8091,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterDhcpServerDeleteParam.Selector) == 0 || hasTags(&v, vpcrouterDhcpServerDeleteParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterDhcpServerDeleteParam.Selector) == 0 || hasTags(&v, vpcRouterDhcpServerDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -8113,7 +8113,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterDhcpServerDeleteParam.Assumeyes {
+					if !vpcRouterDhcpServerDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -8127,11 +8127,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterDhcpServerDeleteParam.SetId(id)
-						p := *vpcrouterDhcpServerDeleteParam // copy struct value
-						vpcrouterDhcpServerDeleteParam := &p
+						vpcRouterDhcpServerDeleteParam.SetId(id)
+						p := *vpcRouterDhcpServerDeleteParam // copy struct value
+						vpcRouterDhcpServerDeleteParam := &p
 						go func() {
-							err := funcs.VpcrouterDhcpServerDelete(ctx, vpcrouterDhcpServerDeleteParam)
+							err := funcs.VPCRouterDhcpServerDelete(ctx, vpcRouterDhcpServerDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -8220,63 +8220,63 @@ func init() {
 						return err
 					}
 
-					vpcrouterDhcpStaticMappingInfoParam.ParamTemplate = c.String("param-template")
-					vpcrouterDhcpStaticMappingInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterDhcpStaticMappingInfoParam)
+					vpcRouterDhcpStaticMappingInfoParam.ParamTemplate = c.String("param-template")
+					vpcRouterDhcpStaticMappingInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterDhcpStaticMappingInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDhcpStaticMappingInfoVpcrouterParam()
+						p := params.NewDhcpStaticMappingInfoVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterDhcpStaticMappingInfoParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterDhcpStaticMappingInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterDhcpStaticMappingInfoParam.Selector = c.StringSlice("selector")
+						vpcRouterDhcpStaticMappingInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterDhcpStaticMappingInfoParam.ParamTemplate = c.String("param-template")
+						vpcRouterDhcpStaticMappingInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterDhcpStaticMappingInfoParam.Parameters = c.String("parameters")
+						vpcRouterDhcpStaticMappingInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterDhcpStaticMappingInfoParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterDhcpStaticMappingInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterDhcpStaticMappingInfoParam.ParameterFile = c.String("parameter-file")
+						vpcRouterDhcpStaticMappingInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterDhcpStaticMappingInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterDhcpStaticMappingInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterDhcpStaticMappingInfoParam.OutputType = c.String("output-type")
+						vpcRouterDhcpStaticMappingInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterDhcpStaticMappingInfoParam.Column = c.StringSlice("column")
+						vpcRouterDhcpStaticMappingInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterDhcpStaticMappingInfoParam.Quiet = c.Bool("quiet")
+						vpcRouterDhcpStaticMappingInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterDhcpStaticMappingInfoParam.Format = c.String("format")
+						vpcRouterDhcpStaticMappingInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterDhcpStaticMappingInfoParam.FormatFile = c.String("format-file")
+						vpcRouterDhcpStaticMappingInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterDhcpStaticMappingInfoParam.Query = c.String("query")
+						vpcRouterDhcpStaticMappingInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterDhcpStaticMappingInfoParam.QueryFile = c.String("query-file")
+						vpcRouterDhcpStaticMappingInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vpcrouterDhcpStaticMappingInfoParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterDhcpStaticMappingInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -8284,7 +8284,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterDhcpStaticMappingInfoParam
+					var outputTypeHolder interface{} = vpcRouterDhcpStaticMappingInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -8295,10 +8295,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterDhcpStaticMappingInfoParam.GenerateSkeleton {
-						vpcrouterDhcpStaticMappingInfoParam.GenerateSkeleton = false
-						vpcrouterDhcpStaticMappingInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterDhcpStaticMappingInfoParam, "", "\t")
+					if vpcRouterDhcpStaticMappingInfoParam.GenerateSkeleton {
+						vpcRouterDhcpStaticMappingInfoParam.GenerateSkeleton = false
+						vpcRouterDhcpStaticMappingInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterDhcpStaticMappingInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -8307,19 +8307,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterDhcpStaticMappingInfoParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterDhcpStaticMappingInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterDhcpStaticMappingInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterDhcpStaticMappingInfoParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterDhcpStaticMappingInfoParam.Selector) == 0 {
+						if len(vpcRouterDhcpStaticMappingInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -8327,13 +8327,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterDhcpStaticMappingInfoParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterDhcpStaticMappingInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterDhcpStaticMappingInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterDhcpStaticMappingInfoParam.Selector)
 						}
 
 					} else {
@@ -8354,8 +8354,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterDhcpStaticMappingInfoParam.Selector) == 0 || hasTags(&v, vpcrouterDhcpStaticMappingInfoParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterDhcpStaticMappingInfoParam.Selector) == 0 || hasTags(&v, vpcRouterDhcpStaticMappingInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -8380,11 +8380,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterDhcpStaticMappingInfoParam.SetId(id)
-						p := *vpcrouterDhcpStaticMappingInfoParam // copy struct value
-						vpcrouterDhcpStaticMappingInfoParam := &p
+						vpcRouterDhcpStaticMappingInfoParam.SetId(id)
+						p := *vpcRouterDhcpStaticMappingInfoParam // copy struct value
+						vpcRouterDhcpStaticMappingInfoParam := &p
 						go func() {
-							err := funcs.VpcrouterDhcpStaticMappingInfo(ctx, vpcrouterDhcpStaticMappingInfoParam)
+							err := funcs.VPCRouterDhcpStaticMappingInfo(ctx, vpcRouterDhcpStaticMappingInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -8455,51 +8455,51 @@ func init() {
 						return err
 					}
 
-					vpcrouterDhcpStaticMappingAddParam.ParamTemplate = c.String("param-template")
-					vpcrouterDhcpStaticMappingAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterDhcpStaticMappingAddParam)
+					vpcRouterDhcpStaticMappingAddParam.ParamTemplate = c.String("param-template")
+					vpcRouterDhcpStaticMappingAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterDhcpStaticMappingAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDhcpStaticMappingAddVpcrouterParam()
+						p := params.NewDhcpStaticMappingAddVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterDhcpStaticMappingAddParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterDhcpStaticMappingAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("macaddress") {
-						vpcrouterDhcpStaticMappingAddParam.Macaddress = c.String("macaddress")
+						vpcRouterDhcpStaticMappingAddParam.Macaddress = c.String("macaddress")
 					}
 					if c.IsSet("ipaddress") {
-						vpcrouterDhcpStaticMappingAddParam.Ipaddress = c.String("ipaddress")
+						vpcRouterDhcpStaticMappingAddParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("selector") {
-						vpcrouterDhcpStaticMappingAddParam.Selector = c.StringSlice("selector")
+						vpcRouterDhcpStaticMappingAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterDhcpStaticMappingAddParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterDhcpStaticMappingAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterDhcpStaticMappingAddParam.ParamTemplate = c.String("param-template")
+						vpcRouterDhcpStaticMappingAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterDhcpStaticMappingAddParam.Parameters = c.String("parameters")
+						vpcRouterDhcpStaticMappingAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterDhcpStaticMappingAddParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterDhcpStaticMappingAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterDhcpStaticMappingAddParam.ParameterFile = c.String("parameter-file")
+						vpcRouterDhcpStaticMappingAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterDhcpStaticMappingAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterDhcpStaticMappingAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterDhcpStaticMappingAddParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterDhcpStaticMappingAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -8507,7 +8507,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterDhcpStaticMappingAddParam
+					var outputTypeHolder interface{} = vpcRouterDhcpStaticMappingAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -8518,10 +8518,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterDhcpStaticMappingAddParam.GenerateSkeleton {
-						vpcrouterDhcpStaticMappingAddParam.GenerateSkeleton = false
-						vpcrouterDhcpStaticMappingAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterDhcpStaticMappingAddParam, "", "\t")
+					if vpcRouterDhcpStaticMappingAddParam.GenerateSkeleton {
+						vpcRouterDhcpStaticMappingAddParam.GenerateSkeleton = false
+						vpcRouterDhcpStaticMappingAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterDhcpStaticMappingAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -8530,19 +8530,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterDhcpStaticMappingAddParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterDhcpStaticMappingAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterDhcpStaticMappingAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterDhcpStaticMappingAddParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterDhcpStaticMappingAddParam.Selector) == 0 {
+						if len(vpcRouterDhcpStaticMappingAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -8550,13 +8550,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterDhcpStaticMappingAddParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterDhcpStaticMappingAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterDhcpStaticMappingAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterDhcpStaticMappingAddParam.Selector)
 						}
 
 					} else {
@@ -8577,8 +8577,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterDhcpStaticMappingAddParam.Selector) == 0 || hasTags(&v, vpcrouterDhcpStaticMappingAddParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterDhcpStaticMappingAddParam.Selector) == 0 || hasTags(&v, vpcRouterDhcpStaticMappingAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -8599,7 +8599,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterDhcpStaticMappingAddParam.Assumeyes {
+					if !vpcRouterDhcpStaticMappingAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -8613,11 +8613,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterDhcpStaticMappingAddParam.SetId(id)
-						p := *vpcrouterDhcpStaticMappingAddParam // copy struct value
-						vpcrouterDhcpStaticMappingAddParam := &p
+						vpcRouterDhcpStaticMappingAddParam.SetId(id)
+						p := *vpcRouterDhcpStaticMappingAddParam // copy struct value
+						vpcRouterDhcpStaticMappingAddParam := &p
 						go func() {
-							err := funcs.VpcrouterDhcpStaticMappingAdd(ctx, vpcrouterDhcpStaticMappingAddParam)
+							err := funcs.VPCRouterDhcpStaticMappingAdd(ctx, vpcRouterDhcpStaticMappingAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -8692,54 +8692,54 @@ func init() {
 						return err
 					}
 
-					vpcrouterDhcpStaticMappingUpdateParam.ParamTemplate = c.String("param-template")
-					vpcrouterDhcpStaticMappingUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterDhcpStaticMappingUpdateParam)
+					vpcRouterDhcpStaticMappingUpdateParam.ParamTemplate = c.String("param-template")
+					vpcRouterDhcpStaticMappingUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterDhcpStaticMappingUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDhcpStaticMappingUpdateVpcrouterParam()
+						p := params.NewDhcpStaticMappingUpdateVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterDhcpStaticMappingUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterDhcpStaticMappingUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						vpcrouterDhcpStaticMappingUpdateParam.Index = c.Int("index")
+						vpcRouterDhcpStaticMappingUpdateParam.Index = c.Int("index")
 					}
 					if c.IsSet("macaddress") {
-						vpcrouterDhcpStaticMappingUpdateParam.Macaddress = c.String("macaddress")
+						vpcRouterDhcpStaticMappingUpdateParam.Macaddress = c.String("macaddress")
 					}
 					if c.IsSet("ipaddress") {
-						vpcrouterDhcpStaticMappingUpdateParam.Ipaddress = c.String("ipaddress")
+						vpcRouterDhcpStaticMappingUpdateParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("selector") {
-						vpcrouterDhcpStaticMappingUpdateParam.Selector = c.StringSlice("selector")
+						vpcRouterDhcpStaticMappingUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterDhcpStaticMappingUpdateParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterDhcpStaticMappingUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterDhcpStaticMappingUpdateParam.ParamTemplate = c.String("param-template")
+						vpcRouterDhcpStaticMappingUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterDhcpStaticMappingUpdateParam.Parameters = c.String("parameters")
+						vpcRouterDhcpStaticMappingUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterDhcpStaticMappingUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterDhcpStaticMappingUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterDhcpStaticMappingUpdateParam.ParameterFile = c.String("parameter-file")
+						vpcRouterDhcpStaticMappingUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterDhcpStaticMappingUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterDhcpStaticMappingUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterDhcpStaticMappingUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterDhcpStaticMappingUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -8747,7 +8747,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterDhcpStaticMappingUpdateParam
+					var outputTypeHolder interface{} = vpcRouterDhcpStaticMappingUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -8758,10 +8758,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterDhcpStaticMappingUpdateParam.GenerateSkeleton {
-						vpcrouterDhcpStaticMappingUpdateParam.GenerateSkeleton = false
-						vpcrouterDhcpStaticMappingUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterDhcpStaticMappingUpdateParam, "", "\t")
+					if vpcRouterDhcpStaticMappingUpdateParam.GenerateSkeleton {
+						vpcRouterDhcpStaticMappingUpdateParam.GenerateSkeleton = false
+						vpcRouterDhcpStaticMappingUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterDhcpStaticMappingUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -8770,19 +8770,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterDhcpStaticMappingUpdateParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterDhcpStaticMappingUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterDhcpStaticMappingUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterDhcpStaticMappingUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterDhcpStaticMappingUpdateParam.Selector) == 0 {
+						if len(vpcRouterDhcpStaticMappingUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -8790,13 +8790,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterDhcpStaticMappingUpdateParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterDhcpStaticMappingUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterDhcpStaticMappingUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterDhcpStaticMappingUpdateParam.Selector)
 						}
 
 					} else {
@@ -8817,8 +8817,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterDhcpStaticMappingUpdateParam.Selector) == 0 || hasTags(&v, vpcrouterDhcpStaticMappingUpdateParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterDhcpStaticMappingUpdateParam.Selector) == 0 || hasTags(&v, vpcRouterDhcpStaticMappingUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -8839,7 +8839,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterDhcpStaticMappingUpdateParam.Assumeyes {
+					if !vpcRouterDhcpStaticMappingUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -8853,11 +8853,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterDhcpStaticMappingUpdateParam.SetId(id)
-						p := *vpcrouterDhcpStaticMappingUpdateParam // copy struct value
-						vpcrouterDhcpStaticMappingUpdateParam := &p
+						vpcRouterDhcpStaticMappingUpdateParam.SetId(id)
+						p := *vpcRouterDhcpStaticMappingUpdateParam // copy struct value
+						vpcRouterDhcpStaticMappingUpdateParam := &p
 						go func() {
-							err := funcs.VpcrouterDhcpStaticMappingUpdate(ctx, vpcrouterDhcpStaticMappingUpdateParam)
+							err := funcs.VPCRouterDhcpStaticMappingUpdate(ctx, vpcRouterDhcpStaticMappingUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -8922,48 +8922,48 @@ func init() {
 						return err
 					}
 
-					vpcrouterDhcpStaticMappingDeleteParam.ParamTemplate = c.String("param-template")
-					vpcrouterDhcpStaticMappingDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterDhcpStaticMappingDeleteParam)
+					vpcRouterDhcpStaticMappingDeleteParam.ParamTemplate = c.String("param-template")
+					vpcRouterDhcpStaticMappingDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterDhcpStaticMappingDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDhcpStaticMappingDeleteVpcrouterParam()
+						p := params.NewDhcpStaticMappingDeleteVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterDhcpStaticMappingDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterDhcpStaticMappingDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						vpcrouterDhcpStaticMappingDeleteParam.Index = c.Int("index")
+						vpcRouterDhcpStaticMappingDeleteParam.Index = c.Int("index")
 					}
 					if c.IsSet("selector") {
-						vpcrouterDhcpStaticMappingDeleteParam.Selector = c.StringSlice("selector")
+						vpcRouterDhcpStaticMappingDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterDhcpStaticMappingDeleteParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterDhcpStaticMappingDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterDhcpStaticMappingDeleteParam.ParamTemplate = c.String("param-template")
+						vpcRouterDhcpStaticMappingDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterDhcpStaticMappingDeleteParam.Parameters = c.String("parameters")
+						vpcRouterDhcpStaticMappingDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterDhcpStaticMappingDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterDhcpStaticMappingDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterDhcpStaticMappingDeleteParam.ParameterFile = c.String("parameter-file")
+						vpcRouterDhcpStaticMappingDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterDhcpStaticMappingDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterDhcpStaticMappingDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterDhcpStaticMappingDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterDhcpStaticMappingDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -8971,7 +8971,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterDhcpStaticMappingDeleteParam
+					var outputTypeHolder interface{} = vpcRouterDhcpStaticMappingDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -8982,10 +8982,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterDhcpStaticMappingDeleteParam.GenerateSkeleton {
-						vpcrouterDhcpStaticMappingDeleteParam.GenerateSkeleton = false
-						vpcrouterDhcpStaticMappingDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterDhcpStaticMappingDeleteParam, "", "\t")
+					if vpcRouterDhcpStaticMappingDeleteParam.GenerateSkeleton {
+						vpcRouterDhcpStaticMappingDeleteParam.GenerateSkeleton = false
+						vpcRouterDhcpStaticMappingDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterDhcpStaticMappingDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -8994,19 +8994,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterDhcpStaticMappingDeleteParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterDhcpStaticMappingDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterDhcpStaticMappingDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterDhcpStaticMappingDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterDhcpStaticMappingDeleteParam.Selector) == 0 {
+						if len(vpcRouterDhcpStaticMappingDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -9014,13 +9014,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterDhcpStaticMappingDeleteParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterDhcpStaticMappingDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterDhcpStaticMappingDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterDhcpStaticMappingDeleteParam.Selector)
 						}
 
 					} else {
@@ -9041,8 +9041,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterDhcpStaticMappingDeleteParam.Selector) == 0 || hasTags(&v, vpcrouterDhcpStaticMappingDeleteParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterDhcpStaticMappingDeleteParam.Selector) == 0 || hasTags(&v, vpcRouterDhcpStaticMappingDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -9063,7 +9063,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterDhcpStaticMappingDeleteParam.Assumeyes {
+					if !vpcRouterDhcpStaticMappingDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -9077,11 +9077,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterDhcpStaticMappingDeleteParam.SetId(id)
-						p := *vpcrouterDhcpStaticMappingDeleteParam // copy struct value
-						vpcrouterDhcpStaticMappingDeleteParam := &p
+						vpcRouterDhcpStaticMappingDeleteParam.SetId(id)
+						p := *vpcRouterDhcpStaticMappingDeleteParam // copy struct value
+						vpcRouterDhcpStaticMappingDeleteParam := &p
 						go func() {
-							err := funcs.VpcrouterDhcpStaticMappingDelete(ctx, vpcrouterDhcpStaticMappingDeleteParam)
+							err := funcs.VPCRouterDhcpStaticMappingDelete(ctx, vpcRouterDhcpStaticMappingDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -9169,63 +9169,63 @@ func init() {
 						return err
 					}
 
-					vpcrouterPptpServerInfoParam.ParamTemplate = c.String("param-template")
-					vpcrouterPptpServerInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterPptpServerInfoParam)
+					vpcRouterPptpServerInfoParam.ParamTemplate = c.String("param-template")
+					vpcRouterPptpServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterPptpServerInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewPptpServerInfoVpcrouterParam()
+						p := params.NewPptpServerInfoVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterPptpServerInfoParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterPptpServerInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterPptpServerInfoParam.Selector = c.StringSlice("selector")
+						vpcRouterPptpServerInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterPptpServerInfoParam.ParamTemplate = c.String("param-template")
+						vpcRouterPptpServerInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterPptpServerInfoParam.Parameters = c.String("parameters")
+						vpcRouterPptpServerInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterPptpServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterPptpServerInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterPptpServerInfoParam.ParameterFile = c.String("parameter-file")
+						vpcRouterPptpServerInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterPptpServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterPptpServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterPptpServerInfoParam.OutputType = c.String("output-type")
+						vpcRouterPptpServerInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterPptpServerInfoParam.Column = c.StringSlice("column")
+						vpcRouterPptpServerInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterPptpServerInfoParam.Quiet = c.Bool("quiet")
+						vpcRouterPptpServerInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterPptpServerInfoParam.Format = c.String("format")
+						vpcRouterPptpServerInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterPptpServerInfoParam.FormatFile = c.String("format-file")
+						vpcRouterPptpServerInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterPptpServerInfoParam.Query = c.String("query")
+						vpcRouterPptpServerInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterPptpServerInfoParam.QueryFile = c.String("query-file")
+						vpcRouterPptpServerInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vpcrouterPptpServerInfoParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterPptpServerInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -9233,7 +9233,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterPptpServerInfoParam
+					var outputTypeHolder interface{} = vpcRouterPptpServerInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -9244,10 +9244,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterPptpServerInfoParam.GenerateSkeleton {
-						vpcrouterPptpServerInfoParam.GenerateSkeleton = false
-						vpcrouterPptpServerInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterPptpServerInfoParam, "", "\t")
+					if vpcRouterPptpServerInfoParam.GenerateSkeleton {
+						vpcRouterPptpServerInfoParam.GenerateSkeleton = false
+						vpcRouterPptpServerInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterPptpServerInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -9256,19 +9256,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterPptpServerInfoParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterPptpServerInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterPptpServerInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterPptpServerInfoParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterPptpServerInfoParam.Selector) == 0 {
+						if len(vpcRouterPptpServerInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -9276,13 +9276,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterPptpServerInfoParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterPptpServerInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterPptpServerInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterPptpServerInfoParam.Selector)
 						}
 
 					} else {
@@ -9303,8 +9303,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterPptpServerInfoParam.Selector) == 0 || hasTags(&v, vpcrouterPptpServerInfoParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterPptpServerInfoParam.Selector) == 0 || hasTags(&v, vpcRouterPptpServerInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -9329,11 +9329,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterPptpServerInfoParam.SetId(id)
-						p := *vpcrouterPptpServerInfoParam // copy struct value
-						vpcrouterPptpServerInfoParam := &p
+						vpcRouterPptpServerInfoParam.SetId(id)
+						p := *vpcRouterPptpServerInfoParam // copy struct value
+						vpcRouterPptpServerInfoParam := &p
 						go func() {
-							err := funcs.VpcrouterPptpServerInfo(ctx, vpcrouterPptpServerInfoParam)
+							err := funcs.VPCRouterPptpServerInfo(ctx, vpcRouterPptpServerInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -9407,54 +9407,54 @@ func init() {
 						return err
 					}
 
-					vpcrouterPptpServerUpdateParam.ParamTemplate = c.String("param-template")
-					vpcrouterPptpServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterPptpServerUpdateParam)
+					vpcRouterPptpServerUpdateParam.ParamTemplate = c.String("param-template")
+					vpcRouterPptpServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterPptpServerUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewPptpServerUpdateVpcrouterParam()
+						p := params.NewPptpServerUpdateVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterPptpServerUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterPptpServerUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("disabled") {
-						vpcrouterPptpServerUpdateParam.Disabled = c.Bool("disabled")
+						vpcRouterPptpServerUpdateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("range-start") {
-						vpcrouterPptpServerUpdateParam.RangeStart = c.String("range-start")
+						vpcRouterPptpServerUpdateParam.RangeStart = c.String("range-start")
 					}
 					if c.IsSet("range-stop") {
-						vpcrouterPptpServerUpdateParam.RangeStop = c.String("range-stop")
+						vpcRouterPptpServerUpdateParam.RangeStop = c.String("range-stop")
 					}
 					if c.IsSet("selector") {
-						vpcrouterPptpServerUpdateParam.Selector = c.StringSlice("selector")
+						vpcRouterPptpServerUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterPptpServerUpdateParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterPptpServerUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterPptpServerUpdateParam.ParamTemplate = c.String("param-template")
+						vpcRouterPptpServerUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterPptpServerUpdateParam.Parameters = c.String("parameters")
+						vpcRouterPptpServerUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterPptpServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterPptpServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterPptpServerUpdateParam.ParameterFile = c.String("parameter-file")
+						vpcRouterPptpServerUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterPptpServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterPptpServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterPptpServerUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterPptpServerUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -9462,7 +9462,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterPptpServerUpdateParam
+					var outputTypeHolder interface{} = vpcRouterPptpServerUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -9473,10 +9473,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterPptpServerUpdateParam.GenerateSkeleton {
-						vpcrouterPptpServerUpdateParam.GenerateSkeleton = false
-						vpcrouterPptpServerUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterPptpServerUpdateParam, "", "\t")
+					if vpcRouterPptpServerUpdateParam.GenerateSkeleton {
+						vpcRouterPptpServerUpdateParam.GenerateSkeleton = false
+						vpcRouterPptpServerUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterPptpServerUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -9485,19 +9485,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterPptpServerUpdateParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterPptpServerUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterPptpServerUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterPptpServerUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterPptpServerUpdateParam.Selector) == 0 {
+						if len(vpcRouterPptpServerUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -9505,13 +9505,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterPptpServerUpdateParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterPptpServerUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterPptpServerUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterPptpServerUpdateParam.Selector)
 						}
 
 					} else {
@@ -9532,8 +9532,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterPptpServerUpdateParam.Selector) == 0 || hasTags(&v, vpcrouterPptpServerUpdateParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterPptpServerUpdateParam.Selector) == 0 || hasTags(&v, vpcRouterPptpServerUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -9554,7 +9554,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterPptpServerUpdateParam.Assumeyes {
+					if !vpcRouterPptpServerUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -9568,11 +9568,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterPptpServerUpdateParam.SetId(id)
-						p := *vpcrouterPptpServerUpdateParam // copy struct value
-						vpcrouterPptpServerUpdateParam := &p
+						vpcRouterPptpServerUpdateParam.SetId(id)
+						p := *vpcRouterPptpServerUpdateParam // copy struct value
+						vpcRouterPptpServerUpdateParam := &p
 						go func() {
-							err := funcs.VpcrouterPptpServerUpdate(ctx, vpcrouterPptpServerUpdateParam)
+							err := funcs.VPCRouterPptpServerUpdate(ctx, vpcRouterPptpServerUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -9660,63 +9660,63 @@ func init() {
 						return err
 					}
 
-					vpcrouterL2tpServerInfoParam.ParamTemplate = c.String("param-template")
-					vpcrouterL2tpServerInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterL2tpServerInfoParam)
+					vpcRouterL2TPServerInfoParam.ParamTemplate = c.String("param-template")
+					vpcRouterL2TPServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterL2TPServerInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewL2tpServerInfoVpcrouterParam()
+						p := params.NewL2TPServerInfoVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterL2tpServerInfoParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterL2TPServerInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterL2tpServerInfoParam.Selector = c.StringSlice("selector")
+						vpcRouterL2TPServerInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterL2tpServerInfoParam.ParamTemplate = c.String("param-template")
+						vpcRouterL2TPServerInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterL2tpServerInfoParam.Parameters = c.String("parameters")
+						vpcRouterL2TPServerInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterL2tpServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterL2TPServerInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterL2tpServerInfoParam.ParameterFile = c.String("parameter-file")
+						vpcRouterL2TPServerInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterL2tpServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterL2TPServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterL2tpServerInfoParam.OutputType = c.String("output-type")
+						vpcRouterL2TPServerInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterL2tpServerInfoParam.Column = c.StringSlice("column")
+						vpcRouterL2TPServerInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterL2tpServerInfoParam.Quiet = c.Bool("quiet")
+						vpcRouterL2TPServerInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterL2tpServerInfoParam.Format = c.String("format")
+						vpcRouterL2TPServerInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterL2tpServerInfoParam.FormatFile = c.String("format-file")
+						vpcRouterL2TPServerInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterL2tpServerInfoParam.Query = c.String("query")
+						vpcRouterL2TPServerInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterL2tpServerInfoParam.QueryFile = c.String("query-file")
+						vpcRouterL2TPServerInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vpcrouterL2tpServerInfoParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterL2TPServerInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -9724,7 +9724,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterL2tpServerInfoParam
+					var outputTypeHolder interface{} = vpcRouterL2TPServerInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -9735,10 +9735,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterL2tpServerInfoParam.GenerateSkeleton {
-						vpcrouterL2tpServerInfoParam.GenerateSkeleton = false
-						vpcrouterL2tpServerInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterL2tpServerInfoParam, "", "\t")
+					if vpcRouterL2TPServerInfoParam.GenerateSkeleton {
+						vpcRouterL2TPServerInfoParam.GenerateSkeleton = false
+						vpcRouterL2TPServerInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterL2TPServerInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -9747,19 +9747,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterL2tpServerInfoParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterL2TPServerInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterL2tpServerInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterL2TPServerInfoParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterL2tpServerInfoParam.Selector) == 0 {
+						if len(vpcRouterL2TPServerInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -9767,13 +9767,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterL2tpServerInfoParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterL2TPServerInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterL2tpServerInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterL2TPServerInfoParam.Selector)
 						}
 
 					} else {
@@ -9794,8 +9794,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterL2tpServerInfoParam.Selector) == 0 || hasTags(&v, vpcrouterL2tpServerInfoParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterL2TPServerInfoParam.Selector) == 0 || hasTags(&v, vpcRouterL2TPServerInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -9820,11 +9820,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterL2tpServerInfoParam.SetId(id)
-						p := *vpcrouterL2tpServerInfoParam // copy struct value
-						vpcrouterL2tpServerInfoParam := &p
+						vpcRouterL2TPServerInfoParam.SetId(id)
+						p := *vpcRouterL2TPServerInfoParam // copy struct value
+						vpcRouterL2TPServerInfoParam := &p
 						go func() {
-							err := funcs.VpcrouterL2tpServerInfo(ctx, vpcrouterL2tpServerInfoParam)
+							err := funcs.VPCRouterL2TPServerInfo(ctx, vpcRouterL2TPServerInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -9902,57 +9902,57 @@ func init() {
 						return err
 					}
 
-					vpcrouterL2tpServerUpdateParam.ParamTemplate = c.String("param-template")
-					vpcrouterL2tpServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterL2tpServerUpdateParam)
+					vpcRouterL2TPServerUpdateParam.ParamTemplate = c.String("param-template")
+					vpcRouterL2TPServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterL2TPServerUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewL2tpServerUpdateVpcrouterParam()
+						p := params.NewL2TPServerUpdateVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterL2tpServerUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterL2TPServerUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("disabled") {
-						vpcrouterL2tpServerUpdateParam.Disabled = c.Bool("disabled")
+						vpcRouterL2TPServerUpdateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("range-start") {
-						vpcrouterL2tpServerUpdateParam.RangeStart = c.String("range-start")
+						vpcRouterL2TPServerUpdateParam.RangeStart = c.String("range-start")
 					}
 					if c.IsSet("range-stop") {
-						vpcrouterL2tpServerUpdateParam.RangeStop = c.String("range-stop")
+						vpcRouterL2TPServerUpdateParam.RangeStop = c.String("range-stop")
 					}
 					if c.IsSet("pre-shared-secret") {
-						vpcrouterL2tpServerUpdateParam.PreSharedSecret = c.String("pre-shared-secret")
+						vpcRouterL2TPServerUpdateParam.PreSharedSecret = c.String("pre-shared-secret")
 					}
 					if c.IsSet("selector") {
-						vpcrouterL2tpServerUpdateParam.Selector = c.StringSlice("selector")
+						vpcRouterL2TPServerUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterL2tpServerUpdateParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterL2TPServerUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterL2tpServerUpdateParam.ParamTemplate = c.String("param-template")
+						vpcRouterL2TPServerUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterL2tpServerUpdateParam.Parameters = c.String("parameters")
+						vpcRouterL2TPServerUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterL2tpServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterL2TPServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterL2tpServerUpdateParam.ParameterFile = c.String("parameter-file")
+						vpcRouterL2TPServerUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterL2tpServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterL2TPServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterL2tpServerUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterL2TPServerUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -9960,7 +9960,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterL2tpServerUpdateParam
+					var outputTypeHolder interface{} = vpcRouterL2TPServerUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -9971,10 +9971,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterL2tpServerUpdateParam.GenerateSkeleton {
-						vpcrouterL2tpServerUpdateParam.GenerateSkeleton = false
-						vpcrouterL2tpServerUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterL2tpServerUpdateParam, "", "\t")
+					if vpcRouterL2TPServerUpdateParam.GenerateSkeleton {
+						vpcRouterL2TPServerUpdateParam.GenerateSkeleton = false
+						vpcRouterL2TPServerUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterL2TPServerUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -9983,19 +9983,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterL2tpServerUpdateParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterL2TPServerUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterL2tpServerUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterL2TPServerUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterL2tpServerUpdateParam.Selector) == 0 {
+						if len(vpcRouterL2TPServerUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -10003,13 +10003,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterL2tpServerUpdateParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterL2TPServerUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterL2tpServerUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterL2TPServerUpdateParam.Selector)
 						}
 
 					} else {
@@ -10030,8 +10030,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterL2tpServerUpdateParam.Selector) == 0 || hasTags(&v, vpcrouterL2tpServerUpdateParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterL2TPServerUpdateParam.Selector) == 0 || hasTags(&v, vpcRouterL2TPServerUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -10052,11 +10052,11 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterL2tpServerUpdateParam.Assumeyes {
+					if !vpcRouterL2TPServerUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("l-2tp-server-update", ids...) {
+						if !command.ConfirmContinue("l2tp-server-update", ids...) {
 							return nil
 						}
 					}
@@ -10066,11 +10066,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterL2tpServerUpdateParam.SetId(id)
-						p := *vpcrouterL2tpServerUpdateParam // copy struct value
-						vpcrouterL2tpServerUpdateParam := &p
+						vpcRouterL2TPServerUpdateParam.SetId(id)
+						p := *vpcRouterL2TPServerUpdateParam // copy struct value
+						vpcRouterL2TPServerUpdateParam := &p
 						go func() {
-							err := funcs.VpcrouterL2tpServerUpdate(ctx, vpcrouterL2tpServerUpdateParam)
+							err := funcs.VPCRouterL2TPServerUpdate(ctx, vpcRouterL2TPServerUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -10159,63 +10159,63 @@ func init() {
 						return err
 					}
 
-					vpcrouterUserInfoParam.ParamTemplate = c.String("param-template")
-					vpcrouterUserInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterUserInfoParam)
+					vpcRouterUserInfoParam.ParamTemplate = c.String("param-template")
+					vpcRouterUserInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterUserInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUserInfoVpcrouterParam()
+						p := params.NewUserInfoVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterUserInfoParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterUserInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterUserInfoParam.Selector = c.StringSlice("selector")
+						vpcRouterUserInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterUserInfoParam.ParamTemplate = c.String("param-template")
+						vpcRouterUserInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterUserInfoParam.Parameters = c.String("parameters")
+						vpcRouterUserInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterUserInfoParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterUserInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterUserInfoParam.ParameterFile = c.String("parameter-file")
+						vpcRouterUserInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterUserInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterUserInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterUserInfoParam.OutputType = c.String("output-type")
+						vpcRouterUserInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterUserInfoParam.Column = c.StringSlice("column")
+						vpcRouterUserInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterUserInfoParam.Quiet = c.Bool("quiet")
+						vpcRouterUserInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterUserInfoParam.Format = c.String("format")
+						vpcRouterUserInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterUserInfoParam.FormatFile = c.String("format-file")
+						vpcRouterUserInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterUserInfoParam.Query = c.String("query")
+						vpcRouterUserInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterUserInfoParam.QueryFile = c.String("query-file")
+						vpcRouterUserInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vpcrouterUserInfoParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterUserInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -10223,7 +10223,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterUserInfoParam
+					var outputTypeHolder interface{} = vpcRouterUserInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -10234,10 +10234,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterUserInfoParam.GenerateSkeleton {
-						vpcrouterUserInfoParam.GenerateSkeleton = false
-						vpcrouterUserInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterUserInfoParam, "", "\t")
+					if vpcRouterUserInfoParam.GenerateSkeleton {
+						vpcRouterUserInfoParam.GenerateSkeleton = false
+						vpcRouterUserInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterUserInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -10246,19 +10246,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterUserInfoParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterUserInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterUserInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterUserInfoParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterUserInfoParam.Selector) == 0 {
+						if len(vpcRouterUserInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -10266,13 +10266,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterUserInfoParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterUserInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterUserInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterUserInfoParam.Selector)
 						}
 
 					} else {
@@ -10293,8 +10293,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterUserInfoParam.Selector) == 0 || hasTags(&v, vpcrouterUserInfoParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterUserInfoParam.Selector) == 0 || hasTags(&v, vpcRouterUserInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -10319,11 +10319,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterUserInfoParam.SetId(id)
-						p := *vpcrouterUserInfoParam // copy struct value
-						vpcrouterUserInfoParam := &p
+						vpcRouterUserInfoParam.SetId(id)
+						p := *vpcRouterUserInfoParam // copy struct value
+						vpcRouterUserInfoParam := &p
 						go func() {
-							err := funcs.VpcrouterUserInfo(ctx, vpcrouterUserInfoParam)
+							err := funcs.VPCRouterUserInfo(ctx, vpcRouterUserInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -10394,51 +10394,51 @@ func init() {
 						return err
 					}
 
-					vpcrouterUserAddParam.ParamTemplate = c.String("param-template")
-					vpcrouterUserAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterUserAddParam)
+					vpcRouterUserAddParam.ParamTemplate = c.String("param-template")
+					vpcRouterUserAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterUserAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUserAddVpcrouterParam()
+						p := params.NewUserAddVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterUserAddParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterUserAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("username") {
-						vpcrouterUserAddParam.Username = c.String("username")
+						vpcRouterUserAddParam.Username = c.String("username")
 					}
 					if c.IsSet("password") {
-						vpcrouterUserAddParam.Password = c.String("password")
+						vpcRouterUserAddParam.Password = c.String("password")
 					}
 					if c.IsSet("selector") {
-						vpcrouterUserAddParam.Selector = c.StringSlice("selector")
+						vpcRouterUserAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterUserAddParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterUserAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterUserAddParam.ParamTemplate = c.String("param-template")
+						vpcRouterUserAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterUserAddParam.Parameters = c.String("parameters")
+						vpcRouterUserAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterUserAddParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterUserAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterUserAddParam.ParameterFile = c.String("parameter-file")
+						vpcRouterUserAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterUserAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterUserAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterUserAddParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterUserAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -10446,7 +10446,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterUserAddParam
+					var outputTypeHolder interface{} = vpcRouterUserAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -10457,10 +10457,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterUserAddParam.GenerateSkeleton {
-						vpcrouterUserAddParam.GenerateSkeleton = false
-						vpcrouterUserAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterUserAddParam, "", "\t")
+					if vpcRouterUserAddParam.GenerateSkeleton {
+						vpcRouterUserAddParam.GenerateSkeleton = false
+						vpcRouterUserAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterUserAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -10469,19 +10469,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterUserAddParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterUserAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterUserAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterUserAddParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterUserAddParam.Selector) == 0 {
+						if len(vpcRouterUserAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -10489,13 +10489,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterUserAddParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterUserAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterUserAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterUserAddParam.Selector)
 						}
 
 					} else {
@@ -10516,8 +10516,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterUserAddParam.Selector) == 0 || hasTags(&v, vpcrouterUserAddParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterUserAddParam.Selector) == 0 || hasTags(&v, vpcRouterUserAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -10538,7 +10538,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterUserAddParam.Assumeyes {
+					if !vpcRouterUserAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -10552,11 +10552,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterUserAddParam.SetId(id)
-						p := *vpcrouterUserAddParam // copy struct value
-						vpcrouterUserAddParam := &p
+						vpcRouterUserAddParam.SetId(id)
+						p := *vpcRouterUserAddParam // copy struct value
+						vpcRouterUserAddParam := &p
 						go func() {
-							err := funcs.VpcrouterUserAdd(ctx, vpcrouterUserAddParam)
+							err := funcs.VPCRouterUserAdd(ctx, vpcRouterUserAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -10631,54 +10631,54 @@ func init() {
 						return err
 					}
 
-					vpcrouterUserUpdateParam.ParamTemplate = c.String("param-template")
-					vpcrouterUserUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterUserUpdateParam)
+					vpcRouterUserUpdateParam.ParamTemplate = c.String("param-template")
+					vpcRouterUserUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterUserUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUserUpdateVpcrouterParam()
+						p := params.NewUserUpdateVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterUserUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterUserUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						vpcrouterUserUpdateParam.Index = c.Int("index")
+						vpcRouterUserUpdateParam.Index = c.Int("index")
 					}
 					if c.IsSet("username") {
-						vpcrouterUserUpdateParam.Username = c.String("username")
+						vpcRouterUserUpdateParam.Username = c.String("username")
 					}
 					if c.IsSet("password") {
-						vpcrouterUserUpdateParam.Password = c.String("password")
+						vpcRouterUserUpdateParam.Password = c.String("password")
 					}
 					if c.IsSet("selector") {
-						vpcrouterUserUpdateParam.Selector = c.StringSlice("selector")
+						vpcRouterUserUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterUserUpdateParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterUserUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterUserUpdateParam.ParamTemplate = c.String("param-template")
+						vpcRouterUserUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterUserUpdateParam.Parameters = c.String("parameters")
+						vpcRouterUserUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterUserUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterUserUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterUserUpdateParam.ParameterFile = c.String("parameter-file")
+						vpcRouterUserUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterUserUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterUserUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterUserUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterUserUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -10686,7 +10686,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterUserUpdateParam
+					var outputTypeHolder interface{} = vpcRouterUserUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -10697,10 +10697,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterUserUpdateParam.GenerateSkeleton {
-						vpcrouterUserUpdateParam.GenerateSkeleton = false
-						vpcrouterUserUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterUserUpdateParam, "", "\t")
+					if vpcRouterUserUpdateParam.GenerateSkeleton {
+						vpcRouterUserUpdateParam.GenerateSkeleton = false
+						vpcRouterUserUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterUserUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -10709,19 +10709,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterUserUpdateParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterUserUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterUserUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterUserUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterUserUpdateParam.Selector) == 0 {
+						if len(vpcRouterUserUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -10729,13 +10729,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterUserUpdateParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterUserUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterUserUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterUserUpdateParam.Selector)
 						}
 
 					} else {
@@ -10756,8 +10756,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterUserUpdateParam.Selector) == 0 || hasTags(&v, vpcrouterUserUpdateParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterUserUpdateParam.Selector) == 0 || hasTags(&v, vpcRouterUserUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -10778,7 +10778,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterUserUpdateParam.Assumeyes {
+					if !vpcRouterUserUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -10792,11 +10792,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterUserUpdateParam.SetId(id)
-						p := *vpcrouterUserUpdateParam // copy struct value
-						vpcrouterUserUpdateParam := &p
+						vpcRouterUserUpdateParam.SetId(id)
+						p := *vpcRouterUserUpdateParam // copy struct value
+						vpcRouterUserUpdateParam := &p
 						go func() {
-							err := funcs.VpcrouterUserUpdate(ctx, vpcrouterUserUpdateParam)
+							err := funcs.VPCRouterUserUpdate(ctx, vpcRouterUserUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -10861,48 +10861,48 @@ func init() {
 						return err
 					}
 
-					vpcrouterUserDeleteParam.ParamTemplate = c.String("param-template")
-					vpcrouterUserDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterUserDeleteParam)
+					vpcRouterUserDeleteParam.ParamTemplate = c.String("param-template")
+					vpcRouterUserDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterUserDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUserDeleteVpcrouterParam()
+						p := params.NewUserDeleteVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterUserDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterUserDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						vpcrouterUserDeleteParam.Index = c.Int("index")
+						vpcRouterUserDeleteParam.Index = c.Int("index")
 					}
 					if c.IsSet("selector") {
-						vpcrouterUserDeleteParam.Selector = c.StringSlice("selector")
+						vpcRouterUserDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterUserDeleteParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterUserDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterUserDeleteParam.ParamTemplate = c.String("param-template")
+						vpcRouterUserDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterUserDeleteParam.Parameters = c.String("parameters")
+						vpcRouterUserDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterUserDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterUserDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterUserDeleteParam.ParameterFile = c.String("parameter-file")
+						vpcRouterUserDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterUserDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterUserDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterUserDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterUserDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -10910,7 +10910,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterUserDeleteParam
+					var outputTypeHolder interface{} = vpcRouterUserDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -10921,10 +10921,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterUserDeleteParam.GenerateSkeleton {
-						vpcrouterUserDeleteParam.GenerateSkeleton = false
-						vpcrouterUserDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterUserDeleteParam, "", "\t")
+					if vpcRouterUserDeleteParam.GenerateSkeleton {
+						vpcRouterUserDeleteParam.GenerateSkeleton = false
+						vpcRouterUserDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterUserDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -10933,19 +10933,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterUserDeleteParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterUserDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterUserDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterUserDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterUserDeleteParam.Selector) == 0 {
+						if len(vpcRouterUserDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -10953,13 +10953,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterUserDeleteParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterUserDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterUserDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterUserDeleteParam.Selector)
 						}
 
 					} else {
@@ -10980,8 +10980,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterUserDeleteParam.Selector) == 0 || hasTags(&v, vpcrouterUserDeleteParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterUserDeleteParam.Selector) == 0 || hasTags(&v, vpcRouterUserDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -11002,7 +11002,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterUserDeleteParam.Assumeyes {
+					if !vpcRouterUserDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -11016,11 +11016,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterUserDeleteParam.SetId(id)
-						p := *vpcrouterUserDeleteParam // copy struct value
-						vpcrouterUserDeleteParam := &p
+						vpcRouterUserDeleteParam.SetId(id)
+						p := *vpcRouterUserDeleteParam // copy struct value
+						vpcRouterUserDeleteParam := &p
 						go func() {
-							err := funcs.VpcrouterUserDelete(ctx, vpcrouterUserDeleteParam)
+							err := funcs.VPCRouterUserDelete(ctx, vpcRouterUserDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -11109,63 +11109,63 @@ func init() {
 						return err
 					}
 
-					vpcrouterSiteToSiteVpnInfoParam.ParamTemplate = c.String("param-template")
-					vpcrouterSiteToSiteVpnInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterSiteToSiteVpnInfoParam)
+					vpcRouterSiteToSiteVPNInfoParam.ParamTemplate = c.String("param-template")
+					vpcRouterSiteToSiteVPNInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterSiteToSiteVPNInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewSiteToSiteVpnInfoVpcrouterParam()
+						p := params.NewSiteToSiteVPNInfoVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterSiteToSiteVpnInfoParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterSiteToSiteVPNInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterSiteToSiteVpnInfoParam.Selector = c.StringSlice("selector")
+						vpcRouterSiteToSiteVPNInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterSiteToSiteVpnInfoParam.ParamTemplate = c.String("param-template")
+						vpcRouterSiteToSiteVPNInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterSiteToSiteVpnInfoParam.Parameters = c.String("parameters")
+						vpcRouterSiteToSiteVPNInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterSiteToSiteVpnInfoParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterSiteToSiteVPNInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterSiteToSiteVpnInfoParam.ParameterFile = c.String("parameter-file")
+						vpcRouterSiteToSiteVPNInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterSiteToSiteVpnInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterSiteToSiteVPNInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterSiteToSiteVpnInfoParam.OutputType = c.String("output-type")
+						vpcRouterSiteToSiteVPNInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterSiteToSiteVpnInfoParam.Column = c.StringSlice("column")
+						vpcRouterSiteToSiteVPNInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterSiteToSiteVpnInfoParam.Quiet = c.Bool("quiet")
+						vpcRouterSiteToSiteVPNInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterSiteToSiteVpnInfoParam.Format = c.String("format")
+						vpcRouterSiteToSiteVPNInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterSiteToSiteVpnInfoParam.FormatFile = c.String("format-file")
+						vpcRouterSiteToSiteVPNInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterSiteToSiteVpnInfoParam.Query = c.String("query")
+						vpcRouterSiteToSiteVPNInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterSiteToSiteVpnInfoParam.QueryFile = c.String("query-file")
+						vpcRouterSiteToSiteVPNInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vpcrouterSiteToSiteVpnInfoParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterSiteToSiteVPNInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -11173,7 +11173,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterSiteToSiteVpnInfoParam
+					var outputTypeHolder interface{} = vpcRouterSiteToSiteVPNInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -11184,10 +11184,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterSiteToSiteVpnInfoParam.GenerateSkeleton {
-						vpcrouterSiteToSiteVpnInfoParam.GenerateSkeleton = false
-						vpcrouterSiteToSiteVpnInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterSiteToSiteVpnInfoParam, "", "\t")
+					if vpcRouterSiteToSiteVPNInfoParam.GenerateSkeleton {
+						vpcRouterSiteToSiteVPNInfoParam.GenerateSkeleton = false
+						vpcRouterSiteToSiteVPNInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterSiteToSiteVPNInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -11196,19 +11196,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterSiteToSiteVpnInfoParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterSiteToSiteVPNInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterSiteToSiteVpnInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterSiteToSiteVPNInfoParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterSiteToSiteVpnInfoParam.Selector) == 0 {
+						if len(vpcRouterSiteToSiteVPNInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -11216,13 +11216,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterSiteToSiteVpnInfoParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterSiteToSiteVPNInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterSiteToSiteVpnInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterSiteToSiteVPNInfoParam.Selector)
 						}
 
 					} else {
@@ -11243,8 +11243,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterSiteToSiteVpnInfoParam.Selector) == 0 || hasTags(&v, vpcrouterSiteToSiteVpnInfoParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterSiteToSiteVPNInfoParam.Selector) == 0 || hasTags(&v, vpcRouterSiteToSiteVPNInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -11269,11 +11269,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterSiteToSiteVpnInfoParam.SetId(id)
-						p := *vpcrouterSiteToSiteVpnInfoParam // copy struct value
-						vpcrouterSiteToSiteVpnInfoParam := &p
+						vpcRouterSiteToSiteVPNInfoParam.SetId(id)
+						p := *vpcRouterSiteToSiteVPNInfoParam // copy struct value
+						vpcRouterSiteToSiteVPNInfoParam := &p
 						go func() {
-							err := funcs.VpcrouterSiteToSiteVpnInfo(ctx, vpcrouterSiteToSiteVpnInfoParam)
+							err := funcs.VPCRouterSiteToSiteVPNInfo(ctx, vpcRouterSiteToSiteVPNInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -11354,60 +11354,60 @@ func init() {
 						return err
 					}
 
-					vpcrouterSiteToSiteVpnAddParam.ParamTemplate = c.String("param-template")
-					vpcrouterSiteToSiteVpnAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterSiteToSiteVpnAddParam)
+					vpcRouterSiteToSiteVPNAddParam.ParamTemplate = c.String("param-template")
+					vpcRouterSiteToSiteVPNAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterSiteToSiteVPNAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewSiteToSiteVpnAddVpcrouterParam()
+						p := params.NewSiteToSiteVPNAddVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterSiteToSiteVpnAddParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterSiteToSiteVPNAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("peer") {
-						vpcrouterSiteToSiteVpnAddParam.Peer = c.String("peer")
+						vpcRouterSiteToSiteVPNAddParam.Peer = c.String("peer")
 					}
 					if c.IsSet("remote-id") {
-						vpcrouterSiteToSiteVpnAddParam.RemoteId = c.String("remote-id")
+						vpcRouterSiteToSiteVPNAddParam.RemoteId = c.String("remote-id")
 					}
 					if c.IsSet("pre-shared-secret") {
-						vpcrouterSiteToSiteVpnAddParam.PreSharedSecret = c.String("pre-shared-secret")
+						vpcRouterSiteToSiteVPNAddParam.PreSharedSecret = c.String("pre-shared-secret")
 					}
 					if c.IsSet("routes") {
-						vpcrouterSiteToSiteVpnAddParam.Routes = c.StringSlice("routes")
+						vpcRouterSiteToSiteVPNAddParam.Routes = c.StringSlice("routes")
 					}
 					if c.IsSet("local-prefix") {
-						vpcrouterSiteToSiteVpnAddParam.LocalPrefix = c.StringSlice("local-prefix")
+						vpcRouterSiteToSiteVPNAddParam.LocalPrefix = c.StringSlice("local-prefix")
 					}
 					if c.IsSet("selector") {
-						vpcrouterSiteToSiteVpnAddParam.Selector = c.StringSlice("selector")
+						vpcRouterSiteToSiteVPNAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterSiteToSiteVpnAddParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterSiteToSiteVPNAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterSiteToSiteVpnAddParam.ParamTemplate = c.String("param-template")
+						vpcRouterSiteToSiteVPNAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterSiteToSiteVpnAddParam.Parameters = c.String("parameters")
+						vpcRouterSiteToSiteVPNAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterSiteToSiteVpnAddParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterSiteToSiteVPNAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterSiteToSiteVpnAddParam.ParameterFile = c.String("parameter-file")
+						vpcRouterSiteToSiteVPNAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterSiteToSiteVpnAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterSiteToSiteVPNAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterSiteToSiteVpnAddParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterSiteToSiteVPNAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -11415,7 +11415,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterSiteToSiteVpnAddParam
+					var outputTypeHolder interface{} = vpcRouterSiteToSiteVPNAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -11426,10 +11426,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterSiteToSiteVpnAddParam.GenerateSkeleton {
-						vpcrouterSiteToSiteVpnAddParam.GenerateSkeleton = false
-						vpcrouterSiteToSiteVpnAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterSiteToSiteVpnAddParam, "", "\t")
+					if vpcRouterSiteToSiteVPNAddParam.GenerateSkeleton {
+						vpcRouterSiteToSiteVPNAddParam.GenerateSkeleton = false
+						vpcRouterSiteToSiteVPNAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterSiteToSiteVPNAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -11438,19 +11438,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterSiteToSiteVpnAddParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterSiteToSiteVPNAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterSiteToSiteVpnAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterSiteToSiteVPNAddParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterSiteToSiteVpnAddParam.Selector) == 0 {
+						if len(vpcRouterSiteToSiteVPNAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -11458,13 +11458,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterSiteToSiteVpnAddParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterSiteToSiteVPNAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterSiteToSiteVpnAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterSiteToSiteVPNAddParam.Selector)
 						}
 
 					} else {
@@ -11485,8 +11485,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterSiteToSiteVpnAddParam.Selector) == 0 || hasTags(&v, vpcrouterSiteToSiteVpnAddParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterSiteToSiteVPNAddParam.Selector) == 0 || hasTags(&v, vpcRouterSiteToSiteVPNAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -11507,7 +11507,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterSiteToSiteVpnAddParam.Assumeyes {
+					if !vpcRouterSiteToSiteVPNAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -11521,11 +11521,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterSiteToSiteVpnAddParam.SetId(id)
-						p := *vpcrouterSiteToSiteVpnAddParam // copy struct value
-						vpcrouterSiteToSiteVpnAddParam := &p
+						vpcRouterSiteToSiteVPNAddParam.SetId(id)
+						p := *vpcRouterSiteToSiteVPNAddParam // copy struct value
+						vpcRouterSiteToSiteVPNAddParam := &p
 						go func() {
-							err := funcs.VpcrouterSiteToSiteVpnAdd(ctx, vpcrouterSiteToSiteVpnAddParam)
+							err := funcs.VPCRouterSiteToSiteVPNAdd(ctx, vpcRouterSiteToSiteVPNAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -11610,63 +11610,63 @@ func init() {
 						return err
 					}
 
-					vpcrouterSiteToSiteVpnUpdateParam.ParamTemplate = c.String("param-template")
-					vpcrouterSiteToSiteVpnUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterSiteToSiteVpnUpdateParam)
+					vpcRouterSiteToSiteVPNUpdateParam.ParamTemplate = c.String("param-template")
+					vpcRouterSiteToSiteVPNUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterSiteToSiteVPNUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewSiteToSiteVpnUpdateVpcrouterParam()
+						p := params.NewSiteToSiteVPNUpdateVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterSiteToSiteVpnUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterSiteToSiteVPNUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						vpcrouterSiteToSiteVpnUpdateParam.Index = c.Int("index")
+						vpcRouterSiteToSiteVPNUpdateParam.Index = c.Int("index")
 					}
 					if c.IsSet("peer") {
-						vpcrouterSiteToSiteVpnUpdateParam.Peer = c.String("peer")
+						vpcRouterSiteToSiteVPNUpdateParam.Peer = c.String("peer")
 					}
 					if c.IsSet("remote-id") {
-						vpcrouterSiteToSiteVpnUpdateParam.RemoteId = c.String("remote-id")
+						vpcRouterSiteToSiteVPNUpdateParam.RemoteId = c.String("remote-id")
 					}
 					if c.IsSet("pre-shared-secret") {
-						vpcrouterSiteToSiteVpnUpdateParam.PreSharedSecret = c.String("pre-shared-secret")
+						vpcRouterSiteToSiteVPNUpdateParam.PreSharedSecret = c.String("pre-shared-secret")
 					}
 					if c.IsSet("routes") {
-						vpcrouterSiteToSiteVpnUpdateParam.Routes = c.StringSlice("routes")
+						vpcRouterSiteToSiteVPNUpdateParam.Routes = c.StringSlice("routes")
 					}
 					if c.IsSet("local-prefix") {
-						vpcrouterSiteToSiteVpnUpdateParam.LocalPrefix = c.StringSlice("local-prefix")
+						vpcRouterSiteToSiteVPNUpdateParam.LocalPrefix = c.StringSlice("local-prefix")
 					}
 					if c.IsSet("selector") {
-						vpcrouterSiteToSiteVpnUpdateParam.Selector = c.StringSlice("selector")
+						vpcRouterSiteToSiteVPNUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterSiteToSiteVpnUpdateParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterSiteToSiteVPNUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterSiteToSiteVpnUpdateParam.ParamTemplate = c.String("param-template")
+						vpcRouterSiteToSiteVPNUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterSiteToSiteVpnUpdateParam.Parameters = c.String("parameters")
+						vpcRouterSiteToSiteVPNUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterSiteToSiteVpnUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterSiteToSiteVPNUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterSiteToSiteVpnUpdateParam.ParameterFile = c.String("parameter-file")
+						vpcRouterSiteToSiteVPNUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterSiteToSiteVpnUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterSiteToSiteVPNUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterSiteToSiteVpnUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterSiteToSiteVPNUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -11674,7 +11674,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterSiteToSiteVpnUpdateParam
+					var outputTypeHolder interface{} = vpcRouterSiteToSiteVPNUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -11685,10 +11685,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterSiteToSiteVpnUpdateParam.GenerateSkeleton {
-						vpcrouterSiteToSiteVpnUpdateParam.GenerateSkeleton = false
-						vpcrouterSiteToSiteVpnUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterSiteToSiteVpnUpdateParam, "", "\t")
+					if vpcRouterSiteToSiteVPNUpdateParam.GenerateSkeleton {
+						vpcRouterSiteToSiteVPNUpdateParam.GenerateSkeleton = false
+						vpcRouterSiteToSiteVPNUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterSiteToSiteVPNUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -11697,19 +11697,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterSiteToSiteVpnUpdateParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterSiteToSiteVPNUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterSiteToSiteVpnUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterSiteToSiteVPNUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterSiteToSiteVpnUpdateParam.Selector) == 0 {
+						if len(vpcRouterSiteToSiteVPNUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -11717,13 +11717,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterSiteToSiteVpnUpdateParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterSiteToSiteVPNUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterSiteToSiteVpnUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterSiteToSiteVPNUpdateParam.Selector)
 						}
 
 					} else {
@@ -11744,8 +11744,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterSiteToSiteVpnUpdateParam.Selector) == 0 || hasTags(&v, vpcrouterSiteToSiteVpnUpdateParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterSiteToSiteVPNUpdateParam.Selector) == 0 || hasTags(&v, vpcRouterSiteToSiteVPNUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -11766,7 +11766,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterSiteToSiteVpnUpdateParam.Assumeyes {
+					if !vpcRouterSiteToSiteVPNUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -11780,11 +11780,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterSiteToSiteVpnUpdateParam.SetId(id)
-						p := *vpcrouterSiteToSiteVpnUpdateParam // copy struct value
-						vpcrouterSiteToSiteVpnUpdateParam := &p
+						vpcRouterSiteToSiteVPNUpdateParam.SetId(id)
+						p := *vpcRouterSiteToSiteVPNUpdateParam // copy struct value
+						vpcRouterSiteToSiteVPNUpdateParam := &p
 						go func() {
-							err := funcs.VpcrouterSiteToSiteVpnUpdate(ctx, vpcrouterSiteToSiteVpnUpdateParam)
+							err := funcs.VPCRouterSiteToSiteVPNUpdate(ctx, vpcRouterSiteToSiteVPNUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -11849,48 +11849,48 @@ func init() {
 						return err
 					}
 
-					vpcrouterSiteToSiteVpnDeleteParam.ParamTemplate = c.String("param-template")
-					vpcrouterSiteToSiteVpnDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterSiteToSiteVpnDeleteParam)
+					vpcRouterSiteToSiteVPNDeleteParam.ParamTemplate = c.String("param-template")
+					vpcRouterSiteToSiteVPNDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterSiteToSiteVPNDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewSiteToSiteVpnDeleteVpcrouterParam()
+						p := params.NewSiteToSiteVPNDeleteVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterSiteToSiteVpnDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterSiteToSiteVPNDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						vpcrouterSiteToSiteVpnDeleteParam.Index = c.Int("index")
+						vpcRouterSiteToSiteVPNDeleteParam.Index = c.Int("index")
 					}
 					if c.IsSet("selector") {
-						vpcrouterSiteToSiteVpnDeleteParam.Selector = c.StringSlice("selector")
+						vpcRouterSiteToSiteVPNDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterSiteToSiteVpnDeleteParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterSiteToSiteVPNDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterSiteToSiteVpnDeleteParam.ParamTemplate = c.String("param-template")
+						vpcRouterSiteToSiteVPNDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterSiteToSiteVpnDeleteParam.Parameters = c.String("parameters")
+						vpcRouterSiteToSiteVPNDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterSiteToSiteVpnDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterSiteToSiteVPNDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterSiteToSiteVpnDeleteParam.ParameterFile = c.String("parameter-file")
+						vpcRouterSiteToSiteVPNDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterSiteToSiteVpnDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterSiteToSiteVPNDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterSiteToSiteVpnDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterSiteToSiteVPNDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -11898,7 +11898,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterSiteToSiteVpnDeleteParam
+					var outputTypeHolder interface{} = vpcRouterSiteToSiteVPNDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -11909,10 +11909,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterSiteToSiteVpnDeleteParam.GenerateSkeleton {
-						vpcrouterSiteToSiteVpnDeleteParam.GenerateSkeleton = false
-						vpcrouterSiteToSiteVpnDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterSiteToSiteVpnDeleteParam, "", "\t")
+					if vpcRouterSiteToSiteVPNDeleteParam.GenerateSkeleton {
+						vpcRouterSiteToSiteVPNDeleteParam.GenerateSkeleton = false
+						vpcRouterSiteToSiteVPNDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterSiteToSiteVPNDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -11921,19 +11921,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterSiteToSiteVpnDeleteParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterSiteToSiteVPNDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterSiteToSiteVpnDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterSiteToSiteVPNDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterSiteToSiteVpnDeleteParam.Selector) == 0 {
+						if len(vpcRouterSiteToSiteVPNDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -11941,13 +11941,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterSiteToSiteVpnDeleteParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterSiteToSiteVPNDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterSiteToSiteVpnDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterSiteToSiteVPNDeleteParam.Selector)
 						}
 
 					} else {
@@ -11968,8 +11968,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterSiteToSiteVpnDeleteParam.Selector) == 0 || hasTags(&v, vpcrouterSiteToSiteVpnDeleteParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterSiteToSiteVPNDeleteParam.Selector) == 0 || hasTags(&v, vpcRouterSiteToSiteVPNDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -11990,7 +11990,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterSiteToSiteVpnDeleteParam.Assumeyes {
+					if !vpcRouterSiteToSiteVPNDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -12004,11 +12004,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterSiteToSiteVpnDeleteParam.SetId(id)
-						p := *vpcrouterSiteToSiteVpnDeleteParam // copy struct value
-						vpcrouterSiteToSiteVpnDeleteParam := &p
+						vpcRouterSiteToSiteVPNDeleteParam.SetId(id)
+						p := *vpcRouterSiteToSiteVPNDeleteParam // copy struct value
+						vpcRouterSiteToSiteVPNDeleteParam := &p
 						go func() {
-							err := funcs.VpcrouterSiteToSiteVpnDelete(ctx, vpcrouterSiteToSiteVpnDeleteParam)
+							err := funcs.VPCRouterSiteToSiteVPNDelete(ctx, vpcRouterSiteToSiteVPNDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -12096,63 +12096,63 @@ func init() {
 						return err
 					}
 
-					vpcrouterSiteToSiteVpnPeersParam.ParamTemplate = c.String("param-template")
-					vpcrouterSiteToSiteVpnPeersParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterSiteToSiteVpnPeersParam)
+					vpcRouterSiteToSiteVPNPeersParam.ParamTemplate = c.String("param-template")
+					vpcRouterSiteToSiteVPNPeersParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterSiteToSiteVPNPeersParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewSiteToSiteVpnPeersVpcrouterParam()
+						p := params.NewSiteToSiteVPNPeersVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterSiteToSiteVpnPeersParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterSiteToSiteVPNPeersParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterSiteToSiteVpnPeersParam.Selector = c.StringSlice("selector")
+						vpcRouterSiteToSiteVPNPeersParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterSiteToSiteVpnPeersParam.ParamTemplate = c.String("param-template")
+						vpcRouterSiteToSiteVPNPeersParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterSiteToSiteVpnPeersParam.Parameters = c.String("parameters")
+						vpcRouterSiteToSiteVPNPeersParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterSiteToSiteVpnPeersParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterSiteToSiteVPNPeersParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterSiteToSiteVpnPeersParam.ParameterFile = c.String("parameter-file")
+						vpcRouterSiteToSiteVPNPeersParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterSiteToSiteVpnPeersParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterSiteToSiteVPNPeersParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterSiteToSiteVpnPeersParam.OutputType = c.String("output-type")
+						vpcRouterSiteToSiteVPNPeersParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterSiteToSiteVpnPeersParam.Column = c.StringSlice("column")
+						vpcRouterSiteToSiteVPNPeersParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterSiteToSiteVpnPeersParam.Quiet = c.Bool("quiet")
+						vpcRouterSiteToSiteVPNPeersParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterSiteToSiteVpnPeersParam.Format = c.String("format")
+						vpcRouterSiteToSiteVPNPeersParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterSiteToSiteVpnPeersParam.FormatFile = c.String("format-file")
+						vpcRouterSiteToSiteVPNPeersParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterSiteToSiteVpnPeersParam.Query = c.String("query")
+						vpcRouterSiteToSiteVPNPeersParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterSiteToSiteVpnPeersParam.QueryFile = c.String("query-file")
+						vpcRouterSiteToSiteVPNPeersParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vpcrouterSiteToSiteVpnPeersParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterSiteToSiteVPNPeersParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -12160,7 +12160,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterSiteToSiteVpnPeersParam
+					var outputTypeHolder interface{} = vpcRouterSiteToSiteVPNPeersParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -12171,10 +12171,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterSiteToSiteVpnPeersParam.GenerateSkeleton {
-						vpcrouterSiteToSiteVpnPeersParam.GenerateSkeleton = false
-						vpcrouterSiteToSiteVpnPeersParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterSiteToSiteVpnPeersParam, "", "\t")
+					if vpcRouterSiteToSiteVPNPeersParam.GenerateSkeleton {
+						vpcRouterSiteToSiteVPNPeersParam.GenerateSkeleton = false
+						vpcRouterSiteToSiteVPNPeersParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterSiteToSiteVPNPeersParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -12183,19 +12183,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterSiteToSiteVpnPeersParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterSiteToSiteVPNPeersParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterSiteToSiteVpnPeersParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterSiteToSiteVPNPeersParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterSiteToSiteVpnPeersParam.Selector) == 0 {
+						if len(vpcRouterSiteToSiteVPNPeersParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -12203,13 +12203,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterSiteToSiteVpnPeersParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterSiteToSiteVPNPeersParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterSiteToSiteVpnPeersParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterSiteToSiteVPNPeersParam.Selector)
 						}
 
 					} else {
@@ -12230,8 +12230,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterSiteToSiteVpnPeersParam.Selector) == 0 || hasTags(&v, vpcrouterSiteToSiteVpnPeersParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterSiteToSiteVPNPeersParam.Selector) == 0 || hasTags(&v, vpcRouterSiteToSiteVPNPeersParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -12256,11 +12256,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterSiteToSiteVpnPeersParam.SetId(id)
-						p := *vpcrouterSiteToSiteVpnPeersParam // copy struct value
-						vpcrouterSiteToSiteVpnPeersParam := &p
+						vpcRouterSiteToSiteVPNPeersParam.SetId(id)
+						p := *vpcRouterSiteToSiteVPNPeersParam // copy struct value
+						vpcRouterSiteToSiteVPNPeersParam := &p
 						go func() {
-							err := funcs.VpcrouterSiteToSiteVpnPeers(ctx, vpcrouterSiteToSiteVpnPeersParam)
+							err := funcs.VPCRouterSiteToSiteVPNPeers(ctx, vpcRouterSiteToSiteVPNPeersParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -12349,63 +12349,63 @@ func init() {
 						return err
 					}
 
-					vpcrouterStaticRouteInfoParam.ParamTemplate = c.String("param-template")
-					vpcrouterStaticRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterStaticRouteInfoParam)
+					vpcRouterStaticRouteInfoParam.ParamTemplate = c.String("param-template")
+					vpcRouterStaticRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterStaticRouteInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewStaticRouteInfoVpcrouterParam()
+						p := params.NewStaticRouteInfoVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterStaticRouteInfoParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterStaticRouteInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						vpcrouterStaticRouteInfoParam.Selector = c.StringSlice("selector")
+						vpcRouterStaticRouteInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterStaticRouteInfoParam.ParamTemplate = c.String("param-template")
+						vpcRouterStaticRouteInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterStaticRouteInfoParam.Parameters = c.String("parameters")
+						vpcRouterStaticRouteInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterStaticRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterStaticRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterStaticRouteInfoParam.ParameterFile = c.String("parameter-file")
+						vpcRouterStaticRouteInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterStaticRouteInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterStaticRouteInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterStaticRouteInfoParam.OutputType = c.String("output-type")
+						vpcRouterStaticRouteInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterStaticRouteInfoParam.Column = c.StringSlice("column")
+						vpcRouterStaticRouteInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterStaticRouteInfoParam.Quiet = c.Bool("quiet")
+						vpcRouterStaticRouteInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterStaticRouteInfoParam.Format = c.String("format")
+						vpcRouterStaticRouteInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterStaticRouteInfoParam.FormatFile = c.String("format-file")
+						vpcRouterStaticRouteInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterStaticRouteInfoParam.Query = c.String("query")
+						vpcRouterStaticRouteInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterStaticRouteInfoParam.QueryFile = c.String("query-file")
+						vpcRouterStaticRouteInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vpcrouterStaticRouteInfoParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterStaticRouteInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -12413,7 +12413,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterStaticRouteInfoParam
+					var outputTypeHolder interface{} = vpcRouterStaticRouteInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -12424,10 +12424,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterStaticRouteInfoParam.GenerateSkeleton {
-						vpcrouterStaticRouteInfoParam.GenerateSkeleton = false
-						vpcrouterStaticRouteInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterStaticRouteInfoParam, "", "\t")
+					if vpcRouterStaticRouteInfoParam.GenerateSkeleton {
+						vpcRouterStaticRouteInfoParam.GenerateSkeleton = false
+						vpcRouterStaticRouteInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterStaticRouteInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -12436,19 +12436,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterStaticRouteInfoParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterStaticRouteInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterStaticRouteInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterStaticRouteInfoParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterStaticRouteInfoParam.Selector) == 0 {
+						if len(vpcRouterStaticRouteInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -12456,13 +12456,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterStaticRouteInfoParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterStaticRouteInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterStaticRouteInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterStaticRouteInfoParam.Selector)
 						}
 
 					} else {
@@ -12483,8 +12483,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterStaticRouteInfoParam.Selector) == 0 || hasTags(&v, vpcrouterStaticRouteInfoParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterStaticRouteInfoParam.Selector) == 0 || hasTags(&v, vpcRouterStaticRouteInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -12509,11 +12509,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterStaticRouteInfoParam.SetId(id)
-						p := *vpcrouterStaticRouteInfoParam // copy struct value
-						vpcrouterStaticRouteInfoParam := &p
+						vpcRouterStaticRouteInfoParam.SetId(id)
+						p := *vpcRouterStaticRouteInfoParam // copy struct value
+						vpcRouterStaticRouteInfoParam := &p
 						go func() {
-							err := funcs.VpcrouterStaticRouteInfo(ctx, vpcrouterStaticRouteInfoParam)
+							err := funcs.VPCRouterStaticRouteInfo(ctx, vpcRouterStaticRouteInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -12582,51 +12582,51 @@ func init() {
 						return err
 					}
 
-					vpcrouterStaticRouteAddParam.ParamTemplate = c.String("param-template")
-					vpcrouterStaticRouteAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterStaticRouteAddParam)
+					vpcRouterStaticRouteAddParam.ParamTemplate = c.String("param-template")
+					vpcRouterStaticRouteAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterStaticRouteAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewStaticRouteAddVpcrouterParam()
+						p := params.NewStaticRouteAddVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterStaticRouteAddParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterStaticRouteAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("prefix") {
-						vpcrouterStaticRouteAddParam.Prefix = c.String("prefix")
+						vpcRouterStaticRouteAddParam.Prefix = c.String("prefix")
 					}
 					if c.IsSet("next-hop") {
-						vpcrouterStaticRouteAddParam.NextHop = c.String("next-hop")
+						vpcRouterStaticRouteAddParam.NextHop = c.String("next-hop")
 					}
 					if c.IsSet("selector") {
-						vpcrouterStaticRouteAddParam.Selector = c.StringSlice("selector")
+						vpcRouterStaticRouteAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterStaticRouteAddParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterStaticRouteAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterStaticRouteAddParam.ParamTemplate = c.String("param-template")
+						vpcRouterStaticRouteAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterStaticRouteAddParam.Parameters = c.String("parameters")
+						vpcRouterStaticRouteAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterStaticRouteAddParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterStaticRouteAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterStaticRouteAddParam.ParameterFile = c.String("parameter-file")
+						vpcRouterStaticRouteAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterStaticRouteAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterStaticRouteAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterStaticRouteAddParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterStaticRouteAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -12634,7 +12634,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterStaticRouteAddParam
+					var outputTypeHolder interface{} = vpcRouterStaticRouteAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -12645,10 +12645,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterStaticRouteAddParam.GenerateSkeleton {
-						vpcrouterStaticRouteAddParam.GenerateSkeleton = false
-						vpcrouterStaticRouteAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterStaticRouteAddParam, "", "\t")
+					if vpcRouterStaticRouteAddParam.GenerateSkeleton {
+						vpcRouterStaticRouteAddParam.GenerateSkeleton = false
+						vpcRouterStaticRouteAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterStaticRouteAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -12657,19 +12657,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterStaticRouteAddParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterStaticRouteAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterStaticRouteAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterStaticRouteAddParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterStaticRouteAddParam.Selector) == 0 {
+						if len(vpcRouterStaticRouteAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -12677,13 +12677,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterStaticRouteAddParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterStaticRouteAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterStaticRouteAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterStaticRouteAddParam.Selector)
 						}
 
 					} else {
@@ -12704,8 +12704,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterStaticRouteAddParam.Selector) == 0 || hasTags(&v, vpcrouterStaticRouteAddParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterStaticRouteAddParam.Selector) == 0 || hasTags(&v, vpcRouterStaticRouteAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -12726,7 +12726,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterStaticRouteAddParam.Assumeyes {
+					if !vpcRouterStaticRouteAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -12740,11 +12740,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterStaticRouteAddParam.SetId(id)
-						p := *vpcrouterStaticRouteAddParam // copy struct value
-						vpcrouterStaticRouteAddParam := &p
+						vpcRouterStaticRouteAddParam.SetId(id)
+						p := *vpcRouterStaticRouteAddParam // copy struct value
+						vpcRouterStaticRouteAddParam := &p
 						go func() {
-							err := funcs.VpcrouterStaticRouteAdd(ctx, vpcrouterStaticRouteAddParam)
+							err := funcs.VPCRouterStaticRouteAdd(ctx, vpcRouterStaticRouteAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -12817,54 +12817,54 @@ func init() {
 						return err
 					}
 
-					vpcrouterStaticRouteUpdateParam.ParamTemplate = c.String("param-template")
-					vpcrouterStaticRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterStaticRouteUpdateParam)
+					vpcRouterStaticRouteUpdateParam.ParamTemplate = c.String("param-template")
+					vpcRouterStaticRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterStaticRouteUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewStaticRouteUpdateVpcrouterParam()
+						p := params.NewStaticRouteUpdateVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterStaticRouteUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterStaticRouteUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						vpcrouterStaticRouteUpdateParam.Index = c.Int("index")
+						vpcRouterStaticRouteUpdateParam.Index = c.Int("index")
 					}
 					if c.IsSet("prefix") {
-						vpcrouterStaticRouteUpdateParam.Prefix = c.String("prefix")
+						vpcRouterStaticRouteUpdateParam.Prefix = c.String("prefix")
 					}
 					if c.IsSet("next-hop") {
-						vpcrouterStaticRouteUpdateParam.NextHop = c.String("next-hop")
+						vpcRouterStaticRouteUpdateParam.NextHop = c.String("next-hop")
 					}
 					if c.IsSet("selector") {
-						vpcrouterStaticRouteUpdateParam.Selector = c.StringSlice("selector")
+						vpcRouterStaticRouteUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterStaticRouteUpdateParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterStaticRouteUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterStaticRouteUpdateParam.ParamTemplate = c.String("param-template")
+						vpcRouterStaticRouteUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterStaticRouteUpdateParam.Parameters = c.String("parameters")
+						vpcRouterStaticRouteUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterStaticRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterStaticRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterStaticRouteUpdateParam.ParameterFile = c.String("parameter-file")
+						vpcRouterStaticRouteUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterStaticRouteUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterStaticRouteUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterStaticRouteUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterStaticRouteUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -12872,7 +12872,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterStaticRouteUpdateParam
+					var outputTypeHolder interface{} = vpcRouterStaticRouteUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -12883,10 +12883,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterStaticRouteUpdateParam.GenerateSkeleton {
-						vpcrouterStaticRouteUpdateParam.GenerateSkeleton = false
-						vpcrouterStaticRouteUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterStaticRouteUpdateParam, "", "\t")
+					if vpcRouterStaticRouteUpdateParam.GenerateSkeleton {
+						vpcRouterStaticRouteUpdateParam.GenerateSkeleton = false
+						vpcRouterStaticRouteUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterStaticRouteUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -12895,19 +12895,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterStaticRouteUpdateParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterStaticRouteUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterStaticRouteUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterStaticRouteUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterStaticRouteUpdateParam.Selector) == 0 {
+						if len(vpcRouterStaticRouteUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -12915,13 +12915,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterStaticRouteUpdateParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterStaticRouteUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterStaticRouteUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterStaticRouteUpdateParam.Selector)
 						}
 
 					} else {
@@ -12942,8 +12942,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterStaticRouteUpdateParam.Selector) == 0 || hasTags(&v, vpcrouterStaticRouteUpdateParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterStaticRouteUpdateParam.Selector) == 0 || hasTags(&v, vpcRouterStaticRouteUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -12964,7 +12964,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterStaticRouteUpdateParam.Assumeyes {
+					if !vpcRouterStaticRouteUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -12978,11 +12978,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterStaticRouteUpdateParam.SetId(id)
-						p := *vpcrouterStaticRouteUpdateParam // copy struct value
-						vpcrouterStaticRouteUpdateParam := &p
+						vpcRouterStaticRouteUpdateParam.SetId(id)
+						p := *vpcRouterStaticRouteUpdateParam // copy struct value
+						vpcRouterStaticRouteUpdateParam := &p
 						go func() {
-							err := funcs.VpcrouterStaticRouteUpdate(ctx, vpcrouterStaticRouteUpdateParam)
+							err := funcs.VPCRouterStaticRouteUpdate(ctx, vpcRouterStaticRouteUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -13047,48 +13047,48 @@ func init() {
 						return err
 					}
 
-					vpcrouterStaticRouteDeleteParam.ParamTemplate = c.String("param-template")
-					vpcrouterStaticRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterStaticRouteDeleteParam)
+					vpcRouterStaticRouteDeleteParam.ParamTemplate = c.String("param-template")
+					vpcRouterStaticRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterStaticRouteDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewStaticRouteDeleteVpcrouterParam()
+						p := params.NewStaticRouteDeleteVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterStaticRouteDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterStaticRouteDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						vpcrouterStaticRouteDeleteParam.Index = c.Int("index")
+						vpcRouterStaticRouteDeleteParam.Index = c.Int("index")
 					}
 					if c.IsSet("selector") {
-						vpcrouterStaticRouteDeleteParam.Selector = c.StringSlice("selector")
+						vpcRouterStaticRouteDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vpcrouterStaticRouteDeleteParam.Assumeyes = c.Bool("assumeyes")
+						vpcRouterStaticRouteDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterStaticRouteDeleteParam.ParamTemplate = c.String("param-template")
+						vpcRouterStaticRouteDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterStaticRouteDeleteParam.Parameters = c.String("parameters")
+						vpcRouterStaticRouteDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterStaticRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterStaticRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterStaticRouteDeleteParam.ParameterFile = c.String("parameter-file")
+						vpcRouterStaticRouteDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterStaticRouteDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterStaticRouteDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterStaticRouteDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterStaticRouteDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -13096,7 +13096,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterStaticRouteDeleteParam
+					var outputTypeHolder interface{} = vpcRouterStaticRouteDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -13107,10 +13107,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterStaticRouteDeleteParam.GenerateSkeleton {
-						vpcrouterStaticRouteDeleteParam.GenerateSkeleton = false
-						vpcrouterStaticRouteDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterStaticRouteDeleteParam, "", "\t")
+					if vpcRouterStaticRouteDeleteParam.GenerateSkeleton {
+						vpcRouterStaticRouteDeleteParam.GenerateSkeleton = false
+						vpcRouterStaticRouteDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterStaticRouteDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -13119,19 +13119,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterStaticRouteDeleteParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterStaticRouteDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterStaticRouteDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterStaticRouteDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterStaticRouteDeleteParam.Selector) == 0 {
+						if len(vpcRouterStaticRouteDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -13139,13 +13139,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterStaticRouteDeleteParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterStaticRouteDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterStaticRouteDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterStaticRouteDeleteParam.Selector)
 						}
 
 					} else {
@@ -13166,8 +13166,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterStaticRouteDeleteParam.Selector) == 0 || hasTags(&v, vpcrouterStaticRouteDeleteParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterStaticRouteDeleteParam.Selector) == 0 || hasTags(&v, vpcRouterStaticRouteDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -13188,7 +13188,7 @@ func init() {
 					}
 
 					// confirm
-					if !vpcrouterStaticRouteDeleteParam.Assumeyes {
+					if !vpcRouterStaticRouteDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -13202,11 +13202,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterStaticRouteDeleteParam.SetId(id)
-						p := *vpcrouterStaticRouteDeleteParam // copy struct value
-						vpcrouterStaticRouteDeleteParam := &p
+						vpcRouterStaticRouteDeleteParam.SetId(id)
+						p := *vpcRouterStaticRouteDeleteParam // copy struct value
+						vpcRouterStaticRouteDeleteParam := &p
 						go func() {
-							err := funcs.VpcrouterStaticRouteDelete(ctx, vpcrouterStaticRouteDeleteParam)
+							err := funcs.VPCRouterStaticRouteDelete(ctx, vpcRouterStaticRouteDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -13220,7 +13220,7 @@ func init() {
 			},
 			{
 				Name:      "monitor",
-				Usage:     "Monitor Vpcrouter",
+				Usage:     "Monitor VPCRouter",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -13312,75 +13312,75 @@ func init() {
 						return err
 					}
 
-					vpcrouterMonitorParam.ParamTemplate = c.String("param-template")
-					vpcrouterMonitorParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterMonitorParam)
+					vpcRouterMonitorParam.ParamTemplate = c.String("param-template")
+					vpcRouterMonitorParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterMonitorParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewMonitorVpcrouterParam()
+						p := params.NewMonitorVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterMonitorParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterMonitorParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("interface") {
-						vpcrouterMonitorParam.Interface = c.String("interface")
+						vpcRouterMonitorParam.Interface = c.String("interface")
 					}
 					if c.IsSet("start") {
-						vpcrouterMonitorParam.Start = c.String("start")
+						vpcRouterMonitorParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						vpcrouterMonitorParam.End = c.String("end")
+						vpcRouterMonitorParam.End = c.String("end")
 					}
 					if c.IsSet("key-format") {
-						vpcrouterMonitorParam.KeyFormat = c.String("key-format")
+						vpcRouterMonitorParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						vpcrouterMonitorParam.Selector = c.StringSlice("selector")
+						vpcRouterMonitorParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterMonitorParam.ParamTemplate = c.String("param-template")
+						vpcRouterMonitorParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterMonitorParam.Parameters = c.String("parameters")
+						vpcRouterMonitorParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterMonitorParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterMonitorParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterMonitorParam.ParameterFile = c.String("parameter-file")
+						vpcRouterMonitorParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterMonitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterMonitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vpcrouterMonitorParam.OutputType = c.String("output-type")
+						vpcRouterMonitorParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vpcrouterMonitorParam.Column = c.StringSlice("column")
+						vpcRouterMonitorParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vpcrouterMonitorParam.Quiet = c.Bool("quiet")
+						vpcRouterMonitorParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vpcrouterMonitorParam.Format = c.String("format")
+						vpcRouterMonitorParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vpcrouterMonitorParam.FormatFile = c.String("format-file")
+						vpcRouterMonitorParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vpcrouterMonitorParam.Query = c.String("query")
+						vpcRouterMonitorParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vpcrouterMonitorParam.QueryFile = c.String("query-file")
+						vpcRouterMonitorParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vpcrouterMonitorParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterMonitorParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -13388,7 +13388,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterMonitorParam
+					var outputTypeHolder interface{} = vpcRouterMonitorParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -13399,10 +13399,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterMonitorParam.GenerateSkeleton {
-						vpcrouterMonitorParam.GenerateSkeleton = false
-						vpcrouterMonitorParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterMonitorParam, "", "\t")
+					if vpcRouterMonitorParam.GenerateSkeleton {
+						vpcRouterMonitorParam.GenerateSkeleton = false
+						vpcRouterMonitorParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterMonitorParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -13411,19 +13411,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterMonitorParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterMonitorParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterMonitorParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterMonitorParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterMonitorParam.Selector) == 0 {
+						if len(vpcRouterMonitorParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -13431,13 +13431,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterMonitorParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterMonitorParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterMonitorParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterMonitorParam.Selector)
 						}
 
 					} else {
@@ -13458,8 +13458,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterMonitorParam.Selector) == 0 || hasTags(&v, vpcrouterMonitorParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterMonitorParam.Selector) == 0 || hasTags(&v, vpcRouterMonitorParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -13484,11 +13484,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterMonitorParam.SetId(id)
-						p := *vpcrouterMonitorParam // copy struct value
-						vpcrouterMonitorParam := &p
+						vpcRouterMonitorParam.SetId(id)
+						p := *vpcRouterMonitorParam // copy struct value
+						vpcRouterMonitorParam := &p
 						go func() {
-							err := funcs.VpcrouterMonitor(ctx, vpcrouterMonitorParam)
+							err := funcs.VPCRouterMonitor(ctx, vpcRouterMonitorParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -13502,7 +13502,7 @@ func init() {
 			},
 			{
 				Name:      "logs",
-				Usage:     "Logs Vpcrouter",
+				Usage:     "Logs VPCRouter",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -13564,54 +13564,54 @@ func init() {
 						return err
 					}
 
-					vpcrouterLogsParam.ParamTemplate = c.String("param-template")
-					vpcrouterLogsParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vpcrouterLogsParam)
+					vpcRouterLogsParam.ParamTemplate = c.String("param-template")
+					vpcRouterLogsParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vpcRouterLogsParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewLogsVpcrouterParam()
+						p := params.NewLogsVPCRouterParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vpcrouterLogsParam, p, mergo.WithOverride)
+						mergo.Merge(vpcRouterLogsParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("log-name") {
-						vpcrouterLogsParam.LogName = c.String("log-name")
+						vpcRouterLogsParam.LogName = c.String("log-name")
 					}
 					if c.IsSet("follow") {
-						vpcrouterLogsParam.Follow = c.Bool("follow")
+						vpcRouterLogsParam.Follow = c.Bool("follow")
 					}
 					if c.IsSet("refresh-interval") {
-						vpcrouterLogsParam.RefreshInterval = c.Int64("refresh-interval")
+						vpcRouterLogsParam.RefreshInterval = c.Int64("refresh-interval")
 					}
 					if c.IsSet("list-log-names") {
-						vpcrouterLogsParam.ListLogNames = c.Bool("list-log-names")
+						vpcRouterLogsParam.ListLogNames = c.Bool("list-log-names")
 					}
 					if c.IsSet("selector") {
-						vpcrouterLogsParam.Selector = c.StringSlice("selector")
+						vpcRouterLogsParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vpcrouterLogsParam.ParamTemplate = c.String("param-template")
+						vpcRouterLogsParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						vpcrouterLogsParam.Parameters = c.String("parameters")
+						vpcRouterLogsParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vpcrouterLogsParam.ParamTemplateFile = c.String("param-template-file")
+						vpcRouterLogsParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						vpcrouterLogsParam.ParameterFile = c.String("parameter-file")
+						vpcRouterLogsParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vpcrouterLogsParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						vpcRouterLogsParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vpcrouterLogsParam.Id = sacloud.ID(c.Int64("id"))
+						vpcRouterLogsParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -13619,7 +13619,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vpcrouterLogsParam
+					var outputTypeHolder interface{} = vpcRouterLogsParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -13630,10 +13630,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vpcrouterLogsParam.GenerateSkeleton {
-						vpcrouterLogsParam.GenerateSkeleton = false
-						vpcrouterLogsParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vpcrouterLogsParam, "", "\t")
+					if vpcRouterLogsParam.GenerateSkeleton {
+						vpcRouterLogsParam.GenerateSkeleton = false
+						vpcRouterLogsParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vpcRouterLogsParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -13642,19 +13642,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vpcrouterLogsParam.Validate(); len(errors) > 0 {
+					if errors := vpcRouterLogsParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vpcrouterLogsParam)
+					ctx := command.NewContext(c, c.Args().Slice(), vpcRouterLogsParam)
 
-					apiClient := ctx.GetAPIClient().Vpcrouter
+					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vpcrouterLogsParam.Selector) == 0 {
+						if len(vpcRouterLogsParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -13662,13 +13662,13 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
-						for _, v := range res.Vpcrouters {
-							if hasTags(&v, vpcrouterLogsParam.Selector) {
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, vpcRouterLogsParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcrouterLogsParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vpcRouterLogsParam.Selector)
 						}
 
 					} else {
@@ -13689,8 +13689,8 @@ func init() {
 									if res.Count == 0 {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
-									for _, v := range res.Vpcrouters {
-										if len(vpcrouterLogsParam.Selector) == 0 || hasTags(&v, vpcrouterLogsParam.Selector) {
+									for _, v := range res.VPCRouters {
+										if len(vpcRouterLogsParam.Selector) == 0 || hasTags(&v, vpcRouterLogsParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -13715,11 +13715,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vpcrouterLogsParam.SetId(id)
-						p := *vpcrouterLogsParam // copy struct value
-						vpcrouterLogsParam := &p
+						vpcRouterLogsParam.SetId(id)
+						p := *vpcRouterLogsParam // copy struct value
+						vpcRouterLogsParam := &p
 						go func() {
-							err := funcs.VpcrouterLogs(ctx, vpcrouterLogsParam)
+							err := funcs.VPCRouterLogs(ctx, vpcRouterLogsParam)
 							if err != nil {
 								errs = append(errs, err)
 							}

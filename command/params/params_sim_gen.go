@@ -23,8 +23,8 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListSimParam is input parameters for the sacloud API
-type ListSimParam struct {
+// ListSIMParam is input parameters for the sacloud API
+type ListSIMParam struct {
 	Name              []string     `json:"name"`
 	Id                []sacloud.ID `json:"id"`
 	Tags              []string     `json:"tags"`
@@ -45,13 +45,13 @@ type ListSimParam struct {
 	QueryFile         string       `json:"query-file"`
 }
 
-// NewListSimParam return new ListSimParam
-func NewListSimParam() *ListSimParam {
-	return &ListSimParam{}
+// NewListSIMParam return new ListSIMParam
+func NewListSIMParam() *ListSIMParam {
+	return &ListSIMParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListSimParam) FillValueToSkeleton() {
+func (p *ListSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -110,7 +110,7 @@ func (p *ListSimParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListSimParam) Validate() []error {
+func (p *ListSIMParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
@@ -168,159 +168,159 @@ func (p *ListSimParam) Validate() []error {
 	return errors
 }
 
-func (p *ListSimParam) GetResourceDef() *schema.Resource {
+func (p *ListSIMParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *ListSimParam) GetCommandDef() *schema.Command {
+func (p *ListSIMParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListSimParam) GetIncludeFields() []string {
+func (p *ListSIMParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListSimParam) GetExcludeFields() []string {
+func (p *ListSIMParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListSimParam) GetTableType() output.TableType {
+func (p *ListSIMParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListSimParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListSIMParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListSimParam) SetName(v []string) {
+func (p *ListSIMParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListSimParam) GetName() []string {
+func (p *ListSIMParam) GetName() []string {
 	return p.Name
 }
-func (p *ListSimParam) SetId(v []sacloud.ID) {
+func (p *ListSIMParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListSimParam) GetId() []sacloud.ID {
+func (p *ListSIMParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListSimParam) SetTags(v []string) {
+func (p *ListSIMParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *ListSimParam) GetTags() []string {
+func (p *ListSIMParam) GetTags() []string {
 	return p.Tags
 }
-func (p *ListSimParam) SetFrom(v int) {
+func (p *ListSIMParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListSimParam) GetFrom() int {
+func (p *ListSIMParam) GetFrom() int {
 	return p.From
 }
-func (p *ListSimParam) SetMax(v int) {
+func (p *ListSIMParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListSimParam) GetMax() int {
+func (p *ListSIMParam) GetMax() int {
 	return p.Max
 }
-func (p *ListSimParam) SetSort(v []string) {
+func (p *ListSIMParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListSimParam) GetSort() []string {
+func (p *ListSIMParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListSimParam) SetParamTemplate(v string) {
+func (p *ListSIMParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListSimParam) GetParamTemplate() string {
+func (p *ListSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListSimParam) SetParameters(v string) {
+func (p *ListSIMParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ListSimParam) GetParameters() string {
+func (p *ListSIMParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ListSimParam) SetParamTemplateFile(v string) {
+func (p *ListSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListSimParam) GetParamTemplateFile() string {
+func (p *ListSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListSimParam) SetParameterFile(v string) {
+func (p *ListSIMParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ListSimParam) GetParameterFile() string {
+func (p *ListSIMParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ListSimParam) SetGenerateSkeleton(v bool) {
+func (p *ListSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListSimParam) GetGenerateSkeleton() bool {
+func (p *ListSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListSimParam) SetOutputType(v string) {
+func (p *ListSIMParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListSimParam) GetOutputType() string {
+func (p *ListSIMParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListSimParam) SetColumn(v []string) {
+func (p *ListSIMParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListSimParam) GetColumn() []string {
+func (p *ListSIMParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ListSimParam) SetQuiet(v bool) {
+func (p *ListSIMParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListSimParam) GetQuiet() bool {
+func (p *ListSIMParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListSimParam) SetFormat(v string) {
+func (p *ListSIMParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListSimParam) GetFormat() string {
+func (p *ListSIMParam) GetFormat() string {
 	return p.Format
 }
-func (p *ListSimParam) SetFormatFile(v string) {
+func (p *ListSIMParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListSimParam) GetFormatFile() string {
+func (p *ListSIMParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListSimParam) SetQuery(v string) {
+func (p *ListSIMParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListSimParam) GetQuery() string {
+func (p *ListSIMParam) GetQuery() string {
 	return p.Query
 }
-func (p *ListSimParam) SetQueryFile(v string) {
+func (p *ListSIMParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListSimParam) GetQueryFile() string {
+func (p *ListSIMParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// CreateSimParam is input parameters for the sacloud API
-type CreateSimParam struct {
+// CreateSIMParam is input parameters for the sacloud API
+type CreateSIMParam struct {
 	Iccid             string     `json:"iccid"`
 	Passcode          string     `json:"passcode"`
 	Disabled          bool       `json:"disabled"`
@@ -345,13 +345,13 @@ type CreateSimParam struct {
 	QueryFile         string     `json:"query-file"`
 }
 
-// NewCreateSimParam return new CreateSimParam
-func NewCreateSimParam() *CreateSimParam {
-	return &CreateSimParam{}
+// NewCreateSIMParam return new CreateSIMParam
+func NewCreateSIMParam() *CreateSIMParam {
+	return &CreateSIMParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CreateSimParam) FillValueToSkeleton() {
+func (p *CreateSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.Iccid) {
 		p.Iccid = ""
 	}
@@ -422,7 +422,7 @@ func (p *CreateSimParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CreateSimParam) Validate() []error {
+func (p *CreateSIMParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -517,187 +517,187 @@ func (p *CreateSimParam) Validate() []error {
 	return errors
 }
 
-func (p *CreateSimParam) GetResourceDef() *schema.Resource {
+func (p *CreateSIMParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *CreateSimParam) GetCommandDef() *schema.Command {
+func (p *CreateSIMParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["create"]
 }
 
-func (p *CreateSimParam) GetIncludeFields() []string {
+func (p *CreateSIMParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CreateSimParam) GetExcludeFields() []string {
+func (p *CreateSIMParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CreateSimParam) GetTableType() output.TableType {
+func (p *CreateSIMParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CreateSimParam) GetColumnDefs() []output.ColumnDef {
+func (p *CreateSIMParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CreateSimParam) SetIccid(v string) {
+func (p *CreateSIMParam) SetIccid(v string) {
 	p.Iccid = v
 }
 
-func (p *CreateSimParam) GetIccid() string {
+func (p *CreateSIMParam) GetIccid() string {
 	return p.Iccid
 }
-func (p *CreateSimParam) SetPasscode(v string) {
+func (p *CreateSIMParam) SetPasscode(v string) {
 	p.Passcode = v
 }
 
-func (p *CreateSimParam) GetPasscode() string {
+func (p *CreateSIMParam) GetPasscode() string {
 	return p.Passcode
 }
-func (p *CreateSimParam) SetDisabled(v bool) {
+func (p *CreateSIMParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
 
-func (p *CreateSimParam) GetDisabled() bool {
+func (p *CreateSIMParam) GetDisabled() bool {
 	return p.Disabled
 }
-func (p *CreateSimParam) SetImei(v string) {
+func (p *CreateSIMParam) SetImei(v string) {
 	p.Imei = v
 }
 
-func (p *CreateSimParam) GetImei() string {
+func (p *CreateSIMParam) GetImei() string {
 	return p.Imei
 }
-func (p *CreateSimParam) SetCarrier(v []string) {
+func (p *CreateSIMParam) SetCarrier(v []string) {
 	p.Carrier = v
 }
 
-func (p *CreateSimParam) GetCarrier() []string {
+func (p *CreateSIMParam) GetCarrier() []string {
 	return p.Carrier
 }
-func (p *CreateSimParam) SetName(v string) {
+func (p *CreateSIMParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *CreateSimParam) GetName() string {
+func (p *CreateSIMParam) GetName() string {
 	return p.Name
 }
-func (p *CreateSimParam) SetDescription(v string) {
+func (p *CreateSIMParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *CreateSimParam) GetDescription() string {
+func (p *CreateSIMParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateSimParam) SetTags(v []string) {
+func (p *CreateSIMParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreateSimParam) GetTags() []string {
+func (p *CreateSIMParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateSimParam) SetIconId(v sacloud.ID) {
+func (p *CreateSIMParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateSimParam) GetIconId() sacloud.ID {
+func (p *CreateSIMParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *CreateSimParam) SetAssumeyes(v bool) {
+func (p *CreateSIMParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *CreateSimParam) GetAssumeyes() bool {
+func (p *CreateSIMParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CreateSimParam) SetParamTemplate(v string) {
+func (p *CreateSIMParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CreateSimParam) GetParamTemplate() string {
+func (p *CreateSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CreateSimParam) SetParameters(v string) {
+func (p *CreateSIMParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *CreateSimParam) GetParameters() string {
+func (p *CreateSIMParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *CreateSimParam) SetParamTemplateFile(v string) {
+func (p *CreateSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CreateSimParam) GetParamTemplateFile() string {
+func (p *CreateSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CreateSimParam) SetParameterFile(v string) {
+func (p *CreateSIMParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *CreateSimParam) GetParameterFile() string {
+func (p *CreateSIMParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *CreateSimParam) SetGenerateSkeleton(v bool) {
+func (p *CreateSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CreateSimParam) GetGenerateSkeleton() bool {
+func (p *CreateSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CreateSimParam) SetOutputType(v string) {
+func (p *CreateSIMParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CreateSimParam) GetOutputType() string {
+func (p *CreateSIMParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CreateSimParam) SetColumn(v []string) {
+func (p *CreateSIMParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CreateSimParam) GetColumn() []string {
+func (p *CreateSIMParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CreateSimParam) SetQuiet(v bool) {
+func (p *CreateSIMParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CreateSimParam) GetQuiet() bool {
+func (p *CreateSIMParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CreateSimParam) SetFormat(v string) {
+func (p *CreateSIMParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CreateSimParam) GetFormat() string {
+func (p *CreateSIMParam) GetFormat() string {
 	return p.Format
 }
-func (p *CreateSimParam) SetFormatFile(v string) {
+func (p *CreateSIMParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CreateSimParam) GetFormatFile() string {
+func (p *CreateSIMParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CreateSimParam) SetQuery(v string) {
+func (p *CreateSIMParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CreateSimParam) GetQuery() string {
+func (p *CreateSIMParam) GetQuery() string {
 	return p.Query
 }
-func (p *CreateSimParam) SetQueryFile(v string) {
+func (p *CreateSIMParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CreateSimParam) GetQueryFile() string {
+func (p *CreateSIMParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// ReadSimParam is input parameters for the sacloud API
-type ReadSimParam struct {
+// ReadSIMParam is input parameters for the sacloud API
+type ReadSIMParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
 	Parameters        string     `json:"parameters"`
@@ -714,13 +714,13 @@ type ReadSimParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewReadSimParam return new ReadSimParam
-func NewReadSimParam() *ReadSimParam {
-	return &ReadSimParam{}
+// NewReadSIMParam return new ReadSIMParam
+func NewReadSIMParam() *ReadSIMParam {
+	return &ReadSIMParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ReadSimParam) FillValueToSkeleton() {
+func (p *ReadSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -767,7 +767,7 @@ func (p *ReadSimParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ReadSimParam) Validate() []error {
+func (p *ReadSIMParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -800,131 +800,131 @@ func (p *ReadSimParam) Validate() []error {
 	return errors
 }
 
-func (p *ReadSimParam) GetResourceDef() *schema.Resource {
+func (p *ReadSIMParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *ReadSimParam) GetCommandDef() *schema.Command {
+func (p *ReadSIMParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["read"]
 }
 
-func (p *ReadSimParam) GetIncludeFields() []string {
+func (p *ReadSIMParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ReadSimParam) GetExcludeFields() []string {
+func (p *ReadSIMParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ReadSimParam) GetTableType() output.TableType {
+func (p *ReadSIMParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ReadSimParam) GetColumnDefs() []output.ColumnDef {
+func (p *ReadSIMParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReadSimParam) SetSelector(v []string) {
+func (p *ReadSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ReadSimParam) GetSelector() []string {
+func (p *ReadSIMParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ReadSimParam) SetParamTemplate(v string) {
+func (p *ReadSIMParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ReadSimParam) GetParamTemplate() string {
+func (p *ReadSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ReadSimParam) SetParameters(v string) {
+func (p *ReadSIMParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ReadSimParam) GetParameters() string {
+func (p *ReadSIMParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ReadSimParam) SetParamTemplateFile(v string) {
+func (p *ReadSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ReadSimParam) GetParamTemplateFile() string {
+func (p *ReadSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ReadSimParam) SetParameterFile(v string) {
+func (p *ReadSIMParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ReadSimParam) GetParameterFile() string {
+func (p *ReadSIMParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ReadSimParam) SetGenerateSkeleton(v bool) {
+func (p *ReadSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ReadSimParam) GetGenerateSkeleton() bool {
+func (p *ReadSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReadSimParam) SetOutputType(v string) {
+func (p *ReadSIMParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ReadSimParam) GetOutputType() string {
+func (p *ReadSIMParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ReadSimParam) SetColumn(v []string) {
+func (p *ReadSIMParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ReadSimParam) GetColumn() []string {
+func (p *ReadSIMParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ReadSimParam) SetQuiet(v bool) {
+func (p *ReadSIMParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ReadSimParam) GetQuiet() bool {
+func (p *ReadSIMParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ReadSimParam) SetFormat(v string) {
+func (p *ReadSIMParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ReadSimParam) GetFormat() string {
+func (p *ReadSIMParam) GetFormat() string {
 	return p.Format
 }
-func (p *ReadSimParam) SetFormatFile(v string) {
+func (p *ReadSIMParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ReadSimParam) GetFormatFile() string {
+func (p *ReadSIMParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ReadSimParam) SetQuery(v string) {
+func (p *ReadSIMParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ReadSimParam) GetQuery() string {
+func (p *ReadSIMParam) GetQuery() string {
 	return p.Query
 }
-func (p *ReadSimParam) SetQueryFile(v string) {
+func (p *ReadSIMParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ReadSimParam) GetQueryFile() string {
+func (p *ReadSIMParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadSimParam) SetId(v sacloud.ID) {
+func (p *ReadSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadSimParam) GetId() sacloud.ID {
+func (p *ReadSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// UpdateSimParam is input parameters for the sacloud API
-type UpdateSimParam struct {
+// UpdateSIMParam is input parameters for the sacloud API
+type UpdateSIMParam struct {
 	Selector          []string   `json:"selector"`
 	Name              string     `json:"name"`
 	Description       string     `json:"description"`
@@ -946,13 +946,13 @@ type UpdateSimParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewUpdateSimParam return new UpdateSimParam
-func NewUpdateSimParam() *UpdateSimParam {
-	return &UpdateSimParam{}
+// NewUpdateSIMParam return new UpdateSIMParam
+func NewUpdateSIMParam() *UpdateSIMParam {
+	return &UpdateSIMParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *UpdateSimParam) FillValueToSkeleton() {
+func (p *UpdateSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1014,7 +1014,7 @@ func (p *UpdateSimParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *UpdateSimParam) Validate() []error {
+func (p *UpdateSIMParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["SIM"].Commands["update"].Params["name"].ValidateFunc
@@ -1075,166 +1075,166 @@ func (p *UpdateSimParam) Validate() []error {
 	return errors
 }
 
-func (p *UpdateSimParam) GetResourceDef() *schema.Resource {
+func (p *UpdateSIMParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *UpdateSimParam) GetCommandDef() *schema.Command {
+func (p *UpdateSIMParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["update"]
 }
 
-func (p *UpdateSimParam) GetIncludeFields() []string {
+func (p *UpdateSIMParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *UpdateSimParam) GetExcludeFields() []string {
+func (p *UpdateSIMParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *UpdateSimParam) GetTableType() output.TableType {
+func (p *UpdateSIMParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *UpdateSimParam) GetColumnDefs() []output.ColumnDef {
+func (p *UpdateSIMParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *UpdateSimParam) SetSelector(v []string) {
+func (p *UpdateSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *UpdateSimParam) GetSelector() []string {
+func (p *UpdateSIMParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *UpdateSimParam) SetName(v string) {
+func (p *UpdateSIMParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *UpdateSimParam) GetName() string {
+func (p *UpdateSIMParam) GetName() string {
 	return p.Name
 }
-func (p *UpdateSimParam) SetDescription(v string) {
+func (p *UpdateSIMParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdateSimParam) GetDescription() string {
+func (p *UpdateSIMParam) GetDescription() string {
 	return p.Description
 }
-func (p *UpdateSimParam) SetTags(v []string) {
+func (p *UpdateSIMParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *UpdateSimParam) GetTags() []string {
+func (p *UpdateSIMParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateSimParam) SetIconId(v sacloud.ID) {
+func (p *UpdateSIMParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateSimParam) GetIconId() sacloud.ID {
+func (p *UpdateSIMParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *UpdateSimParam) SetAssumeyes(v bool) {
+func (p *UpdateSIMParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *UpdateSimParam) GetAssumeyes() bool {
+func (p *UpdateSIMParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *UpdateSimParam) SetParamTemplate(v string) {
+func (p *UpdateSIMParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *UpdateSimParam) GetParamTemplate() string {
+func (p *UpdateSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *UpdateSimParam) SetParameters(v string) {
+func (p *UpdateSIMParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *UpdateSimParam) GetParameters() string {
+func (p *UpdateSIMParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *UpdateSimParam) SetParamTemplateFile(v string) {
+func (p *UpdateSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *UpdateSimParam) GetParamTemplateFile() string {
+func (p *UpdateSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *UpdateSimParam) SetParameterFile(v string) {
+func (p *UpdateSIMParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *UpdateSimParam) GetParameterFile() string {
+func (p *UpdateSIMParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *UpdateSimParam) SetGenerateSkeleton(v bool) {
+func (p *UpdateSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *UpdateSimParam) GetGenerateSkeleton() bool {
+func (p *UpdateSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *UpdateSimParam) SetOutputType(v string) {
+func (p *UpdateSIMParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *UpdateSimParam) GetOutputType() string {
+func (p *UpdateSIMParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *UpdateSimParam) SetColumn(v []string) {
+func (p *UpdateSIMParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *UpdateSimParam) GetColumn() []string {
+func (p *UpdateSIMParam) GetColumn() []string {
 	return p.Column
 }
-func (p *UpdateSimParam) SetQuiet(v bool) {
+func (p *UpdateSIMParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *UpdateSimParam) GetQuiet() bool {
+func (p *UpdateSIMParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *UpdateSimParam) SetFormat(v string) {
+func (p *UpdateSIMParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *UpdateSimParam) GetFormat() string {
+func (p *UpdateSIMParam) GetFormat() string {
 	return p.Format
 }
-func (p *UpdateSimParam) SetFormatFile(v string) {
+func (p *UpdateSIMParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *UpdateSimParam) GetFormatFile() string {
+func (p *UpdateSIMParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *UpdateSimParam) SetQuery(v string) {
+func (p *UpdateSIMParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *UpdateSimParam) GetQuery() string {
+func (p *UpdateSIMParam) GetQuery() string {
 	return p.Query
 }
-func (p *UpdateSimParam) SetQueryFile(v string) {
+func (p *UpdateSIMParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *UpdateSimParam) GetQueryFile() string {
+func (p *UpdateSIMParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateSimParam) SetId(v sacloud.ID) {
+func (p *UpdateSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateSimParam) GetId() sacloud.ID {
+func (p *UpdateSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// DeleteSimParam is input parameters for the sacloud API
-type DeleteSimParam struct {
+// DeleteSIMParam is input parameters for the sacloud API
+type DeleteSIMParam struct {
 	Force             bool       `json:"force"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
@@ -1246,13 +1246,13 @@ type DeleteSimParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewDeleteSimParam return new DeleteSimParam
-func NewDeleteSimParam() *DeleteSimParam {
-	return &DeleteSimParam{}
+// NewDeleteSIMParam return new DeleteSIMParam
+func NewDeleteSIMParam() *DeleteSIMParam {
+	return &DeleteSIMParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *DeleteSimParam) FillValueToSkeleton() {
+func (p *DeleteSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.Force) {
 		p.Force = false
 	}
@@ -1284,7 +1284,7 @@ func (p *DeleteSimParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *DeleteSimParam) Validate() []error {
+func (p *DeleteSIMParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1297,96 +1297,96 @@ func (p *DeleteSimParam) Validate() []error {
 	return errors
 }
 
-func (p *DeleteSimParam) GetResourceDef() *schema.Resource {
+func (p *DeleteSIMParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *DeleteSimParam) GetCommandDef() *schema.Command {
+func (p *DeleteSIMParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["delete"]
 }
 
-func (p *DeleteSimParam) GetIncludeFields() []string {
+func (p *DeleteSIMParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *DeleteSimParam) GetExcludeFields() []string {
+func (p *DeleteSIMParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *DeleteSimParam) GetTableType() output.TableType {
+func (p *DeleteSIMParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *DeleteSimParam) GetColumnDefs() []output.ColumnDef {
+func (p *DeleteSIMParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DeleteSimParam) SetForce(v bool) {
+func (p *DeleteSIMParam) SetForce(v bool) {
 	p.Force = v
 }
 
-func (p *DeleteSimParam) GetForce() bool {
+func (p *DeleteSIMParam) GetForce() bool {
 	return p.Force
 }
-func (p *DeleteSimParam) SetSelector(v []string) {
+func (p *DeleteSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *DeleteSimParam) GetSelector() []string {
+func (p *DeleteSIMParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *DeleteSimParam) SetAssumeyes(v bool) {
+func (p *DeleteSIMParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *DeleteSimParam) GetAssumeyes() bool {
+func (p *DeleteSIMParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeleteSimParam) SetParamTemplate(v string) {
+func (p *DeleteSIMParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *DeleteSimParam) GetParamTemplate() string {
+func (p *DeleteSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *DeleteSimParam) SetParameters(v string) {
+func (p *DeleteSIMParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *DeleteSimParam) GetParameters() string {
+func (p *DeleteSIMParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *DeleteSimParam) SetParamTemplateFile(v string) {
+func (p *DeleteSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *DeleteSimParam) GetParamTemplateFile() string {
+func (p *DeleteSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *DeleteSimParam) SetParameterFile(v string) {
+func (p *DeleteSIMParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *DeleteSimParam) GetParameterFile() string {
+func (p *DeleteSIMParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *DeleteSimParam) SetGenerateSkeleton(v bool) {
+func (p *DeleteSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *DeleteSimParam) GetGenerateSkeleton() bool {
+func (p *DeleteSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DeleteSimParam) SetId(v sacloud.ID) {
+func (p *DeleteSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteSimParam) GetId() sacloud.ID {
+func (p *DeleteSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// CarrierInfoSimParam is input parameters for the sacloud API
-type CarrierInfoSimParam struct {
+// CarrierInfoSIMParam is input parameters for the sacloud API
+type CarrierInfoSIMParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
 	Parameters        string     `json:"parameters"`
@@ -1403,13 +1403,13 @@ type CarrierInfoSimParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewCarrierInfoSimParam return new CarrierInfoSimParam
-func NewCarrierInfoSimParam() *CarrierInfoSimParam {
-	return &CarrierInfoSimParam{}
+// NewCarrierInfoSIMParam return new CarrierInfoSIMParam
+func NewCarrierInfoSIMParam() *CarrierInfoSIMParam {
+	return &CarrierInfoSIMParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CarrierInfoSimParam) FillValueToSkeleton() {
+func (p *CarrierInfoSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1456,7 +1456,7 @@ func (p *CarrierInfoSimParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CarrierInfoSimParam) Validate() []error {
+func (p *CarrierInfoSIMParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1489,131 +1489,131 @@ func (p *CarrierInfoSimParam) Validate() []error {
 	return errors
 }
 
-func (p *CarrierInfoSimParam) GetResourceDef() *schema.Resource {
+func (p *CarrierInfoSIMParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *CarrierInfoSimParam) GetCommandDef() *schema.Command {
+func (p *CarrierInfoSIMParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["carrier-info"]
 }
 
-func (p *CarrierInfoSimParam) GetIncludeFields() []string {
+func (p *CarrierInfoSIMParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CarrierInfoSimParam) GetExcludeFields() []string {
+func (p *CarrierInfoSIMParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CarrierInfoSimParam) GetTableType() output.TableType {
+func (p *CarrierInfoSIMParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CarrierInfoSimParam) GetColumnDefs() []output.ColumnDef {
+func (p *CarrierInfoSIMParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CarrierInfoSimParam) SetSelector(v []string) {
+func (p *CarrierInfoSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *CarrierInfoSimParam) GetSelector() []string {
+func (p *CarrierInfoSIMParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *CarrierInfoSimParam) SetParamTemplate(v string) {
+func (p *CarrierInfoSIMParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CarrierInfoSimParam) GetParamTemplate() string {
+func (p *CarrierInfoSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CarrierInfoSimParam) SetParameters(v string) {
+func (p *CarrierInfoSIMParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *CarrierInfoSimParam) GetParameters() string {
+func (p *CarrierInfoSIMParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *CarrierInfoSimParam) SetParamTemplateFile(v string) {
+func (p *CarrierInfoSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CarrierInfoSimParam) GetParamTemplateFile() string {
+func (p *CarrierInfoSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CarrierInfoSimParam) SetParameterFile(v string) {
+func (p *CarrierInfoSIMParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *CarrierInfoSimParam) GetParameterFile() string {
+func (p *CarrierInfoSIMParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *CarrierInfoSimParam) SetGenerateSkeleton(v bool) {
+func (p *CarrierInfoSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CarrierInfoSimParam) GetGenerateSkeleton() bool {
+func (p *CarrierInfoSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CarrierInfoSimParam) SetOutputType(v string) {
+func (p *CarrierInfoSIMParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CarrierInfoSimParam) GetOutputType() string {
+func (p *CarrierInfoSIMParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CarrierInfoSimParam) SetColumn(v []string) {
+func (p *CarrierInfoSIMParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CarrierInfoSimParam) GetColumn() []string {
+func (p *CarrierInfoSIMParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CarrierInfoSimParam) SetQuiet(v bool) {
+func (p *CarrierInfoSIMParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CarrierInfoSimParam) GetQuiet() bool {
+func (p *CarrierInfoSIMParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CarrierInfoSimParam) SetFormat(v string) {
+func (p *CarrierInfoSIMParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CarrierInfoSimParam) GetFormat() string {
+func (p *CarrierInfoSIMParam) GetFormat() string {
 	return p.Format
 }
-func (p *CarrierInfoSimParam) SetFormatFile(v string) {
+func (p *CarrierInfoSIMParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CarrierInfoSimParam) GetFormatFile() string {
+func (p *CarrierInfoSIMParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CarrierInfoSimParam) SetQuery(v string) {
+func (p *CarrierInfoSIMParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CarrierInfoSimParam) GetQuery() string {
+func (p *CarrierInfoSIMParam) GetQuery() string {
 	return p.Query
 }
-func (p *CarrierInfoSimParam) SetQueryFile(v string) {
+func (p *CarrierInfoSIMParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CarrierInfoSimParam) GetQueryFile() string {
+func (p *CarrierInfoSIMParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *CarrierInfoSimParam) SetId(v sacloud.ID) {
+func (p *CarrierInfoSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CarrierInfoSimParam) GetId() sacloud.ID {
+func (p *CarrierInfoSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// CarrierUpdateSimParam is input parameters for the sacloud API
-type CarrierUpdateSimParam struct {
+// CarrierUpdateSIMParam is input parameters for the sacloud API
+type CarrierUpdateSIMParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -1625,13 +1625,13 @@ type CarrierUpdateSimParam struct {
 	Carrier           []string   `json:"carrier"`
 }
 
-// NewCarrierUpdateSimParam return new CarrierUpdateSimParam
-func NewCarrierUpdateSimParam() *CarrierUpdateSimParam {
-	return &CarrierUpdateSimParam{}
+// NewCarrierUpdateSIMParam return new CarrierUpdateSIMParam
+func NewCarrierUpdateSIMParam() *CarrierUpdateSIMParam {
+	return &CarrierUpdateSIMParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CarrierUpdateSimParam) FillValueToSkeleton() {
+func (p *CarrierUpdateSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1663,7 +1663,7 @@ func (p *CarrierUpdateSimParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CarrierUpdateSimParam) Validate() []error {
+func (p *CarrierUpdateSIMParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1696,96 +1696,96 @@ func (p *CarrierUpdateSimParam) Validate() []error {
 	return errors
 }
 
-func (p *CarrierUpdateSimParam) GetResourceDef() *schema.Resource {
+func (p *CarrierUpdateSIMParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *CarrierUpdateSimParam) GetCommandDef() *schema.Command {
+func (p *CarrierUpdateSIMParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["carrier-update"]
 }
 
-func (p *CarrierUpdateSimParam) GetIncludeFields() []string {
+func (p *CarrierUpdateSIMParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CarrierUpdateSimParam) GetExcludeFields() []string {
+func (p *CarrierUpdateSIMParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CarrierUpdateSimParam) GetTableType() output.TableType {
+func (p *CarrierUpdateSIMParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CarrierUpdateSimParam) GetColumnDefs() []output.ColumnDef {
+func (p *CarrierUpdateSIMParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CarrierUpdateSimParam) SetSelector(v []string) {
+func (p *CarrierUpdateSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *CarrierUpdateSimParam) GetSelector() []string {
+func (p *CarrierUpdateSIMParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *CarrierUpdateSimParam) SetAssumeyes(v bool) {
+func (p *CarrierUpdateSIMParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *CarrierUpdateSimParam) GetAssumeyes() bool {
+func (p *CarrierUpdateSIMParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CarrierUpdateSimParam) SetParamTemplate(v string) {
+func (p *CarrierUpdateSIMParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CarrierUpdateSimParam) GetParamTemplate() string {
+func (p *CarrierUpdateSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CarrierUpdateSimParam) SetParameters(v string) {
+func (p *CarrierUpdateSIMParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *CarrierUpdateSimParam) GetParameters() string {
+func (p *CarrierUpdateSIMParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *CarrierUpdateSimParam) SetParamTemplateFile(v string) {
+func (p *CarrierUpdateSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CarrierUpdateSimParam) GetParamTemplateFile() string {
+func (p *CarrierUpdateSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CarrierUpdateSimParam) SetParameterFile(v string) {
+func (p *CarrierUpdateSIMParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *CarrierUpdateSimParam) GetParameterFile() string {
+func (p *CarrierUpdateSIMParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *CarrierUpdateSimParam) SetGenerateSkeleton(v bool) {
+func (p *CarrierUpdateSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CarrierUpdateSimParam) GetGenerateSkeleton() bool {
+func (p *CarrierUpdateSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CarrierUpdateSimParam) SetId(v sacloud.ID) {
+func (p *CarrierUpdateSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CarrierUpdateSimParam) GetId() sacloud.ID {
+func (p *CarrierUpdateSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
-func (p *CarrierUpdateSimParam) SetCarrier(v []string) {
+func (p *CarrierUpdateSIMParam) SetCarrier(v []string) {
 	p.Carrier = v
 }
 
-func (p *CarrierUpdateSimParam) GetCarrier() []string {
+func (p *CarrierUpdateSIMParam) GetCarrier() []string {
 	return p.Carrier
 }
 
-// ActivateSimParam is input parameters for the sacloud API
-type ActivateSimParam struct {
+// ActivateSIMParam is input parameters for the sacloud API
+type ActivateSIMParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -1796,13 +1796,13 @@ type ActivateSimParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewActivateSimParam return new ActivateSimParam
-func NewActivateSimParam() *ActivateSimParam {
-	return &ActivateSimParam{}
+// NewActivateSIMParam return new ActivateSIMParam
+func NewActivateSIMParam() *ActivateSIMParam {
+	return &ActivateSIMParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ActivateSimParam) FillValueToSkeleton() {
+func (p *ActivateSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1831,7 +1831,7 @@ func (p *ActivateSimParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ActivateSimParam) Validate() []error {
+func (p *ActivateSIMParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1844,89 +1844,89 @@ func (p *ActivateSimParam) Validate() []error {
 	return errors
 }
 
-func (p *ActivateSimParam) GetResourceDef() *schema.Resource {
+func (p *ActivateSIMParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *ActivateSimParam) GetCommandDef() *schema.Command {
+func (p *ActivateSIMParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["activate"]
 }
 
-func (p *ActivateSimParam) GetIncludeFields() []string {
+func (p *ActivateSIMParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ActivateSimParam) GetExcludeFields() []string {
+func (p *ActivateSIMParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ActivateSimParam) GetTableType() output.TableType {
+func (p *ActivateSIMParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ActivateSimParam) GetColumnDefs() []output.ColumnDef {
+func (p *ActivateSIMParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ActivateSimParam) SetSelector(v []string) {
+func (p *ActivateSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ActivateSimParam) GetSelector() []string {
+func (p *ActivateSIMParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ActivateSimParam) SetAssumeyes(v bool) {
+func (p *ActivateSIMParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ActivateSimParam) GetAssumeyes() bool {
+func (p *ActivateSIMParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ActivateSimParam) SetParamTemplate(v string) {
+func (p *ActivateSIMParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ActivateSimParam) GetParamTemplate() string {
+func (p *ActivateSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ActivateSimParam) SetParameters(v string) {
+func (p *ActivateSIMParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ActivateSimParam) GetParameters() string {
+func (p *ActivateSIMParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ActivateSimParam) SetParamTemplateFile(v string) {
+func (p *ActivateSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ActivateSimParam) GetParamTemplateFile() string {
+func (p *ActivateSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ActivateSimParam) SetParameterFile(v string) {
+func (p *ActivateSIMParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ActivateSimParam) GetParameterFile() string {
+func (p *ActivateSIMParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ActivateSimParam) SetGenerateSkeleton(v bool) {
+func (p *ActivateSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ActivateSimParam) GetGenerateSkeleton() bool {
+func (p *ActivateSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ActivateSimParam) SetId(v sacloud.ID) {
+func (p *ActivateSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ActivateSimParam) GetId() sacloud.ID {
+func (p *ActivateSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// DeactivateSimParam is input parameters for the sacloud API
-type DeactivateSimParam struct {
+// DeactivateSIMParam is input parameters for the sacloud API
+type DeactivateSIMParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -1937,13 +1937,13 @@ type DeactivateSimParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewDeactivateSimParam return new DeactivateSimParam
-func NewDeactivateSimParam() *DeactivateSimParam {
-	return &DeactivateSimParam{}
+// NewDeactivateSIMParam return new DeactivateSIMParam
+func NewDeactivateSIMParam() *DeactivateSIMParam {
+	return &DeactivateSIMParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *DeactivateSimParam) FillValueToSkeleton() {
+func (p *DeactivateSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1972,7 +1972,7 @@ func (p *DeactivateSimParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *DeactivateSimParam) Validate() []error {
+func (p *DeactivateSIMParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1985,89 +1985,89 @@ func (p *DeactivateSimParam) Validate() []error {
 	return errors
 }
 
-func (p *DeactivateSimParam) GetResourceDef() *schema.Resource {
+func (p *DeactivateSIMParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *DeactivateSimParam) GetCommandDef() *schema.Command {
+func (p *DeactivateSIMParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["deactivate"]
 }
 
-func (p *DeactivateSimParam) GetIncludeFields() []string {
+func (p *DeactivateSIMParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *DeactivateSimParam) GetExcludeFields() []string {
+func (p *DeactivateSIMParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *DeactivateSimParam) GetTableType() output.TableType {
+func (p *DeactivateSIMParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *DeactivateSimParam) GetColumnDefs() []output.ColumnDef {
+func (p *DeactivateSIMParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DeactivateSimParam) SetSelector(v []string) {
+func (p *DeactivateSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *DeactivateSimParam) GetSelector() []string {
+func (p *DeactivateSIMParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *DeactivateSimParam) SetAssumeyes(v bool) {
+func (p *DeactivateSIMParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *DeactivateSimParam) GetAssumeyes() bool {
+func (p *DeactivateSIMParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeactivateSimParam) SetParamTemplate(v string) {
+func (p *DeactivateSIMParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *DeactivateSimParam) GetParamTemplate() string {
+func (p *DeactivateSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *DeactivateSimParam) SetParameters(v string) {
+func (p *DeactivateSIMParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *DeactivateSimParam) GetParameters() string {
+func (p *DeactivateSIMParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *DeactivateSimParam) SetParamTemplateFile(v string) {
+func (p *DeactivateSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *DeactivateSimParam) GetParamTemplateFile() string {
+func (p *DeactivateSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *DeactivateSimParam) SetParameterFile(v string) {
+func (p *DeactivateSIMParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *DeactivateSimParam) GetParameterFile() string {
+func (p *DeactivateSIMParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *DeactivateSimParam) SetGenerateSkeleton(v bool) {
+func (p *DeactivateSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *DeactivateSimParam) GetGenerateSkeleton() bool {
+func (p *DeactivateSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DeactivateSimParam) SetId(v sacloud.ID) {
+func (p *DeactivateSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeactivateSimParam) GetId() sacloud.ID {
+func (p *DeactivateSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ImeiLockSimParam is input parameters for the sacloud API
-type ImeiLockSimParam struct {
+// ImeiLockSIMParam is input parameters for the sacloud API
+type ImeiLockSIMParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -2079,13 +2079,13 @@ type ImeiLockSimParam struct {
 	Imei              string     `json:"imei"`
 }
 
-// NewImeiLockSimParam return new ImeiLockSimParam
-func NewImeiLockSimParam() *ImeiLockSimParam {
-	return &ImeiLockSimParam{}
+// NewImeiLockSIMParam return new ImeiLockSIMParam
+func NewImeiLockSIMParam() *ImeiLockSIMParam {
+	return &ImeiLockSIMParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ImeiLockSimParam) FillValueToSkeleton() {
+func (p *ImeiLockSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2117,7 +2117,7 @@ func (p *ImeiLockSimParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ImeiLockSimParam) Validate() []error {
+func (p *ImeiLockSIMParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -2137,96 +2137,96 @@ func (p *ImeiLockSimParam) Validate() []error {
 	return errors
 }
 
-func (p *ImeiLockSimParam) GetResourceDef() *schema.Resource {
+func (p *ImeiLockSIMParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *ImeiLockSimParam) GetCommandDef() *schema.Command {
+func (p *ImeiLockSIMParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["imei-lock"]
 }
 
-func (p *ImeiLockSimParam) GetIncludeFields() []string {
+func (p *ImeiLockSIMParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ImeiLockSimParam) GetExcludeFields() []string {
+func (p *ImeiLockSIMParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ImeiLockSimParam) GetTableType() output.TableType {
+func (p *ImeiLockSIMParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ImeiLockSimParam) GetColumnDefs() []output.ColumnDef {
+func (p *ImeiLockSIMParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ImeiLockSimParam) SetSelector(v []string) {
+func (p *ImeiLockSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ImeiLockSimParam) GetSelector() []string {
+func (p *ImeiLockSIMParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ImeiLockSimParam) SetAssumeyes(v bool) {
+func (p *ImeiLockSIMParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ImeiLockSimParam) GetAssumeyes() bool {
+func (p *ImeiLockSIMParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ImeiLockSimParam) SetParamTemplate(v string) {
+func (p *ImeiLockSIMParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ImeiLockSimParam) GetParamTemplate() string {
+func (p *ImeiLockSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ImeiLockSimParam) SetParameters(v string) {
+func (p *ImeiLockSIMParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ImeiLockSimParam) GetParameters() string {
+func (p *ImeiLockSIMParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ImeiLockSimParam) SetParamTemplateFile(v string) {
+func (p *ImeiLockSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ImeiLockSimParam) GetParamTemplateFile() string {
+func (p *ImeiLockSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ImeiLockSimParam) SetParameterFile(v string) {
+func (p *ImeiLockSIMParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ImeiLockSimParam) GetParameterFile() string {
+func (p *ImeiLockSIMParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ImeiLockSimParam) SetGenerateSkeleton(v bool) {
+func (p *ImeiLockSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ImeiLockSimParam) GetGenerateSkeleton() bool {
+func (p *ImeiLockSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ImeiLockSimParam) SetId(v sacloud.ID) {
+func (p *ImeiLockSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ImeiLockSimParam) GetId() sacloud.ID {
+func (p *ImeiLockSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
-func (p *ImeiLockSimParam) SetImei(v string) {
+func (p *ImeiLockSIMParam) SetImei(v string) {
 	p.Imei = v
 }
 
-func (p *ImeiLockSimParam) GetImei() string {
+func (p *ImeiLockSIMParam) GetImei() string {
 	return p.Imei
 }
 
-// IpAddSimParam is input parameters for the sacloud API
-type IpAddSimParam struct {
+// IpAddSIMParam is input parameters for the sacloud API
+type IpAddSIMParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -2238,13 +2238,13 @@ type IpAddSimParam struct {
 	Ip                string     `json:"ip"`
 }
 
-// NewIpAddSimParam return new IpAddSimParam
-func NewIpAddSimParam() *IpAddSimParam {
-	return &IpAddSimParam{}
+// NewIpAddSIMParam return new IpAddSIMParam
+func NewIpAddSIMParam() *IpAddSIMParam {
+	return &IpAddSIMParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *IpAddSimParam) FillValueToSkeleton() {
+func (p *IpAddSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2276,7 +2276,7 @@ func (p *IpAddSimParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *IpAddSimParam) Validate() []error {
+func (p *IpAddSIMParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -2303,96 +2303,96 @@ func (p *IpAddSimParam) Validate() []error {
 	return errors
 }
 
-func (p *IpAddSimParam) GetResourceDef() *schema.Resource {
+func (p *IpAddSIMParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *IpAddSimParam) GetCommandDef() *schema.Command {
+func (p *IpAddSIMParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ip-add"]
 }
 
-func (p *IpAddSimParam) GetIncludeFields() []string {
+func (p *IpAddSIMParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *IpAddSimParam) GetExcludeFields() []string {
+func (p *IpAddSIMParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *IpAddSimParam) GetTableType() output.TableType {
+func (p *IpAddSIMParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *IpAddSimParam) GetColumnDefs() []output.ColumnDef {
+func (p *IpAddSIMParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *IpAddSimParam) SetSelector(v []string) {
+func (p *IpAddSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *IpAddSimParam) GetSelector() []string {
+func (p *IpAddSIMParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *IpAddSimParam) SetAssumeyes(v bool) {
+func (p *IpAddSIMParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *IpAddSimParam) GetAssumeyes() bool {
+func (p *IpAddSIMParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *IpAddSimParam) SetParamTemplate(v string) {
+func (p *IpAddSIMParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *IpAddSimParam) GetParamTemplate() string {
+func (p *IpAddSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *IpAddSimParam) SetParameters(v string) {
+func (p *IpAddSIMParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *IpAddSimParam) GetParameters() string {
+func (p *IpAddSIMParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *IpAddSimParam) SetParamTemplateFile(v string) {
+func (p *IpAddSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *IpAddSimParam) GetParamTemplateFile() string {
+func (p *IpAddSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *IpAddSimParam) SetParameterFile(v string) {
+func (p *IpAddSIMParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *IpAddSimParam) GetParameterFile() string {
+func (p *IpAddSIMParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *IpAddSimParam) SetGenerateSkeleton(v bool) {
+func (p *IpAddSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *IpAddSimParam) GetGenerateSkeleton() bool {
+func (p *IpAddSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *IpAddSimParam) SetId(v sacloud.ID) {
+func (p *IpAddSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *IpAddSimParam) GetId() sacloud.ID {
+func (p *IpAddSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
-func (p *IpAddSimParam) SetIp(v string) {
+func (p *IpAddSIMParam) SetIp(v string) {
 	p.Ip = v
 }
 
-func (p *IpAddSimParam) GetIp() string {
+func (p *IpAddSIMParam) GetIp() string {
 	return p.Ip
 }
 
-// ImeiUnlockSimParam is input parameters for the sacloud API
-type ImeiUnlockSimParam struct {
+// ImeiUnlockSIMParam is input parameters for the sacloud API
+type ImeiUnlockSIMParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -2403,13 +2403,13 @@ type ImeiUnlockSimParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewImeiUnlockSimParam return new ImeiUnlockSimParam
-func NewImeiUnlockSimParam() *ImeiUnlockSimParam {
-	return &ImeiUnlockSimParam{}
+// NewImeiUnlockSIMParam return new ImeiUnlockSIMParam
+func NewImeiUnlockSIMParam() *ImeiUnlockSIMParam {
+	return &ImeiUnlockSIMParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ImeiUnlockSimParam) FillValueToSkeleton() {
+func (p *ImeiUnlockSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2438,7 +2438,7 @@ func (p *ImeiUnlockSimParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ImeiUnlockSimParam) Validate() []error {
+func (p *ImeiUnlockSIMParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -2451,89 +2451,89 @@ func (p *ImeiUnlockSimParam) Validate() []error {
 	return errors
 }
 
-func (p *ImeiUnlockSimParam) GetResourceDef() *schema.Resource {
+func (p *ImeiUnlockSIMParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *ImeiUnlockSimParam) GetCommandDef() *schema.Command {
+func (p *ImeiUnlockSIMParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["imei-unlock"]
 }
 
-func (p *ImeiUnlockSimParam) GetIncludeFields() []string {
+func (p *ImeiUnlockSIMParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ImeiUnlockSimParam) GetExcludeFields() []string {
+func (p *ImeiUnlockSIMParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ImeiUnlockSimParam) GetTableType() output.TableType {
+func (p *ImeiUnlockSIMParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ImeiUnlockSimParam) GetColumnDefs() []output.ColumnDef {
+func (p *ImeiUnlockSIMParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ImeiUnlockSimParam) SetSelector(v []string) {
+func (p *ImeiUnlockSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ImeiUnlockSimParam) GetSelector() []string {
+func (p *ImeiUnlockSIMParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ImeiUnlockSimParam) SetAssumeyes(v bool) {
+func (p *ImeiUnlockSIMParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ImeiUnlockSimParam) GetAssumeyes() bool {
+func (p *ImeiUnlockSIMParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ImeiUnlockSimParam) SetParamTemplate(v string) {
+func (p *ImeiUnlockSIMParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ImeiUnlockSimParam) GetParamTemplate() string {
+func (p *ImeiUnlockSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ImeiUnlockSimParam) SetParameters(v string) {
+func (p *ImeiUnlockSIMParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ImeiUnlockSimParam) GetParameters() string {
+func (p *ImeiUnlockSIMParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ImeiUnlockSimParam) SetParamTemplateFile(v string) {
+func (p *ImeiUnlockSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ImeiUnlockSimParam) GetParamTemplateFile() string {
+func (p *ImeiUnlockSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ImeiUnlockSimParam) SetParameterFile(v string) {
+func (p *ImeiUnlockSIMParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ImeiUnlockSimParam) GetParameterFile() string {
+func (p *ImeiUnlockSIMParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ImeiUnlockSimParam) SetGenerateSkeleton(v bool) {
+func (p *ImeiUnlockSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ImeiUnlockSimParam) GetGenerateSkeleton() bool {
+func (p *ImeiUnlockSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ImeiUnlockSimParam) SetId(v sacloud.ID) {
+func (p *ImeiUnlockSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ImeiUnlockSimParam) GetId() sacloud.ID {
+func (p *ImeiUnlockSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// IpDeleteSimParam is input parameters for the sacloud API
-type IpDeleteSimParam struct {
+// IpDeleteSIMParam is input parameters for the sacloud API
+type IpDeleteSIMParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -2544,13 +2544,13 @@ type IpDeleteSimParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewIpDeleteSimParam return new IpDeleteSimParam
-func NewIpDeleteSimParam() *IpDeleteSimParam {
-	return &IpDeleteSimParam{}
+// NewIpDeleteSIMParam return new IpDeleteSIMParam
+func NewIpDeleteSIMParam() *IpDeleteSIMParam {
+	return &IpDeleteSIMParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *IpDeleteSimParam) FillValueToSkeleton() {
+func (p *IpDeleteSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2579,7 +2579,7 @@ func (p *IpDeleteSimParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *IpDeleteSimParam) Validate() []error {
+func (p *IpDeleteSIMParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -2592,89 +2592,89 @@ func (p *IpDeleteSimParam) Validate() []error {
 	return errors
 }
 
-func (p *IpDeleteSimParam) GetResourceDef() *schema.Resource {
+func (p *IpDeleteSIMParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *IpDeleteSimParam) GetCommandDef() *schema.Command {
+func (p *IpDeleteSIMParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ip-delete"]
 }
 
-func (p *IpDeleteSimParam) GetIncludeFields() []string {
+func (p *IpDeleteSIMParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *IpDeleteSimParam) GetExcludeFields() []string {
+func (p *IpDeleteSIMParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *IpDeleteSimParam) GetTableType() output.TableType {
+func (p *IpDeleteSIMParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *IpDeleteSimParam) GetColumnDefs() []output.ColumnDef {
+func (p *IpDeleteSIMParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *IpDeleteSimParam) SetSelector(v []string) {
+func (p *IpDeleteSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *IpDeleteSimParam) GetSelector() []string {
+func (p *IpDeleteSIMParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *IpDeleteSimParam) SetAssumeyes(v bool) {
+func (p *IpDeleteSIMParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *IpDeleteSimParam) GetAssumeyes() bool {
+func (p *IpDeleteSIMParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *IpDeleteSimParam) SetParamTemplate(v string) {
+func (p *IpDeleteSIMParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *IpDeleteSimParam) GetParamTemplate() string {
+func (p *IpDeleteSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *IpDeleteSimParam) SetParameters(v string) {
+func (p *IpDeleteSIMParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *IpDeleteSimParam) GetParameters() string {
+func (p *IpDeleteSIMParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *IpDeleteSimParam) SetParamTemplateFile(v string) {
+func (p *IpDeleteSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *IpDeleteSimParam) GetParamTemplateFile() string {
+func (p *IpDeleteSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *IpDeleteSimParam) SetParameterFile(v string) {
+func (p *IpDeleteSIMParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *IpDeleteSimParam) GetParameterFile() string {
+func (p *IpDeleteSIMParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *IpDeleteSimParam) SetGenerateSkeleton(v bool) {
+func (p *IpDeleteSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *IpDeleteSimParam) GetGenerateSkeleton() bool {
+func (p *IpDeleteSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *IpDeleteSimParam) SetId(v sacloud.ID) {
+func (p *IpDeleteSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *IpDeleteSimParam) GetId() sacloud.ID {
+func (p *IpDeleteSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// LogsSimParam is input parameters for the sacloud API
-type LogsSimParam struct {
+// LogsSIMParam is input parameters for the sacloud API
+type LogsSIMParam struct {
 	Follow            bool       `json:"follow"`
 	RefreshInterval   int64      `json:"refresh-interval"`
 	Selector          []string   `json:"selector"`
@@ -2693,16 +2693,16 @@ type LogsSimParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewLogsSimParam return new LogsSimParam
-func NewLogsSimParam() *LogsSimParam {
-	return &LogsSimParam{
+// NewLogsSIMParam return new LogsSIMParam
+func NewLogsSIMParam() *LogsSIMParam {
+	return &LogsSIMParam{
 
 		RefreshInterval: 3,
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *LogsSimParam) FillValueToSkeleton() {
+func (p *LogsSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.Follow) {
 		p.Follow = false
 	}
@@ -2755,7 +2755,7 @@ func (p *LogsSimParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *LogsSimParam) Validate() []error {
+func (p *LogsSIMParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["SIM"].Commands["logs"].Params["refresh-interval"].ValidateFunc
@@ -2795,145 +2795,145 @@ func (p *LogsSimParam) Validate() []error {
 	return errors
 }
 
-func (p *LogsSimParam) GetResourceDef() *schema.Resource {
+func (p *LogsSIMParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *LogsSimParam) GetCommandDef() *schema.Command {
+func (p *LogsSIMParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["logs"]
 }
 
-func (p *LogsSimParam) GetIncludeFields() []string {
+func (p *LogsSIMParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *LogsSimParam) GetExcludeFields() []string {
+func (p *LogsSIMParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *LogsSimParam) GetTableType() output.TableType {
+func (p *LogsSIMParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *LogsSimParam) GetColumnDefs() []output.ColumnDef {
+func (p *LogsSIMParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *LogsSimParam) SetFollow(v bool) {
+func (p *LogsSIMParam) SetFollow(v bool) {
 	p.Follow = v
 }
 
-func (p *LogsSimParam) GetFollow() bool {
+func (p *LogsSIMParam) GetFollow() bool {
 	return p.Follow
 }
-func (p *LogsSimParam) SetRefreshInterval(v int64) {
+func (p *LogsSIMParam) SetRefreshInterval(v int64) {
 	p.RefreshInterval = v
 }
 
-func (p *LogsSimParam) GetRefreshInterval() int64 {
+func (p *LogsSIMParam) GetRefreshInterval() int64 {
 	return p.RefreshInterval
 }
-func (p *LogsSimParam) SetSelector(v []string) {
+func (p *LogsSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *LogsSimParam) GetSelector() []string {
+func (p *LogsSIMParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *LogsSimParam) SetParamTemplate(v string) {
+func (p *LogsSIMParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *LogsSimParam) GetParamTemplate() string {
+func (p *LogsSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *LogsSimParam) SetParameters(v string) {
+func (p *LogsSIMParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *LogsSimParam) GetParameters() string {
+func (p *LogsSIMParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *LogsSimParam) SetParamTemplateFile(v string) {
+func (p *LogsSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *LogsSimParam) GetParamTemplateFile() string {
+func (p *LogsSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *LogsSimParam) SetParameterFile(v string) {
+func (p *LogsSIMParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *LogsSimParam) GetParameterFile() string {
+func (p *LogsSIMParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *LogsSimParam) SetGenerateSkeleton(v bool) {
+func (p *LogsSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *LogsSimParam) GetGenerateSkeleton() bool {
+func (p *LogsSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *LogsSimParam) SetOutputType(v string) {
+func (p *LogsSIMParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *LogsSimParam) GetOutputType() string {
+func (p *LogsSIMParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *LogsSimParam) SetColumn(v []string) {
+func (p *LogsSIMParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *LogsSimParam) GetColumn() []string {
+func (p *LogsSIMParam) GetColumn() []string {
 	return p.Column
 }
-func (p *LogsSimParam) SetQuiet(v bool) {
+func (p *LogsSIMParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *LogsSimParam) GetQuiet() bool {
+func (p *LogsSIMParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *LogsSimParam) SetFormat(v string) {
+func (p *LogsSIMParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *LogsSimParam) GetFormat() string {
+func (p *LogsSIMParam) GetFormat() string {
 	return p.Format
 }
-func (p *LogsSimParam) SetFormatFile(v string) {
+func (p *LogsSIMParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *LogsSimParam) GetFormatFile() string {
+func (p *LogsSIMParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *LogsSimParam) SetQuery(v string) {
+func (p *LogsSIMParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *LogsSimParam) GetQuery() string {
+func (p *LogsSIMParam) GetQuery() string {
 	return p.Query
 }
-func (p *LogsSimParam) SetQueryFile(v string) {
+func (p *LogsSIMParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *LogsSimParam) GetQueryFile() string {
+func (p *LogsSIMParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *LogsSimParam) SetId(v sacloud.ID) {
+func (p *LogsSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *LogsSimParam) GetId() sacloud.ID {
+func (p *LogsSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// MonitorSimParam is input parameters for the sacloud API
-type MonitorSimParam struct {
+// MonitorSIMParam is input parameters for the sacloud API
+type MonitorSIMParam struct {
 	Start             string     `json:"start"`
 	End               string     `json:"end"`
 	KeyFormat         string     `json:"key-format"`
@@ -2953,16 +2953,16 @@ type MonitorSimParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewMonitorSimParam return new MonitorSimParam
-func NewMonitorSimParam() *MonitorSimParam {
-	return &MonitorSimParam{
+// NewMonitorSIMParam return new MonitorSIMParam
+func NewMonitorSIMParam() *MonitorSIMParam {
+	return &MonitorSIMParam{
 
 		KeyFormat: "sakuracloud.sim.{{.ID}}",
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *MonitorSimParam) FillValueToSkeleton() {
+func (p *MonitorSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.Start) {
 		p.Start = ""
 	}
@@ -3018,7 +3018,7 @@ func (p *MonitorSimParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *MonitorSimParam) Validate() []error {
+func (p *MonitorSIMParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["SIM"].Commands["monitor"].Params["start"].ValidateFunc
@@ -3072,146 +3072,146 @@ func (p *MonitorSimParam) Validate() []error {
 	return errors
 }
 
-func (p *MonitorSimParam) GetResourceDef() *schema.Resource {
+func (p *MonitorSIMParam) GetResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *MonitorSimParam) GetCommandDef() *schema.Command {
+func (p *MonitorSIMParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["monitor"]
 }
 
-func (p *MonitorSimParam) GetIncludeFields() []string {
+func (p *MonitorSIMParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *MonitorSimParam) GetExcludeFields() []string {
+func (p *MonitorSIMParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *MonitorSimParam) GetTableType() output.TableType {
+func (p *MonitorSIMParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *MonitorSimParam) GetColumnDefs() []output.ColumnDef {
+func (p *MonitorSIMParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *MonitorSimParam) SetStart(v string) {
+func (p *MonitorSIMParam) SetStart(v string) {
 	p.Start = v
 }
 
-func (p *MonitorSimParam) GetStart() string {
+func (p *MonitorSIMParam) GetStart() string {
 	return p.Start
 }
-func (p *MonitorSimParam) SetEnd(v string) {
+func (p *MonitorSIMParam) SetEnd(v string) {
 	p.End = v
 }
 
-func (p *MonitorSimParam) GetEnd() string {
+func (p *MonitorSIMParam) GetEnd() string {
 	return p.End
 }
-func (p *MonitorSimParam) SetKeyFormat(v string) {
+func (p *MonitorSIMParam) SetKeyFormat(v string) {
 	p.KeyFormat = v
 }
 
-func (p *MonitorSimParam) GetKeyFormat() string {
+func (p *MonitorSIMParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
-func (p *MonitorSimParam) SetSelector(v []string) {
+func (p *MonitorSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *MonitorSimParam) GetSelector() []string {
+func (p *MonitorSIMParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *MonitorSimParam) SetParamTemplate(v string) {
+func (p *MonitorSIMParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *MonitorSimParam) GetParamTemplate() string {
+func (p *MonitorSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *MonitorSimParam) SetParameters(v string) {
+func (p *MonitorSIMParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *MonitorSimParam) GetParameters() string {
+func (p *MonitorSIMParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *MonitorSimParam) SetParamTemplateFile(v string) {
+func (p *MonitorSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *MonitorSimParam) GetParamTemplateFile() string {
+func (p *MonitorSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *MonitorSimParam) SetParameterFile(v string) {
+func (p *MonitorSIMParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *MonitorSimParam) GetParameterFile() string {
+func (p *MonitorSIMParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *MonitorSimParam) SetGenerateSkeleton(v bool) {
+func (p *MonitorSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *MonitorSimParam) GetGenerateSkeleton() bool {
+func (p *MonitorSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *MonitorSimParam) SetOutputType(v string) {
+func (p *MonitorSIMParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *MonitorSimParam) GetOutputType() string {
+func (p *MonitorSIMParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *MonitorSimParam) SetColumn(v []string) {
+func (p *MonitorSIMParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *MonitorSimParam) GetColumn() []string {
+func (p *MonitorSIMParam) GetColumn() []string {
 	return p.Column
 }
-func (p *MonitorSimParam) SetQuiet(v bool) {
+func (p *MonitorSIMParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *MonitorSimParam) GetQuiet() bool {
+func (p *MonitorSIMParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *MonitorSimParam) SetFormat(v string) {
+func (p *MonitorSIMParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *MonitorSimParam) GetFormat() string {
+func (p *MonitorSIMParam) GetFormat() string {
 	return p.Format
 }
-func (p *MonitorSimParam) SetFormatFile(v string) {
+func (p *MonitorSIMParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *MonitorSimParam) GetFormatFile() string {
+func (p *MonitorSIMParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *MonitorSimParam) SetQuery(v string) {
+func (p *MonitorSIMParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *MonitorSimParam) GetQuery() string {
+func (p *MonitorSIMParam) GetQuery() string {
 	return p.Query
 }
-func (p *MonitorSimParam) SetQueryFile(v string) {
+func (p *MonitorSIMParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *MonitorSimParam) GetQueryFile() string {
+func (p *MonitorSIMParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *MonitorSimParam) SetId(v sacloud.ID) {
+func (p *MonitorSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorSimParam) GetId() sacloud.ID {
+func (p *MonitorSIMParam) GetId() sacloud.ID {
 	return p.Id
 }

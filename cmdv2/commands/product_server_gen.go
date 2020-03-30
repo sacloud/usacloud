@@ -25,13 +25,13 @@ import (
 )
 
 var (
-	productserverListParam = params.NewListProductserverParam()
-	productserverReadParam = params.NewReadProductserverParam()
+	productServerListParam = params.NewListProductServerParam()
+	productServerReadParam = params.NewReadProductServerParam()
 )
 
-// productserverCmd represents the command to manage SAKURA Cloud ProductServer
-var productserverCmd = &cobra.Command{
-	Use:   "productserver",
+// productServerCmd represents the command to manage SAKURA Cloud ProductServer
+var productServerCmd = &cobra.Command{
+	Use:   "productServer",
 	Short: "A manage commands of ProductServer",
 	Long:  `A manage commands of ProductServer`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -39,54 +39,54 @@ var productserverCmd = &cobra.Command{
 	},
 }
 
-var productserverListCmd = &cobra.Command{
+var productServerListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find"},
-	Short:   "List Productserver (default)",
-	Long:    `List Productserver (default)`,
+	Short:   "List ProductServer (default)",
+	Long:    `List ProductServer (default)`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := productserverListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := productServerListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(productserverListParam))
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(productServerListParam))
 		return err
 	},
 }
 
-func productserverListCmdInit() {
-	fs := productserverListCmd.Flags()
-	fs.IntVarP(&productserverListParam.From, "from", "", 0, "set offset")
-	fs.IntVarP(&productserverListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&productserverListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&productserverListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &productserverListParam.Id), "id", "", "set filter by id(s)")
+func productServerListCmdInit() {
+	fs := productServerListCmd.Flags()
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &productServerListParam.Id), "id", "", "set filter by id(s)")
+	fs.IntVarP(&productServerListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&productServerListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&productServerListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&productServerListParam.Name, "name", "", []string{}, "set filter by name(s)")
 }
 
-var productserverReadCmd = &cobra.Command{
+var productServerReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Productserver",
-	Long:  `Read Productserver`,
+	Short: "Read ProductServer",
+	Long:  `Read ProductServer`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := productserverReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := productServerReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(productserverReadParam))
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(productServerReadParam))
 		return err
 	},
 }
 
-func productserverReadCmdInit() {
-	fs := productserverReadCmd.Flags()
-	fs.VarP(newIDValue(0, &productserverReadParam.Id), "id", "", "set resource ID")
+func productServerReadCmdInit() {
+	fs := productServerReadCmd.Flags()
+	fs.VarP(newIDValue(0, &productServerReadParam.Id), "id", "", "set resource ID")
 }
 
 func init() {
-	parent := productserverCmd
+	parent := productServerCmd
 
-	productserverListCmdInit()
-	parent.AddCommand(productserverListCmd)
+	productServerListCmdInit()
+	parent.AddCommand(productServerListCmd)
 
-	productserverReadCmdInit()
-	parent.AddCommand(productserverReadCmd)
+	productServerReadCmdInit()
+	parent.AddCommand(productServerReadCmd)
 
 	rootCmd.AddCommand(parent)
 }

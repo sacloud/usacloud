@@ -74,7 +74,7 @@ func buildDiskEditValue(ctx command.Context, params *params.EditDiskParam) *sacl
 		p.SetPassword(params.Password)
 	}
 	if ctx.IsSet("ssh-key-ids") {
-		p.SetSSHKeys(command.StringIDs(params.SshKeyIds))
+		p.SetSSHKeys(command.StringIDs(params.SSHKeyIds))
 	}
 	if ctx.IsSet("disable-password-auth") {
 		p.SetDisablePWAuth(params.DisablePasswordAuth)

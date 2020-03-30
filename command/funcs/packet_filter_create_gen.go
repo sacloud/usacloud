@@ -23,10 +23,10 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func PacketfilterCreate(ctx command.Context, params *params.CreatePacketfilterParam) error {
+func PacketFilterCreate(ctx command.Context, params *params.CreatePacketFilterParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetPacketfilterAPI()
+	api := client.GetPacketFilterAPI()
 	p := api.New()
 
 	// set params
@@ -38,7 +38,7 @@ func PacketfilterCreate(ctx command.Context, params *params.CreatePacketfilterPa
 	// call Create(id)
 	res, err := api.Create(p)
 	if err != nil {
-		return fmt.Errorf("PacketfilterCreate is failed: %s", err)
+		return fmt.Errorf("PacketFilterCreate is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

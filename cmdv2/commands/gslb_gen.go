@@ -25,15 +25,15 @@ import (
 )
 
 var (
-	gslbListParam         = params.NewListGslbParam()
-	gslbServerInfoParam   = params.NewServerInfoGslbParam()
-	gslbCreateParam       = params.NewCreateGslbParam()
-	gslbServerAddParam    = params.NewServerAddGslbParam()
-	gslbReadParam         = params.NewReadGslbParam()
-	gslbServerUpdateParam = params.NewServerUpdateGslbParam()
-	gslbServerDeleteParam = params.NewServerDeleteGslbParam()
-	gslbUpdateParam       = params.NewUpdateGslbParam()
-	gslbDeleteParam       = params.NewDeleteGslbParam()
+	gslbListParam         = params.NewListGSLBParam()
+	gslbServerInfoParam   = params.NewServerInfoGSLBParam()
+	gslbCreateParam       = params.NewCreateGSLBParam()
+	gslbServerAddParam    = params.NewServerAddGSLBParam()
+	gslbReadParam         = params.NewReadGSLBParam()
+	gslbServerUpdateParam = params.NewServerUpdateGSLBParam()
+	gslbServerDeleteParam = params.NewServerDeleteGSLBParam()
+	gslbUpdateParam       = params.NewUpdateGSLBParam()
+	gslbDeleteParam       = params.NewDeleteGSLBParam()
 )
 
 // gslbCmd represents the command to manage SAKURA Cloud GSLB
@@ -49,8 +49,8 @@ var gslbCmd = &cobra.Command{
 var gslbListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Gslb",
-	Long:    `List Gslb`,
+	Short:   "List GSLB",
+	Long:    `List GSLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := gslbListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -61,19 +61,19 @@ var gslbListCmd = &cobra.Command{
 
 func gslbListCmdInit() {
 	fs := gslbListCmd.Flags()
-	fs.StringSliceVarP(&gslbListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&gslbListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.StringSliceVarP(&gslbListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &gslbListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&gslbListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&gslbListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&gslbListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.StringSliceVarP(&gslbListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 }
 
 var gslbServerInfoCmd = &cobra.Command{
 	Use:     "server-info",
 	Aliases: []string{"server-list"},
-	Short:   "ServerInfo Gslb",
-	Long:    `ServerInfo Gslb`,
+	Short:   "ServerInfo GSLB",
+	Long:    `ServerInfo GSLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := gslbServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -88,8 +88,8 @@ func gslbServerInfoCmdInit() {
 var gslbCreateCmd = &cobra.Command{
 	Use: "create",
 
-	Short: "Create Gslb",
-	Long:  `Create Gslb`,
+	Short: "Create GSLB",
+	Long:  `Create GSLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := gslbCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -100,25 +100,25 @@ var gslbCreateCmd = &cobra.Command{
 
 func gslbCreateCmdInit() {
 	fs := gslbCreateCmd.Flags()
+	fs.IntVarP(&gslbCreateParam.DelayLoop, "delay-loop", "", 10, "set delay-loop of healthcheck")
+	fs.BoolVarP(&gslbCreateParam.Weighted, "weighted", "", true, "enable weighted")
+	fs.StringVarP(&gslbCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringSliceVarP(&gslbCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.StringVarP(&gslbCreateParam.Protocol, "protocol", "", "ping", "set healthcheck protocol[http/https/ping/tcp]")
 	fs.IntVarP(&gslbCreateParam.ResponseCode, "response-code", "", 200, "set response-code of http/https healthcheck request")
 	fs.IntVarP(&gslbCreateParam.Port, "port", "", 0, "set port of tcp healthcheck")
-	fs.BoolVarP(&gslbCreateParam.Weighted, "weighted", "", true, "enable weighted")
-	fs.StringSliceVarP(&gslbCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.StringVarP(&gslbCreateParam.SorryServer, "sorry-server", "", "", "set sorry-server hostname/ipaddress")
-	fs.StringVarP(&gslbCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&gslbCreateParam.Description, "description", "", "", "set resource description")
 	fs.VarP(newIDValue(0, &gslbCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringVarP(&gslbCreateParam.Protocol, "protocol", "", "ping", "set healthcheck protocol[http/https/ping/tcp]")
 	fs.StringVarP(&gslbCreateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
 	fs.StringVarP(&gslbCreateParam.Path, "path", "", "/", "set path of http/https healthcheck request")
-	fs.IntVarP(&gslbCreateParam.DelayLoop, "delay-loop", "", 10, "set delay-loop of healthcheck")
+	fs.StringVarP(&gslbCreateParam.SorryServer, "sorry-server", "", "", "set sorry-server hostname/ipaddress")
 }
 
 var gslbServerAddCmd = &cobra.Command{
 	Use: "server-add",
 
-	Short: "ServerAdd Gslb",
-	Long:  `ServerAdd Gslb`,
+	Short: "ServerAdd GSLB",
+	Long:  `ServerAdd GSLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := gslbServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -137,8 +137,8 @@ func gslbServerAddCmdInit() {
 var gslbReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Gslb",
-	Long:  `Read Gslb`,
+	Short: "Read GSLB",
+	Long:  `Read GSLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := gslbReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -153,8 +153,8 @@ func gslbReadCmdInit() {
 var gslbServerUpdateCmd = &cobra.Command{
 	Use: "server-update",
 
-	Short: "ServerUpdate Gslb",
-	Long:  `ServerUpdate Gslb`,
+	Short: "ServerUpdate GSLB",
+	Long:  `ServerUpdate GSLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := gslbServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -174,8 +174,8 @@ func gslbServerUpdateCmdInit() {
 var gslbServerDeleteCmd = &cobra.Command{
 	Use: "server-delete",
 
-	Short: "ServerDelete Gslb",
-	Long:  `ServerDelete Gslb`,
+	Short: "ServerDelete GSLB",
+	Long:  `ServerDelete GSLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := gslbServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -192,8 +192,8 @@ func gslbServerDeleteCmdInit() {
 var gslbUpdateCmd = &cobra.Command{
 	Use: "update",
 
-	Short: "Update Gslb",
-	Long:  `Update Gslb`,
+	Short: "Update GSLB",
+	Long:  `Update GSLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := gslbUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -204,25 +204,25 @@ var gslbUpdateCmd = &cobra.Command{
 
 func gslbUpdateCmdInit() {
 	fs := gslbUpdateCmd.Flags()
-	fs.VarP(newIDValue(0, &gslbUpdateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringVarP(&gslbUpdateParam.Protocol, "protocol", "", "", "set healthcheck protocol[http/https/ping/tcp]")
-	fs.StringVarP(&gslbUpdateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
+	fs.IntVarP(&gslbUpdateParam.Port, "port", "", 0, "set port of tcp healthcheck")
+	fs.StringSliceVarP(&gslbUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.StringVarP(&gslbUpdateParam.Path, "path", "", "", "set path of http/https healthcheck request")
 	fs.IntVarP(&gslbUpdateParam.ResponseCode, "response-code", "", 0, "set response-code of http/https healthcheck request")
 	fs.IntVarP(&gslbUpdateParam.DelayLoop, "delay-loop", "", 0, "set delay-loop of healthcheck")
-	fs.StringVarP(&gslbUpdateParam.SorryServer, "sorry-server", "", "", "set sorry-server hostname/ipaddress")
-	fs.StringSliceVarP(&gslbUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.IntVarP(&gslbUpdateParam.Port, "port", "", 0, "set port of tcp healthcheck")
 	fs.BoolVarP(&gslbUpdateParam.Weighted, "weighted", "", false, "enable weighted")
+	fs.StringVarP(&gslbUpdateParam.SorryServer, "sorry-server", "", "", "set sorry-server hostname/ipaddress")
 	fs.StringVarP(&gslbUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&gslbUpdateParam.Description, "description", "", "", "set resource description")
+	fs.VarP(newIDValue(0, &gslbUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringVarP(&gslbUpdateParam.Protocol, "protocol", "", "", "set healthcheck protocol[http/https/ping/tcp]")
+	fs.StringVarP(&gslbUpdateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
 }
 
 var gslbDeleteCmd = &cobra.Command{
 	Use:     "delete",
 	Aliases: []string{"rm"},
-	Short:   "Delete Gslb",
-	Long:    `Delete Gslb`,
+	Short:   "Delete GSLB",
+	Long:    `Delete GSLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := gslbDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG

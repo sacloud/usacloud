@@ -25,37 +25,37 @@ import (
 )
 
 var (
-	proxylbListParam                 = params.NewListProxylbParam()
-	proxylbCreateParam               = params.NewCreateProxylbParam()
-	proxylbReadParam                 = params.NewReadProxylbParam()
-	proxylbUpdateParam               = params.NewUpdateProxylbParam()
-	proxylbDeleteParam               = params.NewDeleteProxylbParam()
-	proxylbPlanChangeParam           = params.NewPlanChangeProxylbParam()
-	proxylbBindPortInfoParam         = params.NewBindPortInfoProxylbParam()
-	proxylbBindPortAddParam          = params.NewBindPortAddProxylbParam()
-	proxylbBindPortUpdateParam       = params.NewBindPortUpdateProxylbParam()
-	proxylbBindPortDeleteParam       = params.NewBindPortDeleteProxylbParam()
-	proxylbResponseHeaderInfoParam   = params.NewResponseHeaderInfoProxylbParam()
-	proxylbResponseHeaderAddParam    = params.NewResponseHeaderAddProxylbParam()
-	proxylbResponseHeaderUpdateParam = params.NewResponseHeaderUpdateProxylbParam()
-	proxylbResponseHeaderDeleteParam = params.NewResponseHeaderDeleteProxylbParam()
-	proxylbAcmeInfoParam             = params.NewAcmeInfoProxylbParam()
-	proxylbAcmeSettingParam          = params.NewAcmeSettingProxylbParam()
-	proxylbAcmeRenewParam            = params.NewAcmeRenewProxylbParam()
-	proxylbServerInfoParam           = params.NewServerInfoProxylbParam()
-	proxylbServerAddParam            = params.NewServerAddProxylbParam()
-	proxylbServerUpdateParam         = params.NewServerUpdateProxylbParam()
-	proxylbServerDeleteParam         = params.NewServerDeleteProxylbParam()
-	proxylbCertificateInfoParam      = params.NewCertificateInfoProxylbParam()
-	proxylbCertificateAddParam       = params.NewCertificateAddProxylbParam()
-	proxylbCertificateUpdateParam    = params.NewCertificateUpdateProxylbParam()
-	proxylbCertificateDeleteParam    = params.NewCertificateDeleteProxylbParam()
-	proxylbMonitorParam              = params.NewMonitorProxylbParam()
+	proxyLBListParam                 = params.NewListProxyLBParam()
+	proxyLBCreateParam               = params.NewCreateProxyLBParam()
+	proxyLBReadParam                 = params.NewReadProxyLBParam()
+	proxyLBUpdateParam               = params.NewUpdateProxyLBParam()
+	proxyLBDeleteParam               = params.NewDeleteProxyLBParam()
+	proxyLBPlanChangeParam           = params.NewPlanChangeProxyLBParam()
+	proxyLBBindPortInfoParam         = params.NewBindPortInfoProxyLBParam()
+	proxyLBBindPortAddParam          = params.NewBindPortAddProxyLBParam()
+	proxyLBBindPortUpdateParam       = params.NewBindPortUpdateProxyLBParam()
+	proxyLBBindPortDeleteParam       = params.NewBindPortDeleteProxyLBParam()
+	proxyLBResponseHeaderInfoParam   = params.NewResponseHeaderInfoProxyLBParam()
+	proxyLBResponseHeaderAddParam    = params.NewResponseHeaderAddProxyLBParam()
+	proxyLBResponseHeaderUpdateParam = params.NewResponseHeaderUpdateProxyLBParam()
+	proxyLBResponseHeaderDeleteParam = params.NewResponseHeaderDeleteProxyLBParam()
+	proxyLBACMEInfoParam             = params.NewACMEInfoProxyLBParam()
+	proxyLBACMESettingParam          = params.NewACMESettingProxyLBParam()
+	proxyLBACMERenewParam            = params.NewACMERenewProxyLBParam()
+	proxyLBServerInfoParam           = params.NewServerInfoProxyLBParam()
+	proxyLBServerAddParam            = params.NewServerAddProxyLBParam()
+	proxyLBServerUpdateParam         = params.NewServerUpdateProxyLBParam()
+	proxyLBServerDeleteParam         = params.NewServerDeleteProxyLBParam()
+	proxyLBCertificateInfoParam      = params.NewCertificateInfoProxyLBParam()
+	proxyLBCertificateAddParam       = params.NewCertificateAddProxyLBParam()
+	proxyLBCertificateUpdateParam    = params.NewCertificateUpdateProxyLBParam()
+	proxyLBCertificateDeleteParam    = params.NewCertificateDeleteProxyLBParam()
+	proxyLBMonitorParam              = params.NewMonitorProxyLBParam()
 )
 
-// proxylbCmd represents the command to manage SAKURA Cloud ProxyLB
-var proxylbCmd = &cobra.Command{
-	Use:   "proxylb",
+// proxyLBCmd represents the command to manage SAKURA Cloud ProxyLB
+var proxyLBCmd = &cobra.Command{
+	Use:   "proxyLB",
 	Short: "A manage commands of ProxyLB",
 	Long:  `A manage commands of ProxyLB`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -63,592 +63,592 @@ var proxylbCmd = &cobra.Command{
 	},
 }
 
-var proxylbListCmd = &cobra.Command{
+var proxyLBListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Proxylb",
-	Long:    `List Proxylb`,
+	Short:   "List ProxyLB",
+	Long:    `List ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(proxylbListParam))
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(proxyLBListParam))
 		return err
 	},
 }
 
-func proxylbListCmdInit() {
-	fs := proxylbListCmd.Flags()
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &proxylbListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&proxylbListParam.From, "from", "", 0, "set offset")
-	fs.IntVarP(&proxylbListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&proxylbListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&proxylbListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.StringSliceVarP(&proxylbListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+func proxyLBListCmdInit() {
+	fs := proxyLBListCmd.Flags()
+	fs.StringSliceVarP(&proxyLBListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&proxyLBListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.StringSliceVarP(&proxyLBListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &proxyLBListParam.Id), "id", "", "set filter by id(s)")
+	fs.IntVarP(&proxyLBListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&proxyLBListParam.Max, "max", "", 0, "set limit")
 }
 
-var proxylbCreateCmd = &cobra.Command{
+var proxyLBCreateCmd = &cobra.Command{
 	Use: "create",
 
-	Short: "Create Proxylb",
-	Long:  `Create Proxylb`,
+	Short: "Create ProxyLB",
+	Long:  `Create ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(proxylbCreateParam))
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(proxyLBCreateParam))
 		return err
 	},
 }
 
-func proxylbCreateCmdInit() {
-	fs := proxylbCreateCmd.Flags()
-	fs.StringVarP(&proxylbCreateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
-	fs.IntVarP(&proxylbCreateParam.DelayLoop, "delay-loop", "", 10, "set delay-loop of healthcheck")
-	fs.StringVarP(&proxylbCreateParam.SorryServerIpaddress, "sorry-server-ipaddress", "", "", "set sorry-server ip address")
-	fs.StringVarP(&proxylbCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&proxylbCreateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&proxylbCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.IntVarP(&proxylbCreateParam.Plan, "plan", "", 1000, "set plan")
-	fs.StringVarP(&proxylbCreateParam.Protocol, "protocol", "", "tcp", "set healthcheck protocol[http/tcp]")
-	fs.IntVarP(&proxylbCreateParam.SorryServerPort, "sorry-server-port", "", 0, "set sorry-server ports")
-	fs.IntVarP(&proxylbCreateParam.Timeout, "timeout", "", 10, "set timeout")
-	fs.VarP(newIDValue(0, &proxylbCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringVarP(&proxylbCreateParam.Path, "path", "", "/", "set path of http/https healthcheck request")
-	fs.BoolVarP(&proxylbCreateParam.StickySession, "sticky-session", "", false, "enable sticky-session")
+func proxyLBCreateCmdInit() {
+	fs := proxyLBCreateCmd.Flags()
+	fs.StringVarP(&proxyLBCreateParam.Name, "name", "", "", "set resource display name")
+	fs.IntVarP(&proxyLBCreateParam.Plan, "plan", "", 1000, "set plan")
+	fs.StringVarP(&proxyLBCreateParam.Path, "path", "", "/", "set path of http/https healthcheck request")
+	fs.BoolVarP(&proxyLBCreateParam.StickySession, "sticky-session", "", false, "enable sticky-session")
+	fs.StringVarP(&proxyLBCreateParam.SorryServerIpaddress, "sorry-server-ipaddress", "", "", "set sorry-server ip address")
+	fs.IntVarP(&proxyLBCreateParam.SorryServerPort, "sorry-server-port", "", 0, "set sorry-server ports")
+	fs.StringSliceVarP(&proxyLBCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &proxyLBCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringVarP(&proxyLBCreateParam.Protocol, "protocol", "", "tcp", "set healthcheck protocol[http/tcp]")
+	fs.StringVarP(&proxyLBCreateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
+	fs.IntVarP(&proxyLBCreateParam.DelayLoop, "delay-loop", "", 10, "set delay-loop of healthcheck")
+	fs.IntVarP(&proxyLBCreateParam.Timeout, "timeout", "", 10, "set timeout")
+	fs.StringVarP(&proxyLBCreateParam.Description, "description", "", "", "set resource description")
 }
 
-var proxylbReadCmd = &cobra.Command{
+var proxyLBReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Proxylb",
-	Long:  `Read Proxylb`,
+	Short: "Read ProxyLB",
+	Long:  `Read ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(proxylbReadParam))
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(proxyLBReadParam))
 		return err
 	},
 }
 
-func proxylbReadCmdInit() {
+func proxyLBReadCmdInit() {
 }
 
-var proxylbUpdateCmd = &cobra.Command{
+var proxyLBUpdateCmd = &cobra.Command{
 	Use: "update",
 
-	Short: "Update Proxylb",
-	Long:  `Update Proxylb`,
+	Short: "Update ProxyLB",
+	Long:  `Update ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(proxylbUpdateParam))
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(proxyLBUpdateParam))
 		return err
 	},
 }
 
-func proxylbUpdateCmdInit() {
-	fs := proxylbUpdateCmd.Flags()
-	fs.StringVarP(&proxylbUpdateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
-	fs.StringVarP(&proxylbUpdateParam.Path, "path", "", "", "set path of http/https healthcheck request")
-	fs.IntVarP(&proxylbUpdateParam.DelayLoop, "delay-loop", "", 0, "set delay-loop of healthcheck")
-	fs.BoolVarP(&proxylbUpdateParam.StickySession, "sticky-session", "", false, "enable sticky-session")
-	fs.StringVarP(&proxylbUpdateParam.SorryServerIpaddress, "sorry-server-ipaddress", "", "", "set sorry-server ip address")
-	fs.IntVarP(&proxylbUpdateParam.SorryServerPort, "sorry-server-port", "", 0, "set sorry-server ports")
-	fs.IntVarP(&proxylbUpdateParam.Timeout, "timeout", "", 10, "set timeout")
-	fs.StringVarP(&proxylbUpdateParam.Protocol, "protocol", "", "", "set healthcheck protocol[http/tcp]")
-	fs.StringVarP(&proxylbUpdateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&proxylbUpdateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&proxylbUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &proxylbUpdateParam.IconId), "icon-id", "", "set Icon ID")
+func proxyLBUpdateCmdInit() {
+	fs := proxyLBUpdateCmd.Flags()
+	fs.StringVarP(&proxyLBUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringSliceVarP(&proxyLBUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &proxyLBUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringVarP(&proxyLBUpdateParam.Path, "path", "", "", "set path of http/https healthcheck request")
+	fs.StringVarP(&proxyLBUpdateParam.SorryServerIpaddress, "sorry-server-ipaddress", "", "", "set sorry-server ip address")
+	fs.IntVarP(&proxyLBUpdateParam.SorryServerPort, "sorry-server-port", "", 0, "set sorry-server ports")
+	fs.IntVarP(&proxyLBUpdateParam.Timeout, "timeout", "", 10, "set timeout")
+	fs.StringVarP(&proxyLBUpdateParam.Description, "description", "", "", "set resource description")
+	fs.StringVarP(&proxyLBUpdateParam.Protocol, "protocol", "", "", "set healthcheck protocol[http/tcp]")
+	fs.StringVarP(&proxyLBUpdateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
+	fs.IntVarP(&proxyLBUpdateParam.DelayLoop, "delay-loop", "", 0, "set delay-loop of healthcheck")
+	fs.BoolVarP(&proxyLBUpdateParam.StickySession, "sticky-session", "", false, "enable sticky-session")
 }
 
-var proxylbDeleteCmd = &cobra.Command{
+var proxyLBDeleteCmd = &cobra.Command{
 	Use:     "delete",
 	Aliases: []string{"rm"},
-	Short:   "Delete Proxylb",
-	Long:    `Delete Proxylb`,
+	Short:   "Delete ProxyLB",
+	Long:    `Delete ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(proxylbDeleteParam))
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(proxyLBDeleteParam))
 		return err
 	},
 }
 
-func proxylbDeleteCmdInit() {
+func proxyLBDeleteCmdInit() {
 }
 
-var proxylbPlanChangeCmd = &cobra.Command{
+var proxyLBPlanChangeCmd = &cobra.Command{
 	Use: "plan-change",
 
 	Short: "Change ProxyLB plan",
 	Long:  `Change ProxyLB plan`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbPlanChangeParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBPlanChangeParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("plan-change parameter: \n%s\n", debugMarshalIndent(proxylbPlanChangeParam))
+		fmt.Printf("plan-change parameter: \n%s\n", debugMarshalIndent(proxyLBPlanChangeParam))
 		return err
 	},
 }
 
-func proxylbPlanChangeCmdInit() {
-	fs := proxylbPlanChangeCmd.Flags()
-	fs.IntVarP(&proxylbPlanChangeParam.Plan, "plan", "", 0, "set plan")
+func proxyLBPlanChangeCmdInit() {
+	fs := proxyLBPlanChangeCmd.Flags()
+	fs.IntVarP(&proxyLBPlanChangeParam.Plan, "plan", "", 0, "set plan")
 }
 
-var proxylbBindPortInfoCmd = &cobra.Command{
+var proxyLBBindPortInfoCmd = &cobra.Command{
 	Use:     "bind-port-info",
 	Aliases: []string{"bind-port-list"},
-	Short:   "BindPortInfo Proxylb",
-	Long:    `BindPortInfo Proxylb`,
+	Short:   "BindPortInfo ProxyLB",
+	Long:    `BindPortInfo ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbBindPortInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBBindPortInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("bind-port-info parameter: \n%s\n", debugMarshalIndent(proxylbBindPortInfoParam))
+		fmt.Printf("bind-port-info parameter: \n%s\n", debugMarshalIndent(proxyLBBindPortInfoParam))
 		return err
 	},
 }
 
-func proxylbBindPortInfoCmdInit() {
+func proxyLBBindPortInfoCmdInit() {
 }
 
-var proxylbBindPortAddCmd = &cobra.Command{
+var proxyLBBindPortAddCmd = &cobra.Command{
 	Use: "bind-port-add",
 
-	Short: "BindPortAdd Proxylb",
-	Long:  `BindPortAdd Proxylb`,
+	Short: "BindPortAdd ProxyLB",
+	Long:  `BindPortAdd ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbBindPortAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBBindPortAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("bind-port-add parameter: \n%s\n", debugMarshalIndent(proxylbBindPortAddParam))
+		fmt.Printf("bind-port-add parameter: \n%s\n", debugMarshalIndent(proxyLBBindPortAddParam))
 		return err
 	},
 }
 
-func proxylbBindPortAddCmdInit() {
-	fs := proxylbBindPortAddCmd.Flags()
-	fs.StringVarP(&proxylbBindPortAddParam.Mode, "mode", "", "", "set bind mode[http/https/tcp]")
-	fs.IntVarP(&proxylbBindPortAddParam.Port, "port", "", 0, "set port number")
-	fs.BoolVarP(&proxylbBindPortAddParam.RedirectToHttps, "redirect-to-https", "", false, "enable to redirect to https")
-	fs.BoolVarP(&proxylbBindPortAddParam.SupportHttp2, "support-http-2", "", false, "enable http/2")
+func proxyLBBindPortAddCmdInit() {
+	fs := proxyLBBindPortAddCmd.Flags()
+	fs.BoolVarP(&proxyLBBindPortAddParam.RedirectToHttps, "redirect-to-https", "", false, "enable to redirect to https")
+	fs.BoolVarP(&proxyLBBindPortAddParam.SupportHttp2, "support-http-2", "", false, "enable http/2")
+	fs.StringVarP(&proxyLBBindPortAddParam.Mode, "mode", "", "", "set bind mode[http/https/tcp]")
+	fs.IntVarP(&proxyLBBindPortAddParam.Port, "port", "", 0, "set port number")
 }
 
-var proxylbBindPortUpdateCmd = &cobra.Command{
+var proxyLBBindPortUpdateCmd = &cobra.Command{
 	Use: "bind-port-update",
 
-	Short: "BindPortUpdate Proxylb",
-	Long:  `BindPortUpdate Proxylb`,
+	Short: "BindPortUpdate ProxyLB",
+	Long:  `BindPortUpdate ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbBindPortUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBBindPortUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("bind-port-update parameter: \n%s\n", debugMarshalIndent(proxylbBindPortUpdateParam))
+		fmt.Printf("bind-port-update parameter: \n%s\n", debugMarshalIndent(proxyLBBindPortUpdateParam))
 		return err
 	},
 }
 
-func proxylbBindPortUpdateCmdInit() {
-	fs := proxylbBindPortUpdateCmd.Flags()
-	fs.IntVarP(&proxylbBindPortUpdateParam.Index, "index", "", 0, "index of target server")
-	fs.StringVarP(&proxylbBindPortUpdateParam.Mode, "mode", "", "", "set bind mode[http/https/tcp]")
-	fs.IntVarP(&proxylbBindPortUpdateParam.Port, "port", "", 0, "set port number")
-	fs.BoolVarP(&proxylbBindPortUpdateParam.RedirectToHttps, "redirect-to-https", "", false, "enable to redirect to https")
-	fs.BoolVarP(&proxylbBindPortUpdateParam.SupportHttp2, "support-http-2", "", false, "enable http/2")
+func proxyLBBindPortUpdateCmdInit() {
+	fs := proxyLBBindPortUpdateCmd.Flags()
+	fs.IntVarP(&proxyLBBindPortUpdateParam.Index, "index", "", 0, "index of target server")
+	fs.StringVarP(&proxyLBBindPortUpdateParam.Mode, "mode", "", "", "set bind mode[http/https/tcp]")
+	fs.IntVarP(&proxyLBBindPortUpdateParam.Port, "port", "", 0, "set port number")
+	fs.BoolVarP(&proxyLBBindPortUpdateParam.RedirectToHttps, "redirect-to-https", "", false, "enable to redirect to https")
+	fs.BoolVarP(&proxyLBBindPortUpdateParam.SupportHttp2, "support-http-2", "", false, "enable http/2")
 }
 
-var proxylbBindPortDeleteCmd = &cobra.Command{
+var proxyLBBindPortDeleteCmd = &cobra.Command{
 	Use: "bind-port-delete",
 
-	Short: "BindPortDelete Proxylb",
-	Long:  `BindPortDelete Proxylb`,
+	Short: "BindPortDelete ProxyLB",
+	Long:  `BindPortDelete ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbBindPortDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBBindPortDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("bind-port-delete parameter: \n%s\n", debugMarshalIndent(proxylbBindPortDeleteParam))
+		fmt.Printf("bind-port-delete parameter: \n%s\n", debugMarshalIndent(proxyLBBindPortDeleteParam))
 		return err
 	},
 }
 
-func proxylbBindPortDeleteCmdInit() {
-	fs := proxylbBindPortDeleteCmd.Flags()
-	fs.IntVarP(&proxylbBindPortDeleteParam.Index, "index", "", 0, "index of target bind-port")
+func proxyLBBindPortDeleteCmdInit() {
+	fs := proxyLBBindPortDeleteCmd.Flags()
+	fs.IntVarP(&proxyLBBindPortDeleteParam.Index, "index", "", 0, "index of target bind-port")
 }
 
-var proxylbResponseHeaderInfoCmd = &cobra.Command{
+var proxyLBResponseHeaderInfoCmd = &cobra.Command{
 	Use:     "response-header-info",
 	Aliases: []string{"response-header-list"},
-	Short:   "ResponseHeaderInfo Proxylb",
-	Long:    `ResponseHeaderInfo Proxylb`,
+	Short:   "ResponseHeaderInfo ProxyLB",
+	Long:    `ResponseHeaderInfo ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbResponseHeaderInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBResponseHeaderInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("response-header-info parameter: \n%s\n", debugMarshalIndent(proxylbResponseHeaderInfoParam))
+		fmt.Printf("response-header-info parameter: \n%s\n", debugMarshalIndent(proxyLBResponseHeaderInfoParam))
 		return err
 	},
 }
 
-func proxylbResponseHeaderInfoCmdInit() {
-	fs := proxylbResponseHeaderInfoCmd.Flags()
-	fs.IntVarP(&proxylbResponseHeaderInfoParam.PortIndex, "port-index", "", 0, "index of target bind-port")
+func proxyLBResponseHeaderInfoCmdInit() {
+	fs := proxyLBResponseHeaderInfoCmd.Flags()
+	fs.IntVarP(&proxyLBResponseHeaderInfoParam.PortIndex, "port-index", "", 0, "index of target bind-port")
 }
 
-var proxylbResponseHeaderAddCmd = &cobra.Command{
+var proxyLBResponseHeaderAddCmd = &cobra.Command{
 	Use: "response-header-add",
 
-	Short: "ResponseHeaderAdd Proxylb",
-	Long:  `ResponseHeaderAdd Proxylb`,
+	Short: "ResponseHeaderAdd ProxyLB",
+	Long:  `ResponseHeaderAdd ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbResponseHeaderAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBResponseHeaderAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("response-header-add parameter: \n%s\n", debugMarshalIndent(proxylbResponseHeaderAddParam))
+		fmt.Printf("response-header-add parameter: \n%s\n", debugMarshalIndent(proxyLBResponseHeaderAddParam))
 		return err
 	},
 }
 
-func proxylbResponseHeaderAddCmdInit() {
-	fs := proxylbResponseHeaderAddCmd.Flags()
-	fs.IntVarP(&proxylbResponseHeaderAddParam.PortIndex, "port-index", "", 0, "index of target bind-port")
-	fs.StringVarP(&proxylbResponseHeaderAddParam.Header, "header", "", "", "set Header")
-	fs.StringVarP(&proxylbResponseHeaderAddParam.Value, "value", "", "", "set Value")
+func proxyLBResponseHeaderAddCmdInit() {
+	fs := proxyLBResponseHeaderAddCmd.Flags()
+	fs.IntVarP(&proxyLBResponseHeaderAddParam.PortIndex, "port-index", "", 0, "index of target bind-port")
+	fs.StringVarP(&proxyLBResponseHeaderAddParam.Header, "header", "", "", "set Header")
+	fs.StringVarP(&proxyLBResponseHeaderAddParam.Value, "value", "", "", "set Value")
 }
 
-var proxylbResponseHeaderUpdateCmd = &cobra.Command{
+var proxyLBResponseHeaderUpdateCmd = &cobra.Command{
 	Use: "response-header-update",
 
-	Short: "ResponseHeaderUpdate Proxylb",
-	Long:  `ResponseHeaderUpdate Proxylb`,
+	Short: "ResponseHeaderUpdate ProxyLB",
+	Long:  `ResponseHeaderUpdate ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbResponseHeaderUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBResponseHeaderUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("response-header-update parameter: \n%s\n", debugMarshalIndent(proxylbResponseHeaderUpdateParam))
+		fmt.Printf("response-header-update parameter: \n%s\n", debugMarshalIndent(proxyLBResponseHeaderUpdateParam))
 		return err
 	},
 }
 
-func proxylbResponseHeaderUpdateCmdInit() {
-	fs := proxylbResponseHeaderUpdateCmd.Flags()
-	fs.StringVarP(&proxylbResponseHeaderUpdateParam.Value, "value", "", "", "set Value")
-	fs.IntVarP(&proxylbResponseHeaderUpdateParam.Index, "index", "", 0, "index of target server")
-	fs.IntVarP(&proxylbResponseHeaderUpdateParam.PortIndex, "port-index", "", 0, "index of target bind-port")
-	fs.StringVarP(&proxylbResponseHeaderUpdateParam.Header, "header", "", "", "set Header")
+func proxyLBResponseHeaderUpdateCmdInit() {
+	fs := proxyLBResponseHeaderUpdateCmd.Flags()
+	fs.IntVarP(&proxyLBResponseHeaderUpdateParam.Index, "index", "", 0, "index of target server")
+	fs.IntVarP(&proxyLBResponseHeaderUpdateParam.PortIndex, "port-index", "", 0, "index of target bind-port")
+	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.Header, "header", "", "", "set Header")
+	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.Value, "value", "", "", "set Value")
 }
 
-var proxylbResponseHeaderDeleteCmd = &cobra.Command{
+var proxyLBResponseHeaderDeleteCmd = &cobra.Command{
 	Use: "response-header-delete",
 
-	Short: "ResponseHeaderDelete Proxylb",
-	Long:  `ResponseHeaderDelete Proxylb`,
+	Short: "ResponseHeaderDelete ProxyLB",
+	Long:  `ResponseHeaderDelete ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbResponseHeaderDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBResponseHeaderDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("response-header-delete parameter: \n%s\n", debugMarshalIndent(proxylbResponseHeaderDeleteParam))
+		fmt.Printf("response-header-delete parameter: \n%s\n", debugMarshalIndent(proxyLBResponseHeaderDeleteParam))
 		return err
 	},
 }
 
-func proxylbResponseHeaderDeleteCmdInit() {
-	fs := proxylbResponseHeaderDeleteCmd.Flags()
-	fs.IntVarP(&proxylbResponseHeaderDeleteParam.Index, "index", "", 0, "index of target bind-port")
-	fs.IntVarP(&proxylbResponseHeaderDeleteParam.PortIndex, "port-index", "", 0, "index of target bind-port")
+func proxyLBResponseHeaderDeleteCmdInit() {
+	fs := proxyLBResponseHeaderDeleteCmd.Flags()
+	fs.IntVarP(&proxyLBResponseHeaderDeleteParam.Index, "index", "", 0, "index of target bind-port")
+	fs.IntVarP(&proxyLBResponseHeaderDeleteParam.PortIndex, "port-index", "", 0, "index of target bind-port")
 }
 
-var proxylbAcmeInfoCmd = &cobra.Command{
+var proxyLBACMEInfoCmd = &cobra.Command{
 	Use: "acme-info",
 
-	Short: "AcmeInfo Proxylb",
-	Long:  `AcmeInfo Proxylb`,
+	Short: "ACMEInfo ProxyLB",
+	Long:  `ACMEInfo ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbAcmeInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBACMEInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("acme-info parameter: \n%s\n", debugMarshalIndent(proxylbAcmeInfoParam))
+		fmt.Printf("acme-info parameter: \n%s\n", debugMarshalIndent(proxyLBACMEInfoParam))
 		return err
 	},
 }
 
-func proxylbAcmeInfoCmdInit() {
+func proxyLBACMEInfoCmdInit() {
 }
 
-var proxylbAcmeSettingCmd = &cobra.Command{
+var proxyLBACMESettingCmd = &cobra.Command{
 	Use: "acme-setting",
 
-	Short: "AcmeSetting Proxylb",
-	Long:  `AcmeSetting Proxylb`,
+	Short: "ACMESetting ProxyLB",
+	Long:  `ACMESetting ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbAcmeSettingParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBACMESettingParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("acme-setting parameter: \n%s\n", debugMarshalIndent(proxylbAcmeSettingParam))
+		fmt.Printf("acme-setting parameter: \n%s\n", debugMarshalIndent(proxyLBACMESettingParam))
 		return err
 	},
 }
 
-func proxylbAcmeSettingCmdInit() {
-	fs := proxylbAcmeSettingCmd.Flags()
-	fs.BoolVarP(&proxylbAcmeSettingParam.AcceptTos, "accept-tos", "", false, "the flag of accept Let's Encrypt's terms of services: https://letsencrypt.org/repository/")
-	fs.StringVarP(&proxylbAcmeSettingParam.CommonName, "common-name", "", "", "set common name")
-	fs.BoolVarP(&proxylbAcmeSettingParam.Disable, "disable", "", false, "the flag of disable Let's Encrypt")
+func proxyLBACMESettingCmdInit() {
+	fs := proxyLBACMESettingCmd.Flags()
+	fs.BoolVarP(&proxyLBACMESettingParam.Disable, "disable", "", false, "the flag of disable Let's Encrypt")
+	fs.BoolVarP(&proxyLBACMESettingParam.AcceptTos, "accept-tos", "", false, "the flag of accept Let's Encrypt's terms of services: https://letsencrypt.org/repository/")
+	fs.StringVarP(&proxyLBACMESettingParam.CommonName, "common-name", "", "", "set common name")
 }
 
-var proxylbAcmeRenewCmd = &cobra.Command{
+var proxyLBACMERenewCmd = &cobra.Command{
 	Use: "acme-renew",
 
-	Short: "AcmeRenew Proxylb",
-	Long:  `AcmeRenew Proxylb`,
+	Short: "ACMERenew ProxyLB",
+	Long:  `ACMERenew ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbAcmeRenewParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBACMERenewParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("acme-renew parameter: \n%s\n", debugMarshalIndent(proxylbAcmeRenewParam))
+		fmt.Printf("acme-renew parameter: \n%s\n", debugMarshalIndent(proxyLBACMERenewParam))
 		return err
 	},
 }
 
-func proxylbAcmeRenewCmdInit() {
+func proxyLBACMERenewCmdInit() {
 }
 
-var proxylbServerInfoCmd = &cobra.Command{
+var proxyLBServerInfoCmd = &cobra.Command{
 	Use:     "server-info",
 	Aliases: []string{"server-list"},
-	Short:   "ServerInfo Proxylb",
-	Long:    `ServerInfo Proxylb`,
+	Short:   "ServerInfo ProxyLB",
+	Long:    `ServerInfo ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("server-info parameter: \n%s\n", debugMarshalIndent(proxylbServerInfoParam))
+		fmt.Printf("server-info parameter: \n%s\n", debugMarshalIndent(proxyLBServerInfoParam))
 		return err
 	},
 }
 
-func proxylbServerInfoCmdInit() {
+func proxyLBServerInfoCmdInit() {
 }
 
-var proxylbServerAddCmd = &cobra.Command{
+var proxyLBServerAddCmd = &cobra.Command{
 	Use: "server-add",
 
-	Short: "ServerAdd Proxylb",
-	Long:  `ServerAdd Proxylb`,
+	Short: "ServerAdd ProxyLB",
+	Long:  `ServerAdd ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("server-add parameter: \n%s\n", debugMarshalIndent(proxylbServerAddParam))
+		fmt.Printf("server-add parameter: \n%s\n", debugMarshalIndent(proxyLBServerAddParam))
 		return err
 	},
 }
 
-func proxylbServerAddCmdInit() {
-	fs := proxylbServerAddCmd.Flags()
-	fs.BoolVarP(&proxylbServerAddParam.Disabled, "disabled", "", false, "set disabled")
-	fs.IntVarP(&proxylbServerAddParam.Port, "port", "", 0, "set server ports")
-	fs.StringVarP(&proxylbServerAddParam.Ipaddress, "ipaddress", "", "", "set target ipaddress")
+func proxyLBServerAddCmdInit() {
+	fs := proxyLBServerAddCmd.Flags()
+	fs.BoolVarP(&proxyLBServerAddParam.Disabled, "disabled", "", false, "set disabled")
+	fs.IntVarP(&proxyLBServerAddParam.Port, "port", "", 0, "set server ports")
+	fs.StringVarP(&proxyLBServerAddParam.Ipaddress, "ipaddress", "", "", "set target ipaddress")
 }
 
-var proxylbServerUpdateCmd = &cobra.Command{
+var proxyLBServerUpdateCmd = &cobra.Command{
 	Use: "server-update",
 
-	Short: "ServerUpdate Proxylb",
-	Long:  `ServerUpdate Proxylb`,
+	Short: "ServerUpdate ProxyLB",
+	Long:  `ServerUpdate ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("server-update parameter: \n%s\n", debugMarshalIndent(proxylbServerUpdateParam))
+		fmt.Printf("server-update parameter: \n%s\n", debugMarshalIndent(proxyLBServerUpdateParam))
 		return err
 	},
 }
 
-func proxylbServerUpdateCmdInit() {
-	fs := proxylbServerUpdateCmd.Flags()
-	fs.IntVarP(&proxylbServerUpdateParam.Index, "index", "", 0, "index of target server")
-	fs.StringVarP(&proxylbServerUpdateParam.Ipaddress, "ipaddress", "", "", "set target ipaddress")
-	fs.BoolVarP(&proxylbServerUpdateParam.Disabled, "disabled", "", false, "set disabled")
-	fs.IntVarP(&proxylbServerUpdateParam.Port, "port", "", 0, "set server ports")
+func proxyLBServerUpdateCmdInit() {
+	fs := proxyLBServerUpdateCmd.Flags()
+	fs.IntVarP(&proxyLBServerUpdateParam.Index, "index", "", 0, "index of target server")
+	fs.StringVarP(&proxyLBServerUpdateParam.Ipaddress, "ipaddress", "", "", "set target ipaddress")
+	fs.BoolVarP(&proxyLBServerUpdateParam.Disabled, "disabled", "", false, "set disabled")
+	fs.IntVarP(&proxyLBServerUpdateParam.Port, "port", "", 0, "set server ports")
 }
 
-var proxylbServerDeleteCmd = &cobra.Command{
+var proxyLBServerDeleteCmd = &cobra.Command{
 	Use: "server-delete",
 
-	Short: "ServerDelete Proxylb",
-	Long:  `ServerDelete Proxylb`,
+	Short: "ServerDelete ProxyLB",
+	Long:  `ServerDelete ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("server-delete parameter: \n%s\n", debugMarshalIndent(proxylbServerDeleteParam))
+		fmt.Printf("server-delete parameter: \n%s\n", debugMarshalIndent(proxyLBServerDeleteParam))
 		return err
 	},
 }
 
-func proxylbServerDeleteCmdInit() {
-	fs := proxylbServerDeleteCmd.Flags()
-	fs.IntVarP(&proxylbServerDeleteParam.Index, "index", "", 0, "index of target server")
+func proxyLBServerDeleteCmdInit() {
+	fs := proxyLBServerDeleteCmd.Flags()
+	fs.IntVarP(&proxyLBServerDeleteParam.Index, "index", "", 0, "index of target server")
 }
 
-var proxylbCertificateInfoCmd = &cobra.Command{
+var proxyLBCertificateInfoCmd = &cobra.Command{
 	Use:     "certificate-info",
 	Aliases: []string{"certificate-list", "cert-list", "cert-info"},
-	Short:   "CertificateInfo Proxylb",
-	Long:    `CertificateInfo Proxylb`,
+	Short:   "CertificateInfo ProxyLB",
+	Long:    `CertificateInfo ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("certificate-info parameter: \n%s\n", debugMarshalIndent(proxylbCertificateInfoParam))
+		fmt.Printf("certificate-info parameter: \n%s\n", debugMarshalIndent(proxyLBCertificateInfoParam))
 		return err
 	},
 }
 
-func proxylbCertificateInfoCmdInit() {
+func proxyLBCertificateInfoCmdInit() {
 }
 
-var proxylbCertificateAddCmd = &cobra.Command{
+var proxyLBCertificateAddCmd = &cobra.Command{
 	Use:     "certificate-add",
 	Aliases: []string{"cert-add"},
-	Short:   "CertificateAdd Proxylb",
-	Long:    `CertificateAdd Proxylb`,
+	Short:   "CertificateAdd ProxyLB",
+	Long:    `CertificateAdd ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbCertificateAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBCertificateAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("certificate-add parameter: \n%s\n", debugMarshalIndent(proxylbCertificateAddParam))
+		fmt.Printf("certificate-add parameter: \n%s\n", debugMarshalIndent(proxyLBCertificateAddParam))
 		return err
 	},
 }
 
-func proxylbCertificateAddCmdInit() {
-	fs := proxylbCertificateAddCmd.Flags()
-	fs.StringVarP(&proxylbCertificateAddParam.PrivateKey, "private-key", "", "", "")
-	fs.StringVarP(&proxylbCertificateAddParam.ServerCertificate, "server-certificate", "", "", "")
-	fs.StringVarP(&proxylbCertificateAddParam.IntermediateCertificate, "intermediate-certificate", "", "", "")
+func proxyLBCertificateAddCmdInit() {
+	fs := proxyLBCertificateAddCmd.Flags()
+	fs.StringVarP(&proxyLBCertificateAddParam.ServerCertificate, "server-certificate", "", "", "")
+	fs.StringVarP(&proxyLBCertificateAddParam.IntermediateCertificate, "intermediate-certificate", "", "", "")
+	fs.StringVarP(&proxyLBCertificateAddParam.PrivateKey, "private-key", "", "", "")
 }
 
-var proxylbCertificateUpdateCmd = &cobra.Command{
+var proxyLBCertificateUpdateCmd = &cobra.Command{
 	Use:     "certificate-update",
 	Aliases: []string{"cert-update"},
-	Short:   "CertificateUpdate Proxylb",
-	Long:    `CertificateUpdate Proxylb`,
+	Short:   "CertificateUpdate ProxyLB",
+	Long:    `CertificateUpdate ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("certificate-update parameter: \n%s\n", debugMarshalIndent(proxylbCertificateUpdateParam))
+		fmt.Printf("certificate-update parameter: \n%s\n", debugMarshalIndent(proxyLBCertificateUpdateParam))
 		return err
 	},
 }
 
-func proxylbCertificateUpdateCmdInit() {
-	fs := proxylbCertificateUpdateCmd.Flags()
-	fs.StringVarP(&proxylbCertificateUpdateParam.ServerCertificate, "server-certificate", "", "", "")
-	fs.StringVarP(&proxylbCertificateUpdateParam.IntermediateCertificate, "intermediate-certificate", "", "", "")
-	fs.StringVarP(&proxylbCertificateUpdateParam.PrivateKey, "private-key", "", "", "")
+func proxyLBCertificateUpdateCmdInit() {
+	fs := proxyLBCertificateUpdateCmd.Flags()
+	fs.StringVarP(&proxyLBCertificateUpdateParam.ServerCertificate, "server-certificate", "", "", "")
+	fs.StringVarP(&proxyLBCertificateUpdateParam.IntermediateCertificate, "intermediate-certificate", "", "", "")
+	fs.StringVarP(&proxyLBCertificateUpdateParam.PrivateKey, "private-key", "", "", "")
 }
 
-var proxylbCertificateDeleteCmd = &cobra.Command{
+var proxyLBCertificateDeleteCmd = &cobra.Command{
 	Use:     "certificate-delete",
 	Aliases: []string{"cert-delete"},
-	Short:   "CertificateDelete Proxylb",
-	Long:    `CertificateDelete Proxylb`,
+	Short:   "CertificateDelete ProxyLB",
+	Long:    `CertificateDelete ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbCertificateDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBCertificateDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("certificate-delete parameter: \n%s\n", debugMarshalIndent(proxylbCertificateDeleteParam))
+		fmt.Printf("certificate-delete parameter: \n%s\n", debugMarshalIndent(proxyLBCertificateDeleteParam))
 		return err
 	},
 }
 
-func proxylbCertificateDeleteCmdInit() {
+func proxyLBCertificateDeleteCmdInit() {
 }
 
-var proxylbMonitorCmd = &cobra.Command{
+var proxyLBMonitorCmd = &cobra.Command{
 	Use: "monitor",
 
-	Short: "Monitor Proxylb",
-	Long:  `Monitor Proxylb`,
+	Short: "Monitor ProxyLB",
+	Long:  `Monitor ProxyLB`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := proxylbMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := proxyLBMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("monitor parameter: \n%s\n", debugMarshalIndent(proxylbMonitorParam))
+		fmt.Printf("monitor parameter: \n%s\n", debugMarshalIndent(proxyLBMonitorParam))
 		return err
 	},
 }
 
-func proxylbMonitorCmdInit() {
-	fs := proxylbMonitorCmd.Flags()
-	fs.StringVarP(&proxylbMonitorParam.KeyFormat, "key-format", "", "sakuracloud.proxylb.{{.ID}}", "set monitoring value key-format")
-	fs.StringVarP(&proxylbMonitorParam.Start, "start", "", "", "set start-time")
-	fs.StringVarP(&proxylbMonitorParam.End, "end", "", "", "set end-time")
+func proxyLBMonitorCmdInit() {
+	fs := proxyLBMonitorCmd.Flags()
+	fs.StringVarP(&proxyLBMonitorParam.KeyFormat, "key-format", "", "sakuracloud.proxylb.{{.ID}}", "set monitoring value key-format")
+	fs.StringVarP(&proxyLBMonitorParam.Start, "start", "", "", "set start-time")
+	fs.StringVarP(&proxyLBMonitorParam.End, "end", "", "", "set end-time")
 }
 
 func init() {
-	parent := proxylbCmd
+	parent := proxyLBCmd
 
-	proxylbListCmdInit()
-	parent.AddCommand(proxylbListCmd)
+	proxyLBListCmdInit()
+	parent.AddCommand(proxyLBListCmd)
 
-	proxylbCreateCmdInit()
-	parent.AddCommand(proxylbCreateCmd)
+	proxyLBCreateCmdInit()
+	parent.AddCommand(proxyLBCreateCmd)
 
-	proxylbReadCmdInit()
-	parent.AddCommand(proxylbReadCmd)
+	proxyLBReadCmdInit()
+	parent.AddCommand(proxyLBReadCmd)
 
-	proxylbUpdateCmdInit()
-	parent.AddCommand(proxylbUpdateCmd)
+	proxyLBUpdateCmdInit()
+	parent.AddCommand(proxyLBUpdateCmd)
 
-	proxylbDeleteCmdInit()
-	parent.AddCommand(proxylbDeleteCmd)
+	proxyLBDeleteCmdInit()
+	parent.AddCommand(proxyLBDeleteCmd)
 
-	proxylbPlanChangeCmdInit()
-	parent.AddCommand(proxylbPlanChangeCmd)
+	proxyLBPlanChangeCmdInit()
+	parent.AddCommand(proxyLBPlanChangeCmd)
 
-	proxylbBindPortInfoCmdInit()
-	parent.AddCommand(proxylbBindPortInfoCmd)
+	proxyLBBindPortInfoCmdInit()
+	parent.AddCommand(proxyLBBindPortInfoCmd)
 
-	proxylbBindPortAddCmdInit()
-	parent.AddCommand(proxylbBindPortAddCmd)
+	proxyLBBindPortAddCmdInit()
+	parent.AddCommand(proxyLBBindPortAddCmd)
 
-	proxylbBindPortUpdateCmdInit()
-	parent.AddCommand(proxylbBindPortUpdateCmd)
+	proxyLBBindPortUpdateCmdInit()
+	parent.AddCommand(proxyLBBindPortUpdateCmd)
 
-	proxylbBindPortDeleteCmdInit()
-	parent.AddCommand(proxylbBindPortDeleteCmd)
+	proxyLBBindPortDeleteCmdInit()
+	parent.AddCommand(proxyLBBindPortDeleteCmd)
 
-	proxylbResponseHeaderInfoCmdInit()
-	parent.AddCommand(proxylbResponseHeaderInfoCmd)
+	proxyLBResponseHeaderInfoCmdInit()
+	parent.AddCommand(proxyLBResponseHeaderInfoCmd)
 
-	proxylbResponseHeaderAddCmdInit()
-	parent.AddCommand(proxylbResponseHeaderAddCmd)
+	proxyLBResponseHeaderAddCmdInit()
+	parent.AddCommand(proxyLBResponseHeaderAddCmd)
 
-	proxylbResponseHeaderUpdateCmdInit()
-	parent.AddCommand(proxylbResponseHeaderUpdateCmd)
+	proxyLBResponseHeaderUpdateCmdInit()
+	parent.AddCommand(proxyLBResponseHeaderUpdateCmd)
 
-	proxylbResponseHeaderDeleteCmdInit()
-	parent.AddCommand(proxylbResponseHeaderDeleteCmd)
+	proxyLBResponseHeaderDeleteCmdInit()
+	parent.AddCommand(proxyLBResponseHeaderDeleteCmd)
 
-	proxylbAcmeInfoCmdInit()
-	parent.AddCommand(proxylbAcmeInfoCmd)
+	proxyLBACMEInfoCmdInit()
+	parent.AddCommand(proxyLBACMEInfoCmd)
 
-	proxylbAcmeSettingCmdInit()
-	parent.AddCommand(proxylbAcmeSettingCmd)
+	proxyLBACMESettingCmdInit()
+	parent.AddCommand(proxyLBACMESettingCmd)
 
-	proxylbAcmeRenewCmdInit()
-	parent.AddCommand(proxylbAcmeRenewCmd)
+	proxyLBACMERenewCmdInit()
+	parent.AddCommand(proxyLBACMERenewCmd)
 
-	proxylbServerInfoCmdInit()
-	parent.AddCommand(proxylbServerInfoCmd)
+	proxyLBServerInfoCmdInit()
+	parent.AddCommand(proxyLBServerInfoCmd)
 
-	proxylbServerAddCmdInit()
-	parent.AddCommand(proxylbServerAddCmd)
+	proxyLBServerAddCmdInit()
+	parent.AddCommand(proxyLBServerAddCmd)
 
-	proxylbServerUpdateCmdInit()
-	parent.AddCommand(proxylbServerUpdateCmd)
+	proxyLBServerUpdateCmdInit()
+	parent.AddCommand(proxyLBServerUpdateCmd)
 
-	proxylbServerDeleteCmdInit()
-	parent.AddCommand(proxylbServerDeleteCmd)
+	proxyLBServerDeleteCmdInit()
+	parent.AddCommand(proxyLBServerDeleteCmd)
 
-	proxylbCertificateInfoCmdInit()
-	parent.AddCommand(proxylbCertificateInfoCmd)
+	proxyLBCertificateInfoCmdInit()
+	parent.AddCommand(proxyLBCertificateInfoCmd)
 
-	proxylbCertificateAddCmdInit()
-	parent.AddCommand(proxylbCertificateAddCmd)
+	proxyLBCertificateAddCmdInit()
+	parent.AddCommand(proxyLBCertificateAddCmd)
 
-	proxylbCertificateUpdateCmdInit()
-	parent.AddCommand(proxylbCertificateUpdateCmd)
+	proxyLBCertificateUpdateCmdInit()
+	parent.AddCommand(proxyLBCertificateUpdateCmd)
 
-	proxylbCertificateDeleteCmdInit()
-	parent.AddCommand(proxylbCertificateDeleteCmd)
+	proxyLBCertificateDeleteCmdInit()
+	parent.AddCommand(proxyLBCertificateDeleteCmd)
 
-	proxylbMonitorCmdInit()
-	parent.AddCommand(proxylbMonitorCmd)
+	proxyLBMonitorCmdInit()
+	parent.AddCommand(proxyLBMonitorCmd)
 
 	rootCmd.AddCommand(parent)
 }

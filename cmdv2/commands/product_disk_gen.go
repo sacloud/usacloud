@@ -25,13 +25,13 @@ import (
 )
 
 var (
-	productdiskListParam = params.NewListProductdiskParam()
-	productdiskReadParam = params.NewReadProductdiskParam()
+	productDiskListParam = params.NewListProductDiskParam()
+	productDiskReadParam = params.NewReadProductDiskParam()
 )
 
-// productdiskCmd represents the command to manage SAKURA Cloud ProductDisk
-var productdiskCmd = &cobra.Command{
-	Use:   "productdisk",
+// productDiskCmd represents the command to manage SAKURA Cloud ProductDisk
+var productDiskCmd = &cobra.Command{
+	Use:   "productDisk",
 	Short: "A manage commands of ProductDisk",
 	Long:  `A manage commands of ProductDisk`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -39,54 +39,54 @@ var productdiskCmd = &cobra.Command{
 	},
 }
 
-var productdiskListCmd = &cobra.Command{
+var productDiskListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find"},
-	Short:   "List Productdisk (default)",
-	Long:    `List Productdisk (default)`,
+	Short:   "List ProductDisk (default)",
+	Long:    `List ProductDisk (default)`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := productdiskListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := productDiskListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(productdiskListParam))
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(productDiskListParam))
 		return err
 	},
 }
 
-func productdiskListCmdInit() {
-	fs := productdiskListCmd.Flags()
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &productdiskListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&productdiskListParam.From, "from", "", 0, "set offset")
-	fs.IntVarP(&productdiskListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&productdiskListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&productdiskListParam.Name, "name", "", []string{}, "set filter by name(s)")
+func productDiskListCmdInit() {
+	fs := productDiskListCmd.Flags()
+	fs.StringSliceVarP(&productDiskListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &productDiskListParam.Id), "id", "", "set filter by id(s)")
+	fs.IntVarP(&productDiskListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&productDiskListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&productDiskListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 }
 
-var productdiskReadCmd = &cobra.Command{
+var productDiskReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Productdisk",
-	Long:  `Read Productdisk`,
+	Short: "Read ProductDisk",
+	Long:  `Read ProductDisk`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := productdiskReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := productDiskReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(productdiskReadParam))
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(productDiskReadParam))
 		return err
 	},
 }
 
-func productdiskReadCmdInit() {
-	fs := productdiskReadCmd.Flags()
-	fs.VarP(newIDValue(0, &productdiskReadParam.Id), "id", "", "set resource ID")
+func productDiskReadCmdInit() {
+	fs := productDiskReadCmd.Flags()
+	fs.VarP(newIDValue(0, &productDiskReadParam.Id), "id", "", "set resource ID")
 }
 
 func init() {
-	parent := productdiskCmd
+	parent := productDiskCmd
 
-	productdiskListCmdInit()
-	parent.AddCommand(productdiskListCmd)
+	productDiskListCmdInit()
+	parent.AddCommand(productDiskListCmd)
 
-	productdiskReadCmdInit()
-	parent.AddCommand(productdiskReadCmd)
+	productDiskReadCmdInit()
+	parent.AddCommand(productDiskReadCmd)
 
 	rootCmd.AddCommand(parent)
 }

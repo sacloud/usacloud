@@ -24,12 +24,12 @@ import (
 )
 
 var (
-	authstatusShowParam = params.NewShowAuthstatusParam()
+	authStatusShowParam = params.NewShowAuthStatusParam()
 )
 
-// authstatusCmd represents the command to manage SAKURA Cloud AuthStatus
-var authstatusCmd = &cobra.Command{
-	Use:   "authstatus",
+// authStatusCmd represents the command to manage SAKURA Cloud AuthStatus
+var authStatusCmd = &cobra.Command{
+	Use:   "authStatus",
 	Short: "A manage commands of AuthStatus",
 	Long:  `A manage commands of AuthStatus`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -37,27 +37,27 @@ var authstatusCmd = &cobra.Command{
 	},
 }
 
-var authstatusShowCmd = &cobra.Command{
+var authStatusShowCmd = &cobra.Command{
 	Use: "show",
 
-	Short: "Show Authstatus (default)",
-	Long:  `Show Authstatus (default)`,
+	Short: "Show AuthStatus (default)",
+	Long:  `Show AuthStatus (default)`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := authstatusShowParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := authStatusShowParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("show parameter: \n%s\n", debugMarshalIndent(authstatusShowParam))
+		fmt.Printf("show parameter: \n%s\n", debugMarshalIndent(authStatusShowParam))
 		return err
 	},
 }
 
-func authstatusShowCmdInit() {
+func authStatusShowCmdInit() {
 }
 
 func init() {
-	parent := authstatusCmd
+	parent := authStatusCmd
 
-	authstatusShowCmdInit()
-	parent.AddCommand(authstatusShowCmd)
+	authStatusShowCmdInit()
+	parent.AddCommand(authStatusShowCmd)
 
 	rootCmd.AddCommand(parent)
 }

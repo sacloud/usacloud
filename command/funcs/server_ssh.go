@@ -24,18 +24,18 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ServerSsh(ctx command.Context, params *params.SshServerParam) error {
+func ServerSSH(ctx command.Context, params *params.SSHServerParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetServerAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("ServerSsh is failed: %s", e)
+		return fmt.Errorf("ServerSSH is failed: %s", e)
 	}
 
 	// has NIC?
 	if len(p.Interfaces) == 0 {
-		return fmt.Errorf("ServerSsh is failed: server has no network interfaces")
+		return fmt.Errorf("ServerSSH is failed: server has no network interfaces")
 	}
 
 	// file exists?
@@ -43,7 +43,7 @@ func ServerSsh(ctx command.Context, params *params.SshServerParam) error {
 	if keyPath == "" {
 		p, err := getSSHPrivateKeyStorePath(p.ID)
 		if err != nil {
-			return fmt.Errorf("ServerSsh is failed: getting HomeDir is failed: %s", e)
+			return fmt.Errorf("ServerSSH is failed: getting HomeDir is failed: %s", e)
 		}
 		keyPath = p
 	}
@@ -56,7 +56,7 @@ func ServerSsh(ctx command.Context, params *params.SshServerParam) error {
 		ip = p.Interfaces[0].UserIPAddress
 	}
 	if ip == "" {
-		return fmt.Errorf("ServerSsh is failed: collecting IPAddress from server is failed: %#v", p)
+		return fmt.Errorf("ServerSSH is failed: collecting IPAddress from server is failed: %#v", p)
 	}
 
 	// collect username
@@ -65,7 +65,7 @@ func ServerSsh(ctx command.Context, params *params.SshServerParam) error {
 		if user == "" {
 			sshUser, _ := getSSHDefaultUserName(client, p.ID)
 			//if err != nil {
-			//	return fmt.Errorf("ServerSsh is failed: get default ssh username is failed: %s", err)
+			//	return fmt.Errorf("ServerSSH is failed: get default ssh username is failed: %s", err)
 			//}
 			if sshUser == "" {
 				sshUser = "root"

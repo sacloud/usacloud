@@ -27,11 +27,11 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListDnsParam is input parameters for the sacloud API
-type ListDnsParam struct {
+// ListDNSParam is input parameters for the sacloud API
+type ListDNSParam struct {
 	From int
-	Tags []string
 	Max  int
+	Tags []string
 	Sort []string
 	Name []string
 	Id   []sacloud.ID
@@ -39,13 +39,13 @@ type ListDnsParam struct {
 	input Input
 }
 
-// NewListDnsParam return new ListDnsParam
-func NewListDnsParam() *ListDnsParam {
-	return &ListDnsParam{}
+// NewListDNSParam return new ListDNSParam
+func NewListDNSParam() *ListDNSParam {
+	return &ListDNSParam{}
 }
 
-// Initialize init ListDnsParam
-func (p *ListDnsParam) Initialize(in Input) error {
+// Initialize init ListDNSParam
+func (p *ListDNSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -54,19 +54,19 @@ func (p *ListDnsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ListDnsParam) WriteSkeleton(writer io.Writer) error {
+func (p *ListDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListDnsParam) fillValueToSkeleton() {
+func (p *ListDNSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
@@ -80,7 +80,7 @@ func (p *ListDnsParam) fillValueToSkeleton() {
 
 }
 
-func (p *ListDnsParam) validate() error {
+func (p *ListDNSParam) validate() error {
 	var errors []error
 
 	{
@@ -121,88 +121,88 @@ func (p *ListDnsParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ListDnsParam) ResourceDef() *schema.Resource {
+func (p *ListDNSParam) ResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *ListDnsParam) CommandDef() *schema.Command {
+func (p *ListDNSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["list"]
 }
 
-func (p *ListDnsParam) IncludeFields() []string {
+func (p *ListDNSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ListDnsParam) ExcludeFields() []string {
+func (p *ListDNSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ListDnsParam) TableType() output.TableType {
+func (p *ListDNSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ListDnsParam) ColumnDefs() []output.ColumnDef {
+func (p *ListDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListDnsParam) SetFrom(v int) {
+func (p *ListDNSParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListDnsParam) GetFrom() int {
+func (p *ListDNSParam) GetFrom() int {
 	return p.From
 }
-func (p *ListDnsParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *ListDnsParam) GetTags() []string {
-	return p.Tags
-}
-func (p *ListDnsParam) SetMax(v int) {
+func (p *ListDNSParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListDnsParam) GetMax() int {
+func (p *ListDNSParam) GetMax() int {
 	return p.Max
 }
-func (p *ListDnsParam) SetSort(v []string) {
+func (p *ListDNSParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *ListDNSParam) GetTags() []string {
+	return p.Tags
+}
+func (p *ListDNSParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListDnsParam) GetSort() []string {
+func (p *ListDNSParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListDnsParam) SetName(v []string) {
+func (p *ListDNSParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListDnsParam) GetName() []string {
+func (p *ListDNSParam) GetName() []string {
 	return p.Name
 }
-func (p *ListDnsParam) SetId(v []sacloud.ID) {
+func (p *ListDNSParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListDnsParam) GetId() []sacloud.ID {
+func (p *ListDNSParam) GetId() []sacloud.ID {
 	return p.Id
 }
 
-// RecordInfoDnsParam is input parameters for the sacloud API
-type RecordInfoDnsParam struct {
+// RecordInfoDNSParam is input parameters for the sacloud API
+type RecordInfoDNSParam struct {
 	Name string
 	Type string
 
 	input Input
 }
 
-// NewRecordInfoDnsParam return new RecordInfoDnsParam
-func NewRecordInfoDnsParam() *RecordInfoDnsParam {
-	return &RecordInfoDnsParam{}
+// NewRecordInfoDNSParam return new RecordInfoDNSParam
+func NewRecordInfoDNSParam() *RecordInfoDNSParam {
+	return &RecordInfoDNSParam{}
 }
 
-// Initialize init RecordInfoDnsParam
-func (p *RecordInfoDnsParam) Initialize(in Input) error {
+// Initialize init RecordInfoDNSParam
+func (p *RecordInfoDNSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -211,11 +211,11 @@ func (p *RecordInfoDnsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *RecordInfoDnsParam) WriteSkeleton(writer io.Writer) error {
+func (p *RecordInfoDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RecordInfoDnsParam) fillValueToSkeleton() {
+func (p *RecordInfoDNSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -225,7 +225,7 @@ func (p *RecordInfoDnsParam) fillValueToSkeleton() {
 
 }
 
-func (p *RecordInfoDnsParam) validate() error {
+func (p *RecordInfoDNSParam) validate() error {
 	var errors []error
 
 	{
@@ -247,61 +247,61 @@ func (p *RecordInfoDnsParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *RecordInfoDnsParam) ResourceDef() *schema.Resource {
+func (p *RecordInfoDNSParam) ResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *RecordInfoDnsParam) CommandDef() *schema.Command {
+func (p *RecordInfoDNSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["record-info"]
 }
 
-func (p *RecordInfoDnsParam) IncludeFields() []string {
+func (p *RecordInfoDNSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *RecordInfoDnsParam) ExcludeFields() []string {
+func (p *RecordInfoDNSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *RecordInfoDnsParam) TableType() output.TableType {
+func (p *RecordInfoDNSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *RecordInfoDnsParam) ColumnDefs() []output.ColumnDef {
+func (p *RecordInfoDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *RecordInfoDnsParam) SetName(v string) {
+func (p *RecordInfoDNSParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *RecordInfoDnsParam) GetName() string {
+func (p *RecordInfoDNSParam) GetName() string {
 	return p.Name
 }
-func (p *RecordInfoDnsParam) SetType(v string) {
+func (p *RecordInfoDNSParam) SetType(v string) {
 	p.Type = v
 }
 
-func (p *RecordInfoDnsParam) GetType() string {
+func (p *RecordInfoDNSParam) GetType() string {
 	return p.Type
 }
 
-// RecordBulkUpdateDnsParam is input parameters for the sacloud API
-type RecordBulkUpdateDnsParam struct {
+// RecordBulkUpdateDNSParam is input parameters for the sacloud API
+type RecordBulkUpdateDNSParam struct {
 	File string
 	Mode string
 
 	input Input
 }
 
-// NewRecordBulkUpdateDnsParam return new RecordBulkUpdateDnsParam
-func NewRecordBulkUpdateDnsParam() *RecordBulkUpdateDnsParam {
-	return &RecordBulkUpdateDnsParam{
+// NewRecordBulkUpdateDNSParam return new RecordBulkUpdateDNSParam
+func NewRecordBulkUpdateDNSParam() *RecordBulkUpdateDNSParam {
+	return &RecordBulkUpdateDNSParam{
 		Mode: "upsert-only"}
 }
 
-// Initialize init RecordBulkUpdateDnsParam
-func (p *RecordBulkUpdateDnsParam) Initialize(in Input) error {
+// Initialize init RecordBulkUpdateDNSParam
+func (p *RecordBulkUpdateDNSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -310,11 +310,11 @@ func (p *RecordBulkUpdateDnsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *RecordBulkUpdateDnsParam) WriteSkeleton(writer io.Writer) error {
+func (p *RecordBulkUpdateDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RecordBulkUpdateDnsParam) fillValueToSkeleton() {
+func (p *RecordBulkUpdateDNSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.File) {
 		p.File = ""
 	}
@@ -324,7 +324,7 @@ func (p *RecordBulkUpdateDnsParam) fillValueToSkeleton() {
 
 }
 
-func (p *RecordBulkUpdateDnsParam) validate() error {
+func (p *RecordBulkUpdateDNSParam) validate() error {
 	var errors []error
 
 	{
@@ -360,62 +360,62 @@ func (p *RecordBulkUpdateDnsParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *RecordBulkUpdateDnsParam) ResourceDef() *schema.Resource {
+func (p *RecordBulkUpdateDNSParam) ResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *RecordBulkUpdateDnsParam) CommandDef() *schema.Command {
+func (p *RecordBulkUpdateDNSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["record-bulk-update"]
 }
 
-func (p *RecordBulkUpdateDnsParam) IncludeFields() []string {
+func (p *RecordBulkUpdateDNSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *RecordBulkUpdateDnsParam) ExcludeFields() []string {
+func (p *RecordBulkUpdateDNSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *RecordBulkUpdateDnsParam) TableType() output.TableType {
+func (p *RecordBulkUpdateDNSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *RecordBulkUpdateDnsParam) ColumnDefs() []output.ColumnDef {
+func (p *RecordBulkUpdateDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *RecordBulkUpdateDnsParam) SetFile(v string) {
+func (p *RecordBulkUpdateDNSParam) SetFile(v string) {
 	p.File = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetFile() string {
+func (p *RecordBulkUpdateDNSParam) GetFile() string {
 	return p.File
 }
-func (p *RecordBulkUpdateDnsParam) SetMode(v string) {
+func (p *RecordBulkUpdateDNSParam) SetMode(v string) {
 	p.Mode = v
 }
 
-func (p *RecordBulkUpdateDnsParam) GetMode() string {
+func (p *RecordBulkUpdateDNSParam) GetMode() string {
 	return p.Mode
 }
 
-// CreateDnsParam is input parameters for the sacloud API
-type CreateDnsParam struct {
-	Name        string
+// CreateDNSParam is input parameters for the sacloud API
+type CreateDNSParam struct {
 	Description string
 	Tags        []string
 	IconId      sacloud.ID
+	Name        string
 
 	input Input
 }
 
-// NewCreateDnsParam return new CreateDnsParam
-func NewCreateDnsParam() *CreateDnsParam {
-	return &CreateDnsParam{}
+// NewCreateDNSParam return new CreateDNSParam
+func NewCreateDNSParam() *CreateDNSParam {
+	return &CreateDNSParam{}
 }
 
-// Initialize init CreateDnsParam
-func (p *CreateDnsParam) Initialize(in Input) error {
+// Initialize init CreateDNSParam
+func (p *CreateDNSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -424,14 +424,11 @@ func (p *CreateDnsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CreateDnsParam) WriteSkeleton(writer io.Writer) error {
+func (p *CreateDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateDnsParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
+func (p *CreateDNSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
@@ -441,26 +438,14 @@ func (p *CreateDnsParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
 
 }
 
-func (p *CreateDnsParam) validate() error {
+func (p *CreateDNSParam) validate() error {
 	var errors []error
-
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["DNS"].Commands["create"].Params["description"].ValidateFunc
@@ -486,85 +471,100 @@ func (p *CreateDnsParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CreateDnsParam) ResourceDef() *schema.Resource {
+func (p *CreateDNSParam) ResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *CreateDnsParam) CommandDef() *schema.Command {
+func (p *CreateDNSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["create"]
 }
 
-func (p *CreateDnsParam) IncludeFields() []string {
+func (p *CreateDNSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CreateDnsParam) ExcludeFields() []string {
+func (p *CreateDNSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CreateDnsParam) TableType() output.TableType {
+func (p *CreateDNSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CreateDnsParam) ColumnDefs() []output.ColumnDef {
+func (p *CreateDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateDnsParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateDnsParam) GetName() string {
-	return p.Name
-}
-func (p *CreateDnsParam) SetDescription(v string) {
+func (p *CreateDNSParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *CreateDnsParam) GetDescription() string {
+func (p *CreateDNSParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateDnsParam) SetTags(v []string) {
+func (p *CreateDNSParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreateDnsParam) GetTags() []string {
+func (p *CreateDNSParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateDnsParam) SetIconId(v sacloud.ID) {
+func (p *CreateDNSParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateDnsParam) GetIconId() sacloud.ID {
+func (p *CreateDNSParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
+func (p *CreateDNSParam) SetName(v string) {
+	p.Name = v
+}
 
-// RecordAddDnsParam is input parameters for the sacloud API
-type RecordAddDnsParam struct {
-	SrvPriority int
-	SrvWeight   int
-	SrvTarget   string
+func (p *CreateDNSParam) GetName() string {
+	return p.Name
+}
+
+// RecordAddDNSParam is input parameters for the sacloud API
+type RecordAddDNSParam struct {
+	SrvPort     int
 	Name        string
-	Type        string
-	Value       string
 	Ttl         int
 	MxPriority  int
-	SrvPort     int
+	SrvPriority int
+	SrvWeight   int
+	Type        string
+	Value       string
+	SrvTarget   string
 
 	input Input
 }
 
-// NewRecordAddDnsParam return new RecordAddDnsParam
-func NewRecordAddDnsParam() *RecordAddDnsParam {
-	return &RecordAddDnsParam{
+// NewRecordAddDNSParam return new RecordAddDNSParam
+func NewRecordAddDNSParam() *RecordAddDNSParam {
+	return &RecordAddDNSParam{
 		Ttl: 3600, MxPriority: 10}
 }
 
-// Initialize init RecordAddDnsParam
-func (p *RecordAddDnsParam) Initialize(in Input) error {
+// Initialize init RecordAddDNSParam
+func (p *RecordAddDNSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -573,28 +573,16 @@ func (p *RecordAddDnsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *RecordAddDnsParam) WriteSkeleton(writer io.Writer) error {
+func (p *RecordAddDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RecordAddDnsParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.SrvPriority) {
-		p.SrvPriority = 0
-	}
-	if utils.IsEmpty(p.SrvWeight) {
-		p.SrvWeight = 0
-	}
-	if utils.IsEmpty(p.SrvTarget) {
-		p.SrvTarget = ""
+func (p *RecordAddDNSParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.SrvPort) {
+		p.SrvPort = 0
 	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
-	}
-	if utils.IsEmpty(p.Type) {
-		p.Type = ""
-	}
-	if utils.IsEmpty(p.Value) {
-		p.Value = ""
 	}
 	if utils.IsEmpty(p.Ttl) {
 		p.Ttl = 0
@@ -602,34 +590,30 @@ func (p *RecordAddDnsParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.MxPriority) {
 		p.MxPriority = 0
 	}
-	if utils.IsEmpty(p.SrvPort) {
-		p.SrvPort = 0
+	if utils.IsEmpty(p.SrvPriority) {
+		p.SrvPriority = 0
+	}
+	if utils.IsEmpty(p.SrvWeight) {
+		p.SrvWeight = 0
+	}
+	if utils.IsEmpty(p.Type) {
+		p.Type = ""
+	}
+	if utils.IsEmpty(p.Value) {
+		p.Value = ""
+	}
+	if utils.IsEmpty(p.SrvTarget) {
+		p.SrvTarget = ""
 	}
 
 }
 
-func (p *RecordAddDnsParam) validate() error {
+func (p *RecordAddDNSParam) validate() error {
 	var errors []error
 
 	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-priority"].ValidateFunc
-		errs := validator("--srv-priority", p.SrvPriority)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-weight"].ValidateFunc
-		errs := validator("--srv-weight", p.SrvWeight)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-target"].ValidateFunc
-		errs := validator("--srv-target", p.SrvTarget)
+		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-port"].ValidateFunc
+		errs := validator("--srv-port", p.SrvPort)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -645,21 +629,6 @@ func (p *RecordAddDnsParam) validate() error {
 	{
 		validator := define.Resources["DNS"].Commands["record-add"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--type", p.Type)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["type"].ValidateFunc
-		errs := validator("--type", p.Type)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -682,8 +651,39 @@ func (p *RecordAddDnsParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-port"].ValidateFunc
-		errs := validator("--srv-port", p.SrvPort)
+		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-priority"].ValidateFunc
+		errs := validator("--srv-priority", p.SrvPriority)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-weight"].ValidateFunc
+		errs := validator("--srv-weight", p.SrvWeight)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--type", p.Type)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-add"].Params["type"].ValidateFunc
+		errs := validator("--type", p.Type)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-target"].ValidateFunc
+		errs := validator("--srv-target", p.SrvTarget)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -692,106 +692,106 @@ func (p *RecordAddDnsParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *RecordAddDnsParam) ResourceDef() *schema.Resource {
+func (p *RecordAddDNSParam) ResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *RecordAddDnsParam) CommandDef() *schema.Command {
+func (p *RecordAddDNSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["record-add"]
 }
 
-func (p *RecordAddDnsParam) IncludeFields() []string {
+func (p *RecordAddDNSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *RecordAddDnsParam) ExcludeFields() []string {
+func (p *RecordAddDNSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *RecordAddDnsParam) TableType() output.TableType {
+func (p *RecordAddDNSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *RecordAddDnsParam) ColumnDefs() []output.ColumnDef {
+func (p *RecordAddDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *RecordAddDnsParam) SetSrvPriority(v int) {
-	p.SrvPriority = v
-}
-
-func (p *RecordAddDnsParam) GetSrvPriority() int {
-	return p.SrvPriority
-}
-func (p *RecordAddDnsParam) SetSrvWeight(v int) {
-	p.SrvWeight = v
-}
-
-func (p *RecordAddDnsParam) GetSrvWeight() int {
-	return p.SrvWeight
-}
-func (p *RecordAddDnsParam) SetSrvTarget(v string) {
-	p.SrvTarget = v
-}
-
-func (p *RecordAddDnsParam) GetSrvTarget() string {
-	return p.SrvTarget
-}
-func (p *RecordAddDnsParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *RecordAddDnsParam) GetName() string {
-	return p.Name
-}
-func (p *RecordAddDnsParam) SetType(v string) {
-	p.Type = v
-}
-
-func (p *RecordAddDnsParam) GetType() string {
-	return p.Type
-}
-func (p *RecordAddDnsParam) SetValue(v string) {
-	p.Value = v
-}
-
-func (p *RecordAddDnsParam) GetValue() string {
-	return p.Value
-}
-func (p *RecordAddDnsParam) SetTtl(v int) {
-	p.Ttl = v
-}
-
-func (p *RecordAddDnsParam) GetTtl() int {
-	return p.Ttl
-}
-func (p *RecordAddDnsParam) SetMxPriority(v int) {
-	p.MxPriority = v
-}
-
-func (p *RecordAddDnsParam) GetMxPriority() int {
-	return p.MxPriority
-}
-func (p *RecordAddDnsParam) SetSrvPort(v int) {
+func (p *RecordAddDNSParam) SetSrvPort(v int) {
 	p.SrvPort = v
 }
 
-func (p *RecordAddDnsParam) GetSrvPort() int {
+func (p *RecordAddDNSParam) GetSrvPort() int {
 	return p.SrvPort
 }
+func (p *RecordAddDNSParam) SetName(v string) {
+	p.Name = v
+}
 
-// ReadDnsParam is input parameters for the sacloud API
-type ReadDnsParam struct {
+func (p *RecordAddDNSParam) GetName() string {
+	return p.Name
+}
+func (p *RecordAddDNSParam) SetTtl(v int) {
+	p.Ttl = v
+}
+
+func (p *RecordAddDNSParam) GetTtl() int {
+	return p.Ttl
+}
+func (p *RecordAddDNSParam) SetMxPriority(v int) {
+	p.MxPriority = v
+}
+
+func (p *RecordAddDNSParam) GetMxPriority() int {
+	return p.MxPriority
+}
+func (p *RecordAddDNSParam) SetSrvPriority(v int) {
+	p.SrvPriority = v
+}
+
+func (p *RecordAddDNSParam) GetSrvPriority() int {
+	return p.SrvPriority
+}
+func (p *RecordAddDNSParam) SetSrvWeight(v int) {
+	p.SrvWeight = v
+}
+
+func (p *RecordAddDNSParam) GetSrvWeight() int {
+	return p.SrvWeight
+}
+func (p *RecordAddDNSParam) SetType(v string) {
+	p.Type = v
+}
+
+func (p *RecordAddDNSParam) GetType() string {
+	return p.Type
+}
+func (p *RecordAddDNSParam) SetValue(v string) {
+	p.Value = v
+}
+
+func (p *RecordAddDNSParam) GetValue() string {
+	return p.Value
+}
+func (p *RecordAddDNSParam) SetSrvTarget(v string) {
+	p.SrvTarget = v
+}
+
+func (p *RecordAddDNSParam) GetSrvTarget() string {
+	return p.SrvTarget
+}
+
+// ReadDNSParam is input parameters for the sacloud API
+type ReadDNSParam struct {
 	input Input
 }
 
-// NewReadDnsParam return new ReadDnsParam
-func NewReadDnsParam() *ReadDnsParam {
-	return &ReadDnsParam{}
+// NewReadDNSParam return new ReadDNSParam
+func NewReadDNSParam() *ReadDNSParam {
+	return &ReadDNSParam{}
 }
 
-// Initialize init ReadDnsParam
-func (p *ReadDnsParam) Initialize(in Input) error {
+// Initialize init ReadDNSParam
+func (p *ReadDNSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -800,67 +800,67 @@ func (p *ReadDnsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ReadDnsParam) WriteSkeleton(writer io.Writer) error {
+func (p *ReadDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadDnsParam) fillValueToSkeleton() {
+func (p *ReadDNSParam) fillValueToSkeleton() {
 
 }
 
-func (p *ReadDnsParam) validate() error {
+func (p *ReadDNSParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ReadDnsParam) ResourceDef() *schema.Resource {
+func (p *ReadDNSParam) ResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *ReadDnsParam) CommandDef() *schema.Command {
+func (p *ReadDNSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["read"]
 }
 
-func (p *ReadDnsParam) IncludeFields() []string {
+func (p *ReadDNSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ReadDnsParam) ExcludeFields() []string {
+func (p *ReadDNSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ReadDnsParam) TableType() output.TableType {
+func (p *ReadDNSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ReadDnsParam) ColumnDefs() []output.ColumnDef {
+func (p *ReadDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// RecordUpdateDnsParam is input parameters for the sacloud API
-type RecordUpdateDnsParam struct {
+// RecordUpdateDNSParam is input parameters for the sacloud API
+type RecordUpdateDNSParam struct {
+	Index       int
 	Name        string
-	Type        string
-	Value       string
-	Ttl         int
 	MxPriority  int
 	SrvPriority int
 	SrvWeight   int
 	SrvTarget   string
-	Index       int
+	Type        string
+	Value       string
+	Ttl         int
 	SrvPort     int
 
 	input Input
 }
 
-// NewRecordUpdateDnsParam return new RecordUpdateDnsParam
-func NewRecordUpdateDnsParam() *RecordUpdateDnsParam {
-	return &RecordUpdateDnsParam{}
+// NewRecordUpdateDNSParam return new RecordUpdateDNSParam
+func NewRecordUpdateDNSParam() *RecordUpdateDNSParam {
+	return &RecordUpdateDNSParam{}
 }
 
-// Initialize init RecordUpdateDnsParam
-func (p *RecordUpdateDnsParam) Initialize(in Input) error {
+// Initialize init RecordUpdateDNSParam
+func (p *RecordUpdateDNSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -869,22 +869,16 @@ func (p *RecordUpdateDnsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *RecordUpdateDnsParam) WriteSkeleton(writer io.Writer) error {
+func (p *RecordUpdateDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RecordUpdateDnsParam) fillValueToSkeleton() {
+func (p *RecordUpdateDNSParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Index) {
+		p.Index = 0
+	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
-	}
-	if utils.IsEmpty(p.Type) {
-		p.Type = ""
-	}
-	if utils.IsEmpty(p.Value) {
-		p.Value = ""
-	}
-	if utils.IsEmpty(p.Ttl) {
-		p.Ttl = 0
 	}
 	if utils.IsEmpty(p.MxPriority) {
 		p.MxPriority = 0
@@ -898,8 +892,14 @@ func (p *RecordUpdateDnsParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.SrvTarget) {
 		p.SrvTarget = ""
 	}
-	if utils.IsEmpty(p.Index) {
-		p.Index = 0
+	if utils.IsEmpty(p.Type) {
+		p.Type = ""
+	}
+	if utils.IsEmpty(p.Value) {
+		p.Value = ""
+	}
+	if utils.IsEmpty(p.Ttl) {
+		p.Ttl = 0
 	}
 	if utils.IsEmpty(p.SrvPort) {
 		p.SrvPort = 0
@@ -907,28 +907,20 @@ func (p *RecordUpdateDnsParam) fillValueToSkeleton() {
 
 }
 
-func (p *RecordUpdateDnsParam) validate() error {
+func (p *RecordUpdateDNSParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["DNS"].Commands["record-update"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["DNS"].Commands["record-update"].Params["type"].ValidateFunc
-		errs := validator("--type", p.Type)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["DNS"].Commands["record-update"].Params["ttl"].ValidateFunc
-		errs := validator("--ttl", p.Ttl)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -967,8 +959,16 @@ func (p *RecordUpdateDnsParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
-		errs := validator("--index", p.Index)
+		validator := define.Resources["DNS"].Commands["record-update"].Params["type"].ValidateFunc
+		errs := validator("--type", p.Type)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["DNS"].Commands["record-update"].Params["ttl"].ValidateFunc
+		errs := validator("--ttl", p.Ttl)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -985,115 +985,115 @@ func (p *RecordUpdateDnsParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *RecordUpdateDnsParam) ResourceDef() *schema.Resource {
+func (p *RecordUpdateDNSParam) ResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *RecordUpdateDnsParam) CommandDef() *schema.Command {
+func (p *RecordUpdateDNSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["record-update"]
 }
 
-func (p *RecordUpdateDnsParam) IncludeFields() []string {
+func (p *RecordUpdateDNSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *RecordUpdateDnsParam) ExcludeFields() []string {
+func (p *RecordUpdateDNSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *RecordUpdateDnsParam) TableType() output.TableType {
+func (p *RecordUpdateDNSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *RecordUpdateDnsParam) ColumnDefs() []output.ColumnDef {
+func (p *RecordUpdateDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *RecordUpdateDnsParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *RecordUpdateDnsParam) GetName() string {
-	return p.Name
-}
-func (p *RecordUpdateDnsParam) SetType(v string) {
-	p.Type = v
-}
-
-func (p *RecordUpdateDnsParam) GetType() string {
-	return p.Type
-}
-func (p *RecordUpdateDnsParam) SetValue(v string) {
-	p.Value = v
-}
-
-func (p *RecordUpdateDnsParam) GetValue() string {
-	return p.Value
-}
-func (p *RecordUpdateDnsParam) SetTtl(v int) {
-	p.Ttl = v
-}
-
-func (p *RecordUpdateDnsParam) GetTtl() int {
-	return p.Ttl
-}
-func (p *RecordUpdateDnsParam) SetMxPriority(v int) {
-	p.MxPriority = v
-}
-
-func (p *RecordUpdateDnsParam) GetMxPriority() int {
-	return p.MxPriority
-}
-func (p *RecordUpdateDnsParam) SetSrvPriority(v int) {
-	p.SrvPriority = v
-}
-
-func (p *RecordUpdateDnsParam) GetSrvPriority() int {
-	return p.SrvPriority
-}
-func (p *RecordUpdateDnsParam) SetSrvWeight(v int) {
-	p.SrvWeight = v
-}
-
-func (p *RecordUpdateDnsParam) GetSrvWeight() int {
-	return p.SrvWeight
-}
-func (p *RecordUpdateDnsParam) SetSrvTarget(v string) {
-	p.SrvTarget = v
-}
-
-func (p *RecordUpdateDnsParam) GetSrvTarget() string {
-	return p.SrvTarget
-}
-func (p *RecordUpdateDnsParam) SetIndex(v int) {
+func (p *RecordUpdateDNSParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *RecordUpdateDnsParam) GetIndex() int {
+func (p *RecordUpdateDNSParam) GetIndex() int {
 	return p.Index
 }
-func (p *RecordUpdateDnsParam) SetSrvPort(v int) {
+func (p *RecordUpdateDNSParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *RecordUpdateDNSParam) GetName() string {
+	return p.Name
+}
+func (p *RecordUpdateDNSParam) SetMxPriority(v int) {
+	p.MxPriority = v
+}
+
+func (p *RecordUpdateDNSParam) GetMxPriority() int {
+	return p.MxPriority
+}
+func (p *RecordUpdateDNSParam) SetSrvPriority(v int) {
+	p.SrvPriority = v
+}
+
+func (p *RecordUpdateDNSParam) GetSrvPriority() int {
+	return p.SrvPriority
+}
+func (p *RecordUpdateDNSParam) SetSrvWeight(v int) {
+	p.SrvWeight = v
+}
+
+func (p *RecordUpdateDNSParam) GetSrvWeight() int {
+	return p.SrvWeight
+}
+func (p *RecordUpdateDNSParam) SetSrvTarget(v string) {
+	p.SrvTarget = v
+}
+
+func (p *RecordUpdateDNSParam) GetSrvTarget() string {
+	return p.SrvTarget
+}
+func (p *RecordUpdateDNSParam) SetType(v string) {
+	p.Type = v
+}
+
+func (p *RecordUpdateDNSParam) GetType() string {
+	return p.Type
+}
+func (p *RecordUpdateDNSParam) SetValue(v string) {
+	p.Value = v
+}
+
+func (p *RecordUpdateDNSParam) GetValue() string {
+	return p.Value
+}
+func (p *RecordUpdateDNSParam) SetTtl(v int) {
+	p.Ttl = v
+}
+
+func (p *RecordUpdateDNSParam) GetTtl() int {
+	return p.Ttl
+}
+func (p *RecordUpdateDNSParam) SetSrvPort(v int) {
 	p.SrvPort = v
 }
 
-func (p *RecordUpdateDnsParam) GetSrvPort() int {
+func (p *RecordUpdateDNSParam) GetSrvPort() int {
 	return p.SrvPort
 }
 
-// RecordDeleteDnsParam is input parameters for the sacloud API
-type RecordDeleteDnsParam struct {
+// RecordDeleteDNSParam is input parameters for the sacloud API
+type RecordDeleteDNSParam struct {
 	Index int
 
 	input Input
 }
 
-// NewRecordDeleteDnsParam return new RecordDeleteDnsParam
-func NewRecordDeleteDnsParam() *RecordDeleteDnsParam {
-	return &RecordDeleteDnsParam{}
+// NewRecordDeleteDNSParam return new RecordDeleteDNSParam
+func NewRecordDeleteDNSParam() *RecordDeleteDNSParam {
+	return &RecordDeleteDNSParam{}
 }
 
-// Initialize init RecordDeleteDnsParam
-func (p *RecordDeleteDnsParam) Initialize(in Input) error {
+// Initialize init RecordDeleteDNSParam
+func (p *RecordDeleteDNSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1102,18 +1102,18 @@ func (p *RecordDeleteDnsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *RecordDeleteDnsParam) WriteSkeleton(writer io.Writer) error {
+func (p *RecordDeleteDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RecordDeleteDnsParam) fillValueToSkeleton() {
+func (p *RecordDeleteDNSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
 
 }
 
-func (p *RecordDeleteDnsParam) validate() error {
+func (p *RecordDeleteDNSParam) validate() error {
 	var errors []error
 
 	{
@@ -1127,54 +1127,54 @@ func (p *RecordDeleteDnsParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *RecordDeleteDnsParam) ResourceDef() *schema.Resource {
+func (p *RecordDeleteDNSParam) ResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *RecordDeleteDnsParam) CommandDef() *schema.Command {
+func (p *RecordDeleteDNSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["record-delete"]
 }
 
-func (p *RecordDeleteDnsParam) IncludeFields() []string {
+func (p *RecordDeleteDNSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *RecordDeleteDnsParam) ExcludeFields() []string {
+func (p *RecordDeleteDNSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *RecordDeleteDnsParam) TableType() output.TableType {
+func (p *RecordDeleteDNSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *RecordDeleteDnsParam) ColumnDefs() []output.ColumnDef {
+func (p *RecordDeleteDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *RecordDeleteDnsParam) SetIndex(v int) {
+func (p *RecordDeleteDNSParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *RecordDeleteDnsParam) GetIndex() int {
+func (p *RecordDeleteDNSParam) GetIndex() int {
 	return p.Index
 }
 
-// UpdateDnsParam is input parameters for the sacloud API
-type UpdateDnsParam struct {
+// UpdateDNSParam is input parameters for the sacloud API
+type UpdateDNSParam struct {
+	Description string
 	Tags        []string
 	IconId      sacloud.ID
-	Description string
 
 	input Input
 }
 
-// NewUpdateDnsParam return new UpdateDnsParam
-func NewUpdateDnsParam() *UpdateDnsParam {
-	return &UpdateDnsParam{}
+// NewUpdateDNSParam return new UpdateDNSParam
+func NewUpdateDNSParam() *UpdateDNSParam {
+	return &UpdateDNSParam{}
 }
 
-// Initialize init UpdateDnsParam
-func (p *UpdateDnsParam) Initialize(in Input) error {
+// Initialize init UpdateDNSParam
+func (p *UpdateDNSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1183,25 +1183,33 @@ func (p *UpdateDnsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *UpdateDnsParam) WriteSkeleton(writer io.Writer) error {
+func (p *UpdateDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateDnsParam) fillValueToSkeleton() {
+func (p *UpdateDNSParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
 
 }
 
-func (p *UpdateDnsParam) validate() error {
+func (p *UpdateDNSParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["DNS"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["DNS"].Commands["update"].Params["tags"].ValidateFunc
@@ -1219,75 +1227,67 @@ func (p *UpdateDnsParam) validate() error {
 		}
 	}
 
-	{
-		validator := define.Resources["DNS"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *UpdateDnsParam) ResourceDef() *schema.Resource {
+func (p *UpdateDNSParam) ResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *UpdateDnsParam) CommandDef() *schema.Command {
+func (p *UpdateDNSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["update"]
 }
 
-func (p *UpdateDnsParam) IncludeFields() []string {
+func (p *UpdateDNSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *UpdateDnsParam) ExcludeFields() []string {
+func (p *UpdateDNSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *UpdateDnsParam) TableType() output.TableType {
+func (p *UpdateDNSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *UpdateDnsParam) ColumnDefs() []output.ColumnDef {
+func (p *UpdateDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateDnsParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *UpdateDnsParam) GetTags() []string {
-	return p.Tags
-}
-func (p *UpdateDnsParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *UpdateDnsParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
-func (p *UpdateDnsParam) SetDescription(v string) {
+func (p *UpdateDNSParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdateDnsParam) GetDescription() string {
+func (p *UpdateDNSParam) GetDescription() string {
 	return p.Description
 }
+func (p *UpdateDNSParam) SetTags(v []string) {
+	p.Tags = v
+}
 
-// DeleteDnsParam is input parameters for the sacloud API
-type DeleteDnsParam struct {
+func (p *UpdateDNSParam) GetTags() []string {
+	return p.Tags
+}
+func (p *UpdateDNSParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *UpdateDNSParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+
+// DeleteDNSParam is input parameters for the sacloud API
+type DeleteDNSParam struct {
 	input Input
 }
 
-// NewDeleteDnsParam return new DeleteDnsParam
-func NewDeleteDnsParam() *DeleteDnsParam {
-	return &DeleteDnsParam{}
+// NewDeleteDNSParam return new DeleteDNSParam
+func NewDeleteDNSParam() *DeleteDNSParam {
+	return &DeleteDNSParam{}
 }
 
-// Initialize init DeleteDnsParam
-func (p *DeleteDnsParam) Initialize(in Input) error {
+// Initialize init DeleteDNSParam
+func (p *DeleteDNSParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1296,40 +1296,40 @@ func (p *DeleteDnsParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DeleteDnsParam) WriteSkeleton(writer io.Writer) error {
+func (p *DeleteDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteDnsParam) fillValueToSkeleton() {
+func (p *DeleteDNSParam) fillValueToSkeleton() {
 
 }
 
-func (p *DeleteDnsParam) validate() error {
+func (p *DeleteDNSParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DeleteDnsParam) ResourceDef() *schema.Resource {
+func (p *DeleteDNSParam) ResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *DeleteDnsParam) CommandDef() *schema.Command {
+func (p *DeleteDNSParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["delete"]
 }
 
-func (p *DeleteDnsParam) IncludeFields() []string {
+func (p *DeleteDNSParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DeleteDnsParam) ExcludeFields() []string {
+func (p *DeleteDNSParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DeleteDnsParam) TableType() output.TableType {
+func (p *DeleteDNSParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DeleteDnsParam) ColumnDefs() []output.ColumnDef {
+func (p *DeleteDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }

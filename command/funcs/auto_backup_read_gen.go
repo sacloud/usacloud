@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func AutobackupRead(ctx command.Context, params *params.ReadAutobackupParam) error {
+func AutoBackupRead(ctx command.Context, params *params.ReadAutoBackupParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetAutobackupAPI()
+	api := client.GetAutoBackupAPI()
 
 	// set params
 
 	// call Read(id)
 	res, err := api.Read(params.Id)
 	if err != nil {
-		return fmt.Errorf("AutobackupRead is failed: %s", err)
+		return fmt.Errorf("AutoBackupRead is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

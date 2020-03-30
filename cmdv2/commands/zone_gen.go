@@ -54,11 +54,11 @@ var zoneListCmd = &cobra.Command{
 
 func zoneListCmdInit() {
 	fs := zoneListCmd.Flags()
-	fs.StringSliceVarP(&zoneListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &zoneListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&zoneListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&zoneListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&zoneListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&zoneListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &zoneListParam.Id), "id", "", "set filter by id(s)")
 }
 
 var zoneReadCmd = &cobra.Command{

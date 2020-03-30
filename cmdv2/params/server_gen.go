@@ -29,12 +29,12 @@ import (
 
 // ListServerParam is input parameters for the sacloud API
 type ListServerParam struct {
+	Name []string
 	Id   []sacloud.ID
 	From int
 	Max  int
 	Sort []string
 	Tags []string
-	Name []string
 
 	input Input
 }
@@ -59,6 +59,9 @@ func (p *ListServerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListServerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
@@ -74,14 +77,21 @@ func (p *ListServerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
 
 }
 
 func (p *ListServerParam) validate() error {
 	var errors []error
+
+	{
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["Server"].Commands["list"].Params["id"].ValidateFunc
@@ -103,16 +113,6 @@ func (p *ListServerParam) validate() error {
 	{
 		validator := define.Resources["Server"].Commands["list"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -145,6 +145,13 @@ func (p *ListServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListServerParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListServerParam) GetName() []string {
+	return p.Name
+}
 func (p *ListServerParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
@@ -180,58 +187,51 @@ func (p *ListServerParam) SetTags(v []string) {
 func (p *ListServerParam) GetTags() []string {
 	return p.Tags
 }
-func (p *ListServerParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListServerParam) GetName() []string {
-	return p.Name
-}
 
 // BuildServerParam is input parameters for the sacloud API
 type BuildServerParam struct {
 	Core                    int
-	Memory                  int
-	SourceArchiveId         sacloud.ID
-	SshKeyMode              string
-	SshKeyPublicKeyFiles    []string
-	StartupScripts          []string
-	SshKeyDescription       string
-	Description             string
-	Commitment              string
-	PrivateHostId           sacloud.ID
-	DiskConnection          string
-	DiskSize                int
-	DiskId                  sacloud.ID
-	SshKeyPrivateKeyOutput  string
-	DistantFrom             []sacloud.ID
-	IsoImageId              sacloud.ID
-	NetworkMode             string
-	InterfaceDriver         string
 	PacketFilterId          sacloud.ID
-	OsType                  string
-	DefaultRoute            string
-	StartupScriptIds        []sacloud.ID
-	DiskPlan                string
-	StartupScriptsEphemeral bool
-	SshKeyName              string
-	UsKeyboard              bool
-	DisableBootAfterCreate  bool
-	SshKeyPassPhrase        string
-	Tags                    []string
-	SourceDiskId            sacloud.ID
-	Hostname                string
-	Password                string
-	NwMasklen               int
-	SshKeyIds               []sacloud.ID
+	SSHKeyPrivateKeyOutput  string
+	SSHKeyEphemeral         bool
+	SSHKeyName              string
+	SSHKeyDescription       string
+	Commitment              string
+	DiskSize                int
+	DistantFrom             []sacloud.ID
+	ISOImageId              sacloud.ID
 	SwitchId                sacloud.ID
-	SshKeyEphemeral         bool
+	SSHKeyMode              string
+	SourceArchiveId         sacloud.ID
+	DiskId                  sacloud.ID
+	InterfaceDriver         string
+	Hostname                string
+	StartupScripts          []string
 	IconId                  sacloud.ID
 	DiskMode                string
-	DisablePasswordAuth     bool
+	DiskConnection          string
+	NwMasklen               int
+	SSHKeyIds               []sacloud.ID
+	StartupScriptIds        []sacloud.ID
+	StartupScriptsEphemeral bool
+	PrivateHostId           sacloud.ID
+	DiskPlan                string
+	SourceDiskId            sacloud.ID
+	NetworkMode             string
+	Password                string
+	DefaultRoute            string
+	Description             string
 	Ipaddress               string
-	SshKeyPublicKeys        []string
+	SSHKeyPublicKeys        []string
 	Name                    string
+	Memory                  int
+	SSHKeyPassPhrase        string
+	Tags                    []string
+	UsKeyboard              bool
+	OsType                  string
+	DisablePasswordAuth     bool
+	SSHKeyPublicKeyFiles    []string
+	DisableBootAfterCreate  bool
 
 	input Input
 }
@@ -239,7 +239,7 @@ type BuildServerParam struct {
 // NewBuildServerParam return new BuildServerParam
 func NewBuildServerParam() *BuildServerParam {
 	return &BuildServerParam{
-		Core: 1, Memory: 1, Commitment: "standard", DiskConnection: "virtio", DiskSize: 20, NetworkMode: "shared", InterfaceDriver: "virtio", DiskPlan: "ssd", StartupScriptsEphemeral: true, NwMasklen: 24, SshKeyEphemeral: true, DiskMode: "create"}
+		Core: 1, SSHKeyEphemeral: true, Commitment: "standard", DiskSize: 20, InterfaceDriver: "virtio", DiskMode: "create", DiskConnection: "virtio", NwMasklen: 24, StartupScriptsEphemeral: true, DiskPlan: "ssd", NetworkMode: "shared", Memory: 1}
 }
 
 // Initialize init BuildServerParam
@@ -260,110 +260,53 @@ func (p *BuildServerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Core) {
 		p.Core = 0
 	}
-	if utils.IsEmpty(p.Memory) {
-		p.Memory = 0
+	if utils.IsEmpty(p.PacketFilterId) {
+		p.PacketFilterId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.SourceArchiveId) {
-		p.SourceArchiveId = sacloud.ID(0)
+	if utils.IsEmpty(p.SSHKeyPrivateKeyOutput) {
+		p.SSHKeyPrivateKeyOutput = ""
 	}
-	if utils.IsEmpty(p.SshKeyMode) {
-		p.SshKeyMode = ""
+	if utils.IsEmpty(p.SSHKeyEphemeral) {
+		p.SSHKeyEphemeral = false
 	}
-	if utils.IsEmpty(p.SshKeyPublicKeyFiles) {
-		p.SshKeyPublicKeyFiles = []string{""}
+	if utils.IsEmpty(p.SSHKeyName) {
+		p.SSHKeyName = ""
 	}
-	if utils.IsEmpty(p.StartupScripts) {
-		p.StartupScripts = []string{""}
-	}
-	if utils.IsEmpty(p.SshKeyDescription) {
-		p.SshKeyDescription = ""
-	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
+	if utils.IsEmpty(p.SSHKeyDescription) {
+		p.SSHKeyDescription = ""
 	}
 	if utils.IsEmpty(p.Commitment) {
 		p.Commitment = ""
 	}
-	if utils.IsEmpty(p.PrivateHostId) {
-		p.PrivateHostId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.DiskConnection) {
-		p.DiskConnection = ""
-	}
 	if utils.IsEmpty(p.DiskSize) {
 		p.DiskSize = 0
-	}
-	if utils.IsEmpty(p.DiskId) {
-		p.DiskId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.SshKeyPrivateKeyOutput) {
-		p.SshKeyPrivateKeyOutput = ""
 	}
 	if utils.IsEmpty(p.DistantFrom) {
 		p.DistantFrom = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.IsoImageId) {
-		p.IsoImageId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.NetworkMode) {
-		p.NetworkMode = ""
-	}
-	if utils.IsEmpty(p.InterfaceDriver) {
-		p.InterfaceDriver = ""
-	}
-	if utils.IsEmpty(p.PacketFilterId) {
-		p.PacketFilterId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.OsType) {
-		p.OsType = ""
-	}
-	if utils.IsEmpty(p.DefaultRoute) {
-		p.DefaultRoute = ""
-	}
-	if utils.IsEmpty(p.StartupScriptIds) {
-		p.StartupScriptIds = []sacloud.ID{}
-	}
-	if utils.IsEmpty(p.DiskPlan) {
-		p.DiskPlan = ""
-	}
-	if utils.IsEmpty(p.StartupScriptsEphemeral) {
-		p.StartupScriptsEphemeral = false
-	}
-	if utils.IsEmpty(p.SshKeyName) {
-		p.SshKeyName = ""
-	}
-	if utils.IsEmpty(p.UsKeyboard) {
-		p.UsKeyboard = false
-	}
-	if utils.IsEmpty(p.DisableBootAfterCreate) {
-		p.DisableBootAfterCreate = false
-	}
-	if utils.IsEmpty(p.SshKeyPassPhrase) {
-		p.SshKeyPassPhrase = ""
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.SourceDiskId) {
-		p.SourceDiskId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.Hostname) {
-		p.Hostname = ""
-	}
-	if utils.IsEmpty(p.Password) {
-		p.Password = ""
-	}
-	if utils.IsEmpty(p.NwMasklen) {
-		p.NwMasklen = 0
-	}
-	if utils.IsEmpty(p.SshKeyIds) {
-		p.SshKeyIds = []sacloud.ID{}
+	if utils.IsEmpty(p.ISOImageId) {
+		p.ISOImageId = sacloud.ID(0)
 	}
 	if utils.IsEmpty(p.SwitchId) {
 		p.SwitchId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.SshKeyEphemeral) {
-		p.SshKeyEphemeral = false
+	if utils.IsEmpty(p.SSHKeyMode) {
+		p.SSHKeyMode = ""
+	}
+	if utils.IsEmpty(p.SourceArchiveId) {
+		p.SourceArchiveId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.DiskId) {
+		p.DiskId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.InterfaceDriver) {
+		p.InterfaceDriver = ""
+	}
+	if utils.IsEmpty(p.Hostname) {
+		p.Hostname = ""
+	}
+	if utils.IsEmpty(p.StartupScripts) {
+		p.StartupScripts = []string{""}
 	}
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
@@ -371,17 +314,74 @@ func (p *BuildServerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.DiskMode) {
 		p.DiskMode = ""
 	}
-	if utils.IsEmpty(p.DisablePasswordAuth) {
-		p.DisablePasswordAuth = false
+	if utils.IsEmpty(p.DiskConnection) {
+		p.DiskConnection = ""
+	}
+	if utils.IsEmpty(p.NwMasklen) {
+		p.NwMasklen = 0
+	}
+	if utils.IsEmpty(p.SSHKeyIds) {
+		p.SSHKeyIds = []sacloud.ID{}
+	}
+	if utils.IsEmpty(p.StartupScriptIds) {
+		p.StartupScriptIds = []sacloud.ID{}
+	}
+	if utils.IsEmpty(p.StartupScriptsEphemeral) {
+		p.StartupScriptsEphemeral = false
+	}
+	if utils.IsEmpty(p.PrivateHostId) {
+		p.PrivateHostId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.DiskPlan) {
+		p.DiskPlan = ""
+	}
+	if utils.IsEmpty(p.SourceDiskId) {
+		p.SourceDiskId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.NetworkMode) {
+		p.NetworkMode = ""
+	}
+	if utils.IsEmpty(p.Password) {
+		p.Password = ""
+	}
+	if utils.IsEmpty(p.DefaultRoute) {
+		p.DefaultRoute = ""
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
 	}
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
-	if utils.IsEmpty(p.SshKeyPublicKeys) {
-		p.SshKeyPublicKeys = []string{""}
+	if utils.IsEmpty(p.SSHKeyPublicKeys) {
+		p.SSHKeyPublicKeys = []string{""}
 	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
+	}
+	if utils.IsEmpty(p.Memory) {
+		p.Memory = 0
+	}
+	if utils.IsEmpty(p.SSHKeyPassPhrase) {
+		p.SSHKeyPassPhrase = ""
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if utils.IsEmpty(p.UsKeyboard) {
+		p.UsKeyboard = false
+	}
+	if utils.IsEmpty(p.OsType) {
+		p.OsType = ""
+	}
+	if utils.IsEmpty(p.DisablePasswordAuth) {
+		p.DisablePasswordAuth = false
+	}
+	if utils.IsEmpty(p.SSHKeyPublicKeyFiles) {
+		p.SSHKeyPublicKeyFiles = []string{""}
+	}
+	if utils.IsEmpty(p.DisableBootAfterCreate) {
+		p.DisableBootAfterCreate = false
 	}
 
 }
@@ -398,40 +398,8 @@ func (p *BuildServerParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
-		errs := validator("--memory", p.Memory)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["source-archive-id"].ValidateFunc
-		errs := validator("--source-archive-id", p.SourceArchiveId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-mode"].ValidateFunc
-		errs := validator("--ssh-key-mode", p.SshKeyMode)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-public-key-files"].ValidateFunc
-		errs := validator("--ssh-key-public-key-files", p.SshKeyPublicKeyFiles)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
+		validator := define.Resources["Server"].Commands["build"].Params["packet-filter-id"].ValidateFunc
+		errs := validator("--packet-filter-id", p.PacketFilterId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -446,32 +414,8 @@ func (p *BuildServerParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["Server"].Commands["build"].Params["private-host-id"].ValidateFunc
-		errs := validator("--private-host-id", p.PrivateHostId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["disk-connection"].ValidateFunc
-		errs := validator("--disk-connection", p.DiskConnection)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
 		validator := define.Resources["Server"].Commands["build"].Params["disk-size"].ValidateFunc
 		errs := validator("--disk-size", p.DiskSize)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["disk-id"].ValidateFunc
-		errs := validator("--disk-id", p.DiskId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -487,110 +431,7 @@ func (p *BuildServerParam) validate() error {
 
 	{
 		validator := define.Resources["Server"].Commands["build"].Params["iso-image-id"].ValidateFunc
-		errs := validator("--iso-image-id", p.IsoImageId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--network-mode", p.NetworkMode)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["network-mode"].ValidateFunc
-		errs := validator("--network-mode", p.NetworkMode)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["interface-driver"].ValidateFunc
-		errs := validator("--interface-driver", p.InterfaceDriver)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["packet-filter-id"].ValidateFunc
-		errs := validator("--packet-filter-id", p.PacketFilterId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["os-type"].ValidateFunc
-		errs := validator("--os-type", p.OsType)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["default-route"].ValidateFunc
-		errs := validator("--default-route", p.DefaultRoute)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["startup-script-ids"].ValidateFunc
-		errs := validator("--startup-script-ids", p.StartupScriptIds)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["disk-plan"].ValidateFunc
-		errs := validator("--disk-plan", p.DiskPlan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-pass-phrase"].ValidateFunc
-		errs := validator("--ssh-key-pass-phrase", p.SshKeyPassPhrase)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["source-disk-id"].ValidateFunc
-		errs := validator("--source-disk-id", p.SourceDiskId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["nw-masklen"].ValidateFunc
-		errs := validator("--nw-masklen", p.NwMasklen)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-ids"].ValidateFunc
-		errs := validator("--ssh-key-ids", p.SshKeyIds)
+		errs := validator("--iso-image-id", p.ISOImageId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -599,6 +440,38 @@ func (p *BuildServerParam) validate() error {
 	{
 		validator := define.Resources["Server"].Commands["build"].Params["switch-id"].ValidateFunc
 		errs := validator("--switch-id", p.SwitchId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-mode"].ValidateFunc
+		errs := validator("--ssh-key-mode", p.SSHKeyMode)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["source-archive-id"].ValidateFunc
+		errs := validator("--source-archive-id", p.SourceArchiveId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["disk-id"].ValidateFunc
+		errs := validator("--disk-id", p.DiskId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["interface-driver"].ValidateFunc
+		errs := validator("--interface-driver", p.InterfaceDriver)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -628,6 +501,93 @@ func (p *BuildServerParam) validate() error {
 	}
 
 	{
+		validator := define.Resources["Server"].Commands["build"].Params["disk-connection"].ValidateFunc
+		errs := validator("--disk-connection", p.DiskConnection)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["nw-masklen"].ValidateFunc
+		errs := validator("--nw-masklen", p.NwMasklen)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-ids"].ValidateFunc
+		errs := validator("--ssh-key-ids", p.SSHKeyIds)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["startup-script-ids"].ValidateFunc
+		errs := validator("--startup-script-ids", p.StartupScriptIds)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["private-host-id"].ValidateFunc
+		errs := validator("--private-host-id", p.PrivateHostId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["disk-plan"].ValidateFunc
+		errs := validator("--disk-plan", p.DiskPlan)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["source-disk-id"].ValidateFunc
+		errs := validator("--source-disk-id", p.SourceDiskId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--network-mode", p.NetworkMode)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["network-mode"].ValidateFunc
+		errs := validator("--network-mode", p.NetworkMode)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["default-route"].ValidateFunc
+		errs := validator("--default-route", p.DefaultRoute)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
 		validator := define.Resources["Server"].Commands["build"].Params["ipaddress"].ValidateFunc
 		errs := validator("--ipaddress", p.Ipaddress)
 		if errs != nil {
@@ -645,6 +605,46 @@ func (p *BuildServerParam) validate() error {
 	{
 		validator := define.Resources["Server"].Commands["build"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--memory", p.Memory)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-pass-phrase"].ValidateFunc
+		errs := validator("--ssh-key-pass-phrase", p.SSHKeyPassPhrase)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["os-type"].ValidateFunc
+		errs := validator("--os-type", p.OsType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-public-key-files"].ValidateFunc
+		errs := validator("--ssh-key-public-key-files", p.SSHKeyPublicKeyFiles)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -684,54 +684,40 @@ func (p *BuildServerParam) SetCore(v int) {
 func (p *BuildServerParam) GetCore() int {
 	return p.Core
 }
-func (p *BuildServerParam) SetMemory(v int) {
-	p.Memory = v
+func (p *BuildServerParam) SetPacketFilterId(v sacloud.ID) {
+	p.PacketFilterId = v
 }
 
-func (p *BuildServerParam) GetMemory() int {
-	return p.Memory
+func (p *BuildServerParam) GetPacketFilterId() sacloud.ID {
+	return p.PacketFilterId
 }
-func (p *BuildServerParam) SetSourceArchiveId(v sacloud.ID) {
-	p.SourceArchiveId = v
-}
-
-func (p *BuildServerParam) GetSourceArchiveId() sacloud.ID {
-	return p.SourceArchiveId
-}
-func (p *BuildServerParam) SetSshKeyMode(v string) {
-	p.SshKeyMode = v
+func (p *BuildServerParam) SetSSHKeyPrivateKeyOutput(v string) {
+	p.SSHKeyPrivateKeyOutput = v
 }
 
-func (p *BuildServerParam) GetSshKeyMode() string {
-	return p.SshKeyMode
+func (p *BuildServerParam) GetSSHKeyPrivateKeyOutput() string {
+	return p.SSHKeyPrivateKeyOutput
 }
-func (p *BuildServerParam) SetSshKeyPublicKeyFiles(v []string) {
-	p.SshKeyPublicKeyFiles = v
-}
-
-func (p *BuildServerParam) GetSshKeyPublicKeyFiles() []string {
-	return p.SshKeyPublicKeyFiles
-}
-func (p *BuildServerParam) SetStartupScripts(v []string) {
-	p.StartupScripts = v
+func (p *BuildServerParam) SetSSHKeyEphemeral(v bool) {
+	p.SSHKeyEphemeral = v
 }
 
-func (p *BuildServerParam) GetStartupScripts() []string {
-	return p.StartupScripts
+func (p *BuildServerParam) GetSSHKeyEphemeral() bool {
+	return p.SSHKeyEphemeral
 }
-func (p *BuildServerParam) SetSshKeyDescription(v string) {
-	p.SshKeyDescription = v
-}
-
-func (p *BuildServerParam) GetSshKeyDescription() string {
-	return p.SshKeyDescription
-}
-func (p *BuildServerParam) SetDescription(v string) {
-	p.Description = v
+func (p *BuildServerParam) SetSSHKeyName(v string) {
+	p.SSHKeyName = v
 }
 
-func (p *BuildServerParam) GetDescription() string {
-	return p.Description
+func (p *BuildServerParam) GetSSHKeyName() string {
+	return p.SSHKeyName
+}
+func (p *BuildServerParam) SetSSHKeyDescription(v string) {
+	p.SSHKeyDescription = v
+}
+
+func (p *BuildServerParam) GetSSHKeyDescription() string {
+	return p.SSHKeyDescription
 }
 func (p *BuildServerParam) SetCommitment(v string) {
 	p.Commitment = v
@@ -740,40 +726,12 @@ func (p *BuildServerParam) SetCommitment(v string) {
 func (p *BuildServerParam) GetCommitment() string {
 	return p.Commitment
 }
-func (p *BuildServerParam) SetPrivateHostId(v sacloud.ID) {
-	p.PrivateHostId = v
-}
-
-func (p *BuildServerParam) GetPrivateHostId() sacloud.ID {
-	return p.PrivateHostId
-}
-func (p *BuildServerParam) SetDiskConnection(v string) {
-	p.DiskConnection = v
-}
-
-func (p *BuildServerParam) GetDiskConnection() string {
-	return p.DiskConnection
-}
 func (p *BuildServerParam) SetDiskSize(v int) {
 	p.DiskSize = v
 }
 
 func (p *BuildServerParam) GetDiskSize() int {
 	return p.DiskSize
-}
-func (p *BuildServerParam) SetDiskId(v sacloud.ID) {
-	p.DiskId = v
-}
-
-func (p *BuildServerParam) GetDiskId() sacloud.ID {
-	return p.DiskId
-}
-func (p *BuildServerParam) SetSshKeyPrivateKeyOutput(v string) {
-	p.SshKeyPrivateKeyOutput = v
-}
-
-func (p *BuildServerParam) GetSshKeyPrivateKeyOutput() string {
-	return p.SshKeyPrivateKeyOutput
 }
 func (p *BuildServerParam) SetDistantFrom(v []sacloud.ID) {
 	p.DistantFrom = v
@@ -782,138 +740,12 @@ func (p *BuildServerParam) SetDistantFrom(v []sacloud.ID) {
 func (p *BuildServerParam) GetDistantFrom() []sacloud.ID {
 	return p.DistantFrom
 }
-func (p *BuildServerParam) SetIsoImageId(v sacloud.ID) {
-	p.IsoImageId = v
+func (p *BuildServerParam) SetISOImageId(v sacloud.ID) {
+	p.ISOImageId = v
 }
 
-func (p *BuildServerParam) GetIsoImageId() sacloud.ID {
-	return p.IsoImageId
-}
-func (p *BuildServerParam) SetNetworkMode(v string) {
-	p.NetworkMode = v
-}
-
-func (p *BuildServerParam) GetNetworkMode() string {
-	return p.NetworkMode
-}
-func (p *BuildServerParam) SetInterfaceDriver(v string) {
-	p.InterfaceDriver = v
-}
-
-func (p *BuildServerParam) GetInterfaceDriver() string {
-	return p.InterfaceDriver
-}
-func (p *BuildServerParam) SetPacketFilterId(v sacloud.ID) {
-	p.PacketFilterId = v
-}
-
-func (p *BuildServerParam) GetPacketFilterId() sacloud.ID {
-	return p.PacketFilterId
-}
-func (p *BuildServerParam) SetOsType(v string) {
-	p.OsType = v
-}
-
-func (p *BuildServerParam) GetOsType() string {
-	return p.OsType
-}
-func (p *BuildServerParam) SetDefaultRoute(v string) {
-	p.DefaultRoute = v
-}
-
-func (p *BuildServerParam) GetDefaultRoute() string {
-	return p.DefaultRoute
-}
-func (p *BuildServerParam) SetStartupScriptIds(v []sacloud.ID) {
-	p.StartupScriptIds = v
-}
-
-func (p *BuildServerParam) GetStartupScriptIds() []sacloud.ID {
-	return p.StartupScriptIds
-}
-func (p *BuildServerParam) SetDiskPlan(v string) {
-	p.DiskPlan = v
-}
-
-func (p *BuildServerParam) GetDiskPlan() string {
-	return p.DiskPlan
-}
-func (p *BuildServerParam) SetStartupScriptsEphemeral(v bool) {
-	p.StartupScriptsEphemeral = v
-}
-
-func (p *BuildServerParam) GetStartupScriptsEphemeral() bool {
-	return p.StartupScriptsEphemeral
-}
-func (p *BuildServerParam) SetSshKeyName(v string) {
-	p.SshKeyName = v
-}
-
-func (p *BuildServerParam) GetSshKeyName() string {
-	return p.SshKeyName
-}
-func (p *BuildServerParam) SetUsKeyboard(v bool) {
-	p.UsKeyboard = v
-}
-
-func (p *BuildServerParam) GetUsKeyboard() bool {
-	return p.UsKeyboard
-}
-func (p *BuildServerParam) SetDisableBootAfterCreate(v bool) {
-	p.DisableBootAfterCreate = v
-}
-
-func (p *BuildServerParam) GetDisableBootAfterCreate() bool {
-	return p.DisableBootAfterCreate
-}
-func (p *BuildServerParam) SetSshKeyPassPhrase(v string) {
-	p.SshKeyPassPhrase = v
-}
-
-func (p *BuildServerParam) GetSshKeyPassPhrase() string {
-	return p.SshKeyPassPhrase
-}
-func (p *BuildServerParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *BuildServerParam) GetTags() []string {
-	return p.Tags
-}
-func (p *BuildServerParam) SetSourceDiskId(v sacloud.ID) {
-	p.SourceDiskId = v
-}
-
-func (p *BuildServerParam) GetSourceDiskId() sacloud.ID {
-	return p.SourceDiskId
-}
-func (p *BuildServerParam) SetHostname(v string) {
-	p.Hostname = v
-}
-
-func (p *BuildServerParam) GetHostname() string {
-	return p.Hostname
-}
-func (p *BuildServerParam) SetPassword(v string) {
-	p.Password = v
-}
-
-func (p *BuildServerParam) GetPassword() string {
-	return p.Password
-}
-func (p *BuildServerParam) SetNwMasklen(v int) {
-	p.NwMasklen = v
-}
-
-func (p *BuildServerParam) GetNwMasklen() int {
-	return p.NwMasklen
-}
-func (p *BuildServerParam) SetSshKeyIds(v []sacloud.ID) {
-	p.SshKeyIds = v
-}
-
-func (p *BuildServerParam) GetSshKeyIds() []sacloud.ID {
-	return p.SshKeyIds
+func (p *BuildServerParam) GetISOImageId() sacloud.ID {
+	return p.ISOImageId
 }
 func (p *BuildServerParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
@@ -922,12 +754,47 @@ func (p *BuildServerParam) SetSwitchId(v sacloud.ID) {
 func (p *BuildServerParam) GetSwitchId() sacloud.ID {
 	return p.SwitchId
 }
-func (p *BuildServerParam) SetSshKeyEphemeral(v bool) {
-	p.SshKeyEphemeral = v
+func (p *BuildServerParam) SetSSHKeyMode(v string) {
+	p.SSHKeyMode = v
 }
 
-func (p *BuildServerParam) GetSshKeyEphemeral() bool {
-	return p.SshKeyEphemeral
+func (p *BuildServerParam) GetSSHKeyMode() string {
+	return p.SSHKeyMode
+}
+func (p *BuildServerParam) SetSourceArchiveId(v sacloud.ID) {
+	p.SourceArchiveId = v
+}
+
+func (p *BuildServerParam) GetSourceArchiveId() sacloud.ID {
+	return p.SourceArchiveId
+}
+func (p *BuildServerParam) SetDiskId(v sacloud.ID) {
+	p.DiskId = v
+}
+
+func (p *BuildServerParam) GetDiskId() sacloud.ID {
+	return p.DiskId
+}
+func (p *BuildServerParam) SetInterfaceDriver(v string) {
+	p.InterfaceDriver = v
+}
+
+func (p *BuildServerParam) GetInterfaceDriver() string {
+	return p.InterfaceDriver
+}
+func (p *BuildServerParam) SetHostname(v string) {
+	p.Hostname = v
+}
+
+func (p *BuildServerParam) GetHostname() string {
+	return p.Hostname
+}
+func (p *BuildServerParam) SetStartupScripts(v []string) {
+	p.StartupScripts = v
+}
+
+func (p *BuildServerParam) GetStartupScripts() []string {
+	return p.StartupScripts
 }
 func (p *BuildServerParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
@@ -943,12 +810,89 @@ func (p *BuildServerParam) SetDiskMode(v string) {
 func (p *BuildServerParam) GetDiskMode() string {
 	return p.DiskMode
 }
-func (p *BuildServerParam) SetDisablePasswordAuth(v bool) {
-	p.DisablePasswordAuth = v
+func (p *BuildServerParam) SetDiskConnection(v string) {
+	p.DiskConnection = v
 }
 
-func (p *BuildServerParam) GetDisablePasswordAuth() bool {
-	return p.DisablePasswordAuth
+func (p *BuildServerParam) GetDiskConnection() string {
+	return p.DiskConnection
+}
+func (p *BuildServerParam) SetNwMasklen(v int) {
+	p.NwMasklen = v
+}
+
+func (p *BuildServerParam) GetNwMasklen() int {
+	return p.NwMasklen
+}
+func (p *BuildServerParam) SetSSHKeyIds(v []sacloud.ID) {
+	p.SSHKeyIds = v
+}
+
+func (p *BuildServerParam) GetSSHKeyIds() []sacloud.ID {
+	return p.SSHKeyIds
+}
+func (p *BuildServerParam) SetStartupScriptIds(v []sacloud.ID) {
+	p.StartupScriptIds = v
+}
+
+func (p *BuildServerParam) GetStartupScriptIds() []sacloud.ID {
+	return p.StartupScriptIds
+}
+func (p *BuildServerParam) SetStartupScriptsEphemeral(v bool) {
+	p.StartupScriptsEphemeral = v
+}
+
+func (p *BuildServerParam) GetStartupScriptsEphemeral() bool {
+	return p.StartupScriptsEphemeral
+}
+func (p *BuildServerParam) SetPrivateHostId(v sacloud.ID) {
+	p.PrivateHostId = v
+}
+
+func (p *BuildServerParam) GetPrivateHostId() sacloud.ID {
+	return p.PrivateHostId
+}
+func (p *BuildServerParam) SetDiskPlan(v string) {
+	p.DiskPlan = v
+}
+
+func (p *BuildServerParam) GetDiskPlan() string {
+	return p.DiskPlan
+}
+func (p *BuildServerParam) SetSourceDiskId(v sacloud.ID) {
+	p.SourceDiskId = v
+}
+
+func (p *BuildServerParam) GetSourceDiskId() sacloud.ID {
+	return p.SourceDiskId
+}
+func (p *BuildServerParam) SetNetworkMode(v string) {
+	p.NetworkMode = v
+}
+
+func (p *BuildServerParam) GetNetworkMode() string {
+	return p.NetworkMode
+}
+func (p *BuildServerParam) SetPassword(v string) {
+	p.Password = v
+}
+
+func (p *BuildServerParam) GetPassword() string {
+	return p.Password
+}
+func (p *BuildServerParam) SetDefaultRoute(v string) {
+	p.DefaultRoute = v
+}
+
+func (p *BuildServerParam) GetDefaultRoute() string {
+	return p.DefaultRoute
+}
+func (p *BuildServerParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *BuildServerParam) GetDescription() string {
+	return p.Description
 }
 func (p *BuildServerParam) SetIpaddress(v string) {
 	p.Ipaddress = v
@@ -957,12 +901,12 @@ func (p *BuildServerParam) SetIpaddress(v string) {
 func (p *BuildServerParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *BuildServerParam) SetSshKeyPublicKeys(v []string) {
-	p.SshKeyPublicKeys = v
+func (p *BuildServerParam) SetSSHKeyPublicKeys(v []string) {
+	p.SSHKeyPublicKeys = v
 }
 
-func (p *BuildServerParam) GetSshKeyPublicKeys() []string {
-	return p.SshKeyPublicKeys
+func (p *BuildServerParam) GetSSHKeyPublicKeys() []string {
+	return p.SSHKeyPublicKeys
 }
 func (p *BuildServerParam) SetName(v string) {
 	p.Name = v
@@ -970,6 +914,62 @@ func (p *BuildServerParam) SetName(v string) {
 
 func (p *BuildServerParam) GetName() string {
 	return p.Name
+}
+func (p *BuildServerParam) SetMemory(v int) {
+	p.Memory = v
+}
+
+func (p *BuildServerParam) GetMemory() int {
+	return p.Memory
+}
+func (p *BuildServerParam) SetSSHKeyPassPhrase(v string) {
+	p.SSHKeyPassPhrase = v
+}
+
+func (p *BuildServerParam) GetSSHKeyPassPhrase() string {
+	return p.SSHKeyPassPhrase
+}
+func (p *BuildServerParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *BuildServerParam) GetTags() []string {
+	return p.Tags
+}
+func (p *BuildServerParam) SetUsKeyboard(v bool) {
+	p.UsKeyboard = v
+}
+
+func (p *BuildServerParam) GetUsKeyboard() bool {
+	return p.UsKeyboard
+}
+func (p *BuildServerParam) SetOsType(v string) {
+	p.OsType = v
+}
+
+func (p *BuildServerParam) GetOsType() string {
+	return p.OsType
+}
+func (p *BuildServerParam) SetDisablePasswordAuth(v bool) {
+	p.DisablePasswordAuth = v
+}
+
+func (p *BuildServerParam) GetDisablePasswordAuth() bool {
+	return p.DisablePasswordAuth
+}
+func (p *BuildServerParam) SetSSHKeyPublicKeyFiles(v []string) {
+	p.SSHKeyPublicKeyFiles = v
+}
+
+func (p *BuildServerParam) GetSSHKeyPublicKeyFiles() []string {
+	return p.SSHKeyPublicKeyFiles
+}
+func (p *BuildServerParam) SetDisableBootAfterCreate(v bool) {
+	p.DisableBootAfterCreate = v
+}
+
+func (p *BuildServerParam) GetDisableBootAfterCreate() bool {
+	return p.DisableBootAfterCreate
 }
 
 // ReadServerParam is input parameters for the sacloud API
@@ -1032,11 +1032,11 @@ func (p *ReadServerParam) ColumnDefs() []output.ColumnDef {
 
 // UpdateServerParam is input parameters for the sacloud API
 type UpdateServerParam struct {
+	IconId          sacloud.ID
+	InterfaceDriver string
 	Name            string
 	Description     string
 	Tags            []string
-	IconId          sacloud.ID
-	InterfaceDriver string
 
 	input Input
 }
@@ -1062,6 +1062,12 @@ func (p *UpdateServerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateServerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.InterfaceDriver) {
+		p.InterfaceDriver = ""
+	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -1071,17 +1077,27 @@ func (p *UpdateServerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.InterfaceDriver) {
-		p.InterfaceDriver = ""
-	}
 
 }
 
 func (p *UpdateServerParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["Server"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["update"].Params["interface-driver"].ValidateFunc
+		errs := validator("--interface-driver", p.InterfaceDriver)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["Server"].Commands["update"].Params["name"].ValidateFunc
@@ -1102,22 +1118,6 @@ func (p *UpdateServerParam) validate() error {
 	{
 		validator := define.Resources["Server"].Commands["update"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["update"].Params["interface-driver"].ValidateFunc
-		errs := validator("--interface-driver", p.InterfaceDriver)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1150,6 +1150,20 @@ func (p *UpdateServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *UpdateServerParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *UpdateServerParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+func (p *UpdateServerParam) SetInterfaceDriver(v string) {
+	p.InterfaceDriver = v
+}
+
+func (p *UpdateServerParam) GetInterfaceDriver() string {
+	return p.InterfaceDriver
+}
 func (p *UpdateServerParam) SetName(v string) {
 	p.Name = v
 }
@@ -1170,20 +1184,6 @@ func (p *UpdateServerParam) SetTags(v []string) {
 
 func (p *UpdateServerParam) GetTags() []string {
 	return p.Tags
-}
-func (p *UpdateServerParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *UpdateServerParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
-func (p *UpdateServerParam) SetInterfaceDriver(v string) {
-	p.InterfaceDriver = v
-}
-
-func (p *UpdateServerParam) GetInterfaceDriver() string {
-	return p.InterfaceDriver
 }
 
 // DeleteServerParam is input parameters for the sacloud API
@@ -1734,25 +1734,25 @@ func (p *WaitForDownServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// SshServerParam is input parameters for the sacloud API
-type SshServerParam struct {
-	Quiet    bool
+// SSHServerParam is input parameters for the sacloud API
+type SSHServerParam struct {
 	Key      string
 	User     string
 	Port     int
 	Password string
+	Quiet    bool
 
 	input Input
 }
 
-// NewSshServerParam return new SshServerParam
-func NewSshServerParam() *SshServerParam {
-	return &SshServerParam{
+// NewSSHServerParam return new SSHServerParam
+func NewSSHServerParam() *SSHServerParam {
+	return &SSHServerParam{
 		Port: 22}
 }
 
-// Initialize init SshServerParam
-func (p *SshServerParam) Initialize(in Input) error {
+// Initialize init SSHServerParam
+func (p *SSHServerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1761,14 +1761,11 @@ func (p *SshServerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *SshServerParam) WriteSkeleton(writer io.Writer) error {
+func (p *SSHServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SshServerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Quiet) {
-		p.Quiet = false
-	}
+func (p *SSHServerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Key) {
 		p.Key = ""
 	}
@@ -1781,10 +1778,13 @@ func (p *SshServerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Password) {
 		p.Password = ""
 	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
 
 }
 
-func (p *SshServerParam) validate() error {
+func (p *SSHServerParam) validate() error {
 	var errors []error
 
 	{
@@ -1806,85 +1806,85 @@ func (p *SshServerParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *SshServerParam) ResourceDef() *schema.Resource {
+func (p *SSHServerParam) ResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *SshServerParam) CommandDef() *schema.Command {
+func (p *SSHServerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["ssh"]
 }
 
-func (p *SshServerParam) IncludeFields() []string {
+func (p *SSHServerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *SshServerParam) ExcludeFields() []string {
+func (p *SSHServerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *SshServerParam) TableType() output.TableType {
+func (p *SSHServerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *SshServerParam) ColumnDefs() []output.ColumnDef {
+func (p *SSHServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *SshServerParam) SetQuiet(v bool) {
-	p.Quiet = v
-}
-
-func (p *SshServerParam) GetQuiet() bool {
-	return p.Quiet
-}
-func (p *SshServerParam) SetKey(v string) {
+func (p *SSHServerParam) SetKey(v string) {
 	p.Key = v
 }
 
-func (p *SshServerParam) GetKey() string {
+func (p *SSHServerParam) GetKey() string {
 	return p.Key
 }
-func (p *SshServerParam) SetUser(v string) {
+func (p *SSHServerParam) SetUser(v string) {
 	p.User = v
 }
 
-func (p *SshServerParam) GetUser() string {
+func (p *SSHServerParam) GetUser() string {
 	return p.User
 }
-func (p *SshServerParam) SetPort(v int) {
+func (p *SSHServerParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *SshServerParam) GetPort() int {
+func (p *SSHServerParam) GetPort() int {
 	return p.Port
 }
-func (p *SshServerParam) SetPassword(v string) {
+func (p *SSHServerParam) SetPassword(v string) {
 	p.Password = v
 }
 
-func (p *SshServerParam) GetPassword() string {
+func (p *SSHServerParam) GetPassword() string {
 	return p.Password
 }
+func (p *SSHServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
 
-// SshExecServerParam is input parameters for the sacloud API
-type SshExecServerParam struct {
-	Key      string
+func (p *SSHServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+
+// SSHExecServerParam is input parameters for the sacloud API
+type SSHExecServerParam struct {
 	User     string
 	Port     int
 	Password string
 	Quiet    bool
+	Key      string
 
 	input Input
 }
 
-// NewSshExecServerParam return new SshExecServerParam
-func NewSshExecServerParam() *SshExecServerParam {
-	return &SshExecServerParam{
+// NewSSHExecServerParam return new SSHExecServerParam
+func NewSSHExecServerParam() *SSHExecServerParam {
+	return &SSHExecServerParam{
 		Port: 22}
 }
 
-// Initialize init SshExecServerParam
-func (p *SshExecServerParam) Initialize(in Input) error {
+// Initialize init SSHExecServerParam
+func (p *SSHExecServerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1893,14 +1893,11 @@ func (p *SshExecServerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *SshExecServerParam) WriteSkeleton(writer io.Writer) error {
+func (p *SSHExecServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SshExecServerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Key) {
-		p.Key = ""
-	}
+func (p *SSHExecServerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.User) {
 		p.User = ""
 	}
@@ -1913,19 +1910,14 @@ func (p *SshExecServerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
+	if utils.IsEmpty(p.Key) {
+		p.Key = ""
+	}
 
 }
 
-func (p *SshExecServerParam) validate() error {
+func (p *SSHExecServerParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Server"].Commands["ssh-exec"].Params["key"].ValidateFunc
-		errs := validator("--key", p.Key)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -1935,77 +1927,85 @@ func (p *SshExecServerParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["Server"].Commands["ssh-exec"].Params["key"].ValidateFunc
+		errs := validator("--key", p.Key)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
-func (p *SshExecServerParam) ResourceDef() *schema.Resource {
+func (p *SSHExecServerParam) ResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *SshExecServerParam) CommandDef() *schema.Command {
+func (p *SSHExecServerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["ssh-exec"]
 }
 
-func (p *SshExecServerParam) IncludeFields() []string {
+func (p *SSHExecServerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *SshExecServerParam) ExcludeFields() []string {
+func (p *SSHExecServerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *SshExecServerParam) TableType() output.TableType {
+func (p *SSHExecServerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *SshExecServerParam) ColumnDefs() []output.ColumnDef {
+func (p *SSHExecServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *SshExecServerParam) SetKey(v string) {
-	p.Key = v
-}
-
-func (p *SshExecServerParam) GetKey() string {
-	return p.Key
-}
-func (p *SshExecServerParam) SetUser(v string) {
+func (p *SSHExecServerParam) SetUser(v string) {
 	p.User = v
 }
 
-func (p *SshExecServerParam) GetUser() string {
+func (p *SSHExecServerParam) GetUser() string {
 	return p.User
 }
-func (p *SshExecServerParam) SetPort(v int) {
+func (p *SSHExecServerParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *SshExecServerParam) GetPort() int {
+func (p *SSHExecServerParam) GetPort() int {
 	return p.Port
 }
-func (p *SshExecServerParam) SetPassword(v string) {
+func (p *SSHExecServerParam) SetPassword(v string) {
 	p.Password = v
 }
 
-func (p *SshExecServerParam) GetPassword() string {
+func (p *SSHExecServerParam) GetPassword() string {
 	return p.Password
 }
-func (p *SshExecServerParam) SetQuiet(v bool) {
+func (p *SSHExecServerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *SshExecServerParam) GetQuiet() bool {
+func (p *SSHExecServerParam) GetQuiet() bool {
 	return p.Quiet
+}
+func (p *SSHExecServerParam) SetKey(v string) {
+	p.Key = v
+}
+
+func (p *SSHExecServerParam) GetKey() string {
+	return p.Key
 }
 
 // ScpServerParam is input parameters for the sacloud API
 type ScpServerParam struct {
+	User      string
 	Port      int
 	Password  string
 	Recursive bool
 	Quiet     bool
 	Key       string
-	User      string
 
 	input Input
 }
@@ -2031,6 +2031,9 @@ func (p *ScpServerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ScpServerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.User) {
+		p.User = ""
+	}
 	if utils.IsEmpty(p.Port) {
 		p.Port = 0
 	}
@@ -2045,9 +2048,6 @@ func (p *ScpServerParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Key) {
 		p.Key = ""
-	}
-	if utils.IsEmpty(p.User) {
-		p.User = ""
 	}
 
 }
@@ -2098,6 +2098,13 @@ func (p *ScpServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ScpServerParam) SetUser(v string) {
+	p.User = v
+}
+
+func (p *ScpServerParam) GetUser() string {
+	return p.User
+}
 func (p *ScpServerParam) SetPort(v int) {
 	p.Port = v
 }
@@ -2132,13 +2139,6 @@ func (p *ScpServerParam) SetKey(v string) {
 
 func (p *ScpServerParam) GetKey() string {
 	return p.Key
-}
-func (p *ScpServerParam) SetUser(v string) {
-	p.User = v
-}
-
-func (p *ScpServerParam) GetUser() string {
-	return p.User
 }
 
 // VncServerParam is input parameters for the sacloud API
@@ -2285,11 +2285,11 @@ func (p *VncInfoServerParam) GetWaitForBoot() bool {
 
 // VncSendServerParam is input parameters for the sacloud API
 type VncSendServerParam struct {
-	Command       string
-	CommandFile   string
 	UseUsKeyboard bool
 	Debug         bool
 	WaitForBoot   bool
+	Command       string
+	CommandFile   string
 
 	input Input
 }
@@ -2314,12 +2314,6 @@ func (p *VncSendServerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *VncSendServerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Command) {
-		p.Command = ""
-	}
-	if utils.IsEmpty(p.CommandFile) {
-		p.CommandFile = ""
-	}
 	if utils.IsEmpty(p.UseUsKeyboard) {
 		p.UseUsKeyboard = false
 	}
@@ -2328,6 +2322,12 @@ func (p *VncSendServerParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.WaitForBoot) {
 		p.WaitForBoot = false
+	}
+	if utils.IsEmpty(p.Command) {
+		p.Command = ""
+	}
+	if utils.IsEmpty(p.CommandFile) {
+		p.CommandFile = ""
 	}
 
 }
@@ -2380,20 +2380,6 @@ func (p *VncSendServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *VncSendServerParam) SetCommand(v string) {
-	p.Command = v
-}
-
-func (p *VncSendServerParam) GetCommand() string {
-	return p.Command
-}
-func (p *VncSendServerParam) SetCommandFile(v string) {
-	p.CommandFile = v
-}
-
-func (p *VncSendServerParam) GetCommandFile() string {
-	return p.CommandFile
-}
 func (p *VncSendServerParam) SetUseUsKeyboard(v bool) {
 	p.UseUsKeyboard = v
 }
@@ -2414,6 +2400,20 @@ func (p *VncSendServerParam) SetWaitForBoot(v bool) {
 
 func (p *VncSendServerParam) GetWaitForBoot() bool {
 	return p.WaitForBoot
+}
+func (p *VncSendServerParam) SetCommand(v string) {
+	p.Command = v
+}
+
+func (p *VncSendServerParam) GetCommand() string {
+	return p.Command
+}
+func (p *VncSendServerParam) SetCommandFile(v string) {
+	p.CommandFile = v
+}
+
+func (p *VncSendServerParam) GetCommandFile() string {
+	return p.CommandFile
 }
 
 // VncSnapshotServerParam is input parameters for the sacloud API
@@ -3057,11 +3057,11 @@ func (p *InterfaceAddForInternetServerParam) GetWithoutDiskEdit() bool {
 
 // InterfaceAddForRouterServerParam is input parameters for the sacloud API
 type InterfaceAddForRouterServerParam struct {
-	DefaultRoute    string
 	NwMasklen       int
 	SwitchId        sacloud.ID
 	WithoutDiskEdit bool
 	Ipaddress       string
+	DefaultRoute    string
 
 	input Input
 }
@@ -3087,9 +3087,6 @@ func (p *InterfaceAddForRouterServerParam) WriteSkeleton(writer io.Writer) error
 }
 
 func (p *InterfaceAddForRouterServerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.DefaultRoute) {
-		p.DefaultRoute = ""
-	}
 	if utils.IsEmpty(p.NwMasklen) {
 		p.NwMasklen = 0
 	}
@@ -3102,19 +3099,14 @@ func (p *InterfaceAddForRouterServerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
+	if utils.IsEmpty(p.DefaultRoute) {
+		p.DefaultRoute = ""
+	}
 
 }
 
 func (p *InterfaceAddForRouterServerParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Server"].Commands["interface-add-for-router"].Params["default-route"].ValidateFunc
-		errs := validator("--default-route", p.DefaultRoute)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Server"].Commands["interface-add-for-router"].Params["nw-masklen"].ValidateFunc
@@ -3147,6 +3139,14 @@ func (p *InterfaceAddForRouterServerParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["Server"].Commands["interface-add-for-router"].Params["default-route"].ValidateFunc
+		errs := validator("--default-route", p.DefaultRoute)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
@@ -3174,13 +3174,6 @@ func (p *InterfaceAddForRouterServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *InterfaceAddForRouterServerParam) SetDefaultRoute(v string) {
-	p.DefaultRoute = v
-}
-
-func (p *InterfaceAddForRouterServerParam) GetDefaultRoute() string {
-	return p.DefaultRoute
-}
 func (p *InterfaceAddForRouterServerParam) SetNwMasklen(v int) {
 	p.NwMasklen = v
 }
@@ -3209,14 +3202,21 @@ func (p *InterfaceAddForRouterServerParam) SetIpaddress(v string) {
 func (p *InterfaceAddForRouterServerParam) GetIpaddress() string {
 	return p.Ipaddress
 }
+func (p *InterfaceAddForRouterServerParam) SetDefaultRoute(v string) {
+	p.DefaultRoute = v
+}
+
+func (p *InterfaceAddForRouterServerParam) GetDefaultRoute() string {
+	return p.DefaultRoute
+}
 
 // InterfaceAddForSwitchServerParam is input parameters for the sacloud API
 type InterfaceAddForSwitchServerParam struct {
-	SwitchId        sacloud.ID
 	WithoutDiskEdit bool
 	Ipaddress       string
 	DefaultRoute    string
 	NwMasklen       int
+	SwitchId        sacloud.ID
 
 	input Input
 }
@@ -3242,9 +3242,6 @@ func (p *InterfaceAddForSwitchServerParam) WriteSkeleton(writer io.Writer) error
 }
 
 func (p *InterfaceAddForSwitchServerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.SwitchId) {
-		p.SwitchId = sacloud.ID(0)
-	}
 	if utils.IsEmpty(p.WithoutDiskEdit) {
 		p.WithoutDiskEdit = false
 	}
@@ -3257,26 +3254,14 @@ func (p *InterfaceAddForSwitchServerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.NwMasklen) {
 		p.NwMasklen = 0
 	}
+	if utils.IsEmpty(p.SwitchId) {
+		p.SwitchId = sacloud.ID(0)
+	}
 
 }
 
 func (p *InterfaceAddForSwitchServerParam) validate() error {
 	var errors []error
-
-	{
-		validator := validateRequired
-		errs := validator("--switch-id", p.SwitchId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["interface-add-for-switch"].Params["switch-id"].ValidateFunc
-		errs := validator("--switch-id", p.SwitchId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Server"].Commands["interface-add-for-switch"].Params["ipaddress"].ValidateFunc
@@ -3297,6 +3282,21 @@ func (p *InterfaceAddForSwitchServerParam) validate() error {
 	{
 		validator := define.Resources["Server"].Commands["interface-add-for-switch"].Params["nw-masklen"].ValidateFunc
 		errs := validator("--nw-masklen", p.NwMasklen)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--switch-id", p.SwitchId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["interface-add-for-switch"].Params["switch-id"].ValidateFunc
+		errs := validator("--switch-id", p.SwitchId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3329,13 +3329,6 @@ func (p *InterfaceAddForSwitchServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *InterfaceAddForSwitchServerParam) SetSwitchId(v sacloud.ID) {
-	p.SwitchId = v
-}
-
-func (p *InterfaceAddForSwitchServerParam) GetSwitchId() sacloud.ID {
-	return p.SwitchId
-}
 func (p *InterfaceAddForSwitchServerParam) SetWithoutDiskEdit(v bool) {
 	p.WithoutDiskEdit = v
 }
@@ -3363,6 +3356,13 @@ func (p *InterfaceAddForSwitchServerParam) SetNwMasklen(v int) {
 
 func (p *InterfaceAddForSwitchServerParam) GetNwMasklen() int {
 	return p.NwMasklen
+}
+func (p *InterfaceAddForSwitchServerParam) SetSwitchId(v sacloud.ID) {
+	p.SwitchId = v
+}
+
+func (p *InterfaceAddForSwitchServerParam) GetSwitchId() sacloud.ID {
+	return p.SwitchId
 }
 
 // InterfaceAddDisconnectedServerParam is input parameters for the sacloud API
@@ -3423,18 +3423,18 @@ func (p *InterfaceAddDisconnectedServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// IsoInfoServerParam is input parameters for the sacloud API
-type IsoInfoServerParam struct {
+// ISOInfoServerParam is input parameters for the sacloud API
+type ISOInfoServerParam struct {
 	input Input
 }
 
-// NewIsoInfoServerParam return new IsoInfoServerParam
-func NewIsoInfoServerParam() *IsoInfoServerParam {
-	return &IsoInfoServerParam{}
+// NewISOInfoServerParam return new ISOInfoServerParam
+func NewISOInfoServerParam() *ISOInfoServerParam {
+	return &ISOInfoServerParam{}
 }
 
-// Initialize init IsoInfoServerParam
-func (p *IsoInfoServerParam) Initialize(in Input) error {
+// Initialize init ISOInfoServerParam
+func (p *ISOInfoServerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3443,65 +3443,65 @@ func (p *IsoInfoServerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *IsoInfoServerParam) WriteSkeleton(writer io.Writer) error {
+func (p *ISOInfoServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *IsoInfoServerParam) fillValueToSkeleton() {
+func (p *ISOInfoServerParam) fillValueToSkeleton() {
 
 }
 
-func (p *IsoInfoServerParam) validate() error {
+func (p *ISOInfoServerParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *IsoInfoServerParam) ResourceDef() *schema.Resource {
+func (p *ISOInfoServerParam) ResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *IsoInfoServerParam) CommandDef() *schema.Command {
+func (p *ISOInfoServerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["iso-info"]
 }
 
-func (p *IsoInfoServerParam) IncludeFields() []string {
+func (p *ISOInfoServerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *IsoInfoServerParam) ExcludeFields() []string {
+func (p *ISOInfoServerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *IsoInfoServerParam) TableType() output.TableType {
+func (p *ISOInfoServerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *IsoInfoServerParam) ColumnDefs() []output.ColumnDef {
+func (p *ISOInfoServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// IsoInsertServerParam is input parameters for the sacloud API
-type IsoInsertServerParam struct {
-	IsoImageId  sacloud.ID
-	Size        int
-	IsoFile     string
-	Name        string
+// ISOInsertServerParam is input parameters for the sacloud API
+type ISOInsertServerParam struct {
 	Description string
 	Tags        []string
 	IconId      sacloud.ID
+	ISOImageId  sacloud.ID
+	Size        int
+	ISOFile     string
+	Name        string
 
 	input Input
 }
 
-// NewIsoInsertServerParam return new IsoInsertServerParam
-func NewIsoInsertServerParam() *IsoInsertServerParam {
-	return &IsoInsertServerParam{
+// NewISOInsertServerParam return new ISOInsertServerParam
+func NewISOInsertServerParam() *ISOInsertServerParam {
+	return &ISOInsertServerParam{
 		Size: 5}
 }
 
-// Initialize init IsoInsertServerParam
-func (p *IsoInsertServerParam) Initialize(in Input) error {
+// Initialize init ISOInsertServerParam
+func (p *ISOInsertServerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3510,23 +3510,11 @@ func (p *IsoInsertServerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *IsoInsertServerParam) WriteSkeleton(writer io.Writer) error {
+func (p *ISOInsertServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *IsoInsertServerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.IsoImageId) {
-		p.IsoImageId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.Size) {
-		p.Size = 0
-	}
-	if utils.IsEmpty(p.IsoFile) {
-		p.IsoFile = ""
-	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
+func (p *ISOInsertServerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
@@ -3536,35 +3524,23 @@ func (p *IsoInsertServerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
+	if utils.IsEmpty(p.ISOImageId) {
+		p.ISOImageId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Size) {
+		p.Size = 0
+	}
+	if utils.IsEmpty(p.ISOFile) {
+		p.ISOFile = ""
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
 
 }
 
-func (p *IsoInsertServerParam) validate() error {
+func (p *ISOInsertServerParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Server"].Commands["iso-insert"].Params["iso-image-id"].ValidateFunc
-		errs := validator("--iso-image-id", p.IsoImageId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["iso-insert"].Params["size"].ValidateFunc
-		errs := validator("--size", p.Size)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Server"].Commands["iso-insert"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Server"].Commands["iso-insert"].Params["description"].ValidateFunc
@@ -3590,95 +3566,119 @@ func (p *IsoInsertServerParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["Server"].Commands["iso-insert"].Params["iso-image-id"].ValidateFunc
+		errs := validator("--iso-image-id", p.ISOImageId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["iso-insert"].Params["size"].ValidateFunc
+		errs := validator("--size", p.Size)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Server"].Commands["iso-insert"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
-func (p *IsoInsertServerParam) ResourceDef() *schema.Resource {
+func (p *ISOInsertServerParam) ResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *IsoInsertServerParam) CommandDef() *schema.Command {
+func (p *ISOInsertServerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["iso-insert"]
 }
 
-func (p *IsoInsertServerParam) IncludeFields() []string {
+func (p *ISOInsertServerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *IsoInsertServerParam) ExcludeFields() []string {
+func (p *ISOInsertServerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *IsoInsertServerParam) TableType() output.TableType {
+func (p *ISOInsertServerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *IsoInsertServerParam) ColumnDefs() []output.ColumnDef {
+func (p *ISOInsertServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *IsoInsertServerParam) SetIsoImageId(v sacloud.ID) {
-	p.IsoImageId = v
-}
-
-func (p *IsoInsertServerParam) GetIsoImageId() sacloud.ID {
-	return p.IsoImageId
-}
-func (p *IsoInsertServerParam) SetSize(v int) {
-	p.Size = v
-}
-
-func (p *IsoInsertServerParam) GetSize() int {
-	return p.Size
-}
-func (p *IsoInsertServerParam) SetIsoFile(v string) {
-	p.IsoFile = v
-}
-
-func (p *IsoInsertServerParam) GetIsoFile() string {
-	return p.IsoFile
-}
-func (p *IsoInsertServerParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *IsoInsertServerParam) GetName() string {
-	return p.Name
-}
-func (p *IsoInsertServerParam) SetDescription(v string) {
+func (p *ISOInsertServerParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *IsoInsertServerParam) GetDescription() string {
+func (p *ISOInsertServerParam) GetDescription() string {
 	return p.Description
 }
-func (p *IsoInsertServerParam) SetTags(v []string) {
+func (p *ISOInsertServerParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *IsoInsertServerParam) GetTags() []string {
+func (p *ISOInsertServerParam) GetTags() []string {
 	return p.Tags
 }
-func (p *IsoInsertServerParam) SetIconId(v sacloud.ID) {
+func (p *ISOInsertServerParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *IsoInsertServerParam) GetIconId() sacloud.ID {
+func (p *ISOInsertServerParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
+func (p *ISOInsertServerParam) SetISOImageId(v sacloud.ID) {
+	p.ISOImageId = v
+}
 
-// IsoEjectServerParam is input parameters for the sacloud API
-type IsoEjectServerParam struct {
+func (p *ISOInsertServerParam) GetISOImageId() sacloud.ID {
+	return p.ISOImageId
+}
+func (p *ISOInsertServerParam) SetSize(v int) {
+	p.Size = v
+}
+
+func (p *ISOInsertServerParam) GetSize() int {
+	return p.Size
+}
+func (p *ISOInsertServerParam) SetISOFile(v string) {
+	p.ISOFile = v
+}
+
+func (p *ISOInsertServerParam) GetISOFile() string {
+	return p.ISOFile
+}
+func (p *ISOInsertServerParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *ISOInsertServerParam) GetName() string {
+	return p.Name
+}
+
+// ISOEjectServerParam is input parameters for the sacloud API
+type ISOEjectServerParam struct {
 	input Input
 }
 
-// NewIsoEjectServerParam return new IsoEjectServerParam
-func NewIsoEjectServerParam() *IsoEjectServerParam {
-	return &IsoEjectServerParam{}
+// NewISOEjectServerParam return new ISOEjectServerParam
+func NewISOEjectServerParam() *ISOEjectServerParam {
+	return &ISOEjectServerParam{}
 }
 
-// Initialize init IsoEjectServerParam
-func (p *IsoEjectServerParam) Initialize(in Input) error {
+// Initialize init ISOEjectServerParam
+func (p *ISOEjectServerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3687,46 +3687,46 @@ func (p *IsoEjectServerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *IsoEjectServerParam) WriteSkeleton(writer io.Writer) error {
+func (p *ISOEjectServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *IsoEjectServerParam) fillValueToSkeleton() {
+func (p *ISOEjectServerParam) fillValueToSkeleton() {
 
 }
 
-func (p *IsoEjectServerParam) validate() error {
+func (p *ISOEjectServerParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *IsoEjectServerParam) ResourceDef() *schema.Resource {
+func (p *ISOEjectServerParam) ResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *IsoEjectServerParam) CommandDef() *schema.Command {
+func (p *ISOEjectServerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["iso-eject"]
 }
 
-func (p *IsoEjectServerParam) IncludeFields() []string {
+func (p *ISOEjectServerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *IsoEjectServerParam) ExcludeFields() []string {
+func (p *ISOEjectServerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *IsoEjectServerParam) TableType() output.TableType {
+func (p *ISOEjectServerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *IsoEjectServerParam) ColumnDefs() []output.ColumnDef {
+func (p *ISOEjectServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// MonitorCpuServerParam is input parameters for the sacloud API
-type MonitorCpuServerParam struct {
+// MonitorCPUServerParam is input parameters for the sacloud API
+type MonitorCPUServerParam struct {
 	Start     string
 	End       string
 	KeyFormat string
@@ -3734,14 +3734,14 @@ type MonitorCpuServerParam struct {
 	input Input
 }
 
-// NewMonitorCpuServerParam return new MonitorCpuServerParam
-func NewMonitorCpuServerParam() *MonitorCpuServerParam {
-	return &MonitorCpuServerParam{
+// NewMonitorCPUServerParam return new MonitorCPUServerParam
+func NewMonitorCPUServerParam() *MonitorCPUServerParam {
+	return &MonitorCPUServerParam{
 		KeyFormat: "sakuracloud.server.{{.ID}}.cpu"}
 }
 
-// Initialize init MonitorCpuServerParam
-func (p *MonitorCpuServerParam) Initialize(in Input) error {
+// Initialize init MonitorCPUServerParam
+func (p *MonitorCPUServerParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3750,11 +3750,11 @@ func (p *MonitorCpuServerParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *MonitorCpuServerParam) WriteSkeleton(writer io.Writer) error {
+func (p *MonitorCPUServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *MonitorCpuServerParam) fillValueToSkeleton() {
+func (p *MonitorCPUServerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Start) {
 		p.Start = ""
 	}
@@ -3767,7 +3767,7 @@ func (p *MonitorCpuServerParam) fillValueToSkeleton() {
 
 }
 
-func (p *MonitorCpuServerParam) validate() error {
+func (p *MonitorCPUServerParam) validate() error {
 	var errors []error
 
 	{
@@ -3797,58 +3797,58 @@ func (p *MonitorCpuServerParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *MonitorCpuServerParam) ResourceDef() *schema.Resource {
+func (p *MonitorCPUServerParam) ResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *MonitorCpuServerParam) CommandDef() *schema.Command {
+func (p *MonitorCPUServerParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["monitor-cpu"]
 }
 
-func (p *MonitorCpuServerParam) IncludeFields() []string {
+func (p *MonitorCPUServerParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *MonitorCpuServerParam) ExcludeFields() []string {
+func (p *MonitorCPUServerParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *MonitorCpuServerParam) TableType() output.TableType {
+func (p *MonitorCPUServerParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *MonitorCpuServerParam) ColumnDefs() []output.ColumnDef {
+func (p *MonitorCPUServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *MonitorCpuServerParam) SetStart(v string) {
+func (p *MonitorCPUServerParam) SetStart(v string) {
 	p.Start = v
 }
 
-func (p *MonitorCpuServerParam) GetStart() string {
+func (p *MonitorCPUServerParam) GetStart() string {
 	return p.Start
 }
-func (p *MonitorCpuServerParam) SetEnd(v string) {
+func (p *MonitorCPUServerParam) SetEnd(v string) {
 	p.End = v
 }
 
-func (p *MonitorCpuServerParam) GetEnd() string {
+func (p *MonitorCPUServerParam) GetEnd() string {
 	return p.End
 }
-func (p *MonitorCpuServerParam) SetKeyFormat(v string) {
+func (p *MonitorCPUServerParam) SetKeyFormat(v string) {
 	p.KeyFormat = v
 }
 
-func (p *MonitorCpuServerParam) GetKeyFormat() string {
+func (p *MonitorCPUServerParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
 
 // MonitorNicServerParam is input parameters for the sacloud API
 type MonitorNicServerParam struct {
-	Index     []int
-	KeyFormat string
 	Start     string
 	End       string
+	Index     []int
+	KeyFormat string
 
 	input Input
 }
@@ -3874,31 +3874,23 @@ func (p *MonitorNicServerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *MonitorNicServerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
-		p.Index = []int{0}
-	}
-	if utils.IsEmpty(p.KeyFormat) {
-		p.KeyFormat = ""
-	}
 	if utils.IsEmpty(p.Start) {
 		p.Start = ""
 	}
 	if utils.IsEmpty(p.End) {
 		p.End = ""
 	}
+	if utils.IsEmpty(p.Index) {
+		p.Index = []int{0}
+	}
+	if utils.IsEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
 
 }
 
 func (p *MonitorNicServerParam) validate() error {
 	var errors []error
-
-	{
-		validator := validateRequired
-		errs := validator("--key-format", p.KeyFormat)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Server"].Commands["monitor-nic"].Params["start"].ValidateFunc
@@ -3911,6 +3903,14 @@ func (p *MonitorNicServerParam) validate() error {
 	{
 		validator := define.Resources["Server"].Commands["monitor-nic"].Params["end"].ValidateFunc
 		errs := validator("--end", p.End)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3943,20 +3943,6 @@ func (p *MonitorNicServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *MonitorNicServerParam) SetIndex(v []int) {
-	p.Index = v
-}
-
-func (p *MonitorNicServerParam) GetIndex() []int {
-	return p.Index
-}
-func (p *MonitorNicServerParam) SetKeyFormat(v string) {
-	p.KeyFormat = v
-}
-
-func (p *MonitorNicServerParam) GetKeyFormat() string {
-	return p.KeyFormat
-}
 func (p *MonitorNicServerParam) SetStart(v string) {
 	p.Start = v
 }
@@ -3971,13 +3957,27 @@ func (p *MonitorNicServerParam) SetEnd(v string) {
 func (p *MonitorNicServerParam) GetEnd() string {
 	return p.End
 }
+func (p *MonitorNicServerParam) SetIndex(v []int) {
+	p.Index = v
+}
+
+func (p *MonitorNicServerParam) GetIndex() []int {
+	return p.Index
+}
+func (p *MonitorNicServerParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorNicServerParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
 
 // MonitorDiskServerParam is input parameters for the sacloud API
 type MonitorDiskServerParam struct {
+	Index     []int
 	KeyFormat string
 	Start     string
 	End       string
-	Index     []int
 
 	input Input
 }
@@ -4003,6 +4003,9 @@ func (p *MonitorDiskServerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *MonitorDiskServerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Index) {
+		p.Index = []int{0}
+	}
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
@@ -4011,9 +4014,6 @@ func (p *MonitorDiskServerParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.End) {
 		p.End = ""
-	}
-	if utils.IsEmpty(p.Index) {
-		p.Index = []int{0}
 	}
 
 }
@@ -4072,6 +4072,13 @@ func (p *MonitorDiskServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *MonitorDiskServerParam) SetIndex(v []int) {
+	p.Index = v
+}
+
+func (p *MonitorDiskServerParam) GetIndex() []int {
+	return p.Index
+}
 func (p *MonitorDiskServerParam) SetKeyFormat(v string) {
 	p.KeyFormat = v
 }
@@ -4092,13 +4099,6 @@ func (p *MonitorDiskServerParam) SetEnd(v string) {
 
 func (p *MonitorDiskServerParam) GetEnd() string {
 	return p.End
-}
-func (p *MonitorDiskServerParam) SetIndex(v []int) {
-	p.Index = v
-}
-
-func (p *MonitorDiskServerParam) GetIndex() []int {
-	return p.Index
 }
 
 // MaintenanceInfoServerParam is input parameters for the sacloud API

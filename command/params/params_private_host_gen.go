@@ -23,8 +23,8 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListPrivatehostParam is input parameters for the sacloud API
-type ListPrivatehostParam struct {
+// ListPrivateHostParam is input parameters for the sacloud API
+type ListPrivateHostParam struct {
 	Name              []string     `json:"name"`
 	Id                []sacloud.ID `json:"id"`
 	Tags              []string     `json:"tags"`
@@ -45,13 +45,13 @@ type ListPrivatehostParam struct {
 	QueryFile         string       `json:"query-file"`
 }
 
-// NewListPrivatehostParam return new ListPrivatehostParam
-func NewListPrivatehostParam() *ListPrivatehostParam {
-	return &ListPrivatehostParam{}
+// NewListPrivateHostParam return new ListPrivateHostParam
+func NewListPrivateHostParam() *ListPrivateHostParam {
+	return &ListPrivateHostParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListPrivatehostParam) FillValueToSkeleton() {
+func (p *ListPrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -110,7 +110,7 @@ func (p *ListPrivatehostParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListPrivatehostParam) Validate() []error {
+func (p *ListPrivateHostParam) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
@@ -168,159 +168,159 @@ func (p *ListPrivatehostParam) Validate() []error {
 	return errors
 }
 
-func (p *ListPrivatehostParam) GetResourceDef() *schema.Resource {
+func (p *ListPrivateHostParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PrivateHost"]
 }
 
-func (p *ListPrivatehostParam) GetCommandDef() *schema.Command {
+func (p *ListPrivateHostParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListPrivatehostParam) GetIncludeFields() []string {
+func (p *ListPrivateHostParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListPrivatehostParam) GetExcludeFields() []string {
+func (p *ListPrivateHostParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListPrivatehostParam) GetTableType() output.TableType {
+func (p *ListPrivateHostParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListPrivatehostParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListPrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListPrivatehostParam) SetName(v []string) {
+func (p *ListPrivateHostParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListPrivatehostParam) GetName() []string {
+func (p *ListPrivateHostParam) GetName() []string {
 	return p.Name
 }
-func (p *ListPrivatehostParam) SetId(v []sacloud.ID) {
+func (p *ListPrivateHostParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListPrivatehostParam) GetId() []sacloud.ID {
+func (p *ListPrivateHostParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListPrivatehostParam) SetTags(v []string) {
+func (p *ListPrivateHostParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *ListPrivatehostParam) GetTags() []string {
+func (p *ListPrivateHostParam) GetTags() []string {
 	return p.Tags
 }
-func (p *ListPrivatehostParam) SetFrom(v int) {
+func (p *ListPrivateHostParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListPrivatehostParam) GetFrom() int {
+func (p *ListPrivateHostParam) GetFrom() int {
 	return p.From
 }
-func (p *ListPrivatehostParam) SetMax(v int) {
+func (p *ListPrivateHostParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListPrivatehostParam) GetMax() int {
+func (p *ListPrivateHostParam) GetMax() int {
 	return p.Max
 }
-func (p *ListPrivatehostParam) SetSort(v []string) {
+func (p *ListPrivateHostParam) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListPrivatehostParam) GetSort() []string {
+func (p *ListPrivateHostParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListPrivatehostParam) SetParamTemplate(v string) {
+func (p *ListPrivateHostParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListPrivatehostParam) GetParamTemplate() string {
+func (p *ListPrivateHostParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListPrivatehostParam) SetParameters(v string) {
+func (p *ListPrivateHostParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ListPrivatehostParam) GetParameters() string {
+func (p *ListPrivateHostParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ListPrivatehostParam) SetParamTemplateFile(v string) {
+func (p *ListPrivateHostParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListPrivatehostParam) GetParamTemplateFile() string {
+func (p *ListPrivateHostParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListPrivatehostParam) SetParameterFile(v string) {
+func (p *ListPrivateHostParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ListPrivatehostParam) GetParameterFile() string {
+func (p *ListPrivateHostParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ListPrivatehostParam) SetGenerateSkeleton(v bool) {
+func (p *ListPrivateHostParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListPrivatehostParam) GetGenerateSkeleton() bool {
+func (p *ListPrivateHostParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListPrivatehostParam) SetOutputType(v string) {
+func (p *ListPrivateHostParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListPrivatehostParam) GetOutputType() string {
+func (p *ListPrivateHostParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListPrivatehostParam) SetColumn(v []string) {
+func (p *ListPrivateHostParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListPrivatehostParam) GetColumn() []string {
+func (p *ListPrivateHostParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ListPrivatehostParam) SetQuiet(v bool) {
+func (p *ListPrivateHostParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListPrivatehostParam) GetQuiet() bool {
+func (p *ListPrivateHostParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListPrivatehostParam) SetFormat(v string) {
+func (p *ListPrivateHostParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListPrivatehostParam) GetFormat() string {
+func (p *ListPrivateHostParam) GetFormat() string {
 	return p.Format
 }
-func (p *ListPrivatehostParam) SetFormatFile(v string) {
+func (p *ListPrivateHostParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListPrivatehostParam) GetFormatFile() string {
+func (p *ListPrivateHostParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListPrivatehostParam) SetQuery(v string) {
+func (p *ListPrivateHostParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListPrivatehostParam) GetQuery() string {
+func (p *ListPrivateHostParam) GetQuery() string {
 	return p.Query
 }
-func (p *ListPrivatehostParam) SetQueryFile(v string) {
+func (p *ListPrivateHostParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListPrivatehostParam) GetQueryFile() string {
+func (p *ListPrivateHostParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// CreatePrivatehostParam is input parameters for the sacloud API
-type CreatePrivatehostParam struct {
+// CreatePrivateHostParam is input parameters for the sacloud API
+type CreatePrivateHostParam struct {
 	Name              string     `json:"name"`
 	Description       string     `json:"description"`
 	Tags              []string   `json:"tags"`
@@ -340,13 +340,13 @@ type CreatePrivatehostParam struct {
 	QueryFile         string     `json:"query-file"`
 }
 
-// NewCreatePrivatehostParam return new CreatePrivatehostParam
-func NewCreatePrivatehostParam() *CreatePrivatehostParam {
-	return &CreatePrivatehostParam{}
+// NewCreatePrivateHostParam return new CreatePrivateHostParam
+func NewCreatePrivateHostParam() *CreatePrivateHostParam {
+	return &CreatePrivateHostParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CreatePrivatehostParam) FillValueToSkeleton() {
+func (p *CreatePrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -402,7 +402,7 @@ func (p *CreatePrivatehostParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CreatePrivatehostParam) Validate() []error {
+func (p *CreatePrivateHostParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -463,152 +463,152 @@ func (p *CreatePrivatehostParam) Validate() []error {
 	return errors
 }
 
-func (p *CreatePrivatehostParam) GetResourceDef() *schema.Resource {
+func (p *CreatePrivateHostParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PrivateHost"]
 }
 
-func (p *CreatePrivatehostParam) GetCommandDef() *schema.Command {
+func (p *CreatePrivateHostParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["create"]
 }
 
-func (p *CreatePrivatehostParam) GetIncludeFields() []string {
+func (p *CreatePrivateHostParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CreatePrivatehostParam) GetExcludeFields() []string {
+func (p *CreatePrivateHostParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CreatePrivatehostParam) GetTableType() output.TableType {
+func (p *CreatePrivateHostParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CreatePrivatehostParam) GetColumnDefs() []output.ColumnDef {
+func (p *CreatePrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CreatePrivatehostParam) SetName(v string) {
+func (p *CreatePrivateHostParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *CreatePrivatehostParam) GetName() string {
+func (p *CreatePrivateHostParam) GetName() string {
 	return p.Name
 }
-func (p *CreatePrivatehostParam) SetDescription(v string) {
+func (p *CreatePrivateHostParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *CreatePrivatehostParam) GetDescription() string {
+func (p *CreatePrivateHostParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreatePrivatehostParam) SetTags(v []string) {
+func (p *CreatePrivateHostParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreatePrivatehostParam) GetTags() []string {
+func (p *CreatePrivateHostParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreatePrivatehostParam) SetIconId(v sacloud.ID) {
+func (p *CreatePrivateHostParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreatePrivatehostParam) GetIconId() sacloud.ID {
+func (p *CreatePrivateHostParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *CreatePrivatehostParam) SetAssumeyes(v bool) {
+func (p *CreatePrivateHostParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *CreatePrivatehostParam) GetAssumeyes() bool {
+func (p *CreatePrivateHostParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CreatePrivatehostParam) SetParamTemplate(v string) {
+func (p *CreatePrivateHostParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CreatePrivatehostParam) GetParamTemplate() string {
+func (p *CreatePrivateHostParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CreatePrivatehostParam) SetParameters(v string) {
+func (p *CreatePrivateHostParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *CreatePrivatehostParam) GetParameters() string {
+func (p *CreatePrivateHostParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *CreatePrivatehostParam) SetParamTemplateFile(v string) {
+func (p *CreatePrivateHostParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CreatePrivatehostParam) GetParamTemplateFile() string {
+func (p *CreatePrivateHostParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CreatePrivatehostParam) SetParameterFile(v string) {
+func (p *CreatePrivateHostParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *CreatePrivatehostParam) GetParameterFile() string {
+func (p *CreatePrivateHostParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *CreatePrivatehostParam) SetGenerateSkeleton(v bool) {
+func (p *CreatePrivateHostParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CreatePrivatehostParam) GetGenerateSkeleton() bool {
+func (p *CreatePrivateHostParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CreatePrivatehostParam) SetOutputType(v string) {
+func (p *CreatePrivateHostParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CreatePrivatehostParam) GetOutputType() string {
+func (p *CreatePrivateHostParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CreatePrivatehostParam) SetColumn(v []string) {
+func (p *CreatePrivateHostParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CreatePrivatehostParam) GetColumn() []string {
+func (p *CreatePrivateHostParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CreatePrivatehostParam) SetQuiet(v bool) {
+func (p *CreatePrivateHostParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CreatePrivatehostParam) GetQuiet() bool {
+func (p *CreatePrivateHostParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CreatePrivatehostParam) SetFormat(v string) {
+func (p *CreatePrivateHostParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CreatePrivatehostParam) GetFormat() string {
+func (p *CreatePrivateHostParam) GetFormat() string {
 	return p.Format
 }
-func (p *CreatePrivatehostParam) SetFormatFile(v string) {
+func (p *CreatePrivateHostParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CreatePrivatehostParam) GetFormatFile() string {
+func (p *CreatePrivateHostParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CreatePrivatehostParam) SetQuery(v string) {
+func (p *CreatePrivateHostParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CreatePrivatehostParam) GetQuery() string {
+func (p *CreatePrivateHostParam) GetQuery() string {
 	return p.Query
 }
-func (p *CreatePrivatehostParam) SetQueryFile(v string) {
+func (p *CreatePrivateHostParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CreatePrivatehostParam) GetQueryFile() string {
+func (p *CreatePrivateHostParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// ReadPrivatehostParam is input parameters for the sacloud API
-type ReadPrivatehostParam struct {
+// ReadPrivateHostParam is input parameters for the sacloud API
+type ReadPrivateHostParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
 	Parameters        string     `json:"parameters"`
@@ -625,13 +625,13 @@ type ReadPrivatehostParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewReadPrivatehostParam return new ReadPrivatehostParam
-func NewReadPrivatehostParam() *ReadPrivatehostParam {
-	return &ReadPrivatehostParam{}
+// NewReadPrivateHostParam return new ReadPrivateHostParam
+func NewReadPrivateHostParam() *ReadPrivateHostParam {
+	return &ReadPrivateHostParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ReadPrivatehostParam) FillValueToSkeleton() {
+func (p *ReadPrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -678,7 +678,7 @@ func (p *ReadPrivatehostParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ReadPrivatehostParam) Validate() []error {
+func (p *ReadPrivateHostParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -711,131 +711,131 @@ func (p *ReadPrivatehostParam) Validate() []error {
 	return errors
 }
 
-func (p *ReadPrivatehostParam) GetResourceDef() *schema.Resource {
+func (p *ReadPrivateHostParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PrivateHost"]
 }
 
-func (p *ReadPrivatehostParam) GetCommandDef() *schema.Command {
+func (p *ReadPrivateHostParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["read"]
 }
 
-func (p *ReadPrivatehostParam) GetIncludeFields() []string {
+func (p *ReadPrivateHostParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ReadPrivatehostParam) GetExcludeFields() []string {
+func (p *ReadPrivateHostParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ReadPrivatehostParam) GetTableType() output.TableType {
+func (p *ReadPrivateHostParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ReadPrivatehostParam) GetColumnDefs() []output.ColumnDef {
+func (p *ReadPrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReadPrivatehostParam) SetSelector(v []string) {
+func (p *ReadPrivateHostParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ReadPrivatehostParam) GetSelector() []string {
+func (p *ReadPrivateHostParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ReadPrivatehostParam) SetParamTemplate(v string) {
+func (p *ReadPrivateHostParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ReadPrivatehostParam) GetParamTemplate() string {
+func (p *ReadPrivateHostParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ReadPrivatehostParam) SetParameters(v string) {
+func (p *ReadPrivateHostParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ReadPrivatehostParam) GetParameters() string {
+func (p *ReadPrivateHostParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ReadPrivatehostParam) SetParamTemplateFile(v string) {
+func (p *ReadPrivateHostParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ReadPrivatehostParam) GetParamTemplateFile() string {
+func (p *ReadPrivateHostParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ReadPrivatehostParam) SetParameterFile(v string) {
+func (p *ReadPrivateHostParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ReadPrivatehostParam) GetParameterFile() string {
+func (p *ReadPrivateHostParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ReadPrivatehostParam) SetGenerateSkeleton(v bool) {
+func (p *ReadPrivateHostParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ReadPrivatehostParam) GetGenerateSkeleton() bool {
+func (p *ReadPrivateHostParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReadPrivatehostParam) SetOutputType(v string) {
+func (p *ReadPrivateHostParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ReadPrivatehostParam) GetOutputType() string {
+func (p *ReadPrivateHostParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ReadPrivatehostParam) SetColumn(v []string) {
+func (p *ReadPrivateHostParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ReadPrivatehostParam) GetColumn() []string {
+func (p *ReadPrivateHostParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ReadPrivatehostParam) SetQuiet(v bool) {
+func (p *ReadPrivateHostParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ReadPrivatehostParam) GetQuiet() bool {
+func (p *ReadPrivateHostParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ReadPrivatehostParam) SetFormat(v string) {
+func (p *ReadPrivateHostParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ReadPrivatehostParam) GetFormat() string {
+func (p *ReadPrivateHostParam) GetFormat() string {
 	return p.Format
 }
-func (p *ReadPrivatehostParam) SetFormatFile(v string) {
+func (p *ReadPrivateHostParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ReadPrivatehostParam) GetFormatFile() string {
+func (p *ReadPrivateHostParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ReadPrivatehostParam) SetQuery(v string) {
+func (p *ReadPrivateHostParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ReadPrivatehostParam) GetQuery() string {
+func (p *ReadPrivateHostParam) GetQuery() string {
 	return p.Query
 }
-func (p *ReadPrivatehostParam) SetQueryFile(v string) {
+func (p *ReadPrivateHostParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ReadPrivatehostParam) GetQueryFile() string {
+func (p *ReadPrivateHostParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadPrivatehostParam) SetId(v sacloud.ID) {
+func (p *ReadPrivateHostParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadPrivatehostParam) GetId() sacloud.ID {
+func (p *ReadPrivateHostParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// UpdatePrivatehostParam is input parameters for the sacloud API
-type UpdatePrivatehostParam struct {
+// UpdatePrivateHostParam is input parameters for the sacloud API
+type UpdatePrivateHostParam struct {
 	Selector          []string   `json:"selector"`
 	Name              string     `json:"name"`
 	Description       string     `json:"description"`
@@ -857,13 +857,13 @@ type UpdatePrivatehostParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewUpdatePrivatehostParam return new UpdatePrivatehostParam
-func NewUpdatePrivatehostParam() *UpdatePrivatehostParam {
-	return &UpdatePrivatehostParam{}
+// NewUpdatePrivateHostParam return new UpdatePrivateHostParam
+func NewUpdatePrivateHostParam() *UpdatePrivateHostParam {
+	return &UpdatePrivateHostParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *UpdatePrivatehostParam) FillValueToSkeleton() {
+func (p *UpdatePrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -925,7 +925,7 @@ func (p *UpdatePrivatehostParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *UpdatePrivatehostParam) Validate() []error {
+func (p *UpdatePrivateHostParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["PrivateHost"].Commands["update"].Params["name"].ValidateFunc
@@ -986,166 +986,166 @@ func (p *UpdatePrivatehostParam) Validate() []error {
 	return errors
 }
 
-func (p *UpdatePrivatehostParam) GetResourceDef() *schema.Resource {
+func (p *UpdatePrivateHostParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PrivateHost"]
 }
 
-func (p *UpdatePrivatehostParam) GetCommandDef() *schema.Command {
+func (p *UpdatePrivateHostParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["update"]
 }
 
-func (p *UpdatePrivatehostParam) GetIncludeFields() []string {
+func (p *UpdatePrivateHostParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *UpdatePrivatehostParam) GetExcludeFields() []string {
+func (p *UpdatePrivateHostParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *UpdatePrivatehostParam) GetTableType() output.TableType {
+func (p *UpdatePrivateHostParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *UpdatePrivatehostParam) GetColumnDefs() []output.ColumnDef {
+func (p *UpdatePrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *UpdatePrivatehostParam) SetSelector(v []string) {
+func (p *UpdatePrivateHostParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *UpdatePrivatehostParam) GetSelector() []string {
+func (p *UpdatePrivateHostParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *UpdatePrivatehostParam) SetName(v string) {
+func (p *UpdatePrivateHostParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *UpdatePrivatehostParam) GetName() string {
+func (p *UpdatePrivateHostParam) GetName() string {
 	return p.Name
 }
-func (p *UpdatePrivatehostParam) SetDescription(v string) {
+func (p *UpdatePrivateHostParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdatePrivatehostParam) GetDescription() string {
+func (p *UpdatePrivateHostParam) GetDescription() string {
 	return p.Description
 }
-func (p *UpdatePrivatehostParam) SetTags(v []string) {
+func (p *UpdatePrivateHostParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *UpdatePrivatehostParam) GetTags() []string {
+func (p *UpdatePrivateHostParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdatePrivatehostParam) SetIconId(v sacloud.ID) {
+func (p *UpdatePrivateHostParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdatePrivatehostParam) GetIconId() sacloud.ID {
+func (p *UpdatePrivateHostParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *UpdatePrivatehostParam) SetAssumeyes(v bool) {
+func (p *UpdatePrivateHostParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *UpdatePrivatehostParam) GetAssumeyes() bool {
+func (p *UpdatePrivateHostParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *UpdatePrivatehostParam) SetParamTemplate(v string) {
+func (p *UpdatePrivateHostParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *UpdatePrivatehostParam) GetParamTemplate() string {
+func (p *UpdatePrivateHostParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *UpdatePrivatehostParam) SetParameters(v string) {
+func (p *UpdatePrivateHostParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *UpdatePrivatehostParam) GetParameters() string {
+func (p *UpdatePrivateHostParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *UpdatePrivatehostParam) SetParamTemplateFile(v string) {
+func (p *UpdatePrivateHostParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *UpdatePrivatehostParam) GetParamTemplateFile() string {
+func (p *UpdatePrivateHostParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *UpdatePrivatehostParam) SetParameterFile(v string) {
+func (p *UpdatePrivateHostParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *UpdatePrivatehostParam) GetParameterFile() string {
+func (p *UpdatePrivateHostParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *UpdatePrivatehostParam) SetGenerateSkeleton(v bool) {
+func (p *UpdatePrivateHostParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *UpdatePrivatehostParam) GetGenerateSkeleton() bool {
+func (p *UpdatePrivateHostParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *UpdatePrivatehostParam) SetOutputType(v string) {
+func (p *UpdatePrivateHostParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *UpdatePrivatehostParam) GetOutputType() string {
+func (p *UpdatePrivateHostParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *UpdatePrivatehostParam) SetColumn(v []string) {
+func (p *UpdatePrivateHostParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *UpdatePrivatehostParam) GetColumn() []string {
+func (p *UpdatePrivateHostParam) GetColumn() []string {
 	return p.Column
 }
-func (p *UpdatePrivatehostParam) SetQuiet(v bool) {
+func (p *UpdatePrivateHostParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *UpdatePrivatehostParam) GetQuiet() bool {
+func (p *UpdatePrivateHostParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *UpdatePrivatehostParam) SetFormat(v string) {
+func (p *UpdatePrivateHostParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *UpdatePrivatehostParam) GetFormat() string {
+func (p *UpdatePrivateHostParam) GetFormat() string {
 	return p.Format
 }
-func (p *UpdatePrivatehostParam) SetFormatFile(v string) {
+func (p *UpdatePrivateHostParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *UpdatePrivatehostParam) GetFormatFile() string {
+func (p *UpdatePrivateHostParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *UpdatePrivatehostParam) SetQuery(v string) {
+func (p *UpdatePrivateHostParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *UpdatePrivatehostParam) GetQuery() string {
+func (p *UpdatePrivateHostParam) GetQuery() string {
 	return p.Query
 }
-func (p *UpdatePrivatehostParam) SetQueryFile(v string) {
+func (p *UpdatePrivateHostParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *UpdatePrivatehostParam) GetQueryFile() string {
+func (p *UpdatePrivateHostParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdatePrivatehostParam) SetId(v sacloud.ID) {
+func (p *UpdatePrivateHostParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdatePrivatehostParam) GetId() sacloud.ID {
+func (p *UpdatePrivateHostParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// DeletePrivatehostParam is input parameters for the sacloud API
-type DeletePrivatehostParam struct {
+// DeletePrivateHostParam is input parameters for the sacloud API
+type DeletePrivateHostParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -1163,13 +1163,13 @@ type DeletePrivatehostParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewDeletePrivatehostParam return new DeletePrivatehostParam
-func NewDeletePrivatehostParam() *DeletePrivatehostParam {
-	return &DeletePrivatehostParam{}
+// NewDeletePrivateHostParam return new DeletePrivateHostParam
+func NewDeletePrivateHostParam() *DeletePrivateHostParam {
+	return &DeletePrivateHostParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *DeletePrivatehostParam) FillValueToSkeleton() {
+func (p *DeletePrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1219,7 +1219,7 @@ func (p *DeletePrivatehostParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *DeletePrivatehostParam) Validate() []error {
+func (p *DeletePrivateHostParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1252,138 +1252,138 @@ func (p *DeletePrivatehostParam) Validate() []error {
 	return errors
 }
 
-func (p *DeletePrivatehostParam) GetResourceDef() *schema.Resource {
+func (p *DeletePrivateHostParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PrivateHost"]
 }
 
-func (p *DeletePrivatehostParam) GetCommandDef() *schema.Command {
+func (p *DeletePrivateHostParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["delete"]
 }
 
-func (p *DeletePrivatehostParam) GetIncludeFields() []string {
+func (p *DeletePrivateHostParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *DeletePrivatehostParam) GetExcludeFields() []string {
+func (p *DeletePrivateHostParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *DeletePrivatehostParam) GetTableType() output.TableType {
+func (p *DeletePrivateHostParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *DeletePrivatehostParam) GetColumnDefs() []output.ColumnDef {
+func (p *DeletePrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DeletePrivatehostParam) SetSelector(v []string) {
+func (p *DeletePrivateHostParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *DeletePrivatehostParam) GetSelector() []string {
+func (p *DeletePrivateHostParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *DeletePrivatehostParam) SetAssumeyes(v bool) {
+func (p *DeletePrivateHostParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *DeletePrivatehostParam) GetAssumeyes() bool {
+func (p *DeletePrivateHostParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeletePrivatehostParam) SetParamTemplate(v string) {
+func (p *DeletePrivateHostParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *DeletePrivatehostParam) GetParamTemplate() string {
+func (p *DeletePrivateHostParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *DeletePrivatehostParam) SetParameters(v string) {
+func (p *DeletePrivateHostParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *DeletePrivatehostParam) GetParameters() string {
+func (p *DeletePrivateHostParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *DeletePrivatehostParam) SetParamTemplateFile(v string) {
+func (p *DeletePrivateHostParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *DeletePrivatehostParam) GetParamTemplateFile() string {
+func (p *DeletePrivateHostParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *DeletePrivatehostParam) SetParameterFile(v string) {
+func (p *DeletePrivateHostParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *DeletePrivatehostParam) GetParameterFile() string {
+func (p *DeletePrivateHostParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *DeletePrivatehostParam) SetGenerateSkeleton(v bool) {
+func (p *DeletePrivateHostParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *DeletePrivatehostParam) GetGenerateSkeleton() bool {
+func (p *DeletePrivateHostParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DeletePrivatehostParam) SetOutputType(v string) {
+func (p *DeletePrivateHostParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *DeletePrivatehostParam) GetOutputType() string {
+func (p *DeletePrivateHostParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *DeletePrivatehostParam) SetColumn(v []string) {
+func (p *DeletePrivateHostParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *DeletePrivatehostParam) GetColumn() []string {
+func (p *DeletePrivateHostParam) GetColumn() []string {
 	return p.Column
 }
-func (p *DeletePrivatehostParam) SetQuiet(v bool) {
+func (p *DeletePrivateHostParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *DeletePrivatehostParam) GetQuiet() bool {
+func (p *DeletePrivateHostParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *DeletePrivatehostParam) SetFormat(v string) {
+func (p *DeletePrivateHostParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *DeletePrivatehostParam) GetFormat() string {
+func (p *DeletePrivateHostParam) GetFormat() string {
 	return p.Format
 }
-func (p *DeletePrivatehostParam) SetFormatFile(v string) {
+func (p *DeletePrivateHostParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *DeletePrivatehostParam) GetFormatFile() string {
+func (p *DeletePrivateHostParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *DeletePrivatehostParam) SetQuery(v string) {
+func (p *DeletePrivateHostParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *DeletePrivatehostParam) GetQuery() string {
+func (p *DeletePrivateHostParam) GetQuery() string {
 	return p.Query
 }
-func (p *DeletePrivatehostParam) SetQueryFile(v string) {
+func (p *DeletePrivateHostParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *DeletePrivatehostParam) GetQueryFile() string {
+func (p *DeletePrivateHostParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeletePrivatehostParam) SetId(v sacloud.ID) {
+func (p *DeletePrivateHostParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeletePrivatehostParam) GetId() sacloud.ID {
+func (p *DeletePrivateHostParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ServerInfoPrivatehostParam is input parameters for the sacloud API
-type ServerInfoPrivatehostParam struct {
+// ServerInfoPrivateHostParam is input parameters for the sacloud API
+type ServerInfoPrivateHostParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
 	Parameters        string     `json:"parameters"`
@@ -1400,13 +1400,13 @@ type ServerInfoPrivatehostParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewServerInfoPrivatehostParam return new ServerInfoPrivatehostParam
-func NewServerInfoPrivatehostParam() *ServerInfoPrivatehostParam {
-	return &ServerInfoPrivatehostParam{}
+// NewServerInfoPrivateHostParam return new ServerInfoPrivateHostParam
+func NewServerInfoPrivateHostParam() *ServerInfoPrivateHostParam {
+	return &ServerInfoPrivateHostParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ServerInfoPrivatehostParam) FillValueToSkeleton() {
+func (p *ServerInfoPrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1453,7 +1453,7 @@ func (p *ServerInfoPrivatehostParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ServerInfoPrivatehostParam) Validate() []error {
+func (p *ServerInfoPrivateHostParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1486,131 +1486,131 @@ func (p *ServerInfoPrivatehostParam) Validate() []error {
 	return errors
 }
 
-func (p *ServerInfoPrivatehostParam) GetResourceDef() *schema.Resource {
+func (p *ServerInfoPrivateHostParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PrivateHost"]
 }
 
-func (p *ServerInfoPrivatehostParam) GetCommandDef() *schema.Command {
+func (p *ServerInfoPrivateHostParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["server-info"]
 }
 
-func (p *ServerInfoPrivatehostParam) GetIncludeFields() []string {
+func (p *ServerInfoPrivateHostParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ServerInfoPrivatehostParam) GetExcludeFields() []string {
+func (p *ServerInfoPrivateHostParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ServerInfoPrivatehostParam) GetTableType() output.TableType {
+func (p *ServerInfoPrivateHostParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ServerInfoPrivatehostParam) GetColumnDefs() []output.ColumnDef {
+func (p *ServerInfoPrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerInfoPrivatehostParam) SetSelector(v []string) {
+func (p *ServerInfoPrivateHostParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ServerInfoPrivatehostParam) GetSelector() []string {
+func (p *ServerInfoPrivateHostParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ServerInfoPrivatehostParam) SetParamTemplate(v string) {
+func (p *ServerInfoPrivateHostParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ServerInfoPrivatehostParam) GetParamTemplate() string {
+func (p *ServerInfoPrivateHostParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ServerInfoPrivatehostParam) SetParameters(v string) {
+func (p *ServerInfoPrivateHostParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ServerInfoPrivatehostParam) GetParameters() string {
+func (p *ServerInfoPrivateHostParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ServerInfoPrivatehostParam) SetParamTemplateFile(v string) {
+func (p *ServerInfoPrivateHostParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ServerInfoPrivatehostParam) GetParamTemplateFile() string {
+func (p *ServerInfoPrivateHostParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ServerInfoPrivatehostParam) SetParameterFile(v string) {
+func (p *ServerInfoPrivateHostParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ServerInfoPrivatehostParam) GetParameterFile() string {
+func (p *ServerInfoPrivateHostParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ServerInfoPrivatehostParam) SetGenerateSkeleton(v bool) {
+func (p *ServerInfoPrivateHostParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ServerInfoPrivatehostParam) GetGenerateSkeleton() bool {
+func (p *ServerInfoPrivateHostParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerInfoPrivatehostParam) SetOutputType(v string) {
+func (p *ServerInfoPrivateHostParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ServerInfoPrivatehostParam) GetOutputType() string {
+func (p *ServerInfoPrivateHostParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ServerInfoPrivatehostParam) SetColumn(v []string) {
+func (p *ServerInfoPrivateHostParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ServerInfoPrivatehostParam) GetColumn() []string {
+func (p *ServerInfoPrivateHostParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ServerInfoPrivatehostParam) SetQuiet(v bool) {
+func (p *ServerInfoPrivateHostParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ServerInfoPrivatehostParam) GetQuiet() bool {
+func (p *ServerInfoPrivateHostParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ServerInfoPrivatehostParam) SetFormat(v string) {
+func (p *ServerInfoPrivateHostParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ServerInfoPrivatehostParam) GetFormat() string {
+func (p *ServerInfoPrivateHostParam) GetFormat() string {
 	return p.Format
 }
-func (p *ServerInfoPrivatehostParam) SetFormatFile(v string) {
+func (p *ServerInfoPrivateHostParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ServerInfoPrivatehostParam) GetFormatFile() string {
+func (p *ServerInfoPrivateHostParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ServerInfoPrivatehostParam) SetQuery(v string) {
+func (p *ServerInfoPrivateHostParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ServerInfoPrivatehostParam) GetQuery() string {
+func (p *ServerInfoPrivateHostParam) GetQuery() string {
 	return p.Query
 }
-func (p *ServerInfoPrivatehostParam) SetQueryFile(v string) {
+func (p *ServerInfoPrivateHostParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ServerInfoPrivatehostParam) GetQueryFile() string {
+func (p *ServerInfoPrivateHostParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerInfoPrivatehostParam) SetId(v sacloud.ID) {
+func (p *ServerInfoPrivateHostParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerInfoPrivatehostParam) GetId() sacloud.ID {
+func (p *ServerInfoPrivateHostParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ServerAddPrivatehostParam is input parameters for the sacloud API
-type ServerAddPrivatehostParam struct {
+// ServerAddPrivateHostParam is input parameters for the sacloud API
+type ServerAddPrivateHostParam struct {
 	ServerId          sacloud.ID `json:"server-id"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
@@ -1629,13 +1629,13 @@ type ServerAddPrivatehostParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewServerAddPrivatehostParam return new ServerAddPrivatehostParam
-func NewServerAddPrivatehostParam() *ServerAddPrivatehostParam {
-	return &ServerAddPrivatehostParam{}
+// NewServerAddPrivateHostParam return new ServerAddPrivateHostParam
+func NewServerAddPrivateHostParam() *ServerAddPrivateHostParam {
+	return &ServerAddPrivateHostParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ServerAddPrivatehostParam) FillValueToSkeleton() {
+func (p *ServerAddPrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.ServerId) {
 		p.ServerId = sacloud.ID(0)
 	}
@@ -1688,7 +1688,7 @@ func (p *ServerAddPrivatehostParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ServerAddPrivatehostParam) Validate() []error {
+func (p *ServerAddPrivateHostParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -1735,145 +1735,145 @@ func (p *ServerAddPrivatehostParam) Validate() []error {
 	return errors
 }
 
-func (p *ServerAddPrivatehostParam) GetResourceDef() *schema.Resource {
+func (p *ServerAddPrivateHostParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PrivateHost"]
 }
 
-func (p *ServerAddPrivatehostParam) GetCommandDef() *schema.Command {
+func (p *ServerAddPrivateHostParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["server-add"]
 }
 
-func (p *ServerAddPrivatehostParam) GetIncludeFields() []string {
+func (p *ServerAddPrivateHostParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ServerAddPrivatehostParam) GetExcludeFields() []string {
+func (p *ServerAddPrivateHostParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ServerAddPrivatehostParam) GetTableType() output.TableType {
+func (p *ServerAddPrivateHostParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ServerAddPrivatehostParam) GetColumnDefs() []output.ColumnDef {
+func (p *ServerAddPrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerAddPrivatehostParam) SetServerId(v sacloud.ID) {
+func (p *ServerAddPrivateHostParam) SetServerId(v sacloud.ID) {
 	p.ServerId = v
 }
 
-func (p *ServerAddPrivatehostParam) GetServerId() sacloud.ID {
+func (p *ServerAddPrivateHostParam) GetServerId() sacloud.ID {
 	return p.ServerId
 }
-func (p *ServerAddPrivatehostParam) SetSelector(v []string) {
+func (p *ServerAddPrivateHostParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ServerAddPrivatehostParam) GetSelector() []string {
+func (p *ServerAddPrivateHostParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ServerAddPrivatehostParam) SetAssumeyes(v bool) {
+func (p *ServerAddPrivateHostParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ServerAddPrivatehostParam) GetAssumeyes() bool {
+func (p *ServerAddPrivateHostParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ServerAddPrivatehostParam) SetParamTemplate(v string) {
+func (p *ServerAddPrivateHostParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ServerAddPrivatehostParam) GetParamTemplate() string {
+func (p *ServerAddPrivateHostParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ServerAddPrivatehostParam) SetParameters(v string) {
+func (p *ServerAddPrivateHostParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ServerAddPrivatehostParam) GetParameters() string {
+func (p *ServerAddPrivateHostParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ServerAddPrivatehostParam) SetParamTemplateFile(v string) {
+func (p *ServerAddPrivateHostParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ServerAddPrivatehostParam) GetParamTemplateFile() string {
+func (p *ServerAddPrivateHostParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ServerAddPrivatehostParam) SetParameterFile(v string) {
+func (p *ServerAddPrivateHostParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ServerAddPrivatehostParam) GetParameterFile() string {
+func (p *ServerAddPrivateHostParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ServerAddPrivatehostParam) SetGenerateSkeleton(v bool) {
+func (p *ServerAddPrivateHostParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ServerAddPrivatehostParam) GetGenerateSkeleton() bool {
+func (p *ServerAddPrivateHostParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerAddPrivatehostParam) SetOutputType(v string) {
+func (p *ServerAddPrivateHostParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ServerAddPrivatehostParam) GetOutputType() string {
+func (p *ServerAddPrivateHostParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ServerAddPrivatehostParam) SetColumn(v []string) {
+func (p *ServerAddPrivateHostParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ServerAddPrivatehostParam) GetColumn() []string {
+func (p *ServerAddPrivateHostParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ServerAddPrivatehostParam) SetQuiet(v bool) {
+func (p *ServerAddPrivateHostParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ServerAddPrivatehostParam) GetQuiet() bool {
+func (p *ServerAddPrivateHostParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ServerAddPrivatehostParam) SetFormat(v string) {
+func (p *ServerAddPrivateHostParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ServerAddPrivatehostParam) GetFormat() string {
+func (p *ServerAddPrivateHostParam) GetFormat() string {
 	return p.Format
 }
-func (p *ServerAddPrivatehostParam) SetFormatFile(v string) {
+func (p *ServerAddPrivateHostParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ServerAddPrivatehostParam) GetFormatFile() string {
+func (p *ServerAddPrivateHostParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ServerAddPrivatehostParam) SetQuery(v string) {
+func (p *ServerAddPrivateHostParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ServerAddPrivatehostParam) GetQuery() string {
+func (p *ServerAddPrivateHostParam) GetQuery() string {
 	return p.Query
 }
-func (p *ServerAddPrivatehostParam) SetQueryFile(v string) {
+func (p *ServerAddPrivateHostParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ServerAddPrivatehostParam) GetQueryFile() string {
+func (p *ServerAddPrivateHostParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerAddPrivatehostParam) SetId(v sacloud.ID) {
+func (p *ServerAddPrivateHostParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerAddPrivatehostParam) GetId() sacloud.ID {
+func (p *ServerAddPrivateHostParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// ServerDeletePrivatehostParam is input parameters for the sacloud API
-type ServerDeletePrivatehostParam struct {
+// ServerDeletePrivateHostParam is input parameters for the sacloud API
+type ServerDeletePrivateHostParam struct {
 	ServerId          sacloud.ID `json:"server-id"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
@@ -1892,13 +1892,13 @@ type ServerDeletePrivatehostParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewServerDeletePrivatehostParam return new ServerDeletePrivatehostParam
-func NewServerDeletePrivatehostParam() *ServerDeletePrivatehostParam {
-	return &ServerDeletePrivatehostParam{}
+// NewServerDeletePrivateHostParam return new ServerDeletePrivateHostParam
+func NewServerDeletePrivateHostParam() *ServerDeletePrivateHostParam {
+	return &ServerDeletePrivateHostParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ServerDeletePrivatehostParam) FillValueToSkeleton() {
+func (p *ServerDeletePrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.ServerId) {
 		p.ServerId = sacloud.ID(0)
 	}
@@ -1951,7 +1951,7 @@ func (p *ServerDeletePrivatehostParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ServerDeletePrivatehostParam) Validate() []error {
+func (p *ServerDeletePrivateHostParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -1998,139 +1998,139 @@ func (p *ServerDeletePrivatehostParam) Validate() []error {
 	return errors
 }
 
-func (p *ServerDeletePrivatehostParam) GetResourceDef() *schema.Resource {
+func (p *ServerDeletePrivateHostParam) GetResourceDef() *schema.Resource {
 	return define.Resources["PrivateHost"]
 }
 
-func (p *ServerDeletePrivatehostParam) GetCommandDef() *schema.Command {
+func (p *ServerDeletePrivateHostParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["server-delete"]
 }
 
-func (p *ServerDeletePrivatehostParam) GetIncludeFields() []string {
+func (p *ServerDeletePrivateHostParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ServerDeletePrivatehostParam) GetExcludeFields() []string {
+func (p *ServerDeletePrivateHostParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ServerDeletePrivatehostParam) GetTableType() output.TableType {
+func (p *ServerDeletePrivateHostParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ServerDeletePrivatehostParam) GetColumnDefs() []output.ColumnDef {
+func (p *ServerDeletePrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerDeletePrivatehostParam) SetServerId(v sacloud.ID) {
+func (p *ServerDeletePrivateHostParam) SetServerId(v sacloud.ID) {
 	p.ServerId = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetServerId() sacloud.ID {
+func (p *ServerDeletePrivateHostParam) GetServerId() sacloud.ID {
 	return p.ServerId
 }
-func (p *ServerDeletePrivatehostParam) SetSelector(v []string) {
+func (p *ServerDeletePrivateHostParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetSelector() []string {
+func (p *ServerDeletePrivateHostParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ServerDeletePrivatehostParam) SetAssumeyes(v bool) {
+func (p *ServerDeletePrivateHostParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetAssumeyes() bool {
+func (p *ServerDeletePrivateHostParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ServerDeletePrivatehostParam) SetParamTemplate(v string) {
+func (p *ServerDeletePrivateHostParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetParamTemplate() string {
+func (p *ServerDeletePrivateHostParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ServerDeletePrivatehostParam) SetParameters(v string) {
+func (p *ServerDeletePrivateHostParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetParameters() string {
+func (p *ServerDeletePrivateHostParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ServerDeletePrivatehostParam) SetParamTemplateFile(v string) {
+func (p *ServerDeletePrivateHostParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetParamTemplateFile() string {
+func (p *ServerDeletePrivateHostParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ServerDeletePrivatehostParam) SetParameterFile(v string) {
+func (p *ServerDeletePrivateHostParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetParameterFile() string {
+func (p *ServerDeletePrivateHostParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ServerDeletePrivatehostParam) SetGenerateSkeleton(v bool) {
+func (p *ServerDeletePrivateHostParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetGenerateSkeleton() bool {
+func (p *ServerDeletePrivateHostParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerDeletePrivatehostParam) SetOutputType(v string) {
+func (p *ServerDeletePrivateHostParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetOutputType() string {
+func (p *ServerDeletePrivateHostParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ServerDeletePrivatehostParam) SetColumn(v []string) {
+func (p *ServerDeletePrivateHostParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetColumn() []string {
+func (p *ServerDeletePrivateHostParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ServerDeletePrivatehostParam) SetQuiet(v bool) {
+func (p *ServerDeletePrivateHostParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetQuiet() bool {
+func (p *ServerDeletePrivateHostParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ServerDeletePrivatehostParam) SetFormat(v string) {
+func (p *ServerDeletePrivateHostParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetFormat() string {
+func (p *ServerDeletePrivateHostParam) GetFormat() string {
 	return p.Format
 }
-func (p *ServerDeletePrivatehostParam) SetFormatFile(v string) {
+func (p *ServerDeletePrivateHostParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetFormatFile() string {
+func (p *ServerDeletePrivateHostParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ServerDeletePrivatehostParam) SetQuery(v string) {
+func (p *ServerDeletePrivateHostParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetQuery() string {
+func (p *ServerDeletePrivateHostParam) GetQuery() string {
 	return p.Query
 }
-func (p *ServerDeletePrivatehostParam) SetQueryFile(v string) {
+func (p *ServerDeletePrivateHostParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetQueryFile() string {
+func (p *ServerDeletePrivateHostParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerDeletePrivatehostParam) SetId(v sacloud.ID) {
+func (p *ServerDeletePrivateHostParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerDeletePrivatehostParam) GetId() sacloud.ID {
+func (p *ServerDeletePrivateHostParam) GetId() sacloud.ID {
 	return p.Id
 }

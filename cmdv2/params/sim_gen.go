@@ -27,25 +27,25 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListSimParam is input parameters for the sacloud API
-type ListSimParam struct {
+// ListSIMParam is input parameters for the sacloud API
+type ListSIMParam struct {
 	From int
 	Max  int
+	Tags []string
 	Sort []string
 	Name []string
 	Id   []sacloud.ID
-	Tags []string
 
 	input Input
 }
 
-// NewListSimParam return new ListSimParam
-func NewListSimParam() *ListSimParam {
-	return &ListSimParam{}
+// NewListSIMParam return new ListSIMParam
+func NewListSIMParam() *ListSIMParam {
+	return &ListSIMParam{}
 }
 
-// Initialize init ListSimParam
-func (p *ListSimParam) Initialize(in Input) error {
+// Initialize init ListSIMParam
+func (p *ListSIMParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -54,16 +54,19 @@ func (p *ListSimParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ListSimParam) WriteSkeleton(writer io.Writer) error {
+func (p *ListSIMParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListSimParam) fillValueToSkeleton() {
+func (p *ListSIMParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
@@ -74,14 +77,19 @@ func (p *ListSimParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
 
 }
 
-func (p *ListSimParam) validate() error {
+func (p *ListSIMParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["SIM"].Commands["list"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
@@ -110,106 +118,98 @@ func (p *ListSimParam) validate() error {
 		}
 	}
 
-	{
-		validator := define.Resources["SIM"].Commands["list"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ListSimParam) ResourceDef() *schema.Resource {
+func (p *ListSIMParam) ResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *ListSimParam) CommandDef() *schema.Command {
+func (p *ListSIMParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["list"]
 }
 
-func (p *ListSimParam) IncludeFields() []string {
+func (p *ListSIMParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ListSimParam) ExcludeFields() []string {
+func (p *ListSIMParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ListSimParam) TableType() output.TableType {
+func (p *ListSIMParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ListSimParam) ColumnDefs() []output.ColumnDef {
+func (p *ListSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListSimParam) SetFrom(v int) {
+func (p *ListSIMParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListSimParam) GetFrom() int {
+func (p *ListSIMParam) GetFrom() int {
 	return p.From
 }
-func (p *ListSimParam) SetMax(v int) {
+func (p *ListSIMParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListSimParam) GetMax() int {
+func (p *ListSIMParam) GetMax() int {
 	return p.Max
 }
-func (p *ListSimParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListSimParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListSimParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListSimParam) GetName() []string {
-	return p.Name
-}
-func (p *ListSimParam) SetId(v []sacloud.ID) {
-	p.Id = v
-}
-
-func (p *ListSimParam) GetId() []sacloud.ID {
-	return p.Id
-}
-func (p *ListSimParam) SetTags(v []string) {
+func (p *ListSIMParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *ListSimParam) GetTags() []string {
+func (p *ListSIMParam) GetTags() []string {
 	return p.Tags
 }
+func (p *ListSIMParam) SetSort(v []string) {
+	p.Sort = v
+}
 
-// CreateSimParam is input parameters for the sacloud API
-type CreateSimParam struct {
-	Passcode    string
-	Carrier     []string
-	Description string
-	IconId      sacloud.ID
+func (p *ListSIMParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListSIMParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListSIMParam) GetName() []string {
+	return p.Name
+}
+func (p *ListSIMParam) SetId(v []sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ListSIMParam) GetId() []sacloud.ID {
+	return p.Id
+}
+
+// CreateSIMParam is input parameters for the sacloud API
+type CreateSIMParam struct {
 	Iccid       string
+	Passcode    string
 	Disabled    bool
+	Description string
 	Imei        string
+	Carrier     []string
 	Name        string
 	Tags        []string
+	IconId      sacloud.ID
 
 	input Input
 }
 
-// NewCreateSimParam return new CreateSimParam
-func NewCreateSimParam() *CreateSimParam {
-	return &CreateSimParam{}
+// NewCreateSIMParam return new CreateSIMParam
+func NewCreateSIMParam() *CreateSIMParam {
+	return &CreateSIMParam{}
 }
 
-// Initialize init CreateSimParam
-func (p *CreateSimParam) Initialize(in Input) error {
+// Initialize init CreateSIMParam
+func (p *CreateSIMParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -218,31 +218,28 @@ func (p *CreateSimParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CreateSimParam) WriteSkeleton(writer io.Writer) error {
+func (p *CreateSIMParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateSimParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Passcode) {
-		p.Passcode = ""
-	}
-	if utils.IsEmpty(p.Carrier) {
-		p.Carrier = []string{""}
-	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
+func (p *CreateSIMParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Iccid) {
 		p.Iccid = ""
+	}
+	if utils.IsEmpty(p.Passcode) {
+		p.Passcode = ""
 	}
 	if utils.IsEmpty(p.Disabled) {
 		p.Disabled = false
 	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
 	if utils.IsEmpty(p.Imei) {
 		p.Imei = ""
+	}
+	if utils.IsEmpty(p.Carrier) {
+		p.Carrier = []string{""}
 	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
@@ -250,15 +247,34 @@ func (p *CreateSimParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
 
 }
 
-func (p *CreateSimParam) validate() error {
+func (p *CreateSIMParam) validate() error {
 	var errors []error
 
 	{
 		validator := validateRequired
+		errs := validator("--iccid", p.Iccid)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
 		errs := validator("--passcode", p.Passcode)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["SIM"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -280,30 +296,6 @@ func (p *CreateSimParam) validate() error {
 	}
 	{
 		errs := validation.SliceLenBetween("--carrier", p.Carrier, 1, 3)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["SIM"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["SIM"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--iccid", p.Iccid)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -332,109 +324,117 @@ func (p *CreateSimParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["SIM"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CreateSimParam) ResourceDef() *schema.Resource {
+func (p *CreateSIMParam) ResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *CreateSimParam) CommandDef() *schema.Command {
+func (p *CreateSIMParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["create"]
 }
 
-func (p *CreateSimParam) IncludeFields() []string {
+func (p *CreateSIMParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CreateSimParam) ExcludeFields() []string {
+func (p *CreateSIMParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CreateSimParam) TableType() output.TableType {
+func (p *CreateSIMParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CreateSimParam) ColumnDefs() []output.ColumnDef {
+func (p *CreateSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateSimParam) SetPasscode(v string) {
-	p.Passcode = v
-}
-
-func (p *CreateSimParam) GetPasscode() string {
-	return p.Passcode
-}
-func (p *CreateSimParam) SetCarrier(v []string) {
-	p.Carrier = v
-}
-
-func (p *CreateSimParam) GetCarrier() []string {
-	return p.Carrier
-}
-func (p *CreateSimParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *CreateSimParam) GetDescription() string {
-	return p.Description
-}
-func (p *CreateSimParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *CreateSimParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
-func (p *CreateSimParam) SetIccid(v string) {
+func (p *CreateSIMParam) SetIccid(v string) {
 	p.Iccid = v
 }
 
-func (p *CreateSimParam) GetIccid() string {
+func (p *CreateSIMParam) GetIccid() string {
 	return p.Iccid
 }
-func (p *CreateSimParam) SetDisabled(v bool) {
+func (p *CreateSIMParam) SetPasscode(v string) {
+	p.Passcode = v
+}
+
+func (p *CreateSIMParam) GetPasscode() string {
+	return p.Passcode
+}
+func (p *CreateSIMParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
 
-func (p *CreateSimParam) GetDisabled() bool {
+func (p *CreateSIMParam) GetDisabled() bool {
 	return p.Disabled
 }
-func (p *CreateSimParam) SetImei(v string) {
+func (p *CreateSIMParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *CreateSIMParam) GetDescription() string {
+	return p.Description
+}
+func (p *CreateSIMParam) SetImei(v string) {
 	p.Imei = v
 }
 
-func (p *CreateSimParam) GetImei() string {
+func (p *CreateSIMParam) GetImei() string {
 	return p.Imei
 }
-func (p *CreateSimParam) SetName(v string) {
+func (p *CreateSIMParam) SetCarrier(v []string) {
+	p.Carrier = v
+}
+
+func (p *CreateSIMParam) GetCarrier() []string {
+	return p.Carrier
+}
+func (p *CreateSIMParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *CreateSimParam) GetName() string {
+func (p *CreateSIMParam) GetName() string {
 	return p.Name
 }
-func (p *CreateSimParam) SetTags(v []string) {
+func (p *CreateSIMParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreateSimParam) GetTags() []string {
+func (p *CreateSIMParam) GetTags() []string {
 	return p.Tags
 }
+func (p *CreateSIMParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
 
-// ReadSimParam is input parameters for the sacloud API
-type ReadSimParam struct {
+func (p *CreateSIMParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+
+// ReadSIMParam is input parameters for the sacloud API
+type ReadSIMParam struct {
 	input Input
 }
 
-// NewReadSimParam return new ReadSimParam
-func NewReadSimParam() *ReadSimParam {
-	return &ReadSimParam{}
+// NewReadSIMParam return new ReadSIMParam
+func NewReadSIMParam() *ReadSIMParam {
+	return &ReadSIMParam{}
 }
 
-// Initialize init ReadSimParam
-func (p *ReadSimParam) Initialize(in Input) error {
+// Initialize init ReadSIMParam
+func (p *ReadSIMParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -443,46 +443,46 @@ func (p *ReadSimParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ReadSimParam) WriteSkeleton(writer io.Writer) error {
+func (p *ReadSIMParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadSimParam) fillValueToSkeleton() {
+func (p *ReadSIMParam) fillValueToSkeleton() {
 
 }
 
-func (p *ReadSimParam) validate() error {
+func (p *ReadSIMParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ReadSimParam) ResourceDef() *schema.Resource {
+func (p *ReadSIMParam) ResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *ReadSimParam) CommandDef() *schema.Command {
+func (p *ReadSIMParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["read"]
 }
 
-func (p *ReadSimParam) IncludeFields() []string {
+func (p *ReadSIMParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ReadSimParam) ExcludeFields() []string {
+func (p *ReadSIMParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ReadSimParam) TableType() output.TableType {
+func (p *ReadSIMParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ReadSimParam) ColumnDefs() []output.ColumnDef {
+func (p *ReadSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// UpdateSimParam is input parameters for the sacloud API
-type UpdateSimParam struct {
+// UpdateSIMParam is input parameters for the sacloud API
+type UpdateSIMParam struct {
 	Name        string
 	Description string
 	Tags        []string
@@ -491,13 +491,13 @@ type UpdateSimParam struct {
 	input Input
 }
 
-// NewUpdateSimParam return new UpdateSimParam
-func NewUpdateSimParam() *UpdateSimParam {
-	return &UpdateSimParam{}
+// NewUpdateSIMParam return new UpdateSIMParam
+func NewUpdateSIMParam() *UpdateSIMParam {
+	return &UpdateSIMParam{}
 }
 
-// Initialize init UpdateSimParam
-func (p *UpdateSimParam) Initialize(in Input) error {
+// Initialize init UpdateSIMParam
+func (p *UpdateSIMParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -506,11 +506,11 @@ func (p *UpdateSimParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *UpdateSimParam) WriteSkeleton(writer io.Writer) error {
+func (p *UpdateSIMParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateSimParam) fillValueToSkeleton() {
+func (p *UpdateSIMParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -526,7 +526,7 @@ func (p *UpdateSimParam) fillValueToSkeleton() {
 
 }
 
-func (p *UpdateSimParam) validate() error {
+func (p *UpdateSIMParam) validate() error {
 	var errors []error
 
 	{
@@ -564,73 +564,73 @@ func (p *UpdateSimParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *UpdateSimParam) ResourceDef() *schema.Resource {
+func (p *UpdateSIMParam) ResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *UpdateSimParam) CommandDef() *schema.Command {
+func (p *UpdateSIMParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["update"]
 }
 
-func (p *UpdateSimParam) IncludeFields() []string {
+func (p *UpdateSIMParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *UpdateSimParam) ExcludeFields() []string {
+func (p *UpdateSIMParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *UpdateSimParam) TableType() output.TableType {
+func (p *UpdateSIMParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *UpdateSimParam) ColumnDefs() []output.ColumnDef {
+func (p *UpdateSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateSimParam) SetName(v string) {
+func (p *UpdateSIMParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *UpdateSimParam) GetName() string {
+func (p *UpdateSIMParam) GetName() string {
 	return p.Name
 }
-func (p *UpdateSimParam) SetDescription(v string) {
+func (p *UpdateSIMParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdateSimParam) GetDescription() string {
+func (p *UpdateSIMParam) GetDescription() string {
 	return p.Description
 }
-func (p *UpdateSimParam) SetTags(v []string) {
+func (p *UpdateSIMParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *UpdateSimParam) GetTags() []string {
+func (p *UpdateSIMParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateSimParam) SetIconId(v sacloud.ID) {
+func (p *UpdateSIMParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateSimParam) GetIconId() sacloud.ID {
+func (p *UpdateSIMParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 
-// DeleteSimParam is input parameters for the sacloud API
-type DeleteSimParam struct {
+// DeleteSIMParam is input parameters for the sacloud API
+type DeleteSIMParam struct {
 	Force bool
 
 	input Input
 }
 
-// NewDeleteSimParam return new DeleteSimParam
-func NewDeleteSimParam() *DeleteSimParam {
-	return &DeleteSimParam{}
+// NewDeleteSIMParam return new DeleteSIMParam
+func NewDeleteSIMParam() *DeleteSIMParam {
+	return &DeleteSIMParam{}
 }
 
-// Initialize init DeleteSimParam
-func (p *DeleteSimParam) Initialize(in Input) error {
+// Initialize init DeleteSIMParam
+func (p *DeleteSIMParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -639,67 +639,67 @@ func (p *DeleteSimParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DeleteSimParam) WriteSkeleton(writer io.Writer) error {
+func (p *DeleteSIMParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteSimParam) fillValueToSkeleton() {
+func (p *DeleteSIMParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Force) {
 		p.Force = false
 	}
 
 }
 
-func (p *DeleteSimParam) validate() error {
+func (p *DeleteSIMParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DeleteSimParam) ResourceDef() *schema.Resource {
+func (p *DeleteSIMParam) ResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *DeleteSimParam) CommandDef() *schema.Command {
+func (p *DeleteSIMParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["delete"]
 }
 
-func (p *DeleteSimParam) IncludeFields() []string {
+func (p *DeleteSIMParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DeleteSimParam) ExcludeFields() []string {
+func (p *DeleteSIMParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DeleteSimParam) TableType() output.TableType {
+func (p *DeleteSIMParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DeleteSimParam) ColumnDefs() []output.ColumnDef {
+func (p *DeleteSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *DeleteSimParam) SetForce(v bool) {
+func (p *DeleteSIMParam) SetForce(v bool) {
 	p.Force = v
 }
 
-func (p *DeleteSimParam) GetForce() bool {
+func (p *DeleteSIMParam) GetForce() bool {
 	return p.Force
 }
 
-// CarrierInfoSimParam is input parameters for the sacloud API
-type CarrierInfoSimParam struct {
+// CarrierInfoSIMParam is input parameters for the sacloud API
+type CarrierInfoSIMParam struct {
 	input Input
 }
 
-// NewCarrierInfoSimParam return new CarrierInfoSimParam
-func NewCarrierInfoSimParam() *CarrierInfoSimParam {
-	return &CarrierInfoSimParam{}
+// NewCarrierInfoSIMParam return new CarrierInfoSIMParam
+func NewCarrierInfoSIMParam() *CarrierInfoSIMParam {
+	return &CarrierInfoSIMParam{}
 }
 
-// Initialize init CarrierInfoSimParam
-func (p *CarrierInfoSimParam) Initialize(in Input) error {
+// Initialize init CarrierInfoSIMParam
+func (p *CarrierInfoSIMParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -708,58 +708,58 @@ func (p *CarrierInfoSimParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CarrierInfoSimParam) WriteSkeleton(writer io.Writer) error {
+func (p *CarrierInfoSIMParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CarrierInfoSimParam) fillValueToSkeleton() {
+func (p *CarrierInfoSIMParam) fillValueToSkeleton() {
 
 }
 
-func (p *CarrierInfoSimParam) validate() error {
+func (p *CarrierInfoSIMParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CarrierInfoSimParam) ResourceDef() *schema.Resource {
+func (p *CarrierInfoSIMParam) ResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *CarrierInfoSimParam) CommandDef() *schema.Command {
+func (p *CarrierInfoSIMParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["carrier-info"]
 }
 
-func (p *CarrierInfoSimParam) IncludeFields() []string {
+func (p *CarrierInfoSIMParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CarrierInfoSimParam) ExcludeFields() []string {
+func (p *CarrierInfoSIMParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CarrierInfoSimParam) TableType() output.TableType {
+func (p *CarrierInfoSIMParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CarrierInfoSimParam) ColumnDefs() []output.ColumnDef {
+func (p *CarrierInfoSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// CarrierUpdateSimParam is input parameters for the sacloud API
-type CarrierUpdateSimParam struct {
+// CarrierUpdateSIMParam is input parameters for the sacloud API
+type CarrierUpdateSIMParam struct {
 	Carrier []string
 
 	input Input
 }
 
-// NewCarrierUpdateSimParam return new CarrierUpdateSimParam
-func NewCarrierUpdateSimParam() *CarrierUpdateSimParam {
-	return &CarrierUpdateSimParam{}
+// NewCarrierUpdateSIMParam return new CarrierUpdateSIMParam
+func NewCarrierUpdateSIMParam() *CarrierUpdateSIMParam {
+	return &CarrierUpdateSIMParam{}
 }
 
-// Initialize init CarrierUpdateSimParam
-func (p *CarrierUpdateSimParam) Initialize(in Input) error {
+// Initialize init CarrierUpdateSIMParam
+func (p *CarrierUpdateSIMParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -768,18 +768,18 @@ func (p *CarrierUpdateSimParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CarrierUpdateSimParam) WriteSkeleton(writer io.Writer) error {
+func (p *CarrierUpdateSIMParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CarrierUpdateSimParam) fillValueToSkeleton() {
+func (p *CarrierUpdateSIMParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Carrier) {
 		p.Carrier = []string{""}
 	}
 
 }
 
-func (p *CarrierUpdateSimParam) validate() error {
+func (p *CarrierUpdateSIMParam) validate() error {
 	var errors []error
 
 	{
@@ -806,50 +806,50 @@ func (p *CarrierUpdateSimParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CarrierUpdateSimParam) ResourceDef() *schema.Resource {
+func (p *CarrierUpdateSIMParam) ResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *CarrierUpdateSimParam) CommandDef() *schema.Command {
+func (p *CarrierUpdateSIMParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["carrier-update"]
 }
 
-func (p *CarrierUpdateSimParam) IncludeFields() []string {
+func (p *CarrierUpdateSIMParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CarrierUpdateSimParam) ExcludeFields() []string {
+func (p *CarrierUpdateSIMParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CarrierUpdateSimParam) TableType() output.TableType {
+func (p *CarrierUpdateSIMParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CarrierUpdateSimParam) ColumnDefs() []output.ColumnDef {
+func (p *CarrierUpdateSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CarrierUpdateSimParam) SetCarrier(v []string) {
+func (p *CarrierUpdateSIMParam) SetCarrier(v []string) {
 	p.Carrier = v
 }
 
-func (p *CarrierUpdateSimParam) GetCarrier() []string {
+func (p *CarrierUpdateSIMParam) GetCarrier() []string {
 	return p.Carrier
 }
 
-// ActivateSimParam is input parameters for the sacloud API
-type ActivateSimParam struct {
+// ActivateSIMParam is input parameters for the sacloud API
+type ActivateSIMParam struct {
 	input Input
 }
 
-// NewActivateSimParam return new ActivateSimParam
-func NewActivateSimParam() *ActivateSimParam {
-	return &ActivateSimParam{}
+// NewActivateSIMParam return new ActivateSIMParam
+func NewActivateSIMParam() *ActivateSIMParam {
+	return &ActivateSIMParam{}
 }
 
-// Initialize init ActivateSimParam
-func (p *ActivateSimParam) Initialize(in Input) error {
+// Initialize init ActivateSIMParam
+func (p *ActivateSIMParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -858,56 +858,56 @@ func (p *ActivateSimParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ActivateSimParam) WriteSkeleton(writer io.Writer) error {
+func (p *ActivateSIMParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ActivateSimParam) fillValueToSkeleton() {
+func (p *ActivateSIMParam) fillValueToSkeleton() {
 
 }
 
-func (p *ActivateSimParam) validate() error {
+func (p *ActivateSIMParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ActivateSimParam) ResourceDef() *schema.Resource {
+func (p *ActivateSIMParam) ResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *ActivateSimParam) CommandDef() *schema.Command {
+func (p *ActivateSIMParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["activate"]
 }
 
-func (p *ActivateSimParam) IncludeFields() []string {
+func (p *ActivateSIMParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ActivateSimParam) ExcludeFields() []string {
+func (p *ActivateSIMParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ActivateSimParam) TableType() output.TableType {
+func (p *ActivateSIMParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ActivateSimParam) ColumnDefs() []output.ColumnDef {
+func (p *ActivateSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// DeactivateSimParam is input parameters for the sacloud API
-type DeactivateSimParam struct {
+// DeactivateSIMParam is input parameters for the sacloud API
+type DeactivateSIMParam struct {
 	input Input
 }
 
-// NewDeactivateSimParam return new DeactivateSimParam
-func NewDeactivateSimParam() *DeactivateSimParam {
-	return &DeactivateSimParam{}
+// NewDeactivateSIMParam return new DeactivateSIMParam
+func NewDeactivateSIMParam() *DeactivateSIMParam {
+	return &DeactivateSIMParam{}
 }
 
-// Initialize init DeactivateSimParam
-func (p *DeactivateSimParam) Initialize(in Input) error {
+// Initialize init DeactivateSIMParam
+func (p *DeactivateSIMParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -916,58 +916,58 @@ func (p *DeactivateSimParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DeactivateSimParam) WriteSkeleton(writer io.Writer) error {
+func (p *DeactivateSIMParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeactivateSimParam) fillValueToSkeleton() {
+func (p *DeactivateSIMParam) fillValueToSkeleton() {
 
 }
 
-func (p *DeactivateSimParam) validate() error {
+func (p *DeactivateSIMParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DeactivateSimParam) ResourceDef() *schema.Resource {
+func (p *DeactivateSIMParam) ResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *DeactivateSimParam) CommandDef() *schema.Command {
+func (p *DeactivateSIMParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["deactivate"]
 }
 
-func (p *DeactivateSimParam) IncludeFields() []string {
+func (p *DeactivateSIMParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DeactivateSimParam) ExcludeFields() []string {
+func (p *DeactivateSIMParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DeactivateSimParam) TableType() output.TableType {
+func (p *DeactivateSIMParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DeactivateSimParam) ColumnDefs() []output.ColumnDef {
+func (p *DeactivateSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// ImeiLockSimParam is input parameters for the sacloud API
-type ImeiLockSimParam struct {
+// ImeiLockSIMParam is input parameters for the sacloud API
+type ImeiLockSIMParam struct {
 	Imei string
 
 	input Input
 }
 
-// NewImeiLockSimParam return new ImeiLockSimParam
-func NewImeiLockSimParam() *ImeiLockSimParam {
-	return &ImeiLockSimParam{}
+// NewImeiLockSIMParam return new ImeiLockSIMParam
+func NewImeiLockSIMParam() *ImeiLockSIMParam {
+	return &ImeiLockSIMParam{}
 }
 
-// Initialize init ImeiLockSimParam
-func (p *ImeiLockSimParam) Initialize(in Input) error {
+// Initialize init ImeiLockSIMParam
+func (p *ImeiLockSIMParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -976,18 +976,18 @@ func (p *ImeiLockSimParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ImeiLockSimParam) WriteSkeleton(writer io.Writer) error {
+func (p *ImeiLockSIMParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ImeiLockSimParam) fillValueToSkeleton() {
+func (p *ImeiLockSIMParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Imei) {
 		p.Imei = ""
 	}
 
 }
 
-func (p *ImeiLockSimParam) validate() error {
+func (p *ImeiLockSIMParam) validate() error {
 	var errors []error
 
 	{
@@ -1001,52 +1001,52 @@ func (p *ImeiLockSimParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ImeiLockSimParam) ResourceDef() *schema.Resource {
+func (p *ImeiLockSIMParam) ResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *ImeiLockSimParam) CommandDef() *schema.Command {
+func (p *ImeiLockSIMParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["imei-lock"]
 }
 
-func (p *ImeiLockSimParam) IncludeFields() []string {
+func (p *ImeiLockSIMParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ImeiLockSimParam) ExcludeFields() []string {
+func (p *ImeiLockSIMParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ImeiLockSimParam) TableType() output.TableType {
+func (p *ImeiLockSIMParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ImeiLockSimParam) ColumnDefs() []output.ColumnDef {
+func (p *ImeiLockSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ImeiLockSimParam) SetImei(v string) {
+func (p *ImeiLockSIMParam) SetImei(v string) {
 	p.Imei = v
 }
 
-func (p *ImeiLockSimParam) GetImei() string {
+func (p *ImeiLockSIMParam) GetImei() string {
 	return p.Imei
 }
 
-// IpAddSimParam is input parameters for the sacloud API
-type IpAddSimParam struct {
+// IpAddSIMParam is input parameters for the sacloud API
+type IpAddSIMParam struct {
 	Ip string
 
 	input Input
 }
 
-// NewIpAddSimParam return new IpAddSimParam
-func NewIpAddSimParam() *IpAddSimParam {
-	return &IpAddSimParam{}
+// NewIpAddSIMParam return new IpAddSIMParam
+func NewIpAddSIMParam() *IpAddSIMParam {
+	return &IpAddSIMParam{}
 }
 
-// Initialize init IpAddSimParam
-func (p *IpAddSimParam) Initialize(in Input) error {
+// Initialize init IpAddSIMParam
+func (p *IpAddSIMParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1055,18 +1055,18 @@ func (p *IpAddSimParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *IpAddSimParam) WriteSkeleton(writer io.Writer) error {
+func (p *IpAddSIMParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *IpAddSimParam) fillValueToSkeleton() {
+func (p *IpAddSIMParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Ip) {
 		p.Ip = ""
 	}
 
 }
 
-func (p *IpAddSimParam) validate() error {
+func (p *IpAddSIMParam) validate() error {
 	var errors []error
 
 	{
@@ -1087,50 +1087,50 @@ func (p *IpAddSimParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *IpAddSimParam) ResourceDef() *schema.Resource {
+func (p *IpAddSIMParam) ResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *IpAddSimParam) CommandDef() *schema.Command {
+func (p *IpAddSIMParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["ip-add"]
 }
 
-func (p *IpAddSimParam) IncludeFields() []string {
+func (p *IpAddSIMParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *IpAddSimParam) ExcludeFields() []string {
+func (p *IpAddSIMParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *IpAddSimParam) TableType() output.TableType {
+func (p *IpAddSIMParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *IpAddSimParam) ColumnDefs() []output.ColumnDef {
+func (p *IpAddSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *IpAddSimParam) SetIp(v string) {
+func (p *IpAddSIMParam) SetIp(v string) {
 	p.Ip = v
 }
 
-func (p *IpAddSimParam) GetIp() string {
+func (p *IpAddSIMParam) GetIp() string {
 	return p.Ip
 }
 
-// ImeiUnlockSimParam is input parameters for the sacloud API
-type ImeiUnlockSimParam struct {
+// ImeiUnlockSIMParam is input parameters for the sacloud API
+type ImeiUnlockSIMParam struct {
 	input Input
 }
 
-// NewImeiUnlockSimParam return new ImeiUnlockSimParam
-func NewImeiUnlockSimParam() *ImeiUnlockSimParam {
-	return &ImeiUnlockSimParam{}
+// NewImeiUnlockSIMParam return new ImeiUnlockSIMParam
+func NewImeiUnlockSIMParam() *ImeiUnlockSIMParam {
+	return &ImeiUnlockSIMParam{}
 }
 
-// Initialize init ImeiUnlockSimParam
-func (p *ImeiUnlockSimParam) Initialize(in Input) error {
+// Initialize init ImeiUnlockSIMParam
+func (p *ImeiUnlockSIMParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1139,56 +1139,56 @@ func (p *ImeiUnlockSimParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ImeiUnlockSimParam) WriteSkeleton(writer io.Writer) error {
+func (p *ImeiUnlockSIMParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ImeiUnlockSimParam) fillValueToSkeleton() {
+func (p *ImeiUnlockSIMParam) fillValueToSkeleton() {
 
 }
 
-func (p *ImeiUnlockSimParam) validate() error {
+func (p *ImeiUnlockSIMParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ImeiUnlockSimParam) ResourceDef() *schema.Resource {
+func (p *ImeiUnlockSIMParam) ResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *ImeiUnlockSimParam) CommandDef() *schema.Command {
+func (p *ImeiUnlockSIMParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["imei-unlock"]
 }
 
-func (p *ImeiUnlockSimParam) IncludeFields() []string {
+func (p *ImeiUnlockSIMParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ImeiUnlockSimParam) ExcludeFields() []string {
+func (p *ImeiUnlockSIMParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ImeiUnlockSimParam) TableType() output.TableType {
+func (p *ImeiUnlockSIMParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ImeiUnlockSimParam) ColumnDefs() []output.ColumnDef {
+func (p *ImeiUnlockSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// IpDeleteSimParam is input parameters for the sacloud API
-type IpDeleteSimParam struct {
+// IpDeleteSIMParam is input parameters for the sacloud API
+type IpDeleteSIMParam struct {
 	input Input
 }
 
-// NewIpDeleteSimParam return new IpDeleteSimParam
-func NewIpDeleteSimParam() *IpDeleteSimParam {
-	return &IpDeleteSimParam{}
+// NewIpDeleteSIMParam return new IpDeleteSIMParam
+func NewIpDeleteSIMParam() *IpDeleteSIMParam {
+	return &IpDeleteSIMParam{}
 }
 
-// Initialize init IpDeleteSimParam
-func (p *IpDeleteSimParam) Initialize(in Input) error {
+// Initialize init IpDeleteSIMParam
+func (p *IpDeleteSIMParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1197,60 +1197,60 @@ func (p *IpDeleteSimParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *IpDeleteSimParam) WriteSkeleton(writer io.Writer) error {
+func (p *IpDeleteSIMParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *IpDeleteSimParam) fillValueToSkeleton() {
+func (p *IpDeleteSIMParam) fillValueToSkeleton() {
 
 }
 
-func (p *IpDeleteSimParam) validate() error {
+func (p *IpDeleteSIMParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *IpDeleteSimParam) ResourceDef() *schema.Resource {
+func (p *IpDeleteSIMParam) ResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *IpDeleteSimParam) CommandDef() *schema.Command {
+func (p *IpDeleteSIMParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["ip-delete"]
 }
 
-func (p *IpDeleteSimParam) IncludeFields() []string {
+func (p *IpDeleteSIMParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *IpDeleteSimParam) ExcludeFields() []string {
+func (p *IpDeleteSIMParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *IpDeleteSimParam) TableType() output.TableType {
+func (p *IpDeleteSIMParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *IpDeleteSimParam) ColumnDefs() []output.ColumnDef {
+func (p *IpDeleteSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// LogsSimParam is input parameters for the sacloud API
-type LogsSimParam struct {
+// LogsSIMParam is input parameters for the sacloud API
+type LogsSIMParam struct {
 	Follow          bool
 	RefreshInterval int64
 
 	input Input
 }
 
-// NewLogsSimParam return new LogsSimParam
-func NewLogsSimParam() *LogsSimParam {
-	return &LogsSimParam{
+// NewLogsSIMParam return new LogsSIMParam
+func NewLogsSIMParam() *LogsSIMParam {
+	return &LogsSIMParam{
 		RefreshInterval: 3}
 }
 
-// Initialize init LogsSimParam
-func (p *LogsSimParam) Initialize(in Input) error {
+// Initialize init LogsSIMParam
+func (p *LogsSIMParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1259,11 +1259,11 @@ func (p *LogsSimParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *LogsSimParam) WriteSkeleton(writer io.Writer) error {
+func (p *LogsSIMParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *LogsSimParam) fillValueToSkeleton() {
+func (p *LogsSIMParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Follow) {
 		p.Follow = false
 	}
@@ -1273,7 +1273,7 @@ func (p *LogsSimParam) fillValueToSkeleton() {
 
 }
 
-func (p *LogsSimParam) validate() error {
+func (p *LogsSIMParam) validate() error {
 	var errors []error
 
 	{
@@ -1287,47 +1287,47 @@ func (p *LogsSimParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *LogsSimParam) ResourceDef() *schema.Resource {
+func (p *LogsSIMParam) ResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *LogsSimParam) CommandDef() *schema.Command {
+func (p *LogsSIMParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["logs"]
 }
 
-func (p *LogsSimParam) IncludeFields() []string {
+func (p *LogsSIMParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *LogsSimParam) ExcludeFields() []string {
+func (p *LogsSIMParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *LogsSimParam) TableType() output.TableType {
+func (p *LogsSIMParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *LogsSimParam) ColumnDefs() []output.ColumnDef {
+func (p *LogsSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *LogsSimParam) SetFollow(v bool) {
+func (p *LogsSIMParam) SetFollow(v bool) {
 	p.Follow = v
 }
 
-func (p *LogsSimParam) GetFollow() bool {
+func (p *LogsSIMParam) GetFollow() bool {
 	return p.Follow
 }
-func (p *LogsSimParam) SetRefreshInterval(v int64) {
+func (p *LogsSIMParam) SetRefreshInterval(v int64) {
 	p.RefreshInterval = v
 }
 
-func (p *LogsSimParam) GetRefreshInterval() int64 {
+func (p *LogsSIMParam) GetRefreshInterval() int64 {
 	return p.RefreshInterval
 }
 
-// MonitorSimParam is input parameters for the sacloud API
-type MonitorSimParam struct {
+// MonitorSIMParam is input parameters for the sacloud API
+type MonitorSIMParam struct {
 	Start     string
 	End       string
 	KeyFormat string
@@ -1335,14 +1335,14 @@ type MonitorSimParam struct {
 	input Input
 }
 
-// NewMonitorSimParam return new MonitorSimParam
-func NewMonitorSimParam() *MonitorSimParam {
-	return &MonitorSimParam{
+// NewMonitorSIMParam return new MonitorSIMParam
+func NewMonitorSIMParam() *MonitorSIMParam {
+	return &MonitorSIMParam{
 		KeyFormat: "sakuracloud.sim.{{.ID}}"}
 }
 
-// Initialize init MonitorSimParam
-func (p *MonitorSimParam) Initialize(in Input) error {
+// Initialize init MonitorSIMParam
+func (p *MonitorSIMParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1351,11 +1351,11 @@ func (p *MonitorSimParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *MonitorSimParam) WriteSkeleton(writer io.Writer) error {
+func (p *MonitorSIMParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *MonitorSimParam) fillValueToSkeleton() {
+func (p *MonitorSIMParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Start) {
 		p.Start = ""
 	}
@@ -1368,7 +1368,7 @@ func (p *MonitorSimParam) fillValueToSkeleton() {
 
 }
 
-func (p *MonitorSimParam) validate() error {
+func (p *MonitorSIMParam) validate() error {
 	var errors []error
 
 	{
@@ -1398,48 +1398,48 @@ func (p *MonitorSimParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *MonitorSimParam) ResourceDef() *schema.Resource {
+func (p *MonitorSIMParam) ResourceDef() *schema.Resource {
 	return define.Resources["SIM"]
 }
 
-func (p *MonitorSimParam) CommandDef() *schema.Command {
+func (p *MonitorSIMParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["monitor"]
 }
 
-func (p *MonitorSimParam) IncludeFields() []string {
+func (p *MonitorSIMParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *MonitorSimParam) ExcludeFields() []string {
+func (p *MonitorSIMParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *MonitorSimParam) TableType() output.TableType {
+func (p *MonitorSIMParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *MonitorSimParam) ColumnDefs() []output.ColumnDef {
+func (p *MonitorSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *MonitorSimParam) SetStart(v string) {
+func (p *MonitorSIMParam) SetStart(v string) {
 	p.Start = v
 }
 
-func (p *MonitorSimParam) GetStart() string {
+func (p *MonitorSIMParam) GetStart() string {
 	return p.Start
 }
-func (p *MonitorSimParam) SetEnd(v string) {
+func (p *MonitorSIMParam) SetEnd(v string) {
 	p.End = v
 }
 
-func (p *MonitorSimParam) GetEnd() string {
+func (p *MonitorSIMParam) GetEnd() string {
 	return p.End
 }
-func (p *MonitorSimParam) SetKeyFormat(v string) {
+func (p *MonitorSIMParam) SetKeyFormat(v string) {
 	p.KeyFormat = v
 }
 
-func (p *MonitorSimParam) GetKeyFormat() string {
+func (p *MonitorSIMParam) GetKeyFormat() string {
 	return p.KeyFormat
 }

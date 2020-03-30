@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func PacketfilterDelete(ctx command.Context, params *params.DeletePacketfilterParam) error {
+func PacketFilterDelete(ctx command.Context, params *params.DeletePacketFilterParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetPacketfilterAPI()
+	api := client.GetPacketFilterAPI()
 
 	// set params
 
 	// call Delete(id)
 	res, err := api.Delete(params.Id)
 	if err != nil {
-		return fmt.Errorf("PacketfilterDelete is failed: %s", err)
+		return fmt.Errorf("PacketFilterDelete is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

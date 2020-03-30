@@ -23,17 +23,17 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func SshkeyDelete(ctx command.Context, params *params.DeleteSshkeyParam) error {
+func SSHKeyDelete(ctx command.Context, params *params.DeleteSSHKeyParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetSshkeyAPI()
+	api := client.GetSSHKeyAPI()
 
 	// set params
 
 	// call Delete(id)
 	res, err := api.Delete(params.Id)
 	if err != nil {
-		return fmt.Errorf("SshkeyDelete is failed: %s", err)
+		return fmt.Errorf("SSHKeyDelete is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

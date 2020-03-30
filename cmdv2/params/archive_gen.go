@@ -29,15 +29,15 @@ import (
 
 // ListArchiveParam is input parameters for the sacloud API
 type ListArchiveParam struct {
+	Sort            []string
 	Name            []string
 	Id              []sacloud.ID
-	From            int
-	Sort            []string
 	Scope           string
+	SourceDiskId    sacloud.ID
+	From            int
+	Max             int
 	Tags            []string
 	SourceArchiveId sacloud.ID
-	SourceDiskId    sacloud.ID
-	Max             int
 
 	input Input
 }
@@ -62,32 +62,32 @@ func (p *ListArchiveParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListArchiveParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
+	if utils.IsEmpty(p.Scope) {
+		p.Scope = ""
+	}
+	if utils.IsEmpty(p.SourceDiskId) {
+		p.SourceDiskId = sacloud.ID(0)
+	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
-	if utils.IsEmpty(p.Scope) {
-		p.Scope = ""
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
 	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.SourceArchiveId) {
 		p.SourceArchiveId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.SourceDiskId) {
-		p.SourceDiskId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
 	}
 
 }
@@ -131,6 +131,14 @@ func (p *ListArchiveParam) validate() error {
 	}
 
 	{
+		validator := define.Resources["Archive"].Commands["list"].Params["source-disk-id"].ValidateFunc
+		errs := validator("--source-disk-id", p.SourceDiskId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
 		validator := define.Resources["Archive"].Commands["list"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
 		if errs != nil {
@@ -141,14 +149,6 @@ func (p *ListArchiveParam) validate() error {
 	{
 		validator := define.Resources["Archive"].Commands["list"].Params["source-archive-id"].ValidateFunc
 		errs := validator("--source-archive-id", p.SourceArchiveId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Archive"].Commands["list"].Params["source-disk-id"].ValidateFunc
-		errs := validator("--source-disk-id", p.SourceDiskId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -181,6 +181,13 @@ func (p *ListArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListArchiveParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListArchiveParam) GetSort() []string {
+	return p.Sort
+}
 func (p *ListArchiveParam) SetName(v []string) {
 	p.Name = v
 }
@@ -195,6 +202,20 @@ func (p *ListArchiveParam) SetId(v []sacloud.ID) {
 func (p *ListArchiveParam) GetId() []sacloud.ID {
 	return p.Id
 }
+func (p *ListArchiveParam) SetScope(v string) {
+	p.Scope = v
+}
+
+func (p *ListArchiveParam) GetScope() string {
+	return p.Scope
+}
+func (p *ListArchiveParam) SetSourceDiskId(v sacloud.ID) {
+	p.SourceDiskId = v
+}
+
+func (p *ListArchiveParam) GetSourceDiskId() sacloud.ID {
+	return p.SourceDiskId
+}
 func (p *ListArchiveParam) SetFrom(v int) {
 	p.From = v
 }
@@ -202,19 +223,12 @@ func (p *ListArchiveParam) SetFrom(v int) {
 func (p *ListArchiveParam) GetFrom() int {
 	return p.From
 }
-func (p *ListArchiveParam) SetSort(v []string) {
-	p.Sort = v
+func (p *ListArchiveParam) SetMax(v int) {
+	p.Max = v
 }
 
-func (p *ListArchiveParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListArchiveParam) SetScope(v string) {
-	p.Scope = v
-}
-
-func (p *ListArchiveParam) GetScope() string {
-	return p.Scope
+func (p *ListArchiveParam) GetMax() int {
+	return p.Max
 }
 func (p *ListArchiveParam) SetTags(v []string) {
 	p.Tags = v
@@ -229,20 +243,6 @@ func (p *ListArchiveParam) SetSourceArchiveId(v sacloud.ID) {
 
 func (p *ListArchiveParam) GetSourceArchiveId() sacloud.ID {
 	return p.SourceArchiveId
-}
-func (p *ListArchiveParam) SetSourceDiskId(v sacloud.ID) {
-	p.SourceDiskId = v
-}
-
-func (p *ListArchiveParam) GetSourceDiskId() sacloud.ID {
-	return p.SourceDiskId
-}
-func (p *ListArchiveParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListArchiveParam) GetMax() int {
-	return p.Max
 }
 
 // CreateArchiveParam is input parameters for the sacloud API
@@ -566,10 +566,10 @@ func (p *ReadArchiveParam) ColumnDefs() []output.ColumnDef {
 
 // UpdateArchiveParam is input parameters for the sacloud API
 type UpdateArchiveParam struct {
-	IconId      sacloud.ID
 	Name        string
 	Description string
 	Tags        []string
+	IconId      sacloud.ID
 
 	input Input
 }
@@ -594,9 +594,6 @@ func (p *UpdateArchiveParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateArchiveParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -606,19 +603,14 @@ func (p *UpdateArchiveParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
 
 }
 
 func (p *UpdateArchiveParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Archive"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Archive"].Commands["update"].Params["name"].ValidateFunc
@@ -639,6 +631,14 @@ func (p *UpdateArchiveParam) validate() error {
 	{
 		validator := define.Resources["Archive"].Commands["update"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Archive"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -671,13 +671,6 @@ func (p *UpdateArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateArchiveParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *UpdateArchiveParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
 func (p *UpdateArchiveParam) SetName(v string) {
 	p.Name = v
 }
@@ -698,6 +691,13 @@ func (p *UpdateArchiveParam) SetTags(v []string) {
 
 func (p *UpdateArchiveParam) GetTags() []string {
 	return p.Tags
+}
+func (p *UpdateArchiveParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *UpdateArchiveParam) GetIconId() sacloud.ID {
+	return p.IconId
 }
 
 // DeleteArchiveParam is input parameters for the sacloud API
@@ -908,18 +908,18 @@ func (p *DownloadArchiveParam) GetFileDestination() string {
 	return p.FileDestination
 }
 
-// FtpOpenArchiveParam is input parameters for the sacloud API
-type FtpOpenArchiveParam struct {
+// FTPOpenArchiveParam is input parameters for the sacloud API
+type FTPOpenArchiveParam struct {
 	input Input
 }
 
-// NewFtpOpenArchiveParam return new FtpOpenArchiveParam
-func NewFtpOpenArchiveParam() *FtpOpenArchiveParam {
-	return &FtpOpenArchiveParam{}
+// NewFTPOpenArchiveParam return new FTPOpenArchiveParam
+func NewFTPOpenArchiveParam() *FTPOpenArchiveParam {
+	return &FTPOpenArchiveParam{}
 }
 
-// Initialize init FtpOpenArchiveParam
-func (p *FtpOpenArchiveParam) Initialize(in Input) error {
+// Initialize init FTPOpenArchiveParam
+func (p *FTPOpenArchiveParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -928,56 +928,56 @@ func (p *FtpOpenArchiveParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *FtpOpenArchiveParam) WriteSkeleton(writer io.Writer) error {
+func (p *FTPOpenArchiveParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *FtpOpenArchiveParam) fillValueToSkeleton() {
+func (p *FTPOpenArchiveParam) fillValueToSkeleton() {
 
 }
 
-func (p *FtpOpenArchiveParam) validate() error {
+func (p *FTPOpenArchiveParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *FtpOpenArchiveParam) ResourceDef() *schema.Resource {
+func (p *FTPOpenArchiveParam) ResourceDef() *schema.Resource {
 	return define.Resources["Archive"]
 }
 
-func (p *FtpOpenArchiveParam) CommandDef() *schema.Command {
+func (p *FTPOpenArchiveParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["ftp-open"]
 }
 
-func (p *FtpOpenArchiveParam) IncludeFields() []string {
+func (p *FTPOpenArchiveParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *FtpOpenArchiveParam) ExcludeFields() []string {
+func (p *FTPOpenArchiveParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *FtpOpenArchiveParam) TableType() output.TableType {
+func (p *FTPOpenArchiveParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *FtpOpenArchiveParam) ColumnDefs() []output.ColumnDef {
+func (p *FTPOpenArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// FtpCloseArchiveParam is input parameters for the sacloud API
-type FtpCloseArchiveParam struct {
+// FTPCloseArchiveParam is input parameters for the sacloud API
+type FTPCloseArchiveParam struct {
 	input Input
 }
 
-// NewFtpCloseArchiveParam return new FtpCloseArchiveParam
-func NewFtpCloseArchiveParam() *FtpCloseArchiveParam {
-	return &FtpCloseArchiveParam{}
+// NewFTPCloseArchiveParam return new FTPCloseArchiveParam
+func NewFTPCloseArchiveParam() *FTPCloseArchiveParam {
+	return &FTPCloseArchiveParam{}
 }
 
-// Initialize init FtpCloseArchiveParam
-func (p *FtpCloseArchiveParam) Initialize(in Input) error {
+// Initialize init FTPCloseArchiveParam
+func (p *FTPCloseArchiveParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -986,41 +986,41 @@ func (p *FtpCloseArchiveParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *FtpCloseArchiveParam) WriteSkeleton(writer io.Writer) error {
+func (p *FTPCloseArchiveParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *FtpCloseArchiveParam) fillValueToSkeleton() {
+func (p *FTPCloseArchiveParam) fillValueToSkeleton() {
 
 }
 
-func (p *FtpCloseArchiveParam) validate() error {
+func (p *FTPCloseArchiveParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *FtpCloseArchiveParam) ResourceDef() *schema.Resource {
+func (p *FTPCloseArchiveParam) ResourceDef() *schema.Resource {
 	return define.Resources["Archive"]
 }
 
-func (p *FtpCloseArchiveParam) CommandDef() *schema.Command {
+func (p *FTPCloseArchiveParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["ftp-close"]
 }
 
-func (p *FtpCloseArchiveParam) IncludeFields() []string {
+func (p *FTPCloseArchiveParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *FtpCloseArchiveParam) ExcludeFields() []string {
+func (p *FTPCloseArchiveParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *FtpCloseArchiveParam) TableType() output.TableType {
+func (p *FTPCloseArchiveParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *FtpCloseArchiveParam) ColumnDefs() []output.ColumnDef {
+func (p *FTPCloseArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 

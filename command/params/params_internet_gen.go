@@ -2678,8 +2678,8 @@ func (p *SubnetUpdateInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// Ipv6InfoInternetParam is input parameters for the sacloud API
-type Ipv6InfoInternetParam struct {
+// IPv6InfoInternetParam is input parameters for the sacloud API
+type IPv6InfoInternetParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
 	Parameters        string     `json:"parameters"`
@@ -2696,13 +2696,13 @@ type Ipv6InfoInternetParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewIpv6InfoInternetParam return new Ipv6InfoInternetParam
-func NewIpv6InfoInternetParam() *Ipv6InfoInternetParam {
-	return &Ipv6InfoInternetParam{}
+// NewIPv6InfoInternetParam return new IPv6InfoInternetParam
+func NewIPv6InfoInternetParam() *IPv6InfoInternetParam {
+	return &IPv6InfoInternetParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *Ipv6InfoInternetParam) FillValueToSkeleton() {
+func (p *IPv6InfoInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2749,7 +2749,7 @@ func (p *Ipv6InfoInternetParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *Ipv6InfoInternetParam) Validate() []error {
+func (p *IPv6InfoInternetParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -2782,131 +2782,131 @@ func (p *Ipv6InfoInternetParam) Validate() []error {
 	return errors
 }
 
-func (p *Ipv6InfoInternetParam) GetResourceDef() *schema.Resource {
+func (p *IPv6InfoInternetParam) GetResourceDef() *schema.Resource {
 	return define.Resources["Internet"]
 }
 
-func (p *Ipv6InfoInternetParam) GetCommandDef() *schema.Command {
+func (p *IPv6InfoInternetParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ipv6-info"]
 }
 
-func (p *Ipv6InfoInternetParam) GetIncludeFields() []string {
+func (p *IPv6InfoInternetParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *Ipv6InfoInternetParam) GetExcludeFields() []string {
+func (p *IPv6InfoInternetParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *Ipv6InfoInternetParam) GetTableType() output.TableType {
+func (p *IPv6InfoInternetParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *Ipv6InfoInternetParam) GetColumnDefs() []output.ColumnDef {
+func (p *IPv6InfoInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *Ipv6InfoInternetParam) SetSelector(v []string) {
+func (p *IPv6InfoInternetParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *Ipv6InfoInternetParam) GetSelector() []string {
+func (p *IPv6InfoInternetParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *Ipv6InfoInternetParam) SetParamTemplate(v string) {
+func (p *IPv6InfoInternetParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *Ipv6InfoInternetParam) GetParamTemplate() string {
+func (p *IPv6InfoInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *Ipv6InfoInternetParam) SetParameters(v string) {
+func (p *IPv6InfoInternetParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *Ipv6InfoInternetParam) GetParameters() string {
+func (p *IPv6InfoInternetParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *Ipv6InfoInternetParam) SetParamTemplateFile(v string) {
+func (p *IPv6InfoInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *Ipv6InfoInternetParam) GetParamTemplateFile() string {
+func (p *IPv6InfoInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *Ipv6InfoInternetParam) SetParameterFile(v string) {
+func (p *IPv6InfoInternetParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *Ipv6InfoInternetParam) GetParameterFile() string {
+func (p *IPv6InfoInternetParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *Ipv6InfoInternetParam) SetGenerateSkeleton(v bool) {
+func (p *IPv6InfoInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *Ipv6InfoInternetParam) GetGenerateSkeleton() bool {
+func (p *IPv6InfoInternetParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *Ipv6InfoInternetParam) SetOutputType(v string) {
+func (p *IPv6InfoInternetParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *Ipv6InfoInternetParam) GetOutputType() string {
+func (p *IPv6InfoInternetParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *Ipv6InfoInternetParam) SetColumn(v []string) {
+func (p *IPv6InfoInternetParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *Ipv6InfoInternetParam) GetColumn() []string {
+func (p *IPv6InfoInternetParam) GetColumn() []string {
 	return p.Column
 }
-func (p *Ipv6InfoInternetParam) SetQuiet(v bool) {
+func (p *IPv6InfoInternetParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *Ipv6InfoInternetParam) GetQuiet() bool {
+func (p *IPv6InfoInternetParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *Ipv6InfoInternetParam) SetFormat(v string) {
+func (p *IPv6InfoInternetParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *Ipv6InfoInternetParam) GetFormat() string {
+func (p *IPv6InfoInternetParam) GetFormat() string {
 	return p.Format
 }
-func (p *Ipv6InfoInternetParam) SetFormatFile(v string) {
+func (p *IPv6InfoInternetParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *Ipv6InfoInternetParam) GetFormatFile() string {
+func (p *IPv6InfoInternetParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *Ipv6InfoInternetParam) SetQuery(v string) {
+func (p *IPv6InfoInternetParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *Ipv6InfoInternetParam) GetQuery() string {
+func (p *IPv6InfoInternetParam) GetQuery() string {
 	return p.Query
 }
-func (p *Ipv6InfoInternetParam) SetQueryFile(v string) {
+func (p *IPv6InfoInternetParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *Ipv6InfoInternetParam) GetQueryFile() string {
+func (p *IPv6InfoInternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *Ipv6InfoInternetParam) SetId(v sacloud.ID) {
+func (p *IPv6InfoInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *Ipv6InfoInternetParam) GetId() sacloud.ID {
+func (p *IPv6InfoInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// Ipv6EnableInternetParam is input parameters for the sacloud API
-type Ipv6EnableInternetParam struct {
+// IPv6EnableInternetParam is input parameters for the sacloud API
+type IPv6EnableInternetParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -2924,13 +2924,13 @@ type Ipv6EnableInternetParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewIpv6EnableInternetParam return new Ipv6EnableInternetParam
-func NewIpv6EnableInternetParam() *Ipv6EnableInternetParam {
-	return &Ipv6EnableInternetParam{}
+// NewIPv6EnableInternetParam return new IPv6EnableInternetParam
+func NewIPv6EnableInternetParam() *IPv6EnableInternetParam {
+	return &IPv6EnableInternetParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *Ipv6EnableInternetParam) FillValueToSkeleton() {
+func (p *IPv6EnableInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2980,7 +2980,7 @@ func (p *Ipv6EnableInternetParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *Ipv6EnableInternetParam) Validate() []error {
+func (p *IPv6EnableInternetParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -3013,138 +3013,138 @@ func (p *Ipv6EnableInternetParam) Validate() []error {
 	return errors
 }
 
-func (p *Ipv6EnableInternetParam) GetResourceDef() *schema.Resource {
+func (p *IPv6EnableInternetParam) GetResourceDef() *schema.Resource {
 	return define.Resources["Internet"]
 }
 
-func (p *Ipv6EnableInternetParam) GetCommandDef() *schema.Command {
+func (p *IPv6EnableInternetParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ipv6-enable"]
 }
 
-func (p *Ipv6EnableInternetParam) GetIncludeFields() []string {
+func (p *IPv6EnableInternetParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *Ipv6EnableInternetParam) GetExcludeFields() []string {
+func (p *IPv6EnableInternetParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *Ipv6EnableInternetParam) GetTableType() output.TableType {
+func (p *IPv6EnableInternetParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *Ipv6EnableInternetParam) GetColumnDefs() []output.ColumnDef {
+func (p *IPv6EnableInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *Ipv6EnableInternetParam) SetSelector(v []string) {
+func (p *IPv6EnableInternetParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *Ipv6EnableInternetParam) GetSelector() []string {
+func (p *IPv6EnableInternetParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *Ipv6EnableInternetParam) SetAssumeyes(v bool) {
+func (p *IPv6EnableInternetParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *Ipv6EnableInternetParam) GetAssumeyes() bool {
+func (p *IPv6EnableInternetParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *Ipv6EnableInternetParam) SetParamTemplate(v string) {
+func (p *IPv6EnableInternetParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *Ipv6EnableInternetParam) GetParamTemplate() string {
+func (p *IPv6EnableInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *Ipv6EnableInternetParam) SetParameters(v string) {
+func (p *IPv6EnableInternetParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *Ipv6EnableInternetParam) GetParameters() string {
+func (p *IPv6EnableInternetParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *Ipv6EnableInternetParam) SetParamTemplateFile(v string) {
+func (p *IPv6EnableInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *Ipv6EnableInternetParam) GetParamTemplateFile() string {
+func (p *IPv6EnableInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *Ipv6EnableInternetParam) SetParameterFile(v string) {
+func (p *IPv6EnableInternetParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *Ipv6EnableInternetParam) GetParameterFile() string {
+func (p *IPv6EnableInternetParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *Ipv6EnableInternetParam) SetGenerateSkeleton(v bool) {
+func (p *IPv6EnableInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *Ipv6EnableInternetParam) GetGenerateSkeleton() bool {
+func (p *IPv6EnableInternetParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *Ipv6EnableInternetParam) SetOutputType(v string) {
+func (p *IPv6EnableInternetParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *Ipv6EnableInternetParam) GetOutputType() string {
+func (p *IPv6EnableInternetParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *Ipv6EnableInternetParam) SetColumn(v []string) {
+func (p *IPv6EnableInternetParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *Ipv6EnableInternetParam) GetColumn() []string {
+func (p *IPv6EnableInternetParam) GetColumn() []string {
 	return p.Column
 }
-func (p *Ipv6EnableInternetParam) SetQuiet(v bool) {
+func (p *IPv6EnableInternetParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *Ipv6EnableInternetParam) GetQuiet() bool {
+func (p *IPv6EnableInternetParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *Ipv6EnableInternetParam) SetFormat(v string) {
+func (p *IPv6EnableInternetParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *Ipv6EnableInternetParam) GetFormat() string {
+func (p *IPv6EnableInternetParam) GetFormat() string {
 	return p.Format
 }
-func (p *Ipv6EnableInternetParam) SetFormatFile(v string) {
+func (p *IPv6EnableInternetParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *Ipv6EnableInternetParam) GetFormatFile() string {
+func (p *IPv6EnableInternetParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *Ipv6EnableInternetParam) SetQuery(v string) {
+func (p *IPv6EnableInternetParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *Ipv6EnableInternetParam) GetQuery() string {
+func (p *IPv6EnableInternetParam) GetQuery() string {
 	return p.Query
 }
-func (p *Ipv6EnableInternetParam) SetQueryFile(v string) {
+func (p *IPv6EnableInternetParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *Ipv6EnableInternetParam) GetQueryFile() string {
+func (p *IPv6EnableInternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *Ipv6EnableInternetParam) SetId(v sacloud.ID) {
+func (p *IPv6EnableInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *Ipv6EnableInternetParam) GetId() sacloud.ID {
+func (p *IPv6EnableInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// Ipv6DisableInternetParam is input parameters for the sacloud API
-type Ipv6DisableInternetParam struct {
+// IPv6DisableInternetParam is input parameters for the sacloud API
+type IPv6DisableInternetParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
@@ -3155,13 +3155,13 @@ type Ipv6DisableInternetParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewIpv6DisableInternetParam return new Ipv6DisableInternetParam
-func NewIpv6DisableInternetParam() *Ipv6DisableInternetParam {
-	return &Ipv6DisableInternetParam{}
+// NewIPv6DisableInternetParam return new IPv6DisableInternetParam
+func NewIPv6DisableInternetParam() *IPv6DisableInternetParam {
+	return &IPv6DisableInternetParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *Ipv6DisableInternetParam) FillValueToSkeleton() {
+func (p *IPv6DisableInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3190,7 +3190,7 @@ func (p *Ipv6DisableInternetParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *Ipv6DisableInternetParam) Validate() []error {
+func (p *IPv6DisableInternetParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -3203,84 +3203,84 @@ func (p *Ipv6DisableInternetParam) Validate() []error {
 	return errors
 }
 
-func (p *Ipv6DisableInternetParam) GetResourceDef() *schema.Resource {
+func (p *IPv6DisableInternetParam) GetResourceDef() *schema.Resource {
 	return define.Resources["Internet"]
 }
 
-func (p *Ipv6DisableInternetParam) GetCommandDef() *schema.Command {
+func (p *IPv6DisableInternetParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ipv6-disable"]
 }
 
-func (p *Ipv6DisableInternetParam) GetIncludeFields() []string {
+func (p *IPv6DisableInternetParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *Ipv6DisableInternetParam) GetExcludeFields() []string {
+func (p *IPv6DisableInternetParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *Ipv6DisableInternetParam) GetTableType() output.TableType {
+func (p *IPv6DisableInternetParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *Ipv6DisableInternetParam) GetColumnDefs() []output.ColumnDef {
+func (p *IPv6DisableInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *Ipv6DisableInternetParam) SetSelector(v []string) {
+func (p *IPv6DisableInternetParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *Ipv6DisableInternetParam) GetSelector() []string {
+func (p *IPv6DisableInternetParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *Ipv6DisableInternetParam) SetAssumeyes(v bool) {
+func (p *IPv6DisableInternetParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *Ipv6DisableInternetParam) GetAssumeyes() bool {
+func (p *IPv6DisableInternetParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *Ipv6DisableInternetParam) SetParamTemplate(v string) {
+func (p *IPv6DisableInternetParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *Ipv6DisableInternetParam) GetParamTemplate() string {
+func (p *IPv6DisableInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *Ipv6DisableInternetParam) SetParameters(v string) {
+func (p *IPv6DisableInternetParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *Ipv6DisableInternetParam) GetParameters() string {
+func (p *IPv6DisableInternetParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *Ipv6DisableInternetParam) SetParamTemplateFile(v string) {
+func (p *IPv6DisableInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *Ipv6DisableInternetParam) GetParamTemplateFile() string {
+func (p *IPv6DisableInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *Ipv6DisableInternetParam) SetParameterFile(v string) {
+func (p *IPv6DisableInternetParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *Ipv6DisableInternetParam) GetParameterFile() string {
+func (p *IPv6DisableInternetParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *Ipv6DisableInternetParam) SetGenerateSkeleton(v bool) {
+func (p *IPv6DisableInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *Ipv6DisableInternetParam) GetGenerateSkeleton() bool {
+func (p *IPv6DisableInternetParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *Ipv6DisableInternetParam) SetId(v sacloud.ID) {
+func (p *IPv6DisableInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *Ipv6DisableInternetParam) GetId() sacloud.ID {
+func (p *IPv6DisableInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 

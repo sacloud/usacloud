@@ -25,11 +25,11 @@ import (
 )
 
 var (
-	ipv6ListParam      = params.NewListIpv6Param()
-	ipv6PtrAddParam    = params.NewPtrAddIpv6Param()
-	ipv6PtrReadParam   = params.NewPtrReadIpv6Param()
-	ipv6PtrUpdateParam = params.NewPtrUpdateIpv6Param()
-	ipv6PtrDeleteParam = params.NewPtrDeleteIpv6Param()
+	ipv6ListParam      = params.NewListIPv6Param()
+	ipv6PtrAddParam    = params.NewPtrAddIPv6Param()
+	ipv6PtrReadParam   = params.NewPtrReadIPv6Param()
+	ipv6PtrUpdateParam = params.NewPtrUpdateIPv6Param()
+	ipv6PtrDeleteParam = params.NewPtrDeleteIPv6Param()
 )
 
 // ipv6Cmd represents the command to manage SAKURA Cloud IPv6
@@ -45,8 +45,8 @@ var ipv6Cmd = &cobra.Command{
 var ipv6ListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find"},
-	Short:   "List Ipv6",
-	Long:    `List Ipv6`,
+	Short:   "List IPv6",
+	Long:    `List IPv6`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := ipv6ListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -57,20 +57,20 @@ var ipv6ListCmd = &cobra.Command{
 
 func ipv6ListCmdInit() {
 	fs := ipv6ListCmd.Flags()
-	fs.VarP(newIDValue(0, &ipv6ListParam.Ipv6netId), "ipv-6net-id", "", "set filter by ipv6net-id")
-	fs.VarP(newIDValue(0, &ipv6ListParam.InternetId), "internet-id", "", "set filter by internet-id")
-	fs.StringSliceVarP(&ipv6ListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &ipv6ListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&ipv6ListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&ipv6ListParam.Max, "max", "", 0, "set limit")
+	fs.VarP(newIDValue(0, &ipv6ListParam.IPv6netId), "ipv6net-id", "", "set filter by ipv6net-id")
+	fs.VarP(newIDValue(0, &ipv6ListParam.InternetId), "internet-id", "", "set filter by internet-id")
 	fs.StringSliceVarP(&ipv6ListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&ipv6ListParam.Name, "name", "", []string{}, "set filter by name(s)")
 }
 
 var ipv6PtrAddCmd = &cobra.Command{
 	Use: "ptr-add",
 
-	Short: "PtrAdd Ipv6",
-	Long:  `PtrAdd Ipv6`,
+	Short: "PtrAdd IPv6",
+	Long:  `PtrAdd IPv6`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := ipv6PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -87,8 +87,8 @@ func ipv6PtrAddCmdInit() {
 var ipv6PtrReadCmd = &cobra.Command{
 	Use: "ptr-read",
 
-	Short: "PtrRead Ipv6",
-	Long:  `PtrRead Ipv6`,
+	Short: "PtrRead IPv6",
+	Long:  `PtrRead IPv6`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := ipv6PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -103,8 +103,8 @@ func ipv6PtrReadCmdInit() {
 var ipv6PtrUpdateCmd = &cobra.Command{
 	Use: "ptr-update",
 
-	Short: "PtrUpdate Ipv6",
-	Long:  `PtrUpdate Ipv6`,
+	Short: "PtrUpdate IPv6",
+	Long:  `PtrUpdate IPv6`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := ipv6PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -121,8 +121,8 @@ func ipv6PtrUpdateCmdInit() {
 var ipv6PtrDeleteCmd = &cobra.Command{
 	Use: "ptr-delete",
 
-	Short: "PtrDelete Ipv6",
-	Long:  `PtrDelete Ipv6`,
+	Short: "PtrDelete IPv6",
+	Long:  `PtrDelete IPv6`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := ipv6PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG

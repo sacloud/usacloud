@@ -21,13 +21,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func VPCRouterSiteToSiteVpnPeers(ctx command.Context, params *params.SiteToSiteVpnPeersVPCRouterParam) error {
+func VPCRouterSiteToSiteVPNPeers(ctx command.Context, params *params.SiteToSiteVPNPeersVPCRouterParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetVPCRouterAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("VPCRouterSiteToSiteVpnPeers is failed: %s", e)
+		return fmt.Errorf("VPCRouterSiteToSiteVPNPeers is failed: %s", e)
 	}
 
 	if !p.HasSiteToSiteIPsecVPN() {
@@ -37,7 +37,7 @@ func VPCRouterSiteToSiteVpnPeers(ctx command.Context, params *params.SiteToSiteV
 
 	status, err := api.Status(params.Id)
 	if err != nil {
-		return fmt.Errorf("VPCRouterSiteToSiteVpnPeers is failed: %s", err)
+		return fmt.Errorf("VPCRouterSiteToSiteVPNPeers is failed: %s", err)
 	}
 
 	// build parameters to display table

@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func IsoimageRead(ctx command.Context, params *params.ReadIsoimageParam) error {
+func ISOImageRead(ctx command.Context, params *params.ReadISOImageParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetCDROMAPI()
@@ -33,7 +33,7 @@ func IsoimageRead(ctx command.Context, params *params.ReadIsoimageParam) error {
 	// call Read(id)
 	res, err := api.Read(params.Id)
 	if err != nil {
-		return fmt.Errorf("IsoimageRead is failed: %s", err)
+		return fmt.Errorf("ISOImageRead is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

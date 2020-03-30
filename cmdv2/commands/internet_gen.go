@@ -35,9 +35,9 @@ var (
 	internetSubnetAddParam       = params.NewSubnetAddInternetParam()
 	internetSubnetDeleteParam    = params.NewSubnetDeleteInternetParam()
 	internetSubnetUpdateParam    = params.NewSubnetUpdateInternetParam()
-	internetIpv6InfoParam        = params.NewIpv6InfoInternetParam()
-	internetIpv6EnableParam      = params.NewIpv6EnableInternetParam()
-	internetIpv6DisableParam     = params.NewIpv6DisableInternetParam()
+	internetIPv6InfoParam        = params.NewIPv6InfoInternetParam()
+	internetIPv6EnableParam      = params.NewIPv6EnableInternetParam()
+	internetIPv6DisableParam     = params.NewIPv6DisableInternetParam()
 	internetMonitorParam         = params.NewMonitorInternetParam()
 )
 
@@ -66,12 +66,12 @@ var internetListCmd = &cobra.Command{
 
 func internetListCmdInit() {
 	fs := internetListCmd.Flags()
+	fs.StringSliceVarP(&internetListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &internetListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&internetListParam.From, "from", "", 0, "set offset")
+	fs.StringSliceVarP(&internetListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.IntVarP(&internetListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&internetListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&internetListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
-	fs.StringSliceVarP(&internetListParam.Name, "name", "", []string{}, "set filter by name(s)")
 }
 
 var internetCreateCmd = &cobra.Command{
@@ -128,11 +128,11 @@ var internetUpdateCmd = &cobra.Command{
 
 func internetUpdateCmdInit() {
 	fs := internetUpdateCmd.Flags()
-	fs.IntVarP(&internetUpdateParam.BandWidth, "band-width", "", 0, "set band-width(Mbpm)")
-	fs.StringVarP(&internetUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&internetUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&internetUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &internetUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.IntVarP(&internetUpdateParam.BandWidth, "band-width", "", 0, "set band-width(Mbpm)")
+	fs.StringVarP(&internetUpdateParam.Name, "name", "", "", "set resource display name")
 }
 
 var internetDeleteCmd = &cobra.Command{
@@ -241,52 +241,52 @@ func internetSubnetUpdateCmdInit() {
 	fs.StringVarP(&internetSubnetUpdateParam.NextHop, "next-hop", "", "", "set NextHop IPAddress")
 }
 
-var internetIpv6InfoCmd = &cobra.Command{
+var internetIPv6InfoCmd = &cobra.Command{
 	Use: "ipv6-info",
 
-	Short: "Ipv6Info Internet",
-	Long:  `Ipv6Info Internet`,
+	Short: "IPv6Info Internet",
+	Long:  `IPv6Info Internet`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetIpv6InfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := internetIPv6InfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("ipv6-info parameter: \n%s\n", debugMarshalIndent(internetIpv6InfoParam))
+		fmt.Printf("ipv6-info parameter: \n%s\n", debugMarshalIndent(internetIPv6InfoParam))
 		return err
 	},
 }
 
-func internetIpv6InfoCmdInit() {
+func internetIPv6InfoCmdInit() {
 }
 
-var internetIpv6EnableCmd = &cobra.Command{
+var internetIPv6EnableCmd = &cobra.Command{
 	Use: "ipv6-enable",
 
-	Short: "Ipv6Enable Internet",
-	Long:  `Ipv6Enable Internet`,
+	Short: "IPv6Enable Internet",
+	Long:  `IPv6Enable Internet`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetIpv6EnableParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := internetIPv6EnableParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("ipv6-enable parameter: \n%s\n", debugMarshalIndent(internetIpv6EnableParam))
+		fmt.Printf("ipv6-enable parameter: \n%s\n", debugMarshalIndent(internetIPv6EnableParam))
 		return err
 	},
 }
 
-func internetIpv6EnableCmdInit() {
+func internetIPv6EnableCmdInit() {
 }
 
-var internetIpv6DisableCmd = &cobra.Command{
+var internetIPv6DisableCmd = &cobra.Command{
 	Use: "ipv6-disable",
 
-	Short: "Ipv6Disable Internet",
-	Long:  `Ipv6Disable Internet`,
+	Short: "IPv6Disable Internet",
+	Long:  `IPv6Disable Internet`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetIpv6DisableParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := internetIPv6DisableParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("ipv6-disable parameter: \n%s\n", debugMarshalIndent(internetIpv6DisableParam))
+		fmt.Printf("ipv6-disable parameter: \n%s\n", debugMarshalIndent(internetIPv6DisableParam))
 		return err
 	},
 }
 
-func internetIpv6DisableCmdInit() {
+func internetIPv6DisableCmdInit() {
 }
 
 var internetMonitorCmd = &cobra.Command{
@@ -342,14 +342,14 @@ func init() {
 	internetSubnetUpdateCmdInit()
 	parent.AddCommand(internetSubnetUpdateCmd)
 
-	internetIpv6InfoCmdInit()
-	parent.AddCommand(internetIpv6InfoCmd)
+	internetIPv6InfoCmdInit()
+	parent.AddCommand(internetIPv6InfoCmd)
 
-	internetIpv6EnableCmdInit()
-	parent.AddCommand(internetIpv6EnableCmd)
+	internetIPv6EnableCmdInit()
+	parent.AddCommand(internetIPv6EnableCmd)
 
-	internetIpv6DisableCmdInit()
-	parent.AddCommand(internetIpv6DisableCmd)
+	internetIPv6DisableCmdInit()
+	parent.AddCommand(internetIPv6DisableCmd)
 
 	internetMonitorCmdInit()
 	parent.AddCommand(internetMonitorCmd)

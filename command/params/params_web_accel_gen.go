@@ -23,8 +23,8 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListWebaccelParam is input parameters for the sacloud API
-type ListWebaccelParam struct {
+// ListWebAccelParam is input parameters for the sacloud API
+type ListWebAccelParam struct {
 	ParamTemplate     string   `json:"param-template"`
 	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -39,13 +39,13 @@ type ListWebaccelParam struct {
 	QueryFile         string   `json:"query-file"`
 }
 
-// NewListWebaccelParam return new ListWebaccelParam
-func NewListWebaccelParam() *ListWebaccelParam {
-	return &ListWebaccelParam{}
+// NewListWebAccelParam return new ListWebAccelParam
+func NewListWebAccelParam() *ListWebAccelParam {
+	return &ListWebAccelParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListWebaccelParam) FillValueToSkeleton() {
+func (p *ListWebAccelParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -86,7 +86,7 @@ func (p *ListWebaccelParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListWebaccelParam) Validate() []error {
+func (p *ListWebAccelParam) Validate() []error {
 	errors := []error{}
 
 	{
@@ -112,117 +112,117 @@ func (p *ListWebaccelParam) Validate() []error {
 	return errors
 }
 
-func (p *ListWebaccelParam) GetResourceDef() *schema.Resource {
+func (p *ListWebAccelParam) GetResourceDef() *schema.Resource {
 	return define.Resources["WebAccel"]
 }
 
-func (p *ListWebaccelParam) GetCommandDef() *schema.Command {
+func (p *ListWebAccelParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListWebaccelParam) GetIncludeFields() []string {
+func (p *ListWebAccelParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListWebaccelParam) GetExcludeFields() []string {
+func (p *ListWebAccelParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListWebaccelParam) GetTableType() output.TableType {
+func (p *ListWebAccelParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListWebaccelParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListWebAccelParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListWebaccelParam) SetParamTemplate(v string) {
+func (p *ListWebAccelParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListWebaccelParam) GetParamTemplate() string {
+func (p *ListWebAccelParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListWebaccelParam) SetParameters(v string) {
+func (p *ListWebAccelParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ListWebaccelParam) GetParameters() string {
+func (p *ListWebAccelParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ListWebaccelParam) SetParamTemplateFile(v string) {
+func (p *ListWebAccelParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListWebaccelParam) GetParamTemplateFile() string {
+func (p *ListWebAccelParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListWebaccelParam) SetParameterFile(v string) {
+func (p *ListWebAccelParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ListWebaccelParam) GetParameterFile() string {
+func (p *ListWebAccelParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ListWebaccelParam) SetGenerateSkeleton(v bool) {
+func (p *ListWebAccelParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListWebaccelParam) GetGenerateSkeleton() bool {
+func (p *ListWebAccelParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListWebaccelParam) SetOutputType(v string) {
+func (p *ListWebAccelParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListWebaccelParam) GetOutputType() string {
+func (p *ListWebAccelParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListWebaccelParam) SetColumn(v []string) {
+func (p *ListWebAccelParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListWebaccelParam) GetColumn() []string {
+func (p *ListWebAccelParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ListWebaccelParam) SetQuiet(v bool) {
+func (p *ListWebAccelParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListWebaccelParam) GetQuiet() bool {
+func (p *ListWebAccelParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListWebaccelParam) SetFormat(v string) {
+func (p *ListWebAccelParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListWebaccelParam) GetFormat() string {
+func (p *ListWebAccelParam) GetFormat() string {
 	return p.Format
 }
-func (p *ListWebaccelParam) SetFormatFile(v string) {
+func (p *ListWebAccelParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListWebaccelParam) GetFormatFile() string {
+func (p *ListWebAccelParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListWebaccelParam) SetQuery(v string) {
+func (p *ListWebAccelParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListWebaccelParam) GetQuery() string {
+func (p *ListWebAccelParam) GetQuery() string {
 	return p.Query
 }
-func (p *ListWebaccelParam) SetQueryFile(v string) {
+func (p *ListWebAccelParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListWebaccelParam) GetQueryFile() string {
+func (p *ListWebAccelParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// ReadWebaccelParam is input parameters for the sacloud API
-type ReadWebaccelParam struct {
+// ReadWebAccelParam is input parameters for the sacloud API
+type ReadWebAccelParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
 	Parameters        string     `json:"parameters"`
@@ -239,13 +239,13 @@ type ReadWebaccelParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewReadWebaccelParam return new ReadWebaccelParam
-func NewReadWebaccelParam() *ReadWebaccelParam {
-	return &ReadWebaccelParam{}
+// NewReadWebAccelParam return new ReadWebAccelParam
+func NewReadWebAccelParam() *ReadWebAccelParam {
+	return &ReadWebAccelParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ReadWebaccelParam) FillValueToSkeleton() {
+func (p *ReadWebAccelParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -292,7 +292,7 @@ func (p *ReadWebaccelParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ReadWebaccelParam) Validate() []error {
+func (p *ReadWebAccelParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -325,131 +325,131 @@ func (p *ReadWebaccelParam) Validate() []error {
 	return errors
 }
 
-func (p *ReadWebaccelParam) GetResourceDef() *schema.Resource {
+func (p *ReadWebAccelParam) GetResourceDef() *schema.Resource {
 	return define.Resources["WebAccel"]
 }
 
-func (p *ReadWebaccelParam) GetCommandDef() *schema.Command {
+func (p *ReadWebAccelParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["read"]
 }
 
-func (p *ReadWebaccelParam) GetIncludeFields() []string {
+func (p *ReadWebAccelParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ReadWebaccelParam) GetExcludeFields() []string {
+func (p *ReadWebAccelParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ReadWebaccelParam) GetTableType() output.TableType {
+func (p *ReadWebAccelParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ReadWebaccelParam) GetColumnDefs() []output.ColumnDef {
+func (p *ReadWebAccelParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReadWebaccelParam) SetSelector(v []string) {
+func (p *ReadWebAccelParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *ReadWebaccelParam) GetSelector() []string {
+func (p *ReadWebAccelParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ReadWebaccelParam) SetParamTemplate(v string) {
+func (p *ReadWebAccelParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ReadWebaccelParam) GetParamTemplate() string {
+func (p *ReadWebAccelParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ReadWebaccelParam) SetParameters(v string) {
+func (p *ReadWebAccelParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *ReadWebaccelParam) GetParameters() string {
+func (p *ReadWebAccelParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *ReadWebaccelParam) SetParamTemplateFile(v string) {
+func (p *ReadWebAccelParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ReadWebaccelParam) GetParamTemplateFile() string {
+func (p *ReadWebAccelParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ReadWebaccelParam) SetParameterFile(v string) {
+func (p *ReadWebAccelParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *ReadWebaccelParam) GetParameterFile() string {
+func (p *ReadWebAccelParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *ReadWebaccelParam) SetGenerateSkeleton(v bool) {
+func (p *ReadWebAccelParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ReadWebaccelParam) GetGenerateSkeleton() bool {
+func (p *ReadWebAccelParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReadWebaccelParam) SetOutputType(v string) {
+func (p *ReadWebAccelParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ReadWebaccelParam) GetOutputType() string {
+func (p *ReadWebAccelParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ReadWebaccelParam) SetColumn(v []string) {
+func (p *ReadWebAccelParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ReadWebaccelParam) GetColumn() []string {
+func (p *ReadWebAccelParam) GetColumn() []string {
 	return p.Column
 }
-func (p *ReadWebaccelParam) SetQuiet(v bool) {
+func (p *ReadWebAccelParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ReadWebaccelParam) GetQuiet() bool {
+func (p *ReadWebAccelParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ReadWebaccelParam) SetFormat(v string) {
+func (p *ReadWebAccelParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ReadWebaccelParam) GetFormat() string {
+func (p *ReadWebAccelParam) GetFormat() string {
 	return p.Format
 }
-func (p *ReadWebaccelParam) SetFormatFile(v string) {
+func (p *ReadWebAccelParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ReadWebaccelParam) GetFormatFile() string {
+func (p *ReadWebAccelParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ReadWebaccelParam) SetQuery(v string) {
+func (p *ReadWebAccelParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ReadWebaccelParam) GetQuery() string {
+func (p *ReadWebAccelParam) GetQuery() string {
 	return p.Query
 }
-func (p *ReadWebaccelParam) SetQueryFile(v string) {
+func (p *ReadWebAccelParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ReadWebaccelParam) GetQueryFile() string {
+func (p *ReadWebAccelParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadWebaccelParam) SetId(v sacloud.ID) {
+func (p *ReadWebAccelParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadWebaccelParam) GetId() sacloud.ID {
+func (p *ReadWebAccelParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// CertificateInfoWebaccelParam is input parameters for the sacloud API
-type CertificateInfoWebaccelParam struct {
+// CertificateInfoWebAccelParam is input parameters for the sacloud API
+type CertificateInfoWebAccelParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
 	Parameters        string     `json:"parameters"`
@@ -466,13 +466,13 @@ type CertificateInfoWebaccelParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewCertificateInfoWebaccelParam return new CertificateInfoWebaccelParam
-func NewCertificateInfoWebaccelParam() *CertificateInfoWebaccelParam {
-	return &CertificateInfoWebaccelParam{}
+// NewCertificateInfoWebAccelParam return new CertificateInfoWebAccelParam
+func NewCertificateInfoWebAccelParam() *CertificateInfoWebAccelParam {
+	return &CertificateInfoWebAccelParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CertificateInfoWebaccelParam) FillValueToSkeleton() {
+func (p *CertificateInfoWebAccelParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -519,7 +519,7 @@ func (p *CertificateInfoWebaccelParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CertificateInfoWebaccelParam) Validate() []error {
+func (p *CertificateInfoWebAccelParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -552,131 +552,131 @@ func (p *CertificateInfoWebaccelParam) Validate() []error {
 	return errors
 }
 
-func (p *CertificateInfoWebaccelParam) GetResourceDef() *schema.Resource {
+func (p *CertificateInfoWebAccelParam) GetResourceDef() *schema.Resource {
 	return define.Resources["WebAccel"]
 }
 
-func (p *CertificateInfoWebaccelParam) GetCommandDef() *schema.Command {
+func (p *CertificateInfoWebAccelParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["certificate-info"]
 }
 
-func (p *CertificateInfoWebaccelParam) GetIncludeFields() []string {
+func (p *CertificateInfoWebAccelParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CertificateInfoWebaccelParam) GetExcludeFields() []string {
+func (p *CertificateInfoWebAccelParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CertificateInfoWebaccelParam) GetTableType() output.TableType {
+func (p *CertificateInfoWebAccelParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CertificateInfoWebaccelParam) GetColumnDefs() []output.ColumnDef {
+func (p *CertificateInfoWebAccelParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CertificateInfoWebaccelParam) SetSelector(v []string) {
+func (p *CertificateInfoWebAccelParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *CertificateInfoWebaccelParam) GetSelector() []string {
+func (p *CertificateInfoWebAccelParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *CertificateInfoWebaccelParam) SetParamTemplate(v string) {
+func (p *CertificateInfoWebAccelParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CertificateInfoWebaccelParam) GetParamTemplate() string {
+func (p *CertificateInfoWebAccelParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CertificateInfoWebaccelParam) SetParameters(v string) {
+func (p *CertificateInfoWebAccelParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *CertificateInfoWebaccelParam) GetParameters() string {
+func (p *CertificateInfoWebAccelParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *CertificateInfoWebaccelParam) SetParamTemplateFile(v string) {
+func (p *CertificateInfoWebAccelParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CertificateInfoWebaccelParam) GetParamTemplateFile() string {
+func (p *CertificateInfoWebAccelParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CertificateInfoWebaccelParam) SetParameterFile(v string) {
+func (p *CertificateInfoWebAccelParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *CertificateInfoWebaccelParam) GetParameterFile() string {
+func (p *CertificateInfoWebAccelParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *CertificateInfoWebaccelParam) SetGenerateSkeleton(v bool) {
+func (p *CertificateInfoWebAccelParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CertificateInfoWebaccelParam) GetGenerateSkeleton() bool {
+func (p *CertificateInfoWebAccelParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CertificateInfoWebaccelParam) SetOutputType(v string) {
+func (p *CertificateInfoWebAccelParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CertificateInfoWebaccelParam) GetOutputType() string {
+func (p *CertificateInfoWebAccelParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CertificateInfoWebaccelParam) SetColumn(v []string) {
+func (p *CertificateInfoWebAccelParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CertificateInfoWebaccelParam) GetColumn() []string {
+func (p *CertificateInfoWebAccelParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CertificateInfoWebaccelParam) SetQuiet(v bool) {
+func (p *CertificateInfoWebAccelParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CertificateInfoWebaccelParam) GetQuiet() bool {
+func (p *CertificateInfoWebAccelParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CertificateInfoWebaccelParam) SetFormat(v string) {
+func (p *CertificateInfoWebAccelParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CertificateInfoWebaccelParam) GetFormat() string {
+func (p *CertificateInfoWebAccelParam) GetFormat() string {
 	return p.Format
 }
-func (p *CertificateInfoWebaccelParam) SetFormatFile(v string) {
+func (p *CertificateInfoWebAccelParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CertificateInfoWebaccelParam) GetFormatFile() string {
+func (p *CertificateInfoWebAccelParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CertificateInfoWebaccelParam) SetQuery(v string) {
+func (p *CertificateInfoWebAccelParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CertificateInfoWebaccelParam) GetQuery() string {
+func (p *CertificateInfoWebAccelParam) GetQuery() string {
 	return p.Query
 }
-func (p *CertificateInfoWebaccelParam) SetQueryFile(v string) {
+func (p *CertificateInfoWebAccelParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CertificateInfoWebaccelParam) GetQueryFile() string {
+func (p *CertificateInfoWebAccelParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *CertificateInfoWebaccelParam) SetId(v sacloud.ID) {
+func (p *CertificateInfoWebAccelParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CertificateInfoWebaccelParam) GetId() sacloud.ID {
+func (p *CertificateInfoWebAccelParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// CertificateNewWebaccelParam is input parameters for the sacloud API
-type CertificateNewWebaccelParam struct {
+// CertificateNewWebAccelParam is input parameters for the sacloud API
+type CertificateNewWebAccelParam struct {
 	Cert              string     `json:"cert"`
 	Key               string     `json:"key"`
 	CertContent       string     `json:"cert-content"`
@@ -698,13 +698,13 @@ type CertificateNewWebaccelParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewCertificateNewWebaccelParam return new CertificateNewWebaccelParam
-func NewCertificateNewWebaccelParam() *CertificateNewWebaccelParam {
-	return &CertificateNewWebaccelParam{}
+// NewCertificateNewWebAccelParam return new CertificateNewWebAccelParam
+func NewCertificateNewWebAccelParam() *CertificateNewWebAccelParam {
+	return &CertificateNewWebAccelParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CertificateNewWebaccelParam) FillValueToSkeleton() {
+func (p *CertificateNewWebAccelParam) FillValueToSkeleton() {
 	if isEmpty(p.Cert) {
 		p.Cert = ""
 	}
@@ -766,7 +766,7 @@ func (p *CertificateNewWebaccelParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CertificateNewWebaccelParam) Validate() []error {
+func (p *CertificateNewWebAccelParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["WebAccel"].Commands["certificate-new"].Params["cert"].ValidateFunc
@@ -831,166 +831,166 @@ func (p *CertificateNewWebaccelParam) Validate() []error {
 	return errors
 }
 
-func (p *CertificateNewWebaccelParam) GetResourceDef() *schema.Resource {
+func (p *CertificateNewWebAccelParam) GetResourceDef() *schema.Resource {
 	return define.Resources["WebAccel"]
 }
 
-func (p *CertificateNewWebaccelParam) GetCommandDef() *schema.Command {
+func (p *CertificateNewWebAccelParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["certificate-new"]
 }
 
-func (p *CertificateNewWebaccelParam) GetIncludeFields() []string {
+func (p *CertificateNewWebAccelParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CertificateNewWebaccelParam) GetExcludeFields() []string {
+func (p *CertificateNewWebAccelParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CertificateNewWebaccelParam) GetTableType() output.TableType {
+func (p *CertificateNewWebAccelParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CertificateNewWebaccelParam) GetColumnDefs() []output.ColumnDef {
+func (p *CertificateNewWebAccelParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CertificateNewWebaccelParam) SetCert(v string) {
+func (p *CertificateNewWebAccelParam) SetCert(v string) {
 	p.Cert = v
 }
 
-func (p *CertificateNewWebaccelParam) GetCert() string {
+func (p *CertificateNewWebAccelParam) GetCert() string {
 	return p.Cert
 }
-func (p *CertificateNewWebaccelParam) SetKey(v string) {
+func (p *CertificateNewWebAccelParam) SetKey(v string) {
 	p.Key = v
 }
 
-func (p *CertificateNewWebaccelParam) GetKey() string {
+func (p *CertificateNewWebAccelParam) GetKey() string {
 	return p.Key
 }
-func (p *CertificateNewWebaccelParam) SetCertContent(v string) {
+func (p *CertificateNewWebAccelParam) SetCertContent(v string) {
 	p.CertContent = v
 }
 
-func (p *CertificateNewWebaccelParam) GetCertContent() string {
+func (p *CertificateNewWebAccelParam) GetCertContent() string {
 	return p.CertContent
 }
-func (p *CertificateNewWebaccelParam) SetKeyContent(v string) {
+func (p *CertificateNewWebAccelParam) SetKeyContent(v string) {
 	p.KeyContent = v
 }
 
-func (p *CertificateNewWebaccelParam) GetKeyContent() string {
+func (p *CertificateNewWebAccelParam) GetKeyContent() string {
 	return p.KeyContent
 }
-func (p *CertificateNewWebaccelParam) SetSelector(v []string) {
+func (p *CertificateNewWebAccelParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *CertificateNewWebaccelParam) GetSelector() []string {
+func (p *CertificateNewWebAccelParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *CertificateNewWebaccelParam) SetAssumeyes(v bool) {
+func (p *CertificateNewWebAccelParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *CertificateNewWebaccelParam) GetAssumeyes() bool {
+func (p *CertificateNewWebAccelParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CertificateNewWebaccelParam) SetParamTemplate(v string) {
+func (p *CertificateNewWebAccelParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CertificateNewWebaccelParam) GetParamTemplate() string {
+func (p *CertificateNewWebAccelParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CertificateNewWebaccelParam) SetParameters(v string) {
+func (p *CertificateNewWebAccelParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *CertificateNewWebaccelParam) GetParameters() string {
+func (p *CertificateNewWebAccelParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *CertificateNewWebaccelParam) SetParamTemplateFile(v string) {
+func (p *CertificateNewWebAccelParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CertificateNewWebaccelParam) GetParamTemplateFile() string {
+func (p *CertificateNewWebAccelParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CertificateNewWebaccelParam) SetParameterFile(v string) {
+func (p *CertificateNewWebAccelParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *CertificateNewWebaccelParam) GetParameterFile() string {
+func (p *CertificateNewWebAccelParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *CertificateNewWebaccelParam) SetGenerateSkeleton(v bool) {
+func (p *CertificateNewWebAccelParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CertificateNewWebaccelParam) GetGenerateSkeleton() bool {
+func (p *CertificateNewWebAccelParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CertificateNewWebaccelParam) SetOutputType(v string) {
+func (p *CertificateNewWebAccelParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CertificateNewWebaccelParam) GetOutputType() string {
+func (p *CertificateNewWebAccelParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CertificateNewWebaccelParam) SetColumn(v []string) {
+func (p *CertificateNewWebAccelParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CertificateNewWebaccelParam) GetColumn() []string {
+func (p *CertificateNewWebAccelParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CertificateNewWebaccelParam) SetQuiet(v bool) {
+func (p *CertificateNewWebAccelParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CertificateNewWebaccelParam) GetQuiet() bool {
+func (p *CertificateNewWebAccelParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CertificateNewWebaccelParam) SetFormat(v string) {
+func (p *CertificateNewWebAccelParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CertificateNewWebaccelParam) GetFormat() string {
+func (p *CertificateNewWebAccelParam) GetFormat() string {
 	return p.Format
 }
-func (p *CertificateNewWebaccelParam) SetFormatFile(v string) {
+func (p *CertificateNewWebAccelParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CertificateNewWebaccelParam) GetFormatFile() string {
+func (p *CertificateNewWebAccelParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CertificateNewWebaccelParam) SetQuery(v string) {
+func (p *CertificateNewWebAccelParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CertificateNewWebaccelParam) GetQuery() string {
+func (p *CertificateNewWebAccelParam) GetQuery() string {
 	return p.Query
 }
-func (p *CertificateNewWebaccelParam) SetQueryFile(v string) {
+func (p *CertificateNewWebAccelParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CertificateNewWebaccelParam) GetQueryFile() string {
+func (p *CertificateNewWebAccelParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *CertificateNewWebaccelParam) SetId(v sacloud.ID) {
+func (p *CertificateNewWebAccelParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CertificateNewWebaccelParam) GetId() sacloud.ID {
+func (p *CertificateNewWebAccelParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// CertificateUpdateWebaccelParam is input parameters for the sacloud API
-type CertificateUpdateWebaccelParam struct {
+// CertificateUpdateWebAccelParam is input parameters for the sacloud API
+type CertificateUpdateWebAccelParam struct {
 	Cert              string     `json:"cert"`
 	Key               string     `json:"key"`
 	CertContent       string     `json:"cert-content"`
@@ -1012,13 +1012,13 @@ type CertificateUpdateWebaccelParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewCertificateUpdateWebaccelParam return new CertificateUpdateWebaccelParam
-func NewCertificateUpdateWebaccelParam() *CertificateUpdateWebaccelParam {
-	return &CertificateUpdateWebaccelParam{}
+// NewCertificateUpdateWebAccelParam return new CertificateUpdateWebAccelParam
+func NewCertificateUpdateWebAccelParam() *CertificateUpdateWebAccelParam {
+	return &CertificateUpdateWebAccelParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *CertificateUpdateWebaccelParam) FillValueToSkeleton() {
+func (p *CertificateUpdateWebAccelParam) FillValueToSkeleton() {
 	if isEmpty(p.Cert) {
 		p.Cert = ""
 	}
@@ -1080,7 +1080,7 @@ func (p *CertificateUpdateWebaccelParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *CertificateUpdateWebaccelParam) Validate() []error {
+func (p *CertificateUpdateWebAccelParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["WebAccel"].Commands["certificate-update"].Params["cert"].ValidateFunc
@@ -1145,166 +1145,166 @@ func (p *CertificateUpdateWebaccelParam) Validate() []error {
 	return errors
 }
 
-func (p *CertificateUpdateWebaccelParam) GetResourceDef() *schema.Resource {
+func (p *CertificateUpdateWebAccelParam) GetResourceDef() *schema.Resource {
 	return define.Resources["WebAccel"]
 }
 
-func (p *CertificateUpdateWebaccelParam) GetCommandDef() *schema.Command {
+func (p *CertificateUpdateWebAccelParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["certificate-update"]
 }
 
-func (p *CertificateUpdateWebaccelParam) GetIncludeFields() []string {
+func (p *CertificateUpdateWebAccelParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *CertificateUpdateWebaccelParam) GetExcludeFields() []string {
+func (p *CertificateUpdateWebAccelParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *CertificateUpdateWebaccelParam) GetTableType() output.TableType {
+func (p *CertificateUpdateWebAccelParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *CertificateUpdateWebaccelParam) GetColumnDefs() []output.ColumnDef {
+func (p *CertificateUpdateWebAccelParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CertificateUpdateWebaccelParam) SetCert(v string) {
+func (p *CertificateUpdateWebAccelParam) SetCert(v string) {
 	p.Cert = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetCert() string {
+func (p *CertificateUpdateWebAccelParam) GetCert() string {
 	return p.Cert
 }
-func (p *CertificateUpdateWebaccelParam) SetKey(v string) {
+func (p *CertificateUpdateWebAccelParam) SetKey(v string) {
 	p.Key = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetKey() string {
+func (p *CertificateUpdateWebAccelParam) GetKey() string {
 	return p.Key
 }
-func (p *CertificateUpdateWebaccelParam) SetCertContent(v string) {
+func (p *CertificateUpdateWebAccelParam) SetCertContent(v string) {
 	p.CertContent = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetCertContent() string {
+func (p *CertificateUpdateWebAccelParam) GetCertContent() string {
 	return p.CertContent
 }
-func (p *CertificateUpdateWebaccelParam) SetKeyContent(v string) {
+func (p *CertificateUpdateWebAccelParam) SetKeyContent(v string) {
 	p.KeyContent = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetKeyContent() string {
+func (p *CertificateUpdateWebAccelParam) GetKeyContent() string {
 	return p.KeyContent
 }
-func (p *CertificateUpdateWebaccelParam) SetSelector(v []string) {
+func (p *CertificateUpdateWebAccelParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetSelector() []string {
+func (p *CertificateUpdateWebAccelParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *CertificateUpdateWebaccelParam) SetAssumeyes(v bool) {
+func (p *CertificateUpdateWebAccelParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetAssumeyes() bool {
+func (p *CertificateUpdateWebAccelParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CertificateUpdateWebaccelParam) SetParamTemplate(v string) {
+func (p *CertificateUpdateWebAccelParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetParamTemplate() string {
+func (p *CertificateUpdateWebAccelParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *CertificateUpdateWebaccelParam) SetParameters(v string) {
+func (p *CertificateUpdateWebAccelParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetParameters() string {
+func (p *CertificateUpdateWebAccelParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *CertificateUpdateWebaccelParam) SetParamTemplateFile(v string) {
+func (p *CertificateUpdateWebAccelParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetParamTemplateFile() string {
+func (p *CertificateUpdateWebAccelParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *CertificateUpdateWebaccelParam) SetParameterFile(v string) {
+func (p *CertificateUpdateWebAccelParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetParameterFile() string {
+func (p *CertificateUpdateWebAccelParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *CertificateUpdateWebaccelParam) SetGenerateSkeleton(v bool) {
+func (p *CertificateUpdateWebAccelParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetGenerateSkeleton() bool {
+func (p *CertificateUpdateWebAccelParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CertificateUpdateWebaccelParam) SetOutputType(v string) {
+func (p *CertificateUpdateWebAccelParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetOutputType() string {
+func (p *CertificateUpdateWebAccelParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *CertificateUpdateWebaccelParam) SetColumn(v []string) {
+func (p *CertificateUpdateWebAccelParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetColumn() []string {
+func (p *CertificateUpdateWebAccelParam) GetColumn() []string {
 	return p.Column
 }
-func (p *CertificateUpdateWebaccelParam) SetQuiet(v bool) {
+func (p *CertificateUpdateWebAccelParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetQuiet() bool {
+func (p *CertificateUpdateWebAccelParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *CertificateUpdateWebaccelParam) SetFormat(v string) {
+func (p *CertificateUpdateWebAccelParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetFormat() string {
+func (p *CertificateUpdateWebAccelParam) GetFormat() string {
 	return p.Format
 }
-func (p *CertificateUpdateWebaccelParam) SetFormatFile(v string) {
+func (p *CertificateUpdateWebAccelParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetFormatFile() string {
+func (p *CertificateUpdateWebAccelParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *CertificateUpdateWebaccelParam) SetQuery(v string) {
+func (p *CertificateUpdateWebAccelParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetQuery() string {
+func (p *CertificateUpdateWebAccelParam) GetQuery() string {
 	return p.Query
 }
-func (p *CertificateUpdateWebaccelParam) SetQueryFile(v string) {
+func (p *CertificateUpdateWebAccelParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetQueryFile() string {
+func (p *CertificateUpdateWebAccelParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *CertificateUpdateWebaccelParam) SetId(v sacloud.ID) {
+func (p *CertificateUpdateWebAccelParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetId() sacloud.ID {
+func (p *CertificateUpdateWebAccelParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// DeleteCacheWebaccelParam is input parameters for the sacloud API
-type DeleteCacheWebaccelParam struct {
+// DeleteCacheWebAccelParam is input parameters for the sacloud API
+type DeleteCacheWebAccelParam struct {
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	Parameters        string   `json:"parameters"`
@@ -1320,13 +1320,13 @@ type DeleteCacheWebaccelParam struct {
 	QueryFile         string   `json:"query-file"`
 }
 
-// NewDeleteCacheWebaccelParam return new DeleteCacheWebaccelParam
-func NewDeleteCacheWebaccelParam() *DeleteCacheWebaccelParam {
-	return &DeleteCacheWebaccelParam{}
+// NewDeleteCacheWebAccelParam return new DeleteCacheWebAccelParam
+func NewDeleteCacheWebAccelParam() *DeleteCacheWebAccelParam {
+	return &DeleteCacheWebAccelParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *DeleteCacheWebaccelParam) FillValueToSkeleton() {
+func (p *DeleteCacheWebAccelParam) FillValueToSkeleton() {
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1370,7 +1370,7 @@ func (p *DeleteCacheWebaccelParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *DeleteCacheWebaccelParam) Validate() []error {
+func (p *DeleteCacheWebAccelParam) Validate() []error {
 	errors := []error{}
 
 	{
@@ -1396,118 +1396,118 @@ func (p *DeleteCacheWebaccelParam) Validate() []error {
 	return errors
 }
 
-func (p *DeleteCacheWebaccelParam) GetResourceDef() *schema.Resource {
+func (p *DeleteCacheWebAccelParam) GetResourceDef() *schema.Resource {
 	return define.Resources["WebAccel"]
 }
 
-func (p *DeleteCacheWebaccelParam) GetCommandDef() *schema.Command {
+func (p *DeleteCacheWebAccelParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["delete-cache"]
 }
 
-func (p *DeleteCacheWebaccelParam) GetIncludeFields() []string {
+func (p *DeleteCacheWebAccelParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *DeleteCacheWebaccelParam) GetExcludeFields() []string {
+func (p *DeleteCacheWebAccelParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *DeleteCacheWebaccelParam) GetTableType() output.TableType {
+func (p *DeleteCacheWebAccelParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *DeleteCacheWebaccelParam) GetColumnDefs() []output.ColumnDef {
+func (p *DeleteCacheWebAccelParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DeleteCacheWebaccelParam) SetAssumeyes(v bool) {
+func (p *DeleteCacheWebAccelParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *DeleteCacheWebaccelParam) GetAssumeyes() bool {
+func (p *DeleteCacheWebAccelParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeleteCacheWebaccelParam) SetParamTemplate(v string) {
+func (p *DeleteCacheWebAccelParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *DeleteCacheWebaccelParam) GetParamTemplate() string {
+func (p *DeleteCacheWebAccelParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *DeleteCacheWebaccelParam) SetParameters(v string) {
+func (p *DeleteCacheWebAccelParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *DeleteCacheWebaccelParam) GetParameters() string {
+func (p *DeleteCacheWebAccelParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *DeleteCacheWebaccelParam) SetParamTemplateFile(v string) {
+func (p *DeleteCacheWebAccelParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *DeleteCacheWebaccelParam) GetParamTemplateFile() string {
+func (p *DeleteCacheWebAccelParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *DeleteCacheWebaccelParam) SetParameterFile(v string) {
+func (p *DeleteCacheWebAccelParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *DeleteCacheWebaccelParam) GetParameterFile() string {
+func (p *DeleteCacheWebAccelParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *DeleteCacheWebaccelParam) SetGenerateSkeleton(v bool) {
+func (p *DeleteCacheWebAccelParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *DeleteCacheWebaccelParam) GetGenerateSkeleton() bool {
+func (p *DeleteCacheWebAccelParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DeleteCacheWebaccelParam) SetOutputType(v string) {
+func (p *DeleteCacheWebAccelParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *DeleteCacheWebaccelParam) GetOutputType() string {
+func (p *DeleteCacheWebAccelParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *DeleteCacheWebaccelParam) SetColumn(v []string) {
+func (p *DeleteCacheWebAccelParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *DeleteCacheWebaccelParam) GetColumn() []string {
+func (p *DeleteCacheWebAccelParam) GetColumn() []string {
 	return p.Column
 }
-func (p *DeleteCacheWebaccelParam) SetQuiet(v bool) {
+func (p *DeleteCacheWebAccelParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *DeleteCacheWebaccelParam) GetQuiet() bool {
+func (p *DeleteCacheWebAccelParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *DeleteCacheWebaccelParam) SetFormat(v string) {
+func (p *DeleteCacheWebAccelParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *DeleteCacheWebaccelParam) GetFormat() string {
+func (p *DeleteCacheWebAccelParam) GetFormat() string {
 	return p.Format
 }
-func (p *DeleteCacheWebaccelParam) SetFormatFile(v string) {
+func (p *DeleteCacheWebAccelParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *DeleteCacheWebaccelParam) GetFormatFile() string {
+func (p *DeleteCacheWebAccelParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *DeleteCacheWebaccelParam) SetQuery(v string) {
+func (p *DeleteCacheWebAccelParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *DeleteCacheWebaccelParam) GetQuery() string {
+func (p *DeleteCacheWebAccelParam) GetQuery() string {
 	return p.Query
 }
-func (p *DeleteCacheWebaccelParam) SetQueryFile(v string) {
+func (p *DeleteCacheWebAccelParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *DeleteCacheWebaccelParam) GetQueryFile() string {
+func (p *DeleteCacheWebAccelParam) GetQueryFile() string {
 	return p.QueryFile
 }

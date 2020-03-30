@@ -30,8 +30,8 @@ import (
 )
 
 func init() {
-	productlicenseListParam := params.NewListProductlicenseParam()
-	productlicenseReadParam := params.NewReadProductlicenseParam()
+	productLicenseListParam := params.NewListProductLicenseParam()
+	productLicenseReadParam := params.NewReadProductLicenseParam()
 
 	cliCommand := &cli.Command{
 		Name:    "product-license",
@@ -124,7 +124,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find"},
-				Usage:   "List Productlicense (default)",
+				Usage:   "List ProductLicense (default)",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -210,72 +210,72 @@ func init() {
 						return err
 					}
 
-					productlicenseListParam.ParamTemplate = c.String("param-template")
-					productlicenseListParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(productlicenseListParam)
+					productLicenseListParam.ParamTemplate = c.String("param-template")
+					productLicenseListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(productLicenseListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListProductlicenseParam()
+						p := params.NewListProductLicenseParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(productlicenseListParam, p, mergo.WithOverride)
+						mergo.Merge(productLicenseListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						productlicenseListParam.Name = c.StringSlice("name")
+						productLicenseListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						productlicenseListParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						productLicenseListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("from") {
-						productlicenseListParam.From = c.Int("from")
+						productLicenseListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						productlicenseListParam.Max = c.Int("max")
+						productLicenseListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						productlicenseListParam.Sort = c.StringSlice("sort")
+						productLicenseListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						productlicenseListParam.ParamTemplate = c.String("param-template")
+						productLicenseListParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						productlicenseListParam.Parameters = c.String("parameters")
+						productLicenseListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						productlicenseListParam.ParamTemplateFile = c.String("param-template-file")
+						productLicenseListParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						productlicenseListParam.ParameterFile = c.String("parameter-file")
+						productLicenseListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						productlicenseListParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						productLicenseListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						productlicenseListParam.OutputType = c.String("output-type")
+						productLicenseListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						productlicenseListParam.Column = c.StringSlice("column")
+						productLicenseListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						productlicenseListParam.Quiet = c.Bool("quiet")
+						productLicenseListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						productlicenseListParam.Format = c.String("format")
+						productLicenseListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						productlicenseListParam.FormatFile = c.String("format-file")
+						productLicenseListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						productlicenseListParam.Query = c.String("query")
+						productLicenseListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						productlicenseListParam.QueryFile = c.String("query-file")
+						productLicenseListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -283,7 +283,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = productlicenseListParam
+					var outputTypeHolder interface{} = productLicenseListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -294,10 +294,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if productlicenseListParam.GenerateSkeleton {
-						productlicenseListParam.GenerateSkeleton = false
-						productlicenseListParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(productlicenseListParam, "", "\t")
+					if productLicenseListParam.GenerateSkeleton {
+						productLicenseListParam.GenerateSkeleton = false
+						productLicenseListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(productLicenseListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -306,21 +306,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := productlicenseListParam.Validate(); len(errors) > 0 {
+					if errors := productLicenseListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), productlicenseListParam)
+					ctx := command.NewContext(c, c.Args().Slice(), productLicenseListParam)
 
 					// Run command with params
-					return funcs.ProductlicenseList(ctx, productlicenseListParam)
+					return funcs.ProductLicenseList(ctx, productLicenseListParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Productlicense",
+				Usage:     "Read ProductLicense",
 				ArgsUsage: "<ID>",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -395,63 +395,63 @@ func init() {
 						return err
 					}
 
-					productlicenseReadParam.ParamTemplate = c.String("param-template")
-					productlicenseReadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(productlicenseReadParam)
+					productLicenseReadParam.ParamTemplate = c.String("param-template")
+					productLicenseReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(productLicenseReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadProductlicenseParam()
+						p := params.NewReadProductLicenseParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(productlicenseReadParam, p, mergo.WithOverride)
+						mergo.Merge(productLicenseReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("assumeyes") {
-						productlicenseReadParam.Assumeyes = c.Bool("assumeyes")
+						productLicenseReadParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						productlicenseReadParam.ParamTemplate = c.String("param-template")
+						productLicenseReadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						productlicenseReadParam.Parameters = c.String("parameters")
+						productLicenseReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						productlicenseReadParam.ParamTemplateFile = c.String("param-template-file")
+						productLicenseReadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						productlicenseReadParam.ParameterFile = c.String("parameter-file")
+						productLicenseReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						productlicenseReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						productLicenseReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						productlicenseReadParam.OutputType = c.String("output-type")
+						productLicenseReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						productlicenseReadParam.Column = c.StringSlice("column")
+						productLicenseReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						productlicenseReadParam.Quiet = c.Bool("quiet")
+						productLicenseReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						productlicenseReadParam.Format = c.String("format")
+						productLicenseReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						productlicenseReadParam.FormatFile = c.String("format-file")
+						productLicenseReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						productlicenseReadParam.Query = c.String("query")
+						productLicenseReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						productlicenseReadParam.QueryFile = c.String("query-file")
+						productLicenseReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						productlicenseReadParam.Id = sacloud.ID(c.Int64("id"))
+						productLicenseReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -459,7 +459,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = productlicenseReadParam
+					var outputTypeHolder interface{} = productLicenseReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -470,10 +470,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if productlicenseReadParam.GenerateSkeleton {
-						productlicenseReadParam.GenerateSkeleton = false
-						productlicenseReadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(productlicenseReadParam, "", "\t")
+					if productLicenseReadParam.GenerateSkeleton {
+						productLicenseReadParam.GenerateSkeleton = false
+						productLicenseReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(productLicenseReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -485,18 +485,18 @@ func init() {
 						return fmt.Errorf("ID argument is required")
 					}
 					c.Set("id", c.Args().First())
-					productlicenseReadParam.SetId(sacloud.ID(c.Int64("id")))
+					productLicenseReadParam.SetId(sacloud.ID(c.Int64("id")))
 
 					// Validate specific for each command params
-					if errors := productlicenseReadParam.Validate(); len(errors) > 0 {
+					if errors := productLicenseReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), productlicenseReadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), productLicenseReadParam)
 
 					// confirm
-					if !productlicenseReadParam.Assumeyes {
+					if !productLicenseReadParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -506,7 +506,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.ProductlicenseRead(ctx, productlicenseReadParam)
+					return funcs.ProductLicenseRead(ctx, productLicenseReadParam)
 
 				},
 			},

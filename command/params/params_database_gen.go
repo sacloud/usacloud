@@ -5050,8 +5050,8 @@ func (p *ReplicaCreateDatabaseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// MonitorCpuDatabaseParam is input parameters for the sacloud API
-type MonitorCpuDatabaseParam struct {
+// MonitorCPUDatabaseParam is input parameters for the sacloud API
+type MonitorCPUDatabaseParam struct {
 	Start             string     `json:"start"`
 	End               string     `json:"end"`
 	KeyFormat         string     `json:"key-format"`
@@ -5071,16 +5071,16 @@ type MonitorCpuDatabaseParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewMonitorCpuDatabaseParam return new MonitorCpuDatabaseParam
-func NewMonitorCpuDatabaseParam() *MonitorCpuDatabaseParam {
-	return &MonitorCpuDatabaseParam{
+// NewMonitorCPUDatabaseParam return new MonitorCPUDatabaseParam
+func NewMonitorCPUDatabaseParam() *MonitorCPUDatabaseParam {
+	return &MonitorCPUDatabaseParam{
 
 		KeyFormat: "sakuracloud.database.{{.ID}}.cpu",
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *MonitorCpuDatabaseParam) FillValueToSkeleton() {
+func (p *MonitorCPUDatabaseParam) FillValueToSkeleton() {
 	if isEmpty(p.Start) {
 		p.Start = ""
 	}
@@ -5136,7 +5136,7 @@ func (p *MonitorCpuDatabaseParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *MonitorCpuDatabaseParam) Validate() []error {
+func (p *MonitorCPUDatabaseParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["Database"].Commands["monitor-cpu"].Params["start"].ValidateFunc
@@ -5190,147 +5190,147 @@ func (p *MonitorCpuDatabaseParam) Validate() []error {
 	return errors
 }
 
-func (p *MonitorCpuDatabaseParam) GetResourceDef() *schema.Resource {
+func (p *MonitorCPUDatabaseParam) GetResourceDef() *schema.Resource {
 	return define.Resources["Database"]
 }
 
-func (p *MonitorCpuDatabaseParam) GetCommandDef() *schema.Command {
+func (p *MonitorCPUDatabaseParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["monitor-cpu"]
 }
 
-func (p *MonitorCpuDatabaseParam) GetIncludeFields() []string {
+func (p *MonitorCPUDatabaseParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *MonitorCpuDatabaseParam) GetExcludeFields() []string {
+func (p *MonitorCPUDatabaseParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *MonitorCpuDatabaseParam) GetTableType() output.TableType {
+func (p *MonitorCPUDatabaseParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *MonitorCpuDatabaseParam) GetColumnDefs() []output.ColumnDef {
+func (p *MonitorCPUDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *MonitorCpuDatabaseParam) SetStart(v string) {
+func (p *MonitorCPUDatabaseParam) SetStart(v string) {
 	p.Start = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetStart() string {
+func (p *MonitorCPUDatabaseParam) GetStart() string {
 	return p.Start
 }
-func (p *MonitorCpuDatabaseParam) SetEnd(v string) {
+func (p *MonitorCPUDatabaseParam) SetEnd(v string) {
 	p.End = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetEnd() string {
+func (p *MonitorCPUDatabaseParam) GetEnd() string {
 	return p.End
 }
-func (p *MonitorCpuDatabaseParam) SetKeyFormat(v string) {
+func (p *MonitorCPUDatabaseParam) SetKeyFormat(v string) {
 	p.KeyFormat = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetKeyFormat() string {
+func (p *MonitorCPUDatabaseParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
-func (p *MonitorCpuDatabaseParam) SetSelector(v []string) {
+func (p *MonitorCPUDatabaseParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetSelector() []string {
+func (p *MonitorCPUDatabaseParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *MonitorCpuDatabaseParam) SetParamTemplate(v string) {
+func (p *MonitorCPUDatabaseParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetParamTemplate() string {
+func (p *MonitorCPUDatabaseParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *MonitorCpuDatabaseParam) SetParameters(v string) {
+func (p *MonitorCPUDatabaseParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetParameters() string {
+func (p *MonitorCPUDatabaseParam) GetParameters() string {
 	return p.Parameters
 }
-func (p *MonitorCpuDatabaseParam) SetParamTemplateFile(v string) {
+func (p *MonitorCPUDatabaseParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetParamTemplateFile() string {
+func (p *MonitorCPUDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *MonitorCpuDatabaseParam) SetParameterFile(v string) {
+func (p *MonitorCPUDatabaseParam) SetParameterFile(v string) {
 	p.ParameterFile = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetParameterFile() string {
+func (p *MonitorCPUDatabaseParam) GetParameterFile() string {
 	return p.ParameterFile
 }
-func (p *MonitorCpuDatabaseParam) SetGenerateSkeleton(v bool) {
+func (p *MonitorCPUDatabaseParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetGenerateSkeleton() bool {
+func (p *MonitorCPUDatabaseParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *MonitorCpuDatabaseParam) SetOutputType(v string) {
+func (p *MonitorCPUDatabaseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetOutputType() string {
+func (p *MonitorCPUDatabaseParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *MonitorCpuDatabaseParam) SetColumn(v []string) {
+func (p *MonitorCPUDatabaseParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetColumn() []string {
+func (p *MonitorCPUDatabaseParam) GetColumn() []string {
 	return p.Column
 }
-func (p *MonitorCpuDatabaseParam) SetQuiet(v bool) {
+func (p *MonitorCPUDatabaseParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetQuiet() bool {
+func (p *MonitorCPUDatabaseParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *MonitorCpuDatabaseParam) SetFormat(v string) {
+func (p *MonitorCPUDatabaseParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetFormat() string {
+func (p *MonitorCPUDatabaseParam) GetFormat() string {
 	return p.Format
 }
-func (p *MonitorCpuDatabaseParam) SetFormatFile(v string) {
+func (p *MonitorCPUDatabaseParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetFormatFile() string {
+func (p *MonitorCPUDatabaseParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *MonitorCpuDatabaseParam) SetQuery(v string) {
+func (p *MonitorCPUDatabaseParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetQuery() string {
+func (p *MonitorCPUDatabaseParam) GetQuery() string {
 	return p.Query
 }
-func (p *MonitorCpuDatabaseParam) SetQueryFile(v string) {
+func (p *MonitorCPUDatabaseParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetQueryFile() string {
+func (p *MonitorCPUDatabaseParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *MonitorCpuDatabaseParam) SetId(v sacloud.ID) {
+func (p *MonitorCPUDatabaseParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorCpuDatabaseParam) GetId() sacloud.ID {
+func (p *MonitorCPUDatabaseParam) GetId() sacloud.ID {
 	return p.Id
 }
 

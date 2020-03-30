@@ -32,11 +32,11 @@ import (
 )
 
 func init() {
-	startupscriptListParam := params.NewListStartupscriptParam()
-	startupscriptCreateParam := params.NewCreateStartupscriptParam()
-	startupscriptReadParam := params.NewReadStartupscriptParam()
-	startupscriptUpdateParam := params.NewUpdateStartupscriptParam()
-	startupscriptDeleteParam := params.NewDeleteStartupscriptParam()
+	startupScriptListParam := params.NewListStartupScriptParam()
+	startupScriptCreateParam := params.NewCreateStartupScriptParam()
+	startupScriptReadParam := params.NewReadStartupScriptParam()
+	startupScriptUpdateParam := params.NewUpdateStartupScriptParam()
+	startupScriptDeleteParam := params.NewDeleteStartupScriptParam()
 
 	cliCommand := &cli.Command{
 		Name:    "startup-script",
@@ -46,7 +46,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find", "selector"},
-				Usage:   "List Startupscript",
+				Usage:   "List StartupScript",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -145,81 +145,81 @@ func init() {
 						return err
 					}
 
-					startupscriptListParam.ParamTemplate = c.String("param-template")
-					startupscriptListParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(startupscriptListParam)
+					startupScriptListParam.ParamTemplate = c.String("param-template")
+					startupScriptListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(startupScriptListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListStartupscriptParam()
+						p := params.NewListStartupScriptParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(startupscriptListParam, p, mergo.WithOverride)
+						mergo.Merge(startupScriptListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						startupscriptListParam.Name = c.StringSlice("name")
+						startupScriptListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						startupscriptListParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						startupScriptListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("scope") {
-						startupscriptListParam.Scope = c.String("scope")
+						startupScriptListParam.Scope = c.String("scope")
 					}
 					if c.IsSet("tags") {
-						startupscriptListParam.Tags = c.StringSlice("tags")
+						startupScriptListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("class") {
-						startupscriptListParam.Class = c.StringSlice("class")
+						startupScriptListParam.Class = c.StringSlice("class")
 					}
 					if c.IsSet("from") {
-						startupscriptListParam.From = c.Int("from")
+						startupScriptListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						startupscriptListParam.Max = c.Int("max")
+						startupScriptListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						startupscriptListParam.Sort = c.StringSlice("sort")
+						startupScriptListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						startupscriptListParam.ParamTemplate = c.String("param-template")
+						startupScriptListParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						startupscriptListParam.Parameters = c.String("parameters")
+						startupScriptListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						startupscriptListParam.ParamTemplateFile = c.String("param-template-file")
+						startupScriptListParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						startupscriptListParam.ParameterFile = c.String("parameter-file")
+						startupScriptListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						startupscriptListParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						startupScriptListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						startupscriptListParam.OutputType = c.String("output-type")
+						startupScriptListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						startupscriptListParam.Column = c.StringSlice("column")
+						startupScriptListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						startupscriptListParam.Quiet = c.Bool("quiet")
+						startupScriptListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						startupscriptListParam.Format = c.String("format")
+						startupScriptListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						startupscriptListParam.FormatFile = c.String("format-file")
+						startupScriptListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						startupscriptListParam.Query = c.String("query")
+						startupScriptListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						startupscriptListParam.QueryFile = c.String("query-file")
+						startupScriptListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -227,7 +227,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = startupscriptListParam
+					var outputTypeHolder interface{} = startupScriptListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -238,10 +238,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if startupscriptListParam.GenerateSkeleton {
-						startupscriptListParam.GenerateSkeleton = false
-						startupscriptListParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(startupscriptListParam, "", "\t")
+					if startupScriptListParam.GenerateSkeleton {
+						startupScriptListParam.GenerateSkeleton = false
+						startupScriptListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(startupScriptListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -250,21 +250,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := startupscriptListParam.Validate(); len(errors) > 0 {
+					if errors := startupScriptListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), startupscriptListParam)
+					ctx := command.NewContext(c, c.Args().Slice(), startupScriptListParam)
 
 					// Run command with params
-					return funcs.StartupscriptList(ctx, startupscriptListParam)
+					return funcs.StartupScriptList(ctx, startupScriptListParam)
 
 				},
 			},
 			{
 				Name:  "create",
-				Usage: "Create Startupscript",
+				Usage: "Create StartupScript",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:    "script",
@@ -360,78 +360,78 @@ func init() {
 						return err
 					}
 
-					startupscriptCreateParam.ParamTemplate = c.String("param-template")
-					startupscriptCreateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(startupscriptCreateParam)
+					startupScriptCreateParam.ParamTemplate = c.String("param-template")
+					startupScriptCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(startupScriptCreateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCreateStartupscriptParam()
+						p := params.NewCreateStartupScriptParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(startupscriptCreateParam, p, mergo.WithOverride)
+						mergo.Merge(startupScriptCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("script") {
-						startupscriptCreateParam.Script = c.String("script")
+						startupScriptCreateParam.Script = c.String("script")
 					}
 					if c.IsSet("script-content") {
-						startupscriptCreateParam.ScriptContent = c.String("script-content")
+						startupScriptCreateParam.ScriptContent = c.String("script-content")
 					}
 					if c.IsSet("class") {
-						startupscriptCreateParam.Class = c.String("class")
+						startupScriptCreateParam.Class = c.String("class")
 					}
 					if c.IsSet("name") {
-						startupscriptCreateParam.Name = c.String("name")
+						startupScriptCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("tags") {
-						startupscriptCreateParam.Tags = c.StringSlice("tags")
+						startupScriptCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						startupscriptCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						startupScriptCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						startupscriptCreateParam.Assumeyes = c.Bool("assumeyes")
+						startupScriptCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						startupscriptCreateParam.ParamTemplate = c.String("param-template")
+						startupScriptCreateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						startupscriptCreateParam.Parameters = c.String("parameters")
+						startupScriptCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						startupscriptCreateParam.ParamTemplateFile = c.String("param-template-file")
+						startupScriptCreateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						startupscriptCreateParam.ParameterFile = c.String("parameter-file")
+						startupScriptCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						startupscriptCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						startupScriptCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						startupscriptCreateParam.OutputType = c.String("output-type")
+						startupScriptCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						startupscriptCreateParam.Column = c.StringSlice("column")
+						startupScriptCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						startupscriptCreateParam.Quiet = c.Bool("quiet")
+						startupScriptCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						startupscriptCreateParam.Format = c.String("format")
+						startupScriptCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						startupscriptCreateParam.FormatFile = c.String("format-file")
+						startupScriptCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						startupscriptCreateParam.Query = c.String("query")
+						startupScriptCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						startupscriptCreateParam.QueryFile = c.String("query-file")
+						startupScriptCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -439,7 +439,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = startupscriptCreateParam
+					var outputTypeHolder interface{} = startupScriptCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -450,10 +450,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if startupscriptCreateParam.GenerateSkeleton {
-						startupscriptCreateParam.GenerateSkeleton = false
-						startupscriptCreateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(startupscriptCreateParam, "", "\t")
+					if startupScriptCreateParam.GenerateSkeleton {
+						startupScriptCreateParam.GenerateSkeleton = false
+						startupScriptCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(startupScriptCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -462,15 +462,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := startupscriptCreateParam.Validate(); len(errors) > 0 {
+					if errors := startupScriptCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), startupscriptCreateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), startupScriptCreateParam)
 
 					// confirm
-					if !startupscriptCreateParam.Assumeyes {
+					if !startupScriptCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -480,13 +480,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.StartupscriptCreate(ctx, startupscriptCreateParam)
+					return funcs.StartupScriptCreate(ctx, startupScriptCreateParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Startupscript",
+				Usage:     "Read StartupScript",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -560,63 +560,63 @@ func init() {
 						return err
 					}
 
-					startupscriptReadParam.ParamTemplate = c.String("param-template")
-					startupscriptReadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(startupscriptReadParam)
+					startupScriptReadParam.ParamTemplate = c.String("param-template")
+					startupScriptReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(startupScriptReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadStartupscriptParam()
+						p := params.NewReadStartupScriptParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(startupscriptReadParam, p, mergo.WithOverride)
+						mergo.Merge(startupScriptReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						startupscriptReadParam.Selector = c.StringSlice("selector")
+						startupScriptReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						startupscriptReadParam.ParamTemplate = c.String("param-template")
+						startupScriptReadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						startupscriptReadParam.Parameters = c.String("parameters")
+						startupScriptReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						startupscriptReadParam.ParamTemplateFile = c.String("param-template-file")
+						startupScriptReadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						startupscriptReadParam.ParameterFile = c.String("parameter-file")
+						startupScriptReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						startupscriptReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						startupScriptReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						startupscriptReadParam.OutputType = c.String("output-type")
+						startupScriptReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						startupscriptReadParam.Column = c.StringSlice("column")
+						startupScriptReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						startupscriptReadParam.Quiet = c.Bool("quiet")
+						startupScriptReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						startupscriptReadParam.Format = c.String("format")
+						startupScriptReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						startupscriptReadParam.FormatFile = c.String("format-file")
+						startupScriptReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						startupscriptReadParam.Query = c.String("query")
+						startupScriptReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						startupscriptReadParam.QueryFile = c.String("query-file")
+						startupScriptReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						startupscriptReadParam.Id = sacloud.ID(c.Int64("id"))
+						startupScriptReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -624,7 +624,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = startupscriptReadParam
+					var outputTypeHolder interface{} = startupScriptReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -635,10 +635,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if startupscriptReadParam.GenerateSkeleton {
-						startupscriptReadParam.GenerateSkeleton = false
-						startupscriptReadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(startupscriptReadParam, "", "\t")
+					if startupScriptReadParam.GenerateSkeleton {
+						startupScriptReadParam.GenerateSkeleton = false
+						startupScriptReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(startupScriptReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -647,19 +647,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := startupscriptReadParam.Validate(); len(errors) > 0 {
+					if errors := startupScriptReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), startupscriptReadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), startupScriptReadParam)
 
 					apiClient := ctx.GetAPIClient().Note
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(startupscriptReadParam.Selector) == 0 {
+						if len(startupScriptReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -668,12 +668,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Notes {
-							if hasTags(&v, startupscriptReadParam.Selector) {
+							if hasTags(&v, startupScriptReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", startupscriptReadParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", startupScriptReadParam.Selector)
 						}
 
 					} else {
@@ -695,7 +695,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Notes {
-										if len(startupscriptReadParam.Selector) == 0 || hasTags(&v, startupscriptReadParam.Selector) {
+										if len(startupScriptReadParam.Selector) == 0 || hasTags(&v, startupScriptReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -720,11 +720,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						startupscriptReadParam.SetId(id)
-						p := *startupscriptReadParam // copy struct value
-						startupscriptReadParam := &p
+						startupScriptReadParam.SetId(id)
+						p := *startupScriptReadParam // copy struct value
+						startupScriptReadParam := &p
 						go func() {
-							err := funcs.StartupscriptRead(ctx, startupscriptReadParam)
+							err := funcs.StartupScriptRead(ctx, startupScriptReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -738,7 +738,7 @@ func init() {
 			},
 			{
 				Name:      "update",
-				Usage:     "Update Startupscript",
+				Usage:     "Update StartupScript",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -843,84 +843,84 @@ func init() {
 						return err
 					}
 
-					startupscriptUpdateParam.ParamTemplate = c.String("param-template")
-					startupscriptUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(startupscriptUpdateParam)
+					startupScriptUpdateParam.ParamTemplate = c.String("param-template")
+					startupScriptUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(startupScriptUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUpdateStartupscriptParam()
+						p := params.NewUpdateStartupScriptParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(startupscriptUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(startupScriptUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("script") {
-						startupscriptUpdateParam.Script = c.String("script")
+						startupScriptUpdateParam.Script = c.String("script")
 					}
 					if c.IsSet("script-content") {
-						startupscriptUpdateParam.ScriptContent = c.String("script-content")
+						startupScriptUpdateParam.ScriptContent = c.String("script-content")
 					}
 					if c.IsSet("class") {
-						startupscriptUpdateParam.Class = c.String("class")
+						startupScriptUpdateParam.Class = c.String("class")
 					}
 					if c.IsSet("selector") {
-						startupscriptUpdateParam.Selector = c.StringSlice("selector")
+						startupScriptUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
-						startupscriptUpdateParam.Name = c.String("name")
+						startupScriptUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("tags") {
-						startupscriptUpdateParam.Tags = c.StringSlice("tags")
+						startupScriptUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						startupscriptUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						startupScriptUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						startupscriptUpdateParam.Assumeyes = c.Bool("assumeyes")
+						startupScriptUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						startupscriptUpdateParam.ParamTemplate = c.String("param-template")
+						startupScriptUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						startupscriptUpdateParam.Parameters = c.String("parameters")
+						startupScriptUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						startupscriptUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						startupScriptUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						startupscriptUpdateParam.ParameterFile = c.String("parameter-file")
+						startupScriptUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						startupscriptUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						startupScriptUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						startupscriptUpdateParam.OutputType = c.String("output-type")
+						startupScriptUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						startupscriptUpdateParam.Column = c.StringSlice("column")
+						startupScriptUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						startupscriptUpdateParam.Quiet = c.Bool("quiet")
+						startupScriptUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						startupscriptUpdateParam.Format = c.String("format")
+						startupScriptUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						startupscriptUpdateParam.FormatFile = c.String("format-file")
+						startupScriptUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						startupscriptUpdateParam.Query = c.String("query")
+						startupScriptUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						startupscriptUpdateParam.QueryFile = c.String("query-file")
+						startupScriptUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						startupscriptUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						startupScriptUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -928,7 +928,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = startupscriptUpdateParam
+					var outputTypeHolder interface{} = startupScriptUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -939,10 +939,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if startupscriptUpdateParam.GenerateSkeleton {
-						startupscriptUpdateParam.GenerateSkeleton = false
-						startupscriptUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(startupscriptUpdateParam, "", "\t")
+					if startupScriptUpdateParam.GenerateSkeleton {
+						startupScriptUpdateParam.GenerateSkeleton = false
+						startupScriptUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(startupScriptUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -951,19 +951,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := startupscriptUpdateParam.Validate(); len(errors) > 0 {
+					if errors := startupScriptUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), startupscriptUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), startupScriptUpdateParam)
 
 					apiClient := ctx.GetAPIClient().Note
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(startupscriptUpdateParam.Selector) == 0 {
+						if len(startupScriptUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -972,12 +972,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Notes {
-							if hasTags(&v, startupscriptUpdateParam.Selector) {
+							if hasTags(&v, startupScriptUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", startupscriptUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", startupScriptUpdateParam.Selector)
 						}
 
 					} else {
@@ -999,7 +999,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Notes {
-										if len(startupscriptUpdateParam.Selector) == 0 || hasTags(&v, startupscriptUpdateParam.Selector) {
+										if len(startupScriptUpdateParam.Selector) == 0 || hasTags(&v, startupScriptUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1016,7 +1016,7 @@ func init() {
 					}
 
 					// confirm
-					if !startupscriptUpdateParam.Assumeyes {
+					if !startupScriptUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1030,11 +1030,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						startupscriptUpdateParam.SetId(id)
-						p := *startupscriptUpdateParam // copy struct value
-						startupscriptUpdateParam := &p
+						startupScriptUpdateParam.SetId(id)
+						p := *startupScriptUpdateParam // copy struct value
+						startupScriptUpdateParam := &p
 						go func() {
-							err := funcs.StartupscriptUpdate(ctx, startupscriptUpdateParam)
+							err := funcs.StartupScriptUpdate(ctx, startupScriptUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1049,7 +1049,7 @@ func init() {
 			{
 				Name:      "delete",
 				Aliases:   []string{"rm"},
-				Usage:     "Delete Startupscript",
+				Usage:     "Delete StartupScript",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1128,66 +1128,66 @@ func init() {
 						return err
 					}
 
-					startupscriptDeleteParam.ParamTemplate = c.String("param-template")
-					startupscriptDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(startupscriptDeleteParam)
+					startupScriptDeleteParam.ParamTemplate = c.String("param-template")
+					startupScriptDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(startupScriptDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeleteStartupscriptParam()
+						p := params.NewDeleteStartupScriptParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(startupscriptDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(startupScriptDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						startupscriptDeleteParam.Selector = c.StringSlice("selector")
+						startupScriptDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						startupscriptDeleteParam.Assumeyes = c.Bool("assumeyes")
+						startupScriptDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						startupscriptDeleteParam.ParamTemplate = c.String("param-template")
+						startupScriptDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						startupscriptDeleteParam.Parameters = c.String("parameters")
+						startupScriptDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						startupscriptDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						startupScriptDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						startupscriptDeleteParam.ParameterFile = c.String("parameter-file")
+						startupScriptDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						startupscriptDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						startupScriptDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						startupscriptDeleteParam.OutputType = c.String("output-type")
+						startupScriptDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						startupscriptDeleteParam.Column = c.StringSlice("column")
+						startupScriptDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						startupscriptDeleteParam.Quiet = c.Bool("quiet")
+						startupScriptDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						startupscriptDeleteParam.Format = c.String("format")
+						startupScriptDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						startupscriptDeleteParam.FormatFile = c.String("format-file")
+						startupScriptDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						startupscriptDeleteParam.Query = c.String("query")
+						startupScriptDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						startupscriptDeleteParam.QueryFile = c.String("query-file")
+						startupScriptDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						startupscriptDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						startupScriptDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1195,7 +1195,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = startupscriptDeleteParam
+					var outputTypeHolder interface{} = startupScriptDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1206,10 +1206,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if startupscriptDeleteParam.GenerateSkeleton {
-						startupscriptDeleteParam.GenerateSkeleton = false
-						startupscriptDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(startupscriptDeleteParam, "", "\t")
+					if startupScriptDeleteParam.GenerateSkeleton {
+						startupScriptDeleteParam.GenerateSkeleton = false
+						startupScriptDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(startupScriptDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1218,19 +1218,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := startupscriptDeleteParam.Validate(); len(errors) > 0 {
+					if errors := startupScriptDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), startupscriptDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), startupScriptDeleteParam)
 
 					apiClient := ctx.GetAPIClient().Note
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(startupscriptDeleteParam.Selector) == 0 {
+						if len(startupScriptDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1239,12 +1239,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Notes {
-							if hasTags(&v, startupscriptDeleteParam.Selector) {
+							if hasTags(&v, startupScriptDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", startupscriptDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", startupScriptDeleteParam.Selector)
 						}
 
 					} else {
@@ -1266,7 +1266,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Notes {
-										if len(startupscriptDeleteParam.Selector) == 0 || hasTags(&v, startupscriptDeleteParam.Selector) {
+										if len(startupScriptDeleteParam.Selector) == 0 || hasTags(&v, startupScriptDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1283,7 +1283,7 @@ func init() {
 					}
 
 					// confirm
-					if !startupscriptDeleteParam.Assumeyes {
+					if !startupScriptDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1297,11 +1297,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						startupscriptDeleteParam.SetId(id)
-						p := *startupscriptDeleteParam // copy struct value
-						startupscriptDeleteParam := &p
+						startupScriptDeleteParam.SetId(id)
+						p := *startupScriptDeleteParam // copy struct value
+						startupScriptDeleteParam := &p
 						go func() {
-							err := funcs.StartupscriptDelete(ctx, startupscriptDeleteParam)
+							err := funcs.StartupScriptDelete(ctx, startupScriptDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}

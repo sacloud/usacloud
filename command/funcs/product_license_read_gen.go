@@ -23,24 +23,24 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ProductlicenseRead(ctx command.Context, params *params.ReadProductlicenseParam) error {
+func ProductLicenseRead(ctx command.Context, params *params.ReadProductLicenseParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetProductlicenseAPI()
+	api := client.GetProductLicenseAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("ProductlicenseRead is failed: %s", e)
+		return fmt.Errorf("ProductLicenseRead is failed: %s", e)
 	}
 
 	// set params
 
 	// TODO Remove and implements here!!
-	return fmt.Errorf("Not Implements ProductlicenseRead : %#v", p)
+	return fmt.Errorf("Not Implements ProductLicenseRead : %#v", p)
 
 	// call manipurate functions
 	// res, err := api.XXXX(params.Id, p)
 	// if err != nil {
-	// 	return fmt.Errorf("ProductlicenseRead is failed: %s", err)
+	// 	return fmt.Errorf("ProductLicenseRead is failed: %s", err)
 	// }
 	// return ctx.GetOutput().Print(res)
 

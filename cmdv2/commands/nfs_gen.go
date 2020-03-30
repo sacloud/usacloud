@@ -25,19 +25,19 @@ import (
 )
 
 var (
-	nfsListParam                = params.NewListNfsParam()
-	nfsCreateParam              = params.NewCreateNfsParam()
-	nfsReadParam                = params.NewReadNfsParam()
-	nfsUpdateParam              = params.NewUpdateNfsParam()
-	nfsDeleteParam              = params.NewDeleteNfsParam()
-	nfsBootParam                = params.NewBootNfsParam()
-	nfsShutdownParam            = params.NewShutdownNfsParam()
-	nfsShutdownForceParam       = params.NewShutdownForceNfsParam()
-	nfsResetParam               = params.NewResetNfsParam()
-	nfsWaitForBootParam         = params.NewWaitForBootNfsParam()
-	nfsWaitForDownParam         = params.NewWaitForDownNfsParam()
-	nfsMonitorNicParam          = params.NewMonitorNicNfsParam()
-	nfsMonitorFreeDiskSizeParam = params.NewMonitorFreeDiskSizeNfsParam()
+	nfsListParam                = params.NewListNFSParam()
+	nfsCreateParam              = params.NewCreateNFSParam()
+	nfsReadParam                = params.NewReadNFSParam()
+	nfsUpdateParam              = params.NewUpdateNFSParam()
+	nfsDeleteParam              = params.NewDeleteNFSParam()
+	nfsBootParam                = params.NewBootNFSParam()
+	nfsShutdownParam            = params.NewShutdownNFSParam()
+	nfsShutdownForceParam       = params.NewShutdownForceNFSParam()
+	nfsResetParam               = params.NewResetNFSParam()
+	nfsWaitForBootParam         = params.NewWaitForBootNFSParam()
+	nfsWaitForDownParam         = params.NewWaitForDownNFSParam()
+	nfsMonitorNicParam          = params.NewMonitorNicNFSParam()
+	nfsMonitorFreeDiskSizeParam = params.NewMonitorFreeDiskSizeNFSParam()
 )
 
 // nfsCmd represents the command to manage SAKURA Cloud NFS
@@ -53,8 +53,8 @@ var nfsCmd = &cobra.Command{
 var nfsListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Nfs",
-	Long:    `List Nfs`,
+	Short:   "List NFS",
+	Long:    `List NFS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := nfsListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -65,19 +65,19 @@ var nfsListCmd = &cobra.Command{
 
 func nfsListCmdInit() {
 	fs := nfsListCmd.Flags()
+	fs.IntVarP(&nfsListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&nfsListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&nfsListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.StringSliceVarP(&nfsListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&nfsListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.StringSliceVarP(&nfsListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &nfsListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&nfsListParam.From, "from", "", 0, "set offset")
 }
 
 var nfsCreateCmd = &cobra.Command{
 	Use: "create",
 
-	Short: "Create Nfs",
-	Long:  `Create Nfs`,
+	Short: "Create NFS",
+	Long:  `Create NFS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := nfsCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -88,23 +88,23 @@ var nfsCreateCmd = &cobra.Command{
 
 func nfsCreateCmdInit() {
 	fs := nfsCreateCmd.Flags()
-	fs.VarP(newIDValue(0, &nfsCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
-	fs.StringVarP(&nfsCreateParam.Plan, "plan", "", "hdd", "set plan[ssd/hdd]")
+	fs.IntVarP(&nfsCreateParam.Size, "size", "", 100, "set plan[100/500/1024/2048/4096/8192/12288]")
+	fs.IntVarP(&nfsCreateParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
 	fs.StringVarP(&nfsCreateParam.DefaultRoute, "default-route", "", "", "set default route")
 	fs.StringVarP(&nfsCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringSliceVarP(&nfsCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &nfsCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.IntVarP(&nfsCreateParam.Size, "size", "", 100, "set plan[100/500/1024/2048/4096/8192/12288]")
-	fs.StringVarP(&nfsCreateParam.Ipaddress, "ipaddress", "", "", "set ipaddress(#)")
-	fs.IntVarP(&nfsCreateParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
 	fs.StringVarP(&nfsCreateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&nfsCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &nfsCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
+	fs.StringVarP(&nfsCreateParam.Plan, "plan", "", "hdd", "set plan[ssd/hdd]")
+	fs.StringVarP(&nfsCreateParam.Ipaddress, "ipaddress", "", "", "set ipaddress(#)")
+	fs.VarP(newIDValue(0, &nfsCreateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
 var nfsReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Nfs",
-	Long:  `Read Nfs`,
+	Short: "Read NFS",
+	Long:  `Read NFS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := nfsReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -119,8 +119,8 @@ func nfsReadCmdInit() {
 var nfsUpdateCmd = &cobra.Command{
 	Use: "update",
 
-	Short: "Update Nfs",
-	Long:  `Update Nfs`,
+	Short: "Update NFS",
+	Long:  `Update NFS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := nfsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -131,17 +131,17 @@ var nfsUpdateCmd = &cobra.Command{
 
 func nfsUpdateCmdInit() {
 	fs := nfsUpdateCmd.Flags()
-	fs.StringVarP(&nfsUpdateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&nfsUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&nfsUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &nfsUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringVarP(&nfsUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&nfsUpdateParam.Description, "description", "", "", "set resource description")
 }
 
 var nfsDeleteCmd = &cobra.Command{
 	Use:     "delete",
 	Aliases: []string{"rm"},
-	Short:   "Delete Nfs",
-	Long:    `Delete Nfs`,
+	Short:   "Delete NFS",
+	Long:    `Delete NFS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := nfsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -158,8 +158,8 @@ func nfsDeleteCmdInit() {
 var nfsBootCmd = &cobra.Command{
 	Use:     "boot",
 	Aliases: []string{"power-on"},
-	Short:   "Boot Nfs",
-	Long:    `Boot Nfs`,
+	Short:   "Boot NFS",
+	Long:    `Boot NFS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := nfsBootParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -174,8 +174,8 @@ func nfsBootCmdInit() {
 var nfsShutdownCmd = &cobra.Command{
 	Use:     "shutdown",
 	Aliases: []string{"power-off"},
-	Short:   "Shutdown Nfs",
-	Long:    `Shutdown Nfs`,
+	Short:   "Shutdown NFS",
+	Long:    `Shutdown NFS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := nfsShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -190,8 +190,8 @@ func nfsShutdownCmdInit() {
 var nfsShutdownForceCmd = &cobra.Command{
 	Use:     "shutdown-force",
 	Aliases: []string{"stop"},
-	Short:   "ShutdownForce Nfs",
-	Long:    `ShutdownForce Nfs`,
+	Short:   "ShutdownForce NFS",
+	Long:    `ShutdownForce NFS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := nfsShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
@@ -206,8 +206,8 @@ func nfsShutdownForceCmdInit() {
 var nfsResetCmd = &cobra.Command{
 	Use: "reset",
 
-	Short: "Reset Nfs",
-	Long:  `Reset Nfs`,
+	Short: "Reset NFS",
+	Long:  `Reset NFS`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := nfsResetParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG

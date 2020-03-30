@@ -32,12 +32,12 @@ import (
 )
 
 func init() {
-	sshkeyListParam := params.NewListSshkeyParam()
-	sshkeyCreateParam := params.NewCreateSshkeyParam()
-	sshkeyReadParam := params.NewReadSshkeyParam()
-	sshkeyUpdateParam := params.NewUpdateSshkeyParam()
-	sshkeyDeleteParam := params.NewDeleteSshkeyParam()
-	sshkeyGenerateParam := params.NewGenerateSshkeyParam()
+	sshKeyListParam := params.NewListSSHKeyParam()
+	sshKeyCreateParam := params.NewCreateSSHKeyParam()
+	sshKeyReadParam := params.NewReadSSHKeyParam()
+	sshKeyUpdateParam := params.NewUpdateSSHKeyParam()
+	sshKeyDeleteParam := params.NewDeleteSSHKeyParam()
+	sshKeyGenerateParam := params.NewGenerateSSHKeyParam()
 
 	cliCommand := &cli.Command{
 		Name:  "ssh-key",
@@ -46,7 +46,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find"},
-				Usage:   "List Sshkey",
+				Usage:   "List SSHKey",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -132,72 +132,72 @@ func init() {
 						return err
 					}
 
-					sshkeyListParam.ParamTemplate = c.String("param-template")
-					sshkeyListParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(sshkeyListParam)
+					sshKeyListParam.ParamTemplate = c.String("param-template")
+					sshKeyListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(sshKeyListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListSshkeyParam()
+						p := params.NewListSSHKeyParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(sshkeyListParam, p, mergo.WithOverride)
+						mergo.Merge(sshKeyListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						sshkeyListParam.Name = c.StringSlice("name")
+						sshKeyListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						sshkeyListParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						sshKeyListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("from") {
-						sshkeyListParam.From = c.Int("from")
+						sshKeyListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						sshkeyListParam.Max = c.Int("max")
+						sshKeyListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						sshkeyListParam.Sort = c.StringSlice("sort")
+						sshKeyListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						sshkeyListParam.ParamTemplate = c.String("param-template")
+						sshKeyListParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						sshkeyListParam.Parameters = c.String("parameters")
+						sshKeyListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						sshkeyListParam.ParamTemplateFile = c.String("param-template-file")
+						sshKeyListParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						sshkeyListParam.ParameterFile = c.String("parameter-file")
+						sshKeyListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						sshkeyListParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						sshKeyListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						sshkeyListParam.OutputType = c.String("output-type")
+						sshKeyListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						sshkeyListParam.Column = c.StringSlice("column")
+						sshKeyListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						sshkeyListParam.Quiet = c.Bool("quiet")
+						sshKeyListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						sshkeyListParam.Format = c.String("format")
+						sshKeyListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						sshkeyListParam.FormatFile = c.String("format-file")
+						sshKeyListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						sshkeyListParam.Query = c.String("query")
+						sshKeyListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						sshkeyListParam.QueryFile = c.String("query-file")
+						sshKeyListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -205,7 +205,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = sshkeyListParam
+					var outputTypeHolder interface{} = sshKeyListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -216,10 +216,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if sshkeyListParam.GenerateSkeleton {
-						sshkeyListParam.GenerateSkeleton = false
-						sshkeyListParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(sshkeyListParam, "", "\t")
+					if sshKeyListParam.GenerateSkeleton {
+						sshKeyListParam.GenerateSkeleton = false
+						sshKeyListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(sshKeyListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -228,21 +228,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := sshkeyListParam.Validate(); len(errors) > 0 {
+					if errors := sshKeyListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), sshkeyListParam)
+					ctx := command.NewContext(c, c.Args().Slice(), sshKeyListParam)
 
 					// Run command with params
-					return funcs.SshkeyList(ctx, sshkeyListParam)
+					return funcs.SSHKeyList(ctx, sshKeyListParam)
 
 				},
 			},
 			{
 				Name:  "create",
-				Usage: "Create Sshkey",
+				Usage: "Create SSHKey",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "public-key",
@@ -328,72 +328,72 @@ func init() {
 						return err
 					}
 
-					sshkeyCreateParam.ParamTemplate = c.String("param-template")
-					sshkeyCreateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(sshkeyCreateParam)
+					sshKeyCreateParam.ParamTemplate = c.String("param-template")
+					sshKeyCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(sshKeyCreateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCreateSshkeyParam()
+						p := params.NewCreateSSHKeyParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(sshkeyCreateParam, p, mergo.WithOverride)
+						mergo.Merge(sshKeyCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("public-key") {
-						sshkeyCreateParam.PublicKey = c.String("public-key")
+						sshKeyCreateParam.PublicKey = c.String("public-key")
 					}
 					if c.IsSet("name") {
-						sshkeyCreateParam.Name = c.String("name")
+						sshKeyCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						sshkeyCreateParam.Description = c.String("description")
+						sshKeyCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("assumeyes") {
-						sshkeyCreateParam.Assumeyes = c.Bool("assumeyes")
+						sshKeyCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("public-key-content") {
-						sshkeyCreateParam.PublicKeyContent = c.String("public-key-content")
+						sshKeyCreateParam.PublicKeyContent = c.String("public-key-content")
 					}
 					if c.IsSet("param-template") {
-						sshkeyCreateParam.ParamTemplate = c.String("param-template")
+						sshKeyCreateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						sshkeyCreateParam.Parameters = c.String("parameters")
+						sshKeyCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						sshkeyCreateParam.ParamTemplateFile = c.String("param-template-file")
+						sshKeyCreateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						sshkeyCreateParam.ParameterFile = c.String("parameter-file")
+						sshKeyCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						sshkeyCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						sshKeyCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						sshkeyCreateParam.OutputType = c.String("output-type")
+						sshKeyCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						sshkeyCreateParam.Column = c.StringSlice("column")
+						sshKeyCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						sshkeyCreateParam.Quiet = c.Bool("quiet")
+						sshKeyCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						sshkeyCreateParam.Format = c.String("format")
+						sshKeyCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						sshkeyCreateParam.FormatFile = c.String("format-file")
+						sshKeyCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						sshkeyCreateParam.Query = c.String("query")
+						sshKeyCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						sshkeyCreateParam.QueryFile = c.String("query-file")
+						sshKeyCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -401,7 +401,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = sshkeyCreateParam
+					var outputTypeHolder interface{} = sshKeyCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -412,10 +412,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if sshkeyCreateParam.GenerateSkeleton {
-						sshkeyCreateParam.GenerateSkeleton = false
-						sshkeyCreateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(sshkeyCreateParam, "", "\t")
+					if sshKeyCreateParam.GenerateSkeleton {
+						sshKeyCreateParam.GenerateSkeleton = false
+						sshKeyCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(sshKeyCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -424,15 +424,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := sshkeyCreateParam.Validate(); len(errors) > 0 {
+					if errors := sshKeyCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), sshkeyCreateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), sshKeyCreateParam)
 
 					// confirm
-					if !sshkeyCreateParam.Assumeyes {
+					if !sshKeyCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -442,13 +442,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.SshkeyCreate(ctx, sshkeyCreateParam)
+					return funcs.SSHKeyCreate(ctx, sshKeyCreateParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Sshkey",
+				Usage:     "Read SSHKey",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -518,60 +518,60 @@ func init() {
 						return err
 					}
 
-					sshkeyReadParam.ParamTemplate = c.String("param-template")
-					sshkeyReadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(sshkeyReadParam)
+					sshKeyReadParam.ParamTemplate = c.String("param-template")
+					sshKeyReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(sshKeyReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadSshkeyParam()
+						p := params.NewReadSSHKeyParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(sshkeyReadParam, p, mergo.WithOverride)
+						mergo.Merge(sshKeyReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						sshkeyReadParam.ParamTemplate = c.String("param-template")
+						sshKeyReadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						sshkeyReadParam.Parameters = c.String("parameters")
+						sshKeyReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						sshkeyReadParam.ParamTemplateFile = c.String("param-template-file")
+						sshKeyReadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						sshkeyReadParam.ParameterFile = c.String("parameter-file")
+						sshKeyReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						sshkeyReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						sshKeyReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						sshkeyReadParam.OutputType = c.String("output-type")
+						sshKeyReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						sshkeyReadParam.Column = c.StringSlice("column")
+						sshKeyReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						sshkeyReadParam.Quiet = c.Bool("quiet")
+						sshKeyReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						sshkeyReadParam.Format = c.String("format")
+						sshKeyReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						sshkeyReadParam.FormatFile = c.String("format-file")
+						sshKeyReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						sshkeyReadParam.Query = c.String("query")
+						sshKeyReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						sshkeyReadParam.QueryFile = c.String("query-file")
+						sshKeyReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						sshkeyReadParam.Id = sacloud.ID(c.Int64("id"))
+						sshKeyReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -579,7 +579,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = sshkeyReadParam
+					var outputTypeHolder interface{} = sshKeyReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -590,10 +590,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if sshkeyReadParam.GenerateSkeleton {
-						sshkeyReadParam.GenerateSkeleton = false
-						sshkeyReadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(sshkeyReadParam, "", "\t")
+					if sshKeyReadParam.GenerateSkeleton {
+						sshKeyReadParam.GenerateSkeleton = false
+						sshKeyReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(sshKeyReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -602,14 +602,14 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := sshkeyReadParam.Validate(); len(errors) > 0 {
+					if errors := sshKeyReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), sshkeyReadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), sshKeyReadParam)
 
-					apiClient := ctx.GetAPIClient().Sshkey
+					apiClient := ctx.GetAPIClient().SSHKey
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -660,11 +660,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						sshkeyReadParam.SetId(id)
-						p := *sshkeyReadParam // copy struct value
-						sshkeyReadParam := &p
+						sshKeyReadParam.SetId(id)
+						p := *sshKeyReadParam // copy struct value
+						sshKeyReadParam := &p
 						go func() {
-							err := funcs.SshkeyRead(ctx, sshkeyReadParam)
+							err := funcs.SSHKeyRead(ctx, sshKeyReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -678,7 +678,7 @@ func init() {
 			},
 			{
 				Name:      "update",
-				Usage:     "Update Sshkey",
+				Usage:     "Update SSHKey",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -762,69 +762,69 @@ func init() {
 						return err
 					}
 
-					sshkeyUpdateParam.ParamTemplate = c.String("param-template")
-					sshkeyUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(sshkeyUpdateParam)
+					sshKeyUpdateParam.ParamTemplate = c.String("param-template")
+					sshKeyUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(sshKeyUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUpdateSshkeyParam()
+						p := params.NewUpdateSSHKeyParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(sshkeyUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(sshKeyUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						sshkeyUpdateParam.Name = c.String("name")
+						sshKeyUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						sshkeyUpdateParam.Description = c.String("description")
+						sshKeyUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("assumeyes") {
-						sshkeyUpdateParam.Assumeyes = c.Bool("assumeyes")
+						sshKeyUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						sshkeyUpdateParam.ParamTemplate = c.String("param-template")
+						sshKeyUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						sshkeyUpdateParam.Parameters = c.String("parameters")
+						sshKeyUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						sshkeyUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						sshKeyUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						sshkeyUpdateParam.ParameterFile = c.String("parameter-file")
+						sshKeyUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						sshkeyUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						sshKeyUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						sshkeyUpdateParam.OutputType = c.String("output-type")
+						sshKeyUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						sshkeyUpdateParam.Column = c.StringSlice("column")
+						sshKeyUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						sshkeyUpdateParam.Quiet = c.Bool("quiet")
+						sshKeyUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						sshkeyUpdateParam.Format = c.String("format")
+						sshKeyUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						sshkeyUpdateParam.FormatFile = c.String("format-file")
+						sshKeyUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						sshkeyUpdateParam.Query = c.String("query")
+						sshKeyUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						sshkeyUpdateParam.QueryFile = c.String("query-file")
+						sshKeyUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						sshkeyUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						sshKeyUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -832,7 +832,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = sshkeyUpdateParam
+					var outputTypeHolder interface{} = sshKeyUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -843,10 +843,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if sshkeyUpdateParam.GenerateSkeleton {
-						sshkeyUpdateParam.GenerateSkeleton = false
-						sshkeyUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(sshkeyUpdateParam, "", "\t")
+					if sshKeyUpdateParam.GenerateSkeleton {
+						sshKeyUpdateParam.GenerateSkeleton = false
+						sshKeyUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(sshKeyUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -855,14 +855,14 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := sshkeyUpdateParam.Validate(); len(errors) > 0 {
+					if errors := sshKeyUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), sshkeyUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), sshKeyUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Sshkey
+					apiClient := ctx.GetAPIClient().SSHKey
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -905,7 +905,7 @@ func init() {
 					}
 
 					// confirm
-					if !sshkeyUpdateParam.Assumeyes {
+					if !sshKeyUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -919,11 +919,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						sshkeyUpdateParam.SetId(id)
-						p := *sshkeyUpdateParam // copy struct value
-						sshkeyUpdateParam := &p
+						sshKeyUpdateParam.SetId(id)
+						p := *sshKeyUpdateParam // copy struct value
+						sshKeyUpdateParam := &p
 						go func() {
-							err := funcs.SshkeyUpdate(ctx, sshkeyUpdateParam)
+							err := funcs.SSHKeyUpdate(ctx, sshKeyUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -938,7 +938,7 @@ func init() {
 			{
 				Name:      "delete",
 				Aliases:   []string{"rm"},
-				Usage:     "Delete Sshkey",
+				Usage:     "Delete SSHKey",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -1013,63 +1013,63 @@ func init() {
 						return err
 					}
 
-					sshkeyDeleteParam.ParamTemplate = c.String("param-template")
-					sshkeyDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(sshkeyDeleteParam)
+					sshKeyDeleteParam.ParamTemplate = c.String("param-template")
+					sshKeyDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(sshKeyDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeleteSshkeyParam()
+						p := params.NewDeleteSSHKeyParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(sshkeyDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(sshKeyDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("assumeyes") {
-						sshkeyDeleteParam.Assumeyes = c.Bool("assumeyes")
+						sshKeyDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						sshkeyDeleteParam.ParamTemplate = c.String("param-template")
+						sshKeyDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						sshkeyDeleteParam.Parameters = c.String("parameters")
+						sshKeyDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						sshkeyDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						sshKeyDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						sshkeyDeleteParam.ParameterFile = c.String("parameter-file")
+						sshKeyDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						sshkeyDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						sshKeyDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						sshkeyDeleteParam.OutputType = c.String("output-type")
+						sshKeyDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						sshkeyDeleteParam.Column = c.StringSlice("column")
+						sshKeyDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						sshkeyDeleteParam.Quiet = c.Bool("quiet")
+						sshKeyDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						sshkeyDeleteParam.Format = c.String("format")
+						sshKeyDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						sshkeyDeleteParam.FormatFile = c.String("format-file")
+						sshKeyDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						sshkeyDeleteParam.Query = c.String("query")
+						sshKeyDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						sshkeyDeleteParam.QueryFile = c.String("query-file")
+						sshKeyDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						sshkeyDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						sshKeyDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1077,7 +1077,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = sshkeyDeleteParam
+					var outputTypeHolder interface{} = sshKeyDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1088,10 +1088,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if sshkeyDeleteParam.GenerateSkeleton {
-						sshkeyDeleteParam.GenerateSkeleton = false
-						sshkeyDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(sshkeyDeleteParam, "", "\t")
+					if sshKeyDeleteParam.GenerateSkeleton {
+						sshKeyDeleteParam.GenerateSkeleton = false
+						sshKeyDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(sshKeyDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1100,14 +1100,14 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := sshkeyDeleteParam.Validate(); len(errors) > 0 {
+					if errors := sshKeyDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), sshkeyDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), sshKeyDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Sshkey
+					apiClient := ctx.GetAPIClient().SSHKey
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1150,7 +1150,7 @@ func init() {
 					}
 
 					// confirm
-					if !sshkeyDeleteParam.Assumeyes {
+					if !sshKeyDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1164,11 +1164,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						sshkeyDeleteParam.SetId(id)
-						p := *sshkeyDeleteParam // copy struct value
-						sshkeyDeleteParam := &p
+						sshKeyDeleteParam.SetId(id)
+						p := *sshKeyDeleteParam // copy struct value
+						sshKeyDeleteParam := &p
 						go func() {
-							err := funcs.SshkeyDelete(ctx, sshkeyDeleteParam)
+							err := funcs.SSHKeyDelete(ctx, sshKeyDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1183,7 +1183,7 @@ func init() {
 			{
 				Name:    "generate",
 				Aliases: []string{"gen"},
-				Usage:   "Generate Sshkey",
+				Usage:   "Generate SSHKey",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "pass-phrase",
@@ -1270,72 +1270,72 @@ func init() {
 						return err
 					}
 
-					sshkeyGenerateParam.ParamTemplate = c.String("param-template")
-					sshkeyGenerateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(sshkeyGenerateParam)
+					sshKeyGenerateParam.ParamTemplate = c.String("param-template")
+					sshKeyGenerateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(sshKeyGenerateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewGenerateSshkeyParam()
+						p := params.NewGenerateSSHKeyParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(sshkeyGenerateParam, p, mergo.WithOverride)
+						mergo.Merge(sshKeyGenerateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("pass-phrase") {
-						sshkeyGenerateParam.PassPhrase = c.String("pass-phrase")
+						sshKeyGenerateParam.PassPhrase = c.String("pass-phrase")
 					}
 					if c.IsSet("name") {
-						sshkeyGenerateParam.Name = c.String("name")
+						sshKeyGenerateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						sshkeyGenerateParam.Description = c.String("description")
+						sshKeyGenerateParam.Description = c.String("description")
 					}
 					if c.IsSet("assumeyes") {
-						sshkeyGenerateParam.Assumeyes = c.Bool("assumeyes")
+						sshKeyGenerateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						sshkeyGenerateParam.ParamTemplate = c.String("param-template")
+						sshKeyGenerateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						sshkeyGenerateParam.Parameters = c.String("parameters")
+						sshKeyGenerateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						sshkeyGenerateParam.ParamTemplateFile = c.String("param-template-file")
+						sshKeyGenerateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						sshkeyGenerateParam.ParameterFile = c.String("parameter-file")
+						sshKeyGenerateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						sshkeyGenerateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						sshKeyGenerateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						sshkeyGenerateParam.OutputType = c.String("output-type")
+						sshKeyGenerateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("private-key-output") {
-						sshkeyGenerateParam.PrivateKeyOutput = c.String("private-key-output")
+						sshKeyGenerateParam.PrivateKeyOutput = c.String("private-key-output")
 					}
 					if c.IsSet("column") {
-						sshkeyGenerateParam.Column = c.StringSlice("column")
+						sshKeyGenerateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						sshkeyGenerateParam.Quiet = c.Bool("quiet")
+						sshKeyGenerateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						sshkeyGenerateParam.Format = c.String("format")
+						sshKeyGenerateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						sshkeyGenerateParam.FormatFile = c.String("format-file")
+						sshKeyGenerateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						sshkeyGenerateParam.Query = c.String("query")
+						sshKeyGenerateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						sshkeyGenerateParam.QueryFile = c.String("query-file")
+						sshKeyGenerateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -1343,7 +1343,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = sshkeyGenerateParam
+					var outputTypeHolder interface{} = sshKeyGenerateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1354,10 +1354,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if sshkeyGenerateParam.GenerateSkeleton {
-						sshkeyGenerateParam.GenerateSkeleton = false
-						sshkeyGenerateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(sshkeyGenerateParam, "", "\t")
+					if sshKeyGenerateParam.GenerateSkeleton {
+						sshKeyGenerateParam.GenerateSkeleton = false
+						sshKeyGenerateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(sshKeyGenerateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1366,15 +1366,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := sshkeyGenerateParam.Validate(); len(errors) > 0 {
+					if errors := sshKeyGenerateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), sshkeyGenerateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), sshKeyGenerateParam)
 
 					// confirm
-					if !sshkeyGenerateParam.Assumeyes {
+					if !sshKeyGenerateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1384,7 +1384,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.SshkeyGenerate(ctx, sshkeyGenerateParam)
+					return funcs.SSHKeyGenerate(ctx, sshKeyGenerateParam)
 
 				},
 			},

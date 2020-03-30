@@ -24,17 +24,17 @@ import (
 )
 
 var (
-	webaccelListParam              = params.NewListWebaccelParam()
-	webaccelReadParam              = params.NewReadWebaccelParam()
-	webaccelCertificateInfoParam   = params.NewCertificateInfoWebaccelParam()
-	webaccelCertificateNewParam    = params.NewCertificateNewWebaccelParam()
-	webaccelCertificateUpdateParam = params.NewCertificateUpdateWebaccelParam()
-	webaccelDeleteCacheParam       = params.NewDeleteCacheWebaccelParam()
+	webAccelListParam              = params.NewListWebAccelParam()
+	webAccelReadParam              = params.NewReadWebAccelParam()
+	webAccelCertificateInfoParam   = params.NewCertificateInfoWebAccelParam()
+	webAccelCertificateNewParam    = params.NewCertificateNewWebAccelParam()
+	webAccelCertificateUpdateParam = params.NewCertificateUpdateWebAccelParam()
+	webAccelDeleteCacheParam       = params.NewDeleteCacheWebAccelParam()
 )
 
-// webaccelCmd represents the command to manage SAKURA Cloud WebAccel
-var webaccelCmd = &cobra.Command{
-	Use:   "webaccel",
+// webAccelCmd represents the command to manage SAKURA Cloud WebAccel
+var webAccelCmd = &cobra.Command{
+	Use:   "webAccel",
 	Short: "A manage commands of WebAccel",
 	Long:  `A manage commands of WebAccel`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -42,132 +42,132 @@ var webaccelCmd = &cobra.Command{
 	},
 }
 
-var webaccelListCmd = &cobra.Command{
+var webAccelListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Webaccel",
-	Long:    `List Webaccel`,
+	Short:   "List WebAccel",
+	Long:    `List WebAccel`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := webaccelListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := webAccelListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(webaccelListParam))
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(webAccelListParam))
 		return err
 	},
 }
 
-func webaccelListCmdInit() {
+func webAccelListCmdInit() {
 }
 
-var webaccelReadCmd = &cobra.Command{
+var webAccelReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Webaccel",
-	Long:  `Read Webaccel`,
+	Short: "Read WebAccel",
+	Long:  `Read WebAccel`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := webaccelReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := webAccelReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(webaccelReadParam))
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(webAccelReadParam))
 		return err
 	},
 }
 
-func webaccelReadCmdInit() {
+func webAccelReadCmdInit() {
 }
 
-var webaccelCertificateInfoCmd = &cobra.Command{
+var webAccelCertificateInfoCmd = &cobra.Command{
 	Use:     "certificate-info",
 	Aliases: []string{"cert-info"},
-	Short:   "CertificateInfo Webaccel",
-	Long:    `CertificateInfo Webaccel`,
+	Short:   "CertificateInfo WebAccel",
+	Long:    `CertificateInfo WebAccel`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := webaccelCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := webAccelCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("certificate-info parameter: \n%s\n", debugMarshalIndent(webaccelCertificateInfoParam))
+		fmt.Printf("certificate-info parameter: \n%s\n", debugMarshalIndent(webAccelCertificateInfoParam))
 		return err
 	},
 }
 
-func webaccelCertificateInfoCmdInit() {
+func webAccelCertificateInfoCmdInit() {
 }
 
-var webaccelCertificateNewCmd = &cobra.Command{
+var webAccelCertificateNewCmd = &cobra.Command{
 	Use:     "certificate-new",
 	Aliases: []string{"cert-new", "cert-create", "certificate-create"},
-	Short:   "CertificateNew Webaccel",
-	Long:    `CertificateNew Webaccel`,
+	Short:   "CertificateNew WebAccel",
+	Long:    `CertificateNew WebAccel`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := webaccelCertificateNewParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := webAccelCertificateNewParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("certificate-new parameter: \n%s\n", debugMarshalIndent(webaccelCertificateNewParam))
+		fmt.Printf("certificate-new parameter: \n%s\n", debugMarshalIndent(webAccelCertificateNewParam))
 		return err
 	},
 }
 
-func webaccelCertificateNewCmdInit() {
-	fs := webaccelCertificateNewCmd.Flags()
-	fs.StringVarP(&webaccelCertificateNewParam.Cert, "cert", "", "", "set certificate(from file)")
-	fs.StringVarP(&webaccelCertificateNewParam.Key, "key", "", "", "set private key(from file)")
-	fs.StringVarP(&webaccelCertificateNewParam.CertContent, "cert-content", "", "", "set certificate(from text)")
-	fs.StringVarP(&webaccelCertificateNewParam.KeyContent, "key-content", "", "", "set private key(from text)")
+func webAccelCertificateNewCmdInit() {
+	fs := webAccelCertificateNewCmd.Flags()
+	fs.StringVarP(&webAccelCertificateNewParam.Cert, "cert", "", "", "set certificate(from file)")
+	fs.StringVarP(&webAccelCertificateNewParam.Key, "key", "", "", "set private key(from file)")
+	fs.StringVarP(&webAccelCertificateNewParam.CertContent, "cert-content", "", "", "set certificate(from text)")
+	fs.StringVarP(&webAccelCertificateNewParam.KeyContent, "key-content", "", "", "set private key(from text)")
 }
 
-var webaccelCertificateUpdateCmd = &cobra.Command{
+var webAccelCertificateUpdateCmd = &cobra.Command{
 	Use:     "certificate-update",
 	Aliases: []string{"cert-update"},
-	Short:   "CertificateUpdate Webaccel",
-	Long:    `CertificateUpdate Webaccel`,
+	Short:   "CertificateUpdate WebAccel",
+	Long:    `CertificateUpdate WebAccel`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := webaccelCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := webAccelCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("certificate-update parameter: \n%s\n", debugMarshalIndent(webaccelCertificateUpdateParam))
+		fmt.Printf("certificate-update parameter: \n%s\n", debugMarshalIndent(webAccelCertificateUpdateParam))
 		return err
 	},
 }
 
-func webaccelCertificateUpdateCmdInit() {
-	fs := webaccelCertificateUpdateCmd.Flags()
-	fs.StringVarP(&webaccelCertificateUpdateParam.KeyContent, "key-content", "", "", "set private key(from text)")
-	fs.StringVarP(&webaccelCertificateUpdateParam.Cert, "cert", "", "", "set certificate(from file)")
-	fs.StringVarP(&webaccelCertificateUpdateParam.Key, "key", "", "", "set private key(from file)")
-	fs.StringVarP(&webaccelCertificateUpdateParam.CertContent, "cert-content", "", "", "set certificate(from text)")
+func webAccelCertificateUpdateCmdInit() {
+	fs := webAccelCertificateUpdateCmd.Flags()
+	fs.StringVarP(&webAccelCertificateUpdateParam.Key, "key", "", "", "set private key(from file)")
+	fs.StringVarP(&webAccelCertificateUpdateParam.CertContent, "cert-content", "", "", "set certificate(from text)")
+	fs.StringVarP(&webAccelCertificateUpdateParam.KeyContent, "key-content", "", "", "set private key(from text)")
+	fs.StringVarP(&webAccelCertificateUpdateParam.Cert, "cert", "", "", "set certificate(from file)")
 }
 
-var webaccelDeleteCacheCmd = &cobra.Command{
+var webAccelDeleteCacheCmd = &cobra.Command{
 	Use:     "delete-cache",
 	Aliases: []string{"purge"},
-	Short:   "DeleteCache Webaccel",
-	Long:    `DeleteCache Webaccel`,
+	Short:   "DeleteCache WebAccel",
+	Long:    `DeleteCache WebAccel`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := webaccelDeleteCacheParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := webAccelDeleteCacheParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("delete-cache parameter: \n%s\n", debugMarshalIndent(webaccelDeleteCacheParam))
+		fmt.Printf("delete-cache parameter: \n%s\n", debugMarshalIndent(webAccelDeleteCacheParam))
 		return err
 	},
 }
 
-func webaccelDeleteCacheCmdInit() {
+func webAccelDeleteCacheCmdInit() {
 }
 
 func init() {
-	parent := webaccelCmd
+	parent := webAccelCmd
 
-	webaccelListCmdInit()
-	parent.AddCommand(webaccelListCmd)
+	webAccelListCmdInit()
+	parent.AddCommand(webAccelListCmd)
 
-	webaccelReadCmdInit()
-	parent.AddCommand(webaccelReadCmd)
+	webAccelReadCmdInit()
+	parent.AddCommand(webAccelReadCmd)
 
-	webaccelCertificateInfoCmdInit()
-	parent.AddCommand(webaccelCertificateInfoCmd)
+	webAccelCertificateInfoCmdInit()
+	parent.AddCommand(webAccelCertificateInfoCmd)
 
-	webaccelCertificateNewCmdInit()
-	parent.AddCommand(webaccelCertificateNewCmd)
+	webAccelCertificateNewCmdInit()
+	parent.AddCommand(webAccelCertificateNewCmd)
 
-	webaccelCertificateUpdateCmdInit()
-	parent.AddCommand(webaccelCertificateUpdateCmd)
+	webAccelCertificateUpdateCmdInit()
+	parent.AddCommand(webAccelCertificateUpdateCmd)
 
-	webaccelDeleteCacheCmdInit()
-	parent.AddCommand(webaccelDeleteCacheCmd)
+	webAccelDeleteCacheCmdInit()
+	parent.AddCommand(webAccelDeleteCacheCmd)
 
 	rootCmd.AddCommand(parent)
 }

@@ -23,10 +23,10 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func VpcrouterList(ctx command.Context, params *params.ListVpcrouterParam) error {
+func VPCRouterList(ctx command.Context, params *params.ListVPCRouterParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetVpcrouterAPI()
+	finder := client.GetVPCRouterAPI()
 
 	finder.SetEmpty()
 
@@ -55,17 +55,17 @@ func VpcrouterList(ctx command.Context, params *params.ListVpcrouterParam) error
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("VpcrouterList is failed: %s", err)
+		return fmt.Errorf("VPCRouterList is failed: %s", err)
 	}
 
 	list := []interface{}{}
-	for i := range res.Vpcrouters {
+	for i := range res.VPCRouters {
 
-		if !params.GetCommandDef().Params["tags"].FilterFunc(list, &res.Vpcrouters[i], params.Tags) {
+		if !params.GetCommandDef().Params["tags"].FilterFunc(list, &res.VPCRouters[i], params.Tags) {
 			continue
 		}
 
-		list = append(list, &res.Vpcrouters[i])
+		list = append(list, &res.VPCRouters[i])
 	}
 	return ctx.GetOutput().Print(list...)
 

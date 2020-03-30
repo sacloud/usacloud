@@ -25,13 +25,13 @@ import (
 )
 
 var (
-	productlicenseListParam = params.NewListProductlicenseParam()
-	productlicenseReadParam = params.NewReadProductlicenseParam()
+	productLicenseListParam = params.NewListProductLicenseParam()
+	productLicenseReadParam = params.NewReadProductLicenseParam()
 )
 
-// productlicenseCmd represents the command to manage SAKURA Cloud ProductLicense
-var productlicenseCmd = &cobra.Command{
-	Use:   "productlicense",
+// productLicenseCmd represents the command to manage SAKURA Cloud ProductLicense
+var productLicenseCmd = &cobra.Command{
+	Use:   "productLicense",
 	Short: "A manage commands of ProductLicense",
 	Long:  `A manage commands of ProductLicense`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -39,54 +39,54 @@ var productlicenseCmd = &cobra.Command{
 	},
 }
 
-var productlicenseListCmd = &cobra.Command{
+var productLicenseListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find"},
-	Short:   "List Productlicense (default)",
-	Long:    `List Productlicense (default)`,
+	Short:   "List ProductLicense (default)",
+	Long:    `List ProductLicense (default)`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := productlicenseListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := productLicenseListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(productlicenseListParam))
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(productLicenseListParam))
 		return err
 	},
 }
 
-func productlicenseListCmdInit() {
-	fs := productlicenseListCmd.Flags()
-	fs.StringSliceVarP(&productlicenseListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &productlicenseListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&productlicenseListParam.From, "from", "", 0, "set offset")
-	fs.IntVarP(&productlicenseListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&productlicenseListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+func productLicenseListCmdInit() {
+	fs := productLicenseListCmd.Flags()
+	fs.StringSliceVarP(&productLicenseListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &productLicenseListParam.Id), "id", "", "set filter by id(s)")
+	fs.IntVarP(&productLicenseListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&productLicenseListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&productLicenseListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 }
 
-var productlicenseReadCmd = &cobra.Command{
+var productLicenseReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Productlicense",
-	Long:  `Read Productlicense`,
+	Short: "Read ProductLicense",
+	Long:  `Read ProductLicense`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := productlicenseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := productLicenseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(productlicenseReadParam))
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(productLicenseReadParam))
 		return err
 	},
 }
 
-func productlicenseReadCmdInit() {
-	fs := productlicenseReadCmd.Flags()
-	fs.VarP(newIDValue(0, &productlicenseReadParam.Id), "id", "", "set resource ID")
+func productLicenseReadCmdInit() {
+	fs := productLicenseReadCmd.Flags()
+	fs.VarP(newIDValue(0, &productLicenseReadParam.Id), "id", "", "set resource ID")
 }
 
 func init() {
-	parent := productlicenseCmd
+	parent := productLicenseCmd
 
-	productlicenseListCmdInit()
-	parent.AddCommand(productlicenseListCmd)
+	productLicenseListCmdInit()
+	parent.AddCommand(productLicenseListCmd)
 
-	productlicenseReadCmdInit()
-	parent.AddCommand(productlicenseReadCmd)
+	productLicenseReadCmdInit()
+	parent.AddCommand(productLicenseReadCmd)
 
 	rootCmd.AddCommand(parent)
 }

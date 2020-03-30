@@ -26,18 +26,18 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListWebaccelParam is input parameters for the sacloud API
-type ListWebaccelParam struct {
+// ListWebAccelParam is input parameters for the sacloud API
+type ListWebAccelParam struct {
 	input Input
 }
 
-// NewListWebaccelParam return new ListWebaccelParam
-func NewListWebaccelParam() *ListWebaccelParam {
-	return &ListWebaccelParam{}
+// NewListWebAccelParam return new ListWebAccelParam
+func NewListWebAccelParam() *ListWebAccelParam {
+	return &ListWebAccelParam{}
 }
 
-// Initialize init ListWebaccelParam
-func (p *ListWebaccelParam) Initialize(in Input) error {
+// Initialize init ListWebAccelParam
+func (p *ListWebAccelParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -46,56 +46,56 @@ func (p *ListWebaccelParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ListWebaccelParam) WriteSkeleton(writer io.Writer) error {
+func (p *ListWebAccelParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListWebaccelParam) fillValueToSkeleton() {
+func (p *ListWebAccelParam) fillValueToSkeleton() {
 
 }
 
-func (p *ListWebaccelParam) validate() error {
+func (p *ListWebAccelParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ListWebaccelParam) ResourceDef() *schema.Resource {
+func (p *ListWebAccelParam) ResourceDef() *schema.Resource {
 	return define.Resources["WebAccel"]
 }
 
-func (p *ListWebaccelParam) CommandDef() *schema.Command {
+func (p *ListWebAccelParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["list"]
 }
 
-func (p *ListWebaccelParam) IncludeFields() []string {
+func (p *ListWebAccelParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ListWebaccelParam) ExcludeFields() []string {
+func (p *ListWebAccelParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ListWebaccelParam) TableType() output.TableType {
+func (p *ListWebAccelParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ListWebaccelParam) ColumnDefs() []output.ColumnDef {
+func (p *ListWebAccelParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// ReadWebaccelParam is input parameters for the sacloud API
-type ReadWebaccelParam struct {
+// ReadWebAccelParam is input parameters for the sacloud API
+type ReadWebAccelParam struct {
 	input Input
 }
 
-// NewReadWebaccelParam return new ReadWebaccelParam
-func NewReadWebaccelParam() *ReadWebaccelParam {
-	return &ReadWebaccelParam{}
+// NewReadWebAccelParam return new ReadWebAccelParam
+func NewReadWebAccelParam() *ReadWebAccelParam {
+	return &ReadWebAccelParam{}
 }
 
-// Initialize init ReadWebaccelParam
-func (p *ReadWebaccelParam) Initialize(in Input) error {
+// Initialize init ReadWebAccelParam
+func (p *ReadWebAccelParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -104,56 +104,56 @@ func (p *ReadWebaccelParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ReadWebaccelParam) WriteSkeleton(writer io.Writer) error {
+func (p *ReadWebAccelParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadWebaccelParam) fillValueToSkeleton() {
+func (p *ReadWebAccelParam) fillValueToSkeleton() {
 
 }
 
-func (p *ReadWebaccelParam) validate() error {
+func (p *ReadWebAccelParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ReadWebaccelParam) ResourceDef() *schema.Resource {
+func (p *ReadWebAccelParam) ResourceDef() *schema.Resource {
 	return define.Resources["WebAccel"]
 }
 
-func (p *ReadWebaccelParam) CommandDef() *schema.Command {
+func (p *ReadWebAccelParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["read"]
 }
 
-func (p *ReadWebaccelParam) IncludeFields() []string {
+func (p *ReadWebAccelParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ReadWebaccelParam) ExcludeFields() []string {
+func (p *ReadWebAccelParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ReadWebaccelParam) TableType() output.TableType {
+func (p *ReadWebAccelParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ReadWebaccelParam) ColumnDefs() []output.ColumnDef {
+func (p *ReadWebAccelParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// CertificateInfoWebaccelParam is input parameters for the sacloud API
-type CertificateInfoWebaccelParam struct {
+// CertificateInfoWebAccelParam is input parameters for the sacloud API
+type CertificateInfoWebAccelParam struct {
 	input Input
 }
 
-// NewCertificateInfoWebaccelParam return new CertificateInfoWebaccelParam
-func NewCertificateInfoWebaccelParam() *CertificateInfoWebaccelParam {
-	return &CertificateInfoWebaccelParam{}
+// NewCertificateInfoWebAccelParam return new CertificateInfoWebAccelParam
+func NewCertificateInfoWebAccelParam() *CertificateInfoWebAccelParam {
+	return &CertificateInfoWebAccelParam{}
 }
 
-// Initialize init CertificateInfoWebaccelParam
-func (p *CertificateInfoWebaccelParam) Initialize(in Input) error {
+// Initialize init CertificateInfoWebAccelParam
+func (p *CertificateInfoWebAccelParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -162,46 +162,46 @@ func (p *CertificateInfoWebaccelParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CertificateInfoWebaccelParam) WriteSkeleton(writer io.Writer) error {
+func (p *CertificateInfoWebAccelParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CertificateInfoWebaccelParam) fillValueToSkeleton() {
+func (p *CertificateInfoWebAccelParam) fillValueToSkeleton() {
 
 }
 
-func (p *CertificateInfoWebaccelParam) validate() error {
+func (p *CertificateInfoWebAccelParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CertificateInfoWebaccelParam) ResourceDef() *schema.Resource {
+func (p *CertificateInfoWebAccelParam) ResourceDef() *schema.Resource {
 	return define.Resources["WebAccel"]
 }
 
-func (p *CertificateInfoWebaccelParam) CommandDef() *schema.Command {
+func (p *CertificateInfoWebAccelParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["certificate-info"]
 }
 
-func (p *CertificateInfoWebaccelParam) IncludeFields() []string {
+func (p *CertificateInfoWebAccelParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CertificateInfoWebaccelParam) ExcludeFields() []string {
+func (p *CertificateInfoWebAccelParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CertificateInfoWebaccelParam) TableType() output.TableType {
+func (p *CertificateInfoWebAccelParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CertificateInfoWebaccelParam) ColumnDefs() []output.ColumnDef {
+func (p *CertificateInfoWebAccelParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// CertificateNewWebaccelParam is input parameters for the sacloud API
-type CertificateNewWebaccelParam struct {
+// CertificateNewWebAccelParam is input parameters for the sacloud API
+type CertificateNewWebAccelParam struct {
 	Cert        string
 	Key         string
 	CertContent string
@@ -210,13 +210,13 @@ type CertificateNewWebaccelParam struct {
 	input Input
 }
 
-// NewCertificateNewWebaccelParam return new CertificateNewWebaccelParam
-func NewCertificateNewWebaccelParam() *CertificateNewWebaccelParam {
-	return &CertificateNewWebaccelParam{}
+// NewCertificateNewWebAccelParam return new CertificateNewWebAccelParam
+func NewCertificateNewWebAccelParam() *CertificateNewWebAccelParam {
+	return &CertificateNewWebAccelParam{}
 }
 
-// Initialize init CertificateNewWebaccelParam
-func (p *CertificateNewWebaccelParam) Initialize(in Input) error {
+// Initialize init CertificateNewWebAccelParam
+func (p *CertificateNewWebAccelParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -225,11 +225,11 @@ func (p *CertificateNewWebaccelParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CertificateNewWebaccelParam) WriteSkeleton(writer io.Writer) error {
+func (p *CertificateNewWebAccelParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CertificateNewWebaccelParam) fillValueToSkeleton() {
+func (p *CertificateNewWebAccelParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Cert) {
 		p.Cert = ""
 	}
@@ -245,7 +245,7 @@ func (p *CertificateNewWebaccelParam) fillValueToSkeleton() {
 
 }
 
-func (p *CertificateNewWebaccelParam) validate() error {
+func (p *CertificateNewWebAccelParam) validate() error {
 	var errors []error
 
 	{
@@ -287,76 +287,76 @@ func (p *CertificateNewWebaccelParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CertificateNewWebaccelParam) ResourceDef() *schema.Resource {
+func (p *CertificateNewWebAccelParam) ResourceDef() *schema.Resource {
 	return define.Resources["WebAccel"]
 }
 
-func (p *CertificateNewWebaccelParam) CommandDef() *schema.Command {
+func (p *CertificateNewWebAccelParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["certificate-new"]
 }
 
-func (p *CertificateNewWebaccelParam) IncludeFields() []string {
+func (p *CertificateNewWebAccelParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CertificateNewWebaccelParam) ExcludeFields() []string {
+func (p *CertificateNewWebAccelParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CertificateNewWebaccelParam) TableType() output.TableType {
+func (p *CertificateNewWebAccelParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CertificateNewWebaccelParam) ColumnDefs() []output.ColumnDef {
+func (p *CertificateNewWebAccelParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CertificateNewWebaccelParam) SetCert(v string) {
+func (p *CertificateNewWebAccelParam) SetCert(v string) {
 	p.Cert = v
 }
 
-func (p *CertificateNewWebaccelParam) GetCert() string {
+func (p *CertificateNewWebAccelParam) GetCert() string {
 	return p.Cert
 }
-func (p *CertificateNewWebaccelParam) SetKey(v string) {
+func (p *CertificateNewWebAccelParam) SetKey(v string) {
 	p.Key = v
 }
 
-func (p *CertificateNewWebaccelParam) GetKey() string {
+func (p *CertificateNewWebAccelParam) GetKey() string {
 	return p.Key
 }
-func (p *CertificateNewWebaccelParam) SetCertContent(v string) {
+func (p *CertificateNewWebAccelParam) SetCertContent(v string) {
 	p.CertContent = v
 }
 
-func (p *CertificateNewWebaccelParam) GetCertContent() string {
+func (p *CertificateNewWebAccelParam) GetCertContent() string {
 	return p.CertContent
 }
-func (p *CertificateNewWebaccelParam) SetKeyContent(v string) {
+func (p *CertificateNewWebAccelParam) SetKeyContent(v string) {
 	p.KeyContent = v
 }
 
-func (p *CertificateNewWebaccelParam) GetKeyContent() string {
+func (p *CertificateNewWebAccelParam) GetKeyContent() string {
 	return p.KeyContent
 }
 
-// CertificateUpdateWebaccelParam is input parameters for the sacloud API
-type CertificateUpdateWebaccelParam struct {
-	CertContent string
+// CertificateUpdateWebAccelParam is input parameters for the sacloud API
+type CertificateUpdateWebAccelParam struct {
 	KeyContent  string
 	Cert        string
 	Key         string
+	CertContent string
 
 	input Input
 }
 
-// NewCertificateUpdateWebaccelParam return new CertificateUpdateWebaccelParam
-func NewCertificateUpdateWebaccelParam() *CertificateUpdateWebaccelParam {
-	return &CertificateUpdateWebaccelParam{}
+// NewCertificateUpdateWebAccelParam return new CertificateUpdateWebAccelParam
+func NewCertificateUpdateWebAccelParam() *CertificateUpdateWebAccelParam {
+	return &CertificateUpdateWebAccelParam{}
 }
 
-// Initialize init CertificateUpdateWebaccelParam
-func (p *CertificateUpdateWebaccelParam) Initialize(in Input) error {
+// Initialize init CertificateUpdateWebAccelParam
+func (p *CertificateUpdateWebAccelParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -365,14 +365,11 @@ func (p *CertificateUpdateWebaccelParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CertificateUpdateWebaccelParam) WriteSkeleton(writer io.Writer) error {
+func (p *CertificateUpdateWebAccelParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CertificateUpdateWebaccelParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.CertContent) {
-		p.CertContent = ""
-	}
+func (p *CertificateUpdateWebAccelParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.KeyContent) {
 		p.KeyContent = ""
 	}
@@ -382,21 +379,14 @@ func (p *CertificateUpdateWebaccelParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Key) {
 		p.Key = ""
 	}
+	if utils.IsEmpty(p.CertContent) {
+		p.CertContent = ""
+	}
 
 }
 
-func (p *CertificateUpdateWebaccelParam) validate() error {
+func (p *CertificateUpdateWebAccelParam) validate() error {
 	var errors []error
-
-	{
-		errs := validation.ConflictsWith("--cert-content", p.CertContent, map[string]interface{}{
-
-			"--cert": p.Cert,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		errs := validation.ConflictsWith("--key-content", p.KeyContent, map[string]interface{}{
@@ -424,74 +414,84 @@ func (p *CertificateUpdateWebaccelParam) validate() error {
 		}
 	}
 
+	{
+		errs := validation.ConflictsWith("--cert-content", p.CertContent, map[string]interface{}{
+
+			"--cert": p.Cert,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CertificateUpdateWebaccelParam) ResourceDef() *schema.Resource {
+func (p *CertificateUpdateWebAccelParam) ResourceDef() *schema.Resource {
 	return define.Resources["WebAccel"]
 }
 
-func (p *CertificateUpdateWebaccelParam) CommandDef() *schema.Command {
+func (p *CertificateUpdateWebAccelParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["certificate-update"]
 }
 
-func (p *CertificateUpdateWebaccelParam) IncludeFields() []string {
+func (p *CertificateUpdateWebAccelParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CertificateUpdateWebaccelParam) ExcludeFields() []string {
+func (p *CertificateUpdateWebAccelParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CertificateUpdateWebaccelParam) TableType() output.TableType {
+func (p *CertificateUpdateWebAccelParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CertificateUpdateWebaccelParam) ColumnDefs() []output.ColumnDef {
+func (p *CertificateUpdateWebAccelParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CertificateUpdateWebaccelParam) SetCertContent(v string) {
-	p.CertContent = v
-}
-
-func (p *CertificateUpdateWebaccelParam) GetCertContent() string {
-	return p.CertContent
-}
-func (p *CertificateUpdateWebaccelParam) SetKeyContent(v string) {
+func (p *CertificateUpdateWebAccelParam) SetKeyContent(v string) {
 	p.KeyContent = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetKeyContent() string {
+func (p *CertificateUpdateWebAccelParam) GetKeyContent() string {
 	return p.KeyContent
 }
-func (p *CertificateUpdateWebaccelParam) SetCert(v string) {
+func (p *CertificateUpdateWebAccelParam) SetCert(v string) {
 	p.Cert = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetCert() string {
+func (p *CertificateUpdateWebAccelParam) GetCert() string {
 	return p.Cert
 }
-func (p *CertificateUpdateWebaccelParam) SetKey(v string) {
+func (p *CertificateUpdateWebAccelParam) SetKey(v string) {
 	p.Key = v
 }
 
-func (p *CertificateUpdateWebaccelParam) GetKey() string {
+func (p *CertificateUpdateWebAccelParam) GetKey() string {
 	return p.Key
 }
+func (p *CertificateUpdateWebAccelParam) SetCertContent(v string) {
+	p.CertContent = v
+}
 
-// DeleteCacheWebaccelParam is input parameters for the sacloud API
-type DeleteCacheWebaccelParam struct {
+func (p *CertificateUpdateWebAccelParam) GetCertContent() string {
+	return p.CertContent
+}
+
+// DeleteCacheWebAccelParam is input parameters for the sacloud API
+type DeleteCacheWebAccelParam struct {
 	input Input
 }
 
-// NewDeleteCacheWebaccelParam return new DeleteCacheWebaccelParam
-func NewDeleteCacheWebaccelParam() *DeleteCacheWebaccelParam {
-	return &DeleteCacheWebaccelParam{}
+// NewDeleteCacheWebAccelParam return new DeleteCacheWebAccelParam
+func NewDeleteCacheWebAccelParam() *DeleteCacheWebAccelParam {
+	return &DeleteCacheWebAccelParam{}
 }
 
-// Initialize init DeleteCacheWebaccelParam
-func (p *DeleteCacheWebaccelParam) Initialize(in Input) error {
+// Initialize init DeleteCacheWebAccelParam
+func (p *DeleteCacheWebAccelParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -500,40 +500,40 @@ func (p *DeleteCacheWebaccelParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DeleteCacheWebaccelParam) WriteSkeleton(writer io.Writer) error {
+func (p *DeleteCacheWebAccelParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteCacheWebaccelParam) fillValueToSkeleton() {
+func (p *DeleteCacheWebAccelParam) fillValueToSkeleton() {
 
 }
 
-func (p *DeleteCacheWebaccelParam) validate() error {
+func (p *DeleteCacheWebAccelParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DeleteCacheWebaccelParam) ResourceDef() *schema.Resource {
+func (p *DeleteCacheWebAccelParam) ResourceDef() *schema.Resource {
 	return define.Resources["WebAccel"]
 }
 
-func (p *DeleteCacheWebaccelParam) CommandDef() *schema.Command {
+func (p *DeleteCacheWebAccelParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["delete-cache"]
 }
 
-func (p *DeleteCacheWebaccelParam) IncludeFields() []string {
+func (p *DeleteCacheWebAccelParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DeleteCacheWebaccelParam) ExcludeFields() []string {
+func (p *DeleteCacheWebAccelParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DeleteCacheWebaccelParam) TableType() output.TableType {
+func (p *DeleteCacheWebAccelParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DeleteCacheWebaccelParam) ColumnDefs() []output.ColumnDef {
+func (p *DeleteCacheWebAccelParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }

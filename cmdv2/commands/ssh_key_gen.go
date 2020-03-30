@@ -25,17 +25,17 @@ import (
 )
 
 var (
-	sshkeyListParam     = params.NewListSshkeyParam()
-	sshkeyCreateParam   = params.NewCreateSshkeyParam()
-	sshkeyReadParam     = params.NewReadSshkeyParam()
-	sshkeyUpdateParam   = params.NewUpdateSshkeyParam()
-	sshkeyDeleteParam   = params.NewDeleteSshkeyParam()
-	sshkeyGenerateParam = params.NewGenerateSshkeyParam()
+	sshKeyListParam     = params.NewListSSHKeyParam()
+	sshKeyCreateParam   = params.NewCreateSSHKeyParam()
+	sshKeyReadParam     = params.NewReadSSHKeyParam()
+	sshKeyUpdateParam   = params.NewUpdateSSHKeyParam()
+	sshKeyDeleteParam   = params.NewDeleteSSHKeyParam()
+	sshKeyGenerateParam = params.NewGenerateSSHKeyParam()
 )
 
-// sshkeyCmd represents the command to manage SAKURA Cloud SSHKey
-var sshkeyCmd = &cobra.Command{
-	Use:   "sshkey",
+// sshKeyCmd represents the command to manage SAKURA Cloud SSHKey
+var sshKeyCmd = &cobra.Command{
+	Use:   "sshKey",
 	Short: "A manage commands of SSHKey",
 	Long:  `A manage commands of SSHKey`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -43,141 +43,141 @@ var sshkeyCmd = &cobra.Command{
 	},
 }
 
-var sshkeyListCmd = &cobra.Command{
+var sshKeyListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls", "find"},
-	Short:   "List Sshkey",
-	Long:    `List Sshkey`,
+	Short:   "List SSHKey",
+	Long:    `List SSHKey`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := sshkeyListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := sshKeyListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(sshkeyListParam))
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(sshKeyListParam))
 		return err
 	},
 }
 
-func sshkeyListCmdInit() {
-	fs := sshkeyListCmd.Flags()
-	fs.StringSliceVarP(&sshkeyListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&sshkeyListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &sshkeyListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&sshkeyListParam.From, "from", "", 0, "set offset")
-	fs.IntVarP(&sshkeyListParam.Max, "max", "", 0, "set limit")
+func sshKeyListCmdInit() {
+	fs := sshKeyListCmd.Flags()
+	fs.StringSliceVarP(&sshKeyListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &sshKeyListParam.Id), "id", "", "set filter by id(s)")
+	fs.IntVarP(&sshKeyListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&sshKeyListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&sshKeyListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 }
 
-var sshkeyCreateCmd = &cobra.Command{
+var sshKeyCreateCmd = &cobra.Command{
 	Use: "create",
 
-	Short: "Create Sshkey",
-	Long:  `Create Sshkey`,
+	Short: "Create SSHKey",
+	Long:  `Create SSHKey`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := sshkeyCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := sshKeyCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(sshkeyCreateParam))
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(sshKeyCreateParam))
 		return err
 	},
 }
 
-func sshkeyCreateCmdInit() {
-	fs := sshkeyCreateCmd.Flags()
-	fs.StringVarP(&sshkeyCreateParam.PublicKey, "public-key", "", "", "set public-key from file")
-	fs.StringVarP(&sshkeyCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&sshkeyCreateParam.Description, "description", "", "", "set resource description")
-	fs.StringVarP(&sshkeyCreateParam.PublicKeyContent, "public-key-content", "", "", "set public-key")
+func sshKeyCreateCmdInit() {
+	fs := sshKeyCreateCmd.Flags()
+	fs.StringVarP(&sshKeyCreateParam.PublicKeyContent, "public-key-content", "", "", "set public-key")
+	fs.StringVarP(&sshKeyCreateParam.PublicKey, "public-key", "", "", "set public-key from file")
+	fs.StringVarP(&sshKeyCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&sshKeyCreateParam.Description, "description", "", "", "set resource description")
 }
 
-var sshkeyReadCmd = &cobra.Command{
+var sshKeyReadCmd = &cobra.Command{
 	Use: "read",
 
-	Short: "Read Sshkey",
-	Long:  `Read Sshkey`,
+	Short: "Read SSHKey",
+	Long:  `Read SSHKey`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := sshkeyReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := sshKeyReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(sshkeyReadParam))
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(sshKeyReadParam))
 		return err
 	},
 }
 
-func sshkeyReadCmdInit() {
+func sshKeyReadCmdInit() {
 }
 
-var sshkeyUpdateCmd = &cobra.Command{
+var sshKeyUpdateCmd = &cobra.Command{
 	Use: "update",
 
-	Short: "Update Sshkey",
-	Long:  `Update Sshkey`,
+	Short: "Update SSHKey",
+	Long:  `Update SSHKey`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := sshkeyUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := sshKeyUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(sshkeyUpdateParam))
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(sshKeyUpdateParam))
 		return err
 	},
 }
 
-func sshkeyUpdateCmdInit() {
-	fs := sshkeyUpdateCmd.Flags()
-	fs.StringVarP(&sshkeyUpdateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&sshkeyUpdateParam.Description, "description", "", "", "set resource description")
+func sshKeyUpdateCmdInit() {
+	fs := sshKeyUpdateCmd.Flags()
+	fs.StringVarP(&sshKeyUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&sshKeyUpdateParam.Description, "description", "", "", "set resource description")
 }
 
-var sshkeyDeleteCmd = &cobra.Command{
+var sshKeyDeleteCmd = &cobra.Command{
 	Use:     "delete",
 	Aliases: []string{"rm"},
-	Short:   "Delete Sshkey",
-	Long:    `Delete Sshkey`,
+	Short:   "Delete SSHKey",
+	Long:    `Delete SSHKey`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := sshkeyDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := sshKeyDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(sshkeyDeleteParam))
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(sshKeyDeleteParam))
 		return err
 	},
 }
 
-func sshkeyDeleteCmdInit() {
+func sshKeyDeleteCmdInit() {
 }
 
-var sshkeyGenerateCmd = &cobra.Command{
+var sshKeyGenerateCmd = &cobra.Command{
 	Use:     "generate",
 	Aliases: []string{"gen"},
-	Short:   "Generate Sshkey",
-	Long:    `Generate Sshkey`,
+	Short:   "Generate SSHKey",
+	Long:    `Generate SSHKey`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := sshkeyGenerateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		err := sshKeyGenerateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
-		fmt.Printf("generate parameter: \n%s\n", debugMarshalIndent(sshkeyGenerateParam))
+		fmt.Printf("generate parameter: \n%s\n", debugMarshalIndent(sshKeyGenerateParam))
 		return err
 	},
 }
 
-func sshkeyGenerateCmdInit() {
-	fs := sshkeyGenerateCmd.Flags()
-	fs.StringVarP(&sshkeyGenerateParam.Description, "description", "", "", "set resource description")
-	fs.StringVarP(&sshkeyGenerateParam.PassPhrase, "pass-phrase", "", "", "set ssh-key pass phrase")
-	fs.StringVarP(&sshkeyGenerateParam.PrivateKeyOutput, "private-key-output", "", "", "set ssh-key privatekey output path")
-	fs.StringVarP(&sshkeyGenerateParam.Name, "name", "", "", "set resource display name")
+func sshKeyGenerateCmdInit() {
+	fs := sshKeyGenerateCmd.Flags()
+	fs.StringVarP(&sshKeyGenerateParam.PassPhrase, "pass-phrase", "", "", "set ssh-key pass phrase")
+	fs.StringVarP(&sshKeyGenerateParam.PrivateKeyOutput, "private-key-output", "", "", "set ssh-key privatekey output path")
+	fs.StringVarP(&sshKeyGenerateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&sshKeyGenerateParam.Description, "description", "", "", "set resource description")
 }
 
 func init() {
-	parent := sshkeyCmd
+	parent := sshKeyCmd
 
-	sshkeyListCmdInit()
-	parent.AddCommand(sshkeyListCmd)
+	sshKeyListCmdInit()
+	parent.AddCommand(sshKeyListCmd)
 
-	sshkeyCreateCmdInit()
-	parent.AddCommand(sshkeyCreateCmd)
+	sshKeyCreateCmdInit()
+	parent.AddCommand(sshKeyCreateCmd)
 
-	sshkeyReadCmdInit()
-	parent.AddCommand(sshkeyReadCmd)
+	sshKeyReadCmdInit()
+	parent.AddCommand(sshKeyReadCmd)
 
-	sshkeyUpdateCmdInit()
-	parent.AddCommand(sshkeyUpdateCmd)
+	sshKeyUpdateCmdInit()
+	parent.AddCommand(sshKeyUpdateCmd)
 
-	sshkeyDeleteCmdInit()
-	parent.AddCommand(sshkeyDeleteCmd)
+	sshKeyDeleteCmdInit()
+	parent.AddCommand(sshKeyDeleteCmd)
 
-	sshkeyGenerateCmdInit()
-	parent.AddCommand(sshkeyGenerateCmd)
+	sshKeyGenerateCmdInit()
+	parent.AddCommand(sshKeyGenerateCmd)
 
 	rootCmd.AddCommand(parent)
 }

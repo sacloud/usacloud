@@ -46,7 +46,7 @@ func VPCRouterDhcpServerUpdate(ctx command.Context, params *params.DhcpServerUpd
 		cnf.RangeStop = params.RangeStop
 	}
 	if ctx.IsSet("dns_servers") {
-		cnf.DNSServers = params.DnsServers
+		cnf.DNSServers = params.DNSServers
 	}
 
 	_, err := api.UpdateSetting(params.Id, p)

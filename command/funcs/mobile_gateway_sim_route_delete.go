@@ -23,18 +23,18 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func MobileGatewaySimRouteDelete(ctx command.Context, params *params.SimRouteDeleteMobileGatewayParam) error {
+func MobileGatewaySIMRouteDelete(ctx command.Context, params *params.SIMRouteDeleteMobileGatewayParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetMobileGatewayAPI()
 	_, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("MobileGatewaySimRouteDelete is failed: %s", e)
+		return fmt.Errorf("MobileGatewaySIMRouteDelete is failed: %s", e)
 	}
 
 	routes, err := api.GetSIMRoutes(params.Id)
 	if err != nil {
-		return fmt.Errorf("MobileGatewaySimRouteDelete is failed: %s", err)
+		return fmt.Errorf("MobileGatewaySIMRouteDelete is failed: %s", err)
 	}
 
 	if len(routes) == 0 {
@@ -52,14 +52,14 @@ func MobileGatewaySimRouteDelete(ctx command.Context, params *params.SimRouteDel
 	}
 
 	if !simRoutes.DeleteSIMRouteAt(params.Index - 1) {
-		return errors.New("MobileGatewaySimRouteDelete is failed: DeleteSIMRouteAt is failed")
+		return errors.New("MobileGatewaySIMRouteDelete is failed: DeleteSIMRouteAt is failed")
 	}
 	if _, err := api.SetSIMRoutes(params.Id, simRoutes); err != nil {
-		return fmt.Errorf("MobileGatewaySimRouteDelete is failed: %s", err)
+		return fmt.Errorf("MobileGatewaySIMRouteDelete is failed: %s", err)
 	}
 	_, err = api.Config(params.Id)
 	if err != nil {
-		return fmt.Errorf("MobileGatewaySimRouteDelete is failed: %s", err)
+		return fmt.Errorf("MobileGatewaySIMRouteDelete is failed: %s", err)
 	}
 
 	return nil

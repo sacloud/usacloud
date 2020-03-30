@@ -32,15 +32,15 @@ import (
 )
 
 func init() {
-	gslbListParam := params.NewListGslbParam()
-	gslbServerInfoParam := params.NewServerInfoGslbParam()
-	gslbCreateParam := params.NewCreateGslbParam()
-	gslbServerAddParam := params.NewServerAddGslbParam()
-	gslbReadParam := params.NewReadGslbParam()
-	gslbServerUpdateParam := params.NewServerUpdateGslbParam()
-	gslbServerDeleteParam := params.NewServerDeleteGslbParam()
-	gslbUpdateParam := params.NewUpdateGslbParam()
-	gslbDeleteParam := params.NewDeleteGslbParam()
+	gslbListParam := params.NewListGSLBParam()
+	gslbServerInfoParam := params.NewServerInfoGSLBParam()
+	gslbCreateParam := params.NewCreateGSLBParam()
+	gslbServerAddParam := params.NewServerAddGSLBParam()
+	gslbReadParam := params.NewReadGSLBParam()
+	gslbServerUpdateParam := params.NewServerUpdateGSLBParam()
+	gslbServerDeleteParam := params.NewServerDeleteGSLBParam()
+	gslbUpdateParam := params.NewUpdateGSLBParam()
+	gslbDeleteParam := params.NewDeleteGSLBParam()
 
 	cliCommand := &cli.Command{
 		Name:  "gslb",
@@ -49,7 +49,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find", "selector"},
-				Usage:   "List Gslb",
+				Usage:   "List GSLB",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -147,7 +147,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListGslbParam()
+						p := params.NewListGSLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -247,14 +247,14 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), gslbListParam)
 
 					// Run command with params
-					return funcs.GslbList(ctx, gslbListParam)
+					return funcs.GSLBList(ctx, gslbListParam)
 
 				},
 			},
 			{
 				Name:      "server-info",
 				Aliases:   []string{"server-list"},
-				Usage:     "ServerInfo Gslb",
+				Usage:     "ServerInfo GSLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -335,7 +335,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerInfoGslbParam()
+						p := params.NewServerInfoGSLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -422,7 +422,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), gslbServerInfoParam)
 
-					apiClient := ctx.GetAPIClient().Gslb
+					apiClient := ctx.GetAPIClient().GSLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -492,7 +492,7 @@ func init() {
 						p := *gslbServerInfoParam // copy struct value
 						gslbServerInfoParam := &p
 						go func() {
-							err := funcs.GslbServerInfo(ctx, gslbServerInfoParam)
+							err := funcs.GSLBServerInfo(ctx, gslbServerInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -506,7 +506,7 @@ func init() {
 			},
 			{
 				Name:  "create",
-				Usage: "Create Gslb",
+				Usage: "Create GSLB",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "protocol",
@@ -636,7 +636,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCreateGslbParam()
+						p := params.NewCreateGSLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -767,13 +767,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.GslbCreate(ctx, gslbCreateParam)
+					return funcs.GSLBCreate(ctx, gslbCreateParam)
 
 				},
 			},
 			{
 				Name:      "server-add",
-				Usage:     "ServerAdd Gslb",
+				Usage:     "ServerAdd GSLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -871,7 +871,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerAddGslbParam()
+						p := params.NewServerAddGSLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -970,7 +970,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), gslbServerAddParam)
 
-					apiClient := ctx.GetAPIClient().Gslb
+					apiClient := ctx.GetAPIClient().GSLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1050,7 +1050,7 @@ func init() {
 						p := *gslbServerAddParam // copy struct value
 						gslbServerAddParam := &p
 						go func() {
-							err := funcs.GslbServerAdd(ctx, gslbServerAddParam)
+							err := funcs.GSLBServerAdd(ctx, gslbServerAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1064,7 +1064,7 @@ func init() {
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Gslb",
+				Usage:     "Read GSLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1145,7 +1145,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadGslbParam()
+						p := params.NewReadGSLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -1232,7 +1232,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), gslbReadParam)
 
-					apiClient := ctx.GetAPIClient().Gslb
+					apiClient := ctx.GetAPIClient().GSLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1302,7 +1302,7 @@ func init() {
 						p := *gslbReadParam // copy struct value
 						gslbReadParam := &p
 						go func() {
-							err := funcs.GslbRead(ctx, gslbReadParam)
+							err := funcs.GSLBRead(ctx, gslbReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1316,7 +1316,7 @@ func init() {
 			},
 			{
 				Name:      "server-update",
-				Usage:     "ServerUpdate Gslb",
+				Usage:     "ServerUpdate GSLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -1418,7 +1418,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerUpdateGslbParam()
+						p := params.NewServerUpdateGSLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -1520,7 +1520,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), gslbServerUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Gslb
+					apiClient := ctx.GetAPIClient().GSLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1600,7 +1600,7 @@ func init() {
 						p := *gslbServerUpdateParam // copy struct value
 						gslbServerUpdateParam := &p
 						go func() {
-							err := funcs.GslbServerUpdate(ctx, gslbServerUpdateParam)
+							err := funcs.GSLBServerUpdate(ctx, gslbServerUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1614,7 +1614,7 @@ func init() {
 			},
 			{
 				Name:      "server-delete",
-				Usage:     "ServerDelete Gslb",
+				Usage:     "ServerDelete GSLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
@@ -1704,7 +1704,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerDeleteGslbParam()
+						p := params.NewServerDeleteGSLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -1797,7 +1797,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), gslbServerDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Gslb
+					apiClient := ctx.GetAPIClient().GSLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -1877,7 +1877,7 @@ func init() {
 						p := *gslbServerDeleteParam // copy struct value
 						gslbServerDeleteParam := &p
 						go func() {
-							err := funcs.GslbServerDelete(ctx, gslbServerDeleteParam)
+							err := funcs.GSLBServerDelete(ctx, gslbServerDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1891,7 +1891,7 @@ func init() {
 			},
 			{
 				Name:      "update",
-				Usage:     "Update Gslb",
+				Usage:     "Update GSLB",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -2026,7 +2026,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUpdateGslbParam()
+						p := params.NewUpdateGSLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -2152,7 +2152,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), gslbUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Gslb
+					apiClient := ctx.GetAPIClient().GSLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -2228,7 +2228,7 @@ func init() {
 						p := *gslbUpdateParam // copy struct value
 						gslbUpdateParam := &p
 						go func() {
-							err := funcs.GslbUpdate(ctx, gslbUpdateParam)
+							err := funcs.GSLBUpdate(ctx, gslbUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2243,7 +2243,7 @@ func init() {
 			{
 				Name:      "delete",
 				Aliases:   []string{"rm"},
-				Usage:     "Delete Gslb",
+				Usage:     "Delete GSLB",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2329,7 +2329,7 @@ func init() {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeleteGslbParam()
+						p := params.NewDeleteGSLBParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
@@ -2419,7 +2419,7 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), gslbDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Gslb
+					apiClient := ctx.GetAPIClient().GSLB
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
@@ -2495,7 +2495,7 @@ func init() {
 						p := *gslbDeleteParam // copy struct value
 						gslbDeleteParam := &p
 						go func() {
-							err := funcs.GslbDelete(ctx, gslbDeleteParam)
+							err := funcs.GSLBDelete(ctx, gslbDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}

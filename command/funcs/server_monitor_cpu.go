@@ -26,7 +26,7 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ServerMonitorCpu(ctx command.Context, params *params.MonitorCpuServerParam) error {
+func ServerMonitorCPU(ctx command.Context, params *params.MonitorCPUServerParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetServerAPI()
@@ -45,13 +45,13 @@ func ServerMonitorCpu(ctx command.Context, params *params.MonitorCpuServerParam)
 
 	res, err := api.Monitor(params.Id, req)
 	if err != nil {
-		return fmt.Errorf("ServerMonitorCpu is failed: %s", err)
+		return fmt.Errorf("ServerMonitorCPU is failed: %s", err)
 	}
 
 	// collect values
 	cpuValues, err := res.FlattenCPUTimeValue()
 	if err != nil {
-		return fmt.Errorf("ServerMonitorCpu is failed: %s", err)
+		return fmt.Errorf("ServerMonitorCPU is failed: %s", err)
 	}
 
 	// sort
@@ -66,7 +66,7 @@ func ServerMonitorCpu(ctx command.Context, params *params.MonitorCpuServerParam)
 		"ID": params.Id,
 	})
 	if err != nil {
-		return fmt.Errorf("ServerMonitorCpu is failed: %s", err)
+		return fmt.Errorf("ServerMonitorCPU is failed: %s", err)
 	}
 	key = buf.String()
 

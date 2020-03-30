@@ -29,7 +29,7 @@ import (
 )
 
 func init() {
-	authstatusShowParam := params.NewShowAuthstatusParam()
+	authStatusShowParam := params.NewShowAuthStatusParam()
 
 	cliCommand := &cli.Command{
 		Name:  "auth-status",
@@ -98,7 +98,7 @@ func init() {
 		Subcommands: []*cli.Command{
 			{
 				Name:  "show",
-				Usage: "Show Authstatus (default)",
+				Usage: "Show AuthStatus (default)",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "param-template",
@@ -162,57 +162,57 @@ func init() {
 						return err
 					}
 
-					authstatusShowParam.ParamTemplate = c.String("param-template")
-					authstatusShowParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(authstatusShowParam)
+					authStatusShowParam.ParamTemplate = c.String("param-template")
+					authStatusShowParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(authStatusShowParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewShowAuthstatusParam()
+						p := params.NewShowAuthStatusParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(authstatusShowParam, p, mergo.WithOverride)
+						mergo.Merge(authStatusShowParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						authstatusShowParam.ParamTemplate = c.String("param-template")
+						authStatusShowParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						authstatusShowParam.Parameters = c.String("parameters")
+						authStatusShowParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						authstatusShowParam.ParamTemplateFile = c.String("param-template-file")
+						authStatusShowParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						authstatusShowParam.ParameterFile = c.String("parameter-file")
+						authStatusShowParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						authstatusShowParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						authStatusShowParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						authstatusShowParam.OutputType = c.String("output-type")
+						authStatusShowParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						authstatusShowParam.Column = c.StringSlice("column")
+						authStatusShowParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						authstatusShowParam.Quiet = c.Bool("quiet")
+						authStatusShowParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						authstatusShowParam.Format = c.String("format")
+						authStatusShowParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						authstatusShowParam.FormatFile = c.String("format-file")
+						authStatusShowParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						authstatusShowParam.Query = c.String("query")
+						authStatusShowParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						authstatusShowParam.QueryFile = c.String("query-file")
+						authStatusShowParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -220,7 +220,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = authstatusShowParam
+					var outputTypeHolder interface{} = authStatusShowParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -231,10 +231,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if authstatusShowParam.GenerateSkeleton {
-						authstatusShowParam.GenerateSkeleton = false
-						authstatusShowParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(authstatusShowParam, "", "\t")
+					if authStatusShowParam.GenerateSkeleton {
+						authStatusShowParam.GenerateSkeleton = false
+						authStatusShowParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(authStatusShowParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -243,15 +243,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := authstatusShowParam.Validate(); len(errors) > 0 {
+					if errors := authStatusShowParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), authstatusShowParam)
+					ctx := command.NewContext(c, c.Args().Slice(), authStatusShowParam)
 
 					// Run command with params
-					return funcs.AuthstatusShow(ctx, authstatusShowParam)
+					return funcs.AuthStatusShow(ctx, authStatusShowParam)
 
 				},
 			},

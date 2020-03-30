@@ -27,25 +27,25 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListVpcrouterParam is input parameters for the sacloud API
-type ListVpcrouterParam struct {
-	Max  int
-	Sort []string
+// ListVPCRouterParam is input parameters for the sacloud API
+type ListVPCRouterParam struct {
 	Name []string
 	Id   []sacloud.ID
 	From int
+	Max  int
+	Sort []string
 	Tags []string
 
 	input Input
 }
 
-// NewListVpcrouterParam return new ListVpcrouterParam
-func NewListVpcrouterParam() *ListVpcrouterParam {
-	return &ListVpcrouterParam{}
+// NewListVPCRouterParam return new ListVPCRouterParam
+func NewListVPCRouterParam() *ListVPCRouterParam {
+	return &ListVPCRouterParam{}
 }
 
-// Initialize init ListVpcrouterParam
-func (p *ListVpcrouterParam) Initialize(in Input) error {
+// Initialize init ListVPCRouterParam
+func (p *ListVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -54,17 +54,11 @@ func (p *ListVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ListVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *ListVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListVpcrouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
-	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
+func (p *ListVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -74,13 +68,19 @@ func (p *ListVpcrouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
+	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
 
 }
 
-func (p *ListVpcrouterParam) validate() error {
+func (p *ListVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -121,99 +121,99 @@ func (p *ListVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ListVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *ListVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *ListVpcrouterParam) CommandDef() *schema.Command {
+func (p *ListVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["list"]
 }
 
-func (p *ListVpcrouterParam) IncludeFields() []string {
+func (p *ListVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ListVpcrouterParam) ExcludeFields() []string {
+func (p *ListVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ListVpcrouterParam) TableType() output.TableType {
+func (p *ListVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ListVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *ListVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListVpcrouterParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListVpcrouterParam) GetMax() int {
-	return p.Max
-}
-func (p *ListVpcrouterParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListVpcrouterParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListVpcrouterParam) SetName(v []string) {
+func (p *ListVPCRouterParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListVpcrouterParam) GetName() []string {
+func (p *ListVPCRouterParam) GetName() []string {
 	return p.Name
 }
-func (p *ListVpcrouterParam) SetId(v []sacloud.ID) {
+func (p *ListVPCRouterParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListVpcrouterParam) GetId() []sacloud.ID {
+func (p *ListVPCRouterParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListVpcrouterParam) SetFrom(v int) {
+func (p *ListVPCRouterParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListVpcrouterParam) GetFrom() int {
+func (p *ListVPCRouterParam) GetFrom() int {
 	return p.From
 }
-func (p *ListVpcrouterParam) SetTags(v []string) {
+func (p *ListVPCRouterParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListVPCRouterParam) GetMax() int {
+	return p.Max
+}
+func (p *ListVPCRouterParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListVPCRouterParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListVPCRouterParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *ListVpcrouterParam) GetTags() []string {
+func (p *ListVPCRouterParam) GetTags() []string {
 	return p.Tags
 }
 
-// CreateVpcrouterParam is input parameters for the sacloud API
-type CreateVpcrouterParam struct {
-	Ipaddress1                string
-	Ipaddress2                string
+// CreateVPCRouterParam is input parameters for the sacloud API
+type CreateVPCRouterParam struct {
 	BootAfterCreate           bool
-	Name                      string
 	Description               string
 	Plan                      string
 	SwitchId                  sacloud.ID
 	Vip                       string
-	Tags                      []string
-	Vrid                      int
+	Ipaddress1                string
+	Ipaddress2                string
 	DisableInternetConnection bool
+	Tags                      []string
 	IconId                    sacloud.ID
+	Vrid                      int
+	Name                      string
 
 	input Input
 }
 
-// NewCreateVpcrouterParam return new CreateVpcrouterParam
-func NewCreateVpcrouterParam() *CreateVpcrouterParam {
-	return &CreateVpcrouterParam{
+// NewCreateVPCRouterParam return new CreateVPCRouterParam
+func NewCreateVPCRouterParam() *CreateVPCRouterParam {
+	return &CreateVPCRouterParam{
 		Plan: "standard", Vrid: 1}
 }
 
-// Initialize init CreateVpcrouterParam
-func (p *CreateVpcrouterParam) Initialize(in Input) error {
+// Initialize init CreateVPCRouterParam
+func (p *CreateVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -222,22 +222,13 @@ func (p *CreateVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *CreateVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *CreateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateVpcrouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Ipaddress1) {
-		p.Ipaddress1 = ""
-	}
-	if utils.IsEmpty(p.Ipaddress2) {
-		p.Ipaddress2 = ""
-	}
+func (p *CreateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.BootAfterCreate) {
 		p.BootAfterCreate = false
-	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
 	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
@@ -251,54 +242,32 @@ func (p *CreateVpcrouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Vip) {
 		p.Vip = ""
 	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
+	if utils.IsEmpty(p.Ipaddress1) {
+		p.Ipaddress1 = ""
 	}
-	if utils.IsEmpty(p.Vrid) {
-		p.Vrid = 0
+	if utils.IsEmpty(p.Ipaddress2) {
+		p.Ipaddress2 = ""
 	}
 	if utils.IsEmpty(p.DisableInternetConnection) {
 		p.DisableInternetConnection = false
 	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Vrid) {
+		p.Vrid = 0
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
 	}
 
 }
 
-func (p *CreateVpcrouterParam) validate() error {
+func (p *CreateVPCRouterParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["create"].Params["ipaddress1"].ValidateFunc
-		errs := validator("--ipaddress-1", p.Ipaddress1)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["create"].Params["ipaddress2"].ValidateFunc
-		errs := validator("--ipaddress-2", p.Ipaddress2)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["VPCRouter"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["VPCRouter"].Commands["create"].Params["description"].ValidateFunc
@@ -340,8 +309,32 @@ func (p *CreateVpcrouterParam) validate() error {
 	}
 
 	{
+		validator := define.Resources["VPCRouter"].Commands["create"].Params["ipaddress1"].ValidateFunc
+		errs := validator("--ipaddress-1", p.Ipaddress1)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["create"].Params["ipaddress2"].ValidateFunc
+		errs := validator("--ipaddress-2", p.Ipaddress2)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
 		validator := define.Resources["VPCRouter"].Commands["create"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -356,8 +349,15 @@ func (p *CreateVpcrouterParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["VPCRouter"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["VPCRouter"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -366,127 +366,127 @@ func (p *CreateVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *CreateVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *CreateVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *CreateVpcrouterParam) CommandDef() *schema.Command {
+func (p *CreateVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["create"]
 }
 
-func (p *CreateVpcrouterParam) IncludeFields() []string {
+func (p *CreateVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *CreateVpcrouterParam) ExcludeFields() []string {
+func (p *CreateVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *CreateVpcrouterParam) TableType() output.TableType {
+func (p *CreateVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *CreateVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *CreateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateVpcrouterParam) SetIpaddress1(v string) {
-	p.Ipaddress1 = v
-}
-
-func (p *CreateVpcrouterParam) GetIpaddress1() string {
-	return p.Ipaddress1
-}
-func (p *CreateVpcrouterParam) SetIpaddress2(v string) {
-	p.Ipaddress2 = v
-}
-
-func (p *CreateVpcrouterParam) GetIpaddress2() string {
-	return p.Ipaddress2
-}
-func (p *CreateVpcrouterParam) SetBootAfterCreate(v bool) {
+func (p *CreateVPCRouterParam) SetBootAfterCreate(v bool) {
 	p.BootAfterCreate = v
 }
 
-func (p *CreateVpcrouterParam) GetBootAfterCreate() bool {
+func (p *CreateVPCRouterParam) GetBootAfterCreate() bool {
 	return p.BootAfterCreate
 }
-func (p *CreateVpcrouterParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateVpcrouterParam) GetName() string {
-	return p.Name
-}
-func (p *CreateVpcrouterParam) SetDescription(v string) {
+func (p *CreateVPCRouterParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *CreateVpcrouterParam) GetDescription() string {
+func (p *CreateVPCRouterParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateVpcrouterParam) SetPlan(v string) {
+func (p *CreateVPCRouterParam) SetPlan(v string) {
 	p.Plan = v
 }
 
-func (p *CreateVpcrouterParam) GetPlan() string {
+func (p *CreateVPCRouterParam) GetPlan() string {
 	return p.Plan
 }
-func (p *CreateVpcrouterParam) SetSwitchId(v sacloud.ID) {
+func (p *CreateVPCRouterParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
 
-func (p *CreateVpcrouterParam) GetSwitchId() sacloud.ID {
+func (p *CreateVPCRouterParam) GetSwitchId() sacloud.ID {
 	return p.SwitchId
 }
-func (p *CreateVpcrouterParam) SetVip(v string) {
+func (p *CreateVPCRouterParam) SetVip(v string) {
 	p.Vip = v
 }
 
-func (p *CreateVpcrouterParam) GetVip() string {
+func (p *CreateVPCRouterParam) GetVip() string {
 	return p.Vip
 }
-func (p *CreateVpcrouterParam) SetTags(v []string) {
-	p.Tags = v
+func (p *CreateVPCRouterParam) SetIpaddress1(v string) {
+	p.Ipaddress1 = v
 }
 
-func (p *CreateVpcrouterParam) GetTags() []string {
-	return p.Tags
+func (p *CreateVPCRouterParam) GetIpaddress1() string {
+	return p.Ipaddress1
 }
-func (p *CreateVpcrouterParam) SetVrid(v int) {
-	p.Vrid = v
+func (p *CreateVPCRouterParam) SetIpaddress2(v string) {
+	p.Ipaddress2 = v
 }
 
-func (p *CreateVpcrouterParam) GetVrid() int {
-	return p.Vrid
+func (p *CreateVPCRouterParam) GetIpaddress2() string {
+	return p.Ipaddress2
 }
-func (p *CreateVpcrouterParam) SetDisableInternetConnection(v bool) {
+func (p *CreateVPCRouterParam) SetDisableInternetConnection(v bool) {
 	p.DisableInternetConnection = v
 }
 
-func (p *CreateVpcrouterParam) GetDisableInternetConnection() bool {
+func (p *CreateVPCRouterParam) GetDisableInternetConnection() bool {
 	return p.DisableInternetConnection
 }
-func (p *CreateVpcrouterParam) SetIconId(v sacloud.ID) {
+func (p *CreateVPCRouterParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CreateVPCRouterParam) GetTags() []string {
+	return p.Tags
+}
+func (p *CreateVPCRouterParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateVpcrouterParam) GetIconId() sacloud.ID {
+func (p *CreateVPCRouterParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
+func (p *CreateVPCRouterParam) SetVrid(v int) {
+	p.Vrid = v
+}
 
-// ReadVpcrouterParam is input parameters for the sacloud API
-type ReadVpcrouterParam struct {
+func (p *CreateVPCRouterParam) GetVrid() int {
+	return p.Vrid
+}
+func (p *CreateVPCRouterParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateVPCRouterParam) GetName() string {
+	return p.Name
+}
+
+// ReadVPCRouterParam is input parameters for the sacloud API
+type ReadVPCRouterParam struct {
 	input Input
 }
 
-// NewReadVpcrouterParam return new ReadVpcrouterParam
-func NewReadVpcrouterParam() *ReadVpcrouterParam {
-	return &ReadVpcrouterParam{}
+// NewReadVPCRouterParam return new ReadVPCRouterParam
+func NewReadVPCRouterParam() *ReadVPCRouterParam {
+	return &ReadVPCRouterParam{}
 }
 
-// Initialize init ReadVpcrouterParam
-func (p *ReadVpcrouterParam) Initialize(in Input) error {
+// Initialize init ReadVPCRouterParam
+func (p *ReadVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -495,46 +495,46 @@ func (p *ReadVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ReadVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *ReadVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadVpcrouterParam) fillValueToSkeleton() {
+func (p *ReadVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *ReadVpcrouterParam) validate() error {
+func (p *ReadVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ReadVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *ReadVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *ReadVpcrouterParam) CommandDef() *schema.Command {
+func (p *ReadVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["read"]
 }
 
-func (p *ReadVpcrouterParam) IncludeFields() []string {
+func (p *ReadVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ReadVpcrouterParam) ExcludeFields() []string {
+func (p *ReadVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ReadVpcrouterParam) TableType() output.TableType {
+func (p *ReadVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ReadVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *ReadVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// UpdateVpcrouterParam is input parameters for the sacloud API
-type UpdateVpcrouterParam struct {
+// UpdateVPCRouterParam is input parameters for the sacloud API
+type UpdateVPCRouterParam struct {
 	SyslogHost         string
 	InternetConnection bool
 	Name               string
@@ -545,13 +545,13 @@ type UpdateVpcrouterParam struct {
 	input Input
 }
 
-// NewUpdateVpcrouterParam return new UpdateVpcrouterParam
-func NewUpdateVpcrouterParam() *UpdateVpcrouterParam {
-	return &UpdateVpcrouterParam{}
+// NewUpdateVPCRouterParam return new UpdateVPCRouterParam
+func NewUpdateVPCRouterParam() *UpdateVPCRouterParam {
+	return &UpdateVPCRouterParam{}
 }
 
-// Initialize init UpdateVpcrouterParam
-func (p *UpdateVpcrouterParam) Initialize(in Input) error {
+// Initialize init UpdateVPCRouterParam
+func (p *UpdateVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -560,11 +560,11 @@ func (p *UpdateVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *UpdateVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *UpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateVpcrouterParam) fillValueToSkeleton() {
+func (p *UpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.SyslogHost) {
 		p.SyslogHost = ""
 	}
@@ -586,7 +586,7 @@ func (p *UpdateVpcrouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *UpdateVpcrouterParam) validate() error {
+func (p *UpdateVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -632,87 +632,87 @@ func (p *UpdateVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *UpdateVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *UpdateVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *UpdateVpcrouterParam) CommandDef() *schema.Command {
+func (p *UpdateVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["update"]
 }
 
-func (p *UpdateVpcrouterParam) IncludeFields() []string {
+func (p *UpdateVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *UpdateVpcrouterParam) ExcludeFields() []string {
+func (p *UpdateVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *UpdateVpcrouterParam) TableType() output.TableType {
+func (p *UpdateVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *UpdateVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *UpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateVpcrouterParam) SetSyslogHost(v string) {
+func (p *UpdateVPCRouterParam) SetSyslogHost(v string) {
 	p.SyslogHost = v
 }
 
-func (p *UpdateVpcrouterParam) GetSyslogHost() string {
+func (p *UpdateVPCRouterParam) GetSyslogHost() string {
 	return p.SyslogHost
 }
-func (p *UpdateVpcrouterParam) SetInternetConnection(v bool) {
+func (p *UpdateVPCRouterParam) SetInternetConnection(v bool) {
 	p.InternetConnection = v
 }
 
-func (p *UpdateVpcrouterParam) GetInternetConnection() bool {
+func (p *UpdateVPCRouterParam) GetInternetConnection() bool {
 	return p.InternetConnection
 }
-func (p *UpdateVpcrouterParam) SetName(v string) {
+func (p *UpdateVPCRouterParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *UpdateVpcrouterParam) GetName() string {
+func (p *UpdateVPCRouterParam) GetName() string {
 	return p.Name
 }
-func (p *UpdateVpcrouterParam) SetDescription(v string) {
+func (p *UpdateVPCRouterParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdateVpcrouterParam) GetDescription() string {
+func (p *UpdateVPCRouterParam) GetDescription() string {
 	return p.Description
 }
-func (p *UpdateVpcrouterParam) SetTags(v []string) {
+func (p *UpdateVPCRouterParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *UpdateVpcrouterParam) GetTags() []string {
+func (p *UpdateVPCRouterParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateVpcrouterParam) SetIconId(v sacloud.ID) {
+func (p *UpdateVPCRouterParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateVpcrouterParam) GetIconId() sacloud.ID {
+func (p *UpdateVPCRouterParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 
-// DeleteVpcrouterParam is input parameters for the sacloud API
-type DeleteVpcrouterParam struct {
+// DeleteVPCRouterParam is input parameters for the sacloud API
+type DeleteVPCRouterParam struct {
 	Force bool
 
 	input Input
 }
 
-// NewDeleteVpcrouterParam return new DeleteVpcrouterParam
-func NewDeleteVpcrouterParam() *DeleteVpcrouterParam {
-	return &DeleteVpcrouterParam{}
+// NewDeleteVPCRouterParam return new DeleteVPCRouterParam
+func NewDeleteVPCRouterParam() *DeleteVPCRouterParam {
+	return &DeleteVPCRouterParam{}
 }
 
-// Initialize init DeleteVpcrouterParam
-func (p *DeleteVpcrouterParam) Initialize(in Input) error {
+// Initialize init DeleteVPCRouterParam
+func (p *DeleteVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -721,67 +721,67 @@ func (p *DeleteVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DeleteVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *DeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteVpcrouterParam) fillValueToSkeleton() {
+func (p *DeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Force) {
 		p.Force = false
 	}
 
 }
 
-func (p *DeleteVpcrouterParam) validate() error {
+func (p *DeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DeleteVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *DeleteVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *DeleteVpcrouterParam) CommandDef() *schema.Command {
+func (p *DeleteVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["delete"]
 }
 
-func (p *DeleteVpcrouterParam) IncludeFields() []string {
+func (p *DeleteVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DeleteVpcrouterParam) ExcludeFields() []string {
+func (p *DeleteVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DeleteVpcrouterParam) TableType() output.TableType {
+func (p *DeleteVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DeleteVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *DeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *DeleteVpcrouterParam) SetForce(v bool) {
+func (p *DeleteVPCRouterParam) SetForce(v bool) {
 	p.Force = v
 }
 
-func (p *DeleteVpcrouterParam) GetForce() bool {
+func (p *DeleteVPCRouterParam) GetForce() bool {
 	return p.Force
 }
 
-// BootVpcrouterParam is input parameters for the sacloud API
-type BootVpcrouterParam struct {
+// BootVPCRouterParam is input parameters for the sacloud API
+type BootVPCRouterParam struct {
 	input Input
 }
 
-// NewBootVpcrouterParam return new BootVpcrouterParam
-func NewBootVpcrouterParam() *BootVpcrouterParam {
-	return &BootVpcrouterParam{}
+// NewBootVPCRouterParam return new BootVPCRouterParam
+func NewBootVPCRouterParam() *BootVPCRouterParam {
+	return &BootVPCRouterParam{}
 }
 
-// Initialize init BootVpcrouterParam
-func (p *BootVpcrouterParam) Initialize(in Input) error {
+// Initialize init BootVPCRouterParam
+func (p *BootVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -790,56 +790,56 @@ func (p *BootVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *BootVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *BootVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *BootVpcrouterParam) fillValueToSkeleton() {
+func (p *BootVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *BootVpcrouterParam) validate() error {
+func (p *BootVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *BootVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *BootVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *BootVpcrouterParam) CommandDef() *schema.Command {
+func (p *BootVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["boot"]
 }
 
-func (p *BootVpcrouterParam) IncludeFields() []string {
+func (p *BootVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *BootVpcrouterParam) ExcludeFields() []string {
+func (p *BootVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *BootVpcrouterParam) TableType() output.TableType {
+func (p *BootVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *BootVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *BootVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// ShutdownVpcrouterParam is input parameters for the sacloud API
-type ShutdownVpcrouterParam struct {
+// ShutdownVPCRouterParam is input parameters for the sacloud API
+type ShutdownVPCRouterParam struct {
 	input Input
 }
 
-// NewShutdownVpcrouterParam return new ShutdownVpcrouterParam
-func NewShutdownVpcrouterParam() *ShutdownVpcrouterParam {
-	return &ShutdownVpcrouterParam{}
+// NewShutdownVPCRouterParam return new ShutdownVPCRouterParam
+func NewShutdownVPCRouterParam() *ShutdownVPCRouterParam {
+	return &ShutdownVPCRouterParam{}
 }
 
-// Initialize init ShutdownVpcrouterParam
-func (p *ShutdownVpcrouterParam) Initialize(in Input) error {
+// Initialize init ShutdownVPCRouterParam
+func (p *ShutdownVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -848,56 +848,56 @@ func (p *ShutdownVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ShutdownVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *ShutdownVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ShutdownVpcrouterParam) fillValueToSkeleton() {
+func (p *ShutdownVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *ShutdownVpcrouterParam) validate() error {
+func (p *ShutdownVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ShutdownVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *ShutdownVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *ShutdownVpcrouterParam) CommandDef() *schema.Command {
+func (p *ShutdownVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["shutdown"]
 }
 
-func (p *ShutdownVpcrouterParam) IncludeFields() []string {
+func (p *ShutdownVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ShutdownVpcrouterParam) ExcludeFields() []string {
+func (p *ShutdownVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ShutdownVpcrouterParam) TableType() output.TableType {
+func (p *ShutdownVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ShutdownVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *ShutdownVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// ShutdownForceVpcrouterParam is input parameters for the sacloud API
-type ShutdownForceVpcrouterParam struct {
+// ShutdownForceVPCRouterParam is input parameters for the sacloud API
+type ShutdownForceVPCRouterParam struct {
 	input Input
 }
 
-// NewShutdownForceVpcrouterParam return new ShutdownForceVpcrouterParam
-func NewShutdownForceVpcrouterParam() *ShutdownForceVpcrouterParam {
-	return &ShutdownForceVpcrouterParam{}
+// NewShutdownForceVPCRouterParam return new ShutdownForceVPCRouterParam
+func NewShutdownForceVPCRouterParam() *ShutdownForceVPCRouterParam {
+	return &ShutdownForceVPCRouterParam{}
 }
 
-// Initialize init ShutdownForceVpcrouterParam
-func (p *ShutdownForceVpcrouterParam) Initialize(in Input) error {
+// Initialize init ShutdownForceVPCRouterParam
+func (p *ShutdownForceVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -906,56 +906,56 @@ func (p *ShutdownForceVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ShutdownForceVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *ShutdownForceVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ShutdownForceVpcrouterParam) fillValueToSkeleton() {
+func (p *ShutdownForceVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *ShutdownForceVpcrouterParam) validate() error {
+func (p *ShutdownForceVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ShutdownForceVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *ShutdownForceVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *ShutdownForceVpcrouterParam) CommandDef() *schema.Command {
+func (p *ShutdownForceVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["shutdown-force"]
 }
 
-func (p *ShutdownForceVpcrouterParam) IncludeFields() []string {
+func (p *ShutdownForceVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ShutdownForceVpcrouterParam) ExcludeFields() []string {
+func (p *ShutdownForceVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ShutdownForceVpcrouterParam) TableType() output.TableType {
+func (p *ShutdownForceVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ShutdownForceVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *ShutdownForceVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// ResetVpcrouterParam is input parameters for the sacloud API
-type ResetVpcrouterParam struct {
+// ResetVPCRouterParam is input parameters for the sacloud API
+type ResetVPCRouterParam struct {
 	input Input
 }
 
-// NewResetVpcrouterParam return new ResetVpcrouterParam
-func NewResetVpcrouterParam() *ResetVpcrouterParam {
-	return &ResetVpcrouterParam{}
+// NewResetVPCRouterParam return new ResetVPCRouterParam
+func NewResetVPCRouterParam() *ResetVPCRouterParam {
+	return &ResetVPCRouterParam{}
 }
 
-// Initialize init ResetVpcrouterParam
-func (p *ResetVpcrouterParam) Initialize(in Input) error {
+// Initialize init ResetVPCRouterParam
+func (p *ResetVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -964,56 +964,56 @@ func (p *ResetVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ResetVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *ResetVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ResetVpcrouterParam) fillValueToSkeleton() {
+func (p *ResetVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *ResetVpcrouterParam) validate() error {
+func (p *ResetVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ResetVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *ResetVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *ResetVpcrouterParam) CommandDef() *schema.Command {
+func (p *ResetVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["reset"]
 }
 
-func (p *ResetVpcrouterParam) IncludeFields() []string {
+func (p *ResetVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ResetVpcrouterParam) ExcludeFields() []string {
+func (p *ResetVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ResetVpcrouterParam) TableType() output.TableType {
+func (p *ResetVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ResetVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *ResetVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// WaitForBootVpcrouterParam is input parameters for the sacloud API
-type WaitForBootVpcrouterParam struct {
+// WaitForBootVPCRouterParam is input parameters for the sacloud API
+type WaitForBootVPCRouterParam struct {
 	input Input
 }
 
-// NewWaitForBootVpcrouterParam return new WaitForBootVpcrouterParam
-func NewWaitForBootVpcrouterParam() *WaitForBootVpcrouterParam {
-	return &WaitForBootVpcrouterParam{}
+// NewWaitForBootVPCRouterParam return new WaitForBootVPCRouterParam
+func NewWaitForBootVPCRouterParam() *WaitForBootVPCRouterParam {
+	return &WaitForBootVPCRouterParam{}
 }
 
-// Initialize init WaitForBootVpcrouterParam
-func (p *WaitForBootVpcrouterParam) Initialize(in Input) error {
+// Initialize init WaitForBootVPCRouterParam
+func (p *WaitForBootVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1022,56 +1022,56 @@ func (p *WaitForBootVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *WaitForBootVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *WaitForBootVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *WaitForBootVpcrouterParam) fillValueToSkeleton() {
+func (p *WaitForBootVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *WaitForBootVpcrouterParam) validate() error {
+func (p *WaitForBootVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *WaitForBootVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *WaitForBootVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *WaitForBootVpcrouterParam) CommandDef() *schema.Command {
+func (p *WaitForBootVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["wait-for-boot"]
 }
 
-func (p *WaitForBootVpcrouterParam) IncludeFields() []string {
+func (p *WaitForBootVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *WaitForBootVpcrouterParam) ExcludeFields() []string {
+func (p *WaitForBootVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *WaitForBootVpcrouterParam) TableType() output.TableType {
+func (p *WaitForBootVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *WaitForBootVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *WaitForBootVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// WaitForDownVpcrouterParam is input parameters for the sacloud API
-type WaitForDownVpcrouterParam struct {
+// WaitForDownVPCRouterParam is input parameters for the sacloud API
+type WaitForDownVPCRouterParam struct {
 	input Input
 }
 
-// NewWaitForDownVpcrouterParam return new WaitForDownVpcrouterParam
-func NewWaitForDownVpcrouterParam() *WaitForDownVpcrouterParam {
-	return &WaitForDownVpcrouterParam{}
+// NewWaitForDownVPCRouterParam return new WaitForDownVPCRouterParam
+func NewWaitForDownVPCRouterParam() *WaitForDownVPCRouterParam {
+	return &WaitForDownVPCRouterParam{}
 }
 
-// Initialize init WaitForDownVpcrouterParam
-func (p *WaitForDownVpcrouterParam) Initialize(in Input) error {
+// Initialize init WaitForDownVPCRouterParam
+func (p *WaitForDownVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1080,56 +1080,56 @@ func (p *WaitForDownVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *WaitForDownVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *WaitForDownVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *WaitForDownVpcrouterParam) fillValueToSkeleton() {
+func (p *WaitForDownVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *WaitForDownVpcrouterParam) validate() error {
+func (p *WaitForDownVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *WaitForDownVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *WaitForDownVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *WaitForDownVpcrouterParam) CommandDef() *schema.Command {
+func (p *WaitForDownVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["wait-for-down"]
 }
 
-func (p *WaitForDownVpcrouterParam) IncludeFields() []string {
+func (p *WaitForDownVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *WaitForDownVpcrouterParam) ExcludeFields() []string {
+func (p *WaitForDownVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *WaitForDownVpcrouterParam) TableType() output.TableType {
+func (p *WaitForDownVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *WaitForDownVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *WaitForDownVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// EnableInternetConnectionVpcrouterParam is input parameters for the sacloud API
-type EnableInternetConnectionVpcrouterParam struct {
+// EnableInternetConnectionVPCRouterParam is input parameters for the sacloud API
+type EnableInternetConnectionVPCRouterParam struct {
 	input Input
 }
 
-// NewEnableInternetConnectionVpcrouterParam return new EnableInternetConnectionVpcrouterParam
-func NewEnableInternetConnectionVpcrouterParam() *EnableInternetConnectionVpcrouterParam {
-	return &EnableInternetConnectionVpcrouterParam{}
+// NewEnableInternetConnectionVPCRouterParam return new EnableInternetConnectionVPCRouterParam
+func NewEnableInternetConnectionVPCRouterParam() *EnableInternetConnectionVPCRouterParam {
+	return &EnableInternetConnectionVPCRouterParam{}
 }
 
-// Initialize init EnableInternetConnectionVpcrouterParam
-func (p *EnableInternetConnectionVpcrouterParam) Initialize(in Input) error {
+// Initialize init EnableInternetConnectionVPCRouterParam
+func (p *EnableInternetConnectionVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1138,56 +1138,56 @@ func (p *EnableInternetConnectionVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *EnableInternetConnectionVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *EnableInternetConnectionVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *EnableInternetConnectionVpcrouterParam) fillValueToSkeleton() {
+func (p *EnableInternetConnectionVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *EnableInternetConnectionVpcrouterParam) validate() error {
+func (p *EnableInternetConnectionVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *EnableInternetConnectionVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *EnableInternetConnectionVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *EnableInternetConnectionVpcrouterParam) CommandDef() *schema.Command {
+func (p *EnableInternetConnectionVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["enable-internet-connection"]
 }
 
-func (p *EnableInternetConnectionVpcrouterParam) IncludeFields() []string {
+func (p *EnableInternetConnectionVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *EnableInternetConnectionVpcrouterParam) ExcludeFields() []string {
+func (p *EnableInternetConnectionVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *EnableInternetConnectionVpcrouterParam) TableType() output.TableType {
+func (p *EnableInternetConnectionVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *EnableInternetConnectionVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *EnableInternetConnectionVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// DisableInternetConnectionVpcrouterParam is input parameters for the sacloud API
-type DisableInternetConnectionVpcrouterParam struct {
+// DisableInternetConnectionVPCRouterParam is input parameters for the sacloud API
+type DisableInternetConnectionVPCRouterParam struct {
 	input Input
 }
 
-// NewDisableInternetConnectionVpcrouterParam return new DisableInternetConnectionVpcrouterParam
-func NewDisableInternetConnectionVpcrouterParam() *DisableInternetConnectionVpcrouterParam {
-	return &DisableInternetConnectionVpcrouterParam{}
+// NewDisableInternetConnectionVPCRouterParam return new DisableInternetConnectionVPCRouterParam
+func NewDisableInternetConnectionVPCRouterParam() *DisableInternetConnectionVPCRouterParam {
+	return &DisableInternetConnectionVPCRouterParam{}
 }
 
-// Initialize init DisableInternetConnectionVpcrouterParam
-func (p *DisableInternetConnectionVpcrouterParam) Initialize(in Input) error {
+// Initialize init DisableInternetConnectionVPCRouterParam
+func (p *DisableInternetConnectionVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1196,56 +1196,56 @@ func (p *DisableInternetConnectionVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DisableInternetConnectionVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *DisableInternetConnectionVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DisableInternetConnectionVpcrouterParam) fillValueToSkeleton() {
+func (p *DisableInternetConnectionVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *DisableInternetConnectionVpcrouterParam) validate() error {
+func (p *DisableInternetConnectionVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DisableInternetConnectionVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *DisableInternetConnectionVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *DisableInternetConnectionVpcrouterParam) CommandDef() *schema.Command {
+func (p *DisableInternetConnectionVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["disable-internet-connection"]
 }
 
-func (p *DisableInternetConnectionVpcrouterParam) IncludeFields() []string {
+func (p *DisableInternetConnectionVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DisableInternetConnectionVpcrouterParam) ExcludeFields() []string {
+func (p *DisableInternetConnectionVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DisableInternetConnectionVpcrouterParam) TableType() output.TableType {
+func (p *DisableInternetConnectionVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DisableInternetConnectionVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *DisableInternetConnectionVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// InterfaceInfoVpcrouterParam is input parameters for the sacloud API
-type InterfaceInfoVpcrouterParam struct {
+// InterfaceInfoVPCRouterParam is input parameters for the sacloud API
+type InterfaceInfoVPCRouterParam struct {
 	input Input
 }
 
-// NewInterfaceInfoVpcrouterParam return new InterfaceInfoVpcrouterParam
-func NewInterfaceInfoVpcrouterParam() *InterfaceInfoVpcrouterParam {
-	return &InterfaceInfoVpcrouterParam{}
+// NewInterfaceInfoVPCRouterParam return new InterfaceInfoVPCRouterParam
+func NewInterfaceInfoVPCRouterParam() *InterfaceInfoVPCRouterParam {
+	return &InterfaceInfoVPCRouterParam{}
 }
 
-// Initialize init InterfaceInfoVpcrouterParam
-func (p *InterfaceInfoVpcrouterParam) Initialize(in Input) error {
+// Initialize init InterfaceInfoVPCRouterParam
+func (p *InterfaceInfoVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1254,65 +1254,65 @@ func (p *InterfaceInfoVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *InterfaceInfoVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *InterfaceInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceInfoVpcrouterParam) fillValueToSkeleton() {
+func (p *InterfaceInfoVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *InterfaceInfoVpcrouterParam) validate() error {
+func (p *InterfaceInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *InterfaceInfoVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *InterfaceInfoVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *InterfaceInfoVpcrouterParam) CommandDef() *schema.Command {
+func (p *InterfaceInfoVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["interface-info"]
 }
 
-func (p *InterfaceInfoVpcrouterParam) IncludeFields() []string {
+func (p *InterfaceInfoVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *InterfaceInfoVpcrouterParam) ExcludeFields() []string {
+func (p *InterfaceInfoVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *InterfaceInfoVpcrouterParam) TableType() output.TableType {
+func (p *InterfaceInfoVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *InterfaceInfoVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *InterfaceInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// InterfaceConnectVpcrouterParam is input parameters for the sacloud API
-type InterfaceConnectVpcrouterParam struct {
-	Ipaddress2 string
-	NwMasklen  int
+// InterfaceConnectVPCRouterParam is input parameters for the sacloud API
+type InterfaceConnectVPCRouterParam struct {
 	WithReboot bool
 	Interface  string
 	SwitchId   sacloud.ID
 	Ipaddress  string
 	Ipaddress1 string
+	Ipaddress2 string
+	NwMasklen  int
 
 	input Input
 }
 
-// NewInterfaceConnectVpcrouterParam return new InterfaceConnectVpcrouterParam
-func NewInterfaceConnectVpcrouterParam() *InterfaceConnectVpcrouterParam {
-	return &InterfaceConnectVpcrouterParam{
+// NewInterfaceConnectVPCRouterParam return new InterfaceConnectVPCRouterParam
+func NewInterfaceConnectVPCRouterParam() *InterfaceConnectVPCRouterParam {
+	return &InterfaceConnectVPCRouterParam{
 		NwMasklen: 24}
 }
 
-// Initialize init InterfaceConnectVpcrouterParam
-func (p *InterfaceConnectVpcrouterParam) Initialize(in Input) error {
+// Initialize init InterfaceConnectVPCRouterParam
+func (p *InterfaceConnectVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1321,17 +1321,11 @@ func (p *InterfaceConnectVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *InterfaceConnectVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *InterfaceConnectVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceConnectVpcrouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Ipaddress2) {
-		p.Ipaddress2 = ""
-	}
-	if utils.IsEmpty(p.NwMasklen) {
-		p.NwMasklen = 0
-	}
+func (p *InterfaceConnectVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.WithReboot) {
 		p.WithReboot = false
 	}
@@ -1347,27 +1341,17 @@ func (p *InterfaceConnectVpcrouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
 	}
+	if utils.IsEmpty(p.Ipaddress2) {
+		p.Ipaddress2 = ""
+	}
+	if utils.IsEmpty(p.NwMasklen) {
+		p.NwMasklen = 0
+	}
 
 }
 
-func (p *InterfaceConnectVpcrouterParam) validate() error {
+func (p *InterfaceConnectVPCRouterParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["ipaddress2"].ValidateFunc
-		errs := validator("--ipaddress-2", p.Ipaddress2)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["nw-masklen"].ValidateFunc
-		errs := validator("--nw-masklen", p.NwMasklen)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -1422,105 +1406,121 @@ func (p *InterfaceConnectVpcrouterParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["ipaddress2"].ValidateFunc
+		errs := validator("--ipaddress-2", p.Ipaddress2)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["nw-masklen"].ValidateFunc
+		errs := validator("--nw-masklen", p.NwMasklen)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
-func (p *InterfaceConnectVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *InterfaceConnectVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *InterfaceConnectVpcrouterParam) CommandDef() *schema.Command {
+func (p *InterfaceConnectVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["interface-connect"]
 }
 
-func (p *InterfaceConnectVpcrouterParam) IncludeFields() []string {
+func (p *InterfaceConnectVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *InterfaceConnectVpcrouterParam) ExcludeFields() []string {
+func (p *InterfaceConnectVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *InterfaceConnectVpcrouterParam) TableType() output.TableType {
+func (p *InterfaceConnectVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *InterfaceConnectVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *InterfaceConnectVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *InterfaceConnectVpcrouterParam) SetIpaddress2(v string) {
-	p.Ipaddress2 = v
-}
-
-func (p *InterfaceConnectVpcrouterParam) GetIpaddress2() string {
-	return p.Ipaddress2
-}
-func (p *InterfaceConnectVpcrouterParam) SetNwMasklen(v int) {
-	p.NwMasklen = v
-}
-
-func (p *InterfaceConnectVpcrouterParam) GetNwMasklen() int {
-	return p.NwMasklen
-}
-func (p *InterfaceConnectVpcrouterParam) SetWithReboot(v bool) {
+func (p *InterfaceConnectVPCRouterParam) SetWithReboot(v bool) {
 	p.WithReboot = v
 }
 
-func (p *InterfaceConnectVpcrouterParam) GetWithReboot() bool {
+func (p *InterfaceConnectVPCRouterParam) GetWithReboot() bool {
 	return p.WithReboot
 }
-func (p *InterfaceConnectVpcrouterParam) SetInterface(v string) {
+func (p *InterfaceConnectVPCRouterParam) SetInterface(v string) {
 	p.Interface = v
 }
 
-func (p *InterfaceConnectVpcrouterParam) GetInterface() string {
+func (p *InterfaceConnectVPCRouterParam) GetInterface() string {
 	return p.Interface
 }
-func (p *InterfaceConnectVpcrouterParam) SetSwitchId(v sacloud.ID) {
+func (p *InterfaceConnectVPCRouterParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
 
-func (p *InterfaceConnectVpcrouterParam) GetSwitchId() sacloud.ID {
+func (p *InterfaceConnectVPCRouterParam) GetSwitchId() sacloud.ID {
 	return p.SwitchId
 }
-func (p *InterfaceConnectVpcrouterParam) SetIpaddress(v string) {
+func (p *InterfaceConnectVPCRouterParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
 
-func (p *InterfaceConnectVpcrouterParam) GetIpaddress() string {
+func (p *InterfaceConnectVPCRouterParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *InterfaceConnectVpcrouterParam) SetIpaddress1(v string) {
+func (p *InterfaceConnectVPCRouterParam) SetIpaddress1(v string) {
 	p.Ipaddress1 = v
 }
 
-func (p *InterfaceConnectVpcrouterParam) GetIpaddress1() string {
+func (p *InterfaceConnectVPCRouterParam) GetIpaddress1() string {
 	return p.Ipaddress1
 }
+func (p *InterfaceConnectVPCRouterParam) SetIpaddress2(v string) {
+	p.Ipaddress2 = v
+}
 
-// InterfaceUpdateVpcrouterParam is input parameters for the sacloud API
-type InterfaceUpdateVpcrouterParam struct {
-	Ipaddress2 string
-	Alias      []string
+func (p *InterfaceConnectVPCRouterParam) GetIpaddress2() string {
+	return p.Ipaddress2
+}
+func (p *InterfaceConnectVPCRouterParam) SetNwMasklen(v int) {
+	p.NwMasklen = v
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetNwMasklen() int {
+	return p.NwMasklen
+}
+
+// InterfaceUpdateVPCRouterParam is input parameters for the sacloud API
+type InterfaceUpdateVPCRouterParam struct {
 	NwMasklen  int
 	WithReboot bool
 	Interface  string
 	SwitchId   sacloud.ID
 	Ipaddress  string
 	Ipaddress1 string
+	Ipaddress2 string
+	Alias      []string
 
 	input Input
 }
 
-// NewInterfaceUpdateVpcrouterParam return new InterfaceUpdateVpcrouterParam
-func NewInterfaceUpdateVpcrouterParam() *InterfaceUpdateVpcrouterParam {
-	return &InterfaceUpdateVpcrouterParam{
+// NewInterfaceUpdateVPCRouterParam return new InterfaceUpdateVPCRouterParam
+func NewInterfaceUpdateVPCRouterParam() *InterfaceUpdateVPCRouterParam {
+	return &InterfaceUpdateVPCRouterParam{
 		NwMasklen: 24}
 }
 
-// Initialize init InterfaceUpdateVpcrouterParam
-func (p *InterfaceUpdateVpcrouterParam) Initialize(in Input) error {
+// Initialize init InterfaceUpdateVPCRouterParam
+func (p *InterfaceUpdateVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1529,17 +1529,11 @@ func (p *InterfaceUpdateVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *InterfaceUpdateVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *InterfaceUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceUpdateVpcrouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Ipaddress2) {
-		p.Ipaddress2 = ""
-	}
-	if utils.IsEmpty(p.Alias) {
-		p.Alias = []string{""}
-	}
+func (p *InterfaceUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.NwMasklen) {
 		p.NwMasklen = 0
 	}
@@ -1558,27 +1552,17 @@ func (p *InterfaceUpdateVpcrouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
 	}
+	if utils.IsEmpty(p.Ipaddress2) {
+		p.Ipaddress2 = ""
+	}
+	if utils.IsEmpty(p.Alias) {
+		p.Alias = []string{""}
+	}
 
 }
 
-func (p *InterfaceUpdateVpcrouterParam) validate() error {
+func (p *InterfaceUpdateVPCRouterParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["interface-update"].Params["ipaddress2"].ValidateFunc
-		errs := validator("--ipaddress-2", p.Ipaddress2)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["interface-update"].Params["alias"].ValidateFunc
-		errs := validator("--alias", p.Alias)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["VPCRouter"].Commands["interface-update"].Params["nw-masklen"].ValidateFunc
@@ -1627,105 +1611,121 @@ func (p *InterfaceUpdateVpcrouterParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["VPCRouter"].Commands["interface-update"].Params["ipaddress2"].ValidateFunc
+		errs := validator("--ipaddress-2", p.Ipaddress2)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["interface-update"].Params["alias"].ValidateFunc
+		errs := validator("--alias", p.Alias)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
-func (p *InterfaceUpdateVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *InterfaceUpdateVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *InterfaceUpdateVpcrouterParam) CommandDef() *schema.Command {
+func (p *InterfaceUpdateVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["interface-update"]
 }
 
-func (p *InterfaceUpdateVpcrouterParam) IncludeFields() []string {
+func (p *InterfaceUpdateVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *InterfaceUpdateVpcrouterParam) ExcludeFields() []string {
+func (p *InterfaceUpdateVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *InterfaceUpdateVpcrouterParam) TableType() output.TableType {
+func (p *InterfaceUpdateVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *InterfaceUpdateVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *InterfaceUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *InterfaceUpdateVpcrouterParam) SetIpaddress2(v string) {
-	p.Ipaddress2 = v
-}
-
-func (p *InterfaceUpdateVpcrouterParam) GetIpaddress2() string {
-	return p.Ipaddress2
-}
-func (p *InterfaceUpdateVpcrouterParam) SetAlias(v []string) {
-	p.Alias = v
-}
-
-func (p *InterfaceUpdateVpcrouterParam) GetAlias() []string {
-	return p.Alias
-}
-func (p *InterfaceUpdateVpcrouterParam) SetNwMasklen(v int) {
+func (p *InterfaceUpdateVPCRouterParam) SetNwMasklen(v int) {
 	p.NwMasklen = v
 }
 
-func (p *InterfaceUpdateVpcrouterParam) GetNwMasklen() int {
+func (p *InterfaceUpdateVPCRouterParam) GetNwMasklen() int {
 	return p.NwMasklen
 }
-func (p *InterfaceUpdateVpcrouterParam) SetWithReboot(v bool) {
+func (p *InterfaceUpdateVPCRouterParam) SetWithReboot(v bool) {
 	p.WithReboot = v
 }
 
-func (p *InterfaceUpdateVpcrouterParam) GetWithReboot() bool {
+func (p *InterfaceUpdateVPCRouterParam) GetWithReboot() bool {
 	return p.WithReboot
 }
-func (p *InterfaceUpdateVpcrouterParam) SetInterface(v string) {
+func (p *InterfaceUpdateVPCRouterParam) SetInterface(v string) {
 	p.Interface = v
 }
 
-func (p *InterfaceUpdateVpcrouterParam) GetInterface() string {
+func (p *InterfaceUpdateVPCRouterParam) GetInterface() string {
 	return p.Interface
 }
-func (p *InterfaceUpdateVpcrouterParam) SetSwitchId(v sacloud.ID) {
+func (p *InterfaceUpdateVPCRouterParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
 
-func (p *InterfaceUpdateVpcrouterParam) GetSwitchId() sacloud.ID {
+func (p *InterfaceUpdateVPCRouterParam) GetSwitchId() sacloud.ID {
 	return p.SwitchId
 }
-func (p *InterfaceUpdateVpcrouterParam) SetIpaddress(v string) {
+func (p *InterfaceUpdateVPCRouterParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
 
-func (p *InterfaceUpdateVpcrouterParam) GetIpaddress() string {
+func (p *InterfaceUpdateVPCRouterParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *InterfaceUpdateVpcrouterParam) SetIpaddress1(v string) {
+func (p *InterfaceUpdateVPCRouterParam) SetIpaddress1(v string) {
 	p.Ipaddress1 = v
 }
 
-func (p *InterfaceUpdateVpcrouterParam) GetIpaddress1() string {
+func (p *InterfaceUpdateVPCRouterParam) GetIpaddress1() string {
 	return p.Ipaddress1
 }
+func (p *InterfaceUpdateVPCRouterParam) SetIpaddress2(v string) {
+	p.Ipaddress2 = v
+}
 
-// InterfaceDisconnectVpcrouterParam is input parameters for the sacloud API
-type InterfaceDisconnectVpcrouterParam struct {
+func (p *InterfaceUpdateVPCRouterParam) GetIpaddress2() string {
+	return p.Ipaddress2
+}
+func (p *InterfaceUpdateVPCRouterParam) SetAlias(v []string) {
+	p.Alias = v
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetAlias() []string {
+	return p.Alias
+}
+
+// InterfaceDisconnectVPCRouterParam is input parameters for the sacloud API
+type InterfaceDisconnectVPCRouterParam struct {
 	Interface  string
 	WithReboot bool
 
 	input Input
 }
 
-// NewInterfaceDisconnectVpcrouterParam return new InterfaceDisconnectVpcrouterParam
-func NewInterfaceDisconnectVpcrouterParam() *InterfaceDisconnectVpcrouterParam {
-	return &InterfaceDisconnectVpcrouterParam{}
+// NewInterfaceDisconnectVPCRouterParam return new InterfaceDisconnectVPCRouterParam
+func NewInterfaceDisconnectVPCRouterParam() *InterfaceDisconnectVPCRouterParam {
+	return &InterfaceDisconnectVPCRouterParam{}
 }
 
-// Initialize init InterfaceDisconnectVpcrouterParam
-func (p *InterfaceDisconnectVpcrouterParam) Initialize(in Input) error {
+// Initialize init InterfaceDisconnectVPCRouterParam
+func (p *InterfaceDisconnectVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1734,11 +1734,11 @@ func (p *InterfaceDisconnectVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *InterfaceDisconnectVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *InterfaceDisconnectVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceDisconnectVpcrouterParam) fillValueToSkeleton() {
+func (p *InterfaceDisconnectVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = ""
 	}
@@ -1748,7 +1748,7 @@ func (p *InterfaceDisconnectVpcrouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *InterfaceDisconnectVpcrouterParam) validate() error {
+func (p *InterfaceDisconnectVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -1769,57 +1769,57 @@ func (p *InterfaceDisconnectVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *InterfaceDisconnectVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *InterfaceDisconnectVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *InterfaceDisconnectVpcrouterParam) CommandDef() *schema.Command {
+func (p *InterfaceDisconnectVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["interface-disconnect"]
 }
 
-func (p *InterfaceDisconnectVpcrouterParam) IncludeFields() []string {
+func (p *InterfaceDisconnectVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *InterfaceDisconnectVpcrouterParam) ExcludeFields() []string {
+func (p *InterfaceDisconnectVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *InterfaceDisconnectVpcrouterParam) TableType() output.TableType {
+func (p *InterfaceDisconnectVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *InterfaceDisconnectVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *InterfaceDisconnectVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *InterfaceDisconnectVpcrouterParam) SetInterface(v string) {
+func (p *InterfaceDisconnectVPCRouterParam) SetInterface(v string) {
 	p.Interface = v
 }
 
-func (p *InterfaceDisconnectVpcrouterParam) GetInterface() string {
+func (p *InterfaceDisconnectVPCRouterParam) GetInterface() string {
 	return p.Interface
 }
-func (p *InterfaceDisconnectVpcrouterParam) SetWithReboot(v bool) {
+func (p *InterfaceDisconnectVPCRouterParam) SetWithReboot(v bool) {
 	p.WithReboot = v
 }
 
-func (p *InterfaceDisconnectVpcrouterParam) GetWithReboot() bool {
+func (p *InterfaceDisconnectVPCRouterParam) GetWithReboot() bool {
 	return p.WithReboot
 }
 
-// StaticNatInfoVpcrouterParam is input parameters for the sacloud API
-type StaticNatInfoVpcrouterParam struct {
+// StaticNatInfoVPCRouterParam is input parameters for the sacloud API
+type StaticNatInfoVPCRouterParam struct {
 	input Input
 }
 
-// NewStaticNatInfoVpcrouterParam return new StaticNatInfoVpcrouterParam
-func NewStaticNatInfoVpcrouterParam() *StaticNatInfoVpcrouterParam {
-	return &StaticNatInfoVpcrouterParam{}
+// NewStaticNatInfoVPCRouterParam return new StaticNatInfoVPCRouterParam
+func NewStaticNatInfoVPCRouterParam() *StaticNatInfoVPCRouterParam {
+	return &StaticNatInfoVPCRouterParam{}
 }
 
-// Initialize init StaticNatInfoVpcrouterParam
-func (p *StaticNatInfoVpcrouterParam) Initialize(in Input) error {
+// Initialize init StaticNatInfoVPCRouterParam
+func (p *StaticNatInfoVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1828,46 +1828,46 @@ func (p *StaticNatInfoVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *StaticNatInfoVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *StaticNatInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticNatInfoVpcrouterParam) fillValueToSkeleton() {
+func (p *StaticNatInfoVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *StaticNatInfoVpcrouterParam) validate() error {
+func (p *StaticNatInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *StaticNatInfoVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *StaticNatInfoVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *StaticNatInfoVpcrouterParam) CommandDef() *schema.Command {
+func (p *StaticNatInfoVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["static-nat-info"]
 }
 
-func (p *StaticNatInfoVpcrouterParam) IncludeFields() []string {
+func (p *StaticNatInfoVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *StaticNatInfoVpcrouterParam) ExcludeFields() []string {
+func (p *StaticNatInfoVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *StaticNatInfoVpcrouterParam) TableType() output.TableType {
+func (p *StaticNatInfoVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *StaticNatInfoVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *StaticNatInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// StaticNatAddVpcrouterParam is input parameters for the sacloud API
-type StaticNatAddVpcrouterParam struct {
+// StaticNatAddVPCRouterParam is input parameters for the sacloud API
+type StaticNatAddVPCRouterParam struct {
 	Description string
 	Global      string
 	Private     string
@@ -1875,13 +1875,13 @@ type StaticNatAddVpcrouterParam struct {
 	input Input
 }
 
-// NewStaticNatAddVpcrouterParam return new StaticNatAddVpcrouterParam
-func NewStaticNatAddVpcrouterParam() *StaticNatAddVpcrouterParam {
-	return &StaticNatAddVpcrouterParam{}
+// NewStaticNatAddVPCRouterParam return new StaticNatAddVPCRouterParam
+func NewStaticNatAddVPCRouterParam() *StaticNatAddVPCRouterParam {
+	return &StaticNatAddVPCRouterParam{}
 }
 
-// Initialize init StaticNatAddVpcrouterParam
-func (p *StaticNatAddVpcrouterParam) Initialize(in Input) error {
+// Initialize init StaticNatAddVPCRouterParam
+func (p *StaticNatAddVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1890,11 +1890,11 @@ func (p *StaticNatAddVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *StaticNatAddVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *StaticNatAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticNatAddVpcrouterParam) fillValueToSkeleton() {
+func (p *StaticNatAddVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
@@ -1907,7 +1907,7 @@ func (p *StaticNatAddVpcrouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *StaticNatAddVpcrouterParam) validate() error {
+func (p *StaticNatAddVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -1951,54 +1951,54 @@ func (p *StaticNatAddVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *StaticNatAddVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *StaticNatAddVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *StaticNatAddVpcrouterParam) CommandDef() *schema.Command {
+func (p *StaticNatAddVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["static-nat-add"]
 }
 
-func (p *StaticNatAddVpcrouterParam) IncludeFields() []string {
+func (p *StaticNatAddVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *StaticNatAddVpcrouterParam) ExcludeFields() []string {
+func (p *StaticNatAddVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *StaticNatAddVpcrouterParam) TableType() output.TableType {
+func (p *StaticNatAddVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *StaticNatAddVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *StaticNatAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *StaticNatAddVpcrouterParam) SetDescription(v string) {
+func (p *StaticNatAddVPCRouterParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *StaticNatAddVpcrouterParam) GetDescription() string {
+func (p *StaticNatAddVPCRouterParam) GetDescription() string {
 	return p.Description
 }
-func (p *StaticNatAddVpcrouterParam) SetGlobal(v string) {
+func (p *StaticNatAddVPCRouterParam) SetGlobal(v string) {
 	p.Global = v
 }
 
-func (p *StaticNatAddVpcrouterParam) GetGlobal() string {
+func (p *StaticNatAddVPCRouterParam) GetGlobal() string {
 	return p.Global
 }
-func (p *StaticNatAddVpcrouterParam) SetPrivate(v string) {
+func (p *StaticNatAddVPCRouterParam) SetPrivate(v string) {
 	p.Private = v
 }
 
-func (p *StaticNatAddVpcrouterParam) GetPrivate() string {
+func (p *StaticNatAddVPCRouterParam) GetPrivate() string {
 	return p.Private
 }
 
-// StaticNatUpdateVpcrouterParam is input parameters for the sacloud API
-type StaticNatUpdateVpcrouterParam struct {
+// StaticNatUpdateVPCRouterParam is input parameters for the sacloud API
+type StaticNatUpdateVPCRouterParam struct {
 	Index       int
 	Global      string
 	Private     string
@@ -2007,13 +2007,13 @@ type StaticNatUpdateVpcrouterParam struct {
 	input Input
 }
 
-// NewStaticNatUpdateVpcrouterParam return new StaticNatUpdateVpcrouterParam
-func NewStaticNatUpdateVpcrouterParam() *StaticNatUpdateVpcrouterParam {
-	return &StaticNatUpdateVpcrouterParam{}
+// NewStaticNatUpdateVPCRouterParam return new StaticNatUpdateVPCRouterParam
+func NewStaticNatUpdateVPCRouterParam() *StaticNatUpdateVPCRouterParam {
+	return &StaticNatUpdateVPCRouterParam{}
 }
 
-// Initialize init StaticNatUpdateVpcrouterParam
-func (p *StaticNatUpdateVpcrouterParam) Initialize(in Input) error {
+// Initialize init StaticNatUpdateVPCRouterParam
+func (p *StaticNatUpdateVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2022,11 +2022,11 @@ func (p *StaticNatUpdateVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *StaticNatUpdateVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *StaticNatUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticNatUpdateVpcrouterParam) fillValueToSkeleton() {
+func (p *StaticNatUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -2042,7 +2042,7 @@ func (p *StaticNatUpdateVpcrouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *StaticNatUpdateVpcrouterParam) validate() error {
+func (p *StaticNatUpdateVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -2080,73 +2080,73 @@ func (p *StaticNatUpdateVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *StaticNatUpdateVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *StaticNatUpdateVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *StaticNatUpdateVpcrouterParam) CommandDef() *schema.Command {
+func (p *StaticNatUpdateVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["static-nat-update"]
 }
 
-func (p *StaticNatUpdateVpcrouterParam) IncludeFields() []string {
+func (p *StaticNatUpdateVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *StaticNatUpdateVpcrouterParam) ExcludeFields() []string {
+func (p *StaticNatUpdateVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *StaticNatUpdateVpcrouterParam) TableType() output.TableType {
+func (p *StaticNatUpdateVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *StaticNatUpdateVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *StaticNatUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *StaticNatUpdateVpcrouterParam) SetIndex(v int) {
+func (p *StaticNatUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *StaticNatUpdateVpcrouterParam) GetIndex() int {
+func (p *StaticNatUpdateVPCRouterParam) GetIndex() int {
 	return p.Index
 }
-func (p *StaticNatUpdateVpcrouterParam) SetGlobal(v string) {
+func (p *StaticNatUpdateVPCRouterParam) SetGlobal(v string) {
 	p.Global = v
 }
 
-func (p *StaticNatUpdateVpcrouterParam) GetGlobal() string {
+func (p *StaticNatUpdateVPCRouterParam) GetGlobal() string {
 	return p.Global
 }
-func (p *StaticNatUpdateVpcrouterParam) SetPrivate(v string) {
+func (p *StaticNatUpdateVPCRouterParam) SetPrivate(v string) {
 	p.Private = v
 }
 
-func (p *StaticNatUpdateVpcrouterParam) GetPrivate() string {
+func (p *StaticNatUpdateVPCRouterParam) GetPrivate() string {
 	return p.Private
 }
-func (p *StaticNatUpdateVpcrouterParam) SetDescription(v string) {
+func (p *StaticNatUpdateVPCRouterParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *StaticNatUpdateVpcrouterParam) GetDescription() string {
+func (p *StaticNatUpdateVPCRouterParam) GetDescription() string {
 	return p.Description
 }
 
-// StaticNatDeleteVpcrouterParam is input parameters for the sacloud API
-type StaticNatDeleteVpcrouterParam struct {
+// StaticNatDeleteVPCRouterParam is input parameters for the sacloud API
+type StaticNatDeleteVPCRouterParam struct {
 	Index int
 
 	input Input
 }
 
-// NewStaticNatDeleteVpcrouterParam return new StaticNatDeleteVpcrouterParam
-func NewStaticNatDeleteVpcrouterParam() *StaticNatDeleteVpcrouterParam {
-	return &StaticNatDeleteVpcrouterParam{}
+// NewStaticNatDeleteVPCRouterParam return new StaticNatDeleteVPCRouterParam
+func NewStaticNatDeleteVPCRouterParam() *StaticNatDeleteVPCRouterParam {
+	return &StaticNatDeleteVPCRouterParam{}
 }
 
-// Initialize init StaticNatDeleteVpcrouterParam
-func (p *StaticNatDeleteVpcrouterParam) Initialize(in Input) error {
+// Initialize init StaticNatDeleteVPCRouterParam
+func (p *StaticNatDeleteVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2155,18 +2155,18 @@ func (p *StaticNatDeleteVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *StaticNatDeleteVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *StaticNatDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticNatDeleteVpcrouterParam) fillValueToSkeleton() {
+func (p *StaticNatDeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
 
 }
 
-func (p *StaticNatDeleteVpcrouterParam) validate() error {
+func (p *StaticNatDeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -2180,50 +2180,50 @@ func (p *StaticNatDeleteVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *StaticNatDeleteVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *StaticNatDeleteVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *StaticNatDeleteVpcrouterParam) CommandDef() *schema.Command {
+func (p *StaticNatDeleteVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["static-nat-delete"]
 }
 
-func (p *StaticNatDeleteVpcrouterParam) IncludeFields() []string {
+func (p *StaticNatDeleteVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *StaticNatDeleteVpcrouterParam) ExcludeFields() []string {
+func (p *StaticNatDeleteVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *StaticNatDeleteVpcrouterParam) TableType() output.TableType {
+func (p *StaticNatDeleteVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *StaticNatDeleteVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *StaticNatDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *StaticNatDeleteVpcrouterParam) SetIndex(v int) {
+func (p *StaticNatDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *StaticNatDeleteVpcrouterParam) GetIndex() int {
+func (p *StaticNatDeleteVPCRouterParam) GetIndex() int {
 	return p.Index
 }
 
-// PortForwardingInfoVpcrouterParam is input parameters for the sacloud API
-type PortForwardingInfoVpcrouterParam struct {
+// PortForwardingInfoVPCRouterParam is input parameters for the sacloud API
+type PortForwardingInfoVPCRouterParam struct {
 	input Input
 }
 
-// NewPortForwardingInfoVpcrouterParam return new PortForwardingInfoVpcrouterParam
-func NewPortForwardingInfoVpcrouterParam() *PortForwardingInfoVpcrouterParam {
-	return &PortForwardingInfoVpcrouterParam{}
+// NewPortForwardingInfoVPCRouterParam return new PortForwardingInfoVPCRouterParam
+func NewPortForwardingInfoVPCRouterParam() *PortForwardingInfoVPCRouterParam {
+	return &PortForwardingInfoVPCRouterParam{}
 }
 
-// Initialize init PortForwardingInfoVpcrouterParam
-func (p *PortForwardingInfoVpcrouterParam) Initialize(in Input) error {
+// Initialize init PortForwardingInfoVPCRouterParam
+func (p *PortForwardingInfoVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2232,46 +2232,46 @@ func (p *PortForwardingInfoVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *PortForwardingInfoVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *PortForwardingInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PortForwardingInfoVpcrouterParam) fillValueToSkeleton() {
+func (p *PortForwardingInfoVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *PortForwardingInfoVpcrouterParam) validate() error {
+func (p *PortForwardingInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *PortForwardingInfoVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *PortForwardingInfoVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *PortForwardingInfoVpcrouterParam) CommandDef() *schema.Command {
+func (p *PortForwardingInfoVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["port-forwarding-info"]
 }
 
-func (p *PortForwardingInfoVpcrouterParam) IncludeFields() []string {
+func (p *PortForwardingInfoVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *PortForwardingInfoVpcrouterParam) ExcludeFields() []string {
+func (p *PortForwardingInfoVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *PortForwardingInfoVpcrouterParam) TableType() output.TableType {
+func (p *PortForwardingInfoVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *PortForwardingInfoVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *PortForwardingInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// PortForwardingAddVpcrouterParam is input parameters for the sacloud API
-type PortForwardingAddVpcrouterParam struct {
+// PortForwardingAddVPCRouterParam is input parameters for the sacloud API
+type PortForwardingAddVPCRouterParam struct {
 	Protocol         string
 	GlobalPort       int
 	PrivateIpaddress string
@@ -2281,13 +2281,13 @@ type PortForwardingAddVpcrouterParam struct {
 	input Input
 }
 
-// NewPortForwardingAddVpcrouterParam return new PortForwardingAddVpcrouterParam
-func NewPortForwardingAddVpcrouterParam() *PortForwardingAddVpcrouterParam {
-	return &PortForwardingAddVpcrouterParam{}
+// NewPortForwardingAddVPCRouterParam return new PortForwardingAddVPCRouterParam
+func NewPortForwardingAddVPCRouterParam() *PortForwardingAddVPCRouterParam {
+	return &PortForwardingAddVPCRouterParam{}
 }
 
-// Initialize init PortForwardingAddVpcrouterParam
-func (p *PortForwardingAddVpcrouterParam) Initialize(in Input) error {
+// Initialize init PortForwardingAddVPCRouterParam
+func (p *PortForwardingAddVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2296,11 +2296,11 @@ func (p *PortForwardingAddVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *PortForwardingAddVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *PortForwardingAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PortForwardingAddVpcrouterParam) fillValueToSkeleton() {
+func (p *PortForwardingAddVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
@@ -2319,7 +2319,7 @@ func (p *PortForwardingAddVpcrouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *PortForwardingAddVpcrouterParam) validate() error {
+func (p *PortForwardingAddVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -2393,85 +2393,85 @@ func (p *PortForwardingAddVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *PortForwardingAddVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *PortForwardingAddVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *PortForwardingAddVpcrouterParam) CommandDef() *schema.Command {
+func (p *PortForwardingAddVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["port-forwarding-add"]
 }
 
-func (p *PortForwardingAddVpcrouterParam) IncludeFields() []string {
+func (p *PortForwardingAddVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *PortForwardingAddVpcrouterParam) ExcludeFields() []string {
+func (p *PortForwardingAddVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *PortForwardingAddVpcrouterParam) TableType() output.TableType {
+func (p *PortForwardingAddVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *PortForwardingAddVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *PortForwardingAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *PortForwardingAddVpcrouterParam) SetProtocol(v string) {
+func (p *PortForwardingAddVPCRouterParam) SetProtocol(v string) {
 	p.Protocol = v
 }
 
-func (p *PortForwardingAddVpcrouterParam) GetProtocol() string {
+func (p *PortForwardingAddVPCRouterParam) GetProtocol() string {
 	return p.Protocol
 }
-func (p *PortForwardingAddVpcrouterParam) SetGlobalPort(v int) {
+func (p *PortForwardingAddVPCRouterParam) SetGlobalPort(v int) {
 	p.GlobalPort = v
 }
 
-func (p *PortForwardingAddVpcrouterParam) GetGlobalPort() int {
+func (p *PortForwardingAddVPCRouterParam) GetGlobalPort() int {
 	return p.GlobalPort
 }
-func (p *PortForwardingAddVpcrouterParam) SetPrivateIpaddress(v string) {
+func (p *PortForwardingAddVPCRouterParam) SetPrivateIpaddress(v string) {
 	p.PrivateIpaddress = v
 }
 
-func (p *PortForwardingAddVpcrouterParam) GetPrivateIpaddress() string {
+func (p *PortForwardingAddVPCRouterParam) GetPrivateIpaddress() string {
 	return p.PrivateIpaddress
 }
-func (p *PortForwardingAddVpcrouterParam) SetPrivatePort(v int) {
+func (p *PortForwardingAddVPCRouterParam) SetPrivatePort(v int) {
 	p.PrivatePort = v
 }
 
-func (p *PortForwardingAddVpcrouterParam) GetPrivatePort() int {
+func (p *PortForwardingAddVPCRouterParam) GetPrivatePort() int {
 	return p.PrivatePort
 }
-func (p *PortForwardingAddVpcrouterParam) SetDescription(v string) {
+func (p *PortForwardingAddVPCRouterParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *PortForwardingAddVpcrouterParam) GetDescription() string {
+func (p *PortForwardingAddVPCRouterParam) GetDescription() string {
 	return p.Description
 }
 
-// PortForwardingUpdateVpcrouterParam is input parameters for the sacloud API
-type PortForwardingUpdateVpcrouterParam struct {
+// PortForwardingUpdateVPCRouterParam is input parameters for the sacloud API
+type PortForwardingUpdateVPCRouterParam struct {
+	Index            int
 	Protocol         string
 	GlobalPort       int
 	PrivateIpaddress string
 	PrivatePort      int
 	Description      string
-	Index            int
 
 	input Input
 }
 
-// NewPortForwardingUpdateVpcrouterParam return new PortForwardingUpdateVpcrouterParam
-func NewPortForwardingUpdateVpcrouterParam() *PortForwardingUpdateVpcrouterParam {
-	return &PortForwardingUpdateVpcrouterParam{}
+// NewPortForwardingUpdateVPCRouterParam return new PortForwardingUpdateVPCRouterParam
+func NewPortForwardingUpdateVPCRouterParam() *PortForwardingUpdateVPCRouterParam {
+	return &PortForwardingUpdateVPCRouterParam{}
 }
 
-// Initialize init PortForwardingUpdateVpcrouterParam
-func (p *PortForwardingUpdateVpcrouterParam) Initialize(in Input) error {
+// Initialize init PortForwardingUpdateVPCRouterParam
+func (p *PortForwardingUpdateVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2480,11 +2480,14 @@ func (p *PortForwardingUpdateVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *PortForwardingUpdateVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *PortForwardingUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PortForwardingUpdateVpcrouterParam) fillValueToSkeleton() {
+func (p *PortForwardingUpdateVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Index) {
+		p.Index = 0
+	}
 	if utils.IsEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
@@ -2500,14 +2503,19 @@ func (p *PortForwardingUpdateVpcrouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Index) {
-		p.Index = 0
-	}
 
 }
 
-func (p *PortForwardingUpdateVpcrouterParam) validate() error {
+func (p *PortForwardingUpdateVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["VPCRouter"].Commands["port-forwarding-update"].Params["protocol"].ValidateFunc
@@ -2549,98 +2557,90 @@ func (p *PortForwardingUpdateVpcrouterParam) validate() error {
 		}
 	}
 
-	{
-		validator := validateRequired
-		errs := validator("--index", p.Index)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *PortForwardingUpdateVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *PortForwardingUpdateVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *PortForwardingUpdateVpcrouterParam) CommandDef() *schema.Command {
+func (p *PortForwardingUpdateVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["port-forwarding-update"]
 }
 
-func (p *PortForwardingUpdateVpcrouterParam) IncludeFields() []string {
+func (p *PortForwardingUpdateVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *PortForwardingUpdateVpcrouterParam) ExcludeFields() []string {
+func (p *PortForwardingUpdateVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *PortForwardingUpdateVpcrouterParam) TableType() output.TableType {
+func (p *PortForwardingUpdateVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *PortForwardingUpdateVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *PortForwardingUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *PortForwardingUpdateVpcrouterParam) SetProtocol(v string) {
-	p.Protocol = v
-}
-
-func (p *PortForwardingUpdateVpcrouterParam) GetProtocol() string {
-	return p.Protocol
-}
-func (p *PortForwardingUpdateVpcrouterParam) SetGlobalPort(v int) {
-	p.GlobalPort = v
-}
-
-func (p *PortForwardingUpdateVpcrouterParam) GetGlobalPort() int {
-	return p.GlobalPort
-}
-func (p *PortForwardingUpdateVpcrouterParam) SetPrivateIpaddress(v string) {
-	p.PrivateIpaddress = v
-}
-
-func (p *PortForwardingUpdateVpcrouterParam) GetPrivateIpaddress() string {
-	return p.PrivateIpaddress
-}
-func (p *PortForwardingUpdateVpcrouterParam) SetPrivatePort(v int) {
-	p.PrivatePort = v
-}
-
-func (p *PortForwardingUpdateVpcrouterParam) GetPrivatePort() int {
-	return p.PrivatePort
-}
-func (p *PortForwardingUpdateVpcrouterParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *PortForwardingUpdateVpcrouterParam) GetDescription() string {
-	return p.Description
-}
-func (p *PortForwardingUpdateVpcrouterParam) SetIndex(v int) {
+func (p *PortForwardingUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *PortForwardingUpdateVpcrouterParam) GetIndex() int {
+func (p *PortForwardingUpdateVPCRouterParam) GetIndex() int {
 	return p.Index
 }
+func (p *PortForwardingUpdateVPCRouterParam) SetProtocol(v string) {
+	p.Protocol = v
+}
 
-// PortForwardingDeleteVpcrouterParam is input parameters for the sacloud API
-type PortForwardingDeleteVpcrouterParam struct {
+func (p *PortForwardingUpdateVPCRouterParam) GetProtocol() string {
+	return p.Protocol
+}
+func (p *PortForwardingUpdateVPCRouterParam) SetGlobalPort(v int) {
+	p.GlobalPort = v
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetGlobalPort() int {
+	return p.GlobalPort
+}
+func (p *PortForwardingUpdateVPCRouterParam) SetPrivateIpaddress(v string) {
+	p.PrivateIpaddress = v
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetPrivateIpaddress() string {
+	return p.PrivateIpaddress
+}
+func (p *PortForwardingUpdateVPCRouterParam) SetPrivatePort(v int) {
+	p.PrivatePort = v
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetPrivatePort() int {
+	return p.PrivatePort
+}
+func (p *PortForwardingUpdateVPCRouterParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetDescription() string {
+	return p.Description
+}
+
+// PortForwardingDeleteVPCRouterParam is input parameters for the sacloud API
+type PortForwardingDeleteVPCRouterParam struct {
 	Index int
 
 	input Input
 }
 
-// NewPortForwardingDeleteVpcrouterParam return new PortForwardingDeleteVpcrouterParam
-func NewPortForwardingDeleteVpcrouterParam() *PortForwardingDeleteVpcrouterParam {
-	return &PortForwardingDeleteVpcrouterParam{}
+// NewPortForwardingDeleteVPCRouterParam return new PortForwardingDeleteVPCRouterParam
+func NewPortForwardingDeleteVPCRouterParam() *PortForwardingDeleteVPCRouterParam {
+	return &PortForwardingDeleteVPCRouterParam{}
 }
 
-// Initialize init PortForwardingDeleteVpcrouterParam
-func (p *PortForwardingDeleteVpcrouterParam) Initialize(in Input) error {
+// Initialize init PortForwardingDeleteVPCRouterParam
+func (p *PortForwardingDeleteVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2649,18 +2649,18 @@ func (p *PortForwardingDeleteVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *PortForwardingDeleteVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *PortForwardingDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PortForwardingDeleteVpcrouterParam) fillValueToSkeleton() {
+func (p *PortForwardingDeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
 
 }
 
-func (p *PortForwardingDeleteVpcrouterParam) validate() error {
+func (p *PortForwardingDeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -2674,54 +2674,54 @@ func (p *PortForwardingDeleteVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *PortForwardingDeleteVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *PortForwardingDeleteVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *PortForwardingDeleteVpcrouterParam) CommandDef() *schema.Command {
+func (p *PortForwardingDeleteVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["port-forwarding-delete"]
 }
 
-func (p *PortForwardingDeleteVpcrouterParam) IncludeFields() []string {
+func (p *PortForwardingDeleteVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *PortForwardingDeleteVpcrouterParam) ExcludeFields() []string {
+func (p *PortForwardingDeleteVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *PortForwardingDeleteVpcrouterParam) TableType() output.TableType {
+func (p *PortForwardingDeleteVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *PortForwardingDeleteVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *PortForwardingDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *PortForwardingDeleteVpcrouterParam) SetIndex(v int) {
+func (p *PortForwardingDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *PortForwardingDeleteVpcrouterParam) GetIndex() int {
+func (p *PortForwardingDeleteVPCRouterParam) GetIndex() int {
 	return p.Index
 }
 
-// FirewallInfoVpcrouterParam is input parameters for the sacloud API
-type FirewallInfoVpcrouterParam struct {
-	Direction string
+// FirewallInfoVPCRouterParam is input parameters for the sacloud API
+type FirewallInfoVPCRouterParam struct {
 	Interface int
+	Direction string
 
 	input Input
 }
 
-// NewFirewallInfoVpcrouterParam return new FirewallInfoVpcrouterParam
-func NewFirewallInfoVpcrouterParam() *FirewallInfoVpcrouterParam {
-	return &FirewallInfoVpcrouterParam{
+// NewFirewallInfoVPCRouterParam return new FirewallInfoVPCRouterParam
+func NewFirewallInfoVPCRouterParam() *FirewallInfoVPCRouterParam {
+	return &FirewallInfoVPCRouterParam{
 		Direction: "receive"}
 }
 
-// Initialize init FirewallInfoVpcrouterParam
-func (p *FirewallInfoVpcrouterParam) Initialize(in Input) error {
+// Initialize init FirewallInfoVPCRouterParam
+func (p *FirewallInfoVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2730,22 +2730,30 @@ func (p *FirewallInfoVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *FirewallInfoVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *FirewallInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *FirewallInfoVpcrouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Direction) {
-		p.Direction = ""
-	}
+func (p *FirewallInfoVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = 0
+	}
+	if utils.IsEmpty(p.Direction) {
+		p.Direction = ""
 	}
 
 }
 
-func (p *FirewallInfoVpcrouterParam) validate() error {
+func (p *FirewallInfoVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-info"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -2762,80 +2770,72 @@ func (p *FirewallInfoVpcrouterParam) validate() error {
 		}
 	}
 
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-info"].Params["interface"].ValidateFunc
-		errs := validator("--interface", p.Interface)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *FirewallInfoVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *FirewallInfoVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *FirewallInfoVpcrouterParam) CommandDef() *schema.Command {
+func (p *FirewallInfoVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["firewall-info"]
 }
 
-func (p *FirewallInfoVpcrouterParam) IncludeFields() []string {
+func (p *FirewallInfoVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *FirewallInfoVpcrouterParam) ExcludeFields() []string {
+func (p *FirewallInfoVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *FirewallInfoVpcrouterParam) TableType() output.TableType {
+func (p *FirewallInfoVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *FirewallInfoVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *FirewallInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *FirewallInfoVpcrouterParam) SetDirection(v string) {
-	p.Direction = v
-}
-
-func (p *FirewallInfoVpcrouterParam) GetDirection() string {
-	return p.Direction
-}
-func (p *FirewallInfoVpcrouterParam) SetInterface(v int) {
+func (p *FirewallInfoVPCRouterParam) SetInterface(v int) {
 	p.Interface = v
 }
 
-func (p *FirewallInfoVpcrouterParam) GetInterface() int {
+func (p *FirewallInfoVPCRouterParam) GetInterface() int {
 	return p.Interface
 }
+func (p *FirewallInfoVPCRouterParam) SetDirection(v string) {
+	p.Direction = v
+}
 
-// FirewallAddVpcrouterParam is input parameters for the sacloud API
-type FirewallAddVpcrouterParam struct {
-	Protocol           string
-	SourcePort         int
-	DestinationPort    int
+func (p *FirewallInfoVPCRouterParam) GetDirection() string {
+	return p.Direction
+}
+
+// FirewallAddVPCRouterParam is input parameters for the sacloud API
+type FirewallAddVPCRouterParam struct {
+	Direction          string
+	DestinationNetwork string
 	Action             string
+	EnableLogging      bool
 	Description        string
 	Interface          int
-	Direction          string
+	Protocol           string
 	SourceNetwork      string
-	DestinationNetwork string
-	EnableLogging      bool
+	SourcePort         int
+	DestinationPort    int
 
 	input Input
 }
 
-// NewFirewallAddVpcrouterParam return new FirewallAddVpcrouterParam
-func NewFirewallAddVpcrouterParam() *FirewallAddVpcrouterParam {
-	return &FirewallAddVpcrouterParam{
-		Action: "deny", Direction: "receive"}
+// NewFirewallAddVPCRouterParam return new FirewallAddVPCRouterParam
+func NewFirewallAddVPCRouterParam() *FirewallAddVPCRouterParam {
+	return &FirewallAddVPCRouterParam{
+		Direction: "receive", Action: "deny"}
 }
 
-// Initialize init FirewallAddVpcrouterParam
-func (p *FirewallAddVpcrouterParam) Initialize(in Input) error {
+// Initialize init FirewallAddVPCRouterParam
+func (p *FirewallAddVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2844,22 +2844,22 @@ func (p *FirewallAddVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *FirewallAddVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *FirewallAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *FirewallAddVpcrouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Protocol) {
-		p.Protocol = ""
+func (p *FirewallAddVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Direction) {
+		p.Direction = ""
 	}
-	if utils.IsEmpty(p.SourcePort) {
-		p.SourcePort = 0
-	}
-	if utils.IsEmpty(p.DestinationPort) {
-		p.DestinationPort = 0
+	if utils.IsEmpty(p.DestinationNetwork) {
+		p.DestinationNetwork = ""
 	}
 	if utils.IsEmpty(p.Action) {
 		p.Action = ""
+	}
+	if utils.IsEmpty(p.EnableLogging) {
+		p.EnableLogging = false
 	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
@@ -2867,50 +2867,42 @@ func (p *FirewallAddVpcrouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
-	if utils.IsEmpty(p.Direction) {
-		p.Direction = ""
+	if utils.IsEmpty(p.Protocol) {
+		p.Protocol = ""
 	}
 	if utils.IsEmpty(p.SourceNetwork) {
 		p.SourceNetwork = ""
 	}
-	if utils.IsEmpty(p.DestinationNetwork) {
-		p.DestinationNetwork = ""
+	if utils.IsEmpty(p.SourcePort) {
+		p.SourcePort = 0
 	}
-	if utils.IsEmpty(p.EnableLogging) {
-		p.EnableLogging = false
+	if utils.IsEmpty(p.DestinationPort) {
+		p.DestinationPort = 0
 	}
 
 }
 
-func (p *FirewallAddVpcrouterParam) validate() error {
+func (p *FirewallAddVPCRouterParam) validate() error {
 	var errors []error
 
 	{
 		validator := validateRequired
-		errs := validator("--protocol", p.Protocol)
+		errs := validator("--direction", p.Direction)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["source-port"].ValidateFunc
-		errs := validator("--source-port", p.SourcePort)
+		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["direction"].ValidateFunc
+		errs := validator("--direction", p.Direction)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
 	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["destination-port"].ValidateFunc
-		errs := validator("--destination-port", p.DestinationPort)
+		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["destination-network"].ValidateFunc
+		errs := validator("--destination-network", p.DestinationNetwork)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2949,14 +2941,14 @@ func (p *FirewallAddVpcrouterParam) validate() error {
 
 	{
 		validator := validateRequired
-		errs := validator("--direction", p.Direction)
+		errs := validator("--protocol", p.Protocol)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["direction"].ValidateFunc
-		errs := validator("--direction", p.Direction)
+		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2971,8 +2963,16 @@ func (p *FirewallAddVpcrouterParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["destination-network"].ValidateFunc
-		errs := validator("--destination-network", p.DestinationNetwork)
+		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["source-port"].ValidateFunc
+		errs := validator("--source-port", p.SourcePort)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["destination-port"].ValidateFunc
+		errs := validator("--destination-port", p.DestinationPort)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2981,126 +2981,126 @@ func (p *FirewallAddVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *FirewallAddVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *FirewallAddVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *FirewallAddVpcrouterParam) CommandDef() *schema.Command {
+func (p *FirewallAddVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["firewall-add"]
 }
 
-func (p *FirewallAddVpcrouterParam) IncludeFields() []string {
+func (p *FirewallAddVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *FirewallAddVpcrouterParam) ExcludeFields() []string {
+func (p *FirewallAddVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *FirewallAddVpcrouterParam) TableType() output.TableType {
+func (p *FirewallAddVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *FirewallAddVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *FirewallAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *FirewallAddVpcrouterParam) SetProtocol(v string) {
-	p.Protocol = v
-}
-
-func (p *FirewallAddVpcrouterParam) GetProtocol() string {
-	return p.Protocol
-}
-func (p *FirewallAddVpcrouterParam) SetSourcePort(v int) {
-	p.SourcePort = v
-}
-
-func (p *FirewallAddVpcrouterParam) GetSourcePort() int {
-	return p.SourcePort
-}
-func (p *FirewallAddVpcrouterParam) SetDestinationPort(v int) {
-	p.DestinationPort = v
-}
-
-func (p *FirewallAddVpcrouterParam) GetDestinationPort() int {
-	return p.DestinationPort
-}
-func (p *FirewallAddVpcrouterParam) SetAction(v string) {
-	p.Action = v
-}
-
-func (p *FirewallAddVpcrouterParam) GetAction() string {
-	return p.Action
-}
-func (p *FirewallAddVpcrouterParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *FirewallAddVpcrouterParam) GetDescription() string {
-	return p.Description
-}
-func (p *FirewallAddVpcrouterParam) SetInterface(v int) {
-	p.Interface = v
-}
-
-func (p *FirewallAddVpcrouterParam) GetInterface() int {
-	return p.Interface
-}
-func (p *FirewallAddVpcrouterParam) SetDirection(v string) {
+func (p *FirewallAddVPCRouterParam) SetDirection(v string) {
 	p.Direction = v
 }
 
-func (p *FirewallAddVpcrouterParam) GetDirection() string {
+func (p *FirewallAddVPCRouterParam) GetDirection() string {
 	return p.Direction
 }
-func (p *FirewallAddVpcrouterParam) SetSourceNetwork(v string) {
-	p.SourceNetwork = v
-}
-
-func (p *FirewallAddVpcrouterParam) GetSourceNetwork() string {
-	return p.SourceNetwork
-}
-func (p *FirewallAddVpcrouterParam) SetDestinationNetwork(v string) {
+func (p *FirewallAddVPCRouterParam) SetDestinationNetwork(v string) {
 	p.DestinationNetwork = v
 }
 
-func (p *FirewallAddVpcrouterParam) GetDestinationNetwork() string {
+func (p *FirewallAddVPCRouterParam) GetDestinationNetwork() string {
 	return p.DestinationNetwork
 }
-func (p *FirewallAddVpcrouterParam) SetEnableLogging(v bool) {
+func (p *FirewallAddVPCRouterParam) SetAction(v string) {
+	p.Action = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetAction() string {
+	return p.Action
+}
+func (p *FirewallAddVPCRouterParam) SetEnableLogging(v bool) {
 	p.EnableLogging = v
 }
 
-func (p *FirewallAddVpcrouterParam) GetEnableLogging() bool {
+func (p *FirewallAddVPCRouterParam) GetEnableLogging() bool {
 	return p.EnableLogging
 }
+func (p *FirewallAddVPCRouterParam) SetDescription(v string) {
+	p.Description = v
+}
 
-// FirewallUpdateVpcrouterParam is input parameters for the sacloud API
-type FirewallUpdateVpcrouterParam struct {
-	SourceNetwork      string
-	SourcePort         int
-	DestinationNetwork string
-	DestinationPort    int
-	EnableLogging      bool
-	Description        string
-	Interface          int
+func (p *FirewallAddVPCRouterParam) GetDescription() string {
+	return p.Description
+}
+func (p *FirewallAddVPCRouterParam) SetInterface(v int) {
+	p.Interface = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetInterface() int {
+	return p.Interface
+}
+func (p *FirewallAddVPCRouterParam) SetProtocol(v string) {
+	p.Protocol = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetProtocol() string {
+	return p.Protocol
+}
+func (p *FirewallAddVPCRouterParam) SetSourceNetwork(v string) {
+	p.SourceNetwork = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetSourceNetwork() string {
+	return p.SourceNetwork
+}
+func (p *FirewallAddVPCRouterParam) SetSourcePort(v int) {
+	p.SourcePort = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetSourcePort() int {
+	return p.SourcePort
+}
+func (p *FirewallAddVPCRouterParam) SetDestinationPort(v int) {
+	p.DestinationPort = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetDestinationPort() int {
+	return p.DestinationPort
+}
+
+// FirewallUpdateVPCRouterParam is input parameters for the sacloud API
+type FirewallUpdateVPCRouterParam struct {
 	Direction          string
 	Index              int
 	Protocol           string
+	SourceNetwork      string
+	DestinationNetwork string
+	Interface          int
+	SourcePort         int
+	DestinationPort    int
 	Action             string
+	EnableLogging      bool
+	Description        string
 
 	input Input
 }
 
-// NewFirewallUpdateVpcrouterParam return new FirewallUpdateVpcrouterParam
-func NewFirewallUpdateVpcrouterParam() *FirewallUpdateVpcrouterParam {
-	return &FirewallUpdateVpcrouterParam{
+// NewFirewallUpdateVPCRouterParam return new FirewallUpdateVPCRouterParam
+func NewFirewallUpdateVPCRouterParam() *FirewallUpdateVPCRouterParam {
+	return &FirewallUpdateVPCRouterParam{
 		Direction: "receive", Action: "deny"}
 }
 
-// Initialize init FirewallUpdateVpcrouterParam
-func (p *FirewallUpdateVpcrouterParam) Initialize(in Input) error {
+// Initialize init FirewallUpdateVPCRouterParam
+func (p *FirewallUpdateVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3109,32 +3109,11 @@ func (p *FirewallUpdateVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *FirewallUpdateVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *FirewallUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *FirewallUpdateVpcrouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.SourceNetwork) {
-		p.SourceNetwork = ""
-	}
-	if utils.IsEmpty(p.SourcePort) {
-		p.SourcePort = 0
-	}
-	if utils.IsEmpty(p.DestinationNetwork) {
-		p.DestinationNetwork = ""
-	}
-	if utils.IsEmpty(p.DestinationPort) {
-		p.DestinationPort = 0
-	}
-	if utils.IsEmpty(p.EnableLogging) {
-		p.EnableLogging = false
-	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
-	if utils.IsEmpty(p.Interface) {
-		p.Interface = 0
-	}
+func (p *FirewallUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Direction) {
 		p.Direction = ""
 	}
@@ -3144,62 +3123,35 @@ func (p *FirewallUpdateVpcrouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
+	if utils.IsEmpty(p.SourceNetwork) {
+		p.SourceNetwork = ""
+	}
+	if utils.IsEmpty(p.DestinationNetwork) {
+		p.DestinationNetwork = ""
+	}
+	if utils.IsEmpty(p.Interface) {
+		p.Interface = 0
+	}
+	if utils.IsEmpty(p.SourcePort) {
+		p.SourcePort = 0
+	}
+	if utils.IsEmpty(p.DestinationPort) {
+		p.DestinationPort = 0
+	}
 	if utils.IsEmpty(p.Action) {
 		p.Action = ""
+	}
+	if utils.IsEmpty(p.EnableLogging) {
+		p.EnableLogging = false
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
 	}
 
 }
 
-func (p *FirewallUpdateVpcrouterParam) validate() error {
+func (p *FirewallUpdateVPCRouterParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["source-network"].ValidateFunc
-		errs := validator("--source-network", p.SourceNetwork)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["source-port"].ValidateFunc
-		errs := validator("--source-port", p.SourcePort)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["destination-network"].ValidateFunc
-		errs := validator("--destination-network", p.DestinationNetwork)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["destination-port"].ValidateFunc
-		errs := validator("--destination-port", p.DestinationPort)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["interface"].ValidateFunc
-		errs := validator("--interface", p.Interface)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -3233,8 +3185,56 @@ func (p *FirewallUpdateVpcrouterParam) validate() error {
 	}
 
 	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["source-network"].ValidateFunc
+		errs := validator("--source-network", p.SourceNetwork)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["destination-network"].ValidateFunc
+		errs := validator("--destination-network", p.DestinationNetwork)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["source-port"].ValidateFunc
+		errs := validator("--source-port", p.SourcePort)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["destination-port"].ValidateFunc
+		errs := validator("--destination-port", p.DestinationPort)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
 		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["action"].ValidateFunc
 		errs := validator("--action", p.Action)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3243,110 +3243,110 @@ func (p *FirewallUpdateVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *FirewallUpdateVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *FirewallUpdateVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *FirewallUpdateVpcrouterParam) CommandDef() *schema.Command {
+func (p *FirewallUpdateVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["firewall-update"]
 }
 
-func (p *FirewallUpdateVpcrouterParam) IncludeFields() []string {
+func (p *FirewallUpdateVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *FirewallUpdateVpcrouterParam) ExcludeFields() []string {
+func (p *FirewallUpdateVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *FirewallUpdateVpcrouterParam) TableType() output.TableType {
+func (p *FirewallUpdateVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *FirewallUpdateVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *FirewallUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *FirewallUpdateVpcrouterParam) SetSourceNetwork(v string) {
-	p.SourceNetwork = v
-}
-
-func (p *FirewallUpdateVpcrouterParam) GetSourceNetwork() string {
-	return p.SourceNetwork
-}
-func (p *FirewallUpdateVpcrouterParam) SetSourcePort(v int) {
-	p.SourcePort = v
-}
-
-func (p *FirewallUpdateVpcrouterParam) GetSourcePort() int {
-	return p.SourcePort
-}
-func (p *FirewallUpdateVpcrouterParam) SetDestinationNetwork(v string) {
-	p.DestinationNetwork = v
-}
-
-func (p *FirewallUpdateVpcrouterParam) GetDestinationNetwork() string {
-	return p.DestinationNetwork
-}
-func (p *FirewallUpdateVpcrouterParam) SetDestinationPort(v int) {
-	p.DestinationPort = v
-}
-
-func (p *FirewallUpdateVpcrouterParam) GetDestinationPort() int {
-	return p.DestinationPort
-}
-func (p *FirewallUpdateVpcrouterParam) SetEnableLogging(v bool) {
-	p.EnableLogging = v
-}
-
-func (p *FirewallUpdateVpcrouterParam) GetEnableLogging() bool {
-	return p.EnableLogging
-}
-func (p *FirewallUpdateVpcrouterParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *FirewallUpdateVpcrouterParam) GetDescription() string {
-	return p.Description
-}
-func (p *FirewallUpdateVpcrouterParam) SetInterface(v int) {
-	p.Interface = v
-}
-
-func (p *FirewallUpdateVpcrouterParam) GetInterface() int {
-	return p.Interface
-}
-func (p *FirewallUpdateVpcrouterParam) SetDirection(v string) {
+func (p *FirewallUpdateVPCRouterParam) SetDirection(v string) {
 	p.Direction = v
 }
 
-func (p *FirewallUpdateVpcrouterParam) GetDirection() string {
+func (p *FirewallUpdateVPCRouterParam) GetDirection() string {
 	return p.Direction
 }
-func (p *FirewallUpdateVpcrouterParam) SetIndex(v int) {
+func (p *FirewallUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *FirewallUpdateVpcrouterParam) GetIndex() int {
+func (p *FirewallUpdateVPCRouterParam) GetIndex() int {
 	return p.Index
 }
-func (p *FirewallUpdateVpcrouterParam) SetProtocol(v string) {
+func (p *FirewallUpdateVPCRouterParam) SetProtocol(v string) {
 	p.Protocol = v
 }
 
-func (p *FirewallUpdateVpcrouterParam) GetProtocol() string {
+func (p *FirewallUpdateVPCRouterParam) GetProtocol() string {
 	return p.Protocol
 }
-func (p *FirewallUpdateVpcrouterParam) SetAction(v string) {
+func (p *FirewallUpdateVPCRouterParam) SetSourceNetwork(v string) {
+	p.SourceNetwork = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetSourceNetwork() string {
+	return p.SourceNetwork
+}
+func (p *FirewallUpdateVPCRouterParam) SetDestinationNetwork(v string) {
+	p.DestinationNetwork = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetDestinationNetwork() string {
+	return p.DestinationNetwork
+}
+func (p *FirewallUpdateVPCRouterParam) SetInterface(v int) {
+	p.Interface = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetInterface() int {
+	return p.Interface
+}
+func (p *FirewallUpdateVPCRouterParam) SetSourcePort(v int) {
+	p.SourcePort = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetSourcePort() int {
+	return p.SourcePort
+}
+func (p *FirewallUpdateVPCRouterParam) SetDestinationPort(v int) {
+	p.DestinationPort = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetDestinationPort() int {
+	return p.DestinationPort
+}
+func (p *FirewallUpdateVPCRouterParam) SetAction(v string) {
 	p.Action = v
 }
 
-func (p *FirewallUpdateVpcrouterParam) GetAction() string {
+func (p *FirewallUpdateVPCRouterParam) GetAction() string {
 	return p.Action
 }
+func (p *FirewallUpdateVPCRouterParam) SetEnableLogging(v bool) {
+	p.EnableLogging = v
+}
 
-// FirewallDeleteVpcrouterParam is input parameters for the sacloud API
-type FirewallDeleteVpcrouterParam struct {
+func (p *FirewallUpdateVPCRouterParam) GetEnableLogging() bool {
+	return p.EnableLogging
+}
+func (p *FirewallUpdateVPCRouterParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetDescription() string {
+	return p.Description
+}
+
+// FirewallDeleteVPCRouterParam is input parameters for the sacloud API
+type FirewallDeleteVPCRouterParam struct {
 	Interface int
 	Direction string
 	Index     int
@@ -3354,14 +3354,14 @@ type FirewallDeleteVpcrouterParam struct {
 	input Input
 }
 
-// NewFirewallDeleteVpcrouterParam return new FirewallDeleteVpcrouterParam
-func NewFirewallDeleteVpcrouterParam() *FirewallDeleteVpcrouterParam {
-	return &FirewallDeleteVpcrouterParam{
+// NewFirewallDeleteVPCRouterParam return new FirewallDeleteVPCRouterParam
+func NewFirewallDeleteVPCRouterParam() *FirewallDeleteVPCRouterParam {
+	return &FirewallDeleteVPCRouterParam{
 		Direction: "receive"}
 }
 
-// Initialize init FirewallDeleteVpcrouterParam
-func (p *FirewallDeleteVpcrouterParam) Initialize(in Input) error {
+// Initialize init FirewallDeleteVPCRouterParam
+func (p *FirewallDeleteVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3370,11 +3370,11 @@ func (p *FirewallDeleteVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *FirewallDeleteVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *FirewallDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *FirewallDeleteVpcrouterParam) fillValueToSkeleton() {
+func (p *FirewallDeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
@@ -3387,7 +3387,7 @@ func (p *FirewallDeleteVpcrouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *FirewallDeleteVpcrouterParam) validate() error {
+func (p *FirewallDeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -3424,64 +3424,64 @@ func (p *FirewallDeleteVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *FirewallDeleteVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *FirewallDeleteVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *FirewallDeleteVpcrouterParam) CommandDef() *schema.Command {
+func (p *FirewallDeleteVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["firewall-delete"]
 }
 
-func (p *FirewallDeleteVpcrouterParam) IncludeFields() []string {
+func (p *FirewallDeleteVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *FirewallDeleteVpcrouterParam) ExcludeFields() []string {
+func (p *FirewallDeleteVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *FirewallDeleteVpcrouterParam) TableType() output.TableType {
+func (p *FirewallDeleteVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *FirewallDeleteVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *FirewallDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *FirewallDeleteVpcrouterParam) SetInterface(v int) {
+func (p *FirewallDeleteVPCRouterParam) SetInterface(v int) {
 	p.Interface = v
 }
 
-func (p *FirewallDeleteVpcrouterParam) GetInterface() int {
+func (p *FirewallDeleteVPCRouterParam) GetInterface() int {
 	return p.Interface
 }
-func (p *FirewallDeleteVpcrouterParam) SetDirection(v string) {
+func (p *FirewallDeleteVPCRouterParam) SetDirection(v string) {
 	p.Direction = v
 }
 
-func (p *FirewallDeleteVpcrouterParam) GetDirection() string {
+func (p *FirewallDeleteVPCRouterParam) GetDirection() string {
 	return p.Direction
 }
-func (p *FirewallDeleteVpcrouterParam) SetIndex(v int) {
+func (p *FirewallDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *FirewallDeleteVpcrouterParam) GetIndex() int {
+func (p *FirewallDeleteVPCRouterParam) GetIndex() int {
 	return p.Index
 }
 
-// DhcpServerInfoVpcrouterParam is input parameters for the sacloud API
-type DhcpServerInfoVpcrouterParam struct {
+// DhcpServerInfoVPCRouterParam is input parameters for the sacloud API
+type DhcpServerInfoVPCRouterParam struct {
 	input Input
 }
 
-// NewDhcpServerInfoVpcrouterParam return new DhcpServerInfoVpcrouterParam
-func NewDhcpServerInfoVpcrouterParam() *DhcpServerInfoVpcrouterParam {
-	return &DhcpServerInfoVpcrouterParam{}
+// NewDhcpServerInfoVPCRouterParam return new DhcpServerInfoVPCRouterParam
+func NewDhcpServerInfoVPCRouterParam() *DhcpServerInfoVPCRouterParam {
+	return &DhcpServerInfoVPCRouterParam{}
 }
 
-// Initialize init DhcpServerInfoVpcrouterParam
-func (p *DhcpServerInfoVpcrouterParam) Initialize(in Input) error {
+// Initialize init DhcpServerInfoVPCRouterParam
+func (p *DhcpServerInfoVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3490,61 +3490,61 @@ func (p *DhcpServerInfoVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DhcpServerInfoVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *DhcpServerInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DhcpServerInfoVpcrouterParam) fillValueToSkeleton() {
+func (p *DhcpServerInfoVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *DhcpServerInfoVpcrouterParam) validate() error {
+func (p *DhcpServerInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DhcpServerInfoVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *DhcpServerInfoVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *DhcpServerInfoVpcrouterParam) CommandDef() *schema.Command {
+func (p *DhcpServerInfoVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["dhcp-server-info"]
 }
 
-func (p *DhcpServerInfoVpcrouterParam) IncludeFields() []string {
+func (p *DhcpServerInfoVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DhcpServerInfoVpcrouterParam) ExcludeFields() []string {
+func (p *DhcpServerInfoVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DhcpServerInfoVpcrouterParam) TableType() output.TableType {
+func (p *DhcpServerInfoVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DhcpServerInfoVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *DhcpServerInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// DhcpServerAddVpcrouterParam is input parameters for the sacloud API
-type DhcpServerAddVpcrouterParam struct {
+// DhcpServerAddVPCRouterParam is input parameters for the sacloud API
+type DhcpServerAddVPCRouterParam struct {
 	Interface  int
 	RangeStart string
 	RangeStop  string
-	DnsServers []string
+	DNSServers []string
 
 	input Input
 }
 
-// NewDhcpServerAddVpcrouterParam return new DhcpServerAddVpcrouterParam
-func NewDhcpServerAddVpcrouterParam() *DhcpServerAddVpcrouterParam {
-	return &DhcpServerAddVpcrouterParam{}
+// NewDhcpServerAddVPCRouterParam return new DhcpServerAddVPCRouterParam
+func NewDhcpServerAddVPCRouterParam() *DhcpServerAddVPCRouterParam {
+	return &DhcpServerAddVPCRouterParam{}
 }
 
-// Initialize init DhcpServerAddVpcrouterParam
-func (p *DhcpServerAddVpcrouterParam) Initialize(in Input) error {
+// Initialize init DhcpServerAddVPCRouterParam
+func (p *DhcpServerAddVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3553,11 +3553,11 @@ func (p *DhcpServerAddVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DhcpServerAddVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *DhcpServerAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DhcpServerAddVpcrouterParam) fillValueToSkeleton() {
+func (p *DhcpServerAddVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
@@ -3567,13 +3567,13 @@ func (p *DhcpServerAddVpcrouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.RangeStop) {
 		p.RangeStop = ""
 	}
-	if utils.IsEmpty(p.DnsServers) {
-		p.DnsServers = []string{""}
+	if utils.IsEmpty(p.DNSServers) {
+		p.DNSServers = []string{""}
 	}
 
 }
 
-func (p *DhcpServerAddVpcrouterParam) validate() error {
+func (p *DhcpServerAddVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -3623,7 +3623,7 @@ func (p *DhcpServerAddVpcrouterParam) validate() error {
 
 	{
 		validator := define.Resources["VPCRouter"].Commands["dhcp-server-add"].Params["dns-servers"].ValidateFunc
-		errs := validator("--dns-servers", p.DnsServers)
+		errs := validator("--dns-servers", p.DNSServers)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3632,76 +3632,76 @@ func (p *DhcpServerAddVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DhcpServerAddVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *DhcpServerAddVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *DhcpServerAddVpcrouterParam) CommandDef() *schema.Command {
+func (p *DhcpServerAddVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["dhcp-server-add"]
 }
 
-func (p *DhcpServerAddVpcrouterParam) IncludeFields() []string {
+func (p *DhcpServerAddVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DhcpServerAddVpcrouterParam) ExcludeFields() []string {
+func (p *DhcpServerAddVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DhcpServerAddVpcrouterParam) TableType() output.TableType {
+func (p *DhcpServerAddVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DhcpServerAddVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *DhcpServerAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *DhcpServerAddVpcrouterParam) SetInterface(v int) {
+func (p *DhcpServerAddVPCRouterParam) SetInterface(v int) {
 	p.Interface = v
 }
 
-func (p *DhcpServerAddVpcrouterParam) GetInterface() int {
+func (p *DhcpServerAddVPCRouterParam) GetInterface() int {
 	return p.Interface
 }
-func (p *DhcpServerAddVpcrouterParam) SetRangeStart(v string) {
+func (p *DhcpServerAddVPCRouterParam) SetRangeStart(v string) {
 	p.RangeStart = v
 }
 
-func (p *DhcpServerAddVpcrouterParam) GetRangeStart() string {
+func (p *DhcpServerAddVPCRouterParam) GetRangeStart() string {
 	return p.RangeStart
 }
-func (p *DhcpServerAddVpcrouterParam) SetRangeStop(v string) {
+func (p *DhcpServerAddVPCRouterParam) SetRangeStop(v string) {
 	p.RangeStop = v
 }
 
-func (p *DhcpServerAddVpcrouterParam) GetRangeStop() string {
+func (p *DhcpServerAddVPCRouterParam) GetRangeStop() string {
 	return p.RangeStop
 }
-func (p *DhcpServerAddVpcrouterParam) SetDnsServers(v []string) {
-	p.DnsServers = v
+func (p *DhcpServerAddVPCRouterParam) SetDNSServers(v []string) {
+	p.DNSServers = v
 }
 
-func (p *DhcpServerAddVpcrouterParam) GetDnsServers() []string {
-	return p.DnsServers
+func (p *DhcpServerAddVPCRouterParam) GetDNSServers() []string {
+	return p.DNSServers
 }
 
-// DhcpServerUpdateVpcrouterParam is input parameters for the sacloud API
-type DhcpServerUpdateVpcrouterParam struct {
-	Interface  int
+// DhcpServerUpdateVPCRouterParam is input parameters for the sacloud API
+type DhcpServerUpdateVPCRouterParam struct {
 	RangeStart string
 	RangeStop  string
-	DnsServers []string
+	DNSServers []string
+	Interface  int
 
 	input Input
 }
 
-// NewDhcpServerUpdateVpcrouterParam return new DhcpServerUpdateVpcrouterParam
-func NewDhcpServerUpdateVpcrouterParam() *DhcpServerUpdateVpcrouterParam {
-	return &DhcpServerUpdateVpcrouterParam{}
+// NewDhcpServerUpdateVPCRouterParam return new DhcpServerUpdateVPCRouterParam
+func NewDhcpServerUpdateVPCRouterParam() *DhcpServerUpdateVPCRouterParam {
+	return &DhcpServerUpdateVPCRouterParam{}
 }
 
-// Initialize init DhcpServerUpdateVpcrouterParam
-func (p *DhcpServerUpdateVpcrouterParam) Initialize(in Input) error {
+// Initialize init DhcpServerUpdateVPCRouterParam
+func (p *DhcpServerUpdateVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3710,43 +3710,28 @@ func (p *DhcpServerUpdateVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DhcpServerUpdateVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *DhcpServerUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DhcpServerUpdateVpcrouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Interface) {
-		p.Interface = 0
-	}
+func (p *DhcpServerUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.RangeStart) {
 		p.RangeStart = ""
 	}
 	if utils.IsEmpty(p.RangeStop) {
 		p.RangeStop = ""
 	}
-	if utils.IsEmpty(p.DnsServers) {
-		p.DnsServers = []string{""}
+	if utils.IsEmpty(p.DNSServers) {
+		p.DNSServers = []string{""}
+	}
+	if utils.IsEmpty(p.Interface) {
+		p.Interface = 0
 	}
 
 }
 
-func (p *DhcpServerUpdateVpcrouterParam) validate() error {
+func (p *DhcpServerUpdateVPCRouterParam) validate() error {
 	var errors []error
-
-	{
-		validator := validateRequired
-		errs := validator("--interface", p.Interface)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["interface"].ValidateFunc
-		errs := validator("--interface", p.Interface)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["range-start"].ValidateFunc
@@ -3766,7 +3751,22 @@ func (p *DhcpServerUpdateVpcrouterParam) validate() error {
 
 	{
 		validator := define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["dns-servers"].ValidateFunc
-		errs := validator("--dns-servers", p.DnsServers)
+		errs := validator("--dns-servers", p.DNSServers)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--interface", p.Interface)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3775,73 +3775,73 @@ func (p *DhcpServerUpdateVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DhcpServerUpdateVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *DhcpServerUpdateVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *DhcpServerUpdateVpcrouterParam) CommandDef() *schema.Command {
+func (p *DhcpServerUpdateVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["dhcp-server-update"]
 }
 
-func (p *DhcpServerUpdateVpcrouterParam) IncludeFields() []string {
+func (p *DhcpServerUpdateVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DhcpServerUpdateVpcrouterParam) ExcludeFields() []string {
+func (p *DhcpServerUpdateVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DhcpServerUpdateVpcrouterParam) TableType() output.TableType {
+func (p *DhcpServerUpdateVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DhcpServerUpdateVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *DhcpServerUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *DhcpServerUpdateVpcrouterParam) SetInterface(v int) {
-	p.Interface = v
-}
-
-func (p *DhcpServerUpdateVpcrouterParam) GetInterface() int {
-	return p.Interface
-}
-func (p *DhcpServerUpdateVpcrouterParam) SetRangeStart(v string) {
+func (p *DhcpServerUpdateVPCRouterParam) SetRangeStart(v string) {
 	p.RangeStart = v
 }
 
-func (p *DhcpServerUpdateVpcrouterParam) GetRangeStart() string {
+func (p *DhcpServerUpdateVPCRouterParam) GetRangeStart() string {
 	return p.RangeStart
 }
-func (p *DhcpServerUpdateVpcrouterParam) SetRangeStop(v string) {
+func (p *DhcpServerUpdateVPCRouterParam) SetRangeStop(v string) {
 	p.RangeStop = v
 }
 
-func (p *DhcpServerUpdateVpcrouterParam) GetRangeStop() string {
+func (p *DhcpServerUpdateVPCRouterParam) GetRangeStop() string {
 	return p.RangeStop
 }
-func (p *DhcpServerUpdateVpcrouterParam) SetDnsServers(v []string) {
-	p.DnsServers = v
+func (p *DhcpServerUpdateVPCRouterParam) SetDNSServers(v []string) {
+	p.DNSServers = v
 }
 
-func (p *DhcpServerUpdateVpcrouterParam) GetDnsServers() []string {
-	return p.DnsServers
+func (p *DhcpServerUpdateVPCRouterParam) GetDNSServers() []string {
+	return p.DNSServers
+}
+func (p *DhcpServerUpdateVPCRouterParam) SetInterface(v int) {
+	p.Interface = v
 }
 
-// DhcpServerDeleteVpcrouterParam is input parameters for the sacloud API
-type DhcpServerDeleteVpcrouterParam struct {
+func (p *DhcpServerUpdateVPCRouterParam) GetInterface() int {
+	return p.Interface
+}
+
+// DhcpServerDeleteVPCRouterParam is input parameters for the sacloud API
+type DhcpServerDeleteVPCRouterParam struct {
 	Interface int
 
 	input Input
 }
 
-// NewDhcpServerDeleteVpcrouterParam return new DhcpServerDeleteVpcrouterParam
-func NewDhcpServerDeleteVpcrouterParam() *DhcpServerDeleteVpcrouterParam {
-	return &DhcpServerDeleteVpcrouterParam{}
+// NewDhcpServerDeleteVPCRouterParam return new DhcpServerDeleteVPCRouterParam
+func NewDhcpServerDeleteVPCRouterParam() *DhcpServerDeleteVPCRouterParam {
+	return &DhcpServerDeleteVPCRouterParam{}
 }
 
-// Initialize init DhcpServerDeleteVpcrouterParam
-func (p *DhcpServerDeleteVpcrouterParam) Initialize(in Input) error {
+// Initialize init DhcpServerDeleteVPCRouterParam
+func (p *DhcpServerDeleteVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3850,18 +3850,18 @@ func (p *DhcpServerDeleteVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DhcpServerDeleteVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *DhcpServerDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DhcpServerDeleteVpcrouterParam) fillValueToSkeleton() {
+func (p *DhcpServerDeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
 
 }
 
-func (p *DhcpServerDeleteVpcrouterParam) validate() error {
+func (p *DhcpServerDeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -3882,50 +3882,50 @@ func (p *DhcpServerDeleteVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DhcpServerDeleteVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *DhcpServerDeleteVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *DhcpServerDeleteVpcrouterParam) CommandDef() *schema.Command {
+func (p *DhcpServerDeleteVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["dhcp-server-delete"]
 }
 
-func (p *DhcpServerDeleteVpcrouterParam) IncludeFields() []string {
+func (p *DhcpServerDeleteVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DhcpServerDeleteVpcrouterParam) ExcludeFields() []string {
+func (p *DhcpServerDeleteVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DhcpServerDeleteVpcrouterParam) TableType() output.TableType {
+func (p *DhcpServerDeleteVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DhcpServerDeleteVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *DhcpServerDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *DhcpServerDeleteVpcrouterParam) SetInterface(v int) {
+func (p *DhcpServerDeleteVPCRouterParam) SetInterface(v int) {
 	p.Interface = v
 }
 
-func (p *DhcpServerDeleteVpcrouterParam) GetInterface() int {
+func (p *DhcpServerDeleteVPCRouterParam) GetInterface() int {
 	return p.Interface
 }
 
-// DhcpStaticMappingInfoVpcrouterParam is input parameters for the sacloud API
-type DhcpStaticMappingInfoVpcrouterParam struct {
+// DhcpStaticMappingInfoVPCRouterParam is input parameters for the sacloud API
+type DhcpStaticMappingInfoVPCRouterParam struct {
 	input Input
 }
 
-// NewDhcpStaticMappingInfoVpcrouterParam return new DhcpStaticMappingInfoVpcrouterParam
-func NewDhcpStaticMappingInfoVpcrouterParam() *DhcpStaticMappingInfoVpcrouterParam {
-	return &DhcpStaticMappingInfoVpcrouterParam{}
+// NewDhcpStaticMappingInfoVPCRouterParam return new DhcpStaticMappingInfoVPCRouterParam
+func NewDhcpStaticMappingInfoVPCRouterParam() *DhcpStaticMappingInfoVPCRouterParam {
+	return &DhcpStaticMappingInfoVPCRouterParam{}
 }
 
-// Initialize init DhcpStaticMappingInfoVpcrouterParam
-func (p *DhcpStaticMappingInfoVpcrouterParam) Initialize(in Input) error {
+// Initialize init DhcpStaticMappingInfoVPCRouterParam
+func (p *DhcpStaticMappingInfoVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3934,59 +3934,59 @@ func (p *DhcpStaticMappingInfoVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DhcpStaticMappingInfoVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *DhcpStaticMappingInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DhcpStaticMappingInfoVpcrouterParam) fillValueToSkeleton() {
+func (p *DhcpStaticMappingInfoVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *DhcpStaticMappingInfoVpcrouterParam) validate() error {
+func (p *DhcpStaticMappingInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DhcpStaticMappingInfoVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *DhcpStaticMappingInfoVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *DhcpStaticMappingInfoVpcrouterParam) CommandDef() *schema.Command {
+func (p *DhcpStaticMappingInfoVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["dhcp-static-mapping-info"]
 }
 
-func (p *DhcpStaticMappingInfoVpcrouterParam) IncludeFields() []string {
+func (p *DhcpStaticMappingInfoVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DhcpStaticMappingInfoVpcrouterParam) ExcludeFields() []string {
+func (p *DhcpStaticMappingInfoVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DhcpStaticMappingInfoVpcrouterParam) TableType() output.TableType {
+func (p *DhcpStaticMappingInfoVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DhcpStaticMappingInfoVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *DhcpStaticMappingInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// DhcpStaticMappingAddVpcrouterParam is input parameters for the sacloud API
-type DhcpStaticMappingAddVpcrouterParam struct {
+// DhcpStaticMappingAddVPCRouterParam is input parameters for the sacloud API
+type DhcpStaticMappingAddVPCRouterParam struct {
 	Macaddress string
 	Ipaddress  string
 
 	input Input
 }
 
-// NewDhcpStaticMappingAddVpcrouterParam return new DhcpStaticMappingAddVpcrouterParam
-func NewDhcpStaticMappingAddVpcrouterParam() *DhcpStaticMappingAddVpcrouterParam {
-	return &DhcpStaticMappingAddVpcrouterParam{}
+// NewDhcpStaticMappingAddVPCRouterParam return new DhcpStaticMappingAddVPCRouterParam
+func NewDhcpStaticMappingAddVPCRouterParam() *DhcpStaticMappingAddVPCRouterParam {
+	return &DhcpStaticMappingAddVPCRouterParam{}
 }
 
-// Initialize init DhcpStaticMappingAddVpcrouterParam
-func (p *DhcpStaticMappingAddVpcrouterParam) Initialize(in Input) error {
+// Initialize init DhcpStaticMappingAddVPCRouterParam
+func (p *DhcpStaticMappingAddVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3995,11 +3995,11 @@ func (p *DhcpStaticMappingAddVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DhcpStaticMappingAddVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *DhcpStaticMappingAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DhcpStaticMappingAddVpcrouterParam) fillValueToSkeleton() {
+func (p *DhcpStaticMappingAddVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Macaddress) {
 		p.Macaddress = ""
 	}
@@ -4009,7 +4009,7 @@ func (p *DhcpStaticMappingAddVpcrouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *DhcpStaticMappingAddVpcrouterParam) validate() error {
+func (p *DhcpStaticMappingAddVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -4045,47 +4045,47 @@ func (p *DhcpStaticMappingAddVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DhcpStaticMappingAddVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *DhcpStaticMappingAddVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *DhcpStaticMappingAddVpcrouterParam) CommandDef() *schema.Command {
+func (p *DhcpStaticMappingAddVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["dhcp-static-mapping-add"]
 }
 
-func (p *DhcpStaticMappingAddVpcrouterParam) IncludeFields() []string {
+func (p *DhcpStaticMappingAddVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DhcpStaticMappingAddVpcrouterParam) ExcludeFields() []string {
+func (p *DhcpStaticMappingAddVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DhcpStaticMappingAddVpcrouterParam) TableType() output.TableType {
+func (p *DhcpStaticMappingAddVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DhcpStaticMappingAddVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *DhcpStaticMappingAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *DhcpStaticMappingAddVpcrouterParam) SetMacaddress(v string) {
+func (p *DhcpStaticMappingAddVPCRouterParam) SetMacaddress(v string) {
 	p.Macaddress = v
 }
 
-func (p *DhcpStaticMappingAddVpcrouterParam) GetMacaddress() string {
+func (p *DhcpStaticMappingAddVPCRouterParam) GetMacaddress() string {
 	return p.Macaddress
 }
-func (p *DhcpStaticMappingAddVpcrouterParam) SetIpaddress(v string) {
+func (p *DhcpStaticMappingAddVPCRouterParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
 
-func (p *DhcpStaticMappingAddVpcrouterParam) GetIpaddress() string {
+func (p *DhcpStaticMappingAddVPCRouterParam) GetIpaddress() string {
 	return p.Ipaddress
 }
 
-// DhcpStaticMappingUpdateVpcrouterParam is input parameters for the sacloud API
-type DhcpStaticMappingUpdateVpcrouterParam struct {
+// DhcpStaticMappingUpdateVPCRouterParam is input parameters for the sacloud API
+type DhcpStaticMappingUpdateVPCRouterParam struct {
 	Index      int
 	Macaddress string
 	Ipaddress  string
@@ -4093,13 +4093,13 @@ type DhcpStaticMappingUpdateVpcrouterParam struct {
 	input Input
 }
 
-// NewDhcpStaticMappingUpdateVpcrouterParam return new DhcpStaticMappingUpdateVpcrouterParam
-func NewDhcpStaticMappingUpdateVpcrouterParam() *DhcpStaticMappingUpdateVpcrouterParam {
-	return &DhcpStaticMappingUpdateVpcrouterParam{}
+// NewDhcpStaticMappingUpdateVPCRouterParam return new DhcpStaticMappingUpdateVPCRouterParam
+func NewDhcpStaticMappingUpdateVPCRouterParam() *DhcpStaticMappingUpdateVPCRouterParam {
+	return &DhcpStaticMappingUpdateVPCRouterParam{}
 }
 
-// Initialize init DhcpStaticMappingUpdateVpcrouterParam
-func (p *DhcpStaticMappingUpdateVpcrouterParam) Initialize(in Input) error {
+// Initialize init DhcpStaticMappingUpdateVPCRouterParam
+func (p *DhcpStaticMappingUpdateVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4108,11 +4108,11 @@ func (p *DhcpStaticMappingUpdateVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DhcpStaticMappingUpdateVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DhcpStaticMappingUpdateVpcrouterParam) fillValueToSkeleton() {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -4125,7 +4125,7 @@ func (p *DhcpStaticMappingUpdateVpcrouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *DhcpStaticMappingUpdateVpcrouterParam) validate() error {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -4155,66 +4155,66 @@ func (p *DhcpStaticMappingUpdateVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DhcpStaticMappingUpdateVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *DhcpStaticMappingUpdateVpcrouterParam) CommandDef() *schema.Command {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["dhcp-static-mapping-update"]
 }
 
-func (p *DhcpStaticMappingUpdateVpcrouterParam) IncludeFields() []string {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DhcpStaticMappingUpdateVpcrouterParam) ExcludeFields() []string {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DhcpStaticMappingUpdateVpcrouterParam) TableType() output.TableType {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DhcpStaticMappingUpdateVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *DhcpStaticMappingUpdateVpcrouterParam) SetIndex(v int) {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *DhcpStaticMappingUpdateVpcrouterParam) GetIndex() int {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetIndex() int {
 	return p.Index
 }
-func (p *DhcpStaticMappingUpdateVpcrouterParam) SetMacaddress(v string) {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) SetMacaddress(v string) {
 	p.Macaddress = v
 }
 
-func (p *DhcpStaticMappingUpdateVpcrouterParam) GetMacaddress() string {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetMacaddress() string {
 	return p.Macaddress
 }
-func (p *DhcpStaticMappingUpdateVpcrouterParam) SetIpaddress(v string) {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
 
-func (p *DhcpStaticMappingUpdateVpcrouterParam) GetIpaddress() string {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetIpaddress() string {
 	return p.Ipaddress
 }
 
-// DhcpStaticMappingDeleteVpcrouterParam is input parameters for the sacloud API
-type DhcpStaticMappingDeleteVpcrouterParam struct {
+// DhcpStaticMappingDeleteVPCRouterParam is input parameters for the sacloud API
+type DhcpStaticMappingDeleteVPCRouterParam struct {
 	Index int
 
 	input Input
 }
 
-// NewDhcpStaticMappingDeleteVpcrouterParam return new DhcpStaticMappingDeleteVpcrouterParam
-func NewDhcpStaticMappingDeleteVpcrouterParam() *DhcpStaticMappingDeleteVpcrouterParam {
-	return &DhcpStaticMappingDeleteVpcrouterParam{}
+// NewDhcpStaticMappingDeleteVPCRouterParam return new DhcpStaticMappingDeleteVPCRouterParam
+func NewDhcpStaticMappingDeleteVPCRouterParam() *DhcpStaticMappingDeleteVPCRouterParam {
+	return &DhcpStaticMappingDeleteVPCRouterParam{}
 }
 
-// Initialize init DhcpStaticMappingDeleteVpcrouterParam
-func (p *DhcpStaticMappingDeleteVpcrouterParam) Initialize(in Input) error {
+// Initialize init DhcpStaticMappingDeleteVPCRouterParam
+func (p *DhcpStaticMappingDeleteVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4223,18 +4223,18 @@ func (p *DhcpStaticMappingDeleteVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *DhcpStaticMappingDeleteVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *DhcpStaticMappingDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DhcpStaticMappingDeleteVpcrouterParam) fillValueToSkeleton() {
+func (p *DhcpStaticMappingDeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
 
 }
 
-func (p *DhcpStaticMappingDeleteVpcrouterParam) validate() error {
+func (p *DhcpStaticMappingDeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -4248,50 +4248,50 @@ func (p *DhcpStaticMappingDeleteVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *DhcpStaticMappingDeleteVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *DhcpStaticMappingDeleteVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *DhcpStaticMappingDeleteVpcrouterParam) CommandDef() *schema.Command {
+func (p *DhcpStaticMappingDeleteVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["dhcp-static-mapping-delete"]
 }
 
-func (p *DhcpStaticMappingDeleteVpcrouterParam) IncludeFields() []string {
+func (p *DhcpStaticMappingDeleteVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *DhcpStaticMappingDeleteVpcrouterParam) ExcludeFields() []string {
+func (p *DhcpStaticMappingDeleteVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *DhcpStaticMappingDeleteVpcrouterParam) TableType() output.TableType {
+func (p *DhcpStaticMappingDeleteVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *DhcpStaticMappingDeleteVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *DhcpStaticMappingDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *DhcpStaticMappingDeleteVpcrouterParam) SetIndex(v int) {
+func (p *DhcpStaticMappingDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *DhcpStaticMappingDeleteVpcrouterParam) GetIndex() int {
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetIndex() int {
 	return p.Index
 }
 
-// PptpServerInfoVpcrouterParam is input parameters for the sacloud API
-type PptpServerInfoVpcrouterParam struct {
+// PptpServerInfoVPCRouterParam is input parameters for the sacloud API
+type PptpServerInfoVPCRouterParam struct {
 	input Input
 }
 
-// NewPptpServerInfoVpcrouterParam return new PptpServerInfoVpcrouterParam
-func NewPptpServerInfoVpcrouterParam() *PptpServerInfoVpcrouterParam {
-	return &PptpServerInfoVpcrouterParam{}
+// NewPptpServerInfoVPCRouterParam return new PptpServerInfoVPCRouterParam
+func NewPptpServerInfoVPCRouterParam() *PptpServerInfoVPCRouterParam {
+	return &PptpServerInfoVPCRouterParam{}
 }
 
-// Initialize init PptpServerInfoVpcrouterParam
-func (p *PptpServerInfoVpcrouterParam) Initialize(in Input) error {
+// Initialize init PptpServerInfoVPCRouterParam
+func (p *PptpServerInfoVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4300,46 +4300,46 @@ func (p *PptpServerInfoVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *PptpServerInfoVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *PptpServerInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PptpServerInfoVpcrouterParam) fillValueToSkeleton() {
+func (p *PptpServerInfoVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *PptpServerInfoVpcrouterParam) validate() error {
+func (p *PptpServerInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *PptpServerInfoVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *PptpServerInfoVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *PptpServerInfoVpcrouterParam) CommandDef() *schema.Command {
+func (p *PptpServerInfoVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["pptp-server-info"]
 }
 
-func (p *PptpServerInfoVpcrouterParam) IncludeFields() []string {
+func (p *PptpServerInfoVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *PptpServerInfoVpcrouterParam) ExcludeFields() []string {
+func (p *PptpServerInfoVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *PptpServerInfoVpcrouterParam) TableType() output.TableType {
+func (p *PptpServerInfoVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *PptpServerInfoVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *PptpServerInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// PptpServerUpdateVpcrouterParam is input parameters for the sacloud API
-type PptpServerUpdateVpcrouterParam struct {
+// PptpServerUpdateVPCRouterParam is input parameters for the sacloud API
+type PptpServerUpdateVPCRouterParam struct {
 	Disabled   bool
 	RangeStart string
 	RangeStop  string
@@ -4347,13 +4347,13 @@ type PptpServerUpdateVpcrouterParam struct {
 	input Input
 }
 
-// NewPptpServerUpdateVpcrouterParam return new PptpServerUpdateVpcrouterParam
-func NewPptpServerUpdateVpcrouterParam() *PptpServerUpdateVpcrouterParam {
-	return &PptpServerUpdateVpcrouterParam{}
+// NewPptpServerUpdateVPCRouterParam return new PptpServerUpdateVPCRouterParam
+func NewPptpServerUpdateVPCRouterParam() *PptpServerUpdateVPCRouterParam {
+	return &PptpServerUpdateVPCRouterParam{}
 }
 
-// Initialize init PptpServerUpdateVpcrouterParam
-func (p *PptpServerUpdateVpcrouterParam) Initialize(in Input) error {
+// Initialize init PptpServerUpdateVPCRouterParam
+func (p *PptpServerUpdateVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4362,11 +4362,11 @@ func (p *PptpServerUpdateVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *PptpServerUpdateVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *PptpServerUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PptpServerUpdateVpcrouterParam) fillValueToSkeleton() {
+func (p *PptpServerUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Disabled) {
 		p.Disabled = false
 	}
@@ -4379,7 +4379,7 @@ func (p *PptpServerUpdateVpcrouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *PptpServerUpdateVpcrouterParam) validate() error {
+func (p *PptpServerUpdateVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -4401,64 +4401,64 @@ func (p *PptpServerUpdateVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *PptpServerUpdateVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *PptpServerUpdateVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *PptpServerUpdateVpcrouterParam) CommandDef() *schema.Command {
+func (p *PptpServerUpdateVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["pptp-server-update"]
 }
 
-func (p *PptpServerUpdateVpcrouterParam) IncludeFields() []string {
+func (p *PptpServerUpdateVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *PptpServerUpdateVpcrouterParam) ExcludeFields() []string {
+func (p *PptpServerUpdateVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *PptpServerUpdateVpcrouterParam) TableType() output.TableType {
+func (p *PptpServerUpdateVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *PptpServerUpdateVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *PptpServerUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *PptpServerUpdateVpcrouterParam) SetDisabled(v bool) {
+func (p *PptpServerUpdateVPCRouterParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
 
-func (p *PptpServerUpdateVpcrouterParam) GetDisabled() bool {
+func (p *PptpServerUpdateVPCRouterParam) GetDisabled() bool {
 	return p.Disabled
 }
-func (p *PptpServerUpdateVpcrouterParam) SetRangeStart(v string) {
+func (p *PptpServerUpdateVPCRouterParam) SetRangeStart(v string) {
 	p.RangeStart = v
 }
 
-func (p *PptpServerUpdateVpcrouterParam) GetRangeStart() string {
+func (p *PptpServerUpdateVPCRouterParam) GetRangeStart() string {
 	return p.RangeStart
 }
-func (p *PptpServerUpdateVpcrouterParam) SetRangeStop(v string) {
+func (p *PptpServerUpdateVPCRouterParam) SetRangeStop(v string) {
 	p.RangeStop = v
 }
 
-func (p *PptpServerUpdateVpcrouterParam) GetRangeStop() string {
+func (p *PptpServerUpdateVPCRouterParam) GetRangeStop() string {
 	return p.RangeStop
 }
 
-// L2tpServerInfoVpcrouterParam is input parameters for the sacloud API
-type L2tpServerInfoVpcrouterParam struct {
+// L2TPServerInfoVPCRouterParam is input parameters for the sacloud API
+type L2TPServerInfoVPCRouterParam struct {
 	input Input
 }
 
-// NewL2tpServerInfoVpcrouterParam return new L2tpServerInfoVpcrouterParam
-func NewL2tpServerInfoVpcrouterParam() *L2tpServerInfoVpcrouterParam {
-	return &L2tpServerInfoVpcrouterParam{}
+// NewL2TPServerInfoVPCRouterParam return new L2TPServerInfoVPCRouterParam
+func NewL2TPServerInfoVPCRouterParam() *L2TPServerInfoVPCRouterParam {
+	return &L2TPServerInfoVPCRouterParam{}
 }
 
-// Initialize init L2tpServerInfoVpcrouterParam
-func (p *L2tpServerInfoVpcrouterParam) Initialize(in Input) error {
+// Initialize init L2TPServerInfoVPCRouterParam
+func (p *L2TPServerInfoVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4467,61 +4467,61 @@ func (p *L2tpServerInfoVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *L2tpServerInfoVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *L2TPServerInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *L2tpServerInfoVpcrouterParam) fillValueToSkeleton() {
+func (p *L2TPServerInfoVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *L2tpServerInfoVpcrouterParam) validate() error {
+func (p *L2TPServerInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *L2tpServerInfoVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *L2TPServerInfoVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *L2tpServerInfoVpcrouterParam) CommandDef() *schema.Command {
+func (p *L2TPServerInfoVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["l2tp-server-info"]
 }
 
-func (p *L2tpServerInfoVpcrouterParam) IncludeFields() []string {
+func (p *L2TPServerInfoVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *L2tpServerInfoVpcrouterParam) ExcludeFields() []string {
+func (p *L2TPServerInfoVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *L2tpServerInfoVpcrouterParam) TableType() output.TableType {
+func (p *L2TPServerInfoVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *L2tpServerInfoVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *L2TPServerInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// L2tpServerUpdateVpcrouterParam is input parameters for the sacloud API
-type L2tpServerUpdateVpcrouterParam struct {
+// L2TPServerUpdateVPCRouterParam is input parameters for the sacloud API
+type L2TPServerUpdateVPCRouterParam struct {
+	PreSharedSecret string
 	Disabled        bool
 	RangeStart      string
 	RangeStop       string
-	PreSharedSecret string
 
 	input Input
 }
 
-// NewL2tpServerUpdateVpcrouterParam return new L2tpServerUpdateVpcrouterParam
-func NewL2tpServerUpdateVpcrouterParam() *L2tpServerUpdateVpcrouterParam {
-	return &L2tpServerUpdateVpcrouterParam{}
+// NewL2TPServerUpdateVPCRouterParam return new L2TPServerUpdateVPCRouterParam
+func NewL2TPServerUpdateVPCRouterParam() *L2TPServerUpdateVPCRouterParam {
+	return &L2TPServerUpdateVPCRouterParam{}
 }
 
-// Initialize init L2tpServerUpdateVpcrouterParam
-func (p *L2tpServerUpdateVpcrouterParam) Initialize(in Input) error {
+// Initialize init L2TPServerUpdateVPCRouterParam
+func (p *L2TPServerUpdateVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4530,11 +4530,14 @@ func (p *L2tpServerUpdateVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *L2tpServerUpdateVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *L2TPServerUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *L2tpServerUpdateVpcrouterParam) fillValueToSkeleton() {
+func (p *L2TPServerUpdateVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.PreSharedSecret) {
+		p.PreSharedSecret = ""
+	}
 	if utils.IsEmpty(p.Disabled) {
 		p.Disabled = false
 	}
@@ -4544,14 +4547,19 @@ func (p *L2tpServerUpdateVpcrouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.RangeStop) {
 		p.RangeStop = ""
 	}
-	if utils.IsEmpty(p.PreSharedSecret) {
-		p.PreSharedSecret = ""
-	}
 
 }
 
-func (p *L2tpServerUpdateVpcrouterParam) validate() error {
+func (p *L2TPServerUpdateVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["l2tp-server-update"].Params["pre-shared-secret"].ValidateFunc
+		errs := validator("--pre-shared-secret", p.PreSharedSecret)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["VPCRouter"].Commands["l2tp-server-update"].Params["range-start"].ValidateFunc
@@ -4569,82 +4577,74 @@ func (p *L2tpServerUpdateVpcrouterParam) validate() error {
 		}
 	}
 
-	{
-		validator := define.Resources["VPCRouter"].Commands["l2tp-server-update"].Params["pre-shared-secret"].ValidateFunc
-		errs := validator("--pre-shared-secret", p.PreSharedSecret)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *L2tpServerUpdateVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *L2TPServerUpdateVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *L2tpServerUpdateVpcrouterParam) CommandDef() *schema.Command {
+func (p *L2TPServerUpdateVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["l2tp-server-update"]
 }
 
-func (p *L2tpServerUpdateVpcrouterParam) IncludeFields() []string {
+func (p *L2TPServerUpdateVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *L2tpServerUpdateVpcrouterParam) ExcludeFields() []string {
+func (p *L2TPServerUpdateVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *L2tpServerUpdateVpcrouterParam) TableType() output.TableType {
+func (p *L2TPServerUpdateVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *L2tpServerUpdateVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *L2TPServerUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *L2tpServerUpdateVpcrouterParam) SetDisabled(v bool) {
-	p.Disabled = v
-}
-
-func (p *L2tpServerUpdateVpcrouterParam) GetDisabled() bool {
-	return p.Disabled
-}
-func (p *L2tpServerUpdateVpcrouterParam) SetRangeStart(v string) {
-	p.RangeStart = v
-}
-
-func (p *L2tpServerUpdateVpcrouterParam) GetRangeStart() string {
-	return p.RangeStart
-}
-func (p *L2tpServerUpdateVpcrouterParam) SetRangeStop(v string) {
-	p.RangeStop = v
-}
-
-func (p *L2tpServerUpdateVpcrouterParam) GetRangeStop() string {
-	return p.RangeStop
-}
-func (p *L2tpServerUpdateVpcrouterParam) SetPreSharedSecret(v string) {
+func (p *L2TPServerUpdateVPCRouterParam) SetPreSharedSecret(v string) {
 	p.PreSharedSecret = v
 }
 
-func (p *L2tpServerUpdateVpcrouterParam) GetPreSharedSecret() string {
+func (p *L2TPServerUpdateVPCRouterParam) GetPreSharedSecret() string {
 	return p.PreSharedSecret
 }
+func (p *L2TPServerUpdateVPCRouterParam) SetDisabled(v bool) {
+	p.Disabled = v
+}
 
-// UserInfoVpcrouterParam is input parameters for the sacloud API
-type UserInfoVpcrouterParam struct {
+func (p *L2TPServerUpdateVPCRouterParam) GetDisabled() bool {
+	return p.Disabled
+}
+func (p *L2TPServerUpdateVPCRouterParam) SetRangeStart(v string) {
+	p.RangeStart = v
+}
+
+func (p *L2TPServerUpdateVPCRouterParam) GetRangeStart() string {
+	return p.RangeStart
+}
+func (p *L2TPServerUpdateVPCRouterParam) SetRangeStop(v string) {
+	p.RangeStop = v
+}
+
+func (p *L2TPServerUpdateVPCRouterParam) GetRangeStop() string {
+	return p.RangeStop
+}
+
+// UserInfoVPCRouterParam is input parameters for the sacloud API
+type UserInfoVPCRouterParam struct {
 	input Input
 }
 
-// NewUserInfoVpcrouterParam return new UserInfoVpcrouterParam
-func NewUserInfoVpcrouterParam() *UserInfoVpcrouterParam {
-	return &UserInfoVpcrouterParam{}
+// NewUserInfoVPCRouterParam return new UserInfoVPCRouterParam
+func NewUserInfoVPCRouterParam() *UserInfoVPCRouterParam {
+	return &UserInfoVPCRouterParam{}
 }
 
-// Initialize init UserInfoVpcrouterParam
-func (p *UserInfoVpcrouterParam) Initialize(in Input) error {
+// Initialize init UserInfoVPCRouterParam
+func (p *UserInfoVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4653,59 +4653,59 @@ func (p *UserInfoVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *UserInfoVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *UserInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UserInfoVpcrouterParam) fillValueToSkeleton() {
+func (p *UserInfoVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *UserInfoVpcrouterParam) validate() error {
+func (p *UserInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *UserInfoVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *UserInfoVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *UserInfoVpcrouterParam) CommandDef() *schema.Command {
+func (p *UserInfoVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["user-info"]
 }
 
-func (p *UserInfoVpcrouterParam) IncludeFields() []string {
+func (p *UserInfoVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *UserInfoVpcrouterParam) ExcludeFields() []string {
+func (p *UserInfoVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *UserInfoVpcrouterParam) TableType() output.TableType {
+func (p *UserInfoVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *UserInfoVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *UserInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// UserAddVpcrouterParam is input parameters for the sacloud API
-type UserAddVpcrouterParam struct {
+// UserAddVPCRouterParam is input parameters for the sacloud API
+type UserAddVPCRouterParam struct {
 	Username string
 	Password string
 
 	input Input
 }
 
-// NewUserAddVpcrouterParam return new UserAddVpcrouterParam
-func NewUserAddVpcrouterParam() *UserAddVpcrouterParam {
-	return &UserAddVpcrouterParam{}
+// NewUserAddVPCRouterParam return new UserAddVPCRouterParam
+func NewUserAddVPCRouterParam() *UserAddVPCRouterParam {
+	return &UserAddVPCRouterParam{}
 }
 
-// Initialize init UserAddVpcrouterParam
-func (p *UserAddVpcrouterParam) Initialize(in Input) error {
+// Initialize init UserAddVPCRouterParam
+func (p *UserAddVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4714,11 +4714,11 @@ func (p *UserAddVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *UserAddVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *UserAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UserAddVpcrouterParam) fillValueToSkeleton() {
+func (p *UserAddVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Username) {
 		p.Username = ""
 	}
@@ -4728,7 +4728,7 @@ func (p *UserAddVpcrouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *UserAddVpcrouterParam) validate() error {
+func (p *UserAddVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -4764,47 +4764,47 @@ func (p *UserAddVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *UserAddVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *UserAddVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *UserAddVpcrouterParam) CommandDef() *schema.Command {
+func (p *UserAddVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["user-add"]
 }
 
-func (p *UserAddVpcrouterParam) IncludeFields() []string {
+func (p *UserAddVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *UserAddVpcrouterParam) ExcludeFields() []string {
+func (p *UserAddVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *UserAddVpcrouterParam) TableType() output.TableType {
+func (p *UserAddVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *UserAddVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *UserAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UserAddVpcrouterParam) SetUsername(v string) {
+func (p *UserAddVPCRouterParam) SetUsername(v string) {
 	p.Username = v
 }
 
-func (p *UserAddVpcrouterParam) GetUsername() string {
+func (p *UserAddVPCRouterParam) GetUsername() string {
 	return p.Username
 }
-func (p *UserAddVpcrouterParam) SetPassword(v string) {
+func (p *UserAddVPCRouterParam) SetPassword(v string) {
 	p.Password = v
 }
 
-func (p *UserAddVpcrouterParam) GetPassword() string {
+func (p *UserAddVPCRouterParam) GetPassword() string {
 	return p.Password
 }
 
-// UserUpdateVpcrouterParam is input parameters for the sacloud API
-type UserUpdateVpcrouterParam struct {
+// UserUpdateVPCRouterParam is input parameters for the sacloud API
+type UserUpdateVPCRouterParam struct {
 	Index    int
 	Username string
 	Password string
@@ -4812,13 +4812,13 @@ type UserUpdateVpcrouterParam struct {
 	input Input
 }
 
-// NewUserUpdateVpcrouterParam return new UserUpdateVpcrouterParam
-func NewUserUpdateVpcrouterParam() *UserUpdateVpcrouterParam {
-	return &UserUpdateVpcrouterParam{}
+// NewUserUpdateVPCRouterParam return new UserUpdateVPCRouterParam
+func NewUserUpdateVPCRouterParam() *UserUpdateVPCRouterParam {
+	return &UserUpdateVPCRouterParam{}
 }
 
-// Initialize init UserUpdateVpcrouterParam
-func (p *UserUpdateVpcrouterParam) Initialize(in Input) error {
+// Initialize init UserUpdateVPCRouterParam
+func (p *UserUpdateVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4827,11 +4827,11 @@ func (p *UserUpdateVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *UserUpdateVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *UserUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UserUpdateVpcrouterParam) fillValueToSkeleton() {
+func (p *UserUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -4844,7 +4844,7 @@ func (p *UserUpdateVpcrouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *UserUpdateVpcrouterParam) validate() error {
+func (p *UserUpdateVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -4874,66 +4874,66 @@ func (p *UserUpdateVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *UserUpdateVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *UserUpdateVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *UserUpdateVpcrouterParam) CommandDef() *schema.Command {
+func (p *UserUpdateVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["user-update"]
 }
 
-func (p *UserUpdateVpcrouterParam) IncludeFields() []string {
+func (p *UserUpdateVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *UserUpdateVpcrouterParam) ExcludeFields() []string {
+func (p *UserUpdateVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *UserUpdateVpcrouterParam) TableType() output.TableType {
+func (p *UserUpdateVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *UserUpdateVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *UserUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UserUpdateVpcrouterParam) SetIndex(v int) {
+func (p *UserUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *UserUpdateVpcrouterParam) GetIndex() int {
+func (p *UserUpdateVPCRouterParam) GetIndex() int {
 	return p.Index
 }
-func (p *UserUpdateVpcrouterParam) SetUsername(v string) {
+func (p *UserUpdateVPCRouterParam) SetUsername(v string) {
 	p.Username = v
 }
 
-func (p *UserUpdateVpcrouterParam) GetUsername() string {
+func (p *UserUpdateVPCRouterParam) GetUsername() string {
 	return p.Username
 }
-func (p *UserUpdateVpcrouterParam) SetPassword(v string) {
+func (p *UserUpdateVPCRouterParam) SetPassword(v string) {
 	p.Password = v
 }
 
-func (p *UserUpdateVpcrouterParam) GetPassword() string {
+func (p *UserUpdateVPCRouterParam) GetPassword() string {
 	return p.Password
 }
 
-// UserDeleteVpcrouterParam is input parameters for the sacloud API
-type UserDeleteVpcrouterParam struct {
+// UserDeleteVPCRouterParam is input parameters for the sacloud API
+type UserDeleteVPCRouterParam struct {
 	Index int
 
 	input Input
 }
 
-// NewUserDeleteVpcrouterParam return new UserDeleteVpcrouterParam
-func NewUserDeleteVpcrouterParam() *UserDeleteVpcrouterParam {
-	return &UserDeleteVpcrouterParam{}
+// NewUserDeleteVPCRouterParam return new UserDeleteVPCRouterParam
+func NewUserDeleteVPCRouterParam() *UserDeleteVPCRouterParam {
+	return &UserDeleteVPCRouterParam{}
 }
 
-// Initialize init UserDeleteVpcrouterParam
-func (p *UserDeleteVpcrouterParam) Initialize(in Input) error {
+// Initialize init UserDeleteVPCRouterParam
+func (p *UserDeleteVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4942,18 +4942,18 @@ func (p *UserDeleteVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *UserDeleteVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *UserDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UserDeleteVpcrouterParam) fillValueToSkeleton() {
+func (p *UserDeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
 
 }
 
-func (p *UserDeleteVpcrouterParam) validate() error {
+func (p *UserDeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -4967,50 +4967,50 @@ func (p *UserDeleteVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *UserDeleteVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *UserDeleteVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *UserDeleteVpcrouterParam) CommandDef() *schema.Command {
+func (p *UserDeleteVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["user-delete"]
 }
 
-func (p *UserDeleteVpcrouterParam) IncludeFields() []string {
+func (p *UserDeleteVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *UserDeleteVpcrouterParam) ExcludeFields() []string {
+func (p *UserDeleteVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *UserDeleteVpcrouterParam) TableType() output.TableType {
+func (p *UserDeleteVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *UserDeleteVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *UserDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UserDeleteVpcrouterParam) SetIndex(v int) {
+func (p *UserDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *UserDeleteVpcrouterParam) GetIndex() int {
+func (p *UserDeleteVPCRouterParam) GetIndex() int {
 	return p.Index
 }
 
-// SiteToSiteVpnInfoVpcrouterParam is input parameters for the sacloud API
-type SiteToSiteVpnInfoVpcrouterParam struct {
+// SiteToSiteVPNInfoVPCRouterParam is input parameters for the sacloud API
+type SiteToSiteVPNInfoVPCRouterParam struct {
 	input Input
 }
 
-// NewSiteToSiteVpnInfoVpcrouterParam return new SiteToSiteVpnInfoVpcrouterParam
-func NewSiteToSiteVpnInfoVpcrouterParam() *SiteToSiteVpnInfoVpcrouterParam {
-	return &SiteToSiteVpnInfoVpcrouterParam{}
+// NewSiteToSiteVPNInfoVPCRouterParam return new SiteToSiteVPNInfoVPCRouterParam
+func NewSiteToSiteVPNInfoVPCRouterParam() *SiteToSiteVPNInfoVPCRouterParam {
+	return &SiteToSiteVPNInfoVPCRouterParam{}
 }
 
-// Initialize init SiteToSiteVpnInfoVpcrouterParam
-func (p *SiteToSiteVpnInfoVpcrouterParam) Initialize(in Input) error {
+// Initialize init SiteToSiteVPNInfoVPCRouterParam
+func (p *SiteToSiteVPNInfoVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5019,62 +5019,62 @@ func (p *SiteToSiteVpnInfoVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *SiteToSiteVpnInfoVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *SiteToSiteVPNInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SiteToSiteVpnInfoVpcrouterParam) fillValueToSkeleton() {
+func (p *SiteToSiteVPNInfoVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *SiteToSiteVpnInfoVpcrouterParam) validate() error {
+func (p *SiteToSiteVPNInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *SiteToSiteVpnInfoVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *SiteToSiteVPNInfoVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *SiteToSiteVpnInfoVpcrouterParam) CommandDef() *schema.Command {
+func (p *SiteToSiteVPNInfoVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["site-to-site-vpn-info"]
 }
 
-func (p *SiteToSiteVpnInfoVpcrouterParam) IncludeFields() []string {
+func (p *SiteToSiteVPNInfoVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *SiteToSiteVpnInfoVpcrouterParam) ExcludeFields() []string {
+func (p *SiteToSiteVPNInfoVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *SiteToSiteVpnInfoVpcrouterParam) TableType() output.TableType {
+func (p *SiteToSiteVPNInfoVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *SiteToSiteVpnInfoVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *SiteToSiteVPNInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// SiteToSiteVpnAddVpcrouterParam is input parameters for the sacloud API
-type SiteToSiteVpnAddVpcrouterParam struct {
+// SiteToSiteVPNAddVPCRouterParam is input parameters for the sacloud API
+type SiteToSiteVPNAddVPCRouterParam struct {
+	Routes          []string
+	LocalPrefix     []string
 	Peer            string
 	RemoteId        string
 	PreSharedSecret string
-	Routes          []string
-	LocalPrefix     []string
 
 	input Input
 }
 
-// NewSiteToSiteVpnAddVpcrouterParam return new SiteToSiteVpnAddVpcrouterParam
-func NewSiteToSiteVpnAddVpcrouterParam() *SiteToSiteVpnAddVpcrouterParam {
-	return &SiteToSiteVpnAddVpcrouterParam{}
+// NewSiteToSiteVPNAddVPCRouterParam return new SiteToSiteVPNAddVPCRouterParam
+func NewSiteToSiteVPNAddVPCRouterParam() *SiteToSiteVPNAddVPCRouterParam {
+	return &SiteToSiteVPNAddVPCRouterParam{}
 }
 
-// Initialize init SiteToSiteVpnAddVpcrouterParam
-func (p *SiteToSiteVpnAddVpcrouterParam) Initialize(in Input) error {
+// Initialize init SiteToSiteVPNAddVPCRouterParam
+func (p *SiteToSiteVPNAddVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5083,11 +5083,17 @@ func (p *SiteToSiteVpnAddVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *SiteToSiteVpnAddVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *SiteToSiteVPNAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SiteToSiteVpnAddVpcrouterParam) fillValueToSkeleton() {
+func (p *SiteToSiteVPNAddVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Routes) {
+		p.Routes = []string{""}
+	}
+	if utils.IsEmpty(p.LocalPrefix) {
+		p.LocalPrefix = []string{""}
+	}
 	if utils.IsEmpty(p.Peer) {
 		p.Peer = ""
 	}
@@ -5097,17 +5103,41 @@ func (p *SiteToSiteVpnAddVpcrouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.PreSharedSecret) {
 		p.PreSharedSecret = ""
 	}
-	if utils.IsEmpty(p.Routes) {
-		p.Routes = []string{""}
-	}
-	if utils.IsEmpty(p.LocalPrefix) {
-		p.LocalPrefix = []string{""}
-	}
 
 }
 
-func (p *SiteToSiteVpnAddVpcrouterParam) validate() error {
+func (p *SiteToSiteVPNAddVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--routes", p.Routes)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].Params["routes"].ValidateFunc
+		errs := validator("--routes", p.Routes)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--local-prefix", p.LocalPrefix)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].Params["local-prefix"].ValidateFunc
+		errs := validator("--local-prefix", p.LocalPrefix)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -5147,118 +5177,88 @@ func (p *SiteToSiteVpnAddVpcrouterParam) validate() error {
 		}
 	}
 
-	{
-		validator := validateRequired
-		errs := validator("--routes", p.Routes)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].Params["routes"].ValidateFunc
-		errs := validator("--routes", p.Routes)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--local-prefix", p.LocalPrefix)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].Params["local-prefix"].ValidateFunc
-		errs := validator("--local-prefix", p.LocalPrefix)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *SiteToSiteVpnAddVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *SiteToSiteVPNAddVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *SiteToSiteVpnAddVpcrouterParam) CommandDef() *schema.Command {
+func (p *SiteToSiteVPNAddVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["site-to-site-vpn-add"]
 }
 
-func (p *SiteToSiteVpnAddVpcrouterParam) IncludeFields() []string {
+func (p *SiteToSiteVPNAddVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *SiteToSiteVpnAddVpcrouterParam) ExcludeFields() []string {
+func (p *SiteToSiteVPNAddVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *SiteToSiteVpnAddVpcrouterParam) TableType() output.TableType {
+func (p *SiteToSiteVPNAddVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *SiteToSiteVpnAddVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *SiteToSiteVPNAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *SiteToSiteVpnAddVpcrouterParam) SetPeer(v string) {
-	p.Peer = v
-}
-
-func (p *SiteToSiteVpnAddVpcrouterParam) GetPeer() string {
-	return p.Peer
-}
-func (p *SiteToSiteVpnAddVpcrouterParam) SetRemoteId(v string) {
-	p.RemoteId = v
-}
-
-func (p *SiteToSiteVpnAddVpcrouterParam) GetRemoteId() string {
-	return p.RemoteId
-}
-func (p *SiteToSiteVpnAddVpcrouterParam) SetPreSharedSecret(v string) {
-	p.PreSharedSecret = v
-}
-
-func (p *SiteToSiteVpnAddVpcrouterParam) GetPreSharedSecret() string {
-	return p.PreSharedSecret
-}
-func (p *SiteToSiteVpnAddVpcrouterParam) SetRoutes(v []string) {
+func (p *SiteToSiteVPNAddVPCRouterParam) SetRoutes(v []string) {
 	p.Routes = v
 }
 
-func (p *SiteToSiteVpnAddVpcrouterParam) GetRoutes() []string {
+func (p *SiteToSiteVPNAddVPCRouterParam) GetRoutes() []string {
 	return p.Routes
 }
-func (p *SiteToSiteVpnAddVpcrouterParam) SetLocalPrefix(v []string) {
+func (p *SiteToSiteVPNAddVPCRouterParam) SetLocalPrefix(v []string) {
 	p.LocalPrefix = v
 }
 
-func (p *SiteToSiteVpnAddVpcrouterParam) GetLocalPrefix() []string {
+func (p *SiteToSiteVPNAddVPCRouterParam) GetLocalPrefix() []string {
 	return p.LocalPrefix
 }
+func (p *SiteToSiteVPNAddVPCRouterParam) SetPeer(v string) {
+	p.Peer = v
+}
 
-// SiteToSiteVpnUpdateVpcrouterParam is input parameters for the sacloud API
-type SiteToSiteVpnUpdateVpcrouterParam struct {
-	Peer            string
-	RemoteId        string
-	PreSharedSecret string
+func (p *SiteToSiteVPNAddVPCRouterParam) GetPeer() string {
+	return p.Peer
+}
+func (p *SiteToSiteVPNAddVPCRouterParam) SetRemoteId(v string) {
+	p.RemoteId = v
+}
+
+func (p *SiteToSiteVPNAddVPCRouterParam) GetRemoteId() string {
+	return p.RemoteId
+}
+func (p *SiteToSiteVPNAddVPCRouterParam) SetPreSharedSecret(v string) {
+	p.PreSharedSecret = v
+}
+
+func (p *SiteToSiteVPNAddVPCRouterParam) GetPreSharedSecret() string {
+	return p.PreSharedSecret
+}
+
+// SiteToSiteVPNUpdateVPCRouterParam is input parameters for the sacloud API
+type SiteToSiteVPNUpdateVPCRouterParam struct {
 	Routes          []string
 	LocalPrefix     []string
 	Index           int
+	Peer            string
+	RemoteId        string
+	PreSharedSecret string
 
 	input Input
 }
 
-// NewSiteToSiteVpnUpdateVpcrouterParam return new SiteToSiteVpnUpdateVpcrouterParam
-func NewSiteToSiteVpnUpdateVpcrouterParam() *SiteToSiteVpnUpdateVpcrouterParam {
-	return &SiteToSiteVpnUpdateVpcrouterParam{}
+// NewSiteToSiteVPNUpdateVPCRouterParam return new SiteToSiteVPNUpdateVPCRouterParam
+func NewSiteToSiteVPNUpdateVPCRouterParam() *SiteToSiteVPNUpdateVPCRouterParam {
+	return &SiteToSiteVPNUpdateVPCRouterParam{}
 }
 
-// Initialize init SiteToSiteVpnUpdateVpcrouterParam
-func (p *SiteToSiteVpnUpdateVpcrouterParam) Initialize(in Input) error {
+// Initialize init SiteToSiteVPNUpdateVPCRouterParam
+func (p *SiteToSiteVPNUpdateVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5267,20 +5267,11 @@ func (p *SiteToSiteVpnUpdateVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *SiteToSiteVpnUpdateVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SiteToSiteVpnUpdateVpcrouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Peer) {
-		p.Peer = ""
-	}
-	if utils.IsEmpty(p.RemoteId) {
-		p.RemoteId = ""
-	}
-	if utils.IsEmpty(p.PreSharedSecret) {
-		p.PreSharedSecret = ""
-	}
+func (p *SiteToSiteVPNUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Routes) {
 		p.Routes = []string{""}
 	}
@@ -5290,27 +5281,20 @@ func (p *SiteToSiteVpnUpdateVpcrouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
+	if utils.IsEmpty(p.Peer) {
+		p.Peer = ""
+	}
+	if utils.IsEmpty(p.RemoteId) {
+		p.RemoteId = ""
+	}
+	if utils.IsEmpty(p.PreSharedSecret) {
+		p.PreSharedSecret = ""
+	}
 
 }
 
-func (p *SiteToSiteVpnUpdateVpcrouterParam) validate() error {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["peer"].ValidateFunc
-		errs := validator("--peer", p.Peer)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["pre-shared-secret"].ValidateFunc
-		errs := validator("--pre-shared-secret", p.PreSharedSecret)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["routes"].ValidateFunc
@@ -5336,90 +5320,106 @@ func (p *SiteToSiteVpnUpdateVpcrouterParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["peer"].ValidateFunc
+		errs := validator("--peer", p.Peer)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["pre-shared-secret"].ValidateFunc
+		errs := validator("--pre-shared-secret", p.PreSharedSecret)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
-func (p *SiteToSiteVpnUpdateVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *SiteToSiteVpnUpdateVpcrouterParam) CommandDef() *schema.Command {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["site-to-site-vpn-update"]
 }
 
-func (p *SiteToSiteVpnUpdateVpcrouterParam) IncludeFields() []string {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *SiteToSiteVpnUpdateVpcrouterParam) ExcludeFields() []string {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *SiteToSiteVpnUpdateVpcrouterParam) TableType() output.TableType {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *SiteToSiteVpnUpdateVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *SiteToSiteVpnUpdateVpcrouterParam) SetPeer(v string) {
-	p.Peer = v
-}
-
-func (p *SiteToSiteVpnUpdateVpcrouterParam) GetPeer() string {
-	return p.Peer
-}
-func (p *SiteToSiteVpnUpdateVpcrouterParam) SetRemoteId(v string) {
-	p.RemoteId = v
-}
-
-func (p *SiteToSiteVpnUpdateVpcrouterParam) GetRemoteId() string {
-	return p.RemoteId
-}
-func (p *SiteToSiteVpnUpdateVpcrouterParam) SetPreSharedSecret(v string) {
-	p.PreSharedSecret = v
-}
-
-func (p *SiteToSiteVpnUpdateVpcrouterParam) GetPreSharedSecret() string {
-	return p.PreSharedSecret
-}
-func (p *SiteToSiteVpnUpdateVpcrouterParam) SetRoutes(v []string) {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) SetRoutes(v []string) {
 	p.Routes = v
 }
 
-func (p *SiteToSiteVpnUpdateVpcrouterParam) GetRoutes() []string {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetRoutes() []string {
 	return p.Routes
 }
-func (p *SiteToSiteVpnUpdateVpcrouterParam) SetLocalPrefix(v []string) {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) SetLocalPrefix(v []string) {
 	p.LocalPrefix = v
 }
 
-func (p *SiteToSiteVpnUpdateVpcrouterParam) GetLocalPrefix() []string {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetLocalPrefix() []string {
 	return p.LocalPrefix
 }
-func (p *SiteToSiteVpnUpdateVpcrouterParam) SetIndex(v int) {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *SiteToSiteVpnUpdateVpcrouterParam) GetIndex() int {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetIndex() int {
 	return p.Index
 }
+func (p *SiteToSiteVPNUpdateVPCRouterParam) SetPeer(v string) {
+	p.Peer = v
+}
 
-// SiteToSiteVpnDeleteVpcrouterParam is input parameters for the sacloud API
-type SiteToSiteVpnDeleteVpcrouterParam struct {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetPeer() string {
+	return p.Peer
+}
+func (p *SiteToSiteVPNUpdateVPCRouterParam) SetRemoteId(v string) {
+	p.RemoteId = v
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetRemoteId() string {
+	return p.RemoteId
+}
+func (p *SiteToSiteVPNUpdateVPCRouterParam) SetPreSharedSecret(v string) {
+	p.PreSharedSecret = v
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetPreSharedSecret() string {
+	return p.PreSharedSecret
+}
+
+// SiteToSiteVPNDeleteVPCRouterParam is input parameters for the sacloud API
+type SiteToSiteVPNDeleteVPCRouterParam struct {
 	Index int
 
 	input Input
 }
 
-// NewSiteToSiteVpnDeleteVpcrouterParam return new SiteToSiteVpnDeleteVpcrouterParam
-func NewSiteToSiteVpnDeleteVpcrouterParam() *SiteToSiteVpnDeleteVpcrouterParam {
-	return &SiteToSiteVpnDeleteVpcrouterParam{}
+// NewSiteToSiteVPNDeleteVPCRouterParam return new SiteToSiteVPNDeleteVPCRouterParam
+func NewSiteToSiteVPNDeleteVPCRouterParam() *SiteToSiteVPNDeleteVPCRouterParam {
+	return &SiteToSiteVPNDeleteVPCRouterParam{}
 }
 
-// Initialize init SiteToSiteVpnDeleteVpcrouterParam
-func (p *SiteToSiteVpnDeleteVpcrouterParam) Initialize(in Input) error {
+// Initialize init SiteToSiteVPNDeleteVPCRouterParam
+func (p *SiteToSiteVPNDeleteVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5428,18 +5428,18 @@ func (p *SiteToSiteVpnDeleteVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *SiteToSiteVpnDeleteVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *SiteToSiteVPNDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SiteToSiteVpnDeleteVpcrouterParam) fillValueToSkeleton() {
+func (p *SiteToSiteVPNDeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
 
 }
 
-func (p *SiteToSiteVpnDeleteVpcrouterParam) validate() error {
+func (p *SiteToSiteVPNDeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -5453,50 +5453,50 @@ func (p *SiteToSiteVpnDeleteVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *SiteToSiteVpnDeleteVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *SiteToSiteVPNDeleteVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *SiteToSiteVpnDeleteVpcrouterParam) CommandDef() *schema.Command {
+func (p *SiteToSiteVPNDeleteVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["site-to-site-vpn-delete"]
 }
 
-func (p *SiteToSiteVpnDeleteVpcrouterParam) IncludeFields() []string {
+func (p *SiteToSiteVPNDeleteVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *SiteToSiteVpnDeleteVpcrouterParam) ExcludeFields() []string {
+func (p *SiteToSiteVPNDeleteVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *SiteToSiteVpnDeleteVpcrouterParam) TableType() output.TableType {
+func (p *SiteToSiteVPNDeleteVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *SiteToSiteVpnDeleteVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *SiteToSiteVPNDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *SiteToSiteVpnDeleteVpcrouterParam) SetIndex(v int) {
+func (p *SiteToSiteVPNDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *SiteToSiteVpnDeleteVpcrouterParam) GetIndex() int {
+func (p *SiteToSiteVPNDeleteVPCRouterParam) GetIndex() int {
 	return p.Index
 }
 
-// SiteToSiteVpnPeersVpcrouterParam is input parameters for the sacloud API
-type SiteToSiteVpnPeersVpcrouterParam struct {
+// SiteToSiteVPNPeersVPCRouterParam is input parameters for the sacloud API
+type SiteToSiteVPNPeersVPCRouterParam struct {
 	input Input
 }
 
-// NewSiteToSiteVpnPeersVpcrouterParam return new SiteToSiteVpnPeersVpcrouterParam
-func NewSiteToSiteVpnPeersVpcrouterParam() *SiteToSiteVpnPeersVpcrouterParam {
-	return &SiteToSiteVpnPeersVpcrouterParam{}
+// NewSiteToSiteVPNPeersVPCRouterParam return new SiteToSiteVPNPeersVPCRouterParam
+func NewSiteToSiteVPNPeersVPCRouterParam() *SiteToSiteVPNPeersVPCRouterParam {
+	return &SiteToSiteVPNPeersVPCRouterParam{}
 }
 
-// Initialize init SiteToSiteVpnPeersVpcrouterParam
-func (p *SiteToSiteVpnPeersVpcrouterParam) Initialize(in Input) error {
+// Initialize init SiteToSiteVPNPeersVPCRouterParam
+func (p *SiteToSiteVPNPeersVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5505,56 +5505,56 @@ func (p *SiteToSiteVpnPeersVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *SiteToSiteVpnPeersVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *SiteToSiteVPNPeersVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SiteToSiteVpnPeersVpcrouterParam) fillValueToSkeleton() {
+func (p *SiteToSiteVPNPeersVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *SiteToSiteVpnPeersVpcrouterParam) validate() error {
+func (p *SiteToSiteVPNPeersVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *SiteToSiteVpnPeersVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *SiteToSiteVPNPeersVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *SiteToSiteVpnPeersVpcrouterParam) CommandDef() *schema.Command {
+func (p *SiteToSiteVPNPeersVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["site-to-site-vpn-peers"]
 }
 
-func (p *SiteToSiteVpnPeersVpcrouterParam) IncludeFields() []string {
+func (p *SiteToSiteVPNPeersVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *SiteToSiteVpnPeersVpcrouterParam) ExcludeFields() []string {
+func (p *SiteToSiteVPNPeersVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *SiteToSiteVpnPeersVpcrouterParam) TableType() output.TableType {
+func (p *SiteToSiteVPNPeersVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *SiteToSiteVpnPeersVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *SiteToSiteVPNPeersVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// StaticRouteInfoVpcrouterParam is input parameters for the sacloud API
-type StaticRouteInfoVpcrouterParam struct {
+// StaticRouteInfoVPCRouterParam is input parameters for the sacloud API
+type StaticRouteInfoVPCRouterParam struct {
 	input Input
 }
 
-// NewStaticRouteInfoVpcrouterParam return new StaticRouteInfoVpcrouterParam
-func NewStaticRouteInfoVpcrouterParam() *StaticRouteInfoVpcrouterParam {
-	return &StaticRouteInfoVpcrouterParam{}
+// NewStaticRouteInfoVPCRouterParam return new StaticRouteInfoVPCRouterParam
+func NewStaticRouteInfoVPCRouterParam() *StaticRouteInfoVPCRouterParam {
+	return &StaticRouteInfoVPCRouterParam{}
 }
 
-// Initialize init StaticRouteInfoVpcrouterParam
-func (p *StaticRouteInfoVpcrouterParam) Initialize(in Input) error {
+// Initialize init StaticRouteInfoVPCRouterParam
+func (p *StaticRouteInfoVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5563,59 +5563,59 @@ func (p *StaticRouteInfoVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *StaticRouteInfoVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *StaticRouteInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticRouteInfoVpcrouterParam) fillValueToSkeleton() {
+func (p *StaticRouteInfoVPCRouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *StaticRouteInfoVpcrouterParam) validate() error {
+func (p *StaticRouteInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	return utils.FlattenErrors(errors)
 }
 
-func (p *StaticRouteInfoVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *StaticRouteInfoVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *StaticRouteInfoVpcrouterParam) CommandDef() *schema.Command {
+func (p *StaticRouteInfoVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["static-route-info"]
 }
 
-func (p *StaticRouteInfoVpcrouterParam) IncludeFields() []string {
+func (p *StaticRouteInfoVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *StaticRouteInfoVpcrouterParam) ExcludeFields() []string {
+func (p *StaticRouteInfoVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *StaticRouteInfoVpcrouterParam) TableType() output.TableType {
+func (p *StaticRouteInfoVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *StaticRouteInfoVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *StaticRouteInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-// StaticRouteAddVpcrouterParam is input parameters for the sacloud API
-type StaticRouteAddVpcrouterParam struct {
+// StaticRouteAddVPCRouterParam is input parameters for the sacloud API
+type StaticRouteAddVPCRouterParam struct {
 	Prefix  string
 	NextHop string
 
 	input Input
 }
 
-// NewStaticRouteAddVpcrouterParam return new StaticRouteAddVpcrouterParam
-func NewStaticRouteAddVpcrouterParam() *StaticRouteAddVpcrouterParam {
-	return &StaticRouteAddVpcrouterParam{}
+// NewStaticRouteAddVPCRouterParam return new StaticRouteAddVPCRouterParam
+func NewStaticRouteAddVPCRouterParam() *StaticRouteAddVPCRouterParam {
+	return &StaticRouteAddVPCRouterParam{}
 }
 
-// Initialize init StaticRouteAddVpcrouterParam
-func (p *StaticRouteAddVpcrouterParam) Initialize(in Input) error {
+// Initialize init StaticRouteAddVPCRouterParam
+func (p *StaticRouteAddVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5624,11 +5624,11 @@ func (p *StaticRouteAddVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *StaticRouteAddVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *StaticRouteAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticRouteAddVpcrouterParam) fillValueToSkeleton() {
+func (p *StaticRouteAddVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Prefix) {
 		p.Prefix = ""
 	}
@@ -5638,7 +5638,7 @@ func (p *StaticRouteAddVpcrouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *StaticRouteAddVpcrouterParam) validate() error {
+func (p *StaticRouteAddVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -5674,61 +5674,61 @@ func (p *StaticRouteAddVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *StaticRouteAddVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *StaticRouteAddVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *StaticRouteAddVpcrouterParam) CommandDef() *schema.Command {
+func (p *StaticRouteAddVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["static-route-add"]
 }
 
-func (p *StaticRouteAddVpcrouterParam) IncludeFields() []string {
+func (p *StaticRouteAddVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *StaticRouteAddVpcrouterParam) ExcludeFields() []string {
+func (p *StaticRouteAddVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *StaticRouteAddVpcrouterParam) TableType() output.TableType {
+func (p *StaticRouteAddVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *StaticRouteAddVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *StaticRouteAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *StaticRouteAddVpcrouterParam) SetPrefix(v string) {
+func (p *StaticRouteAddVPCRouterParam) SetPrefix(v string) {
 	p.Prefix = v
 }
 
-func (p *StaticRouteAddVpcrouterParam) GetPrefix() string {
+func (p *StaticRouteAddVPCRouterParam) GetPrefix() string {
 	return p.Prefix
 }
-func (p *StaticRouteAddVpcrouterParam) SetNextHop(v string) {
+func (p *StaticRouteAddVPCRouterParam) SetNextHop(v string) {
 	p.NextHop = v
 }
 
-func (p *StaticRouteAddVpcrouterParam) GetNextHop() string {
+func (p *StaticRouteAddVPCRouterParam) GetNextHop() string {
 	return p.NextHop
 }
 
-// StaticRouteUpdateVpcrouterParam is input parameters for the sacloud API
-type StaticRouteUpdateVpcrouterParam struct {
+// StaticRouteUpdateVPCRouterParam is input parameters for the sacloud API
+type StaticRouteUpdateVPCRouterParam struct {
+	NextHop string
 	Index   int
 	Prefix  string
-	NextHop string
 
 	input Input
 }
 
-// NewStaticRouteUpdateVpcrouterParam return new StaticRouteUpdateVpcrouterParam
-func NewStaticRouteUpdateVpcrouterParam() *StaticRouteUpdateVpcrouterParam {
-	return &StaticRouteUpdateVpcrouterParam{}
+// NewStaticRouteUpdateVPCRouterParam return new StaticRouteUpdateVPCRouterParam
+func NewStaticRouteUpdateVPCRouterParam() *StaticRouteUpdateVPCRouterParam {
+	return &StaticRouteUpdateVPCRouterParam{}
 }
 
-// Initialize init StaticRouteUpdateVpcrouterParam
-func (p *StaticRouteUpdateVpcrouterParam) Initialize(in Input) error {
+// Initialize init StaticRouteUpdateVPCRouterParam
+func (p *StaticRouteUpdateVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5737,25 +5737,33 @@ func (p *StaticRouteUpdateVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *StaticRouteUpdateVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *StaticRouteUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticRouteUpdateVpcrouterParam) fillValueToSkeleton() {
+func (p *StaticRouteUpdateVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.NextHop) {
+		p.NextHop = ""
+	}
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
 	if utils.IsEmpty(p.Prefix) {
 		p.Prefix = ""
 	}
-	if utils.IsEmpty(p.NextHop) {
-		p.NextHop = ""
-	}
 
 }
 
-func (p *StaticRouteUpdateVpcrouterParam) validate() error {
+func (p *StaticRouteUpdateVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["static-route-update"].Params["next-hop"].ValidateFunc
+		errs := validator("--next-hop", p.NextHop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -5773,77 +5781,69 @@ func (p *StaticRouteUpdateVpcrouterParam) validate() error {
 		}
 	}
 
-	{
-		validator := define.Resources["VPCRouter"].Commands["static-route-update"].Params["next-hop"].ValidateFunc
-		errs := validator("--next-hop", p.NextHop)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *StaticRouteUpdateVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *StaticRouteUpdateVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *StaticRouteUpdateVpcrouterParam) CommandDef() *schema.Command {
+func (p *StaticRouteUpdateVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["static-route-update"]
 }
 
-func (p *StaticRouteUpdateVpcrouterParam) IncludeFields() []string {
+func (p *StaticRouteUpdateVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *StaticRouteUpdateVpcrouterParam) ExcludeFields() []string {
+func (p *StaticRouteUpdateVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *StaticRouteUpdateVpcrouterParam) TableType() output.TableType {
+func (p *StaticRouteUpdateVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *StaticRouteUpdateVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *StaticRouteUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *StaticRouteUpdateVpcrouterParam) SetIndex(v int) {
-	p.Index = v
-}
-
-func (p *StaticRouteUpdateVpcrouterParam) GetIndex() int {
-	return p.Index
-}
-func (p *StaticRouteUpdateVpcrouterParam) SetPrefix(v string) {
-	p.Prefix = v
-}
-
-func (p *StaticRouteUpdateVpcrouterParam) GetPrefix() string {
-	return p.Prefix
-}
-func (p *StaticRouteUpdateVpcrouterParam) SetNextHop(v string) {
+func (p *StaticRouteUpdateVPCRouterParam) SetNextHop(v string) {
 	p.NextHop = v
 }
 
-func (p *StaticRouteUpdateVpcrouterParam) GetNextHop() string {
+func (p *StaticRouteUpdateVPCRouterParam) GetNextHop() string {
 	return p.NextHop
 }
+func (p *StaticRouteUpdateVPCRouterParam) SetIndex(v int) {
+	p.Index = v
+}
 
-// StaticRouteDeleteVpcrouterParam is input parameters for the sacloud API
-type StaticRouteDeleteVpcrouterParam struct {
+func (p *StaticRouteUpdateVPCRouterParam) GetIndex() int {
+	return p.Index
+}
+func (p *StaticRouteUpdateVPCRouterParam) SetPrefix(v string) {
+	p.Prefix = v
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetPrefix() string {
+	return p.Prefix
+}
+
+// StaticRouteDeleteVPCRouterParam is input parameters for the sacloud API
+type StaticRouteDeleteVPCRouterParam struct {
 	Index int
 
 	input Input
 }
 
-// NewStaticRouteDeleteVpcrouterParam return new StaticRouteDeleteVpcrouterParam
-func NewStaticRouteDeleteVpcrouterParam() *StaticRouteDeleteVpcrouterParam {
-	return &StaticRouteDeleteVpcrouterParam{}
+// NewStaticRouteDeleteVPCRouterParam return new StaticRouteDeleteVPCRouterParam
+func NewStaticRouteDeleteVPCRouterParam() *StaticRouteDeleteVPCRouterParam {
+	return &StaticRouteDeleteVPCRouterParam{}
 }
 
-// Initialize init StaticRouteDeleteVpcrouterParam
-func (p *StaticRouteDeleteVpcrouterParam) Initialize(in Input) error {
+// Initialize init StaticRouteDeleteVPCRouterParam
+func (p *StaticRouteDeleteVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5852,18 +5852,18 @@ func (p *StaticRouteDeleteVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *StaticRouteDeleteVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *StaticRouteDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticRouteDeleteVpcrouterParam) fillValueToSkeleton() {
+func (p *StaticRouteDeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
 
 }
 
-func (p *StaticRouteDeleteVpcrouterParam) validate() error {
+func (p *StaticRouteDeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -5877,56 +5877,56 @@ func (p *StaticRouteDeleteVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *StaticRouteDeleteVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *StaticRouteDeleteVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *StaticRouteDeleteVpcrouterParam) CommandDef() *schema.Command {
+func (p *StaticRouteDeleteVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["static-route-delete"]
 }
 
-func (p *StaticRouteDeleteVpcrouterParam) IncludeFields() []string {
+func (p *StaticRouteDeleteVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *StaticRouteDeleteVpcrouterParam) ExcludeFields() []string {
+func (p *StaticRouteDeleteVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *StaticRouteDeleteVpcrouterParam) TableType() output.TableType {
+func (p *StaticRouteDeleteVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *StaticRouteDeleteVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *StaticRouteDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *StaticRouteDeleteVpcrouterParam) SetIndex(v int) {
+func (p *StaticRouteDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *StaticRouteDeleteVpcrouterParam) GetIndex() int {
+func (p *StaticRouteDeleteVPCRouterParam) GetIndex() int {
 	return p.Index
 }
 
-// MonitorVpcrouterParam is input parameters for the sacloud API
-type MonitorVpcrouterParam struct {
+// MonitorVPCRouterParam is input parameters for the sacloud API
+type MonitorVPCRouterParam struct {
+	Interface string
 	Start     string
 	End       string
 	KeyFormat string
-	Interface string
 
 	input Input
 }
 
-// NewMonitorVpcrouterParam return new MonitorVpcrouterParam
-func NewMonitorVpcrouterParam() *MonitorVpcrouterParam {
-	return &MonitorVpcrouterParam{
-		KeyFormat: "sakuracloud.vpcrouter.{{.ID}}.nic.{{.Index}}", Interface: "0"}
+// NewMonitorVPCRouterParam return new MonitorVPCRouterParam
+func NewMonitorVPCRouterParam() *MonitorVPCRouterParam {
+	return &MonitorVPCRouterParam{
+		Interface: "0", KeyFormat: "sakuracloud.vpcrouter.{{.ID}}.nic.{{.Index}}"}
 }
 
-// Initialize init MonitorVpcrouterParam
-func (p *MonitorVpcrouterParam) Initialize(in Input) error {
+// Initialize init MonitorVPCRouterParam
+func (p *MonitorVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5935,11 +5935,14 @@ func (p *MonitorVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *MonitorVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *MonitorVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *MonitorVpcrouterParam) fillValueToSkeleton() {
+func (p *MonitorVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Interface) {
+		p.Interface = ""
+	}
 	if utils.IsEmpty(p.Start) {
 		p.Start = ""
 	}
@@ -5949,14 +5952,26 @@ func (p *MonitorVpcrouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
-	if utils.IsEmpty(p.Interface) {
-		p.Interface = ""
-	}
 
 }
 
-func (p *MonitorVpcrouterParam) validate() error {
+func (p *MonitorVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--interface", p.Interface)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["VPCRouter"].Commands["monitor"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["VPCRouter"].Commands["monitor"].Params["start"].ValidateFunc
@@ -5982,79 +5997,64 @@ func (p *MonitorVpcrouterParam) validate() error {
 		}
 	}
 
-	{
-		validator := validateRequired
-		errs := validator("--interface", p.Interface)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["VPCRouter"].Commands["monitor"].Params["interface"].ValidateFunc
-		errs := validator("--interface", p.Interface)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
-func (p *MonitorVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *MonitorVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *MonitorVpcrouterParam) CommandDef() *schema.Command {
+func (p *MonitorVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["monitor"]
 }
 
-func (p *MonitorVpcrouterParam) IncludeFields() []string {
+func (p *MonitorVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *MonitorVpcrouterParam) ExcludeFields() []string {
+func (p *MonitorVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *MonitorVpcrouterParam) TableType() output.TableType {
+func (p *MonitorVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *MonitorVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *MonitorVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *MonitorVpcrouterParam) SetStart(v string) {
-	p.Start = v
-}
-
-func (p *MonitorVpcrouterParam) GetStart() string {
-	return p.Start
-}
-func (p *MonitorVpcrouterParam) SetEnd(v string) {
-	p.End = v
-}
-
-func (p *MonitorVpcrouterParam) GetEnd() string {
-	return p.End
-}
-func (p *MonitorVpcrouterParam) SetKeyFormat(v string) {
-	p.KeyFormat = v
-}
-
-func (p *MonitorVpcrouterParam) GetKeyFormat() string {
-	return p.KeyFormat
-}
-func (p *MonitorVpcrouterParam) SetInterface(v string) {
+func (p *MonitorVPCRouterParam) SetInterface(v string) {
 	p.Interface = v
 }
 
-func (p *MonitorVpcrouterParam) GetInterface() string {
+func (p *MonitorVPCRouterParam) GetInterface() string {
 	return p.Interface
 }
+func (p *MonitorVPCRouterParam) SetStart(v string) {
+	p.Start = v
+}
 
-// LogsVpcrouterParam is input parameters for the sacloud API
-type LogsVpcrouterParam struct {
+func (p *MonitorVPCRouterParam) GetStart() string {
+	return p.Start
+}
+func (p *MonitorVPCRouterParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorVPCRouterParam) GetEnd() string {
+	return p.End
+}
+func (p *MonitorVPCRouterParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorVPCRouterParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
+
+// LogsVPCRouterParam is input parameters for the sacloud API
+type LogsVPCRouterParam struct {
 	LogName         string
 	Follow          bool
 	RefreshInterval int64
@@ -6063,14 +6063,14 @@ type LogsVpcrouterParam struct {
 	input Input
 }
 
-// NewLogsVpcrouterParam return new LogsVpcrouterParam
-func NewLogsVpcrouterParam() *LogsVpcrouterParam {
-	return &LogsVpcrouterParam{
+// NewLogsVPCRouterParam return new LogsVPCRouterParam
+func NewLogsVPCRouterParam() *LogsVPCRouterParam {
+	return &LogsVPCRouterParam{
 		LogName: "all", RefreshInterval: 3}
 }
 
-// Initialize init LogsVpcrouterParam
-func (p *LogsVpcrouterParam) Initialize(in Input) error {
+// Initialize init LogsVPCRouterParam
+func (p *LogsVPCRouterParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6079,11 +6079,11 @@ func (p *LogsVpcrouterParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *LogsVpcrouterParam) WriteSkeleton(writer io.Writer) error {
+func (p *LogsVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *LogsVpcrouterParam) fillValueToSkeleton() {
+func (p *LogsVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.LogName) {
 		p.LogName = ""
 	}
@@ -6099,7 +6099,7 @@ func (p *LogsVpcrouterParam) fillValueToSkeleton() {
 
 }
 
-func (p *LogsVpcrouterParam) validate() error {
+func (p *LogsVPCRouterParam) validate() error {
 	var errors []error
 
 	{
@@ -6121,55 +6121,55 @@ func (p *LogsVpcrouterParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *LogsVpcrouterParam) ResourceDef() *schema.Resource {
+func (p *LogsVPCRouterParam) ResourceDef() *schema.Resource {
 	return define.Resources["VPCRouter"]
 }
 
-func (p *LogsVpcrouterParam) CommandDef() *schema.Command {
+func (p *LogsVPCRouterParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["logs"]
 }
 
-func (p *LogsVpcrouterParam) IncludeFields() []string {
+func (p *LogsVPCRouterParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *LogsVpcrouterParam) ExcludeFields() []string {
+func (p *LogsVPCRouterParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *LogsVpcrouterParam) TableType() output.TableType {
+func (p *LogsVPCRouterParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *LogsVpcrouterParam) ColumnDefs() []output.ColumnDef {
+func (p *LogsVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *LogsVpcrouterParam) SetLogName(v string) {
+func (p *LogsVPCRouterParam) SetLogName(v string) {
 	p.LogName = v
 }
 
-func (p *LogsVpcrouterParam) GetLogName() string {
+func (p *LogsVPCRouterParam) GetLogName() string {
 	return p.LogName
 }
-func (p *LogsVpcrouterParam) SetFollow(v bool) {
+func (p *LogsVPCRouterParam) SetFollow(v bool) {
 	p.Follow = v
 }
 
-func (p *LogsVpcrouterParam) GetFollow() bool {
+func (p *LogsVPCRouterParam) GetFollow() bool {
 	return p.Follow
 }
-func (p *LogsVpcrouterParam) SetRefreshInterval(v int64) {
+func (p *LogsVPCRouterParam) SetRefreshInterval(v int64) {
 	p.RefreshInterval = v
 }
 
-func (p *LogsVpcrouterParam) GetRefreshInterval() int64 {
+func (p *LogsVPCRouterParam) GetRefreshInterval() int64 {
 	return p.RefreshInterval
 }
-func (p *LogsVpcrouterParam) SetListLogNames(v bool) {
+func (p *LogsVPCRouterParam) SetListLogNames(v bool) {
 	p.ListLogNames = v
 }
 
-func (p *LogsVpcrouterParam) GetListLogNames() bool {
+func (p *LogsVPCRouterParam) GetListLogNames() bool {
 	return p.ListLogNames
 }

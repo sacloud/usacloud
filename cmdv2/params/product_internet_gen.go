@@ -27,24 +27,24 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListProductinternetParam is input parameters for the sacloud API
-type ListProductinternetParam struct {
-	Sort []string
+// ListProductInternetParam is input parameters for the sacloud API
+type ListProductInternetParam struct {
 	Name []string
 	Id   []sacloud.ID
 	From int
 	Max  int
+	Sort []string
 
 	input Input
 }
 
-// NewListProductinternetParam return new ListProductinternetParam
-func NewListProductinternetParam() *ListProductinternetParam {
-	return &ListProductinternetParam{}
+// NewListProductInternetParam return new ListProductInternetParam
+func NewListProductInternetParam() *ListProductInternetParam {
+	return &ListProductInternetParam{}
 }
 
-// Initialize init ListProductinternetParam
-func (p *ListProductinternetParam) Initialize(in Input) error {
+// Initialize init ListProductInternetParam
+func (p *ListProductInternetParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -53,14 +53,11 @@ func (p *ListProductinternetParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ListProductinternetParam) WriteSkeleton(writer io.Writer) error {
+func (p *ListProductInternetParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListProductinternetParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
+func (p *ListProductInternetParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -73,10 +70,13 @@ func (p *ListProductinternetParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
 	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
 
 }
 
-func (p *ListProductinternetParam) validate() error {
+func (p *ListProductInternetParam) validate() error {
 	var errors []error
 
 	{
@@ -109,80 +109,80 @@ func (p *ListProductinternetParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ListProductinternetParam) ResourceDef() *schema.Resource {
+func (p *ListProductInternetParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProductInternet"]
 }
 
-func (p *ListProductinternetParam) CommandDef() *schema.Command {
+func (p *ListProductInternetParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["list"]
 }
 
-func (p *ListProductinternetParam) IncludeFields() []string {
+func (p *ListProductInternetParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ListProductinternetParam) ExcludeFields() []string {
+func (p *ListProductInternetParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ListProductinternetParam) TableType() output.TableType {
+func (p *ListProductInternetParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ListProductinternetParam) ColumnDefs() []output.ColumnDef {
+func (p *ListProductInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListProductinternetParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListProductinternetParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListProductinternetParam) SetName(v []string) {
+func (p *ListProductInternetParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListProductinternetParam) GetName() []string {
+func (p *ListProductInternetParam) GetName() []string {
 	return p.Name
 }
-func (p *ListProductinternetParam) SetId(v []sacloud.ID) {
+func (p *ListProductInternetParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListProductinternetParam) GetId() []sacloud.ID {
+func (p *ListProductInternetParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListProductinternetParam) SetFrom(v int) {
+func (p *ListProductInternetParam) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListProductinternetParam) GetFrom() int {
+func (p *ListProductInternetParam) GetFrom() int {
 	return p.From
 }
-func (p *ListProductinternetParam) SetMax(v int) {
+func (p *ListProductInternetParam) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListProductinternetParam) GetMax() int {
+func (p *ListProductInternetParam) GetMax() int {
 	return p.Max
 }
+func (p *ListProductInternetParam) SetSort(v []string) {
+	p.Sort = v
+}
 
-// ReadProductinternetParam is input parameters for the sacloud API
-type ReadProductinternetParam struct {
+func (p *ListProductInternetParam) GetSort() []string {
+	return p.Sort
+}
+
+// ReadProductInternetParam is input parameters for the sacloud API
+type ReadProductInternetParam struct {
 	Id sacloud.ID
 
 	input Input
 }
 
-// NewReadProductinternetParam return new ReadProductinternetParam
-func NewReadProductinternetParam() *ReadProductinternetParam {
-	return &ReadProductinternetParam{}
+// NewReadProductInternetParam return new ReadProductInternetParam
+func NewReadProductInternetParam() *ReadProductInternetParam {
+	return &ReadProductInternetParam{}
 }
 
-// Initialize init ReadProductinternetParam
-func (p *ReadProductinternetParam) Initialize(in Input) error {
+// Initialize init ReadProductInternetParam
+func (p *ReadProductInternetParam) Initialize(in Input) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -191,18 +191,18 @@ func (p *ReadProductinternetParam) Initialize(in Input) error {
 }
 
 // WriteSkeleton writes skeleton of JSON encoded parameters to specified writer
-func (p *ReadProductinternetParam) WriteSkeleton(writer io.Writer) error {
+func (p *ReadProductInternetParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadProductinternetParam) fillValueToSkeleton() {
+func (p *ReadProductInternetParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
 }
 
-func (p *ReadProductinternetParam) validate() error {
+func (p *ReadProductInternetParam) validate() error {
 	var errors []error
 
 	{
@@ -223,34 +223,34 @@ func (p *ReadProductinternetParam) validate() error {
 	return utils.FlattenErrors(errors)
 }
 
-func (p *ReadProductinternetParam) ResourceDef() *schema.Resource {
+func (p *ReadProductInternetParam) ResourceDef() *schema.Resource {
 	return define.Resources["ProductInternet"]
 }
 
-func (p *ReadProductinternetParam) CommandDef() *schema.Command {
+func (p *ReadProductInternetParam) CommandDef() *schema.Command {
 	return p.ResourceDef().Commands["read"]
 }
 
-func (p *ReadProductinternetParam) IncludeFields() []string {
+func (p *ReadProductInternetParam) IncludeFields() []string {
 	return p.CommandDef().IncludeFields
 }
 
-func (p *ReadProductinternetParam) ExcludeFields() []string {
+func (p *ReadProductInternetParam) ExcludeFields() []string {
 	return p.CommandDef().ExcludeFields
 }
 
-func (p *ReadProductinternetParam) TableType() output.TableType {
+func (p *ReadProductInternetParam) TableType() output.TableType {
 	return p.CommandDef().TableType
 }
 
-func (p *ReadProductinternetParam) ColumnDefs() []output.ColumnDef {
+func (p *ReadProductInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ReadProductinternetParam) SetId(v sacloud.ID) {
+func (p *ReadProductInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadProductinternetParam) GetId() sacloud.ID {
+func (p *ReadProductInternetParam) GetId() sacloud.ID {
 	return p.Id
 }

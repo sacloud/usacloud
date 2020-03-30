@@ -32,14 +32,14 @@ import (
 )
 
 func init() {
-	privatehostListParam := params.NewListPrivatehostParam()
-	privatehostCreateParam := params.NewCreatePrivatehostParam()
-	privatehostReadParam := params.NewReadPrivatehostParam()
-	privatehostUpdateParam := params.NewUpdatePrivatehostParam()
-	privatehostDeleteParam := params.NewDeletePrivatehostParam()
-	privatehostServerInfoParam := params.NewServerInfoPrivatehostParam()
-	privatehostServerAddParam := params.NewServerAddPrivatehostParam()
-	privatehostServerDeleteParam := params.NewServerDeletePrivatehostParam()
+	privateHostListParam := params.NewListPrivateHostParam()
+	privateHostCreateParam := params.NewCreatePrivateHostParam()
+	privateHostReadParam := params.NewReadPrivateHostParam()
+	privateHostUpdateParam := params.NewUpdatePrivateHostParam()
+	privateHostDeleteParam := params.NewDeletePrivateHostParam()
+	privateHostServerInfoParam := params.NewServerInfoPrivateHostParam()
+	privateHostServerAddParam := params.NewServerAddPrivateHostParam()
+	privateHostServerDeleteParam := params.NewServerDeletePrivateHostParam()
 
 	cliCommand := &cli.Command{
 		Name:  "private-host",
@@ -48,7 +48,7 @@ func init() {
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find", "selector"},
-				Usage:   "List Privatehost",
+				Usage:   "List PrivateHost",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -139,75 +139,75 @@ func init() {
 						return err
 					}
 
-					privatehostListParam.ParamTemplate = c.String("param-template")
-					privatehostListParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(privatehostListParam)
+					privateHostListParam.ParamTemplate = c.String("param-template")
+					privateHostListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(privateHostListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListPrivatehostParam()
+						p := params.NewListPrivateHostParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(privatehostListParam, p, mergo.WithOverride)
+						mergo.Merge(privateHostListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						privatehostListParam.Name = c.StringSlice("name")
+						privateHostListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						privatehostListParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						privateHostListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
-						privatehostListParam.Tags = c.StringSlice("tags")
+						privateHostListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("from") {
-						privatehostListParam.From = c.Int("from")
+						privateHostListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						privatehostListParam.Max = c.Int("max")
+						privateHostListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						privatehostListParam.Sort = c.StringSlice("sort")
+						privateHostListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						privatehostListParam.ParamTemplate = c.String("param-template")
+						privateHostListParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						privatehostListParam.Parameters = c.String("parameters")
+						privateHostListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						privatehostListParam.ParamTemplateFile = c.String("param-template-file")
+						privateHostListParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						privatehostListParam.ParameterFile = c.String("parameter-file")
+						privateHostListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						privatehostListParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						privateHostListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						privatehostListParam.OutputType = c.String("output-type")
+						privateHostListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						privatehostListParam.Column = c.StringSlice("column")
+						privateHostListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						privatehostListParam.Quiet = c.Bool("quiet")
+						privateHostListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						privatehostListParam.Format = c.String("format")
+						privateHostListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						privatehostListParam.FormatFile = c.String("format-file")
+						privateHostListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						privatehostListParam.Query = c.String("query")
+						privateHostListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						privatehostListParam.QueryFile = c.String("query-file")
+						privateHostListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -215,7 +215,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = privatehostListParam
+					var outputTypeHolder interface{} = privateHostListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -226,10 +226,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if privatehostListParam.GenerateSkeleton {
-						privatehostListParam.GenerateSkeleton = false
-						privatehostListParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(privatehostListParam, "", "\t")
+					if privateHostListParam.GenerateSkeleton {
+						privateHostListParam.GenerateSkeleton = false
+						privateHostListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(privateHostListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -238,21 +238,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := privatehostListParam.Validate(); len(errors) > 0 {
+					if errors := privateHostListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), privatehostListParam)
+					ctx := command.NewContext(c, c.Args().Slice(), privateHostListParam)
 
 					// Run command with params
-					return funcs.PrivatehostList(ctx, privatehostListParam)
+					return funcs.PrivateHostList(ctx, privateHostListParam)
 
 				},
 			},
 			{
 				Name:  "create",
-				Usage: "Create Privatehost",
+				Usage: "Create PrivateHost",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "name",
@@ -338,72 +338,72 @@ func init() {
 						return err
 					}
 
-					privatehostCreateParam.ParamTemplate = c.String("param-template")
-					privatehostCreateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(privatehostCreateParam)
+					privateHostCreateParam.ParamTemplate = c.String("param-template")
+					privateHostCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(privateHostCreateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewCreatePrivatehostParam()
+						p := params.NewCreatePrivateHostParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(privatehostCreateParam, p, mergo.WithOverride)
+						mergo.Merge(privateHostCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						privatehostCreateParam.Name = c.String("name")
+						privateHostCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						privatehostCreateParam.Description = c.String("description")
+						privateHostCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						privatehostCreateParam.Tags = c.StringSlice("tags")
+						privateHostCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						privatehostCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						privateHostCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						privatehostCreateParam.Assumeyes = c.Bool("assumeyes")
+						privateHostCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						privatehostCreateParam.ParamTemplate = c.String("param-template")
+						privateHostCreateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						privatehostCreateParam.Parameters = c.String("parameters")
+						privateHostCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						privatehostCreateParam.ParamTemplateFile = c.String("param-template-file")
+						privateHostCreateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						privatehostCreateParam.ParameterFile = c.String("parameter-file")
+						privateHostCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						privatehostCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						privateHostCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						privatehostCreateParam.OutputType = c.String("output-type")
+						privateHostCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						privatehostCreateParam.Column = c.StringSlice("column")
+						privateHostCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						privatehostCreateParam.Quiet = c.Bool("quiet")
+						privateHostCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						privatehostCreateParam.Format = c.String("format")
+						privateHostCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						privatehostCreateParam.FormatFile = c.String("format-file")
+						privateHostCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						privatehostCreateParam.Query = c.String("query")
+						privateHostCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						privatehostCreateParam.QueryFile = c.String("query-file")
+						privateHostCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -411,7 +411,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = privatehostCreateParam
+					var outputTypeHolder interface{} = privateHostCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -422,10 +422,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if privatehostCreateParam.GenerateSkeleton {
-						privatehostCreateParam.GenerateSkeleton = false
-						privatehostCreateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(privatehostCreateParam, "", "\t")
+					if privateHostCreateParam.GenerateSkeleton {
+						privateHostCreateParam.GenerateSkeleton = false
+						privateHostCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(privateHostCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -434,15 +434,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := privatehostCreateParam.Validate(); len(errors) > 0 {
+					if errors := privateHostCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), privatehostCreateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), privateHostCreateParam)
 
 					// confirm
-					if !privatehostCreateParam.Assumeyes {
+					if !privateHostCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -452,13 +452,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.PrivatehostCreate(ctx, privatehostCreateParam)
+					return funcs.PrivateHostCreate(ctx, privateHostCreateParam)
 
 				},
 			},
 			{
 				Name:      "read",
-				Usage:     "Read Privatehost",
+				Usage:     "Read PrivateHost",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -532,63 +532,63 @@ func init() {
 						return err
 					}
 
-					privatehostReadParam.ParamTemplate = c.String("param-template")
-					privatehostReadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(privatehostReadParam)
+					privateHostReadParam.ParamTemplate = c.String("param-template")
+					privateHostReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(privateHostReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewReadPrivatehostParam()
+						p := params.NewReadPrivateHostParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(privatehostReadParam, p, mergo.WithOverride)
+						mergo.Merge(privateHostReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						privatehostReadParam.Selector = c.StringSlice("selector")
+						privateHostReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						privatehostReadParam.ParamTemplate = c.String("param-template")
+						privateHostReadParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						privatehostReadParam.Parameters = c.String("parameters")
+						privateHostReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						privatehostReadParam.ParamTemplateFile = c.String("param-template-file")
+						privateHostReadParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						privatehostReadParam.ParameterFile = c.String("parameter-file")
+						privateHostReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						privatehostReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						privateHostReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						privatehostReadParam.OutputType = c.String("output-type")
+						privateHostReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						privatehostReadParam.Column = c.StringSlice("column")
+						privateHostReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						privatehostReadParam.Quiet = c.Bool("quiet")
+						privateHostReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						privatehostReadParam.Format = c.String("format")
+						privateHostReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						privatehostReadParam.FormatFile = c.String("format-file")
+						privateHostReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						privatehostReadParam.Query = c.String("query")
+						privateHostReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						privatehostReadParam.QueryFile = c.String("query-file")
+						privateHostReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						privatehostReadParam.Id = sacloud.ID(c.Int64("id"))
+						privateHostReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -596,7 +596,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = privatehostReadParam
+					var outputTypeHolder interface{} = privateHostReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -607,10 +607,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if privatehostReadParam.GenerateSkeleton {
-						privatehostReadParam.GenerateSkeleton = false
-						privatehostReadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(privatehostReadParam, "", "\t")
+					if privateHostReadParam.GenerateSkeleton {
+						privateHostReadParam.GenerateSkeleton = false
+						privateHostReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(privateHostReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -619,19 +619,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := privatehostReadParam.Validate(); len(errors) > 0 {
+					if errors := privateHostReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), privatehostReadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), privateHostReadParam)
 
-					apiClient := ctx.GetAPIClient().Privatehost
+					apiClient := ctx.GetAPIClient().PrivateHost
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(privatehostReadParam.Selector) == 0 {
+						if len(privateHostReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -640,12 +640,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.PrivateHosts {
-							if hasTags(&v, privatehostReadParam.Selector) {
+							if hasTags(&v, privateHostReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", privatehostReadParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", privateHostReadParam.Selector)
 						}
 
 					} else {
@@ -667,7 +667,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.PrivateHosts {
-										if len(privatehostReadParam.Selector) == 0 || hasTags(&v, privatehostReadParam.Selector) {
+										if len(privateHostReadParam.Selector) == 0 || hasTags(&v, privateHostReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -692,11 +692,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						privatehostReadParam.SetId(id)
-						p := *privatehostReadParam // copy struct value
-						privatehostReadParam := &p
+						privateHostReadParam.SetId(id)
+						p := *privateHostReadParam // copy struct value
+						privateHostReadParam := &p
 						go func() {
-							err := funcs.PrivatehostRead(ctx, privatehostReadParam)
+							err := funcs.PrivateHostRead(ctx, privateHostReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -710,7 +710,7 @@ func init() {
 			},
 			{
 				Name:      "update",
-				Usage:     "Update Privatehost",
+				Usage:     "Update PrivateHost",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -806,78 +806,78 @@ func init() {
 						return err
 					}
 
-					privatehostUpdateParam.ParamTemplate = c.String("param-template")
-					privatehostUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(privatehostUpdateParam)
+					privateHostUpdateParam.ParamTemplate = c.String("param-template")
+					privateHostUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(privateHostUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewUpdatePrivatehostParam()
+						p := params.NewUpdatePrivateHostParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(privatehostUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(privateHostUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						privatehostUpdateParam.Selector = c.StringSlice("selector")
+						privateHostUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
-						privatehostUpdateParam.Name = c.String("name")
+						privateHostUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						privatehostUpdateParam.Description = c.String("description")
+						privateHostUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						privatehostUpdateParam.Tags = c.StringSlice("tags")
+						privateHostUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						privatehostUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						privateHostUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						privatehostUpdateParam.Assumeyes = c.Bool("assumeyes")
+						privateHostUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						privatehostUpdateParam.ParamTemplate = c.String("param-template")
+						privateHostUpdateParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						privatehostUpdateParam.Parameters = c.String("parameters")
+						privateHostUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						privatehostUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						privateHostUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						privatehostUpdateParam.ParameterFile = c.String("parameter-file")
+						privateHostUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						privatehostUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						privateHostUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						privatehostUpdateParam.OutputType = c.String("output-type")
+						privateHostUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						privatehostUpdateParam.Column = c.StringSlice("column")
+						privateHostUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						privatehostUpdateParam.Quiet = c.Bool("quiet")
+						privateHostUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						privatehostUpdateParam.Format = c.String("format")
+						privateHostUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						privatehostUpdateParam.FormatFile = c.String("format-file")
+						privateHostUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						privatehostUpdateParam.Query = c.String("query")
+						privateHostUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						privatehostUpdateParam.QueryFile = c.String("query-file")
+						privateHostUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						privatehostUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						privateHostUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -885,7 +885,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = privatehostUpdateParam
+					var outputTypeHolder interface{} = privateHostUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -896,10 +896,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if privatehostUpdateParam.GenerateSkeleton {
-						privatehostUpdateParam.GenerateSkeleton = false
-						privatehostUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(privatehostUpdateParam, "", "\t")
+					if privateHostUpdateParam.GenerateSkeleton {
+						privateHostUpdateParam.GenerateSkeleton = false
+						privateHostUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(privateHostUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -908,19 +908,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := privatehostUpdateParam.Validate(); len(errors) > 0 {
+					if errors := privateHostUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), privatehostUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), privateHostUpdateParam)
 
-					apiClient := ctx.GetAPIClient().Privatehost
+					apiClient := ctx.GetAPIClient().PrivateHost
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(privatehostUpdateParam.Selector) == 0 {
+						if len(privateHostUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -929,12 +929,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.PrivateHosts {
-							if hasTags(&v, privatehostUpdateParam.Selector) {
+							if hasTags(&v, privateHostUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", privatehostUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", privateHostUpdateParam.Selector)
 						}
 
 					} else {
@@ -956,7 +956,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.PrivateHosts {
-										if len(privatehostUpdateParam.Selector) == 0 || hasTags(&v, privatehostUpdateParam.Selector) {
+										if len(privateHostUpdateParam.Selector) == 0 || hasTags(&v, privateHostUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -973,7 +973,7 @@ func init() {
 					}
 
 					// confirm
-					if !privatehostUpdateParam.Assumeyes {
+					if !privateHostUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -987,11 +987,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						privatehostUpdateParam.SetId(id)
-						p := *privatehostUpdateParam // copy struct value
-						privatehostUpdateParam := &p
+						privateHostUpdateParam.SetId(id)
+						p := *privateHostUpdateParam // copy struct value
+						privateHostUpdateParam := &p
 						go func() {
-							err := funcs.PrivatehostUpdate(ctx, privatehostUpdateParam)
+							err := funcs.PrivateHostUpdate(ctx, privateHostUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1006,7 +1006,7 @@ func init() {
 			{
 				Name:      "delete",
 				Aliases:   []string{"rm"},
-				Usage:     "Delete Privatehost",
+				Usage:     "Delete PrivateHost",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1085,66 +1085,66 @@ func init() {
 						return err
 					}
 
-					privatehostDeleteParam.ParamTemplate = c.String("param-template")
-					privatehostDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(privatehostDeleteParam)
+					privateHostDeleteParam.ParamTemplate = c.String("param-template")
+					privateHostDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(privateHostDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDeletePrivatehostParam()
+						p := params.NewDeletePrivateHostParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(privatehostDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(privateHostDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						privatehostDeleteParam.Selector = c.StringSlice("selector")
+						privateHostDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						privatehostDeleteParam.Assumeyes = c.Bool("assumeyes")
+						privateHostDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						privatehostDeleteParam.ParamTemplate = c.String("param-template")
+						privateHostDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						privatehostDeleteParam.Parameters = c.String("parameters")
+						privateHostDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						privatehostDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						privateHostDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						privatehostDeleteParam.ParameterFile = c.String("parameter-file")
+						privateHostDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						privatehostDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						privateHostDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						privatehostDeleteParam.OutputType = c.String("output-type")
+						privateHostDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						privatehostDeleteParam.Column = c.StringSlice("column")
+						privateHostDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						privatehostDeleteParam.Quiet = c.Bool("quiet")
+						privateHostDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						privatehostDeleteParam.Format = c.String("format")
+						privateHostDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						privatehostDeleteParam.FormatFile = c.String("format-file")
+						privateHostDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						privatehostDeleteParam.Query = c.String("query")
+						privateHostDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						privatehostDeleteParam.QueryFile = c.String("query-file")
+						privateHostDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						privatehostDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						privateHostDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1152,7 +1152,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = privatehostDeleteParam
+					var outputTypeHolder interface{} = privateHostDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1163,10 +1163,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if privatehostDeleteParam.GenerateSkeleton {
-						privatehostDeleteParam.GenerateSkeleton = false
-						privatehostDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(privatehostDeleteParam, "", "\t")
+					if privateHostDeleteParam.GenerateSkeleton {
+						privateHostDeleteParam.GenerateSkeleton = false
+						privateHostDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(privateHostDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1175,19 +1175,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := privatehostDeleteParam.Validate(); len(errors) > 0 {
+					if errors := privateHostDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), privatehostDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), privateHostDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Privatehost
+					apiClient := ctx.GetAPIClient().PrivateHost
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(privatehostDeleteParam.Selector) == 0 {
+						if len(privateHostDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1196,12 +1196,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.PrivateHosts {
-							if hasTags(&v, privatehostDeleteParam.Selector) {
+							if hasTags(&v, privateHostDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", privatehostDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", privateHostDeleteParam.Selector)
 						}
 
 					} else {
@@ -1223,7 +1223,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.PrivateHosts {
-										if len(privatehostDeleteParam.Selector) == 0 || hasTags(&v, privatehostDeleteParam.Selector) {
+										if len(privateHostDeleteParam.Selector) == 0 || hasTags(&v, privateHostDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1240,7 +1240,7 @@ func init() {
 					}
 
 					// confirm
-					if !privatehostDeleteParam.Assumeyes {
+					if !privateHostDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1254,11 +1254,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						privatehostDeleteParam.SetId(id)
-						p := *privatehostDeleteParam // copy struct value
-						privatehostDeleteParam := &p
+						privateHostDeleteParam.SetId(id)
+						p := *privateHostDeleteParam // copy struct value
+						privateHostDeleteParam := &p
 						go func() {
-							err := funcs.PrivatehostDelete(ctx, privatehostDeleteParam)
+							err := funcs.PrivateHostDelete(ctx, privateHostDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1273,7 +1273,7 @@ func init() {
 			{
 				Name:      "server-info",
 				Aliases:   []string{"server-list"},
-				Usage:     "ServerInfo Privatehost",
+				Usage:     "ServerInfo PrivateHost",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1347,63 +1347,63 @@ func init() {
 						return err
 					}
 
-					privatehostServerInfoParam.ParamTemplate = c.String("param-template")
-					privatehostServerInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(privatehostServerInfoParam)
+					privateHostServerInfoParam.ParamTemplate = c.String("param-template")
+					privateHostServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(privateHostServerInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerInfoPrivatehostParam()
+						p := params.NewServerInfoPrivateHostParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(privatehostServerInfoParam, p, mergo.WithOverride)
+						mergo.Merge(privateHostServerInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						privatehostServerInfoParam.Selector = c.StringSlice("selector")
+						privateHostServerInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						privatehostServerInfoParam.ParamTemplate = c.String("param-template")
+						privateHostServerInfoParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						privatehostServerInfoParam.Parameters = c.String("parameters")
+						privateHostServerInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						privatehostServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+						privateHostServerInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						privatehostServerInfoParam.ParameterFile = c.String("parameter-file")
+						privateHostServerInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						privatehostServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						privateHostServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						privatehostServerInfoParam.OutputType = c.String("output-type")
+						privateHostServerInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						privatehostServerInfoParam.Column = c.StringSlice("column")
+						privateHostServerInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						privatehostServerInfoParam.Quiet = c.Bool("quiet")
+						privateHostServerInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						privatehostServerInfoParam.Format = c.String("format")
+						privateHostServerInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						privatehostServerInfoParam.FormatFile = c.String("format-file")
+						privateHostServerInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						privatehostServerInfoParam.Query = c.String("query")
+						privateHostServerInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						privatehostServerInfoParam.QueryFile = c.String("query-file")
+						privateHostServerInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						privatehostServerInfoParam.Id = sacloud.ID(c.Int64("id"))
+						privateHostServerInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1411,7 +1411,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = privatehostServerInfoParam
+					var outputTypeHolder interface{} = privateHostServerInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1422,10 +1422,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if privatehostServerInfoParam.GenerateSkeleton {
-						privatehostServerInfoParam.GenerateSkeleton = false
-						privatehostServerInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(privatehostServerInfoParam, "", "\t")
+					if privateHostServerInfoParam.GenerateSkeleton {
+						privateHostServerInfoParam.GenerateSkeleton = false
+						privateHostServerInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(privateHostServerInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1434,19 +1434,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := privatehostServerInfoParam.Validate(); len(errors) > 0 {
+					if errors := privateHostServerInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), privatehostServerInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), privateHostServerInfoParam)
 
-					apiClient := ctx.GetAPIClient().Privatehost
+					apiClient := ctx.GetAPIClient().PrivateHost
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(privatehostServerInfoParam.Selector) == 0 {
+						if len(privateHostServerInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1455,12 +1455,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.PrivateHosts {
-							if hasTags(&v, privatehostServerInfoParam.Selector) {
+							if hasTags(&v, privateHostServerInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", privatehostServerInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", privateHostServerInfoParam.Selector)
 						}
 
 					} else {
@@ -1482,7 +1482,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.PrivateHosts {
-										if len(privatehostServerInfoParam.Selector) == 0 || hasTags(&v, privatehostServerInfoParam.Selector) {
+										if len(privateHostServerInfoParam.Selector) == 0 || hasTags(&v, privateHostServerInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1507,11 +1507,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						privatehostServerInfoParam.SetId(id)
-						p := *privatehostServerInfoParam // copy struct value
-						privatehostServerInfoParam := &p
+						privateHostServerInfoParam.SetId(id)
+						p := *privateHostServerInfoParam // copy struct value
+						privateHostServerInfoParam := &p
 						go func() {
-							err := funcs.PrivatehostServerInfo(ctx, privatehostServerInfoParam)
+							err := funcs.PrivateHostServerInfo(ctx, privateHostServerInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1525,7 +1525,7 @@ func init() {
 			},
 			{
 				Name:      "server-add",
-				Usage:     "ServerAdd Privatehost",
+				Usage:     "ServerAdd PrivateHost",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -1608,69 +1608,69 @@ func init() {
 						return err
 					}
 
-					privatehostServerAddParam.ParamTemplate = c.String("param-template")
-					privatehostServerAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(privatehostServerAddParam)
+					privateHostServerAddParam.ParamTemplate = c.String("param-template")
+					privateHostServerAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(privateHostServerAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerAddPrivatehostParam()
+						p := params.NewServerAddPrivateHostParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(privatehostServerAddParam, p, mergo.WithOverride)
+						mergo.Merge(privateHostServerAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("server-id") {
-						privatehostServerAddParam.ServerId = sacloud.ID(c.Int64("server-id"))
+						privateHostServerAddParam.ServerId = sacloud.ID(c.Int64("server-id"))
 					}
 					if c.IsSet("selector") {
-						privatehostServerAddParam.Selector = c.StringSlice("selector")
+						privateHostServerAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						privatehostServerAddParam.Assumeyes = c.Bool("assumeyes")
+						privateHostServerAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						privatehostServerAddParam.ParamTemplate = c.String("param-template")
+						privateHostServerAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						privatehostServerAddParam.Parameters = c.String("parameters")
+						privateHostServerAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						privatehostServerAddParam.ParamTemplateFile = c.String("param-template-file")
+						privateHostServerAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						privatehostServerAddParam.ParameterFile = c.String("parameter-file")
+						privateHostServerAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						privatehostServerAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						privateHostServerAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						privatehostServerAddParam.OutputType = c.String("output-type")
+						privateHostServerAddParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						privatehostServerAddParam.Column = c.StringSlice("column")
+						privateHostServerAddParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						privatehostServerAddParam.Quiet = c.Bool("quiet")
+						privateHostServerAddParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						privatehostServerAddParam.Format = c.String("format")
+						privateHostServerAddParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						privatehostServerAddParam.FormatFile = c.String("format-file")
+						privateHostServerAddParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						privatehostServerAddParam.Query = c.String("query")
+						privateHostServerAddParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						privatehostServerAddParam.QueryFile = c.String("query-file")
+						privateHostServerAddParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						privatehostServerAddParam.Id = sacloud.ID(c.Int64("id"))
+						privateHostServerAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1678,7 +1678,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = privatehostServerAddParam
+					var outputTypeHolder interface{} = privateHostServerAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1689,10 +1689,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if privatehostServerAddParam.GenerateSkeleton {
-						privatehostServerAddParam.GenerateSkeleton = false
-						privatehostServerAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(privatehostServerAddParam, "", "\t")
+					if privateHostServerAddParam.GenerateSkeleton {
+						privateHostServerAddParam.GenerateSkeleton = false
+						privateHostServerAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(privateHostServerAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1701,19 +1701,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := privatehostServerAddParam.Validate(); len(errors) > 0 {
+					if errors := privateHostServerAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), privatehostServerAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), privateHostServerAddParam)
 
-					apiClient := ctx.GetAPIClient().Privatehost
+					apiClient := ctx.GetAPIClient().PrivateHost
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(privatehostServerAddParam.Selector) == 0 {
+						if len(privateHostServerAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1722,12 +1722,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.PrivateHosts {
-							if hasTags(&v, privatehostServerAddParam.Selector) {
+							if hasTags(&v, privateHostServerAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", privatehostServerAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", privateHostServerAddParam.Selector)
 						}
 
 					} else {
@@ -1749,7 +1749,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.PrivateHosts {
-										if len(privatehostServerAddParam.Selector) == 0 || hasTags(&v, privatehostServerAddParam.Selector) {
+										if len(privateHostServerAddParam.Selector) == 0 || hasTags(&v, privateHostServerAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1770,7 +1770,7 @@ func init() {
 					}
 
 					// confirm
-					if !privatehostServerAddParam.Assumeyes {
+					if !privateHostServerAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1784,11 +1784,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						privatehostServerAddParam.SetId(id)
-						p := *privatehostServerAddParam // copy struct value
-						privatehostServerAddParam := &p
+						privateHostServerAddParam.SetId(id)
+						p := *privateHostServerAddParam // copy struct value
+						privateHostServerAddParam := &p
 						go func() {
-							err := funcs.PrivatehostServerAdd(ctx, privatehostServerAddParam)
+							err := funcs.PrivateHostServerAdd(ctx, privateHostServerAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1802,7 +1802,7 @@ func init() {
 			},
 			{
 				Name:      "server-delete",
-				Usage:     "ServerDelete Privatehost",
+				Usage:     "ServerDelete PrivateHost",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -1885,69 +1885,69 @@ func init() {
 						return err
 					}
 
-					privatehostServerDeleteParam.ParamTemplate = c.String("param-template")
-					privatehostServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(privatehostServerDeleteParam)
+					privateHostServerDeleteParam.ParamTemplate = c.String("param-template")
+					privateHostServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(privateHostServerDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewServerDeletePrivatehostParam()
+						p := params.NewServerDeletePrivateHostParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(privatehostServerDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(privateHostServerDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("server-id") {
-						privatehostServerDeleteParam.ServerId = sacloud.ID(c.Int64("server-id"))
+						privateHostServerDeleteParam.ServerId = sacloud.ID(c.Int64("server-id"))
 					}
 					if c.IsSet("selector") {
-						privatehostServerDeleteParam.Selector = c.StringSlice("selector")
+						privateHostServerDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						privatehostServerDeleteParam.Assumeyes = c.Bool("assumeyes")
+						privateHostServerDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						privatehostServerDeleteParam.ParamTemplate = c.String("param-template")
+						privateHostServerDeleteParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("parameters") {
-						privatehostServerDeleteParam.Parameters = c.String("parameters")
+						privateHostServerDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						privatehostServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						privateHostServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("parameter-file") {
-						privatehostServerDeleteParam.ParameterFile = c.String("parameter-file")
+						privateHostServerDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						privatehostServerDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						privateHostServerDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						privatehostServerDeleteParam.OutputType = c.String("output-type")
+						privateHostServerDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						privatehostServerDeleteParam.Column = c.StringSlice("column")
+						privateHostServerDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						privatehostServerDeleteParam.Quiet = c.Bool("quiet")
+						privateHostServerDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						privatehostServerDeleteParam.Format = c.String("format")
+						privateHostServerDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						privatehostServerDeleteParam.FormatFile = c.String("format-file")
+						privateHostServerDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						privatehostServerDeleteParam.Query = c.String("query")
+						privateHostServerDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						privatehostServerDeleteParam.QueryFile = c.String("query-file")
+						privateHostServerDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						privatehostServerDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						privateHostServerDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1955,7 +1955,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = privatehostServerDeleteParam
+					var outputTypeHolder interface{} = privateHostServerDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1966,10 +1966,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if privatehostServerDeleteParam.GenerateSkeleton {
-						privatehostServerDeleteParam.GenerateSkeleton = false
-						privatehostServerDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(privatehostServerDeleteParam, "", "\t")
+					if privateHostServerDeleteParam.GenerateSkeleton {
+						privateHostServerDeleteParam.GenerateSkeleton = false
+						privateHostServerDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(privateHostServerDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1978,19 +1978,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := privatehostServerDeleteParam.Validate(); len(errors) > 0 {
+					if errors := privateHostServerDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), privatehostServerDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), privateHostServerDeleteParam)
 
-					apiClient := ctx.GetAPIClient().Privatehost
+					apiClient := ctx.GetAPIClient().PrivateHost
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(privatehostServerDeleteParam.Selector) == 0 {
+						if len(privateHostServerDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1999,12 +1999,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.PrivateHosts {
-							if hasTags(&v, privatehostServerDeleteParam.Selector) {
+							if hasTags(&v, privateHostServerDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", privatehostServerDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", privateHostServerDeleteParam.Selector)
 						}
 
 					} else {
@@ -2026,7 +2026,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.PrivateHosts {
-										if len(privatehostServerDeleteParam.Selector) == 0 || hasTags(&v, privatehostServerDeleteParam.Selector) {
+										if len(privateHostServerDeleteParam.Selector) == 0 || hasTags(&v, privateHostServerDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2047,7 +2047,7 @@ func init() {
 					}
 
 					// confirm
-					if !privatehostServerDeleteParam.Assumeyes {
+					if !privateHostServerDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2061,11 +2061,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						privatehostServerDeleteParam.SetId(id)
-						p := *privatehostServerDeleteParam // copy struct value
-						privatehostServerDeleteParam := &p
+						privateHostServerDeleteParam.SetId(id)
+						p := *privateHostServerDeleteParam // copy struct value
+						privateHostServerDeleteParam := &p
 						go func() {
-							err := funcs.PrivatehostServerDelete(ctx, privatehostServerDeleteParam)
+							err := funcs.PrivateHostServerDelete(ctx, privateHostServerDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
