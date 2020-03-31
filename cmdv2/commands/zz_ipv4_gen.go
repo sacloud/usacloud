@@ -57,11 +57,11 @@ var ipv4ListCmd = &cobra.Command{
 
 func ipv4ListCmdInit() {
 	fs := ipv4ListCmd.Flags()
-	fs.IntVarP(&ipv4ListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&ipv4ListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&ipv4ListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &ipv4ListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&ipv4ListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&ipv4ListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&ipv4ListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 }
 
 var ipv4PtrAddCmd = &cobra.Command{

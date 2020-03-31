@@ -68,9 +68,9 @@ var simListCmd = &cobra.Command{
 func simListCmdInit() {
 	fs := simListCmd.Flags()
 	fs.StringSliceVarP(&simListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&simListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.StringSliceVarP(&simListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &simListParam.Id), "id", "", "set filter by id(s)")
+	fs.StringSliceVarP(&simListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.IntVarP(&simListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&simListParam.Max, "max", "", 0, "set limit")
 }
@@ -91,14 +91,14 @@ var simCreateCmd = &cobra.Command{
 func simCreateCmdInit() {
 	fs := simCreateCmd.Flags()
 	fs.StringVarP(&simCreateParam.Iccid, "iccid", "", "", "")
-	fs.StringVarP(&simCreateParam.Imei, "imei", "", "", "")
-	fs.StringSliceVarP(&simCreateParam.Carrier, "carrier", "", []string{}, "")
-	fs.StringVarP(&simCreateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&simCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &simCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.StringVarP(&simCreateParam.Passcode, "passcode", "", "", "")
 	fs.BoolVarP(&simCreateParam.Disabled, "disabled", "", false, "")
+	fs.StringVarP(&simCreateParam.Imei, "imei", "", "", "")
 	fs.StringVarP(&simCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&simCreateParam.Description, "description", "", "", "set resource description")
+	fs.VarP(newIDValue(0, &simCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringSliceVarP(&simCreateParam.Carrier, "carrier", "", []string{}, "")
+	fs.StringSliceVarP(&simCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 }
 
 var simReadCmd = &cobra.Command{

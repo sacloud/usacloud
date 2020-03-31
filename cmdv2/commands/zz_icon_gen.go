@@ -57,13 +57,13 @@ var iconListCmd = &cobra.Command{
 
 func iconListCmdInit() {
 	fs := iconListCmd.Flags()
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &iconListParam.Id), "id", "", "set filter by id(s)")
+	fs.StringSliceVarP(&iconListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.IntVarP(&iconListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&iconListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&iconListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&iconListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &iconListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringVarP(&iconListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
-	fs.StringSliceVarP(&iconListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 }
 
 var iconCreateCmd = &cobra.Command{

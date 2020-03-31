@@ -29,11 +29,11 @@ import (
 
 // ListPriceParam is input parameters for the sacloud API
 type ListPriceParam struct {
+	From int
+	Max  int
 	Sort []string
 	Name []string
 	Id   []sacloud.ID
-	From int
-	Max  int
 
 	input Input
 }
@@ -58,6 +58,12 @@ func (p *ListPriceParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListPriceParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.From) {
+		p.From = 0
+	}
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
+	}
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
@@ -66,12 +72,6 @@ func (p *ListPriceParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
-	}
-	if utils.IsEmpty(p.From) {
-		p.From = 0
-	}
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
 	}
 
 }
@@ -133,6 +133,20 @@ func (p *ListPriceParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListPriceParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListPriceParam) GetFrom() int {
+	return p.From
+}
+func (p *ListPriceParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListPriceParam) GetMax() int {
+	return p.Max
+}
 func (p *ListPriceParam) SetSort(v []string) {
 	p.Sort = v
 }
@@ -153,18 +167,4 @@ func (p *ListPriceParam) SetId(v []sacloud.ID) {
 
 func (p *ListPriceParam) GetId() []sacloud.ID {
 	return p.Id
-}
-func (p *ListPriceParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListPriceParam) GetFrom() int {
-	return p.From
-}
-func (p *ListPriceParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListPriceParam) GetMax() int {
-	return p.Max
 }

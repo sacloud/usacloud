@@ -85,11 +85,11 @@ var mobileGatewayListCmd = &cobra.Command{
 
 func mobileGatewayListCmdInit() {
 	fs := mobileGatewayListCmd.Flags()
-	fs.StringSliceVarP(&mobileGatewayListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&mobileGatewayListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &mobileGatewayListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&mobileGatewayListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&mobileGatewayListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&mobileGatewayListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&mobileGatewayListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 }
 
@@ -146,11 +146,11 @@ var mobileGatewayUpdateCmd = &cobra.Command{
 
 func mobileGatewayUpdateCmdInit() {
 	fs := mobileGatewayUpdateCmd.Flags()
+	fs.VarP(newIDValue(0, &mobileGatewayUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&mobileGatewayUpdateParam.InternetConnection, "internet-connection", "", false, "connect to internet")
 	fs.StringVarP(&mobileGatewayUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&mobileGatewayUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&mobileGatewayUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &mobileGatewayUpdateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.BoolVarP(&mobileGatewayUpdateParam.InternetConnection, "internet-connection", "", false, "connect to internet")
 }
 
 var mobileGatewayDeleteCmd = &cobra.Command{
@@ -298,9 +298,9 @@ var mobileGatewayInterfaceConnectCmd = &cobra.Command{
 
 func mobileGatewayInterfaceConnectCmdInit() {
 	fs := mobileGatewayInterfaceConnectCmd.Flags()
+	fs.VarP(newIDValue(0, &mobileGatewayInterfaceConnectParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.StringVarP(&mobileGatewayInterfaceConnectParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
 	fs.IntVarP(&mobileGatewayInterfaceConnectParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress prefix")
-	fs.VarP(newIDValue(0, &mobileGatewayInterfaceConnectParam.SwitchId), "switch-id", "", "set connect switch ID")
 }
 
 var mobileGatewayInterfaceUpdateCmd = &cobra.Command{
@@ -369,11 +369,11 @@ var mobileGatewayTrafficControlEnableCmd = &cobra.Command{
 
 func mobileGatewayTrafficControlEnableCmdInit() {
 	fs := mobileGatewayTrafficControlEnableCmd.Flags()
-	fs.BoolVarP(&mobileGatewayTrafficControlEnableParam.AutoTrafficShaping, "auto-traffic-shaping", "", false, "")
 	fs.IntVarP(&mobileGatewayTrafficControlEnableParam.Quota, "quota", "", 512, "")
 	fs.IntVarP(&mobileGatewayTrafficControlEnableParam.BandWidthLimit, "band-width-limit", "", 0, "")
 	fs.BoolVarP(&mobileGatewayTrafficControlEnableParam.EnableEmail, "enable-email", "", false, "")
 	fs.StringVarP(&mobileGatewayTrafficControlEnableParam.SlackWebhookUrl, "slack-webhook-url", "", "", "")
+	fs.BoolVarP(&mobileGatewayTrafficControlEnableParam.AutoTrafficShaping, "auto-traffic-shaping", "", false, "")
 }
 
 var mobileGatewayTrafficControlUpdateCmd = &cobra.Command{
@@ -391,11 +391,11 @@ var mobileGatewayTrafficControlUpdateCmd = &cobra.Command{
 
 func mobileGatewayTrafficControlUpdateCmdInit() {
 	fs := mobileGatewayTrafficControlUpdateCmd.Flags()
-	fs.IntVarP(&mobileGatewayTrafficControlUpdateParam.Quota, "quota", "", 0, "")
 	fs.IntVarP(&mobileGatewayTrafficControlUpdateParam.BandWidthLimit, "band-width-limit", "", 0, "")
 	fs.BoolVarP(&mobileGatewayTrafficControlUpdateParam.EnableEmail, "enable-email", "", false, "")
 	fs.StringVarP(&mobileGatewayTrafficControlUpdateParam.SlackWebhookUrl, "slack-webhook-url", "", "", "")
 	fs.BoolVarP(&mobileGatewayTrafficControlUpdateParam.AutoTrafficShaping, "auto-traffic-shaping", "", false, "")
+	fs.IntVarP(&mobileGatewayTrafficControlUpdateParam.Quota, "quota", "", 0, "")
 }
 
 var mobileGatewayTrafficControlDisableCmd = &cobra.Command{

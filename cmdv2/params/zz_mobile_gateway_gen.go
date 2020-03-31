@@ -190,11 +190,11 @@ func (p *ListMobileGatewayParam) GetTags() []string {
 
 // CreateMobileGatewayParam is input parameters for the sacloud API
 type CreateMobileGatewayParam struct {
+	IconId             sacloud.ID
+	InternetConnection bool
 	Name               string
 	Description        string
 	Tags               []string
-	IconId             sacloud.ID
-	InternetConnection bool
 
 	input Input
 }
@@ -219,6 +219,12 @@ func (p *CreateMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateMobileGatewayParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.InternetConnection) {
+		p.InternetConnection = false
+	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -228,17 +234,19 @@ func (p *CreateMobileGatewayParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.InternetConnection) {
-		p.InternetConnection = false
-	}
 
 }
 
 func (p *CreateMobileGatewayParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["MobileGateway"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -271,14 +279,6 @@ func (p *CreateMobileGatewayParam) validate() error {
 		}
 	}
 
-	{
-		validator := define.Resources["MobileGateway"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
@@ -306,6 +306,20 @@ func (p *CreateMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *CreateMobileGatewayParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *CreateMobileGatewayParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+func (p *CreateMobileGatewayParam) SetInternetConnection(v bool) {
+	p.InternetConnection = v
+}
+
+func (p *CreateMobileGatewayParam) GetInternetConnection() bool {
+	return p.InternetConnection
+}
 func (p *CreateMobileGatewayParam) SetName(v string) {
 	p.Name = v
 }
@@ -326,20 +340,6 @@ func (p *CreateMobileGatewayParam) SetTags(v []string) {
 
 func (p *CreateMobileGatewayParam) GetTags() []string {
 	return p.Tags
-}
-func (p *CreateMobileGatewayParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *CreateMobileGatewayParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
-func (p *CreateMobileGatewayParam) SetInternetConnection(v bool) {
-	p.InternetConnection = v
-}
-
-func (p *CreateMobileGatewayParam) GetInternetConnection() bool {
-	return p.InternetConnection
 }
 
 // ReadMobileGatewayParam is input parameters for the sacloud API
@@ -402,11 +402,11 @@ func (p *ReadMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 
 // UpdateMobileGatewayParam is input parameters for the sacloud API
 type UpdateMobileGatewayParam struct {
-	Name               string
-	Description        string
 	Tags               []string
 	IconId             sacloud.ID
 	InternetConnection bool
+	Name               string
+	Description        string
 
 	input Input
 }
@@ -431,12 +431,6 @@ func (p *UpdateMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateMobileGatewayParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
@@ -446,27 +440,17 @@ func (p *UpdateMobileGatewayParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.InternetConnection) {
 		p.InternetConnection = false
 	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
 
 }
 
 func (p *UpdateMobileGatewayParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["MobileGateway"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["MobileGateway"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["MobileGateway"].Commands["update"].Params["tags"].ValidateFunc
@@ -479,6 +463,22 @@ func (p *UpdateMobileGatewayParam) validate() error {
 	{
 		validator := define.Resources["MobileGateway"].Commands["update"].Params["icon-id"].ValidateFunc
 		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["MobileGateway"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["MobileGateway"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -511,20 +511,6 @@ func (p *UpdateMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateMobileGatewayParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateMobileGatewayParam) GetName() string {
-	return p.Name
-}
-func (p *UpdateMobileGatewayParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *UpdateMobileGatewayParam) GetDescription() string {
-	return p.Description
-}
 func (p *UpdateMobileGatewayParam) SetTags(v []string) {
 	p.Tags = v
 }
@@ -545,6 +531,20 @@ func (p *UpdateMobileGatewayParam) SetInternetConnection(v bool) {
 
 func (p *UpdateMobileGatewayParam) GetInternetConnection() bool {
 	return p.InternetConnection
+}
+func (p *UpdateMobileGatewayParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateMobileGatewayParam) GetName() string {
+	return p.Name
+}
+func (p *UpdateMobileGatewayParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *UpdateMobileGatewayParam) GetDescription() string {
+	return p.Description
 }
 
 // DeleteMobileGatewayParam is input parameters for the sacloud API
@@ -1373,11 +1373,11 @@ func (p *TrafficControlInfoMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 
 // TrafficControlEnableMobileGatewayParam is input parameters for the sacloud API
 type TrafficControlEnableMobileGatewayParam struct {
+	BandWidthLimit     int
+	EnableEmail        bool
 	SlackWebhookUrl    string
 	AutoTrafficShaping bool
 	Quota              int
-	BandWidthLimit     int
-	EnableEmail        bool
 
 	input Input
 }
@@ -1403,6 +1403,12 @@ func (p *TrafficControlEnableMobileGatewayParam) WriteSkeleton(writer io.Writer)
 }
 
 func (p *TrafficControlEnableMobileGatewayParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.BandWidthLimit) {
+		p.BandWidthLimit = 0
+	}
+	if utils.IsEmpty(p.EnableEmail) {
+		p.EnableEmail = false
+	}
 	if utils.IsEmpty(p.SlackWebhookUrl) {
 		p.SlackWebhookUrl = ""
 	}
@@ -1412,17 +1418,19 @@ func (p *TrafficControlEnableMobileGatewayParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Quota) {
 		p.Quota = 0
 	}
-	if utils.IsEmpty(p.BandWidthLimit) {
-		p.BandWidthLimit = 0
-	}
-	if utils.IsEmpty(p.EnableEmail) {
-		p.EnableEmail = false
-	}
 
 }
 
 func (p *TrafficControlEnableMobileGatewayParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["MobileGateway"].Commands["traffic-control-enable"].Params["band-width-limit"].ValidateFunc
+		errs := validator("--band-width-limit", p.BandWidthLimit)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["MobileGateway"].Commands["traffic-control-enable"].Params["slack-webhook-url"].ValidateFunc
@@ -1442,14 +1450,6 @@ func (p *TrafficControlEnableMobileGatewayParam) validate() error {
 	{
 		validator := define.Resources["MobileGateway"].Commands["traffic-control-enable"].Params["quota"].ValidateFunc
 		errs := validator("--quota", p.Quota)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["MobileGateway"].Commands["traffic-control-enable"].Params["band-width-limit"].ValidateFunc
-		errs := validator("--band-width-limit", p.BandWidthLimit)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1482,6 +1482,20 @@ func (p *TrafficControlEnableMobileGatewayParam) ColumnDefs() []output.ColumnDef
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *TrafficControlEnableMobileGatewayParam) SetBandWidthLimit(v int) {
+	p.BandWidthLimit = v
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetBandWidthLimit() int {
+	return p.BandWidthLimit
+}
+func (p *TrafficControlEnableMobileGatewayParam) SetEnableEmail(v bool) {
+	p.EnableEmail = v
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetEnableEmail() bool {
+	return p.EnableEmail
+}
 func (p *TrafficControlEnableMobileGatewayParam) SetSlackWebhookUrl(v string) {
 	p.SlackWebhookUrl = v
 }
@@ -1503,28 +1517,14 @@ func (p *TrafficControlEnableMobileGatewayParam) SetQuota(v int) {
 func (p *TrafficControlEnableMobileGatewayParam) GetQuota() int {
 	return p.Quota
 }
-func (p *TrafficControlEnableMobileGatewayParam) SetBandWidthLimit(v int) {
-	p.BandWidthLimit = v
-}
-
-func (p *TrafficControlEnableMobileGatewayParam) GetBandWidthLimit() int {
-	return p.BandWidthLimit
-}
-func (p *TrafficControlEnableMobileGatewayParam) SetEnableEmail(v bool) {
-	p.EnableEmail = v
-}
-
-func (p *TrafficControlEnableMobileGatewayParam) GetEnableEmail() bool {
-	return p.EnableEmail
-}
 
 // TrafficControlUpdateMobileGatewayParam is input parameters for the sacloud API
 type TrafficControlUpdateMobileGatewayParam struct {
+	SlackWebhookUrl    string
+	AutoTrafficShaping bool
 	Quota              int
 	BandWidthLimit     int
 	EnableEmail        bool
-	SlackWebhookUrl    string
-	AutoTrafficShaping bool
 
 	input Input
 }
@@ -1549,6 +1549,12 @@ func (p *TrafficControlUpdateMobileGatewayParam) WriteSkeleton(writer io.Writer)
 }
 
 func (p *TrafficControlUpdateMobileGatewayParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.SlackWebhookUrl) {
+		p.SlackWebhookUrl = ""
+	}
+	if utils.IsEmpty(p.AutoTrafficShaping) {
+		p.AutoTrafficShaping = false
+	}
 	if utils.IsEmpty(p.Quota) {
 		p.Quota = 0
 	}
@@ -1558,17 +1564,19 @@ func (p *TrafficControlUpdateMobileGatewayParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.EnableEmail) {
 		p.EnableEmail = false
 	}
-	if utils.IsEmpty(p.SlackWebhookUrl) {
-		p.SlackWebhookUrl = ""
-	}
-	if utils.IsEmpty(p.AutoTrafficShaping) {
-		p.AutoTrafficShaping = false
-	}
 
 }
 
 func (p *TrafficControlUpdateMobileGatewayParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["MobileGateway"].Commands["traffic-control-update"].Params["slack-webhook-url"].ValidateFunc
+		errs := validator("--slack-webhook-url", p.SlackWebhookUrl)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["MobileGateway"].Commands["traffic-control-update"].Params["quota"].ValidateFunc
@@ -1581,14 +1589,6 @@ func (p *TrafficControlUpdateMobileGatewayParam) validate() error {
 	{
 		validator := define.Resources["MobileGateway"].Commands["traffic-control-update"].Params["band-width-limit"].ValidateFunc
 		errs := validator("--band-width-limit", p.BandWidthLimit)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["MobileGateway"].Commands["traffic-control-update"].Params["slack-webhook-url"].ValidateFunc
-		errs := validator("--slack-webhook-url", p.SlackWebhookUrl)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1621,6 +1621,20 @@ func (p *TrafficControlUpdateMobileGatewayParam) ColumnDefs() []output.ColumnDef
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *TrafficControlUpdateMobileGatewayParam) SetSlackWebhookUrl(v string) {
+	p.SlackWebhookUrl = v
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetSlackWebhookUrl() string {
+	return p.SlackWebhookUrl
+}
+func (p *TrafficControlUpdateMobileGatewayParam) SetAutoTrafficShaping(v bool) {
+	p.AutoTrafficShaping = v
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetAutoTrafficShaping() bool {
+	return p.AutoTrafficShaping
+}
 func (p *TrafficControlUpdateMobileGatewayParam) SetQuota(v int) {
 	p.Quota = v
 }
@@ -1641,20 +1655,6 @@ func (p *TrafficControlUpdateMobileGatewayParam) SetEnableEmail(v bool) {
 
 func (p *TrafficControlUpdateMobileGatewayParam) GetEnableEmail() bool {
 	return p.EnableEmail
-}
-func (p *TrafficControlUpdateMobileGatewayParam) SetSlackWebhookUrl(v string) {
-	p.SlackWebhookUrl = v
-}
-
-func (p *TrafficControlUpdateMobileGatewayParam) GetSlackWebhookUrl() string {
-	return p.SlackWebhookUrl
-}
-func (p *TrafficControlUpdateMobileGatewayParam) SetAutoTrafficShaping(v bool) {
-	p.AutoTrafficShaping = v
-}
-
-func (p *TrafficControlUpdateMobileGatewayParam) GetAutoTrafficShaping() bool {
-	return p.AutoTrafficShaping
 }
 
 // TrafficControlDisableMobileGatewayParam is input parameters for the sacloud API
@@ -2614,9 +2614,9 @@ func (p *SIMRouteAddMobileGatewayParam) GetSIM() sacloud.ID {
 
 // SIMRouteUpdateMobileGatewayParam is input parameters for the sacloud API
 type SIMRouteUpdateMobileGatewayParam struct {
-	SIM    sacloud.ID
 	Index  int
 	Prefix string
+	SIM    sacloud.ID
 
 	input Input
 }
@@ -2641,28 +2641,20 @@ func (p *SIMRouteUpdateMobileGatewayParam) WriteSkeleton(writer io.Writer) error
 }
 
 func (p *SIMRouteUpdateMobileGatewayParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.SIM) {
-		p.SIM = sacloud.ID(0)
-	}
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
 	if utils.IsEmpty(p.Prefix) {
 		p.Prefix = ""
 	}
+	if utils.IsEmpty(p.SIM) {
+		p.SIM = sacloud.ID(0)
+	}
 
 }
 
 func (p *SIMRouteUpdateMobileGatewayParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["MobileGateway"].Commands["sim-route-update"].Params["sim"].ValidateFunc
-		errs := validator("--sim", p.SIM)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -2675,6 +2667,14 @@ func (p *SIMRouteUpdateMobileGatewayParam) validate() error {
 	{
 		validator := define.Resources["MobileGateway"].Commands["sim-route-update"].Params["prefix"].ValidateFunc
 		errs := validator("--prefix", p.Prefix)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["MobileGateway"].Commands["sim-route-update"].Params["sim"].ValidateFunc
+		errs := validator("--sim", p.SIM)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2707,13 +2707,6 @@ func (p *SIMRouteUpdateMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *SIMRouteUpdateMobileGatewayParam) SetSIM(v sacloud.ID) {
-	p.SIM = v
-}
-
-func (p *SIMRouteUpdateMobileGatewayParam) GetSIM() sacloud.ID {
-	return p.SIM
-}
 func (p *SIMRouteUpdateMobileGatewayParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -2727,6 +2720,13 @@ func (p *SIMRouteUpdateMobileGatewayParam) SetPrefix(v string) {
 
 func (p *SIMRouteUpdateMobileGatewayParam) GetPrefix() string {
 	return p.Prefix
+}
+func (p *SIMRouteUpdateMobileGatewayParam) SetSIM(v sacloud.ID) {
+	p.SIM = v
+}
+
+func (p *SIMRouteUpdateMobileGatewayParam) GetSIM() sacloud.ID {
+	return p.SIM
 }
 
 // SIMRouteDeleteMobileGatewayParam is input parameters for the sacloud API

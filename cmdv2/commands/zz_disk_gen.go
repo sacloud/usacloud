@@ -67,14 +67,14 @@ var diskListCmd = &cobra.Command{
 func diskListCmdInit() {
 	fs := diskListCmd.Flags()
 	fs.IntVarP(&diskListParam.From, "from", "", 0, "set offset")
-	fs.StringSliceVarP(&diskListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringVarP(&diskListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
-	fs.VarP(newIDValue(0, &diskListParam.SourceArchiveId), "source-archive-id", "", "set filter by source-archive-id")
-	fs.VarP(newIDValue(0, &diskListParam.SourceDiskId), "source-disk-id", "", "set filter by source-disk-id")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&diskListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&diskListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.StringSliceVarP(&diskListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.VarP(newIDValue(0, &diskListParam.SourceArchiveId), "source-archive-id", "", "set filter by source-archive-id")
+	fs.IntVarP(&diskListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&diskListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&diskListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskListParam.Id), "id", "", "set filter by id(s)")
+	fs.VarP(newIDValue(0, &diskListParam.SourceDiskId), "source-disk-id", "", "set filter by source-disk-id")
 	fs.StringVarP(&diskListParam.Storage, "storage", "", "", "set filter by storage-name")
 }
 
@@ -93,16 +93,16 @@ var diskCreateCmd = &cobra.Command{
 
 func diskCreateCmdInit() {
 	fs := diskCreateCmd.Flags()
-	fs.StringVarP(&diskCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringSliceVarP(&diskCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.StringVarP(&diskCreateParam.Plan, "plan", "", "ssd", "set disk plan('hdd' or 'ssd')")
 	fs.IntVarP(&diskCreateParam.Size, "size", "", 20, "set disk size(GB)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskCreateParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
+	fs.StringVarP(&diskCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&diskCreateParam.Description, "description", "", "", "set resource description")
-	fs.VarP(newIDValue(0, &diskCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.StringVarP(&diskCreateParam.Connection, "connection", "", "virtio", "set disk connection('virtio' or 'ide')")
 	fs.VarP(newIDValue(0, &diskCreateParam.SourceArchiveId), "source-archive-id", "", "set source disk ID")
 	fs.VarP(newIDValue(0, &diskCreateParam.SourceDiskId), "source-disk-id", "", "set source disk ID")
+	fs.StringSliceVarP(&diskCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &diskCreateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
 var diskReadCmd = &cobra.Command{
@@ -174,14 +174,14 @@ var diskEditCmd = &cobra.Command{
 
 func diskEditCmdInit() {
 	fs := diskEditCmd.Flags()
-	fs.BoolVarP(&diskEditParam.DisablePasswordAuth, "disable-password-auth", "", false, "disable password auth on SSH")
-	fs.StringVarP(&diskEditParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
-	fs.StringVarP(&diskEditParam.DefaultRoute, "default-route", "", "", "set default gateway")
 	fs.IntVarP(&diskEditParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress  prefix")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskEditParam.StartupScriptIds), "startup-script-ids", "", "set startup-script ID(s)")
 	fs.StringVarP(&diskEditParam.Hostname, "hostname", "", "", "set hostname")
 	fs.StringVarP(&diskEditParam.Password, "password", "", "", "set password")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskEditParam.SSHKeyIds), "ssh-key-ids", "", "set ssh-key ID(s)")
+	fs.BoolVarP(&diskEditParam.DisablePasswordAuth, "disable-password-auth", "", false, "disable password auth on SSH")
+	fs.StringVarP(&diskEditParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
+	fs.StringVarP(&diskEditParam.DefaultRoute, "default-route", "", "", "set default gateway")
 }
 
 var diskResizePartitionCmd = &cobra.Command{

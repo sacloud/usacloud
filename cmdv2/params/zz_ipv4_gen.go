@@ -29,11 +29,11 @@ import (
 
 // ListIPv4Param is input parameters for the sacloud API
 type ListIPv4Param struct {
+	Sort []string
 	Name []string
 	Id   []sacloud.ID
 	From int
 	Max  int
-	Sort []string
 
 	input Input
 }
@@ -58,6 +58,9 @@ func (p *ListIPv4Param) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListIPv4Param) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -69,9 +72,6 @@ func (p *ListIPv4Param) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
-	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
 	}
 
 }
@@ -133,6 +133,13 @@ func (p *ListIPv4Param) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListIPv4Param) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListIPv4Param) GetSort() []string {
+	return p.Sort
+}
 func (p *ListIPv4Param) SetName(v []string) {
 	p.Name = v
 }
@@ -160,13 +167,6 @@ func (p *ListIPv4Param) SetMax(v int) {
 
 func (p *ListIPv4Param) GetMax() int {
 	return p.Max
-}
-func (p *ListIPv4Param) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListIPv4Param) GetSort() []string {
-	return p.Sort
 }
 
 // PtrAddIPv4Param is input parameters for the sacloud API

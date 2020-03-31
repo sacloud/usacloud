@@ -29,12 +29,12 @@ import (
 
 // ListSIMParam is input parameters for the sacloud API
 type ListSIMParam struct {
-	Name []string
 	Id   []sacloud.ID
+	Tags []string
 	From int
 	Max  int
 	Sort []string
-	Tags []string
+	Name []string
 
 	input Input
 }
@@ -59,11 +59,11 @@ func (p *ListSIMParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListSIMParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
@@ -74,24 +74,14 @@ func (p *ListSIMParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
 	}
 
 }
 
 func (p *ListSIMParam) validate() error {
 	var errors []error
-
-	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["SIM"].Commands["list"].Params["id"].ValidateFunc
@@ -113,6 +103,16 @@ func (p *ListSIMParam) validate() error {
 	{
 		validator := define.Resources["SIM"].Commands["list"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -145,19 +145,19 @@ func (p *ListSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListSIMParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListSIMParam) GetName() []string {
-	return p.Name
-}
 func (p *ListSIMParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
 func (p *ListSIMParam) GetId() []sacloud.ID {
 	return p.Id
+}
+func (p *ListSIMParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *ListSIMParam) GetTags() []string {
+	return p.Tags
 }
 func (p *ListSIMParam) SetFrom(v int) {
 	p.From = v
@@ -180,25 +180,25 @@ func (p *ListSIMParam) SetSort(v []string) {
 func (p *ListSIMParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListSIMParam) SetTags(v []string) {
-	p.Tags = v
+func (p *ListSIMParam) SetName(v []string) {
+	p.Name = v
 }
 
-func (p *ListSIMParam) GetTags() []string {
-	return p.Tags
+func (p *ListSIMParam) GetName() []string {
+	return p.Name
 }
 
 // CreateSIMParam is input parameters for the sacloud API
 type CreateSIMParam struct {
+	Passcode    string
+	Imei        string
 	Description string
+	IconId      sacloud.ID
 	Iccid       string
 	Disabled    bool
-	Imei        string
 	Carrier     []string
 	Name        string
-	Passcode    string
 	Tags        []string
-	IconId      sacloud.ID
 
 	input Input
 }
@@ -223,8 +223,17 @@ func (p *CreateSIMParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateSIMParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Passcode) {
+		p.Passcode = ""
+	}
+	if utils.IsEmpty(p.Imei) {
+		p.Imei = ""
+	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
+	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
 	}
 	if utils.IsEmpty(p.Iccid) {
 		p.Iccid = ""
@@ -232,23 +241,14 @@ func (p *CreateSIMParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Disabled) {
 		p.Disabled = false
 	}
-	if utils.IsEmpty(p.Imei) {
-		p.Imei = ""
-	}
 	if utils.IsEmpty(p.Carrier) {
 		p.Carrier = []string{""}
 	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Passcode) {
-		p.Passcode = ""
-	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
 	}
 
 }
@@ -257,8 +257,24 @@ func (p *CreateSIMParam) validate() error {
 	var errors []error
 
 	{
+		validator := validateRequired
+		errs := validator("--passcode", p.Passcode)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
 		validator := define.Resources["SIM"].Commands["create"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["SIM"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -309,24 +325,8 @@ func (p *CreateSIMParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
-		errs := validator("--passcode", p.Passcode)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
 		validator := define.Resources["SIM"].Commands["create"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["SIM"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -359,12 +359,33 @@ func (p *CreateSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *CreateSIMParam) SetPasscode(v string) {
+	p.Passcode = v
+}
+
+func (p *CreateSIMParam) GetPasscode() string {
+	return p.Passcode
+}
+func (p *CreateSIMParam) SetImei(v string) {
+	p.Imei = v
+}
+
+func (p *CreateSIMParam) GetImei() string {
+	return p.Imei
+}
 func (p *CreateSIMParam) SetDescription(v string) {
 	p.Description = v
 }
 
 func (p *CreateSIMParam) GetDescription() string {
 	return p.Description
+}
+func (p *CreateSIMParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *CreateSIMParam) GetIconId() sacloud.ID {
+	return p.IconId
 }
 func (p *CreateSIMParam) SetIccid(v string) {
 	p.Iccid = v
@@ -380,13 +401,6 @@ func (p *CreateSIMParam) SetDisabled(v bool) {
 func (p *CreateSIMParam) GetDisabled() bool {
 	return p.Disabled
 }
-func (p *CreateSIMParam) SetImei(v string) {
-	p.Imei = v
-}
-
-func (p *CreateSIMParam) GetImei() string {
-	return p.Imei
-}
 func (p *CreateSIMParam) SetCarrier(v []string) {
 	p.Carrier = v
 }
@@ -401,26 +415,12 @@ func (p *CreateSIMParam) SetName(v string) {
 func (p *CreateSIMParam) GetName() string {
 	return p.Name
 }
-func (p *CreateSIMParam) SetPasscode(v string) {
-	p.Passcode = v
-}
-
-func (p *CreateSIMParam) GetPasscode() string {
-	return p.Passcode
-}
 func (p *CreateSIMParam) SetTags(v []string) {
 	p.Tags = v
 }
 
 func (p *CreateSIMParam) GetTags() []string {
 	return p.Tags
-}
-func (p *CreateSIMParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *CreateSIMParam) GetIconId() sacloud.ID {
-	return p.IconId
 }
 
 // ReadSIMParam is input parameters for the sacloud API
@@ -1237,8 +1237,8 @@ func (p *IpDeleteSIMParam) ColumnDefs() []output.ColumnDef {
 
 // LogsSIMParam is input parameters for the sacloud API
 type LogsSIMParam struct {
-	Follow          bool
 	RefreshInterval int64
+	Follow          bool
 
 	input Input
 }
@@ -1264,11 +1264,11 @@ func (p *LogsSIMParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *LogsSIMParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Follow) {
-		p.Follow = false
-	}
 	if utils.IsEmpty(p.RefreshInterval) {
 		p.RefreshInterval = 0
+	}
+	if utils.IsEmpty(p.Follow) {
+		p.Follow = false
 	}
 
 }
@@ -1311,19 +1311,19 @@ func (p *LogsSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *LogsSIMParam) SetFollow(v bool) {
-	p.Follow = v
-}
-
-func (p *LogsSIMParam) GetFollow() bool {
-	return p.Follow
-}
 func (p *LogsSIMParam) SetRefreshInterval(v int64) {
 	p.RefreshInterval = v
 }
 
 func (p *LogsSIMParam) GetRefreshInterval() int64 {
 	return p.RefreshInterval
+}
+func (p *LogsSIMParam) SetFollow(v bool) {
+	p.Follow = v
+}
+
+func (p *LogsSIMParam) GetFollow() bool {
+	return p.Follow
 }
 
 // MonitorSIMParam is input parameters for the sacloud API

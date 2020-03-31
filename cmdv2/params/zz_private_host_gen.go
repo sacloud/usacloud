@@ -29,12 +29,12 @@ import (
 
 // ListPrivateHostParam is input parameters for the sacloud API
 type ListPrivateHostParam struct {
-	Max  int
-	Sort []string
-	Name []string
 	Tags []string
 	Id   []sacloud.ID
 	From int
+	Max  int
+	Sort []string
+	Name []string
 
 	input Input
 }
@@ -59,15 +59,6 @@ func (p *ListPrivateHostParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListPrivateHostParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
-	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
@@ -77,21 +68,20 @@ func (p *ListPrivateHostParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
+	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
 
 }
 
 func (p *ListPrivateHostParam) validate() error {
 	var errors []error
-
-	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["PrivateHost"].Commands["list"].Params["tags"].ValidateFunc
@@ -112,6 +102,16 @@ func (p *ListPrivateHostParam) validate() error {
 		errs := validation.ConflictsWith("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -145,27 +145,6 @@ func (p *ListPrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListPrivateHostParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListPrivateHostParam) GetMax() int {
-	return p.Max
-}
-func (p *ListPrivateHostParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListPrivateHostParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListPrivateHostParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListPrivateHostParam) GetName() []string {
-	return p.Name
-}
 func (p *ListPrivateHostParam) SetTags(v []string) {
 	p.Tags = v
 }
@@ -186,6 +165,27 @@ func (p *ListPrivateHostParam) SetFrom(v int) {
 
 func (p *ListPrivateHostParam) GetFrom() int {
 	return p.From
+}
+func (p *ListPrivateHostParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListPrivateHostParam) GetMax() int {
+	return p.Max
+}
+func (p *ListPrivateHostParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListPrivateHostParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListPrivateHostParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListPrivateHostParam) GetName() []string {
+	return p.Name
 }
 
 // CreatePrivateHostParam is input parameters for the sacloud API

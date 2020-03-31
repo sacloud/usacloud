@@ -29,13 +29,13 @@ import (
 
 // ListSimpleMonitorParam is input parameters for the sacloud API
 type ListSimpleMonitorParam struct {
-	Name   []string
-	Id     []sacloud.ID
-	From   int
 	Max    int
 	Sort   []string
 	Tags   []string
 	Health string
+	Name   []string
+	Id     []sacloud.ID
+	From   int
 
 	input Input
 }
@@ -60,15 +60,6 @@ func (p *ListSimpleMonitorParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListSimpleMonitorParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
-	if utils.IsEmpty(p.Id) {
-		p.Id = []sacloud.ID{}
-	}
-	if utils.IsEmpty(p.From) {
-		p.From = 0
-	}
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
 	}
@@ -81,11 +72,36 @@ func (p *ListSimpleMonitorParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Health) {
 		p.Health = ""
 	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = []sacloud.ID{}
+	}
+	if utils.IsEmpty(p.From) {
+		p.From = 0
+	}
 
 }
 
 func (p *ListSimpleMonitorParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["list"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["list"].Params["health"].ValidateFunc
+		errs := validator("--health", p.Health)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
@@ -109,22 +125,6 @@ func (p *ListSimpleMonitorParam) validate() error {
 
 			"--name": p.Name,
 		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["list"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["list"].Params["health"].ValidateFunc
-		errs := validator("--health", p.Health)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -157,27 +157,6 @@ func (p *ListSimpleMonitorParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListSimpleMonitorParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListSimpleMonitorParam) GetName() []string {
-	return p.Name
-}
-func (p *ListSimpleMonitorParam) SetId(v []sacloud.ID) {
-	p.Id = v
-}
-
-func (p *ListSimpleMonitorParam) GetId() []sacloud.ID {
-	return p.Id
-}
-func (p *ListSimpleMonitorParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListSimpleMonitorParam) GetFrom() int {
-	return p.From
-}
 func (p *ListSimpleMonitorParam) SetMax(v int) {
 	p.Max = v
 }
@@ -206,30 +185,51 @@ func (p *ListSimpleMonitorParam) SetHealth(v string) {
 func (p *ListSimpleMonitorParam) GetHealth() string {
 	return p.Health
 }
+func (p *ListSimpleMonitorParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListSimpleMonitorParam) GetName() []string {
+	return p.Name
+}
+func (p *ListSimpleMonitorParam) SetId(v []sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ListSimpleMonitorParam) GetId() []sacloud.ID {
+	return p.Id
+}
+func (p *ListSimpleMonitorParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListSimpleMonitorParam) GetFrom() int {
+	return p.From
+}
 
 // CreateSimpleMonitorParam is input parameters for the sacloud API
 type CreateSimpleMonitorParam struct {
+	DelayLoop      int
+	HostHeader     string
+	ResponseCode   int
+	RemainingDays  int
+	Description    string
+	IconId         sacloud.ID
+	Disabled       bool
+	EmailType      string
+	SlackWebhook   string
+	Tags           []string
+	Port           int
 	Path           string
+	DNSExcepted    string
+	NotifyEmail    bool
+	Target         string
+	Protocol       string
+	Sni            bool
 	Username       string
 	Password       string
 	DNSQname       string
-	DelayLoop      int
-	HostHeader     string
 	NotifyInterval int
-	IconId         sacloud.ID
-	Protocol       string
-	RemainingDays  int
-	Sni            bool
-	NotifyEmail    bool
-	Description    string
-	Tags           []string
-	Target         string
-	ResponseCode   int
-	DNSExcepted    string
-	EmailType      string
-	SlackWebhook   string
-	Port           int
-	Disabled       bool
 
 	input Input
 }
@@ -237,7 +237,7 @@ type CreateSimpleMonitorParam struct {
 // NewCreateSimpleMonitorParam return new CreateSimpleMonitorParam
 func NewCreateSimpleMonitorParam() *CreateSimpleMonitorParam {
 	return &CreateSimpleMonitorParam{
-		DelayLoop: 1, NotifyInterval: 2, Protocol: "ping", RemainingDays: 30, NotifyEmail: true, EmailType: "text"}
+		DelayLoop: 1, RemainingDays: 30, EmailType: "text", NotifyEmail: true, Protocol: "ping", NotifyInterval: 2}
 }
 
 // Initialize init CreateSimpleMonitorParam
@@ -255,8 +255,56 @@ func (p *CreateSimpleMonitorParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateSimpleMonitorParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.DelayLoop) {
+		p.DelayLoop = 0
+	}
+	if utils.IsEmpty(p.HostHeader) {
+		p.HostHeader = ""
+	}
+	if utils.IsEmpty(p.ResponseCode) {
+		p.ResponseCode = 0
+	}
+	if utils.IsEmpty(p.RemainingDays) {
+		p.RemainingDays = 0
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Disabled) {
+		p.Disabled = false
+	}
+	if utils.IsEmpty(p.EmailType) {
+		p.EmailType = ""
+	}
+	if utils.IsEmpty(p.SlackWebhook) {
+		p.SlackWebhook = ""
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if utils.IsEmpty(p.Port) {
+		p.Port = 0
+	}
 	if utils.IsEmpty(p.Path) {
 		p.Path = ""
+	}
+	if utils.IsEmpty(p.DNSExcepted) {
+		p.DNSExcepted = ""
+	}
+	if utils.IsEmpty(p.NotifyEmail) {
+		p.NotifyEmail = false
+	}
+	if utils.IsEmpty(p.Target) {
+		p.Target = ""
+	}
+	if utils.IsEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if utils.IsEmpty(p.Sni) {
+		p.Sni = false
 	}
 	if utils.IsEmpty(p.Username) {
 		p.Username = ""
@@ -267,56 +315,8 @@ func (p *CreateSimpleMonitorParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.DNSQname) {
 		p.DNSQname = ""
 	}
-	if utils.IsEmpty(p.DelayLoop) {
-		p.DelayLoop = 0
-	}
-	if utils.IsEmpty(p.HostHeader) {
-		p.HostHeader = ""
-	}
 	if utils.IsEmpty(p.NotifyInterval) {
 		p.NotifyInterval = 0
-	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.Protocol) {
-		p.Protocol = ""
-	}
-	if utils.IsEmpty(p.RemainingDays) {
-		p.RemainingDays = 0
-	}
-	if utils.IsEmpty(p.Sni) {
-		p.Sni = false
-	}
-	if utils.IsEmpty(p.NotifyEmail) {
-		p.NotifyEmail = false
-	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.Target) {
-		p.Target = ""
-	}
-	if utils.IsEmpty(p.ResponseCode) {
-		p.ResponseCode = 0
-	}
-	if utils.IsEmpty(p.DNSExcepted) {
-		p.DNSExcepted = ""
-	}
-	if utils.IsEmpty(p.EmailType) {
-		p.EmailType = ""
-	}
-	if utils.IsEmpty(p.SlackWebhook) {
-		p.SlackWebhook = ""
-	}
-	if utils.IsEmpty(p.Port) {
-		p.Port = 0
-	}
-	if utils.IsEmpty(p.Disabled) {
-		p.Disabled = false
 	}
 
 }
@@ -340,8 +340,16 @@ func (p *CreateSimpleMonitorParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["notify-interval"].ValidateFunc
-		errs := validator("--notify-interval", p.NotifyInterval)
+		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["remaining-days"].ValidateFunc
+		errs := validator("--remaining-days", p.RemainingDays)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -350,6 +358,38 @@ func (p *CreateSimpleMonitorParam) validate() error {
 	{
 		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["icon-id"].ValidateFunc
 		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["email-type"].ValidateFunc
+		errs := validator("--email-type", p.EmailType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["port"].ValidateFunc
+		errs := validator("--port", p.Port)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--target", p.Target)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -371,48 +411,8 @@ func (p *CreateSimpleMonitorParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["remaining-days"].ValidateFunc
-		errs := validator("--remaining-days", p.RemainingDays)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--target", p.Target)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["email-type"].ValidateFunc
-		errs := validator("--email-type", p.EmailType)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["port"].ValidateFunc
-		errs := validator("--port", p.Port)
+		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["notify-interval"].ValidateFunc
+		errs := validator("--notify-interval", p.NotifyInterval)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -445,12 +445,124 @@ func (p *CreateSimpleMonitorParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *CreateSimpleMonitorParam) SetDelayLoop(v int) {
+	p.DelayLoop = v
+}
+
+func (p *CreateSimpleMonitorParam) GetDelayLoop() int {
+	return p.DelayLoop
+}
+func (p *CreateSimpleMonitorParam) SetHostHeader(v string) {
+	p.HostHeader = v
+}
+
+func (p *CreateSimpleMonitorParam) GetHostHeader() string {
+	return p.HostHeader
+}
+func (p *CreateSimpleMonitorParam) SetResponseCode(v int) {
+	p.ResponseCode = v
+}
+
+func (p *CreateSimpleMonitorParam) GetResponseCode() int {
+	return p.ResponseCode
+}
+func (p *CreateSimpleMonitorParam) SetRemainingDays(v int) {
+	p.RemainingDays = v
+}
+
+func (p *CreateSimpleMonitorParam) GetRemainingDays() int {
+	return p.RemainingDays
+}
+func (p *CreateSimpleMonitorParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *CreateSimpleMonitorParam) GetDescription() string {
+	return p.Description
+}
+func (p *CreateSimpleMonitorParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *CreateSimpleMonitorParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+func (p *CreateSimpleMonitorParam) SetDisabled(v bool) {
+	p.Disabled = v
+}
+
+func (p *CreateSimpleMonitorParam) GetDisabled() bool {
+	return p.Disabled
+}
+func (p *CreateSimpleMonitorParam) SetEmailType(v string) {
+	p.EmailType = v
+}
+
+func (p *CreateSimpleMonitorParam) GetEmailType() string {
+	return p.EmailType
+}
+func (p *CreateSimpleMonitorParam) SetSlackWebhook(v string) {
+	p.SlackWebhook = v
+}
+
+func (p *CreateSimpleMonitorParam) GetSlackWebhook() string {
+	return p.SlackWebhook
+}
+func (p *CreateSimpleMonitorParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CreateSimpleMonitorParam) GetTags() []string {
+	return p.Tags
+}
+func (p *CreateSimpleMonitorParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *CreateSimpleMonitorParam) GetPort() int {
+	return p.Port
+}
 func (p *CreateSimpleMonitorParam) SetPath(v string) {
 	p.Path = v
 }
 
 func (p *CreateSimpleMonitorParam) GetPath() string {
 	return p.Path
+}
+func (p *CreateSimpleMonitorParam) SetDNSExcepted(v string) {
+	p.DNSExcepted = v
+}
+
+func (p *CreateSimpleMonitorParam) GetDNSExcepted() string {
+	return p.DNSExcepted
+}
+func (p *CreateSimpleMonitorParam) SetNotifyEmail(v bool) {
+	p.NotifyEmail = v
+}
+
+func (p *CreateSimpleMonitorParam) GetNotifyEmail() bool {
+	return p.NotifyEmail
+}
+func (p *CreateSimpleMonitorParam) SetTarget(v string) {
+	p.Target = v
+}
+
+func (p *CreateSimpleMonitorParam) GetTarget() string {
+	return p.Target
+}
+func (p *CreateSimpleMonitorParam) SetProtocol(v string) {
+	p.Protocol = v
+}
+
+func (p *CreateSimpleMonitorParam) GetProtocol() string {
+	return p.Protocol
+}
+func (p *CreateSimpleMonitorParam) SetSni(v bool) {
+	p.Sni = v
+}
+
+func (p *CreateSimpleMonitorParam) GetSni() bool {
+	return p.Sni
 }
 func (p *CreateSimpleMonitorParam) SetUsername(v string) {
 	p.Username = v
@@ -473,124 +585,12 @@ func (p *CreateSimpleMonitorParam) SetDNSQname(v string) {
 func (p *CreateSimpleMonitorParam) GetDNSQname() string {
 	return p.DNSQname
 }
-func (p *CreateSimpleMonitorParam) SetDelayLoop(v int) {
-	p.DelayLoop = v
-}
-
-func (p *CreateSimpleMonitorParam) GetDelayLoop() int {
-	return p.DelayLoop
-}
-func (p *CreateSimpleMonitorParam) SetHostHeader(v string) {
-	p.HostHeader = v
-}
-
-func (p *CreateSimpleMonitorParam) GetHostHeader() string {
-	return p.HostHeader
-}
 func (p *CreateSimpleMonitorParam) SetNotifyInterval(v int) {
 	p.NotifyInterval = v
 }
 
 func (p *CreateSimpleMonitorParam) GetNotifyInterval() int {
 	return p.NotifyInterval
-}
-func (p *CreateSimpleMonitorParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *CreateSimpleMonitorParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
-func (p *CreateSimpleMonitorParam) SetProtocol(v string) {
-	p.Protocol = v
-}
-
-func (p *CreateSimpleMonitorParam) GetProtocol() string {
-	return p.Protocol
-}
-func (p *CreateSimpleMonitorParam) SetRemainingDays(v int) {
-	p.RemainingDays = v
-}
-
-func (p *CreateSimpleMonitorParam) GetRemainingDays() int {
-	return p.RemainingDays
-}
-func (p *CreateSimpleMonitorParam) SetSni(v bool) {
-	p.Sni = v
-}
-
-func (p *CreateSimpleMonitorParam) GetSni() bool {
-	return p.Sni
-}
-func (p *CreateSimpleMonitorParam) SetNotifyEmail(v bool) {
-	p.NotifyEmail = v
-}
-
-func (p *CreateSimpleMonitorParam) GetNotifyEmail() bool {
-	return p.NotifyEmail
-}
-func (p *CreateSimpleMonitorParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *CreateSimpleMonitorParam) GetDescription() string {
-	return p.Description
-}
-func (p *CreateSimpleMonitorParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CreateSimpleMonitorParam) GetTags() []string {
-	return p.Tags
-}
-func (p *CreateSimpleMonitorParam) SetTarget(v string) {
-	p.Target = v
-}
-
-func (p *CreateSimpleMonitorParam) GetTarget() string {
-	return p.Target
-}
-func (p *CreateSimpleMonitorParam) SetResponseCode(v int) {
-	p.ResponseCode = v
-}
-
-func (p *CreateSimpleMonitorParam) GetResponseCode() int {
-	return p.ResponseCode
-}
-func (p *CreateSimpleMonitorParam) SetDNSExcepted(v string) {
-	p.DNSExcepted = v
-}
-
-func (p *CreateSimpleMonitorParam) GetDNSExcepted() string {
-	return p.DNSExcepted
-}
-func (p *CreateSimpleMonitorParam) SetEmailType(v string) {
-	p.EmailType = v
-}
-
-func (p *CreateSimpleMonitorParam) GetEmailType() string {
-	return p.EmailType
-}
-func (p *CreateSimpleMonitorParam) SetSlackWebhook(v string) {
-	p.SlackWebhook = v
-}
-
-func (p *CreateSimpleMonitorParam) GetSlackWebhook() string {
-	return p.SlackWebhook
-}
-func (p *CreateSimpleMonitorParam) SetPort(v int) {
-	p.Port = v
-}
-
-func (p *CreateSimpleMonitorParam) GetPort() int {
-	return p.Port
-}
-func (p *CreateSimpleMonitorParam) SetDisabled(v bool) {
-	p.Disabled = v
-}
-
-func (p *CreateSimpleMonitorParam) GetDisabled() bool {
-	return p.Disabled
 }
 
 // ReadSimpleMonitorParam is input parameters for the sacloud API
@@ -653,26 +653,26 @@ func (p *ReadSimpleMonitorParam) ColumnDefs() []output.ColumnDef {
 
 // UpdateSimpleMonitorParam is input parameters for the sacloud API
 type UpdateSimpleMonitorParam struct {
-	Protocol       string
-	DelayLoop      int
 	HostHeader     string
+	Path           string
 	Sni            bool
+	Description    string
+	Tags           []string
+	DelayLoop      int
+	ResponseCode   int
+	EmailType      string
+	NotifyInterval int
+	IconId         sacloud.ID
+	Port           int
+	Disabled       bool
+	Username       string
+	DNSQname       string
+	NotifyEmail    bool
+	Protocol       string
 	Password       string
 	DNSExcepted    string
-	Disabled       bool
-	NotifyInterval int
-	Port           int
-	Path           string
-	DNSQname       string
 	RemainingDays  int
-	EmailType      string
 	SlackWebhook   string
-	Tags           []string
-	IconId         sacloud.ID
-	ResponseCode   int
-	Username       string
-	NotifyEmail    bool
-	Description    string
 
 	input Input
 }
@@ -698,17 +698,53 @@ func (p *UpdateSimpleMonitorParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateSimpleMonitorParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Protocol) {
-		p.Protocol = ""
+	if utils.IsEmpty(p.HostHeader) {
+		p.HostHeader = ""
+	}
+	if utils.IsEmpty(p.Path) {
+		p.Path = ""
+	}
+	if utils.IsEmpty(p.Sni) {
+		p.Sni = false
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.DelayLoop) {
 		p.DelayLoop = 0
 	}
-	if utils.IsEmpty(p.HostHeader) {
-		p.HostHeader = ""
+	if utils.IsEmpty(p.ResponseCode) {
+		p.ResponseCode = 0
 	}
-	if utils.IsEmpty(p.Sni) {
-		p.Sni = false
+	if utils.IsEmpty(p.EmailType) {
+		p.EmailType = ""
+	}
+	if utils.IsEmpty(p.NotifyInterval) {
+		p.NotifyInterval = 0
+	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Port) {
+		p.Port = 0
+	}
+	if utils.IsEmpty(p.Disabled) {
+		p.Disabled = false
+	}
+	if utils.IsEmpty(p.Username) {
+		p.Username = ""
+	}
+	if utils.IsEmpty(p.DNSQname) {
+		p.DNSQname = ""
+	}
+	if utils.IsEmpty(p.NotifyEmail) {
+		p.NotifyEmail = false
+	}
+	if utils.IsEmpty(p.Protocol) {
+		p.Protocol = ""
 	}
 	if utils.IsEmpty(p.Password) {
 		p.Password = ""
@@ -716,47 +752,11 @@ func (p *UpdateSimpleMonitorParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.DNSExcepted) {
 		p.DNSExcepted = ""
 	}
-	if utils.IsEmpty(p.Disabled) {
-		p.Disabled = false
-	}
-	if utils.IsEmpty(p.NotifyInterval) {
-		p.NotifyInterval = 0
-	}
-	if utils.IsEmpty(p.Port) {
-		p.Port = 0
-	}
-	if utils.IsEmpty(p.Path) {
-		p.Path = ""
-	}
-	if utils.IsEmpty(p.DNSQname) {
-		p.DNSQname = ""
-	}
 	if utils.IsEmpty(p.RemainingDays) {
 		p.RemainingDays = 0
 	}
-	if utils.IsEmpty(p.EmailType) {
-		p.EmailType = ""
-	}
 	if utils.IsEmpty(p.SlackWebhook) {
 		p.SlackWebhook = ""
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.ResponseCode) {
-		p.ResponseCode = 0
-	}
-	if utils.IsEmpty(p.Username) {
-		p.Username = ""
-	}
-	if utils.IsEmpty(p.NotifyEmail) {
-		p.NotifyEmail = false
-	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
 	}
 
 }
@@ -765,48 +765,8 @@ func (p *UpdateSimpleMonitorParam) validate() error {
 	var errors []error
 
 	{
-		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["delay-loop"].ValidateFunc
-		errs := validator("--delay-loop", p.DelayLoop)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["notify-interval"].ValidateFunc
-		errs := validator("--notify-interval", p.NotifyInterval)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["port"].ValidateFunc
-		errs := validator("--port", p.Port)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["remaining-days"].ValidateFunc
-		errs := validator("--remaining-days", p.RemainingDays)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["email-type"].ValidateFunc
-		errs := validator("--email-type", p.EmailType)
+		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -821,6 +781,30 @@ func (p *UpdateSimpleMonitorParam) validate() error {
 	}
 
 	{
+		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["delay-loop"].ValidateFunc
+		errs := validator("--delay-loop", p.DelayLoop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["email-type"].ValidateFunc
+		errs := validator("--email-type", p.EmailType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["notify-interval"].ValidateFunc
+		errs := validator("--notify-interval", p.NotifyInterval)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
 		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["icon-id"].ValidateFunc
 		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
@@ -829,8 +813,24 @@ func (p *UpdateSimpleMonitorParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
+		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["port"].ValidateFunc
+		errs := validator("--port", p.Port)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["remaining-days"].ValidateFunc
+		errs := validator("--remaining-days", p.RemainingDays)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -863,12 +863,40 @@ func (p *UpdateSimpleMonitorParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateSimpleMonitorParam) SetProtocol(v string) {
-	p.Protocol = v
+func (p *UpdateSimpleMonitorParam) SetHostHeader(v string) {
+	p.HostHeader = v
 }
 
-func (p *UpdateSimpleMonitorParam) GetProtocol() string {
-	return p.Protocol
+func (p *UpdateSimpleMonitorParam) GetHostHeader() string {
+	return p.HostHeader
+}
+func (p *UpdateSimpleMonitorParam) SetPath(v string) {
+	p.Path = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetPath() string {
+	return p.Path
+}
+func (p *UpdateSimpleMonitorParam) SetSni(v bool) {
+	p.Sni = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetSni() bool {
+	return p.Sni
+}
+func (p *UpdateSimpleMonitorParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetDescription() string {
+	return p.Description
+}
+func (p *UpdateSimpleMonitorParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetTags() []string {
+	return p.Tags
 }
 func (p *UpdateSimpleMonitorParam) SetDelayLoop(v int) {
 	p.DelayLoop = v
@@ -877,19 +905,75 @@ func (p *UpdateSimpleMonitorParam) SetDelayLoop(v int) {
 func (p *UpdateSimpleMonitorParam) GetDelayLoop() int {
 	return p.DelayLoop
 }
-func (p *UpdateSimpleMonitorParam) SetHostHeader(v string) {
-	p.HostHeader = v
+func (p *UpdateSimpleMonitorParam) SetResponseCode(v int) {
+	p.ResponseCode = v
 }
 
-func (p *UpdateSimpleMonitorParam) GetHostHeader() string {
-	return p.HostHeader
+func (p *UpdateSimpleMonitorParam) GetResponseCode() int {
+	return p.ResponseCode
 }
-func (p *UpdateSimpleMonitorParam) SetSni(v bool) {
-	p.Sni = v
+func (p *UpdateSimpleMonitorParam) SetEmailType(v string) {
+	p.EmailType = v
 }
 
-func (p *UpdateSimpleMonitorParam) GetSni() bool {
-	return p.Sni
+func (p *UpdateSimpleMonitorParam) GetEmailType() string {
+	return p.EmailType
+}
+func (p *UpdateSimpleMonitorParam) SetNotifyInterval(v int) {
+	p.NotifyInterval = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetNotifyInterval() int {
+	return p.NotifyInterval
+}
+func (p *UpdateSimpleMonitorParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+func (p *UpdateSimpleMonitorParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetPort() int {
+	return p.Port
+}
+func (p *UpdateSimpleMonitorParam) SetDisabled(v bool) {
+	p.Disabled = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetDisabled() bool {
+	return p.Disabled
+}
+func (p *UpdateSimpleMonitorParam) SetUsername(v string) {
+	p.Username = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetUsername() string {
+	return p.Username
+}
+func (p *UpdateSimpleMonitorParam) SetDNSQname(v string) {
+	p.DNSQname = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetDNSQname() string {
+	return p.DNSQname
+}
+func (p *UpdateSimpleMonitorParam) SetNotifyEmail(v bool) {
+	p.NotifyEmail = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetNotifyEmail() bool {
+	return p.NotifyEmail
+}
+func (p *UpdateSimpleMonitorParam) SetProtocol(v string) {
+	p.Protocol = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetProtocol() string {
+	return p.Protocol
 }
 func (p *UpdateSimpleMonitorParam) SetPassword(v string) {
 	p.Password = v
@@ -905,41 +989,6 @@ func (p *UpdateSimpleMonitorParam) SetDNSExcepted(v string) {
 func (p *UpdateSimpleMonitorParam) GetDNSExcepted() string {
 	return p.DNSExcepted
 }
-func (p *UpdateSimpleMonitorParam) SetDisabled(v bool) {
-	p.Disabled = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetDisabled() bool {
-	return p.Disabled
-}
-func (p *UpdateSimpleMonitorParam) SetNotifyInterval(v int) {
-	p.NotifyInterval = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetNotifyInterval() int {
-	return p.NotifyInterval
-}
-func (p *UpdateSimpleMonitorParam) SetPort(v int) {
-	p.Port = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetPort() int {
-	return p.Port
-}
-func (p *UpdateSimpleMonitorParam) SetPath(v string) {
-	p.Path = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetPath() string {
-	return p.Path
-}
-func (p *UpdateSimpleMonitorParam) SetDNSQname(v string) {
-	p.DNSQname = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetDNSQname() string {
-	return p.DNSQname
-}
 func (p *UpdateSimpleMonitorParam) SetRemainingDays(v int) {
 	p.RemainingDays = v
 }
@@ -947,61 +996,12 @@ func (p *UpdateSimpleMonitorParam) SetRemainingDays(v int) {
 func (p *UpdateSimpleMonitorParam) GetRemainingDays() int {
 	return p.RemainingDays
 }
-func (p *UpdateSimpleMonitorParam) SetEmailType(v string) {
-	p.EmailType = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetEmailType() string {
-	return p.EmailType
-}
 func (p *UpdateSimpleMonitorParam) SetSlackWebhook(v string) {
 	p.SlackWebhook = v
 }
 
 func (p *UpdateSimpleMonitorParam) GetSlackWebhook() string {
 	return p.SlackWebhook
-}
-func (p *UpdateSimpleMonitorParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetTags() []string {
-	return p.Tags
-}
-func (p *UpdateSimpleMonitorParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
-func (p *UpdateSimpleMonitorParam) SetResponseCode(v int) {
-	p.ResponseCode = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetResponseCode() int {
-	return p.ResponseCode
-}
-func (p *UpdateSimpleMonitorParam) SetUsername(v string) {
-	p.Username = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetUsername() string {
-	return p.Username
-}
-func (p *UpdateSimpleMonitorParam) SetNotifyEmail(v bool) {
-	p.NotifyEmail = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetNotifyEmail() bool {
-	return p.NotifyEmail
-}
-func (p *UpdateSimpleMonitorParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetDescription() string {
-	return p.Description
 }
 
 // DeleteSimpleMonitorParam is input parameters for the sacloud API

@@ -202,10 +202,10 @@ func (p *CertificateInfoWebAccelParam) ColumnDefs() []output.ColumnDef {
 
 // CertificateNewWebAccelParam is input parameters for the sacloud API
 type CertificateNewWebAccelParam struct {
+	KeyContent  string
 	Cert        string
 	Key         string
 	CertContent string
-	KeyContent  string
 
 	input Input
 }
@@ -230,6 +230,9 @@ func (p *CertificateNewWebAccelParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CertificateNewWebAccelParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.KeyContent) {
+		p.KeyContent = ""
+	}
 	if utils.IsEmpty(p.Cert) {
 		p.Cert = ""
 	}
@@ -239,14 +242,21 @@ func (p *CertificateNewWebAccelParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.CertContent) {
 		p.CertContent = ""
 	}
-	if utils.IsEmpty(p.KeyContent) {
-		p.KeyContent = ""
-	}
 
 }
 
 func (p *CertificateNewWebAccelParam) validate() error {
 	var errors []error
+
+	{
+		errs := validation.ConflictsWith("--key-content", p.KeyContent, map[string]interface{}{
+
+			"--key": p.Key,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["WebAccel"].Commands["certificate-new"].Params["cert"].ValidateFunc
@@ -268,16 +278,6 @@ func (p *CertificateNewWebAccelParam) validate() error {
 		errs := validation.ConflictsWith("--cert-content", p.CertContent, map[string]interface{}{
 
 			"--cert": p.Cert,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		errs := validation.ConflictsWith("--key-content", p.KeyContent, map[string]interface{}{
-
-			"--key": p.Key,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -311,6 +311,13 @@ func (p *CertificateNewWebAccelParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *CertificateNewWebAccelParam) SetKeyContent(v string) {
+	p.KeyContent = v
+}
+
+func (p *CertificateNewWebAccelParam) GetKeyContent() string {
+	return p.KeyContent
+}
 func (p *CertificateNewWebAccelParam) SetCert(v string) {
 	p.Cert = v
 }
@@ -332,20 +339,13 @@ func (p *CertificateNewWebAccelParam) SetCertContent(v string) {
 func (p *CertificateNewWebAccelParam) GetCertContent() string {
 	return p.CertContent
 }
-func (p *CertificateNewWebAccelParam) SetKeyContent(v string) {
-	p.KeyContent = v
-}
-
-func (p *CertificateNewWebAccelParam) GetKeyContent() string {
-	return p.KeyContent
-}
 
 // CertificateUpdateWebAccelParam is input parameters for the sacloud API
 type CertificateUpdateWebAccelParam struct {
-	Cert        string
 	Key         string
 	CertContent string
 	KeyContent  string
+	Cert        string
 
 	input Input
 }
@@ -370,9 +370,6 @@ func (p *CertificateUpdateWebAccelParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CertificateUpdateWebAccelParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Cert) {
-		p.Cert = ""
-	}
 	if utils.IsEmpty(p.Key) {
 		p.Key = ""
 	}
@@ -382,19 +379,14 @@ func (p *CertificateUpdateWebAccelParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.KeyContent) {
 		p.KeyContent = ""
 	}
+	if utils.IsEmpty(p.Cert) {
+		p.Cert = ""
+	}
 
 }
 
 func (p *CertificateUpdateWebAccelParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["WebAccel"].Commands["certificate-update"].Params["cert"].ValidateFunc
-		errs := validator("--cert", p.Cert)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["WebAccel"].Commands["certificate-update"].Params["key"].ValidateFunc
@@ -419,6 +411,14 @@ func (p *CertificateUpdateWebAccelParam) validate() error {
 
 			"--key": p.Key,
 		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["WebAccel"].Commands["certificate-update"].Params["cert"].ValidateFunc
+		errs := validator("--cert", p.Cert)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -451,13 +451,6 @@ func (p *CertificateUpdateWebAccelParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CertificateUpdateWebAccelParam) SetCert(v string) {
-	p.Cert = v
-}
-
-func (p *CertificateUpdateWebAccelParam) GetCert() string {
-	return p.Cert
-}
 func (p *CertificateUpdateWebAccelParam) SetKey(v string) {
 	p.Key = v
 }
@@ -478,6 +471,13 @@ func (p *CertificateUpdateWebAccelParam) SetKeyContent(v string) {
 
 func (p *CertificateUpdateWebAccelParam) GetKeyContent() string {
 	return p.KeyContent
+}
+func (p *CertificateUpdateWebAccelParam) SetCert(v string) {
+	p.Cert = v
+}
+
+func (p *CertificateUpdateWebAccelParam) GetCert() string {
+	return p.Cert
 }
 
 // DeleteCacheWebAccelParam is input parameters for the sacloud API

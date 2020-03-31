@@ -65,12 +65,12 @@ var nfsListCmd = &cobra.Command{
 
 func nfsListCmdInit() {
 	fs := nfsListCmd.Flags()
+	fs.IntVarP(&nfsListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&nfsListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.StringSliceVarP(&nfsListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&nfsListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &nfsListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&nfsListParam.From, "from", "", 0, "set offset")
-	fs.IntVarP(&nfsListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&nfsListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&nfsListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 }
 
 var nfsCreateCmd = &cobra.Command{
@@ -88,16 +88,16 @@ var nfsCreateCmd = &cobra.Command{
 
 func nfsCreateCmdInit() {
 	fs := nfsCreateCmd.Flags()
-	fs.IntVarP(&nfsCreateParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
+	fs.StringVarP(&nfsCreateParam.Plan, "plan", "", "hdd", "set plan[ssd/hdd]")
+	fs.StringVarP(&nfsCreateParam.Ipaddress, "ipaddress", "", "", "set ipaddress(#)")
 	fs.StringVarP(&nfsCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&nfsCreateParam.Description, "description", "", "", "set resource description")
 	fs.VarP(newIDValue(0, &nfsCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.VarP(newIDValue(0, &nfsCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
-	fs.StringVarP(&nfsCreateParam.Ipaddress, "ipaddress", "", "", "set ipaddress(#)")
-	fs.StringVarP(&nfsCreateParam.DefaultRoute, "default-route", "", "", "set default route")
-	fs.StringVarP(&nfsCreateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&nfsCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.StringVarP(&nfsCreateParam.Plan, "plan", "", "hdd", "set plan[ssd/hdd]")
 	fs.IntVarP(&nfsCreateParam.Size, "size", "", 100, "set plan[100/500/1024/2048/4096/8192/12288]")
+	fs.IntVarP(&nfsCreateParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
+	fs.StringVarP(&nfsCreateParam.DefaultRoute, "default-route", "", "", "set default route")
+	fs.StringSliceVarP(&nfsCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 }
 
 var nfsReadCmd = &cobra.Command{
@@ -131,10 +131,10 @@ var nfsUpdateCmd = &cobra.Command{
 
 func nfsUpdateCmdInit() {
 	fs := nfsUpdateCmd.Flags()
+	fs.VarP(newIDValue(0, &nfsUpdateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.StringVarP(&nfsUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&nfsUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&nfsUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &nfsUpdateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
 var nfsDeleteCmd = &cobra.Command{

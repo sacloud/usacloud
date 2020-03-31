@@ -29,12 +29,12 @@ import (
 
 // ListVPCRouterParam is input parameters for the sacloud API
 type ListVPCRouterParam struct {
-	From int
-	Max  int
-	Sort []string
-	Tags []string
 	Name []string
 	Id   []sacloud.ID
+	From int
+	Max  int
+	Tags []string
+	Sort []string
 
 	input Input
 }
@@ -59,37 +59,29 @@ func (p *ListVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListVPCRouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.From) {
-		p.From = 0
-	}
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
-	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
+	if utils.IsEmpty(p.From) {
+		p.From = 0
+	}
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
 
 }
 
 func (p *ListVPCRouterParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["list"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
@@ -113,6 +105,14 @@ func (p *ListVPCRouterParam) validate() error {
 
 			"--name": p.Name,
 		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["list"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -145,34 +145,6 @@ func (p *ListVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListVPCRouterParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListVPCRouterParam) GetFrom() int {
-	return p.From
-}
-func (p *ListVPCRouterParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListVPCRouterParam) GetMax() int {
-	return p.Max
-}
-func (p *ListVPCRouterParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListVPCRouterParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListVPCRouterParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *ListVPCRouterParam) GetTags() []string {
-	return p.Tags
-}
 func (p *ListVPCRouterParam) SetName(v []string) {
 	p.Name = v
 }
@@ -187,21 +159,49 @@ func (p *ListVPCRouterParam) SetId(v []sacloud.ID) {
 func (p *ListVPCRouterParam) GetId() []sacloud.ID {
 	return p.Id
 }
+func (p *ListVPCRouterParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListVPCRouterParam) GetFrom() int {
+	return p.From
+}
+func (p *ListVPCRouterParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListVPCRouterParam) GetMax() int {
+	return p.Max
+}
+func (p *ListVPCRouterParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *ListVPCRouterParam) GetTags() []string {
+	return p.Tags
+}
+func (p *ListVPCRouterParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListVPCRouterParam) GetSort() []string {
+	return p.Sort
+}
 
 // CreateVPCRouterParam is input parameters for the sacloud API
 type CreateVPCRouterParam struct {
-	DisableInternetConnection bool
-	BootAfterCreate           bool
-	Description               string
-	Plan                      string
-	Ipaddress2                string
-	Vip                       string
-	Ipaddress1                string
-	Name                      string
-	Tags                      []string
 	IconId                    sacloud.ID
+	Plan                      string
 	SwitchId                  sacloud.ID
 	Vrid                      int
+	Ipaddress1                string
+	BootAfterCreate           bool
+	Description               string
+	Tags                      []string
+	Vip                       string
+	Ipaddress2                string
+	DisableInternetConnection bool
+	Name                      string
 
 	input Input
 }
@@ -227,8 +227,20 @@ func (p *CreateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateVPCRouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.DisableInternetConnection) {
-		p.DisableInternetConnection = false
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Plan) {
+		p.Plan = ""
+	}
+	if utils.IsEmpty(p.SwitchId) {
+		p.SwitchId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Vrid) {
+		p.Vrid = 0
+	}
+	if utils.IsEmpty(p.Ipaddress1) {
+		p.Ipaddress1 = ""
 	}
 	if utils.IsEmpty(p.BootAfterCreate) {
 		p.BootAfterCreate = false
@@ -236,32 +248,20 @@ func (p *CreateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Plan) {
-		p.Plan = ""
-	}
-	if utils.IsEmpty(p.Ipaddress2) {
-		p.Ipaddress2 = ""
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.Vip) {
 		p.Vip = ""
 	}
-	if utils.IsEmpty(p.Ipaddress1) {
-		p.Ipaddress1 = ""
+	if utils.IsEmpty(p.Ipaddress2) {
+		p.Ipaddress2 = ""
+	}
+	if utils.IsEmpty(p.DisableInternetConnection) {
+		p.DisableInternetConnection = false
 	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.SwitchId) {
-		p.SwitchId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.Vrid) {
-		p.Vrid = 0
 	}
 
 }
@@ -270,8 +270,8 @@ func (p *CreateVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := define.Resources["VPCRouter"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
+		validator := define.Resources["VPCRouter"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -293,8 +293,40 @@ func (p *CreateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["VPCRouter"].Commands["create"].Params["ipaddress2"].ValidateFunc
-		errs := validator("--ipaddress-2", p.Ipaddress2)
+		validator := define.Resources["VPCRouter"].Commands["create"].Params["switch-id"].ValidateFunc
+		errs := validator("--switch-id", p.SwitchId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--vrid", p.Vrid)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["create"].Params["ipaddress1"].ValidateFunc
+		errs := validator("--ipaddress-1", p.Ipaddress1)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -309,8 +341,8 @@ func (p *CreateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["VPCRouter"].Commands["create"].Params["ipaddress1"].ValidateFunc
-		errs := validator("--ipaddress-1", p.Ipaddress1)
+		validator := define.Resources["VPCRouter"].Commands["create"].Params["ipaddress2"].ValidateFunc
+		errs := validator("--ipaddress-2", p.Ipaddress2)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -326,38 +358,6 @@ func (p *CreateVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["create"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["create"].Params["switch-id"].ValidateFunc
-		errs := validator("--switch-id", p.SwitchId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--vrid", p.Vrid)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -390,12 +390,40 @@ func (p *CreateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateVPCRouterParam) SetDisableInternetConnection(v bool) {
-	p.DisableInternetConnection = v
+func (p *CreateVPCRouterParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
 }
 
-func (p *CreateVPCRouterParam) GetDisableInternetConnection() bool {
-	return p.DisableInternetConnection
+func (p *CreateVPCRouterParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+func (p *CreateVPCRouterParam) SetPlan(v string) {
+	p.Plan = v
+}
+
+func (p *CreateVPCRouterParam) GetPlan() string {
+	return p.Plan
+}
+func (p *CreateVPCRouterParam) SetSwitchId(v sacloud.ID) {
+	p.SwitchId = v
+}
+
+func (p *CreateVPCRouterParam) GetSwitchId() sacloud.ID {
+	return p.SwitchId
+}
+func (p *CreateVPCRouterParam) SetVrid(v int) {
+	p.Vrid = v
+}
+
+func (p *CreateVPCRouterParam) GetVrid() int {
+	return p.Vrid
+}
+func (p *CreateVPCRouterParam) SetIpaddress1(v string) {
+	p.Ipaddress1 = v
+}
+
+func (p *CreateVPCRouterParam) GetIpaddress1() string {
+	return p.Ipaddress1
 }
 func (p *CreateVPCRouterParam) SetBootAfterCreate(v bool) {
 	p.BootAfterCreate = v
@@ -411,19 +439,12 @@ func (p *CreateVPCRouterParam) SetDescription(v string) {
 func (p *CreateVPCRouterParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateVPCRouterParam) SetPlan(v string) {
-	p.Plan = v
+func (p *CreateVPCRouterParam) SetTags(v []string) {
+	p.Tags = v
 }
 
-func (p *CreateVPCRouterParam) GetPlan() string {
-	return p.Plan
-}
-func (p *CreateVPCRouterParam) SetIpaddress2(v string) {
-	p.Ipaddress2 = v
-}
-
-func (p *CreateVPCRouterParam) GetIpaddress2() string {
-	return p.Ipaddress2
+func (p *CreateVPCRouterParam) GetTags() []string {
+	return p.Tags
 }
 func (p *CreateVPCRouterParam) SetVip(v string) {
 	p.Vip = v
@@ -432,12 +453,19 @@ func (p *CreateVPCRouterParam) SetVip(v string) {
 func (p *CreateVPCRouterParam) GetVip() string {
 	return p.Vip
 }
-func (p *CreateVPCRouterParam) SetIpaddress1(v string) {
-	p.Ipaddress1 = v
+func (p *CreateVPCRouterParam) SetIpaddress2(v string) {
+	p.Ipaddress2 = v
 }
 
-func (p *CreateVPCRouterParam) GetIpaddress1() string {
-	return p.Ipaddress1
+func (p *CreateVPCRouterParam) GetIpaddress2() string {
+	return p.Ipaddress2
+}
+func (p *CreateVPCRouterParam) SetDisableInternetConnection(v bool) {
+	p.DisableInternetConnection = v
+}
+
+func (p *CreateVPCRouterParam) GetDisableInternetConnection() bool {
+	return p.DisableInternetConnection
 }
 func (p *CreateVPCRouterParam) SetName(v string) {
 	p.Name = v
@@ -445,34 +473,6 @@ func (p *CreateVPCRouterParam) SetName(v string) {
 
 func (p *CreateVPCRouterParam) GetName() string {
 	return p.Name
-}
-func (p *CreateVPCRouterParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CreateVPCRouterParam) GetTags() []string {
-	return p.Tags
-}
-func (p *CreateVPCRouterParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *CreateVPCRouterParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
-func (p *CreateVPCRouterParam) SetSwitchId(v sacloud.ID) {
-	p.SwitchId = v
-}
-
-func (p *CreateVPCRouterParam) GetSwitchId() sacloud.ID {
-	return p.SwitchId
-}
-func (p *CreateVPCRouterParam) SetVrid(v int) {
-	p.Vrid = v
-}
-
-func (p *CreateVPCRouterParam) GetVrid() int {
-	return p.Vrid
 }
 
 // ReadVPCRouterParam is input parameters for the sacloud API
@@ -1294,13 +1294,13 @@ func (p *InterfaceInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 
 // InterfaceConnectVPCRouterParam is input parameters for the sacloud API
 type InterfaceConnectVPCRouterParam struct {
-	Interface  string
-	SwitchId   sacloud.ID
-	Ipaddress  string
 	Ipaddress1 string
 	Ipaddress2 string
 	NwMasklen  int
 	WithReboot bool
+	Interface  string
+	SwitchId   sacloud.ID
+	Ipaddress  string
 
 	input Input
 }
@@ -1326,15 +1326,6 @@ func (p *InterfaceConnectVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *InterfaceConnectVPCRouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Interface) {
-		p.Interface = ""
-	}
-	if utils.IsEmpty(p.SwitchId) {
-		p.SwitchId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.Ipaddress) {
-		p.Ipaddress = ""
-	}
 	if utils.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
 	}
@@ -1347,11 +1338,44 @@ func (p *InterfaceConnectVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.WithReboot) {
 		p.WithReboot = false
 	}
+	if utils.IsEmpty(p.Interface) {
+		p.Interface = ""
+	}
+	if utils.IsEmpty(p.SwitchId) {
+		p.SwitchId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
 
 }
 
 func (p *InterfaceConnectVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["ipaddress1"].ValidateFunc
+		errs := validator("--ipaddress-1", p.Ipaddress1)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["ipaddress2"].ValidateFunc
+		errs := validator("--ipaddress-2", p.Ipaddress2)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["nw-masklen"].ValidateFunc
+		errs := validator("--nw-masklen", p.NwMasklen)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -1398,30 +1422,6 @@ func (p *InterfaceConnectVPCRouterParam) validate() error {
 		}
 	}
 
-	{
-		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["ipaddress1"].ValidateFunc
-		errs := validator("--ipaddress-1", p.Ipaddress1)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["ipaddress2"].ValidateFunc
-		errs := validator("--ipaddress-2", p.Ipaddress2)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["nw-masklen"].ValidateFunc
-		errs := validator("--nw-masklen", p.NwMasklen)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
@@ -1449,27 +1449,6 @@ func (p *InterfaceConnectVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *InterfaceConnectVPCRouterParam) SetInterface(v string) {
-	p.Interface = v
-}
-
-func (p *InterfaceConnectVPCRouterParam) GetInterface() string {
-	return p.Interface
-}
-func (p *InterfaceConnectVPCRouterParam) SetSwitchId(v sacloud.ID) {
-	p.SwitchId = v
-}
-
-func (p *InterfaceConnectVPCRouterParam) GetSwitchId() sacloud.ID {
-	return p.SwitchId
-}
-func (p *InterfaceConnectVPCRouterParam) SetIpaddress(v string) {
-	p.Ipaddress = v
-}
-
-func (p *InterfaceConnectVPCRouterParam) GetIpaddress() string {
-	return p.Ipaddress
-}
 func (p *InterfaceConnectVPCRouterParam) SetIpaddress1(v string) {
 	p.Ipaddress1 = v
 }
@@ -1498,17 +1477,38 @@ func (p *InterfaceConnectVPCRouterParam) SetWithReboot(v bool) {
 func (p *InterfaceConnectVPCRouterParam) GetWithReboot() bool {
 	return p.WithReboot
 }
+func (p *InterfaceConnectVPCRouterParam) SetInterface(v string) {
+	p.Interface = v
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetInterface() string {
+	return p.Interface
+}
+func (p *InterfaceConnectVPCRouterParam) SetSwitchId(v sacloud.ID) {
+	p.SwitchId = v
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetSwitchId() sacloud.ID {
+	return p.SwitchId
+}
+func (p *InterfaceConnectVPCRouterParam) SetIpaddress(v string) {
+	p.Ipaddress = v
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetIpaddress() string {
+	return p.Ipaddress
+}
 
 // InterfaceUpdateVPCRouterParam is input parameters for the sacloud API
 type InterfaceUpdateVPCRouterParam struct {
-	Alias      []string
-	NwMasklen  int
-	WithReboot bool
 	Interface  string
 	SwitchId   sacloud.ID
 	Ipaddress  string
 	Ipaddress1 string
 	Ipaddress2 string
+	Alias      []string
+	NwMasklen  int
+	WithReboot bool
 
 	input Input
 }
@@ -1534,15 +1534,6 @@ func (p *InterfaceUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *InterfaceUpdateVPCRouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Alias) {
-		p.Alias = []string{""}
-	}
-	if utils.IsEmpty(p.NwMasklen) {
-		p.NwMasklen = 0
-	}
-	if utils.IsEmpty(p.WithReboot) {
-		p.WithReboot = false
-	}
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = ""
 	}
@@ -1558,27 +1549,20 @@ func (p *InterfaceUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Ipaddress2) {
 		p.Ipaddress2 = ""
 	}
+	if utils.IsEmpty(p.Alias) {
+		p.Alias = []string{""}
+	}
+	if utils.IsEmpty(p.NwMasklen) {
+		p.NwMasklen = 0
+	}
+	if utils.IsEmpty(p.WithReboot) {
+		p.WithReboot = false
+	}
 
 }
 
 func (p *InterfaceUpdateVPCRouterParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["interface-update"].Params["alias"].ValidateFunc
-		errs := validator("--alias", p.Alias)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["interface-update"].Params["nw-masklen"].ValidateFunc
-		errs := validator("--nw-masklen", p.NwMasklen)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -1627,6 +1611,22 @@ func (p *InterfaceUpdateVPCRouterParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["VPCRouter"].Commands["interface-update"].Params["alias"].ValidateFunc
+		errs := validator("--alias", p.Alias)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["interface-update"].Params["nw-masklen"].ValidateFunc
+		errs := validator("--nw-masklen", p.NwMasklen)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
@@ -1654,27 +1654,6 @@ func (p *InterfaceUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *InterfaceUpdateVPCRouterParam) SetAlias(v []string) {
-	p.Alias = v
-}
-
-func (p *InterfaceUpdateVPCRouterParam) GetAlias() []string {
-	return p.Alias
-}
-func (p *InterfaceUpdateVPCRouterParam) SetNwMasklen(v int) {
-	p.NwMasklen = v
-}
-
-func (p *InterfaceUpdateVPCRouterParam) GetNwMasklen() int {
-	return p.NwMasklen
-}
-func (p *InterfaceUpdateVPCRouterParam) SetWithReboot(v bool) {
-	p.WithReboot = v
-}
-
-func (p *InterfaceUpdateVPCRouterParam) GetWithReboot() bool {
-	return p.WithReboot
-}
 func (p *InterfaceUpdateVPCRouterParam) SetInterface(v string) {
 	p.Interface = v
 }
@@ -1709,6 +1688,27 @@ func (p *InterfaceUpdateVPCRouterParam) SetIpaddress2(v string) {
 
 func (p *InterfaceUpdateVPCRouterParam) GetIpaddress2() string {
 	return p.Ipaddress2
+}
+func (p *InterfaceUpdateVPCRouterParam) SetAlias(v []string) {
+	p.Alias = v
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetAlias() []string {
+	return p.Alias
+}
+func (p *InterfaceUpdateVPCRouterParam) SetNwMasklen(v int) {
+	p.NwMasklen = v
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetNwMasklen() int {
+	return p.NwMasklen
+}
+func (p *InterfaceUpdateVPCRouterParam) SetWithReboot(v bool) {
+	p.WithReboot = v
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetWithReboot() bool {
+	return p.WithReboot
 }
 
 // InterfaceDisconnectVPCRouterParam is input parameters for the sacloud API
@@ -1999,10 +1999,10 @@ func (p *StaticNatAddVPCRouterParam) GetDescription() string {
 
 // StaticNatUpdateVPCRouterParam is input parameters for the sacloud API
 type StaticNatUpdateVPCRouterParam struct {
-	Description string
-	Index       int
 	Global      string
 	Private     string
+	Description string
+	Index       int
 
 	input Input
 }
@@ -2027,39 +2027,23 @@ func (p *StaticNatUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *StaticNatUpdateVPCRouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
-	if utils.IsEmpty(p.Index) {
-		p.Index = 0
-	}
 	if utils.IsEmpty(p.Global) {
 		p.Global = ""
 	}
 	if utils.IsEmpty(p.Private) {
 		p.Private = ""
 	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
+	if utils.IsEmpty(p.Index) {
+		p.Index = 0
+	}
 
 }
 
 func (p *StaticNatUpdateVPCRouterParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["static-nat-update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--index", p.Index)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["VPCRouter"].Commands["static-nat-update"].Params["global"].ValidateFunc
@@ -2072,6 +2056,22 @@ func (p *StaticNatUpdateVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["static-nat-update"].Params["private"].ValidateFunc
 		errs := validator("--private", p.Private)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["static-nat-update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2104,20 +2104,6 @@ func (p *StaticNatUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *StaticNatUpdateVPCRouterParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *StaticNatUpdateVPCRouterParam) GetDescription() string {
-	return p.Description
-}
-func (p *StaticNatUpdateVPCRouterParam) SetIndex(v int) {
-	p.Index = v
-}
-
-func (p *StaticNatUpdateVPCRouterParam) GetIndex() int {
-	return p.Index
-}
 func (p *StaticNatUpdateVPCRouterParam) SetGlobal(v string) {
 	p.Global = v
 }
@@ -2131,6 +2117,20 @@ func (p *StaticNatUpdateVPCRouterParam) SetPrivate(v string) {
 
 func (p *StaticNatUpdateVPCRouterParam) GetPrivate() string {
 	return p.Private
+}
+func (p *StaticNatUpdateVPCRouterParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetDescription() string {
+	return p.Description
+}
+func (p *StaticNatUpdateVPCRouterParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetIndex() int {
+	return p.Index
 }
 
 // StaticNatDeleteVPCRouterParam is input parameters for the sacloud API
@@ -2272,11 +2272,11 @@ func (p *PortForwardingInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 
 // PortForwardingAddVPCRouterParam is input parameters for the sacloud API
 type PortForwardingAddVPCRouterParam struct {
+	GlobalPort       int
 	PrivateIpaddress string
 	PrivatePort      int
 	Description      string
 	Protocol         string
-	GlobalPort       int
 
 	input Input
 }
@@ -2301,6 +2301,9 @@ func (p *PortForwardingAddVPCRouterParam) WriteSkeleton(writer io.Writer) error 
 }
 
 func (p *PortForwardingAddVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.GlobalPort) {
+		p.GlobalPort = 0
+	}
 	if utils.IsEmpty(p.PrivateIpaddress) {
 		p.PrivateIpaddress = ""
 	}
@@ -2313,14 +2316,26 @@ func (p *PortForwardingAddVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
-	if utils.IsEmpty(p.GlobalPort) {
-		p.GlobalPort = 0
-	}
 
 }
 
 func (p *PortForwardingAddVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--global-port", p.GlobalPort)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["VPCRouter"].Commands["port-forwarding-add"].Params["global-port"].ValidateFunc
+		errs := validator("--global-port", p.GlobalPort)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -2375,21 +2390,6 @@ func (p *PortForwardingAddVPCRouterParam) validate() error {
 		}
 	}
 
-	{
-		validator := validateRequired
-		errs := validator("--global-port", p.GlobalPort)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["VPCRouter"].Commands["port-forwarding-add"].Params["global-port"].ValidateFunc
-		errs := validator("--global-port", p.GlobalPort)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
@@ -2417,6 +2417,13 @@ func (p *PortForwardingAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *PortForwardingAddVPCRouterParam) SetGlobalPort(v int) {
+	p.GlobalPort = v
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetGlobalPort() int {
+	return p.GlobalPort
+}
 func (p *PortForwardingAddVPCRouterParam) SetPrivateIpaddress(v string) {
 	p.PrivateIpaddress = v
 }
@@ -2445,22 +2452,15 @@ func (p *PortForwardingAddVPCRouterParam) SetProtocol(v string) {
 func (p *PortForwardingAddVPCRouterParam) GetProtocol() string {
 	return p.Protocol
 }
-func (p *PortForwardingAddVPCRouterParam) SetGlobalPort(v int) {
-	p.GlobalPort = v
-}
-
-func (p *PortForwardingAddVPCRouterParam) GetGlobalPort() int {
-	return p.GlobalPort
-}
 
 // PortForwardingUpdateVPCRouterParam is input parameters for the sacloud API
 type PortForwardingUpdateVPCRouterParam struct {
-	Description      string
 	Index            int
 	Protocol         string
 	GlobalPort       int
 	PrivateIpaddress string
 	PrivatePort      int
+	Description      string
 
 	input Input
 }
@@ -2485,9 +2485,6 @@ func (p *PortForwardingUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) err
 }
 
 func (p *PortForwardingUpdateVPCRouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -2503,19 +2500,14 @@ func (p *PortForwardingUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.PrivatePort) {
 		p.PrivatePort = 0
 	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
 
 }
 
 func (p *PortForwardingUpdateVPCRouterParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["port-forwarding-update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -2557,6 +2549,14 @@ func (p *PortForwardingUpdateVPCRouterParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["VPCRouter"].Commands["port-forwarding-update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
@@ -2584,13 +2584,6 @@ func (p *PortForwardingUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *PortForwardingUpdateVPCRouterParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *PortForwardingUpdateVPCRouterParam) GetDescription() string {
-	return p.Description
-}
 func (p *PortForwardingUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -2625,6 +2618,13 @@ func (p *PortForwardingUpdateVPCRouterParam) SetPrivatePort(v int) {
 
 func (p *PortForwardingUpdateVPCRouterParam) GetPrivatePort() int {
 	return p.PrivatePort
+}
+func (p *PortForwardingUpdateVPCRouterParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetDescription() string {
+	return p.Description
 }
 
 // PortForwardingDeleteVPCRouterParam is input parameters for the sacloud API
@@ -2815,15 +2815,15 @@ func (p *FirewallInfoVPCRouterParam) GetDirection() string {
 // FirewallAddVPCRouterParam is input parameters for the sacloud API
 type FirewallAddVPCRouterParam struct {
 	Direction          string
-	SourceNetwork      string
-	DestinationPort    int
+	Protocol           string
 	Action             string
+	EnableLogging      bool
 	Description        string
 	Interface          int
-	Protocol           string
+	SourceNetwork      string
 	SourcePort         int
 	DestinationNetwork string
-	EnableLogging      bool
+	DestinationPort    int
 
 	input Input
 }
@@ -2852,14 +2852,14 @@ func (p *FirewallAddVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Direction) {
 		p.Direction = ""
 	}
-	if utils.IsEmpty(p.SourceNetwork) {
-		p.SourceNetwork = ""
-	}
-	if utils.IsEmpty(p.DestinationPort) {
-		p.DestinationPort = 0
+	if utils.IsEmpty(p.Protocol) {
+		p.Protocol = ""
 	}
 	if utils.IsEmpty(p.Action) {
 		p.Action = ""
+	}
+	if utils.IsEmpty(p.EnableLogging) {
+		p.EnableLogging = false
 	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
@@ -2867,8 +2867,8 @@ func (p *FirewallAddVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
-	if utils.IsEmpty(p.Protocol) {
-		p.Protocol = ""
+	if utils.IsEmpty(p.SourceNetwork) {
+		p.SourceNetwork = ""
 	}
 	if utils.IsEmpty(p.SourcePort) {
 		p.SourcePort = 0
@@ -2876,8 +2876,8 @@ func (p *FirewallAddVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.DestinationNetwork) {
 		p.DestinationNetwork = ""
 	}
-	if utils.IsEmpty(p.EnableLogging) {
-		p.EnableLogging = false
+	if utils.IsEmpty(p.DestinationPort) {
+		p.DestinationPort = 0
 	}
 
 }
@@ -2901,16 +2901,15 @@ func (p *FirewallAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["source-network"].ValidateFunc
-		errs := validator("--source-network", p.SourceNetwork)
+		validator := validateRequired
+		errs := validator("--protocol", p.Protocol)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-
 	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["destination-port"].ValidateFunc
-		errs := validator("--destination-port", p.DestinationPort)
+		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2948,15 +2947,8 @@ func (p *FirewallAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
-		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
+		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["source-network"].ValidateFunc
+		errs := validator("--source-network", p.SourceNetwork)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2973,6 +2965,14 @@ func (p *FirewallAddVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["destination-network"].ValidateFunc
 		errs := validator("--destination-network", p.DestinationNetwork)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["destination-port"].ValidateFunc
+		errs := validator("--destination-port", p.DestinationPort)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3012,19 +3012,12 @@ func (p *FirewallAddVPCRouterParam) SetDirection(v string) {
 func (p *FirewallAddVPCRouterParam) GetDirection() string {
 	return p.Direction
 }
-func (p *FirewallAddVPCRouterParam) SetSourceNetwork(v string) {
-	p.SourceNetwork = v
+func (p *FirewallAddVPCRouterParam) SetProtocol(v string) {
+	p.Protocol = v
 }
 
-func (p *FirewallAddVPCRouterParam) GetSourceNetwork() string {
-	return p.SourceNetwork
-}
-func (p *FirewallAddVPCRouterParam) SetDestinationPort(v int) {
-	p.DestinationPort = v
-}
-
-func (p *FirewallAddVPCRouterParam) GetDestinationPort() int {
-	return p.DestinationPort
+func (p *FirewallAddVPCRouterParam) GetProtocol() string {
+	return p.Protocol
 }
 func (p *FirewallAddVPCRouterParam) SetAction(v string) {
 	p.Action = v
@@ -3032,6 +3025,13 @@ func (p *FirewallAddVPCRouterParam) SetAction(v string) {
 
 func (p *FirewallAddVPCRouterParam) GetAction() string {
 	return p.Action
+}
+func (p *FirewallAddVPCRouterParam) SetEnableLogging(v bool) {
+	p.EnableLogging = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetEnableLogging() bool {
+	return p.EnableLogging
 }
 func (p *FirewallAddVPCRouterParam) SetDescription(v string) {
 	p.Description = v
@@ -3047,12 +3047,12 @@ func (p *FirewallAddVPCRouterParam) SetInterface(v int) {
 func (p *FirewallAddVPCRouterParam) GetInterface() int {
 	return p.Interface
 }
-func (p *FirewallAddVPCRouterParam) SetProtocol(v string) {
-	p.Protocol = v
+func (p *FirewallAddVPCRouterParam) SetSourceNetwork(v string) {
+	p.SourceNetwork = v
 }
 
-func (p *FirewallAddVPCRouterParam) GetProtocol() string {
-	return p.Protocol
+func (p *FirewallAddVPCRouterParam) GetSourceNetwork() string {
+	return p.SourceNetwork
 }
 func (p *FirewallAddVPCRouterParam) SetSourcePort(v int) {
 	p.SourcePort = v
@@ -3068,27 +3068,27 @@ func (p *FirewallAddVPCRouterParam) SetDestinationNetwork(v string) {
 func (p *FirewallAddVPCRouterParam) GetDestinationNetwork() string {
 	return p.DestinationNetwork
 }
-func (p *FirewallAddVPCRouterParam) SetEnableLogging(v bool) {
-	p.EnableLogging = v
+func (p *FirewallAddVPCRouterParam) SetDestinationPort(v int) {
+	p.DestinationPort = v
 }
 
-func (p *FirewallAddVPCRouterParam) GetEnableLogging() bool {
-	return p.EnableLogging
+func (p *FirewallAddVPCRouterParam) GetDestinationPort() int {
+	return p.DestinationPort
 }
 
 // FirewallUpdateVPCRouterParam is input parameters for the sacloud API
 type FirewallUpdateVPCRouterParam struct {
-	Direction          string
-	DestinationNetwork string
-	DestinationPort    int
-	Description        string
-	EnableLogging      bool
 	Interface          int
-	Index              int
+	Direction          string
 	Protocol           string
+	Action             string
+	DestinationPort    int
+	EnableLogging      bool
+	Description        string
+	Index              int
 	SourceNetwork      string
 	SourcePort         int
-	Action             string
+	DestinationNetwork string
 
 	input Input
 }
@@ -3114,29 +3114,29 @@ func (p *FirewallUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *FirewallUpdateVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Interface) {
+		p.Interface = 0
+	}
 	if utils.IsEmpty(p.Direction) {
 		p.Direction = ""
 	}
-	if utils.IsEmpty(p.DestinationNetwork) {
-		p.DestinationNetwork = ""
+	if utils.IsEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if utils.IsEmpty(p.Action) {
+		p.Action = ""
 	}
 	if utils.IsEmpty(p.DestinationPort) {
 		p.DestinationPort = 0
 	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
 	if utils.IsEmpty(p.EnableLogging) {
 		p.EnableLogging = false
 	}
-	if utils.IsEmpty(p.Interface) {
-		p.Interface = 0
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
 	}
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
-	}
-	if utils.IsEmpty(p.Protocol) {
-		p.Protocol = ""
 	}
 	if utils.IsEmpty(p.SourceNetwork) {
 		p.SourceNetwork = ""
@@ -3144,14 +3144,22 @@ func (p *FirewallUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.SourcePort) {
 		p.SourcePort = 0
 	}
-	if utils.IsEmpty(p.Action) {
-		p.Action = ""
+	if utils.IsEmpty(p.DestinationNetwork) {
+		p.DestinationNetwork = ""
 	}
 
 }
 
 func (p *FirewallUpdateVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -3169,8 +3177,16 @@ func (p *FirewallUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["destination-network"].ValidateFunc
-		errs := validator("--destination-network", p.DestinationNetwork)
+		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["action"].ValidateFunc
+		errs := validator("--action", p.Action)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3193,24 +3209,8 @@ func (p *FirewallUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["interface"].ValidateFunc
-		errs := validator("--interface", p.Interface)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
 		validator := validateRequired
 		errs := validator("--index", p.Index)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3233,8 +3233,8 @@ func (p *FirewallUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["action"].ValidateFunc
-		errs := validator("--action", p.Action)
+		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["destination-network"].ValidateFunc
+		errs := validator("--destination-network", p.DestinationNetwork)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3267,6 +3267,13 @@ func (p *FirewallUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *FirewallUpdateVPCRouterParam) SetInterface(v int) {
+	p.Interface = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetInterface() int {
+	return p.Interface
+}
 func (p *FirewallUpdateVPCRouterParam) SetDirection(v string) {
 	p.Direction = v
 }
@@ -3274,12 +3281,19 @@ func (p *FirewallUpdateVPCRouterParam) SetDirection(v string) {
 func (p *FirewallUpdateVPCRouterParam) GetDirection() string {
 	return p.Direction
 }
-func (p *FirewallUpdateVPCRouterParam) SetDestinationNetwork(v string) {
-	p.DestinationNetwork = v
+func (p *FirewallUpdateVPCRouterParam) SetProtocol(v string) {
+	p.Protocol = v
 }
 
-func (p *FirewallUpdateVPCRouterParam) GetDestinationNetwork() string {
-	return p.DestinationNetwork
+func (p *FirewallUpdateVPCRouterParam) GetProtocol() string {
+	return p.Protocol
+}
+func (p *FirewallUpdateVPCRouterParam) SetAction(v string) {
+	p.Action = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetAction() string {
+	return p.Action
 }
 func (p *FirewallUpdateVPCRouterParam) SetDestinationPort(v int) {
 	p.DestinationPort = v
@@ -3288,13 +3302,6 @@ func (p *FirewallUpdateVPCRouterParam) SetDestinationPort(v int) {
 func (p *FirewallUpdateVPCRouterParam) GetDestinationPort() int {
 	return p.DestinationPort
 }
-func (p *FirewallUpdateVPCRouterParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *FirewallUpdateVPCRouterParam) GetDescription() string {
-	return p.Description
-}
 func (p *FirewallUpdateVPCRouterParam) SetEnableLogging(v bool) {
 	p.EnableLogging = v
 }
@@ -3302,12 +3309,12 @@ func (p *FirewallUpdateVPCRouterParam) SetEnableLogging(v bool) {
 func (p *FirewallUpdateVPCRouterParam) GetEnableLogging() bool {
 	return p.EnableLogging
 }
-func (p *FirewallUpdateVPCRouterParam) SetInterface(v int) {
-	p.Interface = v
+func (p *FirewallUpdateVPCRouterParam) SetDescription(v string) {
+	p.Description = v
 }
 
-func (p *FirewallUpdateVPCRouterParam) GetInterface() int {
-	return p.Interface
+func (p *FirewallUpdateVPCRouterParam) GetDescription() string {
+	return p.Description
 }
 func (p *FirewallUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
@@ -3315,13 +3322,6 @@ func (p *FirewallUpdateVPCRouterParam) SetIndex(v int) {
 
 func (p *FirewallUpdateVPCRouterParam) GetIndex() int {
 	return p.Index
-}
-func (p *FirewallUpdateVPCRouterParam) SetProtocol(v string) {
-	p.Protocol = v
-}
-
-func (p *FirewallUpdateVPCRouterParam) GetProtocol() string {
-	return p.Protocol
 }
 func (p *FirewallUpdateVPCRouterParam) SetSourceNetwork(v string) {
 	p.SourceNetwork = v
@@ -3337,19 +3337,19 @@ func (p *FirewallUpdateVPCRouterParam) SetSourcePort(v int) {
 func (p *FirewallUpdateVPCRouterParam) GetSourcePort() int {
 	return p.SourcePort
 }
-func (p *FirewallUpdateVPCRouterParam) SetAction(v string) {
-	p.Action = v
+func (p *FirewallUpdateVPCRouterParam) SetDestinationNetwork(v string) {
+	p.DestinationNetwork = v
 }
 
-func (p *FirewallUpdateVPCRouterParam) GetAction() string {
-	return p.Action
+func (p *FirewallUpdateVPCRouterParam) GetDestinationNetwork() string {
+	return p.DestinationNetwork
 }
 
 // FirewallDeleteVPCRouterParam is input parameters for the sacloud API
 type FirewallDeleteVPCRouterParam struct {
+	Interface int
 	Direction string
 	Index     int
-	Interface int
 
 	input Input
 }
@@ -3375,20 +3375,28 @@ func (p *FirewallDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *FirewallDeleteVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Interface) {
+		p.Interface = 0
+	}
 	if utils.IsEmpty(p.Direction) {
 		p.Direction = ""
 	}
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Interface) {
-		p.Interface = 0
-	}
 
 }
 
 func (p *FirewallDeleteVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-delete"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -3408,14 +3416,6 @@ func (p *FirewallDeleteVPCRouterParam) validate() error {
 	{
 		validator := validateRequired
 		errs := validator("--index", p.Index)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-delete"].Params["interface"].ValidateFunc
-		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3448,6 +3448,13 @@ func (p *FirewallDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *FirewallDeleteVPCRouterParam) SetInterface(v int) {
+	p.Interface = v
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetInterface() int {
+	return p.Interface
+}
 func (p *FirewallDeleteVPCRouterParam) SetDirection(v string) {
 	p.Direction = v
 }
@@ -3461,13 +3468,6 @@ func (p *FirewallDeleteVPCRouterParam) SetIndex(v int) {
 
 func (p *FirewallDeleteVPCRouterParam) GetIndex() int {
 	return p.Index
-}
-func (p *FirewallDeleteVPCRouterParam) SetInterface(v int) {
-	p.Interface = v
-}
-
-func (p *FirewallDeleteVPCRouterParam) GetInterface() int {
-	return p.Interface
 }
 
 // DhcpServerInfoVPCRouterParam is input parameters for the sacloud API
@@ -4086,9 +4086,9 @@ func (p *DhcpStaticMappingAddVPCRouterParam) GetIpaddress() string {
 
 // DhcpStaticMappingUpdateVPCRouterParam is input parameters for the sacloud API
 type DhcpStaticMappingUpdateVPCRouterParam struct {
+	Index      int
 	Macaddress string
 	Ipaddress  string
-	Index      int
 
 	input Input
 }
@@ -4113,20 +4113,28 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) 
 }
 
 func (p *DhcpStaticMappingUpdateVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Index) {
+		p.Index = 0
+	}
 	if utils.IsEmpty(p.Macaddress) {
 		p.Macaddress = ""
 	}
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
-	if utils.IsEmpty(p.Index) {
-		p.Index = 0
-	}
 
 }
 
 func (p *DhcpStaticMappingUpdateVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-update"].Params["macaddress"].ValidateFunc
@@ -4139,14 +4147,6 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-update"].Params["ipaddress"].ValidateFunc
 		errs := validator("--ipaddress", p.Ipaddress)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4179,6 +4179,13 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef 
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *DhcpStaticMappingUpdateVPCRouterParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetIndex() int {
+	return p.Index
+}
 func (p *DhcpStaticMappingUpdateVPCRouterParam) SetMacaddress(v string) {
 	p.Macaddress = v
 }
@@ -4192,13 +4199,6 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) SetIpaddress(v string) {
 
 func (p *DhcpStaticMappingUpdateVPCRouterParam) GetIpaddress() string {
 	return p.Ipaddress
-}
-func (p *DhcpStaticMappingUpdateVPCRouterParam) SetIndex(v int) {
-	p.Index = v
-}
-
-func (p *DhcpStaticMappingUpdateVPCRouterParam) GetIndex() int {
-	return p.Index
 }
 
 // DhcpStaticMappingDeleteVPCRouterParam is input parameters for the sacloud API
@@ -4805,9 +4805,9 @@ func (p *UserAddVPCRouterParam) GetPassword() string {
 
 // UserUpdateVPCRouterParam is input parameters for the sacloud API
 type UserUpdateVPCRouterParam struct {
+	Index    int
 	Username string
 	Password string
-	Index    int
 
 	input Input
 }
@@ -4832,20 +4832,28 @@ func (p *UserUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UserUpdateVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Index) {
+		p.Index = 0
+	}
 	if utils.IsEmpty(p.Username) {
 		p.Username = ""
 	}
 	if utils.IsEmpty(p.Password) {
 		p.Password = ""
 	}
-	if utils.IsEmpty(p.Index) {
-		p.Index = 0
-	}
 
 }
 
 func (p *UserUpdateVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["VPCRouter"].Commands["user-update"].Params["username"].ValidateFunc
@@ -4858,14 +4866,6 @@ func (p *UserUpdateVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["user-update"].Params["password"].ValidateFunc
 		errs := validator("--password", p.Password)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4898,6 +4898,13 @@ func (p *UserUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *UserUpdateVPCRouterParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *UserUpdateVPCRouterParam) GetIndex() int {
+	return p.Index
+}
 func (p *UserUpdateVPCRouterParam) SetUsername(v string) {
 	p.Username = v
 }
@@ -4911,13 +4918,6 @@ func (p *UserUpdateVPCRouterParam) SetPassword(v string) {
 
 func (p *UserUpdateVPCRouterParam) GetPassword() string {
 	return p.Password
-}
-func (p *UserUpdateVPCRouterParam) SetIndex(v int) {
-	p.Index = v
-}
-
-func (p *UserUpdateVPCRouterParam) GetIndex() int {
-	return p.Index
 }
 
 // UserDeleteVPCRouterParam is input parameters for the sacloud API
@@ -5242,12 +5242,12 @@ func (p *SiteToSiteVPNAddVPCRouterParam) GetLocalPrefix() []string {
 
 // SiteToSiteVPNUpdateVPCRouterParam is input parameters for the sacloud API
 type SiteToSiteVPNUpdateVPCRouterParam struct {
+	Index           int
+	Peer            string
 	RemoteId        string
 	PreSharedSecret string
 	Routes          []string
 	LocalPrefix     []string
-	Index           int
-	Peer            string
 
 	input Input
 }
@@ -5272,6 +5272,12 @@ func (p *SiteToSiteVPNUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) erro
 }
 
 func (p *SiteToSiteVPNUpdateVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Index) {
+		p.Index = 0
+	}
+	if utils.IsEmpty(p.Peer) {
+		p.Peer = ""
+	}
 	if utils.IsEmpty(p.RemoteId) {
 		p.RemoteId = ""
 	}
@@ -5284,17 +5290,27 @@ func (p *SiteToSiteVPNUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.LocalPrefix) {
 		p.LocalPrefix = []string{""}
 	}
-	if utils.IsEmpty(p.Index) {
-		p.Index = 0
-	}
-	if utils.IsEmpty(p.Peer) {
-		p.Peer = ""
-	}
 
 }
 
 func (p *SiteToSiteVPNUpdateVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["peer"].ValidateFunc
+		errs := validator("--peer", p.Peer)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["pre-shared-secret"].ValidateFunc
@@ -5315,22 +5331,6 @@ func (p *SiteToSiteVPNUpdateVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["local-prefix"].ValidateFunc
 		errs := validator("--local-prefix", p.LocalPrefix)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--index", p.Index)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["peer"].ValidateFunc
-		errs := validator("--peer", p.Peer)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5363,6 +5363,20 @@ func (p *SiteToSiteVPNUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *SiteToSiteVPNUpdateVPCRouterParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetIndex() int {
+	return p.Index
+}
+func (p *SiteToSiteVPNUpdateVPCRouterParam) SetPeer(v string) {
+	p.Peer = v
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetPeer() string {
+	return p.Peer
+}
 func (p *SiteToSiteVPNUpdateVPCRouterParam) SetRemoteId(v string) {
 	p.RemoteId = v
 }
@@ -5390,20 +5404,6 @@ func (p *SiteToSiteVPNUpdateVPCRouterParam) SetLocalPrefix(v []string) {
 
 func (p *SiteToSiteVPNUpdateVPCRouterParam) GetLocalPrefix() []string {
 	return p.LocalPrefix
-}
-func (p *SiteToSiteVPNUpdateVPCRouterParam) SetIndex(v int) {
-	p.Index = v
-}
-
-func (p *SiteToSiteVPNUpdateVPCRouterParam) GetIndex() int {
-	return p.Index
-}
-func (p *SiteToSiteVPNUpdateVPCRouterParam) SetPeer(v string) {
-	p.Peer = v
-}
-
-func (p *SiteToSiteVPNUpdateVPCRouterParam) GetPeer() string {
-	return p.Peer
 }
 
 // SiteToSiteVPNDeleteVPCRouterParam is input parameters for the sacloud API
@@ -5911,10 +5911,10 @@ func (p *StaticRouteDeleteVPCRouterParam) GetIndex() int {
 
 // MonitorVPCRouterParam is input parameters for the sacloud API
 type MonitorVPCRouterParam struct {
-	Interface string
-	Start     string
 	End       string
 	KeyFormat string
+	Interface string
+	Start     string
 
 	input Input
 }
@@ -5922,7 +5922,7 @@ type MonitorVPCRouterParam struct {
 // NewMonitorVPCRouterParam return new MonitorVPCRouterParam
 func NewMonitorVPCRouterParam() *MonitorVPCRouterParam {
 	return &MonitorVPCRouterParam{
-		Interface: "0", KeyFormat: "sakuracloud.vpcrouter.{{.ID}}.nic.{{.Index}}"}
+		KeyFormat: "sakuracloud.vpcrouter.{{.ID}}.nic.{{.Index}}", Interface: "0"}
 }
 
 // Initialize init MonitorVPCRouterParam
@@ -5940,23 +5940,39 @@ func (p *MonitorVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *MonitorVPCRouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Interface) {
-		p.Interface = ""
-	}
-	if utils.IsEmpty(p.Start) {
-		p.Start = ""
-	}
 	if utils.IsEmpty(p.End) {
 		p.End = ""
 	}
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
+	if utils.IsEmpty(p.Interface) {
+		p.Interface = ""
+	}
+	if utils.IsEmpty(p.Start) {
+		p.Start = ""
+	}
 
 }
 
 func (p *MonitorVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["monitor"].Params["end"].ValidateFunc
+		errs := validator("--end", p.End)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -5976,22 +5992,6 @@ func (p *MonitorVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["monitor"].Params["start"].ValidateFunc
 		errs := validator("--start", p.Start)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["monitor"].Params["end"].ValidateFunc
-		errs := validator("--end", p.End)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--key-format", p.KeyFormat)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -6024,20 +6024,6 @@ func (p *MonitorVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *MonitorVPCRouterParam) SetInterface(v string) {
-	p.Interface = v
-}
-
-func (p *MonitorVPCRouterParam) GetInterface() string {
-	return p.Interface
-}
-func (p *MonitorVPCRouterParam) SetStart(v string) {
-	p.Start = v
-}
-
-func (p *MonitorVPCRouterParam) GetStart() string {
-	return p.Start
-}
 func (p *MonitorVPCRouterParam) SetEnd(v string) {
 	p.End = v
 }
@@ -6051,6 +6037,20 @@ func (p *MonitorVPCRouterParam) SetKeyFormat(v string) {
 
 func (p *MonitorVPCRouterParam) GetKeyFormat() string {
 	return p.KeyFormat
+}
+func (p *MonitorVPCRouterParam) SetInterface(v string) {
+	p.Interface = v
+}
+
+func (p *MonitorVPCRouterParam) GetInterface() string {
+	return p.Interface
+}
+func (p *MonitorVPCRouterParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorVPCRouterParam) GetStart() string {
+	return p.Start
 }
 
 // LogsVPCRouterParam is input parameters for the sacloud API

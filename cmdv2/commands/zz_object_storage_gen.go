@@ -55,9 +55,9 @@ var objectStorageListCmd = &cobra.Command{
 
 func objectStorageListCmdInit() {
 	fs := objectStorageListCmd.Flags()
+	fs.StringVarP(&objectStorageListParam.Bucket, "bucket", "", "", "set bucket")
 	fs.StringVarP(&objectStorageListParam.AccessKey, "access-key", "", "", "set access-key")
 	fs.StringVarP(&objectStorageListParam.SecretKey, "secret-key", "", "", "set access-key")
-	fs.StringVarP(&objectStorageListParam.Bucket, "bucket", "", "", "set bucket")
 }
 
 var objectStoragePutCmd = &cobra.Command{
@@ -97,10 +97,10 @@ var objectStorageGetCmd = &cobra.Command{
 
 func objectStorageGetCmdInit() {
 	fs := objectStorageGetCmd.Flags()
+	fs.StringVarP(&objectStorageGetParam.AccessKey, "access-key", "", "", "set access-key")
 	fs.StringVarP(&objectStorageGetParam.SecretKey, "secret-key", "", "", "set access-key")
 	fs.StringVarP(&objectStorageGetParam.Bucket, "bucket", "", "", "set bucket")
 	fs.BoolVarP(&objectStorageGetParam.Recursive, "recursive", "r", false, "get objects recursive")
-	fs.StringVarP(&objectStorageGetParam.AccessKey, "access-key", "", "", "set access-key")
 }
 
 var objectStorageDeleteCmd = &cobra.Command{
@@ -118,10 +118,10 @@ var objectStorageDeleteCmd = &cobra.Command{
 
 func objectStorageDeleteCmdInit() {
 	fs := objectStorageDeleteCmd.Flags()
-	fs.StringVarP(&objectStorageDeleteParam.AccessKey, "access-key", "", "", "set access-key")
-	fs.StringVarP(&objectStorageDeleteParam.SecretKey, "secret-key", "", "", "set access-key")
 	fs.StringVarP(&objectStorageDeleteParam.Bucket, "bucket", "", "", "set bucket")
 	fs.BoolVarP(&objectStorageDeleteParam.Recursive, "recursive", "r", false, "delete objects recursive")
+	fs.StringVarP(&objectStorageDeleteParam.AccessKey, "access-key", "", "", "set access-key")
+	fs.StringVarP(&objectStorageDeleteParam.SecretKey, "secret-key", "", "", "set access-key")
 }
 
 func init() {

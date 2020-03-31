@@ -108,12 +108,12 @@ var vpcRouterListCmd = &cobra.Command{
 
 func vpcRouterListCmdInit() {
 	fs := vpcRouterListCmd.Flags()
-	fs.IntVarP(&vpcRouterListParam.From, "from", "", 0, "set offset")
-	fs.IntVarP(&vpcRouterListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&vpcRouterListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&vpcRouterListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.StringSliceVarP(&vpcRouterListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &vpcRouterListParam.Id), "id", "", "set filter by id(s)")
-	fs.StringSliceVarP(&vpcRouterListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.IntVarP(&vpcRouterListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&vpcRouterListParam.Max, "max", "", 0, "set limit")
 }
 
 var vpcRouterCreateCmd = &cobra.Command{
@@ -131,18 +131,18 @@ var vpcRouterCreateCmd = &cobra.Command{
 
 func vpcRouterCreateCmdInit() {
 	fs := vpcRouterCreateCmd.Flags()
-	fs.BoolVarP(&vpcRouterCreateParam.BootAfterCreate, "boot-after-create", "", false, "boot after create")
-	fs.StringVarP(&vpcRouterCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringSliceVarP(&vpcRouterCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &vpcRouterCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.VarP(newIDValue(0, &vpcRouterCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
+	fs.StringVarP(&vpcRouterCreateParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
+	fs.BoolVarP(&vpcRouterCreateParam.BootAfterCreate, "boot-after-create", "", false, "boot after create")
+	fs.IntVarP(&vpcRouterCreateParam.Vrid, "vrid", "", 1, "set VRID")
 	fs.StringVarP(&vpcRouterCreateParam.Vip, "vip", "", "", "set virtual ipddress()")
 	fs.StringVarP(&vpcRouterCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
-	fs.StringVarP(&vpcRouterCreateParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
 	fs.BoolVarP(&vpcRouterCreateParam.DisableInternetConnection, "disable-internet-connection", "", false, "disable internet connection from VPCRouter")
-	fs.StringVarP(&vpcRouterCreateParam.Plan, "plan", "", "standard", "set plan[standard/premium/highspec/highspec1600/highspec4000]")
-	fs.IntVarP(&vpcRouterCreateParam.Vrid, "vrid", "", 1, "set VRID")
+	fs.StringVarP(&vpcRouterCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&vpcRouterCreateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&vpcRouterCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.StringVarP(&vpcRouterCreateParam.Plan, "plan", "", "standard", "set plan[standard/premium/highspec/highspec1600/highspec4000]")
+	fs.VarP(newIDValue(0, &vpcRouterCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
 }
 
 var vpcRouterReadCmd = &cobra.Command{
@@ -176,12 +176,12 @@ var vpcRouterUpdateCmd = &cobra.Command{
 
 func vpcRouterUpdateCmdInit() {
 	fs := vpcRouterUpdateCmd.Flags()
-	fs.VarP(newIDValue(0, &vpcRouterUpdateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.StringVarP(&vpcRouterUpdateParam.SyslogHost, "syslog-host", "", "", "set syslog host IPAddress")
 	fs.BoolVarP(&vpcRouterUpdateParam.InternetConnection, "internet-connection", "", false, "set internet connection from VPCRouter")
 	fs.StringVarP(&vpcRouterUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&vpcRouterUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&vpcRouterUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &vpcRouterUpdateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
 var vpcRouterDeleteCmd = &cobra.Command{
@@ -361,13 +361,13 @@ var vpcRouterInterfaceConnectCmd = &cobra.Command{
 
 func vpcRouterInterfaceConnectCmdInit() {
 	fs := vpcRouterInterfaceConnectCmd.Flags()
-	fs.BoolVarP(&vpcRouterInterfaceConnectParam.WithReboot, "with-reboot", "", false, "reboot after connect")
-	fs.StringVarP(&vpcRouterInterfaceConnectParam.Interface, "interface", "", "", "index of target private-interface")
 	fs.VarP(newIDValue(0, &vpcRouterInterfaceConnectParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.StringVarP(&vpcRouterInterfaceConnectParam.Ipaddress, "ipaddress", "", "", "set (virtual)ipaddress")
 	fs.StringVarP(&vpcRouterInterfaceConnectParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
 	fs.StringVarP(&vpcRouterInterfaceConnectParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
 	fs.IntVarP(&vpcRouterInterfaceConnectParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress prefix")
+	fs.BoolVarP(&vpcRouterInterfaceConnectParam.WithReboot, "with-reboot", "", false, "reboot after connect")
+	fs.StringVarP(&vpcRouterInterfaceConnectParam.Interface, "interface", "", "", "index of target private-interface")
 }
 
 var vpcRouterInterfaceUpdateCmd = &cobra.Command{
@@ -385,14 +385,14 @@ var vpcRouterInterfaceUpdateCmd = &cobra.Command{
 
 func vpcRouterInterfaceUpdateCmdInit() {
 	fs := vpcRouterInterfaceUpdateCmd.Flags()
+	fs.IntVarP(&vpcRouterInterfaceUpdateParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress prefix")
+	fs.BoolVarP(&vpcRouterInterfaceUpdateParam.WithReboot, "with-reboot", "", false, "reboot after connect")
 	fs.StringVarP(&vpcRouterInterfaceUpdateParam.Interface, "interface", "", "", "index of target interface")
 	fs.VarP(newIDValue(0, &vpcRouterInterfaceUpdateParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.StringVarP(&vpcRouterInterfaceUpdateParam.Ipaddress, "ipaddress", "", "", "set (virtual)ipaddress")
 	fs.StringVarP(&vpcRouterInterfaceUpdateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
 	fs.StringVarP(&vpcRouterInterfaceUpdateParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
 	fs.StringSliceVarP(&vpcRouterInterfaceUpdateParam.Alias, "alias", "", []string{}, "set ip aliases")
-	fs.IntVarP(&vpcRouterInterfaceUpdateParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress prefix")
-	fs.BoolVarP(&vpcRouterInterfaceUpdateParam.WithReboot, "with-reboot", "", false, "reboot after connect")
 }
 
 var vpcRouterInterfaceDisconnectCmd = &cobra.Command{
@@ -410,8 +410,8 @@ var vpcRouterInterfaceDisconnectCmd = &cobra.Command{
 
 func vpcRouterInterfaceDisconnectCmdInit() {
 	fs := vpcRouterInterfaceDisconnectCmd.Flags()
-	fs.BoolVarP(&vpcRouterInterfaceDisconnectParam.WithReboot, "with-reboot", "", false, "reboot after connect")
 	fs.StringVarP(&vpcRouterInterfaceDisconnectParam.Interface, "interface", "", "", "index of target private-interface")
+	fs.BoolVarP(&vpcRouterInterfaceDisconnectParam.WithReboot, "with-reboot", "", false, "reboot after connect")
 }
 
 var vpcRouterStaticNatInfoCmd = &cobra.Command{
@@ -445,9 +445,9 @@ var vpcRouterStaticNatAddCmd = &cobra.Command{
 
 func vpcRouterStaticNatAddCmdInit() {
 	fs := vpcRouterStaticNatAddCmd.Flags()
-	fs.StringVarP(&vpcRouterStaticNatAddParam.Global, "global", "", "", "set global ipaddress")
 	fs.StringVarP(&vpcRouterStaticNatAddParam.Private, "private", "", "", "set private ipaddress")
 	fs.StringVarP(&vpcRouterStaticNatAddParam.Description, "description", "", "", "set description")
+	fs.StringVarP(&vpcRouterStaticNatAddParam.Global, "global", "", "", "set global ipaddress")
 }
 
 var vpcRouterStaticNatUpdateCmd = &cobra.Command{
@@ -465,10 +465,10 @@ var vpcRouterStaticNatUpdateCmd = &cobra.Command{
 
 func vpcRouterStaticNatUpdateCmdInit() {
 	fs := vpcRouterStaticNatUpdateCmd.Flags()
-	fs.IntVarP(&vpcRouterStaticNatUpdateParam.Index, "index", "", 0, "index of target static NAT")
 	fs.StringVarP(&vpcRouterStaticNatUpdateParam.Global, "global", "", "", "set global ipaddress")
 	fs.StringVarP(&vpcRouterStaticNatUpdateParam.Private, "private", "", "", "set private ipaddress")
 	fs.StringVarP(&vpcRouterStaticNatUpdateParam.Description, "description", "", "", "set description")
+	fs.IntVarP(&vpcRouterStaticNatUpdateParam.Index, "index", "", 0, "index of target static NAT")
 }
 
 var vpcRouterStaticNatDeleteCmd = &cobra.Command{
@@ -520,11 +520,11 @@ var vpcRouterPortForwardingAddCmd = &cobra.Command{
 
 func vpcRouterPortForwardingAddCmdInit() {
 	fs := vpcRouterPortForwardingAddCmd.Flags()
+	fs.IntVarP(&vpcRouterPortForwardingAddParam.PrivatePort, "private-port", "", 0, "set private ipaddress")
+	fs.StringVarP(&vpcRouterPortForwardingAddParam.Description, "description", "", "", "set description")
 	fs.StringVarP(&vpcRouterPortForwardingAddParam.Protocol, "protocol", "", "", "set target protocol")
 	fs.IntVarP(&vpcRouterPortForwardingAddParam.GlobalPort, "global-port", "", 0, "set global ipaddress")
 	fs.StringVarP(&vpcRouterPortForwardingAddParam.PrivateIpaddress, "private-ipaddress", "", "", "set private ipaddress")
-	fs.IntVarP(&vpcRouterPortForwardingAddParam.PrivatePort, "private-port", "", 0, "set private ipaddress")
-	fs.StringVarP(&vpcRouterPortForwardingAddParam.Description, "description", "", "", "set description")
 }
 
 var vpcRouterPortForwardingUpdateCmd = &cobra.Command{
@@ -542,12 +542,12 @@ var vpcRouterPortForwardingUpdateCmd = &cobra.Command{
 
 func vpcRouterPortForwardingUpdateCmdInit() {
 	fs := vpcRouterPortForwardingUpdateCmd.Flags()
-	fs.StringVarP(&vpcRouterPortForwardingUpdateParam.PrivateIpaddress, "private-ipaddress", "", "", "set private ipaddress")
 	fs.IntVarP(&vpcRouterPortForwardingUpdateParam.PrivatePort, "private-port", "", 0, "set private ipaddress")
 	fs.StringVarP(&vpcRouterPortForwardingUpdateParam.Description, "description", "", "", "set description")
 	fs.IntVarP(&vpcRouterPortForwardingUpdateParam.Index, "index", "", 0, "index of target PortForward")
 	fs.StringVarP(&vpcRouterPortForwardingUpdateParam.Protocol, "protocol", "", "", "set target protocol")
 	fs.IntVarP(&vpcRouterPortForwardingUpdateParam.GlobalPort, "global-port", "", 0, "set global ipaddress")
+	fs.StringVarP(&vpcRouterPortForwardingUpdateParam.PrivateIpaddress, "private-ipaddress", "", "", "set private ipaddress")
 }
 
 var vpcRouterPortForwardingDeleteCmd = &cobra.Command{
@@ -602,16 +602,16 @@ var vpcRouterFirewallAddCmd = &cobra.Command{
 
 func vpcRouterFirewallAddCmdInit() {
 	fs := vpcRouterFirewallAddCmd.Flags()
-	fs.IntVarP(&vpcRouterFirewallAddParam.SourcePort, "source-port", "", 0, "set source port")
-	fs.IntVarP(&vpcRouterFirewallAddParam.DestinationPort, "destination-port", "", 0, "set destination port")
-	fs.BoolVarP(&vpcRouterFirewallAddParam.EnableLogging, "enable-logging", "", false, "enable logging")
 	fs.StringVarP(&vpcRouterFirewallAddParam.Protocol, "protocol", "", "", "set target protocol")
-	fs.StringVarP(&vpcRouterFirewallAddParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
-	fs.StringVarP(&vpcRouterFirewallAddParam.SourceNetwork, "source-network", "", "", "set source ipaddress or network address")
 	fs.StringVarP(&vpcRouterFirewallAddParam.DestinationNetwork, "destination-network", "", "", "set destination ipaddress or network address")
+	fs.IntVarP(&vpcRouterFirewallAddParam.DestinationPort, "destination-port", "", 0, "set destination port")
 	fs.StringVarP(&vpcRouterFirewallAddParam.Action, "action", "", "deny", "set action[allow/deny]")
-	fs.StringVarP(&vpcRouterFirewallAddParam.Description, "description", "", "", "set description")
 	fs.IntVarP(&vpcRouterFirewallAddParam.Interface, "interface", "", 0, "set target NIC index")
+	fs.StringVarP(&vpcRouterFirewallAddParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
+	fs.BoolVarP(&vpcRouterFirewallAddParam.EnableLogging, "enable-logging", "", false, "enable logging")
+	fs.StringVarP(&vpcRouterFirewallAddParam.Description, "description", "", "", "set description")
+	fs.StringVarP(&vpcRouterFirewallAddParam.SourceNetwork, "source-network", "", "", "set source ipaddress or network address")
+	fs.IntVarP(&vpcRouterFirewallAddParam.SourcePort, "source-port", "", 0, "set source port")
 }
 
 var vpcRouterFirewallUpdateCmd = &cobra.Command{
@@ -629,17 +629,17 @@ var vpcRouterFirewallUpdateCmd = &cobra.Command{
 
 func vpcRouterFirewallUpdateCmdInit() {
 	fs := vpcRouterFirewallUpdateCmd.Flags()
-	fs.IntVarP(&vpcRouterFirewallUpdateParam.Index, "index", "", 0, "index of target Firewall rule")
-	fs.StringVarP(&vpcRouterFirewallUpdateParam.SourceNetwork, "source-network", "", "", "set source ipaddress or network address")
-	fs.IntVarP(&vpcRouterFirewallUpdateParam.SourcePort, "source-port", "", 0, "set source port")
-	fs.IntVarP(&vpcRouterFirewallUpdateParam.DestinationPort, "destination-port", "", 0, "set destination port")
 	fs.IntVarP(&vpcRouterFirewallUpdateParam.Interface, "interface", "", 0, "set target NIC index")
-	fs.StringVarP(&vpcRouterFirewallUpdateParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
+	fs.IntVarP(&vpcRouterFirewallUpdateParam.Index, "index", "", 0, "index of target Firewall rule")
+	fs.IntVarP(&vpcRouterFirewallUpdateParam.SourcePort, "source-port", "", 0, "set source port")
+	fs.StringVarP(&vpcRouterFirewallUpdateParam.DestinationNetwork, "destination-network", "", "", "set destination ipaddress or network address")
+	fs.IntVarP(&vpcRouterFirewallUpdateParam.DestinationPort, "destination-port", "", 0, "set destination port")
 	fs.StringVarP(&vpcRouterFirewallUpdateParam.Action, "action", "", "deny", "set action[allow/deny]")
 	fs.BoolVarP(&vpcRouterFirewallUpdateParam.EnableLogging, "enable-logging", "", false, "enable logging")
 	fs.StringVarP(&vpcRouterFirewallUpdateParam.Description, "description", "", "", "set description")
+	fs.StringVarP(&vpcRouterFirewallUpdateParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
 	fs.StringVarP(&vpcRouterFirewallUpdateParam.Protocol, "protocol", "", "", "set target protocol")
-	fs.StringVarP(&vpcRouterFirewallUpdateParam.DestinationNetwork, "destination-network", "", "", "set destination ipaddress or network address")
+	fs.StringVarP(&vpcRouterFirewallUpdateParam.SourceNetwork, "source-network", "", "", "set source ipaddress or network address")
 }
 
 var vpcRouterFirewallDeleteCmd = &cobra.Command{
@@ -657,9 +657,9 @@ var vpcRouterFirewallDeleteCmd = &cobra.Command{
 
 func vpcRouterFirewallDeleteCmdInit() {
 	fs := vpcRouterFirewallDeleteCmd.Flags()
+	fs.IntVarP(&vpcRouterFirewallDeleteParam.Interface, "interface", "", 0, "set target NIC index")
 	fs.StringVarP(&vpcRouterFirewallDeleteParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
 	fs.IntVarP(&vpcRouterFirewallDeleteParam.Index, "index", "", 0, "index of target Firewall rule")
-	fs.IntVarP(&vpcRouterFirewallDeleteParam.Interface, "interface", "", 0, "set target NIC index")
 }
 
 var vpcRouterDhcpServerInfoCmd = &cobra.Command{
@@ -693,10 +693,10 @@ var vpcRouterDhcpServerAddCmd = &cobra.Command{
 
 func vpcRouterDhcpServerAddCmdInit() {
 	fs := vpcRouterDhcpServerAddCmd.Flags()
-	fs.StringVarP(&vpcRouterDhcpServerAddParam.RangeStop, "range-stop", "", "", "set DHCP IPAddress Range(stop)")
-	fs.StringSliceVarP(&vpcRouterDhcpServerAddParam.DNSServers, "dns-servers", "", []string{}, "set DNS Server IPAddress")
 	fs.IntVarP(&vpcRouterDhcpServerAddParam.Interface, "interface", "", 0, "set target NIC(private NIC index)")
 	fs.StringVarP(&vpcRouterDhcpServerAddParam.RangeStart, "range-start", "", "", "set DHCP IPAddress Range(start)")
+	fs.StringVarP(&vpcRouterDhcpServerAddParam.RangeStop, "range-stop", "", "", "set DHCP IPAddress Range(stop)")
+	fs.StringSliceVarP(&vpcRouterDhcpServerAddParam.DNSServers, "dns-servers", "", []string{}, "set DNS Server IPAddress")
 }
 
 var vpcRouterDhcpServerUpdateCmd = &cobra.Command{
@@ -714,10 +714,10 @@ var vpcRouterDhcpServerUpdateCmd = &cobra.Command{
 
 func vpcRouterDhcpServerUpdateCmdInit() {
 	fs := vpcRouterDhcpServerUpdateCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterDhcpServerUpdateParam.DNSServers, "dns-servers", "", []string{}, "set DNS Server IPAddress")
 	fs.IntVarP(&vpcRouterDhcpServerUpdateParam.Interface, "interface", "", 0, "set target NIC(private NIC index)")
 	fs.StringVarP(&vpcRouterDhcpServerUpdateParam.RangeStart, "range-start", "", "", "set DHCP IPAddress Range(start)")
 	fs.StringVarP(&vpcRouterDhcpServerUpdateParam.RangeStop, "range-stop", "", "", "set DHCP IPAddress Range(stop)")
-	fs.StringSliceVarP(&vpcRouterDhcpServerUpdateParam.DNSServers, "dns-servers", "", []string{}, "set DNS Server IPAddress")
 }
 
 var vpcRouterDhcpServerDeleteCmd = &cobra.Command{
@@ -769,8 +769,8 @@ var vpcRouterDhcpStaticMappingAddCmd = &cobra.Command{
 
 func vpcRouterDhcpStaticMappingAddCmdInit() {
 	fs := vpcRouterDhcpStaticMappingAddCmd.Flags()
-	fs.StringVarP(&vpcRouterDhcpStaticMappingAddParam.Macaddress, "macaddress", "", "", "set mac address")
 	fs.StringVarP(&vpcRouterDhcpStaticMappingAddParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingAddParam.Macaddress, "macaddress", "", "", "set mac address")
 }
 
 var vpcRouterDhcpStaticMappingUpdateCmd = &cobra.Command{
@@ -878,10 +878,10 @@ var vpcRouterL2TPServerUpdateCmd = &cobra.Command{
 
 func vpcRouterL2TPServerUpdateCmdInit() {
 	fs := vpcRouterL2TPServerUpdateCmd.Flags()
+	fs.BoolVarP(&vpcRouterL2TPServerUpdateParam.Disabled, "disabled", "", false, "enable/disable PPTP server")
 	fs.StringVarP(&vpcRouterL2TPServerUpdateParam.RangeStart, "range-start", "", "", "set IPAddress Range(start)")
 	fs.StringVarP(&vpcRouterL2TPServerUpdateParam.RangeStop, "range-stop", "", "", "set IPAddress Range(stop)")
 	fs.StringVarP(&vpcRouterL2TPServerUpdateParam.PreSharedSecret, "pre-shared-secret", "", "", "set PreSharedSecret")
-	fs.BoolVarP(&vpcRouterL2TPServerUpdateParam.Disabled, "disabled", "", false, "enable/disable PPTP server")
 }
 
 var vpcRouterUserInfoCmd = &cobra.Command{
@@ -988,11 +988,11 @@ var vpcRouterSiteToSiteVPNAddCmd = &cobra.Command{
 
 func vpcRouterSiteToSiteVPNAddCmdInit() {
 	fs := vpcRouterSiteToSiteVPNAddCmd.Flags()
+	fs.StringVarP(&vpcRouterSiteToSiteVPNAddParam.Peer, "peer", "", "", "set peer address")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNAddParam.RemoteId, "remote-id", "", "", "set remote-id")
 	fs.StringVarP(&vpcRouterSiteToSiteVPNAddParam.PreSharedSecret, "pre-shared-secret", "", "", "set pre-shared-secret")
 	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNAddParam.Routes, "routes", "", []string{}, "set route list")
 	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNAddParam.LocalPrefix, "local-prefix", "", []string{}, "set local prefix list")
-	fs.StringVarP(&vpcRouterSiteToSiteVPNAddParam.Peer, "peer", "", "", "set peer address")
-	fs.StringVarP(&vpcRouterSiteToSiteVPNAddParam.RemoteId, "remote-id", "", "", "set remote-id")
 }
 
 var vpcRouterSiteToSiteVPNUpdateCmd = &cobra.Command{
@@ -1010,12 +1010,12 @@ var vpcRouterSiteToSiteVPNUpdateCmd = &cobra.Command{
 
 func vpcRouterSiteToSiteVPNUpdateCmdInit() {
 	fs := vpcRouterSiteToSiteVPNUpdateCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNUpdateParam.Routes, "routes", "", []string{}, "set route list")
 	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNUpdateParam.LocalPrefix, "local-prefix", "", []string{}, "set local prefix list")
 	fs.IntVarP(&vpcRouterSiteToSiteVPNUpdateParam.Index, "index", "", 0, "index of target remote-access user")
 	fs.StringVarP(&vpcRouterSiteToSiteVPNUpdateParam.Peer, "peer", "", "", "set peer address")
 	fs.StringVarP(&vpcRouterSiteToSiteVPNUpdateParam.RemoteId, "remote-id", "", "", "set remote-id")
 	fs.StringVarP(&vpcRouterSiteToSiteVPNUpdateParam.PreSharedSecret, "pre-shared-secret", "", "", "set pre-shared-secret")
-	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNUpdateParam.Routes, "routes", "", []string{}, "set route list")
 }
 
 var vpcRouterSiteToSiteVPNDeleteCmd = &cobra.Command{
@@ -1083,8 +1083,8 @@ var vpcRouterStaticRouteAddCmd = &cobra.Command{
 
 func vpcRouterStaticRouteAddCmdInit() {
 	fs := vpcRouterStaticRouteAddCmd.Flags()
-	fs.StringVarP(&vpcRouterStaticRouteAddParam.NextHop, "next-hop", "", "", "set next-hop")
 	fs.StringVarP(&vpcRouterStaticRouteAddParam.Prefix, "prefix", "", "", "set prefix")
+	fs.StringVarP(&vpcRouterStaticRouteAddParam.NextHop, "next-hop", "", "", "set next-hop")
 }
 
 var vpcRouterStaticRouteUpdateCmd = &cobra.Command{
@@ -1102,9 +1102,9 @@ var vpcRouterStaticRouteUpdateCmd = &cobra.Command{
 
 func vpcRouterStaticRouteUpdateCmdInit() {
 	fs := vpcRouterStaticRouteUpdateCmd.Flags()
+	fs.IntVarP(&vpcRouterStaticRouteUpdateParam.Index, "index", "", 0, "index of target static-route")
 	fs.StringVarP(&vpcRouterStaticRouteUpdateParam.Prefix, "prefix", "", "", "set prefix")
 	fs.StringVarP(&vpcRouterStaticRouteUpdateParam.NextHop, "next-hop", "", "", "set next-hop")
-	fs.IntVarP(&vpcRouterStaticRouteUpdateParam.Index, "index", "", 0, "index of target static-route")
 }
 
 var vpcRouterStaticRouteDeleteCmd = &cobra.Command{
@@ -1140,10 +1140,10 @@ var vpcRouterMonitorCmd = &cobra.Command{
 
 func vpcRouterMonitorCmdInit() {
 	fs := vpcRouterMonitorCmd.Flags()
-	fs.StringVarP(&vpcRouterMonitorParam.End, "end", "", "", "set end-time")
-	fs.StringVarP(&vpcRouterMonitorParam.KeyFormat, "key-format", "", "sakuracloud.vpcrouter.{{.ID}}.nic.{{.Index}}", "set monitoring value key-format")
 	fs.StringVarP(&vpcRouterMonitorParam.Interface, "interface", "", "0", "index of target interface")
 	fs.StringVarP(&vpcRouterMonitorParam.Start, "start", "", "", "set start-time")
+	fs.StringVarP(&vpcRouterMonitorParam.End, "end", "", "", "set end-time")
+	fs.StringVarP(&vpcRouterMonitorParam.KeyFormat, "key-format", "", "sakuracloud.vpcrouter.{{.ID}}.nic.{{.Index}}", "set monitoring value key-format")
 }
 
 var vpcRouterLogsCmd = &cobra.Command{

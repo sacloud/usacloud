@@ -62,11 +62,11 @@ var dnsListCmd = &cobra.Command{
 
 func dnsListCmdInit() {
 	fs := dnsListCmd.Flags()
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &dnsListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&dnsListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&dnsListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&dnsListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&dnsListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &dnsListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&dnsListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 }
 
@@ -123,10 +123,10 @@ var dnsCreateCmd = &cobra.Command{
 
 func dnsCreateCmdInit() {
 	fs := dnsCreateCmd.Flags()
+	fs.StringVarP(&dnsCreateParam.Name, "name", "", "", "set DNS zone name")
 	fs.StringVarP(&dnsCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&dnsCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &dnsCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringVarP(&dnsCreateParam.Name, "name", "", "", "set DNS zone name")
 }
 
 var dnsRecordAddCmd = &cobra.Command{
@@ -144,15 +144,15 @@ var dnsRecordAddCmd = &cobra.Command{
 
 func dnsRecordAddCmdInit() {
 	fs := dnsRecordAddCmd.Flags()
-	fs.StringVarP(&dnsRecordAddParam.Name, "name", "", "", "set name")
-	fs.IntVarP(&dnsRecordAddParam.MxPriority, "mx-priority", "", 10, "set MX priority")
-	fs.IntVarP(&dnsRecordAddParam.SrvWeight, "srv-weight", "", 0, "set SRV priority")
-	fs.IntVarP(&dnsRecordAddParam.SrvPort, "srv-port", "", 0, "set SRV priority")
 	fs.StringVarP(&dnsRecordAddParam.SrvTarget, "srv-target", "", "", "set SRV priority")
+	fs.StringVarP(&dnsRecordAddParam.Name, "name", "", "", "set name")
 	fs.StringVarP(&dnsRecordAddParam.Type, "type", "", "", "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]")
 	fs.StringVarP(&dnsRecordAddParam.Value, "value", "", "", "set record data")
+	fs.IntVarP(&dnsRecordAddParam.MxPriority, "mx-priority", "", 10, "set MX priority")
 	fs.IntVarP(&dnsRecordAddParam.Ttl, "ttl", "", 3600, "set ttl")
 	fs.IntVarP(&dnsRecordAddParam.SrvPriority, "srv-priority", "", 0, "set SRV priority")
+	fs.IntVarP(&dnsRecordAddParam.SrvWeight, "srv-weight", "", 0, "set SRV priority")
+	fs.IntVarP(&dnsRecordAddParam.SrvPort, "srv-port", "", 0, "set SRV priority")
 }
 
 var dnsReadCmd = &cobra.Command{
@@ -187,14 +187,14 @@ var dnsRecordUpdateCmd = &cobra.Command{
 func dnsRecordUpdateCmdInit() {
 	fs := dnsRecordUpdateCmd.Flags()
 	fs.IntVarP(&dnsRecordUpdateParam.Index, "index", "", 0, "index of target record")
-	fs.StringVarP(&dnsRecordUpdateParam.Name, "name", "", "", "set name")
+	fs.StringVarP(&dnsRecordUpdateParam.Type, "type", "", "", "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]")
+	fs.IntVarP(&dnsRecordUpdateParam.Ttl, "ttl", "", 0, "set ttl")
 	fs.IntVarP(&dnsRecordUpdateParam.SrvPriority, "srv-priority", "", 0, "set SRV priority")
 	fs.IntVarP(&dnsRecordUpdateParam.SrvWeight, "srv-weight", "", 0, "set SRV priority")
-	fs.StringVarP(&dnsRecordUpdateParam.Type, "type", "", "", "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]")
-	fs.StringVarP(&dnsRecordUpdateParam.Value, "value", "", "", "set record data")
-	fs.IntVarP(&dnsRecordUpdateParam.Ttl, "ttl", "", 0, "set ttl")
-	fs.IntVarP(&dnsRecordUpdateParam.MxPriority, "mx-priority", "", 0, "set MX priority")
 	fs.IntVarP(&dnsRecordUpdateParam.SrvPort, "srv-port", "", 0, "set SRV priority")
+	fs.StringVarP(&dnsRecordUpdateParam.Name, "name", "", "", "set name")
+	fs.StringVarP(&dnsRecordUpdateParam.Value, "value", "", "", "set record data")
+	fs.IntVarP(&dnsRecordUpdateParam.MxPriority, "mx-priority", "", 0, "set MX priority")
 	fs.StringVarP(&dnsRecordUpdateParam.SrvTarget, "srv-target", "", "", "set SRV priority")
 }
 
@@ -231,9 +231,9 @@ var dnsUpdateCmd = &cobra.Command{
 
 func dnsUpdateCmdInit() {
 	fs := dnsUpdateCmd.Flags()
-	fs.StringVarP(&dnsUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&dnsUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &dnsUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringVarP(&dnsUpdateParam.Description, "description", "", "", "set resource description")
 }
 
 var dnsDeleteCmd = &cobra.Command{

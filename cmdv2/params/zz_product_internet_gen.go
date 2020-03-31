@@ -29,11 +29,11 @@ import (
 
 // ListProductInternetParam is input parameters for the sacloud API
 type ListProductInternetParam struct {
-	Name []string
 	Id   []sacloud.ID
 	From int
 	Max  int
 	Sort []string
+	Name []string
 
 	input Input
 }
@@ -58,9 +58,6 @@ func (p *ListProductInternetParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListProductInternetParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
@@ -73,21 +70,14 @@ func (p *ListProductInternetParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
 
 }
 
 func (p *ListProductInternetParam) validate() error {
 	var errors []error
-
-	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["ProductInternet"].Commands["list"].Params["id"].ValidateFunc
@@ -100,6 +90,16 @@ func (p *ListProductInternetParam) validate() error {
 		errs := validation.ConflictsWith("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -133,13 +133,6 @@ func (p *ListProductInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListProductInternetParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListProductInternetParam) GetName() []string {
-	return p.Name
-}
 func (p *ListProductInternetParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
@@ -167,6 +160,13 @@ func (p *ListProductInternetParam) SetSort(v []string) {
 
 func (p *ListProductInternetParam) GetSort() []string {
 	return p.Sort
+}
+func (p *ListProductInternetParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListProductInternetParam) GetName() []string {
+	return p.Name
 }
 
 // ReadProductInternetParam is input parameters for the sacloud API

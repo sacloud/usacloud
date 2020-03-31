@@ -29,13 +29,13 @@ import (
 
 // ListIconParam is input parameters for the sacloud API
 type ListIconParam struct {
-	From  int
-	Max   int
-	Sort  []string
-	Scope string
-	Tags  []string
 	Name  []string
 	Id    []sacloud.ID
+	From  int
+	Max   int
+	Scope string
+	Tags  []string
+	Sort  []string
 
 	input Input
 }
@@ -60,14 +60,17 @@ func (p *ListIconParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListIconParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = []sacloud.ID{}
+	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
-	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
 	}
 	if utils.IsEmpty(p.Scope) {
 		p.Scope = ""
@@ -75,33 +78,14 @@ func (p *ListIconParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
-	if utils.IsEmpty(p.Id) {
-		p.Id = []sacloud.ID{}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
 	}
 
 }
 
 func (p *ListIconParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Icon"].Commands["list"].Params["scope"].ValidateFunc
-		errs := validator("--scope", p.Scope)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Icon"].Commands["list"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
@@ -125,6 +109,22 @@ func (p *ListIconParam) validate() error {
 
 			"--name": p.Name,
 		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Icon"].Commands["list"].Params["scope"].ValidateFunc
+		errs := validator("--scope", p.Scope)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Icon"].Commands["list"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -157,6 +157,20 @@ func (p *ListIconParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListIconParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListIconParam) GetName() []string {
+	return p.Name
+}
+func (p *ListIconParam) SetId(v []sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ListIconParam) GetId() []sacloud.ID {
+	return p.Id
+}
 func (p *ListIconParam) SetFrom(v int) {
 	p.From = v
 }
@@ -170,13 +184,6 @@ func (p *ListIconParam) SetMax(v int) {
 
 func (p *ListIconParam) GetMax() int {
 	return p.Max
-}
-func (p *ListIconParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListIconParam) GetSort() []string {
-	return p.Sort
 }
 func (p *ListIconParam) SetScope(v string) {
 	p.Scope = v
@@ -192,19 +199,12 @@ func (p *ListIconParam) SetTags(v []string) {
 func (p *ListIconParam) GetTags() []string {
 	return p.Tags
 }
-func (p *ListIconParam) SetName(v []string) {
-	p.Name = v
+func (p *ListIconParam) SetSort(v []string) {
+	p.Sort = v
 }
 
-func (p *ListIconParam) GetName() []string {
-	return p.Name
-}
-func (p *ListIconParam) SetId(v []sacloud.ID) {
-	p.Id = v
-}
-
-func (p *ListIconParam) GetId() []sacloud.ID {
-	return p.Id
+func (p *ListIconParam) GetSort() []string {
+	return p.Sort
 }
 
 // CreateIconParam is input parameters for the sacloud API

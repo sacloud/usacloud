@@ -29,11 +29,11 @@ import (
 
 // ListProxyLBParam is input parameters for the sacloud API
 type ListProxyLBParam struct {
-	Max  int
-	Sort []string
 	Name []string
 	Id   []sacloud.ID
 	From int
+	Max  int
+	Sort []string
 	Tags []string
 
 	input Input
@@ -59,12 +59,6 @@ func (p *ListProxyLBParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListProxyLBParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
-	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -73,6 +67,12 @@ func (p *ListProxyLBParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
+	}
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
+	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
 	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -145,20 +145,6 @@ func (p *ListProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListProxyLBParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListProxyLBParam) GetMax() int {
-	return p.Max
-}
-func (p *ListProxyLBParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListProxyLBParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListProxyLBParam) SetName(v []string) {
 	p.Name = v
 }
@@ -180,6 +166,20 @@ func (p *ListProxyLBParam) SetFrom(v int) {
 func (p *ListProxyLBParam) GetFrom() int {
 	return p.From
 }
+func (p *ListProxyLBParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListProxyLBParam) GetMax() int {
+	return p.Max
+}
+func (p *ListProxyLBParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListProxyLBParam) GetSort() []string {
+	return p.Sort
+}
 func (p *ListProxyLBParam) SetTags(v []string) {
 	p.Tags = v
 }
@@ -190,19 +190,19 @@ func (p *ListProxyLBParam) GetTags() []string {
 
 // CreateProxyLBParam is input parameters for the sacloud API
 type CreateProxyLBParam struct {
-	SorryServerPort      int
-	Timeout              int
-	Name                 string
-	Description          string
 	Plan                 int
+	Protocol             string
+	HostHeader           string
+	SorryServerPort      int
+	Description          string
+	Tags                 []string
 	Path                 string
 	DelayLoop            int
 	StickySession        bool
-	IconId               sacloud.ID
-	Protocol             string
-	HostHeader           string
 	SorryServerIpaddress string
-	Tags                 []string
+	Timeout              int
+	Name                 string
+	IconId               sacloud.ID
 
 	input Input
 }
@@ -210,7 +210,7 @@ type CreateProxyLBParam struct {
 // NewCreateProxyLBParam return new CreateProxyLBParam
 func NewCreateProxyLBParam() *CreateProxyLBParam {
 	return &CreateProxyLBParam{
-		Timeout: 10, Plan: 1000, Path: "/", DelayLoop: 10, Protocol: "tcp"}
+		Plan: 1000, Protocol: "tcp", Path: "/", DelayLoop: 10, Timeout: 10}
 }
 
 // Initialize init CreateProxyLBParam
@@ -228,20 +228,23 @@ func (p *CreateProxyLBParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateProxyLBParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Plan) {
+		p.Plan = 0
+	}
+	if utils.IsEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if utils.IsEmpty(p.HostHeader) {
+		p.HostHeader = ""
+	}
 	if utils.IsEmpty(p.SorryServerPort) {
 		p.SorryServerPort = 0
-	}
-	if utils.IsEmpty(p.Timeout) {
-		p.Timeout = 0
-	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
 	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Plan) {
-		p.Plan = 0
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.Path) {
 		p.Path = ""
@@ -252,20 +255,17 @@ func (p *CreateProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.StickySession) {
 		p.StickySession = false
 	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.Protocol) {
-		p.Protocol = ""
-	}
-	if utils.IsEmpty(p.HostHeader) {
-		p.HostHeader = ""
-	}
 	if utils.IsEmpty(p.SorryServerIpaddress) {
 		p.SorryServerIpaddress = ""
 	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
+	if utils.IsEmpty(p.Timeout) {
+		p.Timeout = 0
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
 	}
 
 }
@@ -274,8 +274,62 @@ func (p *CreateProxyLBParam) validate() error {
 	var errors []error
 
 	{
+		validator := define.Resources["ProxyLB"].Commands["create"].Params["plan"].ValidateFunc
+		errs := validator("--plan", p.Plan)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--protocol", p.Protocol)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ProxyLB"].Commands["create"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
 		validator := define.Resources["ProxyLB"].Commands["create"].Params["sorry-server-port"].ValidateFunc
 		errs := validator("--sorry-server-port", p.SorryServerPort)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["ProxyLB"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["ProxyLB"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--delay-loop", p.DelayLoop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ProxyLB"].Commands["create"].Params["delay-loop"].ValidateFunc
+		errs := validator("--delay-loop", p.DelayLoop)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -305,62 +359,8 @@ func (p *CreateProxyLBParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["ProxyLB"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["ProxyLB"].Commands["create"].Params["plan"].ValidateFunc
-		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--delay-loop", p.DelayLoop)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ProxyLB"].Commands["create"].Params["delay-loop"].ValidateFunc
-		errs := validator("--delay-loop", p.DelayLoop)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
 		validator := define.Resources["ProxyLB"].Commands["create"].Params["icon-id"].ValidateFunc
 		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ProxyLB"].Commands["create"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["ProxyLB"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -393,26 +393,33 @@ func (p *CreateProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *CreateProxyLBParam) SetPlan(v int) {
+	p.Plan = v
+}
+
+func (p *CreateProxyLBParam) GetPlan() int {
+	return p.Plan
+}
+func (p *CreateProxyLBParam) SetProtocol(v string) {
+	p.Protocol = v
+}
+
+func (p *CreateProxyLBParam) GetProtocol() string {
+	return p.Protocol
+}
+func (p *CreateProxyLBParam) SetHostHeader(v string) {
+	p.HostHeader = v
+}
+
+func (p *CreateProxyLBParam) GetHostHeader() string {
+	return p.HostHeader
+}
 func (p *CreateProxyLBParam) SetSorryServerPort(v int) {
 	p.SorryServerPort = v
 }
 
 func (p *CreateProxyLBParam) GetSorryServerPort() int {
 	return p.SorryServerPort
-}
-func (p *CreateProxyLBParam) SetTimeout(v int) {
-	p.Timeout = v
-}
-
-func (p *CreateProxyLBParam) GetTimeout() int {
-	return p.Timeout
-}
-func (p *CreateProxyLBParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateProxyLBParam) GetName() string {
-	return p.Name
 }
 func (p *CreateProxyLBParam) SetDescription(v string) {
 	p.Description = v
@@ -421,12 +428,12 @@ func (p *CreateProxyLBParam) SetDescription(v string) {
 func (p *CreateProxyLBParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateProxyLBParam) SetPlan(v int) {
-	p.Plan = v
+func (p *CreateProxyLBParam) SetTags(v []string) {
+	p.Tags = v
 }
 
-func (p *CreateProxyLBParam) GetPlan() int {
-	return p.Plan
+func (p *CreateProxyLBParam) GetTags() []string {
+	return p.Tags
 }
 func (p *CreateProxyLBParam) SetPath(v string) {
 	p.Path = v
@@ -449,27 +456,6 @@ func (p *CreateProxyLBParam) SetStickySession(v bool) {
 func (p *CreateProxyLBParam) GetStickySession() bool {
 	return p.StickySession
 }
-func (p *CreateProxyLBParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *CreateProxyLBParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
-func (p *CreateProxyLBParam) SetProtocol(v string) {
-	p.Protocol = v
-}
-
-func (p *CreateProxyLBParam) GetProtocol() string {
-	return p.Protocol
-}
-func (p *CreateProxyLBParam) SetHostHeader(v string) {
-	p.HostHeader = v
-}
-
-func (p *CreateProxyLBParam) GetHostHeader() string {
-	return p.HostHeader
-}
 func (p *CreateProxyLBParam) SetSorryServerIpaddress(v string) {
 	p.SorryServerIpaddress = v
 }
@@ -477,12 +463,26 @@ func (p *CreateProxyLBParam) SetSorryServerIpaddress(v string) {
 func (p *CreateProxyLBParam) GetSorryServerIpaddress() string {
 	return p.SorryServerIpaddress
 }
-func (p *CreateProxyLBParam) SetTags(v []string) {
-	p.Tags = v
+func (p *CreateProxyLBParam) SetTimeout(v int) {
+	p.Timeout = v
 }
 
-func (p *CreateProxyLBParam) GetTags() []string {
-	return p.Tags
+func (p *CreateProxyLBParam) GetTimeout() int {
+	return p.Timeout
+}
+func (p *CreateProxyLBParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateProxyLBParam) GetName() string {
+	return p.Name
+}
+func (p *CreateProxyLBParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *CreateProxyLBParam) GetIconId() sacloud.ID {
+	return p.IconId
 }
 
 // ReadProxyLBParam is input parameters for the sacloud API
@@ -546,17 +546,17 @@ func (p *ReadProxyLBParam) ColumnDefs() []output.ColumnDef {
 // UpdateProxyLBParam is input parameters for the sacloud API
 type UpdateProxyLBParam struct {
 	DelayLoop            int
-	SorryServerIpaddress string
 	SorryServerPort      int
+	Timeout              int
+	Name                 string
 	Tags                 []string
 	IconId               sacloud.ID
 	Protocol             string
+	HostHeader           string
 	Path                 string
 	StickySession        bool
-	Timeout              int
-	Name                 string
+	SorryServerIpaddress string
 	Description          string
-	HostHeader           string
 
 	input Input
 }
@@ -585,11 +585,14 @@ func (p *UpdateProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.DelayLoop) {
 		p.DelayLoop = 0
 	}
-	if utils.IsEmpty(p.SorryServerIpaddress) {
-		p.SorryServerIpaddress = ""
-	}
 	if utils.IsEmpty(p.SorryServerPort) {
 		p.SorryServerPort = 0
+	}
+	if utils.IsEmpty(p.Timeout) {
+		p.Timeout = 0
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
 	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -600,23 +603,20 @@ func (p *UpdateProxyLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
+	if utils.IsEmpty(p.HostHeader) {
+		p.HostHeader = ""
+	}
 	if utils.IsEmpty(p.Path) {
 		p.Path = ""
 	}
 	if utils.IsEmpty(p.StickySession) {
 		p.StickySession = false
 	}
-	if utils.IsEmpty(p.Timeout) {
-		p.Timeout = 0
-	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
+	if utils.IsEmpty(p.SorryServerIpaddress) {
+		p.SorryServerIpaddress = ""
 	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
-	}
-	if utils.IsEmpty(p.HostHeader) {
-		p.HostHeader = ""
 	}
 
 }
@@ -641,6 +641,22 @@ func (p *UpdateProxyLBParam) validate() error {
 	}
 
 	{
+		validator := define.Resources["ProxyLB"].Commands["update"].Params["timeout"].ValidateFunc
+		errs := validator("--timeout", p.Timeout)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["ProxyLB"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
 		validator := define.Resources["ProxyLB"].Commands["update"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
 		if errs != nil {
@@ -659,22 +675,6 @@ func (p *UpdateProxyLBParam) validate() error {
 	{
 		validator := define.Resources["ProxyLB"].Commands["update"].Params["protocol"].ValidateFunc
 		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["ProxyLB"].Commands["update"].Params["timeout"].ValidateFunc
-		errs := validator("--timeout", p.Timeout)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["ProxyLB"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -722,19 +722,26 @@ func (p *UpdateProxyLBParam) SetDelayLoop(v int) {
 func (p *UpdateProxyLBParam) GetDelayLoop() int {
 	return p.DelayLoop
 }
-func (p *UpdateProxyLBParam) SetSorryServerIpaddress(v string) {
-	p.SorryServerIpaddress = v
-}
-
-func (p *UpdateProxyLBParam) GetSorryServerIpaddress() string {
-	return p.SorryServerIpaddress
-}
 func (p *UpdateProxyLBParam) SetSorryServerPort(v int) {
 	p.SorryServerPort = v
 }
 
 func (p *UpdateProxyLBParam) GetSorryServerPort() int {
 	return p.SorryServerPort
+}
+func (p *UpdateProxyLBParam) SetTimeout(v int) {
+	p.Timeout = v
+}
+
+func (p *UpdateProxyLBParam) GetTimeout() int {
+	return p.Timeout
+}
+func (p *UpdateProxyLBParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateProxyLBParam) GetName() string {
+	return p.Name
 }
 func (p *UpdateProxyLBParam) SetTags(v []string) {
 	p.Tags = v
@@ -757,6 +764,13 @@ func (p *UpdateProxyLBParam) SetProtocol(v string) {
 func (p *UpdateProxyLBParam) GetProtocol() string {
 	return p.Protocol
 }
+func (p *UpdateProxyLBParam) SetHostHeader(v string) {
+	p.HostHeader = v
+}
+
+func (p *UpdateProxyLBParam) GetHostHeader() string {
+	return p.HostHeader
+}
 func (p *UpdateProxyLBParam) SetPath(v string) {
 	p.Path = v
 }
@@ -771,19 +785,12 @@ func (p *UpdateProxyLBParam) SetStickySession(v bool) {
 func (p *UpdateProxyLBParam) GetStickySession() bool {
 	return p.StickySession
 }
-func (p *UpdateProxyLBParam) SetTimeout(v int) {
-	p.Timeout = v
+func (p *UpdateProxyLBParam) SetSorryServerIpaddress(v string) {
+	p.SorryServerIpaddress = v
 }
 
-func (p *UpdateProxyLBParam) GetTimeout() int {
-	return p.Timeout
-}
-func (p *UpdateProxyLBParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateProxyLBParam) GetName() string {
-	return p.Name
+func (p *UpdateProxyLBParam) GetSorryServerIpaddress() string {
+	return p.SorryServerIpaddress
 }
 func (p *UpdateProxyLBParam) SetDescription(v string) {
 	p.Description = v
@@ -791,13 +798,6 @@ func (p *UpdateProxyLBParam) SetDescription(v string) {
 
 func (p *UpdateProxyLBParam) GetDescription() string {
 	return p.Description
-}
-func (p *UpdateProxyLBParam) SetHostHeader(v string) {
-	p.HostHeader = v
-}
-
-func (p *UpdateProxyLBParam) GetHostHeader() string {
-	return p.HostHeader
 }
 
 // DeleteProxyLBParam is input parameters for the sacloud API
@@ -1004,10 +1004,10 @@ func (p *BindPortInfoProxyLBParam) ColumnDefs() []output.ColumnDef {
 
 // BindPortAddProxyLBParam is input parameters for the sacloud API
 type BindPortAddProxyLBParam struct {
-	Mode            string
-	Port            int
 	RedirectToHttps bool
 	SupportHttp2    bool
+	Mode            string
+	Port            int
 
 	input Input
 }
@@ -1032,17 +1032,17 @@ func (p *BindPortAddProxyLBParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *BindPortAddProxyLBParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Mode) {
-		p.Mode = ""
-	}
-	if utils.IsEmpty(p.Port) {
-		p.Port = 0
-	}
 	if utils.IsEmpty(p.RedirectToHttps) {
 		p.RedirectToHttps = false
 	}
 	if utils.IsEmpty(p.SupportHttp2) {
 		p.SupportHttp2 = false
+	}
+	if utils.IsEmpty(p.Mode) {
+		p.Mode = ""
+	}
+	if utils.IsEmpty(p.Port) {
+		p.Port = 0
 	}
 
 }
@@ -1107,20 +1107,6 @@ func (p *BindPortAddProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *BindPortAddProxyLBParam) SetMode(v string) {
-	p.Mode = v
-}
-
-func (p *BindPortAddProxyLBParam) GetMode() string {
-	return p.Mode
-}
-func (p *BindPortAddProxyLBParam) SetPort(v int) {
-	p.Port = v
-}
-
-func (p *BindPortAddProxyLBParam) GetPort() int {
-	return p.Port
-}
 func (p *BindPortAddProxyLBParam) SetRedirectToHttps(v bool) {
 	p.RedirectToHttps = v
 }
@@ -1135,14 +1121,28 @@ func (p *BindPortAddProxyLBParam) SetSupportHttp2(v bool) {
 func (p *BindPortAddProxyLBParam) GetSupportHttp2() bool {
 	return p.SupportHttp2
 }
+func (p *BindPortAddProxyLBParam) SetMode(v string) {
+	p.Mode = v
+}
+
+func (p *BindPortAddProxyLBParam) GetMode() string {
+	return p.Mode
+}
+func (p *BindPortAddProxyLBParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *BindPortAddProxyLBParam) GetPort() int {
+	return p.Port
+}
 
 // BindPortUpdateProxyLBParam is input parameters for the sacloud API
 type BindPortUpdateProxyLBParam struct {
-	RedirectToHttps bool
-	SupportHttp2    bool
 	Index           int
 	Mode            string
 	Port            int
+	RedirectToHttps bool
+	SupportHttp2    bool
 
 	input Input
 }
@@ -1167,12 +1167,6 @@ func (p *BindPortUpdateProxyLBParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *BindPortUpdateProxyLBParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.RedirectToHttps) {
-		p.RedirectToHttps = false
-	}
-	if utils.IsEmpty(p.SupportHttp2) {
-		p.SupportHttp2 = false
-	}
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -1181,6 +1175,12 @@ func (p *BindPortUpdateProxyLBParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Port) {
 		p.Port = 0
+	}
+	if utils.IsEmpty(p.RedirectToHttps) {
+		p.RedirectToHttps = false
+	}
+	if utils.IsEmpty(p.SupportHttp2) {
+		p.SupportHttp2 = false
 	}
 
 }
@@ -1239,20 +1239,6 @@ func (p *BindPortUpdateProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *BindPortUpdateProxyLBParam) SetRedirectToHttps(v bool) {
-	p.RedirectToHttps = v
-}
-
-func (p *BindPortUpdateProxyLBParam) GetRedirectToHttps() bool {
-	return p.RedirectToHttps
-}
-func (p *BindPortUpdateProxyLBParam) SetSupportHttp2(v bool) {
-	p.SupportHttp2 = v
-}
-
-func (p *BindPortUpdateProxyLBParam) GetSupportHttp2() bool {
-	return p.SupportHttp2
-}
 func (p *BindPortUpdateProxyLBParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -1273,6 +1259,20 @@ func (p *BindPortUpdateProxyLBParam) SetPort(v int) {
 
 func (p *BindPortUpdateProxyLBParam) GetPort() int {
 	return p.Port
+}
+func (p *BindPortUpdateProxyLBParam) SetRedirectToHttps(v bool) {
+	p.RedirectToHttps = v
+}
+
+func (p *BindPortUpdateProxyLBParam) GetRedirectToHttps() bool {
+	return p.RedirectToHttps
+}
+func (p *BindPortUpdateProxyLBParam) SetSupportHttp2(v bool) {
+	p.SupportHttp2 = v
+}
+
+func (p *BindPortUpdateProxyLBParam) GetSupportHttp2() bool {
+	return p.SupportHttp2
 }
 
 // BindPortDeleteProxyLBParam is input parameters for the sacloud API
@@ -1828,9 +1828,9 @@ func (p *ACMEInfoProxyLBParam) ColumnDefs() []output.ColumnDef {
 
 // ACMESettingProxyLBParam is input parameters for the sacloud API
 type ACMESettingProxyLBParam struct {
+	Disable    bool
 	AcceptTos  bool
 	CommonName string
-	Disable    bool
 
 	input Input
 }
@@ -1855,14 +1855,14 @@ func (p *ACMESettingProxyLBParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ACMESettingProxyLBParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Disable) {
+		p.Disable = false
+	}
 	if utils.IsEmpty(p.AcceptTos) {
 		p.AcceptTos = false
 	}
 	if utils.IsEmpty(p.CommonName) {
 		p.CommonName = ""
-	}
-	if utils.IsEmpty(p.Disable) {
-		p.Disable = false
 	}
 
 }
@@ -1897,6 +1897,13 @@ func (p *ACMESettingProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ACMESettingProxyLBParam) SetDisable(v bool) {
+	p.Disable = v
+}
+
+func (p *ACMESettingProxyLBParam) GetDisable() bool {
+	return p.Disable
+}
 func (p *ACMESettingProxyLBParam) SetAcceptTos(v bool) {
 	p.AcceptTos = v
 }
@@ -1910,13 +1917,6 @@ func (p *ACMESettingProxyLBParam) SetCommonName(v string) {
 
 func (p *ACMESettingProxyLBParam) GetCommonName() string {
 	return p.CommonName
-}
-func (p *ACMESettingProxyLBParam) SetDisable(v bool) {
-	p.Disable = v
-}
-
-func (p *ACMESettingProxyLBParam) GetDisable() bool {
-	return p.Disable
 }
 
 // ACMERenewProxyLBParam is input parameters for the sacloud API
@@ -2037,9 +2037,9 @@ func (p *ServerInfoProxyLBParam) ColumnDefs() []output.ColumnDef {
 
 // ServerAddProxyLBParam is input parameters for the sacloud API
 type ServerAddProxyLBParam struct {
-	Ipaddress string
 	Disabled  bool
 	Port      int
+	Ipaddress string
 
 	input Input
 }
@@ -2064,35 +2064,20 @@ func (p *ServerAddProxyLBParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ServerAddProxyLBParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Ipaddress) {
-		p.Ipaddress = ""
-	}
 	if utils.IsEmpty(p.Disabled) {
 		p.Disabled = false
 	}
 	if utils.IsEmpty(p.Port) {
 		p.Port = 0
 	}
+	if utils.IsEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
 
 }
 
 func (p *ServerAddProxyLBParam) validate() error {
 	var errors []error
-
-	{
-		validator := validateRequired
-		errs := validator("--ipaddress", p.Ipaddress)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ProxyLB"].Commands["server-add"].Params["ipaddress"].ValidateFunc
-		errs := validator("--ipaddress", p.Ipaddress)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -2104,6 +2089,21 @@ func (p *ServerAddProxyLBParam) validate() error {
 	{
 		validator := define.Resources["ProxyLB"].Commands["server-add"].Params["port"].ValidateFunc
 		errs := validator("--port", p.Port)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--ipaddress", p.Ipaddress)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ProxyLB"].Commands["server-add"].Params["ipaddress"].ValidateFunc
+		errs := validator("--ipaddress", p.Ipaddress)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2136,13 +2136,6 @@ func (p *ServerAddProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ServerAddProxyLBParam) SetIpaddress(v string) {
-	p.Ipaddress = v
-}
-
-func (p *ServerAddProxyLBParam) GetIpaddress() string {
-	return p.Ipaddress
-}
 func (p *ServerAddProxyLBParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
@@ -2156,6 +2149,13 @@ func (p *ServerAddProxyLBParam) SetPort(v int) {
 
 func (p *ServerAddProxyLBParam) GetPort() int {
 	return p.Port
+}
+func (p *ServerAddProxyLBParam) SetIpaddress(v string) {
+	p.Ipaddress = v
+}
+
+func (p *ServerAddProxyLBParam) GetIpaddress() string {
+	return p.Ipaddress
 }
 
 // ServerUpdateProxyLBParam is input parameters for the sacloud API
@@ -2425,9 +2425,9 @@ func (p *CertificateInfoProxyLBParam) ColumnDefs() []output.ColumnDef {
 
 // CertificateAddProxyLBParam is input parameters for the sacloud API
 type CertificateAddProxyLBParam struct {
+	ServerCertificate       string
 	IntermediateCertificate string
 	PrivateKey              string
-	ServerCertificate       string
 
 	input Input
 }
@@ -2452,14 +2452,14 @@ func (p *CertificateAddProxyLBParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CertificateAddProxyLBParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.ServerCertificate) {
+		p.ServerCertificate = ""
+	}
 	if utils.IsEmpty(p.IntermediateCertificate) {
 		p.IntermediateCertificate = ""
 	}
 	if utils.IsEmpty(p.PrivateKey) {
 		p.PrivateKey = ""
-	}
-	if utils.IsEmpty(p.ServerCertificate) {
-		p.ServerCertificate = ""
 	}
 
 }
@@ -2469,7 +2469,7 @@ func (p *CertificateAddProxyLBParam) validate() error {
 
 	{
 		validator := validateRequired
-		errs := validator("--private-key", p.PrivateKey)
+		errs := validator("--server-certificate", p.ServerCertificate)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2477,7 +2477,7 @@ func (p *CertificateAddProxyLBParam) validate() error {
 
 	{
 		validator := validateRequired
-		errs := validator("--server-certificate", p.ServerCertificate)
+		errs := validator("--private-key", p.PrivateKey)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2510,6 +2510,13 @@ func (p *CertificateAddProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *CertificateAddProxyLBParam) SetServerCertificate(v string) {
+	p.ServerCertificate = v
+}
+
+func (p *CertificateAddProxyLBParam) GetServerCertificate() string {
+	return p.ServerCertificate
+}
 func (p *CertificateAddProxyLBParam) SetIntermediateCertificate(v string) {
 	p.IntermediateCertificate = v
 }
@@ -2523,13 +2530,6 @@ func (p *CertificateAddProxyLBParam) SetPrivateKey(v string) {
 
 func (p *CertificateAddProxyLBParam) GetPrivateKey() string {
 	return p.PrivateKey
-}
-func (p *CertificateAddProxyLBParam) SetServerCertificate(v string) {
-	p.ServerCertificate = v
-}
-
-func (p *CertificateAddProxyLBParam) GetServerCertificate() string {
-	return p.ServerCertificate
 }
 
 // CertificateUpdateProxyLBParam is input parameters for the sacloud API

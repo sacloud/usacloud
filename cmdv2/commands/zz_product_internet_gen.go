@@ -54,11 +54,11 @@ var productInternetListCmd = &cobra.Command{
 
 func productInternetListCmdInit() {
 	fs := productInternetListCmd.Flags()
+	fs.StringSliceVarP(&productInternetListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &productInternetListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&productInternetListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&productInternetListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&productInternetListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&productInternetListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &productInternetListParam.Id), "id", "", "set filter by id(s)")
 }
 
 var productInternetReadCmd = &cobra.Command{

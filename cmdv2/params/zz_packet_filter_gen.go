@@ -29,11 +29,11 @@ import (
 
 // ListPacketFilterParam is input parameters for the sacloud API
 type ListPacketFilterParam struct {
-	Sort []string
 	Name []string
 	Id   []sacloud.ID
 	From int
 	Max  int
+	Sort []string
 
 	input Input
 }
@@ -58,9 +58,6 @@ func (p *ListPacketFilterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListPacketFilterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -72,6 +69,9 @@ func (p *ListPacketFilterParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
+	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
 	}
 
 }
@@ -133,13 +133,6 @@ func (p *ListPacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListPacketFilterParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListPacketFilterParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListPacketFilterParam) SetName(v []string) {
 	p.Name = v
 }
@@ -168,11 +161,18 @@ func (p *ListPacketFilterParam) SetMax(v int) {
 func (p *ListPacketFilterParam) GetMax() int {
 	return p.Max
 }
+func (p *ListPacketFilterParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListPacketFilterParam) GetSort() []string {
+	return p.Sort
+}
 
 // CreatePacketFilterParam is input parameters for the sacloud API
 type CreatePacketFilterParam struct {
-	Description string
 	Name        string
+	Description string
 
 	input Input
 }
@@ -197,25 +197,17 @@ func (p *CreatePacketFilterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreatePacketFilterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
 	}
 
 }
 
 func (p *CreatePacketFilterParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["PacketFilter"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -227,6 +219,14 @@ func (p *CreatePacketFilterParam) validate() error {
 	{
 		validator := define.Resources["PacketFilter"].Commands["create"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["PacketFilter"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -259,19 +259,19 @@ func (p *CreatePacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreatePacketFilterParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *CreatePacketFilterParam) GetDescription() string {
-	return p.Description
-}
 func (p *CreatePacketFilterParam) SetName(v string) {
 	p.Name = v
 }
 
 func (p *CreatePacketFilterParam) GetName() string {
 	return p.Name
+}
+func (p *CreatePacketFilterParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *CreatePacketFilterParam) GetDescription() string {
+	return p.Description
 }
 
 // ReadPacketFilterParam is input parameters for the sacloud API
@@ -548,13 +548,13 @@ func (p *RuleInfoPacketFilterParam) ColumnDefs() []output.ColumnDef {
 
 // RuleAddPacketFilterParam is input parameters for the sacloud API
 type RuleAddPacketFilterParam struct {
+	DestinationPort string
+	Action          string
+	Description     string
 	Index           int
 	Protocol        string
 	SourceNetwork   string
 	SourcePort      string
-	DestinationPort string
-	Action          string
-	Description     string
 
 	input Input
 }
@@ -580,6 +580,15 @@ func (p *RuleAddPacketFilterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *RuleAddPacketFilterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.DestinationPort) {
+		p.DestinationPort = ""
+	}
+	if utils.IsEmpty(p.Action) {
+		p.Action = ""
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -592,44 +601,11 @@ func (p *RuleAddPacketFilterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.SourcePort) {
 		p.SourcePort = ""
 	}
-	if utils.IsEmpty(p.DestinationPort) {
-		p.DestinationPort = ""
-	}
-	if utils.IsEmpty(p.Action) {
-		p.Action = ""
-	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
 
 }
 
 func (p *RuleAddPacketFilterParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["source-network"].ValidateFunc
-		errs := validator("--source-network", p.SourceNetwork)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["source-port"].ValidateFunc
-		errs := validator("--source-port", p.SourcePort)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["destination-port"].ValidateFunc
@@ -650,6 +626,30 @@ func (p *RuleAddPacketFilterParam) validate() error {
 	{
 		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["source-network"].ValidateFunc
+		errs := validator("--source-network", p.SourceNetwork)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["source-port"].ValidateFunc
+		errs := validator("--source-port", p.SourcePort)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -682,6 +682,27 @@ func (p *RuleAddPacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *RuleAddPacketFilterParam) SetDestinationPort(v string) {
+	p.DestinationPort = v
+}
+
+func (p *RuleAddPacketFilterParam) GetDestinationPort() string {
+	return p.DestinationPort
+}
+func (p *RuleAddPacketFilterParam) SetAction(v string) {
+	p.Action = v
+}
+
+func (p *RuleAddPacketFilterParam) GetAction() string {
+	return p.Action
+}
+func (p *RuleAddPacketFilterParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *RuleAddPacketFilterParam) GetDescription() string {
+	return p.Description
+}
 func (p *RuleAddPacketFilterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -710,37 +731,16 @@ func (p *RuleAddPacketFilterParam) SetSourcePort(v string) {
 func (p *RuleAddPacketFilterParam) GetSourcePort() string {
 	return p.SourcePort
 }
-func (p *RuleAddPacketFilterParam) SetDestinationPort(v string) {
-	p.DestinationPort = v
-}
-
-func (p *RuleAddPacketFilterParam) GetDestinationPort() string {
-	return p.DestinationPort
-}
-func (p *RuleAddPacketFilterParam) SetAction(v string) {
-	p.Action = v
-}
-
-func (p *RuleAddPacketFilterParam) GetAction() string {
-	return p.Action
-}
-func (p *RuleAddPacketFilterParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *RuleAddPacketFilterParam) GetDescription() string {
-	return p.Description
-}
 
 // RuleUpdatePacketFilterParam is input parameters for the sacloud API
 type RuleUpdatePacketFilterParam struct {
+	Index           int
 	Protocol        string
 	SourceNetwork   string
 	SourcePort      string
 	DestinationPort string
 	Action          string
 	Description     string
-	Index           int
 
 	input Input
 }
@@ -765,6 +765,9 @@ func (p *RuleUpdatePacketFilterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *RuleUpdatePacketFilterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Index) {
+		p.Index = 0
+	}
 	if utils.IsEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
@@ -783,14 +786,19 @@ func (p *RuleUpdatePacketFilterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Index) {
-		p.Index = 0
-	}
 
 }
 
 func (p *RuleUpdatePacketFilterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["PacketFilter"].Commands["rule-update"].Params["protocol"].ValidateFunc
@@ -840,14 +848,6 @@ func (p *RuleUpdatePacketFilterParam) validate() error {
 		}
 	}
 
-	{
-		validator := validateRequired
-		errs := validator("--index", p.Index)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
@@ -875,6 +875,13 @@ func (p *RuleUpdatePacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *RuleUpdatePacketFilterParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *RuleUpdatePacketFilterParam) GetIndex() int {
+	return p.Index
+}
 func (p *RuleUpdatePacketFilterParam) SetProtocol(v string) {
 	p.Protocol = v
 }
@@ -916,13 +923,6 @@ func (p *RuleUpdatePacketFilterParam) SetDescription(v string) {
 
 func (p *RuleUpdatePacketFilterParam) GetDescription() string {
 	return p.Description
-}
-func (p *RuleUpdatePacketFilterParam) SetIndex(v int) {
-	p.Index = v
-}
-
-func (p *RuleUpdatePacketFilterParam) GetIndex() int {
-	return p.Index
 }
 
 // RuleDeletePacketFilterParam is input parameters for the sacloud API

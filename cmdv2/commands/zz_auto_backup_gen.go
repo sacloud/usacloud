@@ -57,12 +57,12 @@ var autoBackupListCmd = &cobra.Command{
 
 func autoBackupListCmdInit() {
 	fs := autoBackupListCmd.Flags()
-	fs.StringSliceVarP(&autoBackupListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
-	fs.StringSliceVarP(&autoBackupListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &autoBackupListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&autoBackupListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&autoBackupListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&autoBackupListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&autoBackupListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &autoBackupListParam.Id), "id", "", "set filter by id(s)")
+	fs.StringSliceVarP(&autoBackupListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 }
 
 var autoBackupCreateCmd = &cobra.Command{
@@ -80,13 +80,13 @@ var autoBackupCreateCmd = &cobra.Command{
 
 func autoBackupCreateCmdInit() {
 	fs := autoBackupCreateCmd.Flags()
-	fs.VarP(newIDValue(0, &autoBackupCreateParam.DiskId), "disk-id", "", "set target diskID ")
-	fs.StringSliceVarP(&autoBackupCreateParam.Weekdays, "weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
-	fs.IntVarP(&autoBackupCreateParam.Generation, "generation", "", 1, "set backup generation[1-10]")
 	fs.StringVarP(&autoBackupCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&autoBackupCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&autoBackupCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &autoBackupCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.VarP(newIDValue(0, &autoBackupCreateParam.DiskId), "disk-id", "", "set target diskID ")
+	fs.StringSliceVarP(&autoBackupCreateParam.Weekdays, "weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
+	fs.IntVarP(&autoBackupCreateParam.Generation, "generation", "", 1, "set backup generation[1-10]")
 }
 
 var autoBackupReadCmd = &cobra.Command{
@@ -120,12 +120,12 @@ var autoBackupUpdateCmd = &cobra.Command{
 
 func autoBackupUpdateCmdInit() {
 	fs := autoBackupUpdateCmd.Flags()
+	fs.IntVarP(&autoBackupUpdateParam.Generation, "generation", "", 0, "set backup generation[1-10]")
 	fs.StringVarP(&autoBackupUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&autoBackupUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&autoBackupUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &autoBackupUpdateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.StringSliceVarP(&autoBackupUpdateParam.Weekdays, "weekdays", "", []string{}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
-	fs.IntVarP(&autoBackupUpdateParam.Generation, "generation", "", 0, "set backup generation[1-10]")
 }
 
 var autoBackupDeleteCmd = &cobra.Command{

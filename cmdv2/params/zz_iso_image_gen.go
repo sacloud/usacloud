@@ -29,13 +29,13 @@ import (
 
 // ListISOImageParam is input parameters for the sacloud API
 type ListISOImageParam struct {
+	Scope string
 	Tags  []string
-	Sort  []string
 	Name  []string
 	Id    []sacloud.ID
 	From  int
 	Max   int
-	Scope string
+	Sort  []string
 
 	input Input
 }
@@ -60,11 +60,11 @@ func (p *ListISOImageParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListISOImageParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Scope) {
+		p.Scope = ""
+	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
 	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
@@ -78,14 +78,22 @@ func (p *ListISOImageParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
 	}
-	if utils.IsEmpty(p.Scope) {
-		p.Scope = ""
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
 	}
 
 }
 
 func (p *ListISOImageParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["ISOImage"].Commands["list"].Params["scope"].ValidateFunc
+		errs := validator("--scope", p.Scope)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["ISOImage"].Commands["list"].Params["tags"].ValidateFunc
@@ -122,14 +130,6 @@ func (p *ListISOImageParam) validate() error {
 		}
 	}
 
-	{
-		validator := define.Resources["ISOImage"].Commands["list"].Params["scope"].ValidateFunc
-		errs := validator("--scope", p.Scope)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
@@ -157,19 +157,19 @@ func (p *ListISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListISOImageParam) SetScope(v string) {
+	p.Scope = v
+}
+
+func (p *ListISOImageParam) GetScope() string {
+	return p.Scope
+}
 func (p *ListISOImageParam) SetTags(v []string) {
 	p.Tags = v
 }
 
 func (p *ListISOImageParam) GetTags() []string {
 	return p.Tags
-}
-func (p *ListISOImageParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListISOImageParam) GetSort() []string {
-	return p.Sort
 }
 func (p *ListISOImageParam) SetName(v []string) {
 	p.Name = v
@@ -199,22 +199,22 @@ func (p *ListISOImageParam) SetMax(v int) {
 func (p *ListISOImageParam) GetMax() int {
 	return p.Max
 }
-func (p *ListISOImageParam) SetScope(v string) {
-	p.Scope = v
+func (p *ListISOImageParam) SetSort(v []string) {
+	p.Sort = v
 }
 
-func (p *ListISOImageParam) GetScope() string {
-	return p.Scope
+func (p *ListISOImageParam) GetSort() []string {
+	return p.Sort
 }
 
 // CreateISOImageParam is input parameters for the sacloud API
 type CreateISOImageParam struct {
-	Size        int
 	ISOFile     string
 	Name        string
 	Description string
 	Tags        []string
 	IconId      sacloud.ID
+	Size        int
 
 	input Input
 }
@@ -240,9 +240,6 @@ func (p *CreateISOImageParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateISOImageParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Size) {
-		p.Size = 0
-	}
 	if utils.IsEmpty(p.ISOFile) {
 		p.ISOFile = ""
 	}
@@ -258,26 +255,14 @@ func (p *CreateISOImageParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
+	if utils.IsEmpty(p.Size) {
+		p.Size = 0
+	}
 
 }
 
 func (p *CreateISOImageParam) validate() error {
 	var errors []error
-
-	{
-		validator := validateRequired
-		errs := validator("--size", p.Size)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["create"].Params["size"].ValidateFunc
-		errs := validator("--size", p.Size)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["ISOImage"].Commands["create"].Params["iso-file"].ValidateFunc
@@ -326,6 +311,21 @@ func (p *CreateISOImageParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateRequired
+		errs := validator("--size", p.Size)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["create"].Params["size"].ValidateFunc
+		errs := validator("--size", p.Size)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
@@ -353,13 +353,6 @@ func (p *CreateISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateISOImageParam) SetSize(v int) {
-	p.Size = v
-}
-
-func (p *CreateISOImageParam) GetSize() int {
-	return p.Size
-}
 func (p *CreateISOImageParam) SetISOFile(v string) {
 	p.ISOFile = v
 }
@@ -394,6 +387,13 @@ func (p *CreateISOImageParam) SetIconId(v sacloud.ID) {
 
 func (p *CreateISOImageParam) GetIconId() sacloud.ID {
 	return p.IconId
+}
+func (p *CreateISOImageParam) SetSize(v int) {
+	p.Size = v
+}
+
+func (p *CreateISOImageParam) GetSize() int {
+	return p.Size
 }
 
 // ReadISOImageParam is input parameters for the sacloud API

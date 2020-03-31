@@ -58,11 +58,11 @@ var ipv6ListCmd = &cobra.Command{
 func ipv6ListCmdInit() {
 	fs := ipv6ListCmd.Flags()
 	fs.VarP(newIDValue(0, &ipv6ListParam.InternetId), "internet-id", "", "set filter by internet-id")
-	fs.StringSliceVarP(&ipv6ListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&ipv6ListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &ipv6ListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&ipv6ListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&ipv6ListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&ipv6ListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.VarP(newIDValue(0, &ipv6ListParam.IPv6netId), "ipv6net-id", "", "set filter by ipv6net-id")
 }
 

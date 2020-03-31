@@ -105,10 +105,10 @@ var webAccelCertificateNewCmd = &cobra.Command{
 
 func webAccelCertificateNewCmdInit() {
 	fs := webAccelCertificateNewCmd.Flags()
-	fs.StringVarP(&webAccelCertificateNewParam.Key, "key", "", "", "set private key(from file)")
 	fs.StringVarP(&webAccelCertificateNewParam.CertContent, "cert-content", "", "", "set certificate(from text)")
 	fs.StringVarP(&webAccelCertificateNewParam.KeyContent, "key-content", "", "", "set private key(from text)")
 	fs.StringVarP(&webAccelCertificateNewParam.Cert, "cert", "", "", "set certificate(from file)")
+	fs.StringVarP(&webAccelCertificateNewParam.Key, "key", "", "", "set private key(from file)")
 }
 
 var webAccelCertificateUpdateCmd = &cobra.Command{
@@ -126,10 +126,10 @@ var webAccelCertificateUpdateCmd = &cobra.Command{
 
 func webAccelCertificateUpdateCmdInit() {
 	fs := webAccelCertificateUpdateCmd.Flags()
-	fs.StringVarP(&webAccelCertificateUpdateParam.CertContent, "cert-content", "", "", "set certificate(from text)")
-	fs.StringVarP(&webAccelCertificateUpdateParam.KeyContent, "key-content", "", "", "set private key(from text)")
 	fs.StringVarP(&webAccelCertificateUpdateParam.Cert, "cert", "", "", "set certificate(from file)")
 	fs.StringVarP(&webAccelCertificateUpdateParam.Key, "key", "", "", "set private key(from file)")
+	fs.StringVarP(&webAccelCertificateUpdateParam.CertContent, "cert-content", "", "", "set certificate(from text)")
+	fs.StringVarP(&webAccelCertificateUpdateParam.KeyContent, "key-content", "", "", "set private key(from text)")
 }
 
 var webAccelDeleteCacheCmd = &cobra.Command{

@@ -29,11 +29,11 @@ import (
 
 // ListGSLBParam is input parameters for the sacloud API
 type ListGSLBParam struct {
+	Id   []sacloud.ID
+	From int
 	Max  int
 	Sort []string
 	Name []string
-	Id   []sacloud.ID
-	From int
 	Tags []string
 
 	input Input
@@ -59,6 +59,12 @@ func (p *ListGSLBParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListGSLBParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Id) {
+		p.Id = []sacloud.ID{}
+	}
+	if utils.IsEmpty(p.From) {
+		p.From = 0
+	}
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
 	}
@@ -68,12 +74,6 @@ func (p *ListGSLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
-	if utils.IsEmpty(p.Id) {
-		p.Id = []sacloud.ID{}
-	}
-	if utils.IsEmpty(p.From) {
-		p.From = 0
-	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
@@ -82,16 +82,6 @@ func (p *ListGSLBParam) fillValueToSkeleton() {
 
 func (p *ListGSLBParam) validate() error {
 	var errors []error
-
-	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["GSLB"].Commands["list"].Params["id"].ValidateFunc
@@ -104,6 +94,16 @@ func (p *ListGSLBParam) validate() error {
 		errs := validation.ConflictsWith("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -145,6 +145,20 @@ func (p *ListGSLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListGSLBParam) SetId(v []sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ListGSLBParam) GetId() []sacloud.ID {
+	return p.Id
+}
+func (p *ListGSLBParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListGSLBParam) GetFrom() int {
+	return p.From
+}
 func (p *ListGSLBParam) SetMax(v int) {
 	p.Max = v
 }
@@ -165,20 +179,6 @@ func (p *ListGSLBParam) SetName(v []string) {
 
 func (p *ListGSLBParam) GetName() []string {
 	return p.Name
-}
-func (p *ListGSLBParam) SetId(v []sacloud.ID) {
-	p.Id = v
-}
-
-func (p *ListGSLBParam) GetId() []sacloud.ID {
-	return p.Id
-}
-func (p *ListGSLBParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListGSLBParam) GetFrom() int {
-	return p.From
 }
 func (p *ListGSLBParam) SetTags(v []string) {
 	p.Tags = v
@@ -248,18 +248,18 @@ func (p *ServerInfoGSLBParam) ColumnDefs() []output.ColumnDef {
 
 // CreateGSLBParam is input parameters for the sacloud API
 type CreateGSLBParam struct {
-	IconId       sacloud.ID
-	Protocol     string
-	HostHeader   string
-	ResponseCode int
-	Weighted     bool
-	SorryServer  string
-	Tags         []string
 	Path         string
 	Port         int
-	DelayLoop    int
+	Weighted     bool
 	Name         string
+	Tags         []string
+	IconId       sacloud.ID
+	HostHeader   string
+	ResponseCode int
+	DelayLoop    int
+	SorryServer  string
 	Description  string
+	Protocol     string
 
 	input Input
 }
@@ -267,7 +267,7 @@ type CreateGSLBParam struct {
 // NewCreateGSLBParam return new CreateGSLBParam
 func NewCreateGSLBParam() *CreateGSLBParam {
 	return &CreateGSLBParam{
-		Protocol: "ping", ResponseCode: 200, Weighted: true, Path: "/", DelayLoop: 10}
+		Path: "/", Weighted: true, ResponseCode: 200, DelayLoop: 10, Protocol: "ping"}
 }
 
 // Initialize init CreateGSLBParam
@@ -285,11 +285,23 @@ func (p *CreateGSLBParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateGSLBParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Path) {
+		p.Path = ""
+	}
+	if utils.IsEmpty(p.Port) {
+		p.Port = 0
+	}
+	if utils.IsEmpty(p.Weighted) {
+		p.Weighted = false
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.Protocol) {
-		p.Protocol = ""
 	}
 	if utils.IsEmpty(p.HostHeader) {
 		p.HostHeader = ""
@@ -297,29 +309,17 @@ func (p *CreateGSLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.ResponseCode) {
 		p.ResponseCode = 0
 	}
-	if utils.IsEmpty(p.Weighted) {
-		p.Weighted = false
+	if utils.IsEmpty(p.DelayLoop) {
+		p.DelayLoop = 0
 	}
 	if utils.IsEmpty(p.SorryServer) {
 		p.SorryServer = ""
 	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.Path) {
-		p.Path = ""
-	}
-	if utils.IsEmpty(p.Port) {
-		p.Port = 0
-	}
-	if utils.IsEmpty(p.DelayLoop) {
-		p.DelayLoop = 0
-	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
+	}
+	if utils.IsEmpty(p.Protocol) {
+		p.Protocol = ""
 	}
 
 }
@@ -328,54 +328,8 @@ func (p *CreateGSLBParam) validate() error {
 	var errors []error
 
 	{
-		validator := define.Resources["GSLB"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["GSLB"].Commands["create"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["GSLB"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
 		validator := define.Resources["GSLB"].Commands["create"].Params["port"].ValidateFunc
 		errs := validator("--port", p.Port)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--delay-loop", p.DelayLoop)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["GSLB"].Commands["create"].Params["delay-loop"].ValidateFunc
-		errs := validator("--delay-loop", p.DelayLoop)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -397,8 +351,54 @@ func (p *CreateGSLBParam) validate() error {
 	}
 
 	{
+		validator := define.Resources["GSLB"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["GSLB"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--delay-loop", p.DelayLoop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["GSLB"].Commands["create"].Params["delay-loop"].ValidateFunc
+		errs := validator("--delay-loop", p.DelayLoop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
 		validator := define.Resources["GSLB"].Commands["create"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--protocol", p.Protocol)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["GSLB"].Commands["create"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -431,19 +431,47 @@ func (p *CreateGSLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *CreateGSLBParam) SetPath(v string) {
+	p.Path = v
+}
+
+func (p *CreateGSLBParam) GetPath() string {
+	return p.Path
+}
+func (p *CreateGSLBParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *CreateGSLBParam) GetPort() int {
+	return p.Port
+}
+func (p *CreateGSLBParam) SetWeighted(v bool) {
+	p.Weighted = v
+}
+
+func (p *CreateGSLBParam) GetWeighted() bool {
+	return p.Weighted
+}
+func (p *CreateGSLBParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateGSLBParam) GetName() string {
+	return p.Name
+}
+func (p *CreateGSLBParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CreateGSLBParam) GetTags() []string {
+	return p.Tags
+}
 func (p *CreateGSLBParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
 func (p *CreateGSLBParam) GetIconId() sacloud.ID {
 	return p.IconId
-}
-func (p *CreateGSLBParam) SetProtocol(v string) {
-	p.Protocol = v
-}
-
-func (p *CreateGSLBParam) GetProtocol() string {
-	return p.Protocol
 }
 func (p *CreateGSLBParam) SetHostHeader(v string) {
 	p.HostHeader = v
@@ -459,12 +487,12 @@ func (p *CreateGSLBParam) SetResponseCode(v int) {
 func (p *CreateGSLBParam) GetResponseCode() int {
 	return p.ResponseCode
 }
-func (p *CreateGSLBParam) SetWeighted(v bool) {
-	p.Weighted = v
+func (p *CreateGSLBParam) SetDelayLoop(v int) {
+	p.DelayLoop = v
 }
 
-func (p *CreateGSLBParam) GetWeighted() bool {
-	return p.Weighted
+func (p *CreateGSLBParam) GetDelayLoop() int {
+	return p.DelayLoop
 }
 func (p *CreateGSLBParam) SetSorryServer(v string) {
 	p.SorryServer = v
@@ -473,47 +501,19 @@ func (p *CreateGSLBParam) SetSorryServer(v string) {
 func (p *CreateGSLBParam) GetSorryServer() string {
 	return p.SorryServer
 }
-func (p *CreateGSLBParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CreateGSLBParam) GetTags() []string {
-	return p.Tags
-}
-func (p *CreateGSLBParam) SetPath(v string) {
-	p.Path = v
-}
-
-func (p *CreateGSLBParam) GetPath() string {
-	return p.Path
-}
-func (p *CreateGSLBParam) SetPort(v int) {
-	p.Port = v
-}
-
-func (p *CreateGSLBParam) GetPort() int {
-	return p.Port
-}
-func (p *CreateGSLBParam) SetDelayLoop(v int) {
-	p.DelayLoop = v
-}
-
-func (p *CreateGSLBParam) GetDelayLoop() int {
-	return p.DelayLoop
-}
-func (p *CreateGSLBParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateGSLBParam) GetName() string {
-	return p.Name
-}
 func (p *CreateGSLBParam) SetDescription(v string) {
 	p.Description = v
 }
 
 func (p *CreateGSLBParam) GetDescription() string {
 	return p.Description
+}
+func (p *CreateGSLBParam) SetProtocol(v string) {
+	p.Protocol = v
+}
+
+func (p *CreateGSLBParam) GetProtocol() string {
+	return p.Protocol
 }
 
 // ServerAddGSLBParam is input parameters for the sacloud API
@@ -685,10 +685,10 @@ func (p *ReadGSLBParam) ColumnDefs() []output.ColumnDef {
 
 // ServerUpdateGSLBParam is input parameters for the sacloud API
 type ServerUpdateGSLBParam struct {
-	Weight    int
-	Index     int
 	Ipaddress string
 	Disabled  bool
+	Weight    int
+	Index     int
 
 	input Input
 }
@@ -713,23 +713,31 @@ func (p *ServerUpdateGSLBParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ServerUpdateGSLBParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Weight) {
-		p.Weight = 0
-	}
-	if utils.IsEmpty(p.Index) {
-		p.Index = 0
-	}
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
 	if utils.IsEmpty(p.Disabled) {
 		p.Disabled = false
 	}
+	if utils.IsEmpty(p.Weight) {
+		p.Weight = 0
+	}
+	if utils.IsEmpty(p.Index) {
+		p.Index = 0
+	}
 
 }
 
 func (p *ServerUpdateGSLBParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["GSLB"].Commands["server-update"].Params["ipaddress"].ValidateFunc
+		errs := validator("--ipaddress", p.Ipaddress)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["GSLB"].Commands["server-update"].Params["weight"].ValidateFunc
@@ -742,14 +750,6 @@ func (p *ServerUpdateGSLBParam) validate() error {
 	{
 		validator := validateRequired
 		errs := validator("--index", p.Index)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["GSLB"].Commands["server-update"].Params["ipaddress"].ValidateFunc
-		errs := validator("--ipaddress", p.Ipaddress)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -782,20 +782,6 @@ func (p *ServerUpdateGSLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ServerUpdateGSLBParam) SetWeight(v int) {
-	p.Weight = v
-}
-
-func (p *ServerUpdateGSLBParam) GetWeight() int {
-	return p.Weight
-}
-func (p *ServerUpdateGSLBParam) SetIndex(v int) {
-	p.Index = v
-}
-
-func (p *ServerUpdateGSLBParam) GetIndex() int {
-	return p.Index
-}
 func (p *ServerUpdateGSLBParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
@@ -809,6 +795,20 @@ func (p *ServerUpdateGSLBParam) SetDisabled(v bool) {
 
 func (p *ServerUpdateGSLBParam) GetDisabled() bool {
 	return p.Disabled
+}
+func (p *ServerUpdateGSLBParam) SetWeight(v int) {
+	p.Weight = v
+}
+
+func (p *ServerUpdateGSLBParam) GetWeight() int {
+	return p.Weight
+}
+func (p *ServerUpdateGSLBParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *ServerUpdateGSLBParam) GetIndex() int {
+	return p.Index
 }
 
 // ServerDeleteGSLBParam is input parameters for the sacloud API
@@ -892,18 +892,18 @@ func (p *ServerDeleteGSLBParam) GetIndex() int {
 
 // UpdateGSLBParam is input parameters for the sacloud API
 type UpdateGSLBParam struct {
-	Protocol     string
-	HostHeader   string
-	ResponseCode int
-	Tags         []string
-	IconId       sacloud.ID
 	Path         string
 	Port         int
 	DelayLoop    int
-	Weighted     bool
-	SorryServer  string
 	Name         string
 	Description  string
+	Tags         []string
+	Protocol     string
+	HostHeader   string
+	ResponseCode int
+	Weighted     bool
+	SorryServer  string
+	IconId       sacloud.ID
 
 	input Input
 }
@@ -928,21 +928,6 @@ func (p *UpdateGSLBParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateGSLBParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Protocol) {
-		p.Protocol = ""
-	}
-	if utils.IsEmpty(p.HostHeader) {
-		p.HostHeader = ""
-	}
-	if utils.IsEmpty(p.ResponseCode) {
-		p.ResponseCode = 0
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
 	if utils.IsEmpty(p.Path) {
 		p.Path = ""
 	}
@@ -952,47 +937,38 @@ func (p *UpdateGSLBParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.DelayLoop) {
 		p.DelayLoop = 0
 	}
-	if utils.IsEmpty(p.Weighted) {
-		p.Weighted = false
-	}
-	if utils.IsEmpty(p.SorryServer) {
-		p.SorryServer = ""
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if utils.IsEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if utils.IsEmpty(p.HostHeader) {
+		p.HostHeader = ""
+	}
+	if utils.IsEmpty(p.ResponseCode) {
+		p.ResponseCode = 0
+	}
+	if utils.IsEmpty(p.Weighted) {
+		p.Weighted = false
+	}
+	if utils.IsEmpty(p.SorryServer) {
+		p.SorryServer = ""
+	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
 
 }
 
 func (p *UpdateGSLBParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["GSLB"].Commands["update"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["GSLB"].Commands["update"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["GSLB"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["GSLB"].Commands["update"].Params["port"].ValidateFunc
@@ -1026,6 +1002,30 @@ func (p *UpdateGSLBParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["GSLB"].Commands["update"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["GSLB"].Commands["update"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["GSLB"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
@@ -1053,41 +1053,6 @@ func (p *UpdateGSLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateGSLBParam) SetProtocol(v string) {
-	p.Protocol = v
-}
-
-func (p *UpdateGSLBParam) GetProtocol() string {
-	return p.Protocol
-}
-func (p *UpdateGSLBParam) SetHostHeader(v string) {
-	p.HostHeader = v
-}
-
-func (p *UpdateGSLBParam) GetHostHeader() string {
-	return p.HostHeader
-}
-func (p *UpdateGSLBParam) SetResponseCode(v int) {
-	p.ResponseCode = v
-}
-
-func (p *UpdateGSLBParam) GetResponseCode() int {
-	return p.ResponseCode
-}
-func (p *UpdateGSLBParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *UpdateGSLBParam) GetTags() []string {
-	return p.Tags
-}
-func (p *UpdateGSLBParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *UpdateGSLBParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
 func (p *UpdateGSLBParam) SetPath(v string) {
 	p.Path = v
 }
@@ -1109,6 +1074,48 @@ func (p *UpdateGSLBParam) SetDelayLoop(v int) {
 func (p *UpdateGSLBParam) GetDelayLoop() int {
 	return p.DelayLoop
 }
+func (p *UpdateGSLBParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateGSLBParam) GetName() string {
+	return p.Name
+}
+func (p *UpdateGSLBParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *UpdateGSLBParam) GetDescription() string {
+	return p.Description
+}
+func (p *UpdateGSLBParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *UpdateGSLBParam) GetTags() []string {
+	return p.Tags
+}
+func (p *UpdateGSLBParam) SetProtocol(v string) {
+	p.Protocol = v
+}
+
+func (p *UpdateGSLBParam) GetProtocol() string {
+	return p.Protocol
+}
+func (p *UpdateGSLBParam) SetHostHeader(v string) {
+	p.HostHeader = v
+}
+
+func (p *UpdateGSLBParam) GetHostHeader() string {
+	return p.HostHeader
+}
+func (p *UpdateGSLBParam) SetResponseCode(v int) {
+	p.ResponseCode = v
+}
+
+func (p *UpdateGSLBParam) GetResponseCode() int {
+	return p.ResponseCode
+}
 func (p *UpdateGSLBParam) SetWeighted(v bool) {
 	p.Weighted = v
 }
@@ -1123,19 +1130,12 @@ func (p *UpdateGSLBParam) SetSorryServer(v string) {
 func (p *UpdateGSLBParam) GetSorryServer() string {
 	return p.SorryServer
 }
-func (p *UpdateGSLBParam) SetName(v string) {
-	p.Name = v
+func (p *UpdateGSLBParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
 }
 
-func (p *UpdateGSLBParam) GetName() string {
-	return p.Name
-}
-func (p *UpdateGSLBParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *UpdateGSLBParam) GetDescription() string {
-	return p.Description
+func (p *UpdateGSLBParam) GetIconId() sacloud.ID {
+	return p.IconId
 }
 
 // DeleteGSLBParam is input parameters for the sacloud API

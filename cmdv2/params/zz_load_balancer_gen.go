@@ -29,11 +29,11 @@ import (
 
 // ListLoadBalancerParam is input parameters for the sacloud API
 type ListLoadBalancerParam struct {
+	Name []string
+	Id   []sacloud.ID
 	From int
 	Max  int
 	Sort []string
-	Name []string
-	Id   []sacloud.ID
 	Tags []string
 
 	input Input
@@ -59,6 +59,12 @@ func (p *ListLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListLoadBalancerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = []sacloud.ID{}
+	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
@@ -67,12 +73,6 @@ func (p *ListLoadBalancerParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
-	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
-	if utils.IsEmpty(p.Id) {
-		p.Id = []sacloud.ID{}
 	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -145,6 +145,20 @@ func (p *ListLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListLoadBalancerParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListLoadBalancerParam) GetName() []string {
+	return p.Name
+}
+func (p *ListLoadBalancerParam) SetId(v []sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ListLoadBalancerParam) GetId() []sacloud.ID {
+	return p.Id
+}
 func (p *ListLoadBalancerParam) SetFrom(v int) {
 	p.From = v
 }
@@ -166,20 +180,6 @@ func (p *ListLoadBalancerParam) SetSort(v []string) {
 func (p *ListLoadBalancerParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListLoadBalancerParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListLoadBalancerParam) GetName() []string {
-	return p.Name
-}
-func (p *ListLoadBalancerParam) SetId(v []sacloud.ID) {
-	p.Id = v
-}
-
-func (p *ListLoadBalancerParam) GetId() []sacloud.ID {
-	return p.Id
-}
 func (p *ListLoadBalancerParam) SetTags(v []string) {
 	p.Tags = v
 }
@@ -190,18 +190,18 @@ func (p *ListLoadBalancerParam) GetTags() []string {
 
 // CreateLoadBalancerParam is input parameters for the sacloud API
 type CreateLoadBalancerParam struct {
-	Description      string
+	IconId           sacloud.ID
+	Vrid             int
+	Plan             string
+	Ipaddress2       string
+	Name             string
 	Tags             []string
+	Description      string
+	SwitchId         sacloud.ID
+	HighAvailability bool
 	Ipaddress1       string
 	NwMaskLen        int
 	DefaultRoute     string
-	Name             string
-	Ipaddress2       string
-	IconId           sacloud.ID
-	SwitchId         sacloud.ID
-	Vrid             int
-	HighAvailability bool
-	Plan             string
 
 	input Input
 }
@@ -227,11 +227,32 @@ func (p *CreateLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateLoadBalancerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Vrid) {
+		p.Vrid = 0
+	}
+	if utils.IsEmpty(p.Plan) {
+		p.Plan = ""
+	}
+	if utils.IsEmpty(p.Ipaddress2) {
+		p.Ipaddress2 = ""
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
 	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
+	if utils.IsEmpty(p.SwitchId) {
+		p.SwitchId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.HighAvailability) {
+		p.HighAvailability = false
 	}
 	if utils.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
@@ -242,32 +263,73 @@ func (p *CreateLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.DefaultRoute) {
 		p.DefaultRoute = ""
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
-	if utils.IsEmpty(p.Ipaddress2) {
-		p.Ipaddress2 = ""
-	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.SwitchId) {
-		p.SwitchId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.Vrid) {
-		p.Vrid = 0
-	}
-	if utils.IsEmpty(p.HighAvailability) {
-		p.HighAvailability = false
-	}
-	if utils.IsEmpty(p.Plan) {
-		p.Plan = ""
-	}
 
 }
 
 func (p *CreateLoadBalancerParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--vrid", p.Vrid)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--plan", p.Plan)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["plan"].ValidateFunc
+		errs := validator("--plan", p.Plan)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["ipaddress2"].ValidateFunc
+		errs := validator("--ipaddress-2", p.Ipaddress2)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["LoadBalancer"].Commands["create"].Params["description"].ValidateFunc
@@ -278,8 +340,8 @@ func (p *CreateLoadBalancerParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["switch-id"].ValidateFunc
+		errs := validator("--switch-id", p.SwitchId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -323,68 +385,6 @@ func (p *CreateLoadBalancerParam) validate() error {
 		}
 	}
 
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["ipaddress2"].ValidateFunc
-		errs := validator("--ipaddress-2", p.Ipaddress2)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["switch-id"].ValidateFunc
-		errs := validator("--switch-id", p.SwitchId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--vrid", p.Vrid)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["plan"].ValidateFunc
-		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
@@ -412,12 +412,40 @@ func (p *CreateLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateLoadBalancerParam) SetDescription(v string) {
-	p.Description = v
+func (p *CreateLoadBalancerParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
 }
 
-func (p *CreateLoadBalancerParam) GetDescription() string {
-	return p.Description
+func (p *CreateLoadBalancerParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+func (p *CreateLoadBalancerParam) SetVrid(v int) {
+	p.Vrid = v
+}
+
+func (p *CreateLoadBalancerParam) GetVrid() int {
+	return p.Vrid
+}
+func (p *CreateLoadBalancerParam) SetPlan(v string) {
+	p.Plan = v
+}
+
+func (p *CreateLoadBalancerParam) GetPlan() string {
+	return p.Plan
+}
+func (p *CreateLoadBalancerParam) SetIpaddress2(v string) {
+	p.Ipaddress2 = v
+}
+
+func (p *CreateLoadBalancerParam) GetIpaddress2() string {
+	return p.Ipaddress2
+}
+func (p *CreateLoadBalancerParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateLoadBalancerParam) GetName() string {
+	return p.Name
 }
 func (p *CreateLoadBalancerParam) SetTags(v []string) {
 	p.Tags = v
@@ -425,6 +453,27 @@ func (p *CreateLoadBalancerParam) SetTags(v []string) {
 
 func (p *CreateLoadBalancerParam) GetTags() []string {
 	return p.Tags
+}
+func (p *CreateLoadBalancerParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *CreateLoadBalancerParam) GetDescription() string {
+	return p.Description
+}
+func (p *CreateLoadBalancerParam) SetSwitchId(v sacloud.ID) {
+	p.SwitchId = v
+}
+
+func (p *CreateLoadBalancerParam) GetSwitchId() sacloud.ID {
+	return p.SwitchId
+}
+func (p *CreateLoadBalancerParam) SetHighAvailability(v bool) {
+	p.HighAvailability = v
+}
+
+func (p *CreateLoadBalancerParam) GetHighAvailability() bool {
+	return p.HighAvailability
 }
 func (p *CreateLoadBalancerParam) SetIpaddress1(v string) {
 	p.Ipaddress1 = v
@@ -446,55 +495,6 @@ func (p *CreateLoadBalancerParam) SetDefaultRoute(v string) {
 
 func (p *CreateLoadBalancerParam) GetDefaultRoute() string {
 	return p.DefaultRoute
-}
-func (p *CreateLoadBalancerParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateLoadBalancerParam) GetName() string {
-	return p.Name
-}
-func (p *CreateLoadBalancerParam) SetIpaddress2(v string) {
-	p.Ipaddress2 = v
-}
-
-func (p *CreateLoadBalancerParam) GetIpaddress2() string {
-	return p.Ipaddress2
-}
-func (p *CreateLoadBalancerParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *CreateLoadBalancerParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
-func (p *CreateLoadBalancerParam) SetSwitchId(v sacloud.ID) {
-	p.SwitchId = v
-}
-
-func (p *CreateLoadBalancerParam) GetSwitchId() sacloud.ID {
-	return p.SwitchId
-}
-func (p *CreateLoadBalancerParam) SetVrid(v int) {
-	p.Vrid = v
-}
-
-func (p *CreateLoadBalancerParam) GetVrid() int {
-	return p.Vrid
-}
-func (p *CreateLoadBalancerParam) SetHighAvailability(v bool) {
-	p.HighAvailability = v
-}
-
-func (p *CreateLoadBalancerParam) GetHighAvailability() bool {
-	return p.HighAvailability
-}
-func (p *CreateLoadBalancerParam) SetPlan(v string) {
-	p.Plan = v
-}
-
-func (p *CreateLoadBalancerParam) GetPlan() string {
-	return p.Plan
 }
 
 // ReadLoadBalancerParam is input parameters for the sacloud API
@@ -557,10 +557,10 @@ func (p *ReadLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 
 // UpdateLoadBalancerParam is input parameters for the sacloud API
 type UpdateLoadBalancerParam struct {
-	IconId      sacloud.ID
 	Name        string
 	Description string
 	Tags        []string
+	IconId      sacloud.ID
 
 	input Input
 }
@@ -585,9 +585,6 @@ func (p *UpdateLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateLoadBalancerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -597,19 +594,14 @@ func (p *UpdateLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
 
 }
 
 func (p *UpdateLoadBalancerParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["LoadBalancer"].Commands["update"].Params["name"].ValidateFunc
@@ -630,6 +622,14 @@ func (p *UpdateLoadBalancerParam) validate() error {
 	{
 		validator := define.Resources["LoadBalancer"].Commands["update"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -662,13 +662,6 @@ func (p *UpdateLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateLoadBalancerParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *UpdateLoadBalancerParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
 func (p *UpdateLoadBalancerParam) SetName(v string) {
 	p.Name = v
 }
@@ -689,6 +682,13 @@ func (p *UpdateLoadBalancerParam) SetTags(v []string) {
 
 func (p *UpdateLoadBalancerParam) GetTags() []string {
 	return p.Tags
+}
+func (p *UpdateLoadBalancerParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *UpdateLoadBalancerParam) GetIconId() sacloud.ID {
+	return p.IconId
 }
 
 // DeleteLoadBalancerParam is input parameters for the sacloud API
@@ -1170,11 +1170,11 @@ func (p *VipInfoLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 
 // VipAddLoadBalancerParam is input parameters for the sacloud API
 type VipAddLoadBalancerParam struct {
-	Vip         string
-	Port        int
 	DelayLoop   int
 	SorryServer string
 	Description string
+	Vip         string
+	Port        int
 
 	input Input
 }
@@ -1200,12 +1200,6 @@ func (p *VipAddLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *VipAddLoadBalancerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Vip) {
-		p.Vip = ""
-	}
-	if utils.IsEmpty(p.Port) {
-		p.Port = 0
-	}
 	if utils.IsEmpty(p.DelayLoop) {
 		p.DelayLoop = 0
 	}
@@ -1215,11 +1209,33 @@ func (p *VipAddLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
+	if utils.IsEmpty(p.Vip) {
+		p.Vip = ""
+	}
+	if utils.IsEmpty(p.Port) {
+		p.Port = 0
+	}
 
 }
 
 func (p *VipAddLoadBalancerParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["vip-add"].Params["delay-loop"].ValidateFunc
+		errs := validator("--delay-loop", p.DelayLoop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["vip-add"].Params["sorry-server"].ValidateFunc
+		errs := validator("--sorry-server", p.SorryServer)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -1246,22 +1262,6 @@ func (p *VipAddLoadBalancerParam) validate() error {
 	{
 		validator := define.Resources["LoadBalancer"].Commands["vip-add"].Params["port"].ValidateFunc
 		errs := validator("--port", p.Port)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["vip-add"].Params["delay-loop"].ValidateFunc
-		errs := validator("--delay-loop", p.DelayLoop)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["vip-add"].Params["sorry-server"].ValidateFunc
-		errs := validator("--sorry-server", p.SorryServer)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1294,20 +1294,6 @@ func (p *VipAddLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *VipAddLoadBalancerParam) SetVip(v string) {
-	p.Vip = v
-}
-
-func (p *VipAddLoadBalancerParam) GetVip() string {
-	return p.Vip
-}
-func (p *VipAddLoadBalancerParam) SetPort(v int) {
-	p.Port = v
-}
-
-func (p *VipAddLoadBalancerParam) GetPort() int {
-	return p.Port
-}
 func (p *VipAddLoadBalancerParam) SetDelayLoop(v int) {
 	p.DelayLoop = v
 }
@@ -1329,15 +1315,29 @@ func (p *VipAddLoadBalancerParam) SetDescription(v string) {
 func (p *VipAddLoadBalancerParam) GetDescription() string {
 	return p.Description
 }
+func (p *VipAddLoadBalancerParam) SetVip(v string) {
+	p.Vip = v
+}
+
+func (p *VipAddLoadBalancerParam) GetVip() string {
+	return p.Vip
+}
+func (p *VipAddLoadBalancerParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *VipAddLoadBalancerParam) GetPort() int {
+	return p.Port
+}
 
 // VipUpdateLoadBalancerParam is input parameters for the sacloud API
 type VipUpdateLoadBalancerParam struct {
-	DelayLoop   int
-	SorryServer string
-	Description string
 	Index       int
 	Vip         string
 	Port        int
+	DelayLoop   int
+	SorryServer string
+	Description string
 
 	input Input
 }
@@ -1363,15 +1363,6 @@ func (p *VipUpdateLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *VipUpdateLoadBalancerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.DelayLoop) {
-		p.DelayLoop = 0
-	}
-	if utils.IsEmpty(p.SorryServer) {
-		p.SorryServer = ""
-	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -1381,27 +1372,20 @@ func (p *VipUpdateLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Port) {
 		p.Port = 0
 	}
+	if utils.IsEmpty(p.DelayLoop) {
+		p.DelayLoop = 0
+	}
+	if utils.IsEmpty(p.SorryServer) {
+		p.SorryServer = ""
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
 
 }
 
 func (p *VipUpdateLoadBalancerParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["vip-update"].Params["delay-loop"].ValidateFunc
-		errs := validator("--delay-loop", p.DelayLoop)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["vip-update"].Params["sorry-server"].ValidateFunc
-		errs := validator("--sorry-server", p.SorryServer)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -1422,6 +1406,22 @@ func (p *VipUpdateLoadBalancerParam) validate() error {
 	{
 		validator := define.Resources["LoadBalancer"].Commands["vip-update"].Params["port"].ValidateFunc
 		errs := validator("--port", p.Port)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["vip-update"].Params["delay-loop"].ValidateFunc
+		errs := validator("--delay-loop", p.DelayLoop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["vip-update"].Params["sorry-server"].ValidateFunc
+		errs := validator("--sorry-server", p.SorryServer)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1454,27 +1454,6 @@ func (p *VipUpdateLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *VipUpdateLoadBalancerParam) SetDelayLoop(v int) {
-	p.DelayLoop = v
-}
-
-func (p *VipUpdateLoadBalancerParam) GetDelayLoop() int {
-	return p.DelayLoop
-}
-func (p *VipUpdateLoadBalancerParam) SetSorryServer(v string) {
-	p.SorryServer = v
-}
-
-func (p *VipUpdateLoadBalancerParam) GetSorryServer() string {
-	return p.SorryServer
-}
-func (p *VipUpdateLoadBalancerParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *VipUpdateLoadBalancerParam) GetDescription() string {
-	return p.Description
-}
 func (p *VipUpdateLoadBalancerParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -1495,6 +1474,27 @@ func (p *VipUpdateLoadBalancerParam) SetPort(v int) {
 
 func (p *VipUpdateLoadBalancerParam) GetPort() int {
 	return p.Port
+}
+func (p *VipUpdateLoadBalancerParam) SetDelayLoop(v int) {
+	p.DelayLoop = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetDelayLoop() int {
+	return p.DelayLoop
+}
+func (p *VipUpdateLoadBalancerParam) SetSorryServer(v string) {
+	p.SorryServer = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetSorryServer() string {
+	return p.SorryServer
+}
+func (p *VipUpdateLoadBalancerParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetDescription() string {
+	return p.Description
 }
 
 // VipDeleteLoadBalancerParam is input parameters for the sacloud API
@@ -1716,7 +1716,6 @@ func (p *ServerInfoLoadBalancerParam) GetPort() int {
 
 // ServerAddLoadBalancerParam is input parameters for the sacloud API
 type ServerAddLoadBalancerParam struct {
-	Disabled     bool
 	VipIndex     int
 	Vip          string
 	Port         int
@@ -1724,6 +1723,7 @@ type ServerAddLoadBalancerParam struct {
 	Protocol     string
 	Path         string
 	ResponseCode int
+	Disabled     bool
 
 	input Input
 }
@@ -1749,9 +1749,6 @@ func (p *ServerAddLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ServerAddLoadBalancerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Disabled) {
-		p.Disabled = false
-	}
 	if utils.IsEmpty(p.VipIndex) {
 		p.VipIndex = 0
 	}
@@ -1772,6 +1769,9 @@ func (p *ServerAddLoadBalancerParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.ResponseCode) {
 		p.ResponseCode = 0
+	}
+	if utils.IsEmpty(p.Disabled) {
+		p.Disabled = false
 	}
 
 }
@@ -1881,13 +1881,6 @@ func (p *ServerAddLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ServerAddLoadBalancerParam) SetDisabled(v bool) {
-	p.Disabled = v
-}
-
-func (p *ServerAddLoadBalancerParam) GetDisabled() bool {
-	return p.Disabled
-}
 func (p *ServerAddLoadBalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
@@ -1937,17 +1930,24 @@ func (p *ServerAddLoadBalancerParam) SetResponseCode(v int) {
 func (p *ServerAddLoadBalancerParam) GetResponseCode() int {
 	return p.ResponseCode
 }
+func (p *ServerAddLoadBalancerParam) SetDisabled(v bool) {
+	p.Disabled = v
+}
+
+func (p *ServerAddLoadBalancerParam) GetDisabled() bool {
+	return p.Disabled
+}
 
 // ServerUpdateLoadBalancerParam is input parameters for the sacloud API
 type ServerUpdateLoadBalancerParam struct {
+	Path         string
+	ResponseCode int
+	Disabled     bool
 	VipIndex     int
 	Vip          string
 	Port         int
 	Ipaddress    string
 	Protocol     string
-	Path         string
-	ResponseCode int
-	Disabled     bool
 
 	input Input
 }
@@ -1972,6 +1972,15 @@ func (p *ServerUpdateLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ServerUpdateLoadBalancerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Path) {
+		p.Path = ""
+	}
+	if utils.IsEmpty(p.ResponseCode) {
+		p.ResponseCode = 0
+	}
+	if utils.IsEmpty(p.Disabled) {
+		p.Disabled = false
+	}
 	if utils.IsEmpty(p.VipIndex) {
 		p.VipIndex = 0
 	}
@@ -1986,15 +1995,6 @@ func (p *ServerUpdateLoadBalancerParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Protocol) {
 		p.Protocol = ""
-	}
-	if utils.IsEmpty(p.Path) {
-		p.Path = ""
-	}
-	if utils.IsEmpty(p.ResponseCode) {
-		p.ResponseCode = 0
-	}
-	if utils.IsEmpty(p.Disabled) {
-		p.Disabled = false
 	}
 
 }
@@ -2097,6 +2097,27 @@ func (p *ServerUpdateLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ServerUpdateLoadBalancerParam) SetPath(v string) {
+	p.Path = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetPath() string {
+	return p.Path
+}
+func (p *ServerUpdateLoadBalancerParam) SetResponseCode(v int) {
+	p.ResponseCode = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetResponseCode() int {
+	return p.ResponseCode
+}
+func (p *ServerUpdateLoadBalancerParam) SetDisabled(v bool) {
+	p.Disabled = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetDisabled() bool {
+	return p.Disabled
+}
 func (p *ServerUpdateLoadBalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
@@ -2131,27 +2152,6 @@ func (p *ServerUpdateLoadBalancerParam) SetProtocol(v string) {
 
 func (p *ServerUpdateLoadBalancerParam) GetProtocol() string {
 	return p.Protocol
-}
-func (p *ServerUpdateLoadBalancerParam) SetPath(v string) {
-	p.Path = v
-}
-
-func (p *ServerUpdateLoadBalancerParam) GetPath() string {
-	return p.Path
-}
-func (p *ServerUpdateLoadBalancerParam) SetResponseCode(v int) {
-	p.ResponseCode = v
-}
-
-func (p *ServerUpdateLoadBalancerParam) GetResponseCode() int {
-	return p.ResponseCode
-}
-func (p *ServerUpdateLoadBalancerParam) SetDisabled(v bool) {
-	p.Disabled = v
-}
-
-func (p *ServerUpdateLoadBalancerParam) GetDisabled() bool {
-	return p.Disabled
 }
 
 // ServerDeleteLoadBalancerParam is input parameters for the sacloud API

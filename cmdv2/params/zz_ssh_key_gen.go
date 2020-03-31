@@ -29,11 +29,11 @@ import (
 
 // ListSSHKeyParam is input parameters for the sacloud API
 type ListSSHKeyParam struct {
-	Sort []string
-	Name []string
 	Id   []sacloud.ID
 	From int
 	Max  int
+	Sort []string
+	Name []string
 
 	input Input
 }
@@ -58,12 +58,6 @@ func (p *ListSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListSSHKeyParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
@@ -73,21 +67,17 @@ func (p *ListSSHKeyParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
 	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
 
 }
 
 func (p *ListSSHKeyParam) validate() error {
 	var errors []error
-
-	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["SSHKey"].Commands["list"].Params["id"].ValidateFunc
@@ -100,6 +90,16 @@ func (p *ListSSHKeyParam) validate() error {
 		errs := validation.ConflictsWith("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -133,20 +133,6 @@ func (p *ListSSHKeyParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListSSHKeyParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListSSHKeyParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListSSHKeyParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListSSHKeyParam) GetName() []string {
-	return p.Name
-}
 func (p *ListSSHKeyParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
@@ -167,6 +153,20 @@ func (p *ListSSHKeyParam) SetMax(v int) {
 
 func (p *ListSSHKeyParam) GetMax() int {
 	return p.Max
+}
+func (p *ListSSHKeyParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListSSHKeyParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListSSHKeyParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListSSHKeyParam) GetName() []string {
+	return p.Name
 }
 
 // CreateSSHKeyParam is input parameters for the sacloud API
@@ -530,10 +530,10 @@ func (p *DeleteSSHKeyParam) ColumnDefs() []output.ColumnDef {
 
 // GenerateSSHKeyParam is input parameters for the sacloud API
 type GenerateSSHKeyParam struct {
+	Description      string
 	PassPhrase       string
 	PrivateKeyOutput string
 	Name             string
-	Description      string
 
 	input Input
 }
@@ -558,6 +558,9 @@ func (p *GenerateSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *GenerateSSHKeyParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
 	if utils.IsEmpty(p.PassPhrase) {
 		p.PassPhrase = ""
 	}
@@ -567,14 +570,19 @@ func (p *GenerateSSHKeyParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
 
 }
 
 func (p *GenerateSSHKeyParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["SSHKey"].Commands["generate"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["SSHKey"].Commands["generate"].Params["pass-phrase"].ValidateFunc
@@ -594,14 +602,6 @@ func (p *GenerateSSHKeyParam) validate() error {
 	{
 		validator := define.Resources["SSHKey"].Commands["generate"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["SSHKey"].Commands["generate"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -634,6 +634,13 @@ func (p *GenerateSSHKeyParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *GenerateSSHKeyParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *GenerateSSHKeyParam) GetDescription() string {
+	return p.Description
+}
 func (p *GenerateSSHKeyParam) SetPassPhrase(v string) {
 	p.PassPhrase = v
 }
@@ -654,11 +661,4 @@ func (p *GenerateSSHKeyParam) SetName(v string) {
 
 func (p *GenerateSSHKeyParam) GetName() string {
 	return p.Name
-}
-func (p *GenerateSSHKeyParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *GenerateSSHKeyParam) GetDescription() string {
-	return p.Description
 }

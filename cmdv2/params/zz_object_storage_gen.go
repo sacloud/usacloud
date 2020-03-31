@@ -27,9 +27,9 @@ import (
 
 // ListObjectStorageParam is input parameters for the sacloud API
 type ListObjectStorageParam struct {
+	AccessKey string
 	SecretKey string
 	Bucket    string
-	AccessKey string
 
 	input Input
 }
@@ -54,14 +54,14 @@ func (p *ListObjectStorageParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListObjectStorageParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.AccessKey) {
+		p.AccessKey = ""
+	}
 	if utils.IsEmpty(p.SecretKey) {
 		p.SecretKey = ""
 	}
 	if utils.IsEmpty(p.Bucket) {
 		p.Bucket = ""
-	}
-	if utils.IsEmpty(p.AccessKey) {
-		p.AccessKey = ""
 	}
 
 }
@@ -71,7 +71,7 @@ func (p *ListObjectStorageParam) validate() error {
 
 	{
 		validator := validateRequired
-		errs := validator("--secret-key", p.SecretKey)
+		errs := validator("--access-key", p.AccessKey)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -79,7 +79,7 @@ func (p *ListObjectStorageParam) validate() error {
 
 	{
 		validator := validateRequired
-		errs := validator("--access-key", p.AccessKey)
+		errs := validator("--secret-key", p.SecretKey)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -112,6 +112,13 @@ func (p *ListObjectStorageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListObjectStorageParam) SetAccessKey(v string) {
+	p.AccessKey = v
+}
+
+func (p *ListObjectStorageParam) GetAccessKey() string {
+	return p.AccessKey
+}
 func (p *ListObjectStorageParam) SetSecretKey(v string) {
 	p.SecretKey = v
 }
@@ -126,21 +133,14 @@ func (p *ListObjectStorageParam) SetBucket(v string) {
 func (p *ListObjectStorageParam) GetBucket() string {
 	return p.Bucket
 }
-func (p *ListObjectStorageParam) SetAccessKey(v string) {
-	p.AccessKey = v
-}
-
-func (p *ListObjectStorageParam) GetAccessKey() string {
-	return p.AccessKey
-}
 
 // PutObjectStorageParam is input parameters for the sacloud API
 type PutObjectStorageParam struct {
-	Recursive   bool
-	AccessKey   string
 	SecretKey   string
 	Bucket      string
 	ContentType string
+	Recursive   bool
+	AccessKey   string
 
 	input Input
 }
@@ -166,12 +166,6 @@ func (p *PutObjectStorageParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *PutObjectStorageParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Recursive) {
-		p.Recursive = false
-	}
-	if utils.IsEmpty(p.AccessKey) {
-		p.AccessKey = ""
-	}
 	if utils.IsEmpty(p.SecretKey) {
 		p.SecretKey = ""
 	}
@@ -181,6 +175,12 @@ func (p *PutObjectStorageParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.ContentType) {
 		p.ContentType = ""
 	}
+	if utils.IsEmpty(p.Recursive) {
+		p.Recursive = false
+	}
+	if utils.IsEmpty(p.AccessKey) {
+		p.AccessKey = ""
+	}
 
 }
 
@@ -189,7 +189,7 @@ func (p *PutObjectStorageParam) validate() error {
 
 	{
 		validator := validateRequired
-		errs := validator("--access-key", p.AccessKey)
+		errs := validator("--secret-key", p.SecretKey)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -197,7 +197,7 @@ func (p *PutObjectStorageParam) validate() error {
 
 	{
 		validator := validateRequired
-		errs := validator("--secret-key", p.SecretKey)
+		errs := validator("--access-key", p.AccessKey)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -230,20 +230,6 @@ func (p *PutObjectStorageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *PutObjectStorageParam) SetRecursive(v bool) {
-	p.Recursive = v
-}
-
-func (p *PutObjectStorageParam) GetRecursive() bool {
-	return p.Recursive
-}
-func (p *PutObjectStorageParam) SetAccessKey(v string) {
-	p.AccessKey = v
-}
-
-func (p *PutObjectStorageParam) GetAccessKey() string {
-	return p.AccessKey
-}
 func (p *PutObjectStorageParam) SetSecretKey(v string) {
 	p.SecretKey = v
 }
@@ -265,13 +251,27 @@ func (p *PutObjectStorageParam) SetContentType(v string) {
 func (p *PutObjectStorageParam) GetContentType() string {
 	return p.ContentType
 }
+func (p *PutObjectStorageParam) SetRecursive(v bool) {
+	p.Recursive = v
+}
+
+func (p *PutObjectStorageParam) GetRecursive() bool {
+	return p.Recursive
+}
+func (p *PutObjectStorageParam) SetAccessKey(v string) {
+	p.AccessKey = v
+}
+
+func (p *PutObjectStorageParam) GetAccessKey() string {
+	return p.AccessKey
+}
 
 // GetObjectStorageParam is input parameters for the sacloud API
 type GetObjectStorageParam struct {
-	Bucket    string
-	Recursive bool
 	AccessKey string
 	SecretKey string
+	Bucket    string
+	Recursive bool
 
 	input Input
 }
@@ -296,17 +296,17 @@ func (p *GetObjectStorageParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *GetObjectStorageParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Bucket) {
-		p.Bucket = ""
-	}
-	if utils.IsEmpty(p.Recursive) {
-		p.Recursive = false
-	}
 	if utils.IsEmpty(p.AccessKey) {
 		p.AccessKey = ""
 	}
 	if utils.IsEmpty(p.SecretKey) {
 		p.SecretKey = ""
+	}
+	if utils.IsEmpty(p.Bucket) {
+		p.Bucket = ""
+	}
+	if utils.IsEmpty(p.Recursive) {
+		p.Recursive = false
 	}
 
 }
@@ -357,20 +357,6 @@ func (p *GetObjectStorageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *GetObjectStorageParam) SetBucket(v string) {
-	p.Bucket = v
-}
-
-func (p *GetObjectStorageParam) GetBucket() string {
-	return p.Bucket
-}
-func (p *GetObjectStorageParam) SetRecursive(v bool) {
-	p.Recursive = v
-}
-
-func (p *GetObjectStorageParam) GetRecursive() bool {
-	return p.Recursive
-}
 func (p *GetObjectStorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
@@ -384,6 +370,20 @@ func (p *GetObjectStorageParam) SetSecretKey(v string) {
 
 func (p *GetObjectStorageParam) GetSecretKey() string {
 	return p.SecretKey
+}
+func (p *GetObjectStorageParam) SetBucket(v string) {
+	p.Bucket = v
+}
+
+func (p *GetObjectStorageParam) GetBucket() string {
+	return p.Bucket
+}
+func (p *GetObjectStorageParam) SetRecursive(v bool) {
+	p.Recursive = v
+}
+
+func (p *GetObjectStorageParam) GetRecursive() bool {
+	return p.Recursive
 }
 
 // DeleteObjectStorageParam is input parameters for the sacloud API

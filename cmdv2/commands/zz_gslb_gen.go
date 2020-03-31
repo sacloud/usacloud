@@ -61,12 +61,12 @@ var gslbListCmd = &cobra.Command{
 
 func gslbListCmdInit() {
 	fs := gslbListCmd.Flags()
-	fs.StringSliceVarP(&gslbListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &gslbListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&gslbListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&gslbListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&gslbListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&gslbListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.StringSliceVarP(&gslbListParam.Name, "name", "", []string{}, "set filter by name(s)")
 }
 
 var gslbServerInfoCmd = &cobra.Command{
@@ -100,18 +100,18 @@ var gslbCreateCmd = &cobra.Command{
 
 func gslbCreateCmdInit() {
 	fs := gslbCreateCmd.Flags()
-	fs.StringVarP(&gslbCreateParam.Path, "path", "", "/", "set path of http/https healthcheck request")
-	fs.IntVarP(&gslbCreateParam.ResponseCode, "response-code", "", 200, "set response-code of http/https healthcheck request")
-	fs.IntVarP(&gslbCreateParam.DelayLoop, "delay-loop", "", 10, "set delay-loop of healthcheck")
-	fs.StringVarP(&gslbCreateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&gslbCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.StringVarP(&gslbCreateParam.Protocol, "protocol", "", "ping", "set healthcheck protocol[http/https/ping/tcp]")
-	fs.IntVarP(&gslbCreateParam.Port, "port", "", 0, "set port of tcp healthcheck")
+	fs.IntVarP(&gslbCreateParam.DelayLoop, "delay-loop", "", 10, "set delay-loop of healthcheck")
 	fs.BoolVarP(&gslbCreateParam.Weighted, "weighted", "", true, "enable weighted")
 	fs.StringVarP(&gslbCreateParam.SorryServer, "sorry-server", "", "", "set sorry-server hostname/ipaddress")
-	fs.StringVarP(&gslbCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringSliceVarP(&gslbCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.StringVarP(&gslbCreateParam.Description, "description", "", "", "set resource description")
 	fs.VarP(newIDValue(0, &gslbCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.StringVarP(&gslbCreateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
+	fs.StringVarP(&gslbCreateParam.Path, "path", "", "/", "set path of http/https healthcheck request")
+	fs.IntVarP(&gslbCreateParam.ResponseCode, "response-code", "", 200, "set response-code of http/https healthcheck request")
+	fs.IntVarP(&gslbCreateParam.Port, "port", "", 0, "set port of tcp healthcheck")
+	fs.StringVarP(&gslbCreateParam.Name, "name", "", "", "set resource display name")
 }
 
 var gslbServerAddCmd = &cobra.Command{
@@ -129,9 +129,9 @@ var gslbServerAddCmd = &cobra.Command{
 
 func gslbServerAddCmdInit() {
 	fs := gslbServerAddCmd.Flags()
+	fs.StringVarP(&gslbServerAddParam.Ipaddress, "ipaddress", "", "", "set target ipaddress")
 	fs.BoolVarP(&gslbServerAddParam.Disabled, "disabled", "", false, "set disabled")
 	fs.IntVarP(&gslbServerAddParam.Weight, "weight", "", 0, "set weight")
-	fs.StringVarP(&gslbServerAddParam.Ipaddress, "ipaddress", "", "", "set target ipaddress")
 }
 
 var gslbReadCmd = &cobra.Command{
@@ -165,10 +165,10 @@ var gslbServerUpdateCmd = &cobra.Command{
 
 func gslbServerUpdateCmdInit() {
 	fs := gslbServerUpdateCmd.Flags()
+	fs.IntVarP(&gslbServerUpdateParam.Index, "index", "", 0, "index of target server")
 	fs.StringVarP(&gslbServerUpdateParam.Ipaddress, "ipaddress", "", "", "set target ipaddress")
 	fs.BoolVarP(&gslbServerUpdateParam.Disabled, "disabled", "", false, "set disabled")
 	fs.IntVarP(&gslbServerUpdateParam.Weight, "weight", "", 0, "set weight")
-	fs.IntVarP(&gslbServerUpdateParam.Index, "index", "", 0, "index of target server")
 }
 
 var gslbServerDeleteCmd = &cobra.Command{
@@ -204,18 +204,18 @@ var gslbUpdateCmd = &cobra.Command{
 
 func gslbUpdateCmdInit() {
 	fs := gslbUpdateCmd.Flags()
-	fs.StringSliceVarP(&gslbUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.StringVarP(&gslbUpdateParam.Protocol, "protocol", "", "", "set healthcheck protocol[http/https/ping/tcp]")
-	fs.StringVarP(&gslbUpdateParam.Path, "path", "", "", "set path of http/https healthcheck request")
-	fs.BoolVarP(&gslbUpdateParam.Weighted, "weighted", "", false, "enable weighted")
-	fs.StringVarP(&gslbUpdateParam.SorryServer, "sorry-server", "", "", "set sorry-server hostname/ipaddress")
-	fs.StringVarP(&gslbUpdateParam.Description, "description", "", "", "set resource description")
-	fs.VarP(newIDValue(0, &gslbUpdateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringVarP(&gslbUpdateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
 	fs.IntVarP(&gslbUpdateParam.ResponseCode, "response-code", "", 0, "set response-code of http/https healthcheck request")
 	fs.IntVarP(&gslbUpdateParam.Port, "port", "", 0, "set port of tcp healthcheck")
 	fs.IntVarP(&gslbUpdateParam.DelayLoop, "delay-loop", "", 0, "set delay-loop of healthcheck")
 	fs.StringVarP(&gslbUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&gslbUpdateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&gslbUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.StringVarP(&gslbUpdateParam.Protocol, "protocol", "", "", "set healthcheck protocol[http/https/ping/tcp]")
+	fs.StringVarP(&gslbUpdateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
+	fs.StringVarP(&gslbUpdateParam.Path, "path", "", "", "set path of http/https healthcheck request")
+	fs.BoolVarP(&gslbUpdateParam.Weighted, "weighted", "", false, "enable weighted")
+	fs.StringVarP(&gslbUpdateParam.SorryServer, "sorry-server", "", "", "set sorry-server hostname/ipaddress")
+	fs.VarP(newIDValue(0, &gslbUpdateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
 var gslbDeleteCmd = &cobra.Command{

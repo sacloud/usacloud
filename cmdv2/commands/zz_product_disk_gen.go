@@ -54,11 +54,11 @@ var productDiskListCmd = &cobra.Command{
 
 func productDiskListCmdInit() {
 	fs := productDiskListCmd.Flags()
+	fs.StringSliceVarP(&productDiskListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &productDiskListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&productDiskListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&productDiskListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&productDiskListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&productDiskListParam.Name, "name", "", []string{}, "set filter by name(s)")
 }
 
 var productDiskReadCmd = &cobra.Command{

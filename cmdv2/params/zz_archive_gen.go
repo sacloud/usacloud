@@ -30,14 +30,14 @@ import (
 // ListArchiveParam is input parameters for the sacloud API
 type ListArchiveParam struct {
 	Name            []string
+	Id              []sacloud.ID
 	From            int
-	Max             int
+	Sort            []string
 	Scope           string
 	Tags            []string
-	SourceDiskId    sacloud.ID
-	Id              []sacloud.ID
-	Sort            []string
 	SourceArchiveId sacloud.ID
+	SourceDiskId    sacloud.ID
+	Max             int
 
 	input Input
 }
@@ -65,11 +65,14 @@ func (p *ListArchiveParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = []sacloud.ID{}
+	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
 	}
 	if utils.IsEmpty(p.Scope) {
 		p.Scope = ""
@@ -77,17 +80,14 @@ func (p *ListArchiveParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
+	if utils.IsEmpty(p.SourceArchiveId) {
+		p.SourceArchiveId = sacloud.ID(0)
+	}
 	if utils.IsEmpty(p.SourceDiskId) {
 		p.SourceDiskId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Id) {
-		p.Id = []sacloud.ID{}
-	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
-	if utils.IsEmpty(p.SourceArchiveId) {
-		p.SourceArchiveId = sacloud.ID(0)
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
 	}
 
 }
@@ -100,30 +100,6 @@ func (p *ListArchiveParam) validate() error {
 
 			"--id": p.Id,
 		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Archive"].Commands["list"].Params["scope"].ValidateFunc
-		errs := validator("--scope", p.Scope)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Archive"].Commands["list"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Archive"].Commands["list"].Params["source-disk-id"].ValidateFunc
-		errs := validator("--source-disk-id", p.SourceDiskId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -147,8 +123,32 @@ func (p *ListArchiveParam) validate() error {
 	}
 
 	{
+		validator := define.Resources["Archive"].Commands["list"].Params["scope"].ValidateFunc
+		errs := validator("--scope", p.Scope)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Archive"].Commands["list"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
 		validator := define.Resources["Archive"].Commands["list"].Params["source-archive-id"].ValidateFunc
 		errs := validator("--source-archive-id", p.SourceArchiveId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Archive"].Commands["list"].Params["source-disk-id"].ValidateFunc
+		errs := validator("--source-disk-id", p.SourceDiskId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -188,6 +188,13 @@ func (p *ListArchiveParam) SetName(v []string) {
 func (p *ListArchiveParam) GetName() []string {
 	return p.Name
 }
+func (p *ListArchiveParam) SetId(v []sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ListArchiveParam) GetId() []sacloud.ID {
+	return p.Id
+}
 func (p *ListArchiveParam) SetFrom(v int) {
 	p.From = v
 }
@@ -195,12 +202,12 @@ func (p *ListArchiveParam) SetFrom(v int) {
 func (p *ListArchiveParam) GetFrom() int {
 	return p.From
 }
-func (p *ListArchiveParam) SetMax(v int) {
-	p.Max = v
+func (p *ListArchiveParam) SetSort(v []string) {
+	p.Sort = v
 }
 
-func (p *ListArchiveParam) GetMax() int {
-	return p.Max
+func (p *ListArchiveParam) GetSort() []string {
+	return p.Sort
 }
 func (p *ListArchiveParam) SetScope(v string) {
 	p.Scope = v
@@ -216,27 +223,6 @@ func (p *ListArchiveParam) SetTags(v []string) {
 func (p *ListArchiveParam) GetTags() []string {
 	return p.Tags
 }
-func (p *ListArchiveParam) SetSourceDiskId(v sacloud.ID) {
-	p.SourceDiskId = v
-}
-
-func (p *ListArchiveParam) GetSourceDiskId() sacloud.ID {
-	return p.SourceDiskId
-}
-func (p *ListArchiveParam) SetId(v []sacloud.ID) {
-	p.Id = v
-}
-
-func (p *ListArchiveParam) GetId() []sacloud.ID {
-	return p.Id
-}
-func (p *ListArchiveParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListArchiveParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListArchiveParam) SetSourceArchiveId(v sacloud.ID) {
 	p.SourceArchiveId = v
 }
@@ -244,9 +230,24 @@ func (p *ListArchiveParam) SetSourceArchiveId(v sacloud.ID) {
 func (p *ListArchiveParam) GetSourceArchiveId() sacloud.ID {
 	return p.SourceArchiveId
 }
+func (p *ListArchiveParam) SetSourceDiskId(v sacloud.ID) {
+	p.SourceDiskId = v
+}
+
+func (p *ListArchiveParam) GetSourceDiskId() sacloud.ID {
+	return p.SourceDiskId
+}
+func (p *ListArchiveParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListArchiveParam) GetMax() int {
+	return p.Max
+}
 
 // CreateArchiveParam is input parameters for the sacloud API
 type CreateArchiveParam struct {
+	Tags            []string
 	IconId          sacloud.ID
 	SourceDiskId    sacloud.ID
 	SourceArchiveId sacloud.ID
@@ -254,7 +255,6 @@ type CreateArchiveParam struct {
 	ArchiveFile     string
 	Name            string
 	Description     string
-	Tags            []string
 
 	input Input
 }
@@ -279,6 +279,9 @@ func (p *CreateArchiveParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateArchiveParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
@@ -300,14 +303,19 @@ func (p *CreateArchiveParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
 
 }
 
 func (p *CreateArchiveParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["Archive"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["Archive"].Commands["create"].Params["icon-id"].ValidateFunc
@@ -414,14 +422,6 @@ func (p *CreateArchiveParam) validate() error {
 		}
 	}
 
-	{
-		validator := define.Resources["Archive"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
@@ -449,6 +449,13 @@ func (p *CreateArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *CreateArchiveParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CreateArchiveParam) GetTags() []string {
+	return p.Tags
+}
 func (p *CreateArchiveParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
@@ -497,13 +504,6 @@ func (p *CreateArchiveParam) SetDescription(v string) {
 
 func (p *CreateArchiveParam) GetDescription() string {
 	return p.Description
-}
-func (p *CreateArchiveParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CreateArchiveParam) GetTags() []string {
-	return p.Tags
 }
 
 // ReadArchiveParam is input parameters for the sacloud API
@@ -566,10 +566,10 @@ func (p *ReadArchiveParam) ColumnDefs() []output.ColumnDef {
 
 // UpdateArchiveParam is input parameters for the sacloud API
 type UpdateArchiveParam struct {
-	Name        string
 	Description string
 	Tags        []string
 	IconId      sacloud.ID
+	Name        string
 
 	input Input
 }
@@ -594,9 +594,6 @@ func (p *UpdateArchiveParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateArchiveParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
@@ -606,19 +603,14 @@ func (p *UpdateArchiveParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
 
 }
 
 func (p *UpdateArchiveParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Archive"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Archive"].Commands["update"].Params["description"].ValidateFunc
@@ -639,6 +631,14 @@ func (p *UpdateArchiveParam) validate() error {
 	{
 		validator := define.Resources["Archive"].Commands["update"].Params["icon-id"].ValidateFunc
 		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Archive"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -671,13 +671,6 @@ func (p *UpdateArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateArchiveParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateArchiveParam) GetName() string {
-	return p.Name
-}
 func (p *UpdateArchiveParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -698,6 +691,13 @@ func (p *UpdateArchiveParam) SetIconId(v sacloud.ID) {
 
 func (p *UpdateArchiveParam) GetIconId() sacloud.ID {
 	return p.IconId
+}
+func (p *UpdateArchiveParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateArchiveParam) GetName() string {
+	return p.Name
 }
 
 // DeleteArchiveParam is input parameters for the sacloud API

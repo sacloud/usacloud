@@ -80,9 +80,7 @@ func initCredentialFlags(flags *pflag.FlagSet) {
 }
 
 func initOutputFlags(flags *pflag.FlagSet) {
-	// TODO グローバルオプションではなくて各コマンドが持つべき
 	fs := pflag.NewFlagSet("Output", pflag.ExitOnError)
-	fs.StringP("format", "", "", "the output format with Go template")
 	fs.BoolP("no-color", "", false, "disable ANSI color output")
 	flags.AddFlagSet(fs)
 }

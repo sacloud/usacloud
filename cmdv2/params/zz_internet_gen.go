@@ -29,12 +29,12 @@ import (
 
 // ListInternetParam is input parameters for the sacloud API
 type ListInternetParam struct {
-	Id   []sacloud.ID
-	Tags []string
 	From int
 	Max  int
 	Sort []string
+	Tags []string
 	Name []string
+	Id   []sacloud.ID
 
 	input Input
 }
@@ -59,12 +59,6 @@ func (p *ListInternetParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListInternetParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Id) {
-		p.Id = []sacloud.ID{}
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
@@ -74,31 +68,20 @@ func (p *ListInternetParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = []sacloud.ID{}
 	}
 
 }
 
 func (p *ListInternetParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Internet"].Commands["list"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validation.ConflictsWith("--id", p.Id, map[string]interface{}{
-
-			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Internet"].Commands["list"].Params["tags"].ValidateFunc
@@ -112,6 +95,23 @@ func (p *ListInternetParam) validate() error {
 		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
 
 			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Internet"].Commands["list"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validation.ConflictsWith("--id", p.Id, map[string]interface{}{
+
+			"--name": p.Name,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -145,20 +145,6 @@ func (p *ListInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListInternetParam) SetId(v []sacloud.ID) {
-	p.Id = v
-}
-
-func (p *ListInternetParam) GetId() []sacloud.ID {
-	return p.Id
-}
-func (p *ListInternetParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *ListInternetParam) GetTags() []string {
-	return p.Tags
-}
 func (p *ListInternetParam) SetFrom(v int) {
 	p.From = v
 }
@@ -180,12 +166,26 @@ func (p *ListInternetParam) SetSort(v []string) {
 func (p *ListInternetParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListInternetParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *ListInternetParam) GetTags() []string {
+	return p.Tags
+}
 func (p *ListInternetParam) SetName(v []string) {
 	p.Name = v
 }
 
 func (p *ListInternetParam) GetName() []string {
 	return p.Name
+}
+func (p *ListInternetParam) SetId(v []sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ListInternetParam) GetId() []sacloud.ID {
+	return p.Id
 }
 
 // CreateInternetParam is input parameters for the sacloud API
@@ -444,11 +444,11 @@ func (p *ReadInternetParam) ColumnDefs() []output.ColumnDef {
 
 // UpdateInternetParam is input parameters for the sacloud API
 type UpdateInternetParam struct {
+	Description string
+	Tags        []string
 	IconId      sacloud.ID
 	BandWidth   int
 	Name        string
-	Description string
-	Tags        []string
 
 	input Input
 }
@@ -473,6 +473,12 @@ func (p *UpdateInternetParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateInternetParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
@@ -482,17 +488,27 @@ func (p *UpdateInternetParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
 
 }
 
 func (p *UpdateInternetParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["Internet"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Internet"].Commands["update"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["Internet"].Commands["update"].Params["icon-id"].ValidateFunc
@@ -513,22 +529,6 @@ func (p *UpdateInternetParam) validate() error {
 	{
 		validator := define.Resources["Internet"].Commands["update"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Internet"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Internet"].Commands["update"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -561,6 +561,20 @@ func (p *UpdateInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *UpdateInternetParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *UpdateInternetParam) GetDescription() string {
+	return p.Description
+}
+func (p *UpdateInternetParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *UpdateInternetParam) GetTags() []string {
+	return p.Tags
+}
 func (p *UpdateInternetParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
@@ -581,20 +595,6 @@ func (p *UpdateInternetParam) SetName(v string) {
 
 func (p *UpdateInternetParam) GetName() string {
 	return p.Name
-}
-func (p *UpdateInternetParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *UpdateInternetParam) GetDescription() string {
-	return p.Description
-}
-func (p *UpdateInternetParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *UpdateInternetParam) GetTags() []string {
-	return p.Tags
 }
 
 // DeleteInternetParam is input parameters for the sacloud API
@@ -802,8 +802,8 @@ func (p *SubnetInfoInternetParam) ColumnDefs() []output.ColumnDef {
 
 // SubnetAddInternetParam is input parameters for the sacloud API
 type SubnetAddInternetParam struct {
-	NextHop   string
 	NwMasklen int
+	NextHop   string
 
 	input Input
 }
@@ -829,32 +829,17 @@ func (p *SubnetAddInternetParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *SubnetAddInternetParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.NextHop) {
-		p.NextHop = ""
-	}
 	if utils.IsEmpty(p.NwMasklen) {
 		p.NwMasklen = 0
+	}
+	if utils.IsEmpty(p.NextHop) {
+		p.NextHop = ""
 	}
 
 }
 
 func (p *SubnetAddInternetParam) validate() error {
 	var errors []error
-
-	{
-		validator := validateRequired
-		errs := validator("--next-hop", p.NextHop)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Internet"].Commands["subnet-add"].Params["next-hop"].ValidateFunc
-		errs := validator("--next-hop", p.NextHop)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -866,6 +851,21 @@ func (p *SubnetAddInternetParam) validate() error {
 	{
 		validator := define.Resources["Internet"].Commands["subnet-add"].Params["nw-masklen"].ValidateFunc
 		errs := validator("--nw-masklen", p.NwMasklen)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--next-hop", p.NextHop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Internet"].Commands["subnet-add"].Params["next-hop"].ValidateFunc
+		errs := validator("--next-hop", p.NextHop)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -898,19 +898,19 @@ func (p *SubnetAddInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *SubnetAddInternetParam) SetNextHop(v string) {
-	p.NextHop = v
-}
-
-func (p *SubnetAddInternetParam) GetNextHop() string {
-	return p.NextHop
-}
 func (p *SubnetAddInternetParam) SetNwMasklen(v int) {
 	p.NwMasklen = v
 }
 
 func (p *SubnetAddInternetParam) GetNwMasklen() int {
 	return p.NwMasklen
+}
+func (p *SubnetAddInternetParam) SetNextHop(v string) {
+	p.NextHop = v
+}
+
+func (p *SubnetAddInternetParam) GetNextHop() string {
+	return p.NextHop
 }
 
 // SubnetDeleteInternetParam is input parameters for the sacloud API
@@ -994,8 +994,8 @@ func (p *SubnetDeleteInternetParam) GetSubnetId() sacloud.ID {
 
 // SubnetUpdateInternetParam is input parameters for the sacloud API
 type SubnetUpdateInternetParam struct {
-	SubnetId sacloud.ID
 	NextHop  string
+	SubnetId sacloud.ID
 
 	input Input
 }
@@ -1020,25 +1020,17 @@ func (p *SubnetUpdateInternetParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *SubnetUpdateInternetParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.SubnetId) {
-		p.SubnetId = sacloud.ID(0)
-	}
 	if utils.IsEmpty(p.NextHop) {
 		p.NextHop = ""
+	}
+	if utils.IsEmpty(p.SubnetId) {
+		p.SubnetId = sacloud.ID(0)
 	}
 
 }
 
 func (p *SubnetUpdateInternetParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Internet"].Commands["subnet-update"].Params["subnet-id"].ValidateFunc
-		errs := validator("--subnet-id", p.SubnetId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -1050,6 +1042,14 @@ func (p *SubnetUpdateInternetParam) validate() error {
 	{
 		validator := define.Resources["Internet"].Commands["subnet-update"].Params["next-hop"].ValidateFunc
 		errs := validator("--next-hop", p.NextHop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Internet"].Commands["subnet-update"].Params["subnet-id"].ValidateFunc
+		errs := validator("--subnet-id", p.SubnetId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1082,19 +1082,19 @@ func (p *SubnetUpdateInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *SubnetUpdateInternetParam) SetSubnetId(v sacloud.ID) {
-	p.SubnetId = v
-}
-
-func (p *SubnetUpdateInternetParam) GetSubnetId() sacloud.ID {
-	return p.SubnetId
-}
 func (p *SubnetUpdateInternetParam) SetNextHop(v string) {
 	p.NextHop = v
 }
 
 func (p *SubnetUpdateInternetParam) GetNextHop() string {
 	return p.NextHop
+}
+func (p *SubnetUpdateInternetParam) SetSubnetId(v sacloud.ID) {
+	p.SubnetId = v
+}
+
+func (p *SubnetUpdateInternetParam) GetSubnetId() sacloud.ID {
+	return p.SubnetId
 }
 
 // IPv6InfoInternetParam is input parameters for the sacloud API

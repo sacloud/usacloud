@@ -88,12 +88,12 @@ var serverListCmd = &cobra.Command{
 
 func serverListCmdInit() {
 	fs := serverListCmd.Flags()
+	fs.IntVarP(&serverListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&serverListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&serverListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &serverListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&serverListParam.From, "from", "", 0, "set offset")
 	fs.StringSliceVarP(&serverListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
-	fs.IntVarP(&serverListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&serverListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 }
 
 var serverBuildCmd = &cobra.Command{
@@ -111,48 +111,48 @@ var serverBuildCmd = &cobra.Command{
 
 func serverBuildCmdInit() {
 	fs := serverBuildCmd.Flags()
-	fs.StringVarP(&serverBuildParam.Password, "password", "", "", "set password")
-	fs.IntVarP(&serverBuildParam.Memory, "memory", "", 1, "set memory size(GB)")
-	fs.StringVarP(&serverBuildParam.DiskConnection, "disk-connection", "", "virtio", "set disk connection('virtio' or 'ide')")
-	fs.StringVarP(&serverBuildParam.NetworkMode, "network-mode", "", "shared", "network connection mode[shared/switch/disconnect/none]")
-	fs.StringVarP(&serverBuildParam.InterfaceDriver, "interface-driver", "", "virtio", "set interface driver[virtio/e1000]")
-	fs.VarP(newIDValue(0, &serverBuildParam.SwitchId), "switch-id", "", "set connect switch ID")
-	fs.IntVarP(&serverBuildParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress  prefix")
+	fs.StringVarP(&serverBuildParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &serverBuildParam.StartupScriptIds), "startup-script-ids", "", "set startup script ID(s)")
-	fs.StringSliceVarP(&serverBuildParam.SSHKeyPublicKeys, "ssh-key-public-keys", "", []string{}, "set ssh-key public key ")
-	fs.StringVarP(&serverBuildParam.DiskMode, "disk-mode", "", "create", "disk create mode[create/connect/diskless]")
-	fs.StringVarP(&serverBuildParam.OsType, "os-type", "", "", "set source OS type")
-	fs.VarP(newIDValue(0, &serverBuildParam.SourceArchiveId), "source-archive-id", "", "set source disk ID")
+	fs.StringVarP(&serverBuildParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&serverBuildParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.StringVarP(&serverBuildParam.Hostname, "hostname", "", "", "set hostname")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &serverBuildParam.SSHKeyIds), "ssh-key-ids", "", "set ssh-key ID(s)")
-	fs.StringVarP(&serverBuildParam.SSHKeyPrivateKeyOutput, "ssh-key-private-key-output", "", "", "set ssh-key privatekey output path")
-	fs.StringVarP(&serverBuildParam.DiskPlan, "disk-plan", "", "ssd", "set disk plan('hdd' or 'ssd')")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &serverBuildParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
+	fs.VarP(newIDValue(0, &serverBuildParam.SourceDiskId), "source-disk-id", "", "set source disk ID")
 	fs.VarP(newIDValue(0, &serverBuildParam.DiskId), "disk-id", "", "set connect disk ID")
-	fs.StringVarP(&serverBuildParam.SSHKeyDescription, "ssh-key-description", "", "", "set ssh-key description")
-	fs.StringVarP(&serverBuildParam.Name, "name", "", "", "set resource display name")
-	fs.BoolVarP(&serverBuildParam.DisableBootAfterCreate, "disable-boot-after-create", "", false, "boot after create")
-	fs.IntVarP(&serverBuildParam.DiskSize, "disk-size", "", 20, "set disk size(GB)")
+	fs.StringVarP(&serverBuildParam.Password, "password", "", "", "set password")
 	fs.VarP(newIDValue(0, &serverBuildParam.ISOImageId), "iso-image-id", "", "set iso-image ID")
 	fs.StringVarP(&serverBuildParam.SSHKeyMode, "ssh-key-mode", "", "", "ssh-key mode[none/id/generate/upload]")
-	fs.StringVarP(&serverBuildParam.Description, "description", "", "", "set resource description")
-	fs.StringVarP(&serverBuildParam.SSHKeyPassPhrase, "ssh-key-pass-phrase", "", "", "set ssh-key pass phrase")
-	fs.VarP(newIDValue(0, &serverBuildParam.IconId), "icon-id", "", "set Icon ID")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &serverBuildParam.SSHKeyIds), "ssh-key-ids", "", "set ssh-key ID(s)")
+	fs.StringVarP(&serverBuildParam.Name, "name", "", "", "set resource display name")
+	fs.IntVarP(&serverBuildParam.Core, "core", "", 1, "set CPU core count")
+	fs.StringVarP(&serverBuildParam.OsType, "os-type", "", "", "set source OS type")
+	fs.StringVarP(&serverBuildParam.DiskPlan, "disk-plan", "", "ssd", "set disk plan('hdd' or 'ssd')")
+	fs.StringVarP(&serverBuildParam.SSHKeyDescription, "ssh-key-description", "", "", "set ssh-key description")
+	fs.StringVarP(&serverBuildParam.SSHKeyPrivateKeyOutput, "ssh-key-private-key-output", "", "", "set ssh-key privatekey output path")
+	fs.BoolVarP(&serverBuildParam.DisableBootAfterCreate, "disable-boot-after-create", "", false, "boot after create")
+	fs.VarP(newIDValue(0, &serverBuildParam.SourceArchiveId), "source-archive-id", "", "set source disk ID")
+	fs.StringVarP(&serverBuildParam.Hostname, "hostname", "", "", "set hostname")
+	fs.StringVarP(&serverBuildParam.SSHKeyName, "ssh-key-name", "", "", "set ssh-key name")
+	fs.StringSliceVarP(&serverBuildParam.StartupScripts, "startup-scripts", "", []string{}, "set startup script(s)")
 	fs.StringVarP(&serverBuildParam.Commitment, "commitment", "", "standard", "set plan of core assignment")
-	fs.StringVarP(&serverBuildParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
+	fs.VarP(newIDValue(0, &serverBuildParam.PrivateHostId), "private-host-id", "", "set private-host-id")
+	fs.StringVarP(&serverBuildParam.InterfaceDriver, "interface-driver", "", "virtio", "set interface driver[virtio/e1000]")
+	fs.StringVarP(&serverBuildParam.DiskMode, "disk-mode", "", "create", "disk create mode[create/connect/diskless]")
+	fs.IntVarP(&serverBuildParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress  prefix")
+	fs.BoolVarP(&serverBuildParam.UsKeyboard, "us-keyboard", "", false, "use us-keyboard")
+	fs.StringVarP(&serverBuildParam.SSHKeyPassPhrase, "ssh-key-pass-phrase", "", "", "set ssh-key pass phrase")
+	fs.StringSliceVarP(&serverBuildParam.SSHKeyPublicKeyFiles, "ssh-key-public-key-files", "", []string{}, "set ssh-key public key file")
+	fs.StringVarP(&serverBuildParam.DiskConnection, "disk-connection", "", "virtio", "set disk connection('virtio' or 'ide')")
+	fs.StringVarP(&serverBuildParam.NetworkMode, "network-mode", "", "shared", "network connection mode[shared/switch/disconnect/none]")
 	fs.BoolVarP(&serverBuildParam.StartupScriptsEphemeral, "startup-scripts-ephemeral", "", true, "set startup script persist mode")
 	fs.VarP(newIDValue(0, &serverBuildParam.PacketFilterId), "packet-filter-id", "", "set packet filter ID")
+	fs.VarP(newIDValue(0, &serverBuildParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.BoolVarP(&serverBuildParam.DisablePasswordAuth, "disable-password-auth", "", false, "disable password auth on SSH")
-	fs.StringVarP(&serverBuildParam.DefaultRoute, "default-route", "", "", "set default gateway")
-	fs.StringSliceVarP(&serverBuildParam.StartupScripts, "startup-scripts", "", []string{}, "set startup script(s)")
-	fs.StringVarP(&serverBuildParam.SSHKeyName, "ssh-key-name", "", "", "set ssh-key name")
-	fs.IntVarP(&serverBuildParam.Core, "core", "", 1, "set CPU core count")
-	fs.VarP(newIDValue(0, &serverBuildParam.PrivateHostId), "private-host-id", "", "set private-host-id")
-	fs.VarP(newIDValue(0, &serverBuildParam.SourceDiskId), "source-disk-id", "", "set source disk ID")
 	fs.BoolVarP(&serverBuildParam.SSHKeyEphemeral, "ssh-key-ephemeral", "", true, "set ssh-key persist mode")
-	fs.BoolVarP(&serverBuildParam.UsKeyboard, "us-keyboard", "", false, "use us-keyboard")
-	fs.StringSliceVarP(&serverBuildParam.SSHKeyPublicKeyFiles, "ssh-key-public-key-files", "", []string{}, "set ssh-key public key file")
+	fs.VarP(newIDValue(0, &serverBuildParam.IconId), "icon-id", "", "set Icon ID")
+	fs.IntVarP(&serverBuildParam.Memory, "memory", "", 1, "set memory size(GB)")
+	fs.IntVarP(&serverBuildParam.DiskSize, "disk-size", "", 20, "set disk size(GB)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &serverBuildParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
+	fs.StringVarP(&serverBuildParam.DefaultRoute, "default-route", "", "", "set default gateway")
+	fs.StringSliceVarP(&serverBuildParam.SSHKeyPublicKeys, "ssh-key-public-keys", "", []string{}, "set ssh-key public key ")
 }
 
 var serverReadCmd = &cobra.Command{
@@ -186,11 +186,11 @@ var serverUpdateCmd = &cobra.Command{
 
 func serverUpdateCmdInit() {
 	fs := serverUpdateCmd.Flags()
-	fs.VarP(newIDValue(0, &serverUpdateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringVarP(&serverUpdateParam.InterfaceDriver, "interface-driver", "", "virtio", "set interface driver[virtio/e1000]")
 	fs.StringVarP(&serverUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&serverUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&serverUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &serverUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringVarP(&serverUpdateParam.InterfaceDriver, "interface-driver", "", "virtio", "set interface driver[virtio/e1000]")
 }
 
 var serverDeleteCmd = &cobra.Command{
@@ -343,11 +343,11 @@ var serverSSHCmd = &cobra.Command{
 
 func serverSSHCmdInit() {
 	fs := serverSSHCmd.Flags()
-	fs.BoolVarP(&serverSSHParam.Quiet, "quiet", "q", false, "disable information messages")
 	fs.StringVarP(&serverSSHParam.Key, "key", "i", "", "private-key file path")
 	fs.StringVarP(&serverSSHParam.User, "user", "l", "", "user name")
 	fs.IntVarP(&serverSSHParam.Port, "port", "p", 22, "port")
 	fs.StringVarP(&serverSSHParam.Password, "password", "", "", "password(or private-key pass phrase)")
+	fs.BoolVarP(&serverSSHParam.Quiet, "quiet", "q", false, "disable information messages")
 }
 
 var serverSSHExecCmd = &cobra.Command{
@@ -365,11 +365,11 @@ var serverSSHExecCmd = &cobra.Command{
 
 func serverSSHExecCmdInit() {
 	fs := serverSSHExecCmd.Flags()
-	fs.StringVarP(&serverSSHExecParam.Key, "key", "i", "", "private-key file path")
 	fs.StringVarP(&serverSSHExecParam.User, "user", "l", "", "user name")
 	fs.IntVarP(&serverSSHExecParam.Port, "port", "p", 22, "port")
 	fs.StringVarP(&serverSSHExecParam.Password, "password", "", "", "password(or private-key pass phrase)")
 	fs.BoolVarP(&serverSSHExecParam.Quiet, "quiet", "q", false, "disable information messages")
+	fs.StringVarP(&serverSSHExecParam.Key, "key", "i", "", "private-key file path")
 }
 
 var serverScpCmd = &cobra.Command{
@@ -387,12 +387,12 @@ var serverScpCmd = &cobra.Command{
 
 func serverScpCmdInit() {
 	fs := serverScpCmd.Flags()
-	fs.IntVarP(&serverScpParam.Port, "port", "p", 22, "port")
-	fs.StringVarP(&serverScpParam.Password, "password", "", "", "password(or private-key pass phrase)")
 	fs.BoolVarP(&serverScpParam.Recursive, "recursive", "r", false, "set recursive copy flag")
 	fs.BoolVarP(&serverScpParam.Quiet, "quiet", "q", false, "disable information messages")
 	fs.StringVarP(&serverScpParam.Key, "key", "i", "", "private-key file path")
 	fs.StringVarP(&serverScpParam.User, "user", "l", "", "user name")
+	fs.IntVarP(&serverScpParam.Port, "port", "p", 22, "port")
+	fs.StringVarP(&serverScpParam.Password, "password", "", "", "password(or private-key pass phrase)")
 }
 
 var serverVncCmd = &cobra.Command{
@@ -446,11 +446,11 @@ var serverVncSendCmd = &cobra.Command{
 
 func serverVncSendCmdInit() {
 	fs := serverVncSendCmd.Flags()
+	fs.BoolVarP(&serverVncSendParam.UseUsKeyboard, "use-us-keyboard", "", false, "use US Keyboard")
 	fs.BoolVarP(&serverVncSendParam.Debug, "debug", "d", false, "write debug info")
 	fs.BoolVarP(&serverVncSendParam.WaitForBoot, "wait-for-boot", "", false, "wait until the server starts up")
 	fs.StringVarP(&serverVncSendParam.Command, "command", "c", "", "command(compatible with HashiCorp Packer's boot_command)")
 	fs.StringVarP(&serverVncSendParam.CommandFile, "command-file", "f", "", "command file(compatible with HashiCorp Packer's boot_command)")
-	fs.BoolVarP(&serverVncSendParam.UseUsKeyboard, "use-us-keyboard", "", false, "use US Keyboard")
 }
 
 var serverVncSnapshotCmd = &cobra.Command{
@@ -487,8 +487,8 @@ var serverRemoteDesktopCmd = &cobra.Command{
 
 func serverRemoteDesktopCmdInit() {
 	fs := serverRemoteDesktopCmd.Flags()
-	fs.IntVarP(&serverRemoteDesktopParam.Port, "port", "p", 3389, "port")
 	fs.StringVarP(&serverRemoteDesktopParam.User, "user", "l", "Administrator", "user name")
+	fs.IntVarP(&serverRemoteDesktopParam.Port, "port", "p", 3389, "port")
 }
 
 var serverRemoteDesktopInfoCmd = &cobra.Command{
@@ -611,11 +611,11 @@ var serverInterfaceAddForRouterCmd = &cobra.Command{
 
 func serverInterfaceAddForRouterCmdInit() {
 	fs := serverInterfaceAddForRouterCmd.Flags()
+	fs.StringVarP(&serverInterfaceAddForRouterParam.DefaultRoute, "default-route", "", "", "set default gateway")
+	fs.IntVarP(&serverInterfaceAddForRouterParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress  prefix")
 	fs.VarP(newIDValue(0, &serverInterfaceAddForRouterParam.SwitchId), "switch-id", "", "set connect switch(connected to router) ID")
 	fs.BoolVarP(&serverInterfaceAddForRouterParam.WithoutDiskEdit, "without-disk-edit", "", false, "set skip edit-disk flag. if true, don't call DiskEdit API after interface added")
 	fs.StringVarP(&serverInterfaceAddForRouterParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
-	fs.StringVarP(&serverInterfaceAddForRouterParam.DefaultRoute, "default-route", "", "", "set default gateway")
-	fs.IntVarP(&serverInterfaceAddForRouterParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress  prefix")
 }
 
 var serverInterfaceAddForSwitchCmd = &cobra.Command{
@@ -633,11 +633,11 @@ var serverInterfaceAddForSwitchCmd = &cobra.Command{
 
 func serverInterfaceAddForSwitchCmdInit() {
 	fs := serverInterfaceAddForSwitchCmd.Flags()
-	fs.VarP(newIDValue(0, &serverInterfaceAddForSwitchParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.BoolVarP(&serverInterfaceAddForSwitchParam.WithoutDiskEdit, "without-disk-edit", "", false, "set skip edit-disk flag. if true, don't call DiskEdit API after interface added")
 	fs.StringVarP(&serverInterfaceAddForSwitchParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
 	fs.StringVarP(&serverInterfaceAddForSwitchParam.DefaultRoute, "default-route", "", "", "set default gateway")
 	fs.IntVarP(&serverInterfaceAddForSwitchParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress  prefix")
+	fs.VarP(newIDValue(0, &serverInterfaceAddForSwitchParam.SwitchId), "switch-id", "", "set connect switch ID")
 }
 
 var serverInterfaceAddDisconnectedCmd = &cobra.Command{
@@ -687,13 +687,13 @@ var serverISOInsertCmd = &cobra.Command{
 
 func serverISOInsertCmdInit() {
 	fs := serverISOInsertCmd.Flags()
-	fs.VarP(newIDValue(0, &serverISOInsertParam.ISOImageId), "iso-image-id", "", "set iso-image ID")
-	fs.IntVarP(&serverISOInsertParam.Size, "size", "", 5, "set iso size(GB)")
 	fs.StringVarP(&serverISOInsertParam.ISOFile, "iso-file", "", "", "set iso image file")
 	fs.StringVarP(&serverISOInsertParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&serverISOInsertParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&serverISOInsertParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &serverISOInsertParam.IconId), "icon-id", "", "set Icon ID")
+	fs.VarP(newIDValue(0, &serverISOInsertParam.ISOImageId), "iso-image-id", "", "set iso-image ID")
+	fs.IntVarP(&serverISOInsertParam.Size, "size", "", 5, "set iso size(GB)")
 }
 
 var serverISOEjectCmd = &cobra.Command{
@@ -747,10 +747,10 @@ var serverMonitorNicCmd = &cobra.Command{
 
 func serverMonitorNicCmdInit() {
 	fs := serverMonitorNicCmd.Flags()
+	fs.StringVarP(&serverMonitorNicParam.End, "end", "", "", "set end-time")
 	fs.IntSliceVarP(&serverMonitorNicParam.Index, "index", "", []int{}, "target index(es)")
 	fs.StringVarP(&serverMonitorNicParam.KeyFormat, "key-format", "", "sakuracloud.server.{{.ID}}.nic.{{.Index}}", "set monitoring value key-format")
 	fs.StringVarP(&serverMonitorNicParam.Start, "start", "", "", "set start-time")
-	fs.StringVarP(&serverMonitorNicParam.End, "end", "", "", "set end-time")
 }
 
 var serverMonitorDiskCmd = &cobra.Command{

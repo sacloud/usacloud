@@ -53,11 +53,11 @@ var priceListCmd = &cobra.Command{
 
 func priceListCmdInit() {
 	fs := priceListCmd.Flags()
+	fs.StringSliceVarP(&priceListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&priceListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &priceListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&priceListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&priceListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&priceListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 }
 
 func init() {

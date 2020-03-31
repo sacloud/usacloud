@@ -29,11 +29,11 @@ import (
 
 // ListBridgeParam is input parameters for the sacloud API
 type ListBridgeParam struct {
+	Name []string
 	Id   []sacloud.ID
 	From int
 	Max  int
 	Sort []string
-	Name []string
 
 	input Input
 }
@@ -58,6 +58,9 @@ func (p *ListBridgeParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListBridgeParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
@@ -70,14 +73,21 @@ func (p *ListBridgeParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
 
 }
 
 func (p *ListBridgeParam) validate() error {
 	var errors []error
+
+	{
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["Bridge"].Commands["list"].Params["id"].ValidateFunc
@@ -90,16 +100,6 @@ func (p *ListBridgeParam) validate() error {
 		errs := validation.ConflictsWith("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -133,6 +133,13 @@ func (p *ListBridgeParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListBridgeParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListBridgeParam) GetName() []string {
+	return p.Name
+}
 func (p *ListBridgeParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
@@ -160,13 +167,6 @@ func (p *ListBridgeParam) SetSort(v []string) {
 
 func (p *ListBridgeParam) GetSort() []string {
 	return p.Sort
-}
-func (p *ListBridgeParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListBridgeParam) GetName() []string {
-	return p.Name
 }
 
 // CreateBridgeParam is input parameters for the sacloud API

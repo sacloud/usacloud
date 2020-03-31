@@ -66,12 +66,12 @@ var internetListCmd = &cobra.Command{
 
 func internetListCmdInit() {
 	fs := internetListCmd.Flags()
-	fs.IntVarP(&internetListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&internetListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&internetListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.StringSliceVarP(&internetListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &internetListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&internetListParam.From, "from", "", 0, "set offset")
-	fs.StringSliceVarP(&internetListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.IntVarP(&internetListParam.Max, "max", "", 0, "set limit")
 }
 
 var internetCreateCmd = &cobra.Command{
@@ -89,12 +89,12 @@ var internetCreateCmd = &cobra.Command{
 
 func internetCreateCmdInit() {
 	fs := internetCreateCmd.Flags()
-	fs.VarP(newIDValue(0, &internetCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.IntVarP(&internetCreateParam.NwMasklen, "nw-masklen", "", 28, "set Global-IPAddress prefix")
-	fs.IntVarP(&internetCreateParam.BandWidth, "band-width", "", 100, "set band-width(Mbpm)")
 	fs.StringVarP(&internetCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&internetCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&internetCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &internetCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.IntVarP(&internetCreateParam.NwMasklen, "nw-masklen", "", 28, "set Global-IPAddress prefix")
+	fs.IntVarP(&internetCreateParam.BandWidth, "band-width", "", 100, "set band-width(Mbpm)")
 }
 
 var internetReadCmd = &cobra.Command{
