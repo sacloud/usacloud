@@ -55,11 +55,19 @@ var nfsListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List NFS",
 	Long:    `List NFS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return nfsListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := nfsListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), nfsListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(nfsListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(nfsListParam))
+		return nil
 	},
 }
 
@@ -90,11 +98,19 @@ var nfsCreateCmd = &cobra.Command{
 
 	Short: "Create NFS",
 	Long:  `Create NFS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return nfsCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := nfsCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), nfsCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(nfsCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(nfsCreateParam))
+		return nil
 	},
 }
 
@@ -130,11 +146,19 @@ var nfsReadCmd = &cobra.Command{
 
 	Short: "Read NFS",
 	Long:  `Read NFS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return nfsReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := nfsReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), nfsReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(nfsReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(nfsReadParam))
+		return nil
 	},
 }
 
@@ -161,11 +185,19 @@ var nfsUpdateCmd = &cobra.Command{
 
 	Short: "Update NFS",
 	Long:  `Update NFS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return nfsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := nfsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), nfsUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(nfsUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(nfsUpdateParam))
+		return nil
 	},
 }
 
@@ -197,11 +229,19 @@ var nfsDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete NFS",
 	Long:    `Delete NFS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return nfsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := nfsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), nfsDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(nfsDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(nfsDeleteParam))
+		return nil
 	},
 }
 
@@ -230,11 +270,19 @@ var nfsBootCmd = &cobra.Command{
 	Aliases: []string{"power-on"},
 	Short:   "Boot NFS",
 	Long:    `Boot NFS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return nfsBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := nfsBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), nfsBootParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("boot parameter: \n%s\n", debugMarshalIndent(nfsBootParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(nfsBootParam))
+		return nil
 	},
 }
 
@@ -255,11 +303,19 @@ var nfsShutdownCmd = &cobra.Command{
 	Aliases: []string{"power-off"},
 	Short:   "Shutdown NFS",
 	Long:    `Shutdown NFS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return nfsShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := nfsShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), nfsShutdownParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("shutdown parameter: \n%s\n", debugMarshalIndent(nfsShutdownParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(nfsShutdownParam))
+		return nil
 	},
 }
 
@@ -280,11 +336,19 @@ var nfsShutdownForceCmd = &cobra.Command{
 	Aliases: []string{"stop"},
 	Short:   "ShutdownForce NFS",
 	Long:    `ShutdownForce NFS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return nfsShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := nfsShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), nfsShutdownForceParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("shutdown-force parameter: \n%s\n", debugMarshalIndent(nfsShutdownForceParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(nfsShutdownForceParam))
+		return nil
 	},
 }
 
@@ -305,11 +369,19 @@ var nfsResetCmd = &cobra.Command{
 
 	Short: "Reset NFS",
 	Long:  `Reset NFS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return nfsResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := nfsResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), nfsResetParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("reset parameter: \n%s\n", debugMarshalIndent(nfsResetParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(nfsResetParam))
+		return nil
 	},
 }
 
@@ -330,11 +402,19 @@ var nfsWaitForBootCmd = &cobra.Command{
 
 	Short: "Wait until boot is completed",
 	Long:  `Wait until boot is completed`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return nfsWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := nfsWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), nfsWaitForBootParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("wait-for-boot parameter: \n%s\n", debugMarshalIndent(nfsWaitForBootParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(nfsWaitForBootParam))
+		return nil
 	},
 }
 
@@ -354,11 +434,19 @@ var nfsWaitForDownCmd = &cobra.Command{
 
 	Short: "Wait until shutdown is completed",
 	Long:  `Wait until shutdown is completed`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return nfsWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := nfsWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), nfsWaitForDownParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("wait-for-down parameter: \n%s\n", debugMarshalIndent(nfsWaitForDownParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(nfsWaitForDownParam))
+		return nil
 	},
 }
 
@@ -378,11 +466,19 @@ var nfsMonitorNicCmd = &cobra.Command{
 
 	Short: "Collect NIC(s) monitor values",
 	Long:  `Collect NIC(s) monitor values`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return nfsMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := nfsMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), nfsMonitorNicParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("monitor-nic parameter: \n%s\n", debugMarshalIndent(nfsMonitorNicParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("monitor-nic local parameter: \n%s\n", debugMarshalIndent(nfsMonitorNicParam))
+		return nil
 	},
 }
 
@@ -412,11 +508,19 @@ var nfsMonitorFreeDiskSizeCmd = &cobra.Command{
 
 	Short: "Collect system-disk monitor values(IO)",
 	Long:  `Collect system-disk monitor values(IO)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return nfsMonitorFreeDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := nfsMonitorFreeDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), nfsMonitorFreeDiskSizeParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("monitor-free-disk-size parameter: \n%s\n", debugMarshalIndent(nfsMonitorFreeDiskSizeParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("monitor-free-disk-size local parameter: \n%s\n", debugMarshalIndent(nfsMonitorFreeDiskSizeParam))
+		return nil
 	},
 }
 

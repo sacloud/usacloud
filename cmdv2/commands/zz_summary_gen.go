@@ -42,11 +42,19 @@ var summaryShowCmd = &cobra.Command{
 
 	Short: "Show Summary (default)",
 	Long:  `Show Summary (default)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return summaryShowParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := summaryShowParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), summaryShowParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("show parameter: \n%s\n", debugMarshalIndent(summaryShowParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("show local parameter: \n%s\n", debugMarshalIndent(summaryShowParam))
+		return nil
 	},
 }
 

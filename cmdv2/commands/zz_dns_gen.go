@@ -52,11 +52,19 @@ var dnsListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List DNS",
 	Long:    `List DNS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return dnsListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := dnsListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), dnsListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(dnsListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(dnsListParam))
+		return nil
 	},
 }
 
@@ -87,11 +95,19 @@ var dnsRecordInfoCmd = &cobra.Command{
 	Aliases: []string{"record-list"},
 	Short:   "RecordInfo DNS",
 	Long:    `RecordInfo DNS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return dnsRecordInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := dnsRecordInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), dnsRecordInfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("record-info parameter: \n%s\n", debugMarshalIndent(dnsRecordInfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("record-info local parameter: \n%s\n", debugMarshalIndent(dnsRecordInfoParam))
+		return nil
 	},
 }
 
@@ -120,11 +136,19 @@ var dnsRecordBulkUpdateCmd = &cobra.Command{
 
 	Short: "RecordBulkUpdate DNS",
 	Long:  `RecordBulkUpdate DNS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return dnsRecordBulkUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := dnsRecordBulkUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), dnsRecordBulkUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("record-bulk-update parameter: \n%s\n", debugMarshalIndent(dnsRecordBulkUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("record-bulk-update local parameter: \n%s\n", debugMarshalIndent(dnsRecordBulkUpdateParam))
+		return nil
 	},
 }
 
@@ -154,11 +178,19 @@ var dnsCreateCmd = &cobra.Command{
 
 	Short: "Create DNS",
 	Long:  `Create DNS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return dnsCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := dnsCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), dnsCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(dnsCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(dnsCreateParam))
+		return nil
 	},
 }
 
@@ -188,11 +220,19 @@ var dnsRecordAddCmd = &cobra.Command{
 
 	Short: "RecordAdd DNS",
 	Long:  `RecordAdd DNS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return dnsRecordAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := dnsRecordAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), dnsRecordAddParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("record-add parameter: \n%s\n", debugMarshalIndent(dnsRecordAddParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("record-add local parameter: \n%s\n", debugMarshalIndent(dnsRecordAddParam))
+		return nil
 	},
 }
 
@@ -229,11 +269,19 @@ var dnsReadCmd = &cobra.Command{
 
 	Short: "Read DNS",
 	Long:  `Read DNS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return dnsReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := dnsReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), dnsReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(dnsReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(dnsReadParam))
+		return nil
 	},
 }
 
@@ -260,11 +308,19 @@ var dnsRecordUpdateCmd = &cobra.Command{
 
 	Short: "RecordUpdate DNS",
 	Long:  `RecordUpdate DNS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return dnsRecordUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := dnsRecordUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), dnsRecordUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("record-update parameter: \n%s\n", debugMarshalIndent(dnsRecordUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("record-update local parameter: \n%s\n", debugMarshalIndent(dnsRecordUpdateParam))
+		return nil
 	},
 }
 
@@ -302,11 +358,19 @@ var dnsRecordDeleteCmd = &cobra.Command{
 
 	Short: "RecordDelete DNS",
 	Long:  `RecordDelete DNS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return dnsRecordDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := dnsRecordDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), dnsRecordDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("record-delete parameter: \n%s\n", debugMarshalIndent(dnsRecordDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("record-delete local parameter: \n%s\n", debugMarshalIndent(dnsRecordDeleteParam))
+		return nil
 	},
 }
 
@@ -335,11 +399,19 @@ var dnsUpdateCmd = &cobra.Command{
 
 	Short: "Update DNS",
 	Long:  `Update DNS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return dnsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := dnsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), dnsUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(dnsUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(dnsUpdateParam))
+		return nil
 	},
 }
 
@@ -370,11 +442,19 @@ var dnsDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete DNS",
 	Long:    `Delete DNS`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return dnsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := dnsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), dnsDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(dnsDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(dnsDeleteParam))
+		return nil
 	},
 }
 

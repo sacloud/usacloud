@@ -43,11 +43,19 @@ var billCsvCmd = &cobra.Command{
 
 	Short: "Csv Bill",
 	Long:  `Csv Bill`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return billCsvParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := billCsvParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), billCsvParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("csv parameter: \n%s\n", debugMarshalIndent(billCsvParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("csv local parameter: \n%s\n", debugMarshalIndent(billCsvParam))
+		return nil
 	},
 }
 
@@ -68,11 +76,19 @@ var billListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List Bill (default)",
 	Long:    `List Bill (default)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return billListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := billListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), billListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(billListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(billListParam))
+		return nil
 	},
 }
 

@@ -52,11 +52,19 @@ var archiveListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Archive",
 	Long:    `List Archive`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return archiveListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := archiveListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), archiveListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(archiveListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(archiveListParam))
+		return nil
 	},
 }
 
@@ -90,11 +98,19 @@ var archiveCreateCmd = &cobra.Command{
 
 	Short: "Create Archive",
 	Long:  `Create Archive`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return archiveCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := archiveCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), archiveCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(archiveCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(archiveCreateParam))
+		return nil
 	},
 }
 
@@ -128,11 +144,19 @@ var archiveReadCmd = &cobra.Command{
 
 	Short: "Read Archive",
 	Long:  `Read Archive`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return archiveReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := archiveReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), archiveReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(archiveReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(archiveReadParam))
+		return nil
 	},
 }
 
@@ -159,11 +183,19 @@ var archiveUpdateCmd = &cobra.Command{
 
 	Short: "Update Archive",
 	Long:  `Update Archive`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return archiveUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := archiveUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), archiveUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(archiveUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(archiveUpdateParam))
+		return nil
 	},
 }
 
@@ -195,11 +227,19 @@ var archiveDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Archive",
 	Long:    `Delete Archive`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return archiveDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := archiveDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), archiveDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(archiveDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(archiveDeleteParam))
+		return nil
 	},
 }
 
@@ -227,11 +267,19 @@ var archiveUploadCmd = &cobra.Command{
 
 	Short: "Upload Archive",
 	Long:  `Upload Archive`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return archiveUploadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := archiveUploadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), archiveUploadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("upload parameter: \n%s\n", debugMarshalIndent(archiveUploadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("upload local parameter: \n%s\n", debugMarshalIndent(archiveUploadParam))
+		return nil
 	},
 }
 
@@ -260,11 +308,19 @@ var archiveDownloadCmd = &cobra.Command{
 
 	Short: "Download Archive",
 	Long:  `Download Archive`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return archiveDownloadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := archiveDownloadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), archiveDownloadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("download parameter: \n%s\n", debugMarshalIndent(archiveDownloadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("download local parameter: \n%s\n", debugMarshalIndent(archiveDownloadParam))
+		return nil
 	},
 }
 
@@ -286,11 +342,19 @@ var archiveFTPOpenCmd = &cobra.Command{
 
 	Short: "FTPOpen Archive",
 	Long:  `FTPOpen Archive`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return archiveFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := archiveFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), archiveFTPOpenParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ftp-open parameter: \n%s\n", debugMarshalIndent(archiveFTPOpenParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ftp-open local parameter: \n%s\n", debugMarshalIndent(archiveFTPOpenParam))
+		return nil
 	},
 }
 
@@ -318,11 +382,19 @@ var archiveFTPCloseCmd = &cobra.Command{
 
 	Short: "FTPClose Archive",
 	Long:  `FTPClose Archive`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return archiveFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := archiveFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), archiveFTPCloseParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ftp-close parameter: \n%s\n", debugMarshalIndent(archiveFTPCloseParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ftp-close local parameter: \n%s\n", debugMarshalIndent(archiveFTPCloseParam))
+		return nil
 	},
 }
 
@@ -343,11 +415,19 @@ var archiveWaitForCopyCmd = &cobra.Command{
 
 	Short: "WaitForCopy Archive",
 	Long:  `WaitForCopy Archive`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return archiveWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := archiveWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), archiveWaitForCopyParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("wait-for-copy parameter: \n%s\n", debugMarshalIndent(archiveWaitForCopyParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("wait-for-copy local parameter: \n%s\n", debugMarshalIndent(archiveWaitForCopyParam))
+		return nil
 	},
 }
 

@@ -44,11 +44,19 @@ var zoneListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List Zone (default)",
 	Long:    `List Zone (default)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return zoneListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := zoneListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), zoneListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(zoneListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(zoneListParam))
+		return nil
 	},
 }
 
@@ -78,11 +86,19 @@ var zoneReadCmd = &cobra.Command{
 
 	Short: "Read Zone",
 	Long:  `Read Zone`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return zoneReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := zoneReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), zoneReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(zoneReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(zoneReadParam))
+		return nil
 	},
 }
 

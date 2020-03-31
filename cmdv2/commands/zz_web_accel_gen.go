@@ -47,11 +47,19 @@ var webAccelListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List WebAccel",
 	Long:    `List WebAccel`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return webAccelListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := webAccelListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), webAccelListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(webAccelListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(webAccelListParam))
+		return nil
 	},
 }
 
@@ -76,11 +84,19 @@ var webAccelReadCmd = &cobra.Command{
 
 	Short: "Read WebAccel",
 	Long:  `Read WebAccel`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return webAccelReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := webAccelReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), webAccelReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(webAccelReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(webAccelReadParam))
+		return nil
 	},
 }
 
@@ -107,11 +123,19 @@ var webAccelCertificateInfoCmd = &cobra.Command{
 	Aliases: []string{"cert-info"},
 	Short:   "CertificateInfo WebAccel",
 	Long:    `CertificateInfo WebAccel`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return webAccelCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := webAccelCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), webAccelCertificateInfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("certificate-info parameter: \n%s\n", debugMarshalIndent(webAccelCertificateInfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("certificate-info local parameter: \n%s\n", debugMarshalIndent(webAccelCertificateInfoParam))
+		return nil
 	},
 }
 
@@ -138,11 +162,19 @@ var webAccelCertificateNewCmd = &cobra.Command{
 	Aliases: []string{"cert-new", "cert-create", "certificate-create"},
 	Short:   "CertificateNew WebAccel",
 	Long:    `CertificateNew WebAccel`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return webAccelCertificateNewParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := webAccelCertificateNewParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), webAccelCertificateNewParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("certificate-new parameter: \n%s\n", debugMarshalIndent(webAccelCertificateNewParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("certificate-new local parameter: \n%s\n", debugMarshalIndent(webAccelCertificateNewParam))
+		return nil
 	},
 }
 
@@ -174,11 +206,19 @@ var webAccelCertificateUpdateCmd = &cobra.Command{
 	Aliases: []string{"cert-update"},
 	Short:   "CertificateUpdate WebAccel",
 	Long:    `CertificateUpdate WebAccel`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return webAccelCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := webAccelCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), webAccelCertificateUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("certificate-update parameter: \n%s\n", debugMarshalIndent(webAccelCertificateUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("certificate-update local parameter: \n%s\n", debugMarshalIndent(webAccelCertificateUpdateParam))
+		return nil
 	},
 }
 
@@ -210,11 +250,19 @@ var webAccelDeleteCacheCmd = &cobra.Command{
 	Aliases: []string{"purge"},
 	Short:   "DeleteCache WebAccel",
 	Long:    `DeleteCache WebAccel`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return webAccelDeleteCacheParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := webAccelDeleteCacheParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), webAccelDeleteCacheParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete-cache parameter: \n%s\n", debugMarshalIndent(webAccelDeleteCacheParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete-cache local parameter: \n%s\n", debugMarshalIndent(webAccelDeleteCacheParam))
+		return nil
 	},
 }
 

@@ -44,11 +44,19 @@ var productInternetListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List ProductInternet (default)",
 	Long:    `List ProductInternet (default)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return productInternetListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := productInternetListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), productInternetListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(productInternetListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(productInternetListParam))
+		return nil
 	},
 }
 
@@ -78,11 +86,19 @@ var productInternetReadCmd = &cobra.Command{
 
 	Short: "Read ProductInternet",
 	Long:  `Read ProductInternet`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return productInternetReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := productInternetReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), productInternetReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(productInternetReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(productInternetReadParam))
+		return nil
 	},
 }
 

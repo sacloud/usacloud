@@ -42,11 +42,19 @@ var selfInfoCmd = &cobra.Command{
 
 	Short: "Info Self (default)",
 	Long:  `Info Self (default)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return selfInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := selfInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), selfInfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("info parameter: \n%s\n", debugMarshalIndent(selfInfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("info local parameter: \n%s\n", debugMarshalIndent(selfInfoParam))
+		return nil
 	},
 }
 

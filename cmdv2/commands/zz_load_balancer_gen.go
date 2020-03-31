@@ -62,11 +62,19 @@ var loadBalancerListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List LoadBalancer",
 	Long:    `List LoadBalancer`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(loadBalancerListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(loadBalancerListParam))
+		return nil
 	},
 }
 
@@ -97,11 +105,19 @@ var loadBalancerCreateCmd = &cobra.Command{
 
 	Short: "Create LoadBalancer",
 	Long:  `Create LoadBalancer`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(loadBalancerCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(loadBalancerCreateParam))
+		return nil
 	},
 }
 
@@ -139,11 +155,19 @@ var loadBalancerReadCmd = &cobra.Command{
 
 	Short: "Read LoadBalancer",
 	Long:  `Read LoadBalancer`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(loadBalancerReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(loadBalancerReadParam))
+		return nil
 	},
 }
 
@@ -170,11 +194,19 @@ var loadBalancerUpdateCmd = &cobra.Command{
 
 	Short: "Update LoadBalancer",
 	Long:  `Update LoadBalancer`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(loadBalancerUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(loadBalancerUpdateParam))
+		return nil
 	},
 }
 
@@ -206,11 +238,19 @@ var loadBalancerDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete LoadBalancer",
 	Long:    `Delete LoadBalancer`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(loadBalancerDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(loadBalancerDeleteParam))
+		return nil
 	},
 }
 
@@ -239,11 +279,19 @@ var loadBalancerBootCmd = &cobra.Command{
 	Aliases: []string{"power-on"},
 	Short:   "Boot LoadBalancer",
 	Long:    `Boot LoadBalancer`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerBootParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("boot parameter: \n%s\n", debugMarshalIndent(loadBalancerBootParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(loadBalancerBootParam))
+		return nil
 	},
 }
 
@@ -264,11 +312,19 @@ var loadBalancerShutdownCmd = &cobra.Command{
 	Aliases: []string{"power-off"},
 	Short:   "Shutdown LoadBalancer",
 	Long:    `Shutdown LoadBalancer`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerShutdownParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("shutdown parameter: \n%s\n", debugMarshalIndent(loadBalancerShutdownParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(loadBalancerShutdownParam))
+		return nil
 	},
 }
 
@@ -289,11 +345,19 @@ var loadBalancerShutdownForceCmd = &cobra.Command{
 	Aliases: []string{"stop"},
 	Short:   "ShutdownForce LoadBalancer",
 	Long:    `ShutdownForce LoadBalancer`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerShutdownForceParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("shutdown-force parameter: \n%s\n", debugMarshalIndent(loadBalancerShutdownForceParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(loadBalancerShutdownForceParam))
+		return nil
 	},
 }
 
@@ -314,11 +378,19 @@ var loadBalancerResetCmd = &cobra.Command{
 
 	Short: "Reset LoadBalancer",
 	Long:  `Reset LoadBalancer`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerResetParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("reset parameter: \n%s\n", debugMarshalIndent(loadBalancerResetParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(loadBalancerResetParam))
+		return nil
 	},
 }
 
@@ -339,11 +411,19 @@ var loadBalancerWaitForBootCmd = &cobra.Command{
 
 	Short: "Wait until boot is completed",
 	Long:  `Wait until boot is completed`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerWaitForBootParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("wait-for-boot parameter: \n%s\n", debugMarshalIndent(loadBalancerWaitForBootParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(loadBalancerWaitForBootParam))
+		return nil
 	},
 }
 
@@ -363,11 +443,19 @@ var loadBalancerWaitForDownCmd = &cobra.Command{
 
 	Short: "Wait until shutdown is completed",
 	Long:  `Wait until shutdown is completed`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerWaitForDownParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("wait-for-down parameter: \n%s\n", debugMarshalIndent(loadBalancerWaitForDownParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(loadBalancerWaitForDownParam))
+		return nil
 	},
 }
 
@@ -387,11 +475,19 @@ var loadBalancerVipInfoCmd = &cobra.Command{
 
 	Short: "Show information of VIP(s)",
 	Long:  `Show information of VIP(s)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerVipInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerVipInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerVipInfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("vip-info parameter: \n%s\n", debugMarshalIndent(loadBalancerVipInfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("vip-info local parameter: \n%s\n", debugMarshalIndent(loadBalancerVipInfoParam))
+		return nil
 	},
 }
 
@@ -418,11 +514,19 @@ var loadBalancerVipAddCmd = &cobra.Command{
 
 	Short: "Add VIP to LoadBalancer",
 	Long:  `Add VIP to LoadBalancer`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerVipAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerVipAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerVipAddParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("vip-add parameter: \n%s\n", debugMarshalIndent(loadBalancerVipAddParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("vip-add local parameter: \n%s\n", debugMarshalIndent(loadBalancerVipAddParam))
+		return nil
 	},
 }
 
@@ -448,11 +552,19 @@ var loadBalancerVipUpdateCmd = &cobra.Command{
 
 	Short: "Update VIP",
 	Long:  `Update VIP`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerVipUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerVipUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerVipUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("vip-update parameter: \n%s\n", debugMarshalIndent(loadBalancerVipUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("vip-update local parameter: \n%s\n", debugMarshalIndent(loadBalancerVipUpdateParam))
+		return nil
 	},
 }
 
@@ -479,11 +591,19 @@ var loadBalancerVipDeleteCmd = &cobra.Command{
 
 	Short: "Delete VIP from LoadBalancer",
 	Long:  `Delete VIP from LoadBalancer`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerVipDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerVipDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerVipDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("vip-delete parameter: \n%s\n", debugMarshalIndent(loadBalancerVipDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("vip-delete local parameter: \n%s\n", debugMarshalIndent(loadBalancerVipDeleteParam))
+		return nil
 	},
 }
 
@@ -505,11 +625,19 @@ var loadBalancerServerInfoCmd = &cobra.Command{
 
 	Short: "Show servers under VIP(s)",
 	Long:  `Show servers under VIP(s)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerServerInfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("server-info parameter: \n%s\n", debugMarshalIndent(loadBalancerServerInfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("server-info local parameter: \n%s\n", debugMarshalIndent(loadBalancerServerInfoParam))
+		return nil
 	},
 }
 
@@ -539,11 +667,19 @@ var loadBalancerServerAddCmd = &cobra.Command{
 
 	Short: "Add server under VIP(s)",
 	Long:  `Add server under VIP(s)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerServerAddParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("server-add parameter: \n%s\n", debugMarshalIndent(loadBalancerServerAddParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("server-add local parameter: \n%s\n", debugMarshalIndent(loadBalancerServerAddParam))
+		return nil
 	},
 }
 
@@ -572,11 +708,19 @@ var loadBalancerServerUpdateCmd = &cobra.Command{
 
 	Short: "Update server under VIP(s)",
 	Long:  `Update server under VIP(s)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerServerUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("server-update parameter: \n%s\n", debugMarshalIndent(loadBalancerServerUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("server-update local parameter: \n%s\n", debugMarshalIndent(loadBalancerServerUpdateParam))
+		return nil
 	},
 }
 
@@ -605,11 +749,19 @@ var loadBalancerServerDeleteCmd = &cobra.Command{
 
 	Short: "Delete server under VIP(s)",
 	Long:  `Delete server under VIP(s)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerServerDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("server-delete parameter: \n%s\n", debugMarshalIndent(loadBalancerServerDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("server-delete local parameter: \n%s\n", debugMarshalIndent(loadBalancerServerDeleteParam))
+		return nil
 	},
 }
 
@@ -634,11 +786,19 @@ var loadBalancerMonitorCmd = &cobra.Command{
 
 	Short: "Monitor LoadBalancer",
 	Long:  `Monitor LoadBalancer`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return loadBalancerMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := loadBalancerMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), loadBalancerMonitorParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("monitor parameter: \n%s\n", debugMarshalIndent(loadBalancerMonitorParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(loadBalancerMonitorParam))
+		return nil
 	},
 }
 

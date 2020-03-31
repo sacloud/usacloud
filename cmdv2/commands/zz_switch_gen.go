@@ -49,11 +49,19 @@ var switchListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Switch",
 	Long:    `List Switch`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return switchListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := switchListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), switchListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(switchListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(switchListParam))
+		return nil
 	},
 }
 
@@ -84,11 +92,19 @@ var switchCreateCmd = &cobra.Command{
 
 	Short: "Create Switch",
 	Long:  `Create Switch`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return switchCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := switchCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), switchCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(switchCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(switchCreateParam))
+		return nil
 	},
 }
 
@@ -118,11 +134,19 @@ var switchReadCmd = &cobra.Command{
 
 	Short: "Read Switch",
 	Long:  `Read Switch`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return switchReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := switchReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), switchReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(switchReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(switchReadParam))
+		return nil
 	},
 }
 
@@ -149,11 +173,19 @@ var switchUpdateCmd = &cobra.Command{
 
 	Short: "Update Switch",
 	Long:  `Update Switch`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return switchUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := switchUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), switchUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(switchUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(switchUpdateParam))
+		return nil
 	},
 }
 
@@ -185,11 +217,19 @@ var switchDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Switch",
 	Long:    `Delete Switch`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return switchDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := switchDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), switchDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(switchDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(switchDeleteParam))
+		return nil
 	},
 }
 
@@ -217,11 +257,19 @@ var switchBridgeConnectCmd = &cobra.Command{
 
 	Short: "BridgeConnect Switch",
 	Long:  `BridgeConnect Switch`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return switchBridgeConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := switchBridgeConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), switchBridgeConnectParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("bridge-connect parameter: \n%s\n", debugMarshalIndent(switchBridgeConnectParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("bridge-connect local parameter: \n%s\n", debugMarshalIndent(switchBridgeConnectParam))
+		return nil
 	},
 }
 
@@ -243,11 +291,19 @@ var switchBridgeDisconnectCmd = &cobra.Command{
 
 	Short: "BridgeDisconnect Switch",
 	Long:  `BridgeDisconnect Switch`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return switchBridgeDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := switchBridgeDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), switchBridgeDisconnectParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("bridge-disconnect parameter: \n%s\n", debugMarshalIndent(switchBridgeDisconnectParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("bridge-disconnect local parameter: \n%s\n", debugMarshalIndent(switchBridgeDisconnectParam))
+		return nil
 	},
 }
 

@@ -101,11 +101,19 @@ var {{ .CLIVariableName }} = &cobra.Command{
 	{{ if .Aliases }}Aliases: []string{ {{ .AliasesLiteral }} },{{ end }}
 	Short: "{{ .Usage }}",
 	Long: ` + "`{{ .Usage }}`" + `,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return {{ .InputParameterVariable }}.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := {{ .InputParameterVariable }}.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), {{ .InputParameterVariable }})
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("{{.Name}} parameter: \n%s\n", debugMarshalIndent({{.InputParameterVariable}}))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("{{.Name}} local parameter: \n%s\n", debugMarshalIndent({{ .InputParameterVariable }}))
+		return nil
 	},
 }
 

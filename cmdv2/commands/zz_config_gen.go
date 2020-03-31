@@ -48,11 +48,19 @@ var configCurrentCmd = &cobra.Command{
 
 	Short: "Current Config",
 	Long:  `Current Config`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return configCurrentParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := configCurrentParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), configCurrentParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("current parameter: \n%s\n", debugMarshalIndent(configCurrentParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("current local parameter: \n%s\n", debugMarshalIndent(configCurrentParam))
+		return nil
 	},
 }
 
@@ -70,11 +78,19 @@ var configDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Config",
 	Long:    `Delete Config`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return configDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := configDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), configDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(configDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(configDeleteParam))
+		return nil
 	},
 }
 
@@ -93,11 +109,19 @@ var configEditCmd = &cobra.Command{
 
 	Short: "Edit Config (default)",
 	Long:  `Edit Config (default)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return configEditParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := configEditParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), configEditParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("edit parameter: \n%s\n", debugMarshalIndent(configEditParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("edit local parameter: \n%s\n", debugMarshalIndent(configEditParam))
+		return nil
 	},
 }
 
@@ -119,11 +143,19 @@ var configListCmd = &cobra.Command{
 	Aliases: []string{"ls"},
 	Short:   "List Config",
 	Long:    `List Config`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return configListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := configListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), configListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(configListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(configListParam))
+		return nil
 	},
 }
 
@@ -141,11 +173,19 @@ var configMigrateCmd = &cobra.Command{
 
 	Short: "Migrate Config",
 	Long:  `Migrate Config`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return configMigrateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := configMigrateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), configMigrateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("migrate parameter: \n%s\n", debugMarshalIndent(configMigrateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("migrate local parameter: \n%s\n", debugMarshalIndent(configMigrateParam))
+		return nil
 	},
 }
 
@@ -163,11 +203,19 @@ var configShowCmd = &cobra.Command{
 
 	Short: "Show Config",
 	Long:  `Show Config`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return configShowParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := configShowParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), configShowParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("show parameter: \n%s\n", debugMarshalIndent(configShowParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("show local parameter: \n%s\n", debugMarshalIndent(configShowParam))
+		return nil
 	},
 }
 
@@ -185,11 +233,19 @@ var configUseCmd = &cobra.Command{
 
 	Short: "Use Config",
 	Long:  `Use Config`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return configUseParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := configUseParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), configUseParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("use parameter: \n%s\n", debugMarshalIndent(configUseParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("use local parameter: \n%s\n", debugMarshalIndent(configUseParam))
+		return nil
 	},
 }
 

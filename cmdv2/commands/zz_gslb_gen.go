@@ -51,11 +51,19 @@ var gslbListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List GSLB",
 	Long:    `List GSLB`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return gslbListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := gslbListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), gslbListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(gslbListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(gslbListParam))
+		return nil
 	},
 }
 
@@ -86,11 +94,19 @@ var gslbServerInfoCmd = &cobra.Command{
 	Aliases: []string{"server-list"},
 	Short:   "ServerInfo GSLB",
 	Long:    `ServerInfo GSLB`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return gslbServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := gslbServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), gslbServerInfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("server-info parameter: \n%s\n", debugMarshalIndent(gslbServerInfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("server-info local parameter: \n%s\n", debugMarshalIndent(gslbServerInfoParam))
+		return nil
 	},
 }
 
@@ -117,11 +133,19 @@ var gslbCreateCmd = &cobra.Command{
 
 	Short: "Create GSLB",
 	Long:  `Create GSLB`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return gslbCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := gslbCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), gslbCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(gslbCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(gslbCreateParam))
+		return nil
 	},
 }
 
@@ -159,11 +183,19 @@ var gslbServerAddCmd = &cobra.Command{
 
 	Short: "ServerAdd GSLB",
 	Long:  `ServerAdd GSLB`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return gslbServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := gslbServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), gslbServerAddParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("server-add parameter: \n%s\n", debugMarshalIndent(gslbServerAddParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("server-add local parameter: \n%s\n", debugMarshalIndent(gslbServerAddParam))
+		return nil
 	},
 }
 
@@ -194,11 +226,19 @@ var gslbReadCmd = &cobra.Command{
 
 	Short: "Read GSLB",
 	Long:  `Read GSLB`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return gslbReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := gslbReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), gslbReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(gslbReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(gslbReadParam))
+		return nil
 	},
 }
 
@@ -225,11 +265,19 @@ var gslbServerUpdateCmd = &cobra.Command{
 
 	Short: "ServerUpdate GSLB",
 	Long:  `ServerUpdate GSLB`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return gslbServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := gslbServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), gslbServerUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("server-update parameter: \n%s\n", debugMarshalIndent(gslbServerUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("server-update local parameter: \n%s\n", debugMarshalIndent(gslbServerUpdateParam))
+		return nil
 	},
 }
 
@@ -261,11 +309,19 @@ var gslbServerDeleteCmd = &cobra.Command{
 
 	Short: "ServerDelete GSLB",
 	Long:  `ServerDelete GSLB`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return gslbServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := gslbServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), gslbServerDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("server-delete parameter: \n%s\n", debugMarshalIndent(gslbServerDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("server-delete local parameter: \n%s\n", debugMarshalIndent(gslbServerDeleteParam))
+		return nil
 	},
 }
 
@@ -294,11 +350,19 @@ var gslbUpdateCmd = &cobra.Command{
 
 	Short: "Update GSLB",
 	Long:  `Update GSLB`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return gslbUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := gslbUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), gslbUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(gslbUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(gslbUpdateParam))
+		return nil
 	},
 }
 
@@ -338,11 +402,19 @@ var gslbDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete GSLB",
 	Long:    `Delete GSLB`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return gslbDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := gslbDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), gslbDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(gslbDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(gslbDeleteParam))
+		return nil
 	},
 }
 

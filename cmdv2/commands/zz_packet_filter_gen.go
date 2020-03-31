@@ -53,11 +53,19 @@ var packetFilterListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List PacketFilter",
 	Long:    `List PacketFilter`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return packetFilterListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetFilterListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), packetFilterListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(packetFilterListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(packetFilterListParam))
+		return nil
 	},
 }
 
@@ -87,11 +95,19 @@ var packetFilterCreateCmd = &cobra.Command{
 
 	Short: "Create PacketFilter",
 	Long:  `Create PacketFilter`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return packetFilterCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetFilterCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), packetFilterCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(packetFilterCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(packetFilterCreateParam))
+		return nil
 	},
 }
 
@@ -119,11 +135,19 @@ var packetFilterReadCmd = &cobra.Command{
 
 	Short: "Read PacketFilter",
 	Long:  `Read PacketFilter`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return packetFilterReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetFilterReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), packetFilterReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(packetFilterReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(packetFilterReadParam))
+		return nil
 	},
 }
 
@@ -149,11 +173,19 @@ var packetFilterUpdateCmd = &cobra.Command{
 
 	Short: "Update PacketFilter",
 	Long:  `Update PacketFilter`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return packetFilterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetFilterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), packetFilterUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(packetFilterUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(packetFilterUpdateParam))
+		return nil
 	},
 }
 
@@ -182,11 +214,19 @@ var packetFilterDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete PacketFilter",
 	Long:    `Delete PacketFilter`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return packetFilterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetFilterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), packetFilterDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(packetFilterDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(packetFilterDeleteParam))
+		return nil
 	},
 }
 
@@ -213,11 +253,19 @@ var packetFilterRuleInfoCmd = &cobra.Command{
 	Aliases: []string{"rules", "rule-list"},
 	Short:   "RuleInfo PacketFilter",
 	Long:    `RuleInfo PacketFilter`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return packetFilterRuleInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetFilterRuleInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), packetFilterRuleInfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("rule-info parameter: \n%s\n", debugMarshalIndent(packetFilterRuleInfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("rule-info local parameter: \n%s\n", debugMarshalIndent(packetFilterRuleInfoParam))
+		return nil
 	},
 }
 
@@ -243,11 +291,19 @@ var packetFilterRuleAddCmd = &cobra.Command{
 
 	Short: "RuleAdd PacketFilter",
 	Long:  `RuleAdd PacketFilter`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return packetFilterRuleAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetFilterRuleAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), packetFilterRuleAddParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("rule-add parameter: \n%s\n", debugMarshalIndent(packetFilterRuleAddParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("rule-add local parameter: \n%s\n", debugMarshalIndent(packetFilterRuleAddParam))
+		return nil
 	},
 }
 
@@ -281,11 +337,19 @@ var packetFilterRuleUpdateCmd = &cobra.Command{
 
 	Short: "RuleUpdate PacketFilter",
 	Long:  `RuleUpdate PacketFilter`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return packetFilterRuleUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetFilterRuleUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), packetFilterRuleUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("rule-update parameter: \n%s\n", debugMarshalIndent(packetFilterRuleUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("rule-update local parameter: \n%s\n", debugMarshalIndent(packetFilterRuleUpdateParam))
+		return nil
 	},
 }
 
@@ -319,11 +383,19 @@ var packetFilterRuleDeleteCmd = &cobra.Command{
 
 	Short: "RuleDelete PacketFilter",
 	Long:  `RuleDelete PacketFilter`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return packetFilterRuleDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetFilterRuleDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), packetFilterRuleDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("rule-delete parameter: \n%s\n", debugMarshalIndent(packetFilterRuleDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("rule-delete local parameter: \n%s\n", debugMarshalIndent(packetFilterRuleDeleteParam))
+		return nil
 	},
 }
 
@@ -351,11 +423,19 @@ var packetFilterInterfaceConnectCmd = &cobra.Command{
 
 	Short: "InterfaceConnect PacketFilter",
 	Long:  `InterfaceConnect PacketFilter`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return packetFilterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetFilterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), packetFilterInterfaceConnectParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("interface-connect parameter: \n%s\n", debugMarshalIndent(packetFilterInterfaceConnectParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("interface-connect local parameter: \n%s\n", debugMarshalIndent(packetFilterInterfaceConnectParam))
+		return nil
 	},
 }
 
@@ -376,11 +456,19 @@ var packetFilterInterfaceDisconnectCmd = &cobra.Command{
 
 	Short: "InterfaceDisconnect PacketFilter",
 	Long:  `InterfaceDisconnect PacketFilter`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return packetFilterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := packetFilterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), packetFilterInterfaceDisconnectParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("interface-disconnect parameter: \n%s\n", debugMarshalIndent(packetFilterInterfaceDisconnectParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("interface-disconnect local parameter: \n%s\n", debugMarshalIndent(packetFilterInterfaceDisconnectParam))
+		return nil
 	},
 }
 

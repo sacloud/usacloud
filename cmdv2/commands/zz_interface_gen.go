@@ -49,11 +49,19 @@ var interfaceListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List Interface",
 	Long:    `List Interface`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return interfaceListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := interfaceListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), interfaceListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(interfaceListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(interfaceListParam))
+		return nil
 	},
 }
 
@@ -83,11 +91,19 @@ var interfacePacketFilterConnectCmd = &cobra.Command{
 
 	Short: "PacketFilterConnect Interface",
 	Long:  `PacketFilterConnect Interface`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return interfacePacketFilterConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := interfacePacketFilterConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), interfacePacketFilterConnectParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("packet-filter-connect parameter: \n%s\n", debugMarshalIndent(interfacePacketFilterConnectParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("packet-filter-connect local parameter: \n%s\n", debugMarshalIndent(interfacePacketFilterConnectParam))
+		return nil
 	},
 }
 
@@ -108,11 +124,19 @@ var interfaceCreateCmd = &cobra.Command{
 
 	Short: "Create Interface",
 	Long:  `Create Interface`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return interfaceCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := interfaceCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), interfaceCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(interfaceCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(interfaceCreateParam))
+		return nil
 	},
 }
 
@@ -139,11 +163,19 @@ var interfacePacketFilterDisconnectCmd = &cobra.Command{
 
 	Short: "PacketFilterDisconnect Interface",
 	Long:  `PacketFilterDisconnect Interface`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return interfacePacketFilterDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := interfacePacketFilterDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), interfacePacketFilterDisconnectParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("packet-filter-disconnect parameter: \n%s\n", debugMarshalIndent(interfacePacketFilterDisconnectParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("packet-filter-disconnect local parameter: \n%s\n", debugMarshalIndent(interfacePacketFilterDisconnectParam))
+		return nil
 	},
 }
 
@@ -164,11 +196,19 @@ var interfaceReadCmd = &cobra.Command{
 
 	Short: "Read Interface",
 	Long:  `Read Interface`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return interfaceReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := interfaceReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), interfaceReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(interfaceReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(interfaceReadParam))
+		return nil
 	},
 }
 
@@ -194,11 +234,19 @@ var interfaceUpdateCmd = &cobra.Command{
 
 	Short: "Update Interface",
 	Long:  `Update Interface`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return interfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := interfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), interfaceUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(interfaceUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(interfaceUpdateParam))
+		return nil
 	},
 }
 
@@ -226,11 +274,19 @@ var interfaceDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Interface",
 	Long:    `Delete Interface`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return interfaceDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := interfaceDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), interfaceDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(interfaceDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(interfaceDeleteParam))
+		return nil
 	},
 }
 

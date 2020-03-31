@@ -47,11 +47,19 @@ var ipv4ListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List IPv4",
 	Long:    `List IPv4`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return ipv4ListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := ipv4ListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), ipv4ListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(ipv4ListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(ipv4ListParam))
+		return nil
 	},
 }
 
@@ -81,11 +89,19 @@ var ipv4PtrAddCmd = &cobra.Command{
 
 	Short: "PtrAdd IPv4",
 	Long:  `PtrAdd IPv4`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return ipv4PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := ipv4PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), ipv4PtrAddParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ptr-add parameter: \n%s\n", debugMarshalIndent(ipv4PtrAddParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ptr-add local parameter: \n%s\n", debugMarshalIndent(ipv4PtrAddParam))
+		return nil
 	},
 }
 
@@ -112,11 +128,19 @@ var ipv4PtrReadCmd = &cobra.Command{
 
 	Short: "PtrRead IPv4",
 	Long:  `PtrRead IPv4`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return ipv4PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := ipv4PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), ipv4PtrReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ptr-read parameter: \n%s\n", debugMarshalIndent(ipv4PtrReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ptr-read local parameter: \n%s\n", debugMarshalIndent(ipv4PtrReadParam))
+		return nil
 	},
 }
 
@@ -141,11 +165,19 @@ var ipv4PtrUpdateCmd = &cobra.Command{
 
 	Short: "PtrUpdate IPv4",
 	Long:  `PtrUpdate IPv4`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return ipv4PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := ipv4PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), ipv4PtrUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ptr-update parameter: \n%s\n", debugMarshalIndent(ipv4PtrUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ptr-update local parameter: \n%s\n", debugMarshalIndent(ipv4PtrUpdateParam))
+		return nil
 	},
 }
 
@@ -172,11 +204,19 @@ var ipv4PtrDeleteCmd = &cobra.Command{
 
 	Short: "PtrDelete IPv4",
 	Long:  `PtrDelete IPv4`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return ipv4PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := ipv4PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), ipv4PtrDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ptr-delete parameter: \n%s\n", debugMarshalIndent(ipv4PtrDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ptr-delete local parameter: \n%s\n", debugMarshalIndent(ipv4PtrDeleteParam))
+		return nil
 	},
 }
 

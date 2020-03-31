@@ -45,11 +45,19 @@ var objectStorageListCmd = &cobra.Command{
 	Aliases: []string{"ls"},
 	Short:   "List ObjectStorage",
 	Long:    `List ObjectStorage`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return objectStorageListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := objectStorageListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), objectStorageListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(objectStorageListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(objectStorageListParam))
+		return nil
 	},
 }
 
@@ -77,11 +85,19 @@ var objectStoragePutCmd = &cobra.Command{
 
 	Short: "Put ObjectStorage",
 	Long:  `Put ObjectStorage`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return objectStoragePutParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := objectStoragePutParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), objectStoragePutParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("put parameter: \n%s\n", debugMarshalIndent(objectStoragePutParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("put local parameter: \n%s\n", debugMarshalIndent(objectStoragePutParam))
+		return nil
 	},
 }
 
@@ -105,11 +121,19 @@ var objectStorageGetCmd = &cobra.Command{
 
 	Short: "Get ObjectStorage",
 	Long:  `Get ObjectStorage`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return objectStorageGetParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := objectStorageGetParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), objectStorageGetParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("get parameter: \n%s\n", debugMarshalIndent(objectStorageGetParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("get local parameter: \n%s\n", debugMarshalIndent(objectStorageGetParam))
+		return nil
 	},
 }
 
@@ -131,11 +155,19 @@ var objectStorageDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm", "del"},
 	Short:   "Delete ObjectStorage",
 	Long:    `Delete ObjectStorage`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return objectStorageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := objectStorageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), objectStorageDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(objectStorageDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(objectStorageDeleteParam))
+		return nil
 	},
 }
 

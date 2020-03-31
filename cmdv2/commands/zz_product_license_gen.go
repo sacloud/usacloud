@@ -44,11 +44,19 @@ var productLicenseListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List ProductLicense (default)",
 	Long:    `List ProductLicense (default)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return productLicenseListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := productLicenseListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), productLicenseListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(productLicenseListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(productLicenseListParam))
+		return nil
 	},
 }
 
@@ -78,11 +86,19 @@ var productLicenseReadCmd = &cobra.Command{
 
 	Short: "Read ProductLicense",
 	Long:  `Read ProductLicense`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return productLicenseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := productLicenseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), productLicenseReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(productLicenseReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(productLicenseReadParam))
+		return nil
 	},
 }
 

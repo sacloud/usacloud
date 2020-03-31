@@ -69,11 +69,19 @@ var databaseListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Database",
 	Long:    `List Database`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(databaseListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(databaseListParam))
+		return nil
 	},
 }
 
@@ -104,11 +112,19 @@ var databaseCreateCmd = &cobra.Command{
 
 	Short: "Create Database",
 	Long:  `Create Database`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(databaseCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(databaseCreateParam))
+		return nil
 	},
 }
 
@@ -153,11 +169,19 @@ var databaseReadCmd = &cobra.Command{
 
 	Short: "Read Database",
 	Long:  `Read Database`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(databaseReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(databaseReadParam))
+		return nil
 	},
 }
 
@@ -184,11 +208,19 @@ var databaseUpdateCmd = &cobra.Command{
 
 	Short: "Update Database",
 	Long:  `Update Database`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(databaseUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(databaseUpdateParam))
+		return nil
 	},
 }
 
@@ -229,11 +261,19 @@ var databaseDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Database",
 	Long:    `Delete Database`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(databaseDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(databaseDeleteParam))
+		return nil
 	},
 }
 
@@ -262,11 +302,19 @@ var databaseBootCmd = &cobra.Command{
 	Aliases: []string{"power-on"},
 	Short:   "Boot Database",
 	Long:    `Boot Database`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseBootParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("boot parameter: \n%s\n", debugMarshalIndent(databaseBootParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(databaseBootParam))
+		return nil
 	},
 }
 
@@ -287,11 +335,19 @@ var databaseShutdownCmd = &cobra.Command{
 	Aliases: []string{"power-off"},
 	Short:   "Shutdown Database",
 	Long:    `Shutdown Database`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseShutdownParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("shutdown parameter: \n%s\n", debugMarshalIndent(databaseShutdownParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(databaseShutdownParam))
+		return nil
 	},
 }
 
@@ -312,11 +368,19 @@ var databaseShutdownForceCmd = &cobra.Command{
 	Aliases: []string{"stop"},
 	Short:   "ShutdownForce Database",
 	Long:    `ShutdownForce Database`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseShutdownForceParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("shutdown-force parameter: \n%s\n", debugMarshalIndent(databaseShutdownForceParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(databaseShutdownForceParam))
+		return nil
 	},
 }
 
@@ -337,11 +401,19 @@ var databaseResetCmd = &cobra.Command{
 
 	Short: "Reset Database",
 	Long:  `Reset Database`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseResetParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("reset parameter: \n%s\n", debugMarshalIndent(databaseResetParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(databaseResetParam))
+		return nil
 	},
 }
 
@@ -362,11 +434,19 @@ var databaseWaitForBootCmd = &cobra.Command{
 
 	Short: "Wait until boot is completed",
 	Long:  `Wait until boot is completed`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseWaitForBootParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("wait-for-boot parameter: \n%s\n", debugMarshalIndent(databaseWaitForBootParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(databaseWaitForBootParam))
+		return nil
 	},
 }
 
@@ -386,11 +466,19 @@ var databaseWaitForDownCmd = &cobra.Command{
 
 	Short: "Wait until shutdown is completed",
 	Long:  `Wait until shutdown is completed`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseWaitForDownParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("wait-for-down parameter: \n%s\n", debugMarshalIndent(databaseWaitForDownParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(databaseWaitForDownParam))
+		return nil
 	},
 }
 
@@ -410,11 +498,19 @@ var databaseBackupInfoCmd = &cobra.Command{
 	Aliases: []string{"backups", "backup-list"},
 	Short:   "Show information of backup",
 	Long:    `Show information of backup`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseBackupInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseBackupInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseBackupInfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("backup-info parameter: \n%s\n", debugMarshalIndent(databaseBackupInfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("backup-info local parameter: \n%s\n", debugMarshalIndent(databaseBackupInfoParam))
+		return nil
 	},
 }
 
@@ -441,11 +537,19 @@ var databaseBackupCreateCmd = &cobra.Command{
 
 	Short: "Make new database backup",
 	Long:  `Make new database backup`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseBackupCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("backup-create parameter: \n%s\n", debugMarshalIndent(databaseBackupCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("backup-create local parameter: \n%s\n", debugMarshalIndent(databaseBackupCreateParam))
+		return nil
 	},
 }
 
@@ -472,11 +576,19 @@ var databaseBackupRestoreCmd = &cobra.Command{
 
 	Short: "Restore database from backup",
 	Long:  `Restore database from backup`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseBackupRestoreParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseBackupRestoreParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseBackupRestoreParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("backup-restore parameter: \n%s\n", debugMarshalIndent(databaseBackupRestoreParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("backup-restore local parameter: \n%s\n", debugMarshalIndent(databaseBackupRestoreParam))
+		return nil
 	},
 }
 
@@ -504,11 +616,19 @@ var databaseBackupLockCmd = &cobra.Command{
 
 	Short: "Lock backup",
 	Long:  `Lock backup`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseBackupLockParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseBackupLockParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseBackupLockParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("backup-lock parameter: \n%s\n", debugMarshalIndent(databaseBackupLockParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("backup-lock local parameter: \n%s\n", debugMarshalIndent(databaseBackupLockParam))
+		return nil
 	},
 }
 
@@ -536,11 +656,19 @@ var databaseBackupUnlockCmd = &cobra.Command{
 
 	Short: "Unlock backup",
 	Long:  `Unlock backup`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseBackupUnlockParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseBackupUnlockParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseBackupUnlockParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("backup-unlock parameter: \n%s\n", debugMarshalIndent(databaseBackupUnlockParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("backup-unlock local parameter: \n%s\n", debugMarshalIndent(databaseBackupUnlockParam))
+		return nil
 	},
 }
 
@@ -568,11 +696,19 @@ var databaseBackupRemoveCmd = &cobra.Command{
 
 	Short: "Remove backup",
 	Long:  `Remove backup`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseBackupRemoveParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseBackupRemoveParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseBackupRemoveParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("backup-remove parameter: \n%s\n", debugMarshalIndent(databaseBackupRemoveParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("backup-remove local parameter: \n%s\n", debugMarshalIndent(databaseBackupRemoveParam))
+		return nil
 	},
 }
 
@@ -600,11 +736,19 @@ var databaseCloneCmd = &cobra.Command{
 
 	Short: "Create clone instance",
 	Long:  `Create clone instance`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseCloneParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseCloneParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseCloneParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("clone parameter: \n%s\n", debugMarshalIndent(databaseCloneParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("clone local parameter: \n%s\n", debugMarshalIndent(databaseCloneParam))
+		return nil
 	},
 }
 
@@ -647,11 +791,19 @@ var databaseReplicaCreateCmd = &cobra.Command{
 
 	Short: "Create replication slave instance",
 	Long:  `Create replication slave instance`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseReplicaCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseReplicaCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseReplicaCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("replica-create parameter: \n%s\n", debugMarshalIndent(databaseReplicaCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("replica-create local parameter: \n%s\n", debugMarshalIndent(databaseReplicaCreateParam))
+		return nil
 	},
 }
 
@@ -686,11 +838,19 @@ var databaseMonitorCPUCmd = &cobra.Command{
 
 	Short: "Collect CPU monitor values",
 	Long:  `Collect CPU monitor values`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseMonitorCPUParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseMonitorCPUParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseMonitorCPUParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("monitor-cpu parameter: \n%s\n", debugMarshalIndent(databaseMonitorCPUParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("monitor-cpu local parameter: \n%s\n", debugMarshalIndent(databaseMonitorCPUParam))
+		return nil
 	},
 }
 
@@ -720,11 +880,19 @@ var databaseMonitorMemoryCmd = &cobra.Command{
 
 	Short: "Collect memory monitor values",
 	Long:  `Collect memory monitor values`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseMonitorMemoryParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseMonitorMemoryParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseMonitorMemoryParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("monitor-memory parameter: \n%s\n", debugMarshalIndent(databaseMonitorMemoryParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("monitor-memory local parameter: \n%s\n", debugMarshalIndent(databaseMonitorMemoryParam))
+		return nil
 	},
 }
 
@@ -754,11 +922,19 @@ var databaseMonitorNicCmd = &cobra.Command{
 
 	Short: "Collect NIC(s) monitor values",
 	Long:  `Collect NIC(s) monitor values`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseMonitorNicParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("monitor-nic parameter: \n%s\n", debugMarshalIndent(databaseMonitorNicParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("monitor-nic local parameter: \n%s\n", debugMarshalIndent(databaseMonitorNicParam))
+		return nil
 	},
 }
 
@@ -788,11 +964,19 @@ var databaseMonitorSystemDiskCmd = &cobra.Command{
 
 	Short: "Collect system-disk monitor values(IO)",
 	Long:  `Collect system-disk monitor values(IO)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseMonitorSystemDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseMonitorSystemDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseMonitorSystemDiskParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("monitor-system-disk parameter: \n%s\n", debugMarshalIndent(databaseMonitorSystemDiskParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("monitor-system-disk local parameter: \n%s\n", debugMarshalIndent(databaseMonitorSystemDiskParam))
+		return nil
 	},
 }
 
@@ -822,11 +1006,19 @@ var databaseMonitorBackupDiskCmd = &cobra.Command{
 
 	Short: "Collect backup-disk monitor values(IO)",
 	Long:  `Collect backup-disk monitor values(IO)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseMonitorBackupDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseMonitorBackupDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseMonitorBackupDiskParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("monitor-backup-disk parameter: \n%s\n", debugMarshalIndent(databaseMonitorBackupDiskParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("monitor-backup-disk local parameter: \n%s\n", debugMarshalIndent(databaseMonitorBackupDiskParam))
+		return nil
 	},
 }
 
@@ -856,11 +1048,19 @@ var databaseMonitorSystemDiskSizeCmd = &cobra.Command{
 
 	Short: "Collect system-disk monitor values(usage)",
 	Long:  `Collect system-disk monitor values(usage)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseMonitorSystemDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseMonitorSystemDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseMonitorSystemDiskSizeParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("monitor-system-disk-size parameter: \n%s\n", debugMarshalIndent(databaseMonitorSystemDiskSizeParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("monitor-system-disk-size local parameter: \n%s\n", debugMarshalIndent(databaseMonitorSystemDiskSizeParam))
+		return nil
 	},
 }
 
@@ -890,11 +1090,19 @@ var databaseMonitorBackupDiskSizeCmd = &cobra.Command{
 
 	Short: "Collect backup-disk monitor values(usage)",
 	Long:  `Collect backup-disk monitor values(usage)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseMonitorBackupDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseMonitorBackupDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseMonitorBackupDiskSizeParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("monitor-backup-disk-size parameter: \n%s\n", debugMarshalIndent(databaseMonitorBackupDiskSizeParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("monitor-backup-disk-size local parameter: \n%s\n", debugMarshalIndent(databaseMonitorBackupDiskSizeParam))
+		return nil
 	},
 }
 
@@ -924,11 +1132,19 @@ var databaseLogsCmd = &cobra.Command{
 
 	Short: "Logs Database",
 	Long:  `Logs Database`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return databaseLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := databaseLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), databaseLogsParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("logs parameter: \n%s\n", debugMarshalIndent(databaseLogsParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("logs local parameter: \n%s\n", debugMarshalIndent(databaseLogsParam))
+		return nil
 	},
 }
 

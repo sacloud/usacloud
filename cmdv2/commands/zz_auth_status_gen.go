@@ -42,11 +42,19 @@ var authStatusShowCmd = &cobra.Command{
 
 	Short: "Show AuthStatus (default)",
 	Long:  `Show AuthStatus (default)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return authStatusShowParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := authStatusShowParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), authStatusShowParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("show parameter: \n%s\n", debugMarshalIndent(authStatusShowParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("show local parameter: \n%s\n", debugMarshalIndent(authStatusShowParam))
+		return nil
 	},
 }
 

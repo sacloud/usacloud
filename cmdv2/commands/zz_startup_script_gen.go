@@ -47,11 +47,19 @@ var startupScriptListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List StartupScript",
 	Long:    `List StartupScript`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return startupScriptListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := startupScriptListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), startupScriptListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(startupScriptListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(startupScriptListParam))
+		return nil
 	},
 }
 
@@ -84,11 +92,19 @@ var startupScriptCreateCmd = &cobra.Command{
 
 	Short: "Create StartupScript",
 	Long:  `Create StartupScript`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return startupScriptCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := startupScriptCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), startupScriptCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(startupScriptCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(startupScriptCreateParam))
+		return nil
 	},
 }
 
@@ -120,11 +136,19 @@ var startupScriptReadCmd = &cobra.Command{
 
 	Short: "Read StartupScript",
 	Long:  `Read StartupScript`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return startupScriptReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := startupScriptReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), startupScriptReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(startupScriptReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(startupScriptReadParam))
+		return nil
 	},
 }
 
@@ -151,11 +175,19 @@ var startupScriptUpdateCmd = &cobra.Command{
 
 	Short: "Update StartupScript",
 	Long:  `Update StartupScript`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return startupScriptUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := startupScriptUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), startupScriptUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(startupScriptUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(startupScriptUpdateParam))
+		return nil
 	},
 }
 
@@ -189,11 +221,19 @@ var startupScriptDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete StartupScript",
 	Long:    `Delete StartupScript`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return startupScriptDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := startupScriptDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), startupScriptDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(startupScriptDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(startupScriptDeleteParam))
+		return nil
 	},
 }
 

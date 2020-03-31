@@ -48,11 +48,19 @@ var sshKeyListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List SSHKey",
 	Long:    `List SSHKey`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return sshKeyListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := sshKeyListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), sshKeyListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(sshKeyListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(sshKeyListParam))
+		return nil
 	},
 }
 
@@ -82,11 +90,19 @@ var sshKeyCreateCmd = &cobra.Command{
 
 	Short: "Create SSHKey",
 	Long:  `Create SSHKey`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return sshKeyCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := sshKeyCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), sshKeyCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(sshKeyCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(sshKeyCreateParam))
+		return nil
 	},
 }
 
@@ -116,11 +132,19 @@ var sshKeyReadCmd = &cobra.Command{
 
 	Short: "Read SSHKey",
 	Long:  `Read SSHKey`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return sshKeyReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := sshKeyReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), sshKeyReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(sshKeyReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(sshKeyReadParam))
+		return nil
 	},
 }
 
@@ -146,11 +170,19 @@ var sshKeyUpdateCmd = &cobra.Command{
 
 	Short: "Update SSHKey",
 	Long:  `Update SSHKey`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return sshKeyUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := sshKeyUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), sshKeyUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(sshKeyUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(sshKeyUpdateParam))
+		return nil
 	},
 }
 
@@ -179,11 +211,19 @@ var sshKeyDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete SSHKey",
 	Long:    `Delete SSHKey`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return sshKeyDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := sshKeyDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), sshKeyDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(sshKeyDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(sshKeyDeleteParam))
+		return nil
 	},
 }
 
@@ -210,11 +250,19 @@ var sshKeyGenerateCmd = &cobra.Command{
 	Aliases: []string{"gen"},
 	Short:   "Generate SSHKey",
 	Long:    `Generate SSHKey`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return sshKeyGenerateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := sshKeyGenerateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), sshKeyGenerateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("generate parameter: \n%s\n", debugMarshalIndent(sshKeyGenerateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("generate local parameter: \n%s\n", debugMarshalIndent(sshKeyGenerateParam))
+		return nil
 	},
 }
 

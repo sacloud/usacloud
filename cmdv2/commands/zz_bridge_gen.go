@@ -47,11 +47,19 @@ var bridgeListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List Bridge",
 	Long:    `List Bridge`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return bridgeListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := bridgeListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), bridgeListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(bridgeListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(bridgeListParam))
+		return nil
 	},
 }
 
@@ -81,11 +89,19 @@ var bridgeCreateCmd = &cobra.Command{
 
 	Short: "Create Bridge",
 	Long:  `Create Bridge`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return bridgeCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := bridgeCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), bridgeCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(bridgeCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(bridgeCreateParam))
+		return nil
 	},
 }
 
@@ -113,11 +129,19 @@ var bridgeReadCmd = &cobra.Command{
 
 	Short: "Read Bridge",
 	Long:  `Read Bridge`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return bridgeReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := bridgeReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), bridgeReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(bridgeReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(bridgeReadParam))
+		return nil
 	},
 }
 
@@ -143,11 +167,19 @@ var bridgeUpdateCmd = &cobra.Command{
 
 	Short: "Update Bridge",
 	Long:  `Update Bridge`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return bridgeUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := bridgeUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), bridgeUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(bridgeUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(bridgeUpdateParam))
+		return nil
 	},
 }
 
@@ -176,11 +208,19 @@ var bridgeDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Bridge",
 	Long:    `Delete Bridge`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return bridgeDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := bridgeDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), bridgeDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(bridgeDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(bridgeDeleteParam))
+		return nil
 	},
 }
 

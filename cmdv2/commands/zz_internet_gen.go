@@ -56,11 +56,19 @@ var internetListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Internet",
 	Long:    `List Internet`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return internetListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), internetListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(internetListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(internetListParam))
+		return nil
 	},
 }
 
@@ -91,11 +99,19 @@ var internetCreateCmd = &cobra.Command{
 
 	Short: "Create Internet",
 	Long:  `Create Internet`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return internetCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), internetCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(internetCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(internetCreateParam))
+		return nil
 	},
 }
 
@@ -127,11 +143,19 @@ var internetReadCmd = &cobra.Command{
 
 	Short: "Read Internet",
 	Long:  `Read Internet`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return internetReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), internetReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(internetReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(internetReadParam))
+		return nil
 	},
 }
 
@@ -158,11 +182,19 @@ var internetUpdateCmd = &cobra.Command{
 
 	Short: "Update Internet",
 	Long:  `Update Internet`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return internetUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), internetUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(internetUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(internetUpdateParam))
+		return nil
 	},
 }
 
@@ -195,11 +227,19 @@ var internetDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Internet",
 	Long:    `Delete Internet`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return internetDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), internetDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(internetDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(internetDeleteParam))
+		return nil
 	},
 }
 
@@ -227,11 +267,19 @@ var internetUpdateBandwidthCmd = &cobra.Command{
 
 	Short: "UpdateBandwidth Internet",
 	Long:  `UpdateBandwidth Internet`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return internetUpdateBandwidthParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetUpdateBandwidthParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), internetUpdateBandwidthParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update-bandwidth parameter: \n%s\n", debugMarshalIndent(internetUpdateBandwidthParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update-bandwidth local parameter: \n%s\n", debugMarshalIndent(internetUpdateBandwidthParam))
+		return nil
 	},
 }
 
@@ -260,11 +308,19 @@ var internetSubnetInfoCmd = &cobra.Command{
 
 	Short: "SubnetInfo Internet",
 	Long:  `SubnetInfo Internet`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return internetSubnetInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetSubnetInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), internetSubnetInfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("subnet-info parameter: \n%s\n", debugMarshalIndent(internetSubnetInfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("subnet-info local parameter: \n%s\n", debugMarshalIndent(internetSubnetInfoParam))
+		return nil
 	},
 }
 
@@ -291,11 +347,19 @@ var internetSubnetAddCmd = &cobra.Command{
 
 	Short: "SubnetAdd Internet",
 	Long:  `SubnetAdd Internet`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return internetSubnetAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetSubnetAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), internetSubnetAddParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("subnet-add parameter: \n%s\n", debugMarshalIndent(internetSubnetAddParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("subnet-add local parameter: \n%s\n", debugMarshalIndent(internetSubnetAddParam))
+		return nil
 	},
 }
 
@@ -325,11 +389,19 @@ var internetSubnetDeleteCmd = &cobra.Command{
 
 	Short: "SubnetDelete Internet",
 	Long:  `SubnetDelete Internet`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return internetSubnetDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetSubnetDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), internetSubnetDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("subnet-delete parameter: \n%s\n", debugMarshalIndent(internetSubnetDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("subnet-delete local parameter: \n%s\n", debugMarshalIndent(internetSubnetDeleteParam))
+		return nil
 	},
 }
 
@@ -351,11 +423,19 @@ var internetSubnetUpdateCmd = &cobra.Command{
 
 	Short: "SubnetUpdate Internet",
 	Long:  `SubnetUpdate Internet`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return internetSubnetUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetSubnetUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), internetSubnetUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("subnet-update parameter: \n%s\n", debugMarshalIndent(internetSubnetUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("subnet-update local parameter: \n%s\n", debugMarshalIndent(internetSubnetUpdateParam))
+		return nil
 	},
 }
 
@@ -385,11 +465,19 @@ var internetIPv6InfoCmd = &cobra.Command{
 
 	Short: "IPv6Info Internet",
 	Long:  `IPv6Info Internet`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return internetIPv6InfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetIPv6InfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), internetIPv6InfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ipv6-info parameter: \n%s\n", debugMarshalIndent(internetIPv6InfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ipv6-info local parameter: \n%s\n", debugMarshalIndent(internetIPv6InfoParam))
+		return nil
 	},
 }
 
@@ -416,11 +504,19 @@ var internetIPv6EnableCmd = &cobra.Command{
 
 	Short: "IPv6Enable Internet",
 	Long:  `IPv6Enable Internet`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return internetIPv6EnableParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetIPv6EnableParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), internetIPv6EnableParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ipv6-enable parameter: \n%s\n", debugMarshalIndent(internetIPv6EnableParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ipv6-enable local parameter: \n%s\n", debugMarshalIndent(internetIPv6EnableParam))
+		return nil
 	},
 }
 
@@ -448,11 +544,19 @@ var internetIPv6DisableCmd = &cobra.Command{
 
 	Short: "IPv6Disable Internet",
 	Long:  `IPv6Disable Internet`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return internetIPv6DisableParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetIPv6DisableParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), internetIPv6DisableParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ipv6-disable parameter: \n%s\n", debugMarshalIndent(internetIPv6DisableParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ipv6-disable local parameter: \n%s\n", debugMarshalIndent(internetIPv6DisableParam))
+		return nil
 	},
 }
 
@@ -473,11 +577,19 @@ var internetMonitorCmd = &cobra.Command{
 
 	Short: "Monitor Internet",
 	Long:  `Monitor Internet`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return internetMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := internetMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), internetMonitorParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("monitor parameter: \n%s\n", debugMarshalIndent(internetMonitorParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(internetMonitorParam))
+		return nil
 	},
 }
 

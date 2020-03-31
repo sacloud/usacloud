@@ -50,11 +50,19 @@ var privateHostListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List PrivateHost",
 	Long:    `List PrivateHost`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return privateHostListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := privateHostListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), privateHostListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(privateHostListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(privateHostListParam))
+		return nil
 	},
 }
 
@@ -85,11 +93,19 @@ var privateHostCreateCmd = &cobra.Command{
 
 	Short: "Create PrivateHost",
 	Long:  `Create PrivateHost`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return privateHostCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := privateHostCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), privateHostCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(privateHostCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(privateHostCreateParam))
+		return nil
 	},
 }
 
@@ -119,11 +135,19 @@ var privateHostReadCmd = &cobra.Command{
 
 	Short: "Read PrivateHost",
 	Long:  `Read PrivateHost`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return privateHostReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := privateHostReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), privateHostReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(privateHostReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(privateHostReadParam))
+		return nil
 	},
 }
 
@@ -150,11 +174,19 @@ var privateHostUpdateCmd = &cobra.Command{
 
 	Short: "Update PrivateHost",
 	Long:  `Update PrivateHost`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return privateHostUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := privateHostUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), privateHostUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(privateHostUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(privateHostUpdateParam))
+		return nil
 	},
 }
 
@@ -186,11 +218,19 @@ var privateHostDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete PrivateHost",
 	Long:    `Delete PrivateHost`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return privateHostDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := privateHostDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), privateHostDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(privateHostDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(privateHostDeleteParam))
+		return nil
 	},
 }
 
@@ -218,11 +258,19 @@ var privateHostServerInfoCmd = &cobra.Command{
 	Aliases: []string{"server-list"},
 	Short:   "ServerInfo PrivateHost",
 	Long:    `ServerInfo PrivateHost`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return privateHostServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := privateHostServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), privateHostServerInfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("server-info parameter: \n%s\n", debugMarshalIndent(privateHostServerInfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("server-info local parameter: \n%s\n", debugMarshalIndent(privateHostServerInfoParam))
+		return nil
 	},
 }
 
@@ -249,11 +297,19 @@ var privateHostServerAddCmd = &cobra.Command{
 
 	Short: "ServerAdd PrivateHost",
 	Long:  `ServerAdd PrivateHost`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return privateHostServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := privateHostServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), privateHostServerAddParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("server-add parameter: \n%s\n", debugMarshalIndent(privateHostServerAddParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("server-add local parameter: \n%s\n", debugMarshalIndent(privateHostServerAddParam))
+		return nil
 	},
 }
 
@@ -282,11 +338,19 @@ var privateHostServerDeleteCmd = &cobra.Command{
 
 	Short: "ServerDelete PrivateHost",
 	Long:  `ServerDelete PrivateHost`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return privateHostServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := privateHostServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), privateHostServerDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("server-delete parameter: \n%s\n", debugMarshalIndent(privateHostServerDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("server-delete local parameter: \n%s\n", debugMarshalIndent(privateHostServerDeleteParam))
+		return nil
 	},
 }
 

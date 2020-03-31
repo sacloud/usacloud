@@ -48,11 +48,19 @@ var simpleMonitorListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List SimpleMonitor",
 	Long:    `List SimpleMonitor`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simpleMonitorListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simpleMonitorListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simpleMonitorListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(simpleMonitorListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(simpleMonitorListParam))
+		return nil
 	},
 }
 
@@ -84,11 +92,19 @@ var simpleMonitorCreateCmd = &cobra.Command{
 
 	Short: "Create SimpleMonitor",
 	Long:  `Create SimpleMonitor`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simpleMonitorCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simpleMonitorCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simpleMonitorCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(simpleMonitorCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(simpleMonitorCreateParam))
+		return nil
 	},
 }
 
@@ -135,11 +151,19 @@ var simpleMonitorReadCmd = &cobra.Command{
 
 	Short: "Read SimpleMonitor",
 	Long:  `Read SimpleMonitor`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simpleMonitorReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simpleMonitorReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simpleMonitorReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(simpleMonitorReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(simpleMonitorReadParam))
+		return nil
 	},
 }
 
@@ -166,11 +190,19 @@ var simpleMonitorUpdateCmd = &cobra.Command{
 
 	Short: "Update SimpleMonitor",
 	Long:  `Update SimpleMonitor`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simpleMonitorUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simpleMonitorUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simpleMonitorUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(simpleMonitorUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(simpleMonitorUpdateParam))
+		return nil
 	},
 }
 
@@ -218,11 +250,19 @@ var simpleMonitorDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete SimpleMonitor",
 	Long:    `Delete SimpleMonitor`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simpleMonitorDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simpleMonitorDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simpleMonitorDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(simpleMonitorDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(simpleMonitorDeleteParam))
+		return nil
 	},
 }
 
@@ -250,11 +290,19 @@ var simpleMonitorHealthCmd = &cobra.Command{
 
 	Short: "Health SimpleMonitor",
 	Long:  `Health SimpleMonitor`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simpleMonitorHealthParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simpleMonitorHealthParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simpleMonitorHealthParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("health parameter: \n%s\n", debugMarshalIndent(simpleMonitorHealthParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("health local parameter: \n%s\n", debugMarshalIndent(simpleMonitorHealthParam))
+		return nil
 	},
 }
 

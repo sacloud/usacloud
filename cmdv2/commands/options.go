@@ -21,6 +21,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/sacloud/usacloud/pkg/utils"
+
 	"github.com/sacloud/libsacloud/v2/sacloud"
 
 	"github.com/sacloud/usacloud/define"
@@ -31,8 +33,7 @@ import (
 )
 
 var (
-	cliOption = &CLIOptions{}
-	cliIO     = &IO{
+	cliIO = &IO{
 		In:       os.Stdin,
 		Out:      os.Stdout,
 		Progress: os.Stderr,
@@ -89,6 +90,13 @@ func initDebugFlags(flags *pflag.FlagSet) {
 	fs.BoolP("fake", "", false, "enable fake API driver")
 	fs.StringP("fake-store", "", "", "path to file store used by the fake API driver")
 	flags.AddFlagSet(fs)
+}
+
+func initCLIOptions(flags *pflag.FlagSet) (*CLIOptions, error) {
+	o := &CLIOptions{}
+	o.loadGlobalFlags(flags)
+
+	return o, utils.FlattenErrors(o.Validate(true))
 }
 
 func (o *CLIOptions) loadGlobalFlags(flags *pflag.FlagSet) {

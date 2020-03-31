@@ -75,11 +75,19 @@ var mobileGatewayListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List MobileGateway",
 	Long:    `List MobileGateway`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(mobileGatewayListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(mobileGatewayListParam))
+		return nil
 	},
 }
 
@@ -110,11 +118,19 @@ var mobileGatewayCreateCmd = &cobra.Command{
 
 	Short: "Create MobileGateway",
 	Long:  `Create MobileGateway`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(mobileGatewayCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(mobileGatewayCreateParam))
+		return nil
 	},
 }
 
@@ -145,11 +161,19 @@ var mobileGatewayReadCmd = &cobra.Command{
 
 	Short: "Read MobileGateway",
 	Long:  `Read MobileGateway`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(mobileGatewayReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(mobileGatewayReadParam))
+		return nil
 	},
 }
 
@@ -176,11 +200,19 @@ var mobileGatewayUpdateCmd = &cobra.Command{
 
 	Short: "Update MobileGateway",
 	Long:  `Update MobileGateway`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(mobileGatewayUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayUpdateParam))
+		return nil
 	},
 }
 
@@ -213,11 +245,19 @@ var mobileGatewayDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete MobileGateway",
 	Long:    `Delete MobileGateway`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(mobileGatewayDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(mobileGatewayDeleteParam))
+		return nil
 	},
 }
 
@@ -246,11 +286,19 @@ var mobileGatewayBootCmd = &cobra.Command{
 	Aliases: []string{"power-on"},
 	Short:   "Boot MobileGateway",
 	Long:    `Boot MobileGateway`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayBootParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("boot parameter: \n%s\n", debugMarshalIndent(mobileGatewayBootParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(mobileGatewayBootParam))
+		return nil
 	},
 }
 
@@ -271,11 +319,19 @@ var mobileGatewayShutdownCmd = &cobra.Command{
 	Aliases: []string{"power-off"},
 	Short:   "Shutdown MobileGateway",
 	Long:    `Shutdown MobileGateway`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayShutdownParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("shutdown parameter: \n%s\n", debugMarshalIndent(mobileGatewayShutdownParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(mobileGatewayShutdownParam))
+		return nil
 	},
 }
 
@@ -296,11 +352,19 @@ var mobileGatewayShutdownForceCmd = &cobra.Command{
 	Aliases: []string{"stop"},
 	Short:   "ShutdownForce MobileGateway",
 	Long:    `ShutdownForce MobileGateway`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayShutdownForceParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("shutdown-force parameter: \n%s\n", debugMarshalIndent(mobileGatewayShutdownForceParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(mobileGatewayShutdownForceParam))
+		return nil
 	},
 }
 
@@ -321,11 +385,19 @@ var mobileGatewayResetCmd = &cobra.Command{
 
 	Short: "Reset MobileGateway",
 	Long:  `Reset MobileGateway`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayResetParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("reset parameter: \n%s\n", debugMarshalIndent(mobileGatewayResetParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(mobileGatewayResetParam))
+		return nil
 	},
 }
 
@@ -346,11 +418,19 @@ var mobileGatewayWaitForBootCmd = &cobra.Command{
 
 	Short: "Wait until boot is completed",
 	Long:  `Wait until boot is completed`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayWaitForBootParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("wait-for-boot parameter: \n%s\n", debugMarshalIndent(mobileGatewayWaitForBootParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(mobileGatewayWaitForBootParam))
+		return nil
 	},
 }
 
@@ -370,11 +450,19 @@ var mobileGatewayWaitForDownCmd = &cobra.Command{
 
 	Short: "Wait until shutdown is completed",
 	Long:  `Wait until shutdown is completed`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayWaitForDownParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("wait-for-down parameter: \n%s\n", debugMarshalIndent(mobileGatewayWaitForDownParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(mobileGatewayWaitForDownParam))
+		return nil
 	},
 }
 
@@ -394,11 +482,19 @@ var mobileGatewayInterfaceInfoCmd = &cobra.Command{
 	Aliases: []string{"interface-list"},
 	Short:   "Show information of NIC(s) connected to mobile-gateway",
 	Long:    `Show information of NIC(s) connected to mobile-gateway`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayInterfaceInfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("interface-info parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceInfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("interface-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceInfoParam))
+		return nil
 	},
 }
 
@@ -425,11 +521,19 @@ var mobileGatewayInterfaceConnectCmd = &cobra.Command{
 
 	Short: "Connected to switch",
 	Long:  `Connected to switch`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayInterfaceConnectParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("interface-connect parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceConnectParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("interface-connect local parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceConnectParam))
+		return nil
 	},
 }
 
@@ -453,11 +557,19 @@ var mobileGatewayInterfaceUpdateCmd = &cobra.Command{
 
 	Short: "Update interface",
 	Long:  `Update interface`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayInterfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayInterfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayInterfaceUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("interface-update parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("interface-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceUpdateParam))
+		return nil
 	},
 }
 
@@ -480,11 +592,19 @@ var mobileGatewayInterfaceDisconnectCmd = &cobra.Command{
 
 	Short: "Disconnected to switch",
 	Long:  `Disconnected to switch`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayInterfaceDisconnectParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("interface-disconnect parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceDisconnectParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("interface-disconnect local parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceDisconnectParam))
+		return nil
 	},
 }
 
@@ -505,11 +625,19 @@ var mobileGatewayTrafficControlInfoCmd = &cobra.Command{
 
 	Short: "Show information of traffic-control",
 	Long:  `Show information of traffic-control`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayTrafficControlInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayTrafficControlInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayTrafficControlInfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("traffic-control-info parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlInfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("traffic-control-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlInfoParam))
+		return nil
 	},
 }
 
@@ -536,11 +664,19 @@ var mobileGatewayTrafficControlEnableCmd = &cobra.Command{
 
 	Short: "Enable traffic-control",
 	Long:  `Enable traffic-control`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayTrafficControlEnableParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayTrafficControlEnableParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayTrafficControlEnableParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("traffic-control-enable parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlEnableParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("traffic-control-enable local parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlEnableParam))
+		return nil
 	},
 }
 
@@ -566,11 +702,19 @@ var mobileGatewayTrafficControlUpdateCmd = &cobra.Command{
 
 	Short: "Update traffic-control config",
 	Long:  `Update traffic-control config`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayTrafficControlUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayTrafficControlUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayTrafficControlUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("traffic-control-update parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("traffic-control-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlUpdateParam))
+		return nil
 	},
 }
 
@@ -596,11 +740,19 @@ var mobileGatewayTrafficControlDisableCmd = &cobra.Command{
 	Aliases: []string{"traffic-control-delete"},
 	Short:   "Disable traffic-control config",
 	Long:    `Disable traffic-control config`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayTrafficControlDisableParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayTrafficControlDisableParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayTrafficControlDisableParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("traffic-control-disable parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlDisableParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("traffic-control-disable local parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlDisableParam))
+		return nil
 	},
 }
 
@@ -621,11 +773,19 @@ var mobileGatewayStaticRouteInfoCmd = &cobra.Command{
 	Aliases: []string{"static-route-list"},
 	Short:   "Show information of static-routes",
 	Long:    `Show information of static-routes`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayStaticRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayStaticRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayStaticRouteInfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("static-route-info parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteInfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("static-route-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteInfoParam))
+		return nil
 	},
 }
 
@@ -652,11 +812,19 @@ var mobileGatewayStaticRouteAddCmd = &cobra.Command{
 
 	Short: "Add static-route",
 	Long:  `Add static-route`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayStaticRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayStaticRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayStaticRouteAddParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("static-route-add parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteAddParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("static-route-add local parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteAddParam))
+		return nil
 	},
 }
 
@@ -679,11 +847,19 @@ var mobileGatewayStaticRouteUpdateCmd = &cobra.Command{
 
 	Short: "Update static-route",
 	Long:  `Update static-route`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayStaticRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayStaticRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayStaticRouteUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("static-route-update parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("static-route-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteUpdateParam))
+		return nil
 	},
 }
 
@@ -707,11 +883,19 @@ var mobileGatewayStaticRouteDeleteCmd = &cobra.Command{
 
 	Short: "Delete static-route",
 	Long:  `Delete static-route`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayStaticRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayStaticRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayStaticRouteDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("static-route-delete parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("static-route-delete local parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteDeleteParam))
+		return nil
 	},
 }
 
@@ -733,11 +917,19 @@ var mobileGatewaySIMInfoCmd = &cobra.Command{
 	Aliases: []string{"interface-list"},
 	Short:   "Show information of NIC(s) connected to mobile-gateway",
 	Long:    `Show information of NIC(s) connected to mobile-gateway`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewaySIMInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewaySIMInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMInfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("sim-info parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMInfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("sim-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMInfoParam))
+		return nil
 	},
 }
 
@@ -764,11 +956,19 @@ var mobileGatewaySIMAddCmd = &cobra.Command{
 
 	Short: "Connected to switch",
 	Long:  `Connected to switch`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewaySIMAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewaySIMAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMAddParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("sim-add parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMAddParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("sim-add local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMAddParam))
+		return nil
 	},
 }
 
@@ -791,11 +991,19 @@ var mobileGatewaySIMUpdateCmd = &cobra.Command{
 
 	Short: "Connected to switch",
 	Long:  `Connected to switch`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewaySIMUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewaySIMUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("sim-update parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("sim-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMUpdateParam))
+		return nil
 	},
 }
 
@@ -818,11 +1026,19 @@ var mobileGatewaySIMDeleteCmd = &cobra.Command{
 
 	Short: "Disconnected to switch",
 	Long:  `Disconnected to switch`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewaySIMDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewaySIMDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("sim-delete parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("sim-delete local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMDeleteParam))
+		return nil
 	},
 }
 
@@ -844,11 +1060,19 @@ var mobileGatewaySIMRouteInfoCmd = &cobra.Command{
 	Aliases: []string{"sim-route-list"},
 	Short:   "Show information of sim-routes",
 	Long:    `Show information of sim-routes`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewaySIMRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewaySIMRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMRouteInfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("sim-route-info parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteInfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("sim-route-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteInfoParam))
+		return nil
 	},
 }
 
@@ -875,11 +1099,19 @@ var mobileGatewaySIMRouteAddCmd = &cobra.Command{
 
 	Short: "Add sim-route",
 	Long:  `Add sim-route`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewaySIMRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewaySIMRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMRouteAddParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("sim-route-add parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteAddParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("sim-route-add local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteAddParam))
+		return nil
 	},
 }
 
@@ -902,11 +1134,19 @@ var mobileGatewaySIMRouteUpdateCmd = &cobra.Command{
 
 	Short: "Update sim-route",
 	Long:  `Update sim-route`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewaySIMRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewaySIMRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMRouteUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("sim-route-update parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("sim-route-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteUpdateParam))
+		return nil
 	},
 }
 
@@ -930,11 +1170,19 @@ var mobileGatewaySIMRouteDeleteCmd = &cobra.Command{
 
 	Short: "Delete sim-route",
 	Long:  `Delete sim-route`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewaySIMRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewaySIMRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMRouteDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("sim-route-delete parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("sim-route-delete local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteDeleteParam))
+		return nil
 	},
 }
 
@@ -956,11 +1204,19 @@ var mobileGatewayDNSUpdateCmd = &cobra.Command{
 
 	Short: "Update interface",
 	Long:  `Update interface`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayDNSUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayDNSUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayDNSUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("dns-update parameter: \n%s\n", debugMarshalIndent(mobileGatewayDNSUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("dns-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayDNSUpdateParam))
+		return nil
 	},
 }
 
@@ -983,11 +1239,19 @@ var mobileGatewayLogsCmd = &cobra.Command{
 
 	Short: "Logs MobileGateway",
 	Long:  `Logs MobileGateway`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return mobileGatewayLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := mobileGatewayLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), mobileGatewayLogsParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("logs parameter: \n%s\n", debugMarshalIndent(mobileGatewayLogsParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("logs local parameter: \n%s\n", debugMarshalIndent(mobileGatewayLogsParam))
+		return nil
 	},
 }
 

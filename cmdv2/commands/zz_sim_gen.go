@@ -57,11 +57,19 @@ var simListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List SIM",
 	Long:    `List SIM`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(simListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(simListParam))
+		return nil
 	},
 }
 
@@ -92,11 +100,19 @@ var simCreateCmd = &cobra.Command{
 
 	Short: "Create SIM",
 	Long:  `Create SIM`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(simCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(simCreateParam))
+		return nil
 	},
 }
 
@@ -131,11 +147,19 @@ var simReadCmd = &cobra.Command{
 
 	Short: "Read SIM",
 	Long:  `Read SIM`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(simReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(simReadParam))
+		return nil
 	},
 }
 
@@ -162,11 +186,19 @@ var simUpdateCmd = &cobra.Command{
 
 	Short: "Update SIM",
 	Long:  `Update SIM`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(simUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(simUpdateParam))
+		return nil
 	},
 }
 
@@ -198,11 +230,19 @@ var simDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete SIM",
 	Long:    `Delete SIM`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(simDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(simDeleteParam))
+		return nil
 	},
 }
 
@@ -224,11 +264,19 @@ var simCarrierInfoCmd = &cobra.Command{
 	Aliases: []string{"carrier-list"},
 	Short:   "CarrierInfo SIM",
 	Long:    `CarrierInfo SIM`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simCarrierInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simCarrierInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simCarrierInfoParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("carrier-info parameter: \n%s\n", debugMarshalIndent(simCarrierInfoParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("carrier-info local parameter: \n%s\n", debugMarshalIndent(simCarrierInfoParam))
+		return nil
 	},
 }
 
@@ -255,11 +303,19 @@ var simCarrierUpdateCmd = &cobra.Command{
 
 	Short: "CarrierUpdate SIM",
 	Long:  `CarrierUpdate SIM`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simCarrierUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simCarrierUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simCarrierUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("carrier-update parameter: \n%s\n", debugMarshalIndent(simCarrierUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("carrier-update local parameter: \n%s\n", debugMarshalIndent(simCarrierUpdateParam))
+		return nil
 	},
 }
 
@@ -281,11 +337,19 @@ var simActivateCmd = &cobra.Command{
 
 	Short: "Activate SIM",
 	Long:  `Activate SIM`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simActivateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simActivateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simActivateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("activate parameter: \n%s\n", debugMarshalIndent(simActivateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("activate local parameter: \n%s\n", debugMarshalIndent(simActivateParam))
+		return nil
 	},
 }
 
@@ -306,11 +370,19 @@ var simDeactivateCmd = &cobra.Command{
 
 	Short: "Deactivate SIM",
 	Long:  `Deactivate SIM`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simDeactivateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simDeactivateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simDeactivateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("deactivate parameter: \n%s\n", debugMarshalIndent(simDeactivateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("deactivate local parameter: \n%s\n", debugMarshalIndent(simDeactivateParam))
+		return nil
 	},
 }
 
@@ -331,11 +403,19 @@ var simImeiLockCmd = &cobra.Command{
 
 	Short: "ImeiLock SIM",
 	Long:  `ImeiLock SIM`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simImeiLockParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simImeiLockParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simImeiLockParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("imei-lock parameter: \n%s\n", debugMarshalIndent(simImeiLockParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("imei-lock local parameter: \n%s\n", debugMarshalIndent(simImeiLockParam))
+		return nil
 	},
 }
 
@@ -357,11 +437,19 @@ var simIpAddCmd = &cobra.Command{
 
 	Short: "IpAdd SIM",
 	Long:  `IpAdd SIM`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simIpAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simIpAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simIpAddParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ip-add parameter: \n%s\n", debugMarshalIndent(simIpAddParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ip-add local parameter: \n%s\n", debugMarshalIndent(simIpAddParam))
+		return nil
 	},
 }
 
@@ -383,11 +471,19 @@ var simImeiUnlockCmd = &cobra.Command{
 
 	Short: "ImeiUnlock SIM",
 	Long:  `ImeiUnlock SIM`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simImeiUnlockParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simImeiUnlockParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simImeiUnlockParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("imei-unlock parameter: \n%s\n", debugMarshalIndent(simImeiUnlockParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("imei-unlock local parameter: \n%s\n", debugMarshalIndent(simImeiUnlockParam))
+		return nil
 	},
 }
 
@@ -408,11 +504,19 @@ var simIpDeleteCmd = &cobra.Command{
 	Aliases: []string{"ip-del"},
 	Short:   "IpDelete SIM",
 	Long:    `IpDelete SIM`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simIpDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simIpDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simIpDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ip-delete parameter: \n%s\n", debugMarshalIndent(simIpDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ip-delete local parameter: \n%s\n", debugMarshalIndent(simIpDeleteParam))
+		return nil
 	},
 }
 
@@ -433,11 +537,19 @@ var simLogsCmd = &cobra.Command{
 
 	Short: "Logs SIM",
 	Long:  `Logs SIM`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simLogsParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("logs parameter: \n%s\n", debugMarshalIndent(simLogsParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("logs local parameter: \n%s\n", debugMarshalIndent(simLogsParam))
+		return nil
 	},
 }
 
@@ -466,11 +578,19 @@ var simMonitorCmd = &cobra.Command{
 
 	Short: "Monitor SIM",
 	Long:  `Monitor SIM`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return simMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := simMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), simMonitorParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("monitor parameter: \n%s\n", debugMarshalIndent(simMonitorParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(simMonitorParam))
+		return nil
 	},
 }
 

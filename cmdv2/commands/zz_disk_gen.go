@@ -56,11 +56,19 @@ var diskListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Disk",
 	Long:    `List Disk`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return diskListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := diskListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), diskListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(diskListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(diskListParam))
+		return nil
 	},
 }
 
@@ -95,11 +103,19 @@ var diskCreateCmd = &cobra.Command{
 
 	Short: "Create Disk",
 	Long:  `Create Disk`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return diskCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := diskCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), diskCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(diskCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(diskCreateParam))
+		return nil
 	},
 }
 
@@ -135,11 +151,19 @@ var diskReadCmd = &cobra.Command{
 
 	Short: "Read Disk",
 	Long:  `Read Disk`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return diskReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := diskReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), diskReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(diskReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(diskReadParam))
+		return nil
 	},
 }
 
@@ -166,11 +190,19 @@ var diskUpdateCmd = &cobra.Command{
 
 	Short: "Update Disk",
 	Long:  `Update Disk`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return diskUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := diskUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), diskUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(diskUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(diskUpdateParam))
+		return nil
 	},
 }
 
@@ -203,11 +235,19 @@ var diskDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Disk",
 	Long:    `Delete Disk`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return diskDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := diskDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), diskDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(diskDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(diskDeleteParam))
+		return nil
 	},
 }
 
@@ -235,11 +275,19 @@ var diskEditCmd = &cobra.Command{
 	Aliases: []string{"config"},
 	Short:   "Edit Disk",
 	Long:    `Edit Disk`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return diskEditParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := diskEditParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), diskEditParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("edit parameter: \n%s\n", debugMarshalIndent(diskEditParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("edit local parameter: \n%s\n", debugMarshalIndent(diskEditParam))
+		return nil
 	},
 }
 
@@ -275,11 +323,19 @@ var diskResizePartitionCmd = &cobra.Command{
 
 	Short: "ResizePartition Disk",
 	Long:  `ResizePartition Disk`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return diskResizePartitionParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := diskResizePartitionParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), diskResizePartitionParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("resize-partition parameter: \n%s\n", debugMarshalIndent(diskResizePartitionParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("resize-partition local parameter: \n%s\n", debugMarshalIndent(diskResizePartitionParam))
+		return nil
 	},
 }
 
@@ -307,11 +363,19 @@ var diskReinstallFromArchiveCmd = &cobra.Command{
 
 	Short: "ReinstallFromArchive Disk",
 	Long:  `ReinstallFromArchive Disk`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return diskReinstallFromArchiveParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := diskReinstallFromArchiveParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), diskReinstallFromArchiveParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("reinstall-from-archive parameter: \n%s\n", debugMarshalIndent(diskReinstallFromArchiveParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("reinstall-from-archive local parameter: \n%s\n", debugMarshalIndent(diskReinstallFromArchiveParam))
+		return nil
 	},
 }
 
@@ -334,11 +398,19 @@ var diskReinstallFromDiskCmd = &cobra.Command{
 
 	Short: "ReinstallFromDisk Disk",
 	Long:  `ReinstallFromDisk Disk`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return diskReinstallFromDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := diskReinstallFromDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), diskReinstallFromDiskParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("reinstall-from-disk parameter: \n%s\n", debugMarshalIndent(diskReinstallFromDiskParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("reinstall-from-disk local parameter: \n%s\n", debugMarshalIndent(diskReinstallFromDiskParam))
+		return nil
 	},
 }
 
@@ -361,11 +433,19 @@ var diskReinstallToBlankCmd = &cobra.Command{
 
 	Short: "ReinstallToBlank Disk",
 	Long:  `ReinstallToBlank Disk`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return diskReinstallToBlankParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := diskReinstallToBlankParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), diskReinstallToBlankParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("reinstall-to-blank parameter: \n%s\n", debugMarshalIndent(diskReinstallToBlankParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("reinstall-to-blank local parameter: \n%s\n", debugMarshalIndent(diskReinstallToBlankParam))
+		return nil
 	},
 }
 
@@ -387,11 +467,19 @@ var diskServerConnectCmd = &cobra.Command{
 
 	Short: "ServerConnect Disk",
 	Long:  `ServerConnect Disk`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return diskServerConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := diskServerConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), diskServerConnectParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("server-connect parameter: \n%s\n", debugMarshalIndent(diskServerConnectParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("server-connect local parameter: \n%s\n", debugMarshalIndent(diskServerConnectParam))
+		return nil
 	},
 }
 
@@ -413,11 +501,19 @@ var diskServerDisconnectCmd = &cobra.Command{
 
 	Short: "ServerDisconnect Disk",
 	Long:  `ServerDisconnect Disk`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return diskServerDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := diskServerDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), diskServerDisconnectParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("server-disconnect parameter: \n%s\n", debugMarshalIndent(diskServerDisconnectParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("server-disconnect local parameter: \n%s\n", debugMarshalIndent(diskServerDisconnectParam))
+		return nil
 	},
 }
 
@@ -438,11 +534,19 @@ var diskMonitorCmd = &cobra.Command{
 
 	Short: "Monitor Disk",
 	Long:  `Monitor Disk`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return diskMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := diskMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), diskMonitorParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("monitor parameter: \n%s\n", debugMarshalIndent(diskMonitorParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(diskMonitorParam))
+		return nil
 	},
 }
 
@@ -472,11 +576,19 @@ var diskWaitForCopyCmd = &cobra.Command{
 	Aliases: []string{"wait"},
 	Short:   "WaitForCopy Disk",
 	Long:    `WaitForCopy Disk`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return diskWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := diskWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), diskWaitForCopyParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("wait-for-copy parameter: \n%s\n", debugMarshalIndent(diskWaitForCopyParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("wait-for-copy local parameter: \n%s\n", debugMarshalIndent(diskWaitForCopyParam))
+		return nil
 	},
 }
 

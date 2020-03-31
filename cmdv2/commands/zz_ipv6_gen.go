@@ -47,11 +47,19 @@ var ipv6ListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List IPv6",
 	Long:    `List IPv6`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return ipv6ListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := ipv6ListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), ipv6ListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(ipv6ListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(ipv6ListParam))
+		return nil
 	},
 }
 
@@ -83,11 +91,19 @@ var ipv6PtrAddCmd = &cobra.Command{
 
 	Short: "PtrAdd IPv6",
 	Long:  `PtrAdd IPv6`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return ipv6PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := ipv6PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), ipv6PtrAddParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ptr-add parameter: \n%s\n", debugMarshalIndent(ipv6PtrAddParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ptr-add local parameter: \n%s\n", debugMarshalIndent(ipv6PtrAddParam))
+		return nil
 	},
 }
 
@@ -114,11 +130,19 @@ var ipv6PtrReadCmd = &cobra.Command{
 
 	Short: "PtrRead IPv6",
 	Long:  `PtrRead IPv6`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return ipv6PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := ipv6PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), ipv6PtrReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ptr-read parameter: \n%s\n", debugMarshalIndent(ipv6PtrReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ptr-read local parameter: \n%s\n", debugMarshalIndent(ipv6PtrReadParam))
+		return nil
 	},
 }
 
@@ -143,11 +167,19 @@ var ipv6PtrUpdateCmd = &cobra.Command{
 
 	Short: "PtrUpdate IPv6",
 	Long:  `PtrUpdate IPv6`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return ipv6PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := ipv6PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), ipv6PtrUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ptr-update parameter: \n%s\n", debugMarshalIndent(ipv6PtrUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ptr-update local parameter: \n%s\n", debugMarshalIndent(ipv6PtrUpdateParam))
+		return nil
 	},
 }
 
@@ -174,11 +206,19 @@ var ipv6PtrDeleteCmd = &cobra.Command{
 
 	Short: "PtrDelete IPv6",
 	Long:  `PtrDelete IPv6`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return ipv6PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := ipv6PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), ipv6PtrDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ptr-delete parameter: \n%s\n", debugMarshalIndent(ipv6PtrDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ptr-delete local parameter: \n%s\n", debugMarshalIndent(ipv6PtrDeleteParam))
+		return nil
 	},
 }
 

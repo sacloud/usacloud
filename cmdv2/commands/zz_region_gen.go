@@ -44,11 +44,19 @@ var regionListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List Region (default)",
 	Long:    `List Region (default)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return regionListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := regionListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), regionListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(regionListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(regionListParam))
+		return nil
 	},
 }
 
@@ -78,11 +86,19 @@ var regionReadCmd = &cobra.Command{
 
 	Short: "Read Region",
 	Long:  `Read Region`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return regionReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := regionReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), regionReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(regionReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(regionReadParam))
+		return nil
 	},
 }
 

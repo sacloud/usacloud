@@ -47,11 +47,19 @@ var autoBackupListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List AutoBackup",
 	Long:    `List AutoBackup`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return autoBackupListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := autoBackupListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), autoBackupListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(autoBackupListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(autoBackupListParam))
+		return nil
 	},
 }
 
@@ -82,11 +90,19 @@ var autoBackupCreateCmd = &cobra.Command{
 
 	Short: "Create AutoBackup",
 	Long:  `Create AutoBackup`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return autoBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := autoBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), autoBackupCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(autoBackupCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(autoBackupCreateParam))
+		return nil
 	},
 }
 
@@ -119,11 +135,19 @@ var autoBackupReadCmd = &cobra.Command{
 
 	Short: "Read AutoBackup",
 	Long:  `Read AutoBackup`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return autoBackupReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := autoBackupReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), autoBackupReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(autoBackupReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(autoBackupReadParam))
+		return nil
 	},
 }
 
@@ -150,11 +174,19 @@ var autoBackupUpdateCmd = &cobra.Command{
 
 	Short: "Update AutoBackup",
 	Long:  `Update AutoBackup`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return autoBackupUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := autoBackupUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), autoBackupUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(autoBackupUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(autoBackupUpdateParam))
+		return nil
 	},
 }
 
@@ -188,11 +220,19 @@ var autoBackupDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete AutoBackup",
 	Long:    `Delete AutoBackup`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return autoBackupDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := autoBackupDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), autoBackupDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(autoBackupDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(autoBackupDeleteParam))
+		return nil
 	},
 }
 

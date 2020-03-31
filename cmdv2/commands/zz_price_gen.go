@@ -43,11 +43,19 @@ var priceListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List Price (default)",
 	Long:    `List Price (default)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return priceListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := priceListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), priceListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(priceListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(priceListParam))
+		return nil
 	},
 }
 

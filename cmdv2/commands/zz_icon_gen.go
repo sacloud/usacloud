@@ -47,11 +47,19 @@ var iconListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Icon",
 	Long:    `List Icon`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return iconListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := iconListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), iconListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(iconListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(iconListParam))
+		return nil
 	},
 }
 
@@ -83,11 +91,19 @@ var iconCreateCmd = &cobra.Command{
 
 	Short: "Create Icon",
 	Long:  `Create Icon`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return iconCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := iconCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), iconCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(iconCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(iconCreateParam))
+		return nil
 	},
 }
 
@@ -116,11 +132,19 @@ var iconReadCmd = &cobra.Command{
 
 	Short: "Read Icon",
 	Long:  `Read Icon`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return iconReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := iconReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), iconReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(iconReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(iconReadParam))
+		return nil
 	},
 }
 
@@ -147,11 +171,19 @@ var iconUpdateCmd = &cobra.Command{
 
 	Short: "Update Icon",
 	Long:  `Update Icon`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return iconUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := iconUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), iconUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(iconUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(iconUpdateParam))
+		return nil
 	},
 }
 
@@ -181,11 +213,19 @@ var iconDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Icon",
 	Long:    `Delete Icon`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return iconDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := iconDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), iconDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(iconDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(iconDeleteParam))
+		return nil
 	},
 }
 

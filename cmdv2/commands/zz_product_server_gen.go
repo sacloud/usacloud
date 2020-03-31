@@ -44,11 +44,19 @@ var productServerListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List ProductServer (default)",
 	Long:    `List ProductServer (default)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return productServerListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := productServerListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), productServerListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(productServerListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(productServerListParam))
+		return nil
 	},
 }
 
@@ -78,11 +86,19 @@ var productServerReadCmd = &cobra.Command{
 
 	Short: "Read ProductServer",
 	Long:  `Read ProductServer`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return productServerReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := productServerReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), productServerReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(productServerReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(productServerReadParam))
+		return nil
 	},
 }
 

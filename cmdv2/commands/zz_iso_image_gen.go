@@ -51,11 +51,19 @@ var isoImageListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List ISOImage",
 	Long:    `List ISOImage`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return isoImageListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoImageListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), isoImageListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(isoImageListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(isoImageListParam))
+		return nil
 	},
 }
 
@@ -87,11 +95,19 @@ var isoImageCreateCmd = &cobra.Command{
 
 	Short: "Create ISOImage",
 	Long:  `Create ISOImage`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return isoImageCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoImageCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), isoImageCreateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(isoImageCreateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(isoImageCreateParam))
+		return nil
 	},
 }
 
@@ -123,11 +139,19 @@ var isoImageReadCmd = &cobra.Command{
 
 	Short: "Read ISOImage",
 	Long:  `Read ISOImage`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return isoImageReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoImageReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), isoImageReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(isoImageReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(isoImageReadParam))
+		return nil
 	},
 }
 
@@ -154,11 +178,19 @@ var isoImageUpdateCmd = &cobra.Command{
 
 	Short: "Update ISOImage",
 	Long:  `Update ISOImage`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return isoImageUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoImageUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), isoImageUpdateParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(isoImageUpdateParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(isoImageUpdateParam))
+		return nil
 	},
 }
 
@@ -190,11 +222,19 @@ var isoImageDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete ISOImage",
 	Long:    `Delete ISOImage`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return isoImageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoImageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), isoImageDeleteParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(isoImageDeleteParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(isoImageDeleteParam))
+		return nil
 	},
 }
 
@@ -222,11 +262,19 @@ var isoImageUploadCmd = &cobra.Command{
 
 	Short: "Upload ISOImage",
 	Long:  `Upload ISOImage`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return isoImageUploadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoImageUploadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), isoImageUploadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("upload parameter: \n%s\n", debugMarshalIndent(isoImageUploadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("upload local parameter: \n%s\n", debugMarshalIndent(isoImageUploadParam))
+		return nil
 	},
 }
 
@@ -255,11 +303,19 @@ var isoImageDownloadCmd = &cobra.Command{
 
 	Short: "Download ISOImage",
 	Long:  `Download ISOImage`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return isoImageDownloadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoImageDownloadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), isoImageDownloadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("download parameter: \n%s\n", debugMarshalIndent(isoImageDownloadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("download local parameter: \n%s\n", debugMarshalIndent(isoImageDownloadParam))
+		return nil
 	},
 }
 
@@ -281,11 +337,19 @@ var isoImageFTPOpenCmd = &cobra.Command{
 
 	Short: "FTPOpen ISOImage",
 	Long:  `FTPOpen ISOImage`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return isoImageFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoImageFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), isoImageFTPOpenParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ftp-open parameter: \n%s\n", debugMarshalIndent(isoImageFTPOpenParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ftp-open local parameter: \n%s\n", debugMarshalIndent(isoImageFTPOpenParam))
+		return nil
 	},
 }
 
@@ -313,11 +377,19 @@ var isoImageFTPCloseCmd = &cobra.Command{
 
 	Short: "FTPClose ISOImage",
 	Long:  `FTPClose ISOImage`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return isoImageFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := isoImageFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), isoImageFTPCloseParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("ftp-close parameter: \n%s\n", debugMarshalIndent(isoImageFTPCloseParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("ftp-close local parameter: \n%s\n", debugMarshalIndent(isoImageFTPCloseParam))
+		return nil
 	},
 }
 

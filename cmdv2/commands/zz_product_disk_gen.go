@@ -44,11 +44,19 @@ var productDiskListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List ProductDisk (default)",
 	Long:    `List ProductDisk (default)`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return productDiskListParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := productDiskListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), productDiskListParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(productDiskListParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(productDiskListParam))
+		return nil
 	},
 }
 
@@ -78,11 +86,19 @@ var productDiskReadCmd = &cobra.Command{
 
 	Short: "Read ProductDisk",
 	Long:  `Read ProductDisk`,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		return productDiskReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := productDiskReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		ctx, err := newCLIContext(globalFlags(), productDiskReadParam)
+		if err != nil {
+			return err
+		}
+
 		// TODO DEBUG
-		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(productDiskReadParam))
-		return err
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(productDiskReadParam))
+		return nil
 	},
 }
 

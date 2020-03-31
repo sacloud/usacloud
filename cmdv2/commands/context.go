@@ -23,6 +23,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/spf13/pflag"
+
 	libsacloud "github.com/sacloud/libsacloud/v2"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/fake"
@@ -50,12 +52,19 @@ type cliContext struct {
 	clientOnce sync.Once
 }
 
-func newCLIContext(ctx context.Context, option *CLIOptions, formatter interface{}) Context {
+func newCLIContext(globalFlags *pflag.FlagSet, formatter interface{}) (Context, error) {
+	// TODO あとで変更する
+	ctx := context.TODO()
+	option, err := initCLIOptions(globalFlags)
+	if err != nil {
+		return nil, err
+	}
+
 	return &cliContext{
 		parentCtx: ctx,
 		option:    option,
 		output:    getOutputWriter(formatter),
-	}
+	}, nil
 }
 
 func (c *cliContext) Option() *CLIOptions {

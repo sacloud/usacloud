@@ -18,7 +18,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/spf13/pflag"
 
 	"github.com/spf13/cobra"
 )
@@ -39,15 +39,13 @@ var rootCmd = &cobra.Command{
 	Long:  `CLI to manage to resources on the SAKURA Cloud`,
 }
 
-func rootCmdPersistPreRunE(cmd *cobra.Command, args []string) error {
-	cliOption.loadGlobalFlags(rootCmd.PersistentFlags())
-	return utils.FlattenErrors(cliOption.Validate(true))
+func globalFlags() *pflag.FlagSet {
+	return rootCmd.PersistentFlags()
 }
 
 func init() {
-	rootCmd.PersistentPreRunE = rootCmdPersistPreRunE
 	rootCmd.Flags().SortFlags = false
 	rootCmd.PersistentFlags().SortFlags = false
 
-	initGlobalFlags(rootCmd.PersistentFlags())
+	initGlobalFlags(globalFlags())
 }
