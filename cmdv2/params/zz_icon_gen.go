@@ -29,13 +29,13 @@ import (
 
 // ListIconParam is input parameters for the sacloud API
 type ListIconParam struct {
+	From  int
+	Max   int
+	Sort  []string
 	Scope string
 	Tags  []string
 	Name  []string
 	Id    []sacloud.ID
-	From  int
-	Max   int
-	Sort  []string
 
 	input Input
 }
@@ -60,6 +60,15 @@ func (p *ListIconParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListIconParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.From) {
+		p.From = 0
+	}
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
+	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
 	if utils.IsEmpty(p.Scope) {
 		p.Scope = ""
 	}
@@ -71,15 +80,6 @@ func (p *ListIconParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
-	}
-	if utils.IsEmpty(p.From) {
-		p.From = 0
-	}
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
-	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
 	}
 
 }
@@ -157,6 +157,27 @@ func (p *ListIconParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListIconParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListIconParam) GetFrom() int {
+	return p.From
+}
+func (p *ListIconParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListIconParam) GetMax() int {
+	return p.Max
+}
+func (p *ListIconParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListIconParam) GetSort() []string {
+	return p.Sort
+}
 func (p *ListIconParam) SetScope(v string) {
 	p.Scope = v
 }
@@ -184,27 +205,6 @@ func (p *ListIconParam) SetId(v []sacloud.ID) {
 
 func (p *ListIconParam) GetId() []sacloud.ID {
 	return p.Id
-}
-func (p *ListIconParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListIconParam) GetFrom() int {
-	return p.From
-}
-func (p *ListIconParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListIconParam) GetMax() int {
-	return p.Max
-}
-func (p *ListIconParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListIconParam) GetSort() []string {
-	return p.Sort
 }
 
 // CreateIconParam is input parameters for the sacloud API

@@ -61,13 +61,13 @@ var isoImageListCmd = &cobra.Command{
 
 func isoImageListCmdInit() {
 	fs := isoImageListCmd.Flags()
-	fs.IntVarP(&isoImageListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&isoImageListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&isoImageListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringVarP(&isoImageListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
-	fs.StringSliceVarP(&isoImageListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.StringSliceVarP(&isoImageListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &isoImageListParam.Id), "id", "", "set filter by id(s)")
+	fs.IntVarP(&isoImageListParam.From, "from", "", 0, "set offset")
+	fs.StringVarP(&isoImageListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
+	fs.StringSliceVarP(&isoImageListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 }
 
 var isoImageCreateCmd = &cobra.Command{
@@ -85,12 +85,12 @@ var isoImageCreateCmd = &cobra.Command{
 
 func isoImageCreateCmdInit() {
 	fs := isoImageCreateCmd.Flags()
+	fs.StringSliceVarP(&isoImageCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &isoImageCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.IntVarP(&isoImageCreateParam.Size, "size", "", 5, "set iso size(GB)")
 	fs.StringVarP(&isoImageCreateParam.ISOFile, "iso-file", "", "", "set iso image file")
 	fs.StringVarP(&isoImageCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&isoImageCreateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&isoImageCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &isoImageCreateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
 var isoImageReadCmd = &cobra.Command{
@@ -124,10 +124,10 @@ var isoImageUpdateCmd = &cobra.Command{
 
 func isoImageUpdateCmdInit() {
 	fs := isoImageUpdateCmd.Flags()
-	fs.StringVarP(&isoImageUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&isoImageUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&isoImageUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &isoImageUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringVarP(&isoImageUpdateParam.Name, "name", "", "", "set resource display name")
 }
 
 var isoImageDeleteCmd = &cobra.Command{

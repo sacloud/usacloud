@@ -29,11 +29,11 @@ import (
 
 // ListProductLicenseParam is input parameters for the sacloud API
 type ListProductLicenseParam struct {
-	Name []string
 	Id   []sacloud.ID
 	From int
 	Max  int
 	Sort []string
+	Name []string
 
 	input Input
 }
@@ -58,9 +58,6 @@ func (p *ListProductLicenseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListProductLicenseParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
@@ -73,21 +70,14 @@ func (p *ListProductLicenseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
 
 }
 
 func (p *ListProductLicenseParam) validate() error {
 	var errors []error
-
-	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["ProductLicense"].Commands["list"].Params["id"].ValidateFunc
@@ -100,6 +90,16 @@ func (p *ListProductLicenseParam) validate() error {
 		errs := validation.ConflictsWith("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -133,13 +133,6 @@ func (p *ListProductLicenseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListProductLicenseParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListProductLicenseParam) GetName() []string {
-	return p.Name
-}
 func (p *ListProductLicenseParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
@@ -167,6 +160,13 @@ func (p *ListProductLicenseParam) SetSort(v []string) {
 
 func (p *ListProductLicenseParam) GetSort() []string {
 	return p.Sort
+}
+func (p *ListProductLicenseParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListProductLicenseParam) GetName() []string {
+	return p.Name
 }
 
 // ReadProductLicenseParam is input parameters for the sacloud API

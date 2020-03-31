@@ -29,11 +29,11 @@ import (
 
 // ListSSHKeyParam is input parameters for the sacloud API
 type ListSSHKeyParam struct {
-	Max  int
 	Sort []string
 	Name []string
 	Id   []sacloud.ID
 	From int
+	Max  int
 
 	input Input
 }
@@ -58,9 +58,6 @@ func (p *ListSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListSSHKeyParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
-	}
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
@@ -72,6 +69,9 @@ func (p *ListSSHKeyParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
+	}
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
 	}
 
 }
@@ -133,13 +133,6 @@ func (p *ListSSHKeyParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListSSHKeyParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListSSHKeyParam) GetMax() int {
-	return p.Max
-}
 func (p *ListSSHKeyParam) SetSort(v []string) {
 	p.Sort = v
 }
@@ -168,13 +161,20 @@ func (p *ListSSHKeyParam) SetFrom(v int) {
 func (p *ListSSHKeyParam) GetFrom() int {
 	return p.From
 }
+func (p *ListSSHKeyParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListSSHKeyParam) GetMax() int {
+	return p.Max
+}
 
 // CreateSSHKeyParam is input parameters for the sacloud API
 type CreateSSHKeyParam struct {
-	Description      string
 	PublicKeyContent string
 	PublicKey        string
 	Name             string
+	Description      string
 
 	input Input
 }
@@ -199,9 +199,6 @@ func (p *CreateSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateSSHKeyParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
 	if utils.IsEmpty(p.PublicKeyContent) {
 		p.PublicKeyContent = ""
 	}
@@ -211,19 +208,14 @@ func (p *CreateSSHKeyParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
 
 }
 
 func (p *CreateSSHKeyParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["SSHKey"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		errs := validation.ConflictsWith("--public-key-content", p.PublicKeyContent, map[string]interface{}{
@@ -258,6 +250,14 @@ func (p *CreateSSHKeyParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["SSHKey"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
@@ -285,13 +285,6 @@ func (p *CreateSSHKeyParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateSSHKeyParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *CreateSSHKeyParam) GetDescription() string {
-	return p.Description
-}
 func (p *CreateSSHKeyParam) SetPublicKeyContent(v string) {
 	p.PublicKeyContent = v
 }
@@ -312,6 +305,13 @@ func (p *CreateSSHKeyParam) SetName(v string) {
 
 func (p *CreateSSHKeyParam) GetName() string {
 	return p.Name
+}
+func (p *CreateSSHKeyParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *CreateSSHKeyParam) GetDescription() string {
+	return p.Description
 }
 
 // ReadSSHKeyParam is input parameters for the sacloud API

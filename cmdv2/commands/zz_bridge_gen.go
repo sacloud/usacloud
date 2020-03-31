@@ -57,11 +57,11 @@ var bridgeListCmd = &cobra.Command{
 
 func bridgeListCmdInit() {
 	fs := bridgeListCmd.Flags()
-	fs.StringSliceVarP(&bridgeListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&bridgeListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &bridgeListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&bridgeListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&bridgeListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&bridgeListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&bridgeListParam.Name, "name", "", []string{}, "set filter by name(s)")
 }
 
 var bridgeCreateCmd = &cobra.Command{
@@ -114,8 +114,8 @@ var bridgeUpdateCmd = &cobra.Command{
 
 func bridgeUpdateCmdInit() {
 	fs := bridgeUpdateCmd.Flags()
-	fs.StringVarP(&bridgeUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringVarP(&bridgeUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&bridgeUpdateParam.Description, "description", "", "", "set resource description")
 }
 
 var bridgeDeleteCmd = &cobra.Command{

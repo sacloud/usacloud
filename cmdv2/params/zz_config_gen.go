@@ -143,10 +143,10 @@ func (p *DeleteConfigParam) ColumnDefs() []output.ColumnDef {
 
 // EditConfigParam is input parameters for the sacloud API
 type EditConfigParam struct {
-	DefaultOutputType string
 	Token             string
 	Secret            string
 	Zone              string
+	DefaultOutputType string
 
 	input Input
 }
@@ -171,9 +171,6 @@ func (p *EditConfigParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *EditConfigParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.DefaultOutputType) {
-		p.DefaultOutputType = ""
-	}
 	if utils.IsEmpty(p.Token) {
 		p.Token = ""
 	}
@@ -183,6 +180,9 @@ func (p *EditConfigParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Zone) {
 		p.Zone = ""
 	}
+	if utils.IsEmpty(p.DefaultOutputType) {
+		p.DefaultOutputType = ""
+	}
 
 }
 
@@ -190,16 +190,16 @@ func (p *EditConfigParam) validate() error {
 	var errors []error
 
 	{
-		validator := define.Resources["Config"].Commands["edit"].Params["default-output-type"].ValidateFunc
-		errs := validator("--default-output-type", p.DefaultOutputType)
+		validator := define.Resources["Config"].Commands["edit"].Params["zone"].ValidateFunc
+		errs := validator("--zone", p.Zone)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
 	{
-		validator := define.Resources["Config"].Commands["edit"].Params["zone"].ValidateFunc
-		errs := validator("--zone", p.Zone)
+		validator := define.Resources["Config"].Commands["edit"].Params["default-output-type"].ValidateFunc
+		errs := validator("--default-output-type", p.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -232,13 +232,6 @@ func (p *EditConfigParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *EditConfigParam) SetDefaultOutputType(v string) {
-	p.DefaultOutputType = v
-}
-
-func (p *EditConfigParam) GetDefaultOutputType() string {
-	return p.DefaultOutputType
-}
 func (p *EditConfigParam) SetToken(v string) {
 	p.Token = v
 }
@@ -259,6 +252,13 @@ func (p *EditConfigParam) SetZone(v string) {
 
 func (p *EditConfigParam) GetZone() string {
 	return p.Zone
+}
+func (p *EditConfigParam) SetDefaultOutputType(v string) {
+	p.DefaultOutputType = v
+}
+
+func (p *EditConfigParam) GetDefaultOutputType() string {
+	return p.DefaultOutputType
 }
 
 // ListConfigParam is input parameters for the sacloud API

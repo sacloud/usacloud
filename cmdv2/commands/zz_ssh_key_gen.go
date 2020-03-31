@@ -58,11 +58,11 @@ var sshKeyListCmd = &cobra.Command{
 
 func sshKeyListCmdInit() {
 	fs := sshKeyListCmd.Flags()
+	fs.IntVarP(&sshKeyListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&sshKeyListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&sshKeyListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&sshKeyListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &sshKeyListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&sshKeyListParam.From, "from", "", 0, "set offset")
-	fs.IntVarP(&sshKeyListParam.Max, "max", "", 0, "set limit")
 }
 
 var sshKeyCreateCmd = &cobra.Command{
@@ -80,10 +80,10 @@ var sshKeyCreateCmd = &cobra.Command{
 
 func sshKeyCreateCmdInit() {
 	fs := sshKeyCreateCmd.Flags()
+	fs.StringVarP(&sshKeyCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringVarP(&sshKeyCreateParam.PublicKeyContent, "public-key-content", "", "", "set public-key")
 	fs.StringVarP(&sshKeyCreateParam.PublicKey, "public-key", "", "", "set public-key from file")
 	fs.StringVarP(&sshKeyCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&sshKeyCreateParam.Description, "description", "", "", "set resource description")
 }
 
 var sshKeyReadCmd = &cobra.Command{

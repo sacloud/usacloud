@@ -57,14 +57,14 @@ var startupScriptListCmd = &cobra.Command{
 
 func startupScriptListCmdInit() {
 	fs := startupScriptListCmd.Flags()
-	fs.IntVarP(&startupScriptListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&startupScriptListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&startupScriptListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.StringVarP(&startupScriptListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
 	fs.StringSliceVarP(&startupScriptListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.StringSliceVarP(&startupScriptListParam.Class, "class", "", []string{}, "set filter by class(es)")
-	fs.StringSliceVarP(&startupScriptListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &startupScriptListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&startupScriptListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&startupScriptListParam.Max, "max", "", 0, "set limit")
 }
 
 var startupScriptCreateCmd = &cobra.Command{
@@ -82,12 +82,12 @@ var startupScriptCreateCmd = &cobra.Command{
 
 func startupScriptCreateCmdInit() {
 	fs := startupScriptCreateCmd.Flags()
-	fs.StringVarP(&startupScriptCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringSliceVarP(&startupScriptCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &startupScriptCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.StringVarP(&startupScriptCreateParam.ScriptContent, "script-content", "", "", "set script content")
 	fs.StringVarP(&startupScriptCreateParam.Script, "script", "", "", "set script from file")
 	fs.StringVarP(&startupScriptCreateParam.Class, "class", "", "shell", "set script class[shell/cloud-config-yaml]")
+	fs.StringVarP(&startupScriptCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringSliceVarP(&startupScriptCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 }
 
 var startupScriptReadCmd = &cobra.Command{
@@ -121,12 +121,12 @@ var startupScriptUpdateCmd = &cobra.Command{
 
 func startupScriptUpdateCmdInit() {
 	fs := startupScriptUpdateCmd.Flags()
-	fs.StringSliceVarP(&startupScriptUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &startupScriptUpdateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.StringVarP(&startupScriptUpdateParam.ScriptContent, "script-content", "", "", "set script content")
 	fs.StringVarP(&startupScriptUpdateParam.Script, "script", "", "", "set script from file")
 	fs.StringVarP(&startupScriptUpdateParam.Class, "class", "", "", "set script class[shell/cloud-config-yaml]")
 	fs.StringVarP(&startupScriptUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringSliceVarP(&startupScriptUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 }
 
 var startupScriptDeleteCmd = &cobra.Command{

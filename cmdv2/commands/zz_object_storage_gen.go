@@ -97,10 +97,10 @@ var objectStorageGetCmd = &cobra.Command{
 
 func objectStorageGetCmdInit() {
 	fs := objectStorageGetCmd.Flags()
-	fs.StringVarP(&objectStorageGetParam.AccessKey, "access-key", "", "", "set access-key")
 	fs.StringVarP(&objectStorageGetParam.SecretKey, "secret-key", "", "", "set access-key")
 	fs.StringVarP(&objectStorageGetParam.Bucket, "bucket", "", "", "set bucket")
 	fs.BoolVarP(&objectStorageGetParam.Recursive, "recursive", "r", false, "get objects recursive")
+	fs.StringVarP(&objectStorageGetParam.AccessKey, "access-key", "", "", "set access-key")
 }
 
 var objectStorageDeleteCmd = &cobra.Command{

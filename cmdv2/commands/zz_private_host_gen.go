@@ -60,12 +60,12 @@ var privateHostListCmd = &cobra.Command{
 
 func privateHostListCmdInit() {
 	fs := privateHostListCmd.Flags()
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &privateHostListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&privateHostListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&privateHostListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&privateHostListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&privateHostListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.StringSliceVarP(&privateHostListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.StringSliceVarP(&privateHostListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &privateHostListParam.Id), "id", "", "set filter by id(s)")
 }
 
 var privateHostCreateCmd = &cobra.Command{
@@ -120,10 +120,10 @@ var privateHostUpdateCmd = &cobra.Command{
 
 func privateHostUpdateCmdInit() {
 	fs := privateHostUpdateCmd.Flags()
-	fs.StringSliceVarP(&privateHostUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &privateHostUpdateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.StringVarP(&privateHostUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&privateHostUpdateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&privateHostUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &privateHostUpdateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
 var privateHostDeleteCmd = &cobra.Command{

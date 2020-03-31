@@ -71,27 +71,27 @@ func initGlobalFlags(flags *pflag.FlagSet) {
 
 func initCredentialFlags(flags *pflag.FlagSet) {
 	fs := pflag.NewFlagSet("Credentials", pflag.ExitOnError)
-	fs.StringVarP(&cliOption.Profile, "profile", "", "default", "the name of saved credentials")
-	fs.StringVarP(&cliOption.AccessToken, "token", "", "", "the API token used when calling SAKURA Cloud API")
-	fs.StringVarP(&cliOption.AccessTokenSecret, "secret", "", "", "the API secret used when calling SAKURA Cloud API")
-	fs.StringVarP(&cliOption.Zone, "zone", "", "", "target zone name")
-	fs.StringSliceVarP(&cliOption.Zones, "zones", "", []string{}, "permitted zone names")
+	fs.StringP("profile", "", "default", "the name of saved credentials")
+	fs.StringP("token", "", "", "the API token used when calling SAKURA Cloud API")
+	fs.StringP("secret", "", "", "the API secret used when calling SAKURA Cloud API")
+	fs.StringP("zone", "", "", "target zone name")
+	fs.StringSliceP("zones", "", []string{}, "permitted zone names")
 	flags.AddFlagSet(fs)
 }
 
 func initOutputFlags(flags *pflag.FlagSet) {
 	// TODO グローバルオプションではなくて各コマンドが持つべき
 	fs := pflag.NewFlagSet("Output", pflag.ExitOnError)
-	fs.StringVarP(&cliOption.Format, "format", "", "", "the output format with Go template")
-	fs.BoolVarP(&cliOption.NoColor, "no-color", "", false, "disable ANSI color output")
+	fs.StringP("format", "", "", "the output format with Go template")
+	fs.BoolP("no-color", "", false, "disable ANSI color output")
 	flags.AddFlagSet(fs)
 }
 
 func initDebugFlags(flags *pflag.FlagSet) {
 	fs := pflag.NewFlagSet("Debug", pflag.ExitOnError)
-	fs.StringVarP(&cliOption.TraceMode, "trace", "", "", "enable trace logs for API calling")
-	fs.BoolVarP(&cliOption.FakeMode, "fake", "", false, "enable fake API driver")
-	fs.StringVarP(&cliOption.FakeStorePath, "fake-store", "", "", "path to file store used by the fake API driver")
+	fs.StringP("trace", "", "", "enable trace logs for API calling")
+	fs.BoolP("fake", "", false, "enable fake API driver")
+	fs.StringP("fake-store", "", "", "path to file store used by the fake API driver")
 	flags.AddFlagSet(fs)
 }
 
@@ -109,21 +109,21 @@ func (o *CLIOptions) fillDefaults() {
 }
 
 func (o *CLIOptions) loadFromEnv() {
-	o.Profile = stringFromEnv("SAKURACLOUD_PROFILE", o.Profile)
-	o.AccessToken = stringFromEnv("SAKURACLOUD_ACCESS_TOKEN", o.AccessToken)
-	o.AccessTokenSecret = stringFromEnv("SAKURACLOUD_ACCESS_TOKEN_SECRET", o.AccessTokenSecret)
-	o.Zone = stringFromEnv("SAKURACLOUD_ZONE", o.Zone)
-	o.Zones = stringSliceFromEnv("SAKURACLOUD_ZONES", o.Zones)
-	o.AcceptLanguage = stringFromEnv("SAKURACLOUD_ACCEPT_LANGUAGE", o.AcceptLanguage)
-	o.RetryMax = intFromEnv("SAKURACLOUD_RETRY_MAX", o.RetryMax)
-	o.RetryWaitMax = intFromEnv("SAKURACLOUD_RETRY_WAIT_MAX", o.RetryWaitMax)
-	o.RetryWaitMin = intFromEnv("SAKURACLOUD_RETRY_WAIT_MIN", o.RetryWaitMin)
-	o.HTTPRequestTimeout = intFromEnv("SAKURACLOUD_API_REQUEST_TIMEOUT", o.HTTPRequestTimeout)
-	o.HTTPRequestRateLimit = intFromEnv("SAKURACLOUD_API_REQUEST_RATE_LIMIT", o.HTTPRequestRateLimit)
-	o.APIRootURL = stringFromEnv("SAKURACLOUD_API_ROOT_URL", o.APIRootURL)
-	o.TraceMode = stringFromEnv("SAKURACLOUD_TRACE", o.TraceMode)
+	o.Profile = stringFromEnv("SAKURACLOUD_PROFILE", "default")
+	o.AccessToken = stringFromEnv("SAKURACLOUD_ACCESS_TOKEN", "")
+	o.AccessTokenSecret = stringFromEnv("SAKURACLOUD_ACCESS_TOKEN_SECRET", "")
+	o.Zone = stringFromEnv("SAKURACLOUD_ZONE", "is1a")
+	o.Zones = stringSliceFromEnv("SAKURACLOUD_ZONES", sacloud.SakuraCloudZones)
+	o.AcceptLanguage = stringFromEnv("SAKURACLOUD_ACCEPT_LANGUAGE", "")
+	o.RetryMax = intFromEnv("SAKURACLOUD_RETRY_MAX", sacloud.APIDefaultRetryMax)
+	o.RetryWaitMax = intFromEnv("SAKURACLOUD_RETRY_WAIT_MAX", 64)
+	o.RetryWaitMin = intFromEnv("SAKURACLOUD_RETRY_WAIT_MIN", 1)
+	o.HTTPRequestTimeout = intFromEnv("SAKURACLOUD_API_REQUEST_TIMEOUT", 300)
+	o.HTTPRequestRateLimit = intFromEnv("SAKURACLOUD_API_REQUEST_RATE_LIMIT", 1)
+	o.APIRootURL = stringFromEnv("SAKURACLOUD_API_ROOT_URL", sacloud.SakuraCloudAPIRoot)
+	o.TraceMode = stringFromEnv("SAKURACLOUD_TRACE", "")
 	o.FakeMode = os.Getenv("SAKURACLOUD_FAKE_MODE") != ""
-	o.FakeStorePath = stringFromEnv("SAKURACLOUD_FAKE_STORE_PATH", o.FakeStorePath)
+	o.FakeStorePath = stringFromEnv("SAKURACLOUD_FAKE_STORE_PATH", "")
 }
 
 func (o *CLIOptions) loadFromProfile() {

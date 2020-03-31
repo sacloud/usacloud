@@ -30,11 +30,11 @@ import (
 // ListSwitchParam is input parameters for the sacloud API
 type ListSwitchParam struct {
 	Name []string
-	Tags []string
 	Id   []sacloud.ID
 	From int
 	Max  int
 	Sort []string
+	Tags []string
 
 	input Input
 }
@@ -62,9 +62,6 @@ func (p *ListSwitchParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
@@ -76,6 +73,9 @@ func (p *ListSwitchParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 
 }
@@ -94,14 +94,6 @@ func (p *ListSwitchParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["Switch"].Commands["list"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
 		validator := define.Resources["Switch"].Commands["list"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
 		if errs != nil {
@@ -113,6 +105,14 @@ func (p *ListSwitchParam) validate() error {
 
 			"--name": p.Name,
 		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Switch"].Commands["list"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -152,13 +152,6 @@ func (p *ListSwitchParam) SetName(v []string) {
 func (p *ListSwitchParam) GetName() []string {
 	return p.Name
 }
-func (p *ListSwitchParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *ListSwitchParam) GetTags() []string {
-	return p.Tags
-}
 func (p *ListSwitchParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
@@ -186,6 +179,13 @@ func (p *ListSwitchParam) SetSort(v []string) {
 
 func (p *ListSwitchParam) GetSort() []string {
 	return p.Sort
+}
+func (p *ListSwitchParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *ListSwitchParam) GetTags() []string {
+	return p.Tags
 }
 
 // CreateSwitchParam is input parameters for the sacloud API
@@ -391,10 +391,10 @@ func (p *ReadSwitchParam) ColumnDefs() []output.ColumnDef {
 
 // UpdateSwitchParam is input parameters for the sacloud API
 type UpdateSwitchParam struct {
-	Tags        []string
-	IconId      sacloud.ID
 	Name        string
 	Description string
+	Tags        []string
+	IconId      sacloud.ID
 
 	input Input
 }
@@ -419,39 +419,23 @@ func (p *UpdateSwitchParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateSwitchParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
 
 }
 
 func (p *UpdateSwitchParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Switch"].Commands["update"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Switch"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Switch"].Commands["update"].Params["name"].ValidateFunc
@@ -464,6 +448,22 @@ func (p *UpdateSwitchParam) validate() error {
 	{
 		validator := define.Resources["Switch"].Commands["update"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Switch"].Commands["update"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Switch"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -496,20 +496,6 @@ func (p *UpdateSwitchParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateSwitchParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *UpdateSwitchParam) GetTags() []string {
-	return p.Tags
-}
-func (p *UpdateSwitchParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *UpdateSwitchParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
 func (p *UpdateSwitchParam) SetName(v string) {
 	p.Name = v
 }
@@ -523,6 +509,20 @@ func (p *UpdateSwitchParam) SetDescription(v string) {
 
 func (p *UpdateSwitchParam) GetDescription() string {
 	return p.Description
+}
+func (p *UpdateSwitchParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *UpdateSwitchParam) GetTags() []string {
+	return p.Tags
+}
+func (p *UpdateSwitchParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *UpdateSwitchParam) GetIconId() sacloud.ID {
+	return p.IconId
 }
 
 // DeleteSwitchParam is input parameters for the sacloud API

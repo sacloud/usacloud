@@ -29,12 +29,12 @@ import (
 
 // ListDNSParam is input parameters for the sacloud API
 type ListDNSParam struct {
+	Name []string
 	Id   []sacloud.ID
 	From int
 	Max  int
-	Tags []string
 	Sort []string
-	Name []string
+	Tags []string
 
 	input Input
 }
@@ -59,6 +59,9 @@ func (p *ListDNSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListDNSParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
@@ -68,20 +71,27 @@ func (p *ListDNSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
 	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 
 }
 
 func (p *ListDNSParam) validate() error {
 	var errors []error
+
+	{
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["DNS"].Commands["list"].Params["id"].ValidateFunc
@@ -103,16 +113,6 @@ func (p *ListDNSParam) validate() error {
 	{
 		validator := define.Resources["DNS"].Commands["list"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -145,6 +145,13 @@ func (p *ListDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListDNSParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListDNSParam) GetName() []string {
+	return p.Name
+}
 func (p *ListDNSParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
@@ -166,13 +173,6 @@ func (p *ListDNSParam) SetMax(v int) {
 func (p *ListDNSParam) GetMax() int {
 	return p.Max
 }
-func (p *ListDNSParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *ListDNSParam) GetTags() []string {
-	return p.Tags
-}
 func (p *ListDNSParam) SetSort(v []string) {
 	p.Sort = v
 }
@@ -180,12 +180,12 @@ func (p *ListDNSParam) SetSort(v []string) {
 func (p *ListDNSParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListDNSParam) SetName(v []string) {
-	p.Name = v
+func (p *ListDNSParam) SetTags(v []string) {
+	p.Tags = v
 }
 
-func (p *ListDNSParam) GetName() []string {
-	return p.Name
+func (p *ListDNSParam) GetTags() []string {
+	return p.Tags
 }
 
 // RecordInfoDNSParam is input parameters for the sacloud API
@@ -401,10 +401,10 @@ func (p *RecordBulkUpdateDNSParam) GetMode() string {
 
 // CreateDNSParam is input parameters for the sacloud API
 type CreateDNSParam struct {
-	IconId      sacloud.ID
 	Name        string
 	Description string
 	Tags        []string
+	IconId      sacloud.ID
 
 	input Input
 }
@@ -429,9 +429,6 @@ func (p *CreateDNSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateDNSParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -441,19 +438,14 @@ func (p *CreateDNSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
 
 }
 
 func (p *CreateDNSParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["DNS"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -486,6 +478,14 @@ func (p *CreateDNSParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["DNS"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
@@ -513,13 +513,6 @@ func (p *CreateDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateDNSParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *CreateDNSParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
 func (p *CreateDNSParam) SetName(v string) {
 	p.Name = v
 }
@@ -541,18 +534,25 @@ func (p *CreateDNSParam) SetTags(v []string) {
 func (p *CreateDNSParam) GetTags() []string {
 	return p.Tags
 }
+func (p *CreateDNSParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *CreateDNSParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
 
 // RecordAddDNSParam is input parameters for the sacloud API
 type RecordAddDNSParam struct {
-	MxPriority  int
-	SrvPriority int
+	SrvTarget   string
+	Name        string
 	SrvWeight   int
 	SrvPort     int
-	Name        string
+	MxPriority  int
+	SrvPriority int
+	Type        string
 	Value       string
 	Ttl         int
-	Type        string
-	SrvTarget   string
 
 	input Input
 }
@@ -578,11 +578,11 @@ func (p *RecordAddDNSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *RecordAddDNSParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.MxPriority) {
-		p.MxPriority = 0
+	if utils.IsEmpty(p.SrvTarget) {
+		p.SrvTarget = ""
 	}
-	if utils.IsEmpty(p.SrvPriority) {
-		p.SrvPriority = 0
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
 	}
 	if utils.IsEmpty(p.SrvWeight) {
 		p.SrvWeight = 0
@@ -590,20 +590,20 @@ func (p *RecordAddDNSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.SrvPort) {
 		p.SrvPort = 0
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
+	if utils.IsEmpty(p.MxPriority) {
+		p.MxPriority = 0
+	}
+	if utils.IsEmpty(p.SrvPriority) {
+		p.SrvPriority = 0
+	}
+	if utils.IsEmpty(p.Type) {
+		p.Type = ""
 	}
 	if utils.IsEmpty(p.Value) {
 		p.Value = ""
 	}
 	if utils.IsEmpty(p.Ttl) {
 		p.Ttl = 0
-	}
-	if utils.IsEmpty(p.Type) {
-		p.Type = ""
-	}
-	if utils.IsEmpty(p.SrvTarget) {
-		p.SrvTarget = ""
 	}
 
 }
@@ -612,16 +612,23 @@ func (p *RecordAddDNSParam) validate() error {
 	var errors []error
 
 	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["mx-priority"].ValidateFunc
-		errs := validator("--mx-priority", p.MxPriority)
+		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-target"].ValidateFunc
+		errs := validator("--srv-target", p.SrvTarget)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
 	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-priority"].ValidateFunc
-		errs := validator("--srv-priority", p.SrvPriority)
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-add"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -644,23 +651,16 @@ func (p *RecordAddDNSParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
+		validator := define.Resources["DNS"].Commands["record-add"].Params["mx-priority"].ValidateFunc
+		errs := validator("--mx-priority", p.MxPriority)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
 	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["ttl"].ValidateFunc
-		errs := validator("--ttl", p.Ttl)
+		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-priority"].ValidateFunc
+		errs := validator("--srv-priority", p.SrvPriority)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -682,8 +682,8 @@ func (p *RecordAddDNSParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-target"].ValidateFunc
-		errs := validator("--srv-target", p.SrvTarget)
+		validator := define.Resources["DNS"].Commands["record-add"].Params["ttl"].ValidateFunc
+		errs := validator("--ttl", p.Ttl)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -716,19 +716,19 @@ func (p *RecordAddDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *RecordAddDNSParam) SetMxPriority(v int) {
-	p.MxPriority = v
+func (p *RecordAddDNSParam) SetSrvTarget(v string) {
+	p.SrvTarget = v
 }
 
-func (p *RecordAddDNSParam) GetMxPriority() int {
-	return p.MxPriority
+func (p *RecordAddDNSParam) GetSrvTarget() string {
+	return p.SrvTarget
 }
-func (p *RecordAddDNSParam) SetSrvPriority(v int) {
-	p.SrvPriority = v
+func (p *RecordAddDNSParam) SetName(v string) {
+	p.Name = v
 }
 
-func (p *RecordAddDNSParam) GetSrvPriority() int {
-	return p.SrvPriority
+func (p *RecordAddDNSParam) GetName() string {
+	return p.Name
 }
 func (p *RecordAddDNSParam) SetSrvWeight(v int) {
 	p.SrvWeight = v
@@ -744,12 +744,26 @@ func (p *RecordAddDNSParam) SetSrvPort(v int) {
 func (p *RecordAddDNSParam) GetSrvPort() int {
 	return p.SrvPort
 }
-func (p *RecordAddDNSParam) SetName(v string) {
-	p.Name = v
+func (p *RecordAddDNSParam) SetMxPriority(v int) {
+	p.MxPriority = v
 }
 
-func (p *RecordAddDNSParam) GetName() string {
-	return p.Name
+func (p *RecordAddDNSParam) GetMxPriority() int {
+	return p.MxPriority
+}
+func (p *RecordAddDNSParam) SetSrvPriority(v int) {
+	p.SrvPriority = v
+}
+
+func (p *RecordAddDNSParam) GetSrvPriority() int {
+	return p.SrvPriority
+}
+func (p *RecordAddDNSParam) SetType(v string) {
+	p.Type = v
+}
+
+func (p *RecordAddDNSParam) GetType() string {
+	return p.Type
 }
 func (p *RecordAddDNSParam) SetValue(v string) {
 	p.Value = v
@@ -764,20 +778,6 @@ func (p *RecordAddDNSParam) SetTtl(v int) {
 
 func (p *RecordAddDNSParam) GetTtl() int {
 	return p.Ttl
-}
-func (p *RecordAddDNSParam) SetType(v string) {
-	p.Type = v
-}
-
-func (p *RecordAddDNSParam) GetType() string {
-	return p.Type
-}
-func (p *RecordAddDNSParam) SetSrvTarget(v string) {
-	p.SrvTarget = v
-}
-
-func (p *RecordAddDNSParam) GetSrvTarget() string {
-	return p.SrvTarget
 }
 
 // ReadDNSParam is input parameters for the sacloud API
@@ -840,16 +840,16 @@ func (p *ReadDNSParam) ColumnDefs() []output.ColumnDef {
 
 // RecordUpdateDNSParam is input parameters for the sacloud API
 type RecordUpdateDNSParam struct {
-	MxPriority  int
-	SrvWeight   int
+	SrvPriority int
 	SrvPort     int
-	SrvTarget   string
 	Index       int
 	Type        string
-	Value       string
-	Name        string
 	Ttl         int
-	SrvPriority int
+	MxPriority  int
+	Name        string
+	Value       string
+	SrvWeight   int
+	SrvTarget   string
 
 	input Input
 }
@@ -874,17 +874,11 @@ func (p *RecordUpdateDNSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *RecordUpdateDNSParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.MxPriority) {
-		p.MxPriority = 0
-	}
-	if utils.IsEmpty(p.SrvWeight) {
-		p.SrvWeight = 0
+	if utils.IsEmpty(p.SrvPriority) {
+		p.SrvPriority = 0
 	}
 	if utils.IsEmpty(p.SrvPort) {
 		p.SrvPort = 0
-	}
-	if utils.IsEmpty(p.SrvTarget) {
-		p.SrvTarget = ""
 	}
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
@@ -892,17 +886,23 @@ func (p *RecordUpdateDNSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Type) {
 		p.Type = ""
 	}
-	if utils.IsEmpty(p.Value) {
-		p.Value = ""
+	if utils.IsEmpty(p.Ttl) {
+		p.Ttl = 0
+	}
+	if utils.IsEmpty(p.MxPriority) {
+		p.MxPriority = 0
 	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Ttl) {
-		p.Ttl = 0
+	if utils.IsEmpty(p.Value) {
+		p.Value = ""
 	}
-	if utils.IsEmpty(p.SrvPriority) {
-		p.SrvPriority = 0
+	if utils.IsEmpty(p.SrvWeight) {
+		p.SrvWeight = 0
+	}
+	if utils.IsEmpty(p.SrvTarget) {
+		p.SrvTarget = ""
 	}
 
 }
@@ -911,16 +911,8 @@ func (p *RecordUpdateDNSParam) validate() error {
 	var errors []error
 
 	{
-		validator := define.Resources["DNS"].Commands["record-update"].Params["mx-priority"].ValidateFunc
-		errs := validator("--mx-priority", p.MxPriority)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["DNS"].Commands["record-update"].Params["srv-weight"].ValidateFunc
-		errs := validator("--srv-weight", p.SrvWeight)
+		validator := define.Resources["DNS"].Commands["record-update"].Params["srv-priority"].ValidateFunc
+		errs := validator("--srv-priority", p.SrvPriority)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -929,14 +921,6 @@ func (p *RecordUpdateDNSParam) validate() error {
 	{
 		validator := define.Resources["DNS"].Commands["record-update"].Params["srv-port"].ValidateFunc
 		errs := validator("--srv-port", p.SrvPort)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["DNS"].Commands["record-update"].Params["srv-target"].ValidateFunc
-		errs := validator("--srv-target", p.SrvTarget)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -959,14 +943,6 @@ func (p *RecordUpdateDNSParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["DNS"].Commands["record-update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
 		validator := define.Resources["DNS"].Commands["record-update"].Params["ttl"].ValidateFunc
 		errs := validator("--ttl", p.Ttl)
 		if errs != nil {
@@ -975,8 +951,32 @@ func (p *RecordUpdateDNSParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["DNS"].Commands["record-update"].Params["srv-priority"].ValidateFunc
-		errs := validator("--srv-priority", p.SrvPriority)
+		validator := define.Resources["DNS"].Commands["record-update"].Params["mx-priority"].ValidateFunc
+		errs := validator("--mx-priority", p.MxPriority)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["DNS"].Commands["record-update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["DNS"].Commands["record-update"].Params["srv-weight"].ValidateFunc
+		errs := validator("--srv-weight", p.SrvWeight)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["DNS"].Commands["record-update"].Params["srv-target"].ValidateFunc
+		errs := validator("--srv-target", p.SrvTarget)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1009,19 +1009,12 @@ func (p *RecordUpdateDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *RecordUpdateDNSParam) SetMxPriority(v int) {
-	p.MxPriority = v
+func (p *RecordUpdateDNSParam) SetSrvPriority(v int) {
+	p.SrvPriority = v
 }
 
-func (p *RecordUpdateDNSParam) GetMxPriority() int {
-	return p.MxPriority
-}
-func (p *RecordUpdateDNSParam) SetSrvWeight(v int) {
-	p.SrvWeight = v
-}
-
-func (p *RecordUpdateDNSParam) GetSrvWeight() int {
-	return p.SrvWeight
+func (p *RecordUpdateDNSParam) GetSrvPriority() int {
+	return p.SrvPriority
 }
 func (p *RecordUpdateDNSParam) SetSrvPort(v int) {
 	p.SrvPort = v
@@ -1029,13 +1022,6 @@ func (p *RecordUpdateDNSParam) SetSrvPort(v int) {
 
 func (p *RecordUpdateDNSParam) GetSrvPort() int {
 	return p.SrvPort
-}
-func (p *RecordUpdateDNSParam) SetSrvTarget(v string) {
-	p.SrvTarget = v
-}
-
-func (p *RecordUpdateDNSParam) GetSrvTarget() string {
-	return p.SrvTarget
 }
 func (p *RecordUpdateDNSParam) SetIndex(v int) {
 	p.Index = v
@@ -1051,12 +1037,19 @@ func (p *RecordUpdateDNSParam) SetType(v string) {
 func (p *RecordUpdateDNSParam) GetType() string {
 	return p.Type
 }
-func (p *RecordUpdateDNSParam) SetValue(v string) {
-	p.Value = v
+func (p *RecordUpdateDNSParam) SetTtl(v int) {
+	p.Ttl = v
 }
 
-func (p *RecordUpdateDNSParam) GetValue() string {
-	return p.Value
+func (p *RecordUpdateDNSParam) GetTtl() int {
+	return p.Ttl
+}
+func (p *RecordUpdateDNSParam) SetMxPriority(v int) {
+	p.MxPriority = v
+}
+
+func (p *RecordUpdateDNSParam) GetMxPriority() int {
+	return p.MxPriority
 }
 func (p *RecordUpdateDNSParam) SetName(v string) {
 	p.Name = v
@@ -1065,19 +1058,26 @@ func (p *RecordUpdateDNSParam) SetName(v string) {
 func (p *RecordUpdateDNSParam) GetName() string {
 	return p.Name
 }
-func (p *RecordUpdateDNSParam) SetTtl(v int) {
-	p.Ttl = v
+func (p *RecordUpdateDNSParam) SetValue(v string) {
+	p.Value = v
 }
 
-func (p *RecordUpdateDNSParam) GetTtl() int {
-	return p.Ttl
+func (p *RecordUpdateDNSParam) GetValue() string {
+	return p.Value
 }
-func (p *RecordUpdateDNSParam) SetSrvPriority(v int) {
-	p.SrvPriority = v
+func (p *RecordUpdateDNSParam) SetSrvWeight(v int) {
+	p.SrvWeight = v
 }
 
-func (p *RecordUpdateDNSParam) GetSrvPriority() int {
-	return p.SrvPriority
+func (p *RecordUpdateDNSParam) GetSrvWeight() int {
+	return p.SrvWeight
+}
+func (p *RecordUpdateDNSParam) SetSrvTarget(v string) {
+	p.SrvTarget = v
+}
+
+func (p *RecordUpdateDNSParam) GetSrvTarget() string {
+	return p.SrvTarget
 }
 
 // RecordDeleteDNSParam is input parameters for the sacloud API
@@ -1161,9 +1161,9 @@ func (p *RecordDeleteDNSParam) GetIndex() int {
 
 // UpdateDNSParam is input parameters for the sacloud API
 type UpdateDNSParam struct {
-	IconId      sacloud.ID
 	Description string
 	Tags        []string
+	IconId      sacloud.ID
 
 	input Input
 }
@@ -1188,28 +1188,20 @@ func (p *UpdateDNSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateDNSParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
 
 }
 
 func (p *UpdateDNSParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["DNS"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["DNS"].Commands["update"].Params["description"].ValidateFunc
@@ -1222,6 +1214,14 @@ func (p *UpdateDNSParam) validate() error {
 	{
 		validator := define.Resources["DNS"].Commands["update"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["DNS"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1254,13 +1254,6 @@ func (p *UpdateDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateDNSParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *UpdateDNSParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
 func (p *UpdateDNSParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -1274,6 +1267,13 @@ func (p *UpdateDNSParam) SetTags(v []string) {
 
 func (p *UpdateDNSParam) GetTags() []string {
 	return p.Tags
+}
+func (p *UpdateDNSParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *UpdateDNSParam) GetIconId() sacloud.ID {
+	return p.IconId
 }
 
 // DeleteDNSParam is input parameters for the sacloud API

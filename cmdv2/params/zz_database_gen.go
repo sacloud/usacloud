@@ -29,11 +29,11 @@ import (
 
 // ListDatabaseParam is input parameters for the sacloud API
 type ListDatabaseParam struct {
+	Name []string
 	Id   []sacloud.ID
 	From int
 	Max  int
 	Sort []string
-	Name []string
 	Tags []string
 
 	input Input
@@ -59,6 +59,9 @@ func (p *ListDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListDatabaseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
@@ -71,9 +74,6 @@ func (p *ListDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
@@ -82,6 +82,16 @@ func (p *ListDatabaseParam) fillValueToSkeleton() {
 
 func (p *ListDatabaseParam) validate() error {
 	var errors []error
+
+	{
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["Database"].Commands["list"].Params["id"].ValidateFunc
@@ -94,16 +104,6 @@ func (p *ListDatabaseParam) validate() error {
 		errs := validation.ConflictsWith("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -145,6 +145,13 @@ func (p *ListDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListDatabaseParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListDatabaseParam) GetName() []string {
+	return p.Name
+}
 func (p *ListDatabaseParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
@@ -173,13 +180,6 @@ func (p *ListDatabaseParam) SetSort(v []string) {
 func (p *ListDatabaseParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListDatabaseParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListDatabaseParam) GetName() []string {
-	return p.Name
-}
 func (p *ListDatabaseParam) SetTags(v []string) {
 	p.Tags = v
 }
@@ -190,25 +190,25 @@ func (p *ListDatabaseParam) GetTags() []string {
 
 // CreateDatabaseParam is input parameters for the sacloud API
 type CreateDatabaseParam struct {
-	EnableBackup        bool
 	SwitchId            sacloud.ID
-	Password            string
-	BackupTime          string
-	Port                int
-	Description         string
-	Username            string
+	Plan                int
+	SourceNetworks      []string
 	EnableWebUi         bool
+	Ipaddress1          string
+	Name                string
+	Description         string
+	IconId              sacloud.ID
+	Username            string
+	Password            string
+	EnableBackup        bool
+	BackupWeekdays      []string
 	NwMaskLen           int
 	DefaultRoute        string
-	Name                string
 	Tags                []string
-	BackupWeekdays      []string
-	Ipaddress1          string
-	ReplicaUserPassword string
-	SourceNetworks      []string
-	IconId              sacloud.ID
-	Plan                int
 	Database            string
+	ReplicaUserPassword string
+	BackupTime          string
+	Port                int
 
 	input Input
 }
@@ -216,7 +216,7 @@ type CreateDatabaseParam struct {
 // NewCreateDatabaseParam return new CreateDatabaseParam
 func NewCreateDatabaseParam() *CreateDatabaseParam {
 	return &CreateDatabaseParam{
-		BackupWeekdays: []string{"all"}, Plan: 10}
+		Plan: 10, BackupWeekdays: []string{"all"}}
 }
 
 // Initialize init CreateDatabaseParam
@@ -234,29 +234,41 @@ func (p *CreateDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateDatabaseParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.EnableBackup) {
-		p.EnableBackup = false
-	}
 	if utils.IsEmpty(p.SwitchId) {
 		p.SwitchId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Password) {
-		p.Password = ""
+	if utils.IsEmpty(p.Plan) {
+		p.Plan = 0
 	}
-	if utils.IsEmpty(p.BackupTime) {
-		p.BackupTime = ""
+	if utils.IsEmpty(p.SourceNetworks) {
+		p.SourceNetworks = []string{""}
 	}
-	if utils.IsEmpty(p.Port) {
-		p.Port = 0
+	if utils.IsEmpty(p.EnableWebUi) {
+		p.EnableWebUi = false
+	}
+	if utils.IsEmpty(p.Ipaddress1) {
+		p.Ipaddress1 = ""
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
 	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
 	if utils.IsEmpty(p.Username) {
 		p.Username = ""
 	}
-	if utils.IsEmpty(p.EnableWebUi) {
-		p.EnableWebUi = false
+	if utils.IsEmpty(p.Password) {
+		p.Password = ""
+	}
+	if utils.IsEmpty(p.EnableBackup) {
+		p.EnableBackup = false
+	}
+	if utils.IsEmpty(p.BackupWeekdays) {
+		p.BackupWeekdays = []string{""}
 	}
 	if utils.IsEmpty(p.NwMaskLen) {
 		p.NwMaskLen = 0
@@ -264,32 +276,20 @@ func (p *CreateDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.DefaultRoute) {
 		p.DefaultRoute = ""
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.BackupWeekdays) {
-		p.BackupWeekdays = []string{""}
-	}
-	if utils.IsEmpty(p.Ipaddress1) {
-		p.Ipaddress1 = ""
+	if utils.IsEmpty(p.Database) {
+		p.Database = ""
 	}
 	if utils.IsEmpty(p.ReplicaUserPassword) {
 		p.ReplicaUserPassword = ""
 	}
-	if utils.IsEmpty(p.SourceNetworks) {
-		p.SourceNetworks = []string{""}
+	if utils.IsEmpty(p.BackupTime) {
+		p.BackupTime = ""
 	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.Plan) {
-		p.Plan = 0
-	}
-	if utils.IsEmpty(p.Database) {
-		p.Database = ""
+	if utils.IsEmpty(p.Port) {
+		p.Port = 0
 	}
 
 }
@@ -314,30 +314,52 @@ func (p *CreateDatabaseParam) validate() error {
 
 	{
 		validator := validateRequired
-		errs := validator("--password", p.Password)
+		errs := validator("--plan", p.Plan)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["Database"].Commands["create"].Params["password"].ValidateFunc
-		errs := validator("--password", p.Password)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["backup-time"].ValidateFunc
-		errs := validator("--backup-time", p.BackupTime)
+		validator := define.Resources["Database"].Commands["create"].Params["plan"].ValidateFunc
+		errs := validator("--plan", p.Plan)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
 	{
-		validator := define.Resources["Database"].Commands["create"].Params["port"].ValidateFunc
-		errs := validator("--port", p.Port)
+		validator := define.Resources["Database"].Commands["create"].Params["source-networks"].ValidateFunc
+		errs := validator("--source-networks", p.SourceNetworks)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--ipaddress-1", p.Ipaddress1)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["ipaddress1"].ValidateFunc
+		errs := validator("--ipaddress-1", p.Ipaddress1)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -346,6 +368,14 @@ func (p *CreateDatabaseParam) validate() error {
 	{
 		validator := define.Resources["Database"].Commands["create"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -361,6 +391,29 @@ func (p *CreateDatabaseParam) validate() error {
 	{
 		validator := define.Resources["Database"].Commands["create"].Params["username"].ValidateFunc
 		errs := validator("--username", p.Username)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--password", p.Password)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["password"].ValidateFunc
+		errs := validator("--password", p.Password)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["backup-weekdays"].ValidateFunc
+		errs := validator("--backup-weekdays", p.BackupWeekdays)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -397,85 +450,8 @@ func (p *CreateDatabaseParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
 		validator := define.Resources["Database"].Commands["create"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["backup-weekdays"].ValidateFunc
-		errs := validator("--backup-weekdays", p.BackupWeekdays)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--ipaddress-1", p.Ipaddress1)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["ipaddress1"].ValidateFunc
-		errs := validator("--ipaddress-1", p.Ipaddress1)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["replica-user-password"].ValidateFunc
-		errs := validator("--replica-user-password", p.ReplicaUserPassword)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["source-networks"].ValidateFunc
-		errs := validator("--source-networks", p.SourceNetworks)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["plan"].ValidateFunc
-		errs := validator("--plan", p.Plan)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -491,6 +467,30 @@ func (p *CreateDatabaseParam) validate() error {
 	{
 		validator := define.Resources["Database"].Commands["create"].Params["database"].ValidateFunc
 		errs := validator("--database", p.Database)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["replica-user-password"].ValidateFunc
+		errs := validator("--replica-user-password", p.ReplicaUserPassword)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["backup-time"].ValidateFunc
+		errs := validator("--backup-time", p.BackupTime)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["port"].ValidateFunc
+		errs := validator("--port", p.Port)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -523,13 +523,6 @@ func (p *CreateDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateDatabaseParam) SetEnableBackup(v bool) {
-	p.EnableBackup = v
-}
-
-func (p *CreateDatabaseParam) GetEnableBackup() bool {
-	return p.EnableBackup
-}
 func (p *CreateDatabaseParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
@@ -537,26 +530,40 @@ func (p *CreateDatabaseParam) SetSwitchId(v sacloud.ID) {
 func (p *CreateDatabaseParam) GetSwitchId() sacloud.ID {
 	return p.SwitchId
 }
-func (p *CreateDatabaseParam) SetPassword(v string) {
-	p.Password = v
+func (p *CreateDatabaseParam) SetPlan(v int) {
+	p.Plan = v
 }
 
-func (p *CreateDatabaseParam) GetPassword() string {
-	return p.Password
+func (p *CreateDatabaseParam) GetPlan() int {
+	return p.Plan
 }
-func (p *CreateDatabaseParam) SetBackupTime(v string) {
-	p.BackupTime = v
-}
-
-func (p *CreateDatabaseParam) GetBackupTime() string {
-	return p.BackupTime
-}
-func (p *CreateDatabaseParam) SetPort(v int) {
-	p.Port = v
+func (p *CreateDatabaseParam) SetSourceNetworks(v []string) {
+	p.SourceNetworks = v
 }
 
-func (p *CreateDatabaseParam) GetPort() int {
-	return p.Port
+func (p *CreateDatabaseParam) GetSourceNetworks() []string {
+	return p.SourceNetworks
+}
+func (p *CreateDatabaseParam) SetEnableWebUi(v bool) {
+	p.EnableWebUi = v
+}
+
+func (p *CreateDatabaseParam) GetEnableWebUi() bool {
+	return p.EnableWebUi
+}
+func (p *CreateDatabaseParam) SetIpaddress1(v string) {
+	p.Ipaddress1 = v
+}
+
+func (p *CreateDatabaseParam) GetIpaddress1() string {
+	return p.Ipaddress1
+}
+func (p *CreateDatabaseParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateDatabaseParam) GetName() string {
+	return p.Name
 }
 func (p *CreateDatabaseParam) SetDescription(v string) {
 	p.Description = v
@@ -565,6 +572,13 @@ func (p *CreateDatabaseParam) SetDescription(v string) {
 func (p *CreateDatabaseParam) GetDescription() string {
 	return p.Description
 }
+func (p *CreateDatabaseParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *CreateDatabaseParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
 func (p *CreateDatabaseParam) SetUsername(v string) {
 	p.Username = v
 }
@@ -572,12 +586,26 @@ func (p *CreateDatabaseParam) SetUsername(v string) {
 func (p *CreateDatabaseParam) GetUsername() string {
 	return p.Username
 }
-func (p *CreateDatabaseParam) SetEnableWebUi(v bool) {
-	p.EnableWebUi = v
+func (p *CreateDatabaseParam) SetPassword(v string) {
+	p.Password = v
 }
 
-func (p *CreateDatabaseParam) GetEnableWebUi() bool {
-	return p.EnableWebUi
+func (p *CreateDatabaseParam) GetPassword() string {
+	return p.Password
+}
+func (p *CreateDatabaseParam) SetEnableBackup(v bool) {
+	p.EnableBackup = v
+}
+
+func (p *CreateDatabaseParam) GetEnableBackup() bool {
+	return p.EnableBackup
+}
+func (p *CreateDatabaseParam) SetBackupWeekdays(v []string) {
+	p.BackupWeekdays = v
+}
+
+func (p *CreateDatabaseParam) GetBackupWeekdays() []string {
+	return p.BackupWeekdays
 }
 func (p *CreateDatabaseParam) SetNwMaskLen(v int) {
 	p.NwMaskLen = v
@@ -593,13 +621,6 @@ func (p *CreateDatabaseParam) SetDefaultRoute(v string) {
 func (p *CreateDatabaseParam) GetDefaultRoute() string {
 	return p.DefaultRoute
 }
-func (p *CreateDatabaseParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateDatabaseParam) GetName() string {
-	return p.Name
-}
 func (p *CreateDatabaseParam) SetTags(v []string) {
 	p.Tags = v
 }
@@ -607,19 +628,12 @@ func (p *CreateDatabaseParam) SetTags(v []string) {
 func (p *CreateDatabaseParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateDatabaseParam) SetBackupWeekdays(v []string) {
-	p.BackupWeekdays = v
+func (p *CreateDatabaseParam) SetDatabase(v string) {
+	p.Database = v
 }
 
-func (p *CreateDatabaseParam) GetBackupWeekdays() []string {
-	return p.BackupWeekdays
-}
-func (p *CreateDatabaseParam) SetIpaddress1(v string) {
-	p.Ipaddress1 = v
-}
-
-func (p *CreateDatabaseParam) GetIpaddress1() string {
-	return p.Ipaddress1
+func (p *CreateDatabaseParam) GetDatabase() string {
+	return p.Database
 }
 func (p *CreateDatabaseParam) SetReplicaUserPassword(v string) {
 	p.ReplicaUserPassword = v
@@ -628,33 +642,19 @@ func (p *CreateDatabaseParam) SetReplicaUserPassword(v string) {
 func (p *CreateDatabaseParam) GetReplicaUserPassword() string {
 	return p.ReplicaUserPassword
 }
-func (p *CreateDatabaseParam) SetSourceNetworks(v []string) {
-	p.SourceNetworks = v
+func (p *CreateDatabaseParam) SetBackupTime(v string) {
+	p.BackupTime = v
 }
 
-func (p *CreateDatabaseParam) GetSourceNetworks() []string {
-	return p.SourceNetworks
+func (p *CreateDatabaseParam) GetBackupTime() string {
+	return p.BackupTime
 }
-func (p *CreateDatabaseParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *CreateDatabaseParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
-func (p *CreateDatabaseParam) SetPlan(v int) {
-	p.Plan = v
+func (p *CreateDatabaseParam) SetPort(v int) {
+	p.Port = v
 }
 
-func (p *CreateDatabaseParam) GetPlan() int {
-	return p.Plan
-}
-func (p *CreateDatabaseParam) SetDatabase(v string) {
-	p.Database = v
-}
-
-func (p *CreateDatabaseParam) GetDatabase() string {
-	return p.Database
+func (p *CreateDatabaseParam) GetPort() int {
+	return p.Port
 }
 
 // ReadDatabaseParam is input parameters for the sacloud API
@@ -717,19 +717,19 @@ func (p *ReadDatabaseParam) ColumnDefs() []output.ColumnDef {
 
 // UpdateDatabaseParam is input parameters for the sacloud API
 type UpdateDatabaseParam struct {
-	Name                string
-	EnableReplication   bool
-	EnableWebUi         bool
-	EnableBackup        bool
-	BackupWeekdays      []string
-	BackupTime          string
-	Description         string
 	Tags                []string
 	IconId              sacloud.ID
 	Password            string
 	ReplicaUserPassword string
-	Port                int
 	SourceNetworks      []string
+	Name                string
+	BackupWeekdays      []string
+	BackupTime          string
+	Description         string
+	EnableReplication   bool
+	Port                int
+	EnableWebUi         bool
+	EnableBackup        bool
 
 	input Input
 }
@@ -755,27 +755,6 @@ func (p *UpdateDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateDatabaseParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
-	if utils.IsEmpty(p.EnableReplication) {
-		p.EnableReplication = false
-	}
-	if utils.IsEmpty(p.EnableWebUi) {
-		p.EnableWebUi = false
-	}
-	if utils.IsEmpty(p.EnableBackup) {
-		p.EnableBackup = false
-	}
-	if utils.IsEmpty(p.BackupWeekdays) {
-		p.BackupWeekdays = []string{""}
-	}
-	if utils.IsEmpty(p.BackupTime) {
-		p.BackupTime = ""
-	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
@@ -788,49 +767,38 @@ func (p *UpdateDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.ReplicaUserPassword) {
 		p.ReplicaUserPassword = ""
 	}
+	if utils.IsEmpty(p.SourceNetworks) {
+		p.SourceNetworks = []string{""}
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
+	if utils.IsEmpty(p.BackupWeekdays) {
+		p.BackupWeekdays = []string{""}
+	}
+	if utils.IsEmpty(p.BackupTime) {
+		p.BackupTime = ""
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
+	if utils.IsEmpty(p.EnableReplication) {
+		p.EnableReplication = false
+	}
 	if utils.IsEmpty(p.Port) {
 		p.Port = 0
 	}
-	if utils.IsEmpty(p.SourceNetworks) {
-		p.SourceNetworks = []string{""}
+	if utils.IsEmpty(p.EnableWebUi) {
+		p.EnableWebUi = false
+	}
+	if utils.IsEmpty(p.EnableBackup) {
+		p.EnableBackup = false
 	}
 
 }
 
 func (p *UpdateDatabaseParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Database"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["update"].Params["backup-weekdays"].ValidateFunc
-		errs := validator("--backup-weekdays", p.BackupWeekdays)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["update"].Params["backup-time"].ValidateFunc
-		errs := validator("--backup-time", p.BackupTime)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Database"].Commands["update"].Params["tags"].ValidateFunc
@@ -865,16 +833,48 @@ func (p *UpdateDatabaseParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["Database"].Commands["update"].Params["port"].ValidateFunc
-		errs := validator("--port", p.Port)
+		validator := define.Resources["Database"].Commands["update"].Params["source-networks"].ValidateFunc
+		errs := validator("--source-networks", p.SourceNetworks)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
 	{
-		validator := define.Resources["Database"].Commands["update"].Params["source-networks"].ValidateFunc
-		errs := validator("--source-networks", p.SourceNetworks)
+		validator := define.Resources["Database"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["update"].Params["backup-weekdays"].ValidateFunc
+		errs := validator("--backup-weekdays", p.BackupWeekdays)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["update"].Params["backup-time"].ValidateFunc
+		errs := validator("--backup-time", p.BackupTime)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["update"].Params["port"].ValidateFunc
+		errs := validator("--port", p.Port)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -907,55 +907,6 @@ func (p *UpdateDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateDatabaseParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateDatabaseParam) GetName() string {
-	return p.Name
-}
-func (p *UpdateDatabaseParam) SetEnableReplication(v bool) {
-	p.EnableReplication = v
-}
-
-func (p *UpdateDatabaseParam) GetEnableReplication() bool {
-	return p.EnableReplication
-}
-func (p *UpdateDatabaseParam) SetEnableWebUi(v bool) {
-	p.EnableWebUi = v
-}
-
-func (p *UpdateDatabaseParam) GetEnableWebUi() bool {
-	return p.EnableWebUi
-}
-func (p *UpdateDatabaseParam) SetEnableBackup(v bool) {
-	p.EnableBackup = v
-}
-
-func (p *UpdateDatabaseParam) GetEnableBackup() bool {
-	return p.EnableBackup
-}
-func (p *UpdateDatabaseParam) SetBackupWeekdays(v []string) {
-	p.BackupWeekdays = v
-}
-
-func (p *UpdateDatabaseParam) GetBackupWeekdays() []string {
-	return p.BackupWeekdays
-}
-func (p *UpdateDatabaseParam) SetBackupTime(v string) {
-	p.BackupTime = v
-}
-
-func (p *UpdateDatabaseParam) GetBackupTime() string {
-	return p.BackupTime
-}
-func (p *UpdateDatabaseParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *UpdateDatabaseParam) GetDescription() string {
-	return p.Description
-}
 func (p *UpdateDatabaseParam) SetTags(v []string) {
 	p.Tags = v
 }
@@ -984,6 +935,48 @@ func (p *UpdateDatabaseParam) SetReplicaUserPassword(v string) {
 func (p *UpdateDatabaseParam) GetReplicaUserPassword() string {
 	return p.ReplicaUserPassword
 }
+func (p *UpdateDatabaseParam) SetSourceNetworks(v []string) {
+	p.SourceNetworks = v
+}
+
+func (p *UpdateDatabaseParam) GetSourceNetworks() []string {
+	return p.SourceNetworks
+}
+func (p *UpdateDatabaseParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateDatabaseParam) GetName() string {
+	return p.Name
+}
+func (p *UpdateDatabaseParam) SetBackupWeekdays(v []string) {
+	p.BackupWeekdays = v
+}
+
+func (p *UpdateDatabaseParam) GetBackupWeekdays() []string {
+	return p.BackupWeekdays
+}
+func (p *UpdateDatabaseParam) SetBackupTime(v string) {
+	p.BackupTime = v
+}
+
+func (p *UpdateDatabaseParam) GetBackupTime() string {
+	return p.BackupTime
+}
+func (p *UpdateDatabaseParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *UpdateDatabaseParam) GetDescription() string {
+	return p.Description
+}
+func (p *UpdateDatabaseParam) SetEnableReplication(v bool) {
+	p.EnableReplication = v
+}
+
+func (p *UpdateDatabaseParam) GetEnableReplication() bool {
+	return p.EnableReplication
+}
 func (p *UpdateDatabaseParam) SetPort(v int) {
 	p.Port = v
 }
@@ -991,12 +984,19 @@ func (p *UpdateDatabaseParam) SetPort(v int) {
 func (p *UpdateDatabaseParam) GetPort() int {
 	return p.Port
 }
-func (p *UpdateDatabaseParam) SetSourceNetworks(v []string) {
-	p.SourceNetworks = v
+func (p *UpdateDatabaseParam) SetEnableWebUi(v bool) {
+	p.EnableWebUi = v
 }
 
-func (p *UpdateDatabaseParam) GetSourceNetworks() []string {
-	return p.SourceNetworks
+func (p *UpdateDatabaseParam) GetEnableWebUi() bool {
+	return p.EnableWebUi
+}
+func (p *UpdateDatabaseParam) SetEnableBackup(v bool) {
+	p.EnableBackup = v
+}
+
+func (p *UpdateDatabaseParam) GetEnableBackup() bool {
+	return p.EnableBackup
 }
 
 // DeleteDatabaseParam is input parameters for the sacloud API
@@ -1880,22 +1880,22 @@ func (p *BackupRemoveDatabaseParam) GetIndex() int {
 
 // CloneDatabaseParam is input parameters for the sacloud API
 type CloneDatabaseParam struct {
-	IconId              sacloud.ID
-	Plan                int
-	NwMaskLen           int
-	Ipaddress1          string
-	DefaultRoute        string
 	Name                string
-	Tags                []string
-	ReplicaUserPassword string
+	Plan                int
+	SourceNetworks      []string
+	BackupWeekdays      []string
+	Port                int
+	Ipaddress1          string
+	NwMaskLen           int
+	DefaultRoute        string
+	IconId              sacloud.ID
 	EnableWebUi         bool
 	BackupTime          string
-	Port                int
-	Description         string
-	SourceNetworks      []string
 	EnableBackup        bool
+	Description         string
+	Tags                []string
 	SwitchId            sacloud.ID
-	BackupWeekdays      []string
+	ReplicaUserPassword string
 
 	input Input
 }
@@ -1921,29 +1921,32 @@ func (p *CloneDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CloneDatabaseParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
 	}
 	if utils.IsEmpty(p.Plan) {
 		p.Plan = 0
 	}
-	if utils.IsEmpty(p.NwMaskLen) {
-		p.NwMaskLen = 0
+	if utils.IsEmpty(p.SourceNetworks) {
+		p.SourceNetworks = []string{""}
+	}
+	if utils.IsEmpty(p.BackupWeekdays) {
+		p.BackupWeekdays = []string{""}
+	}
+	if utils.IsEmpty(p.Port) {
+		p.Port = 0
 	}
 	if utils.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
 	}
+	if utils.IsEmpty(p.NwMaskLen) {
+		p.NwMaskLen = 0
+	}
 	if utils.IsEmpty(p.DefaultRoute) {
 		p.DefaultRoute = ""
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.ReplicaUserPassword) {
-		p.ReplicaUserPassword = ""
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
 	}
 	if utils.IsEmpty(p.EnableWebUi) {
 		p.EnableWebUi = false
@@ -1951,23 +1954,20 @@ func (p *CloneDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.BackupTime) {
 		p.BackupTime = ""
 	}
-	if utils.IsEmpty(p.Port) {
-		p.Port = 0
+	if utils.IsEmpty(p.EnableBackup) {
+		p.EnableBackup = false
 	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.SourceNetworks) {
-		p.SourceNetworks = []string{""}
-	}
-	if utils.IsEmpty(p.EnableBackup) {
-		p.EnableBackup = false
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.SwitchId) {
 		p.SwitchId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.BackupWeekdays) {
-		p.BackupWeekdays = []string{""}
+	if utils.IsEmpty(p.ReplicaUserPassword) {
+		p.ReplicaUserPassword = ""
 	}
 
 }
@@ -1976,8 +1976,15 @@ func (p *CloneDatabaseParam) validate() error {
 	var errors []error
 
 	{
-		validator := define.Resources["Database"].Commands["clone"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["clone"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1999,8 +2006,24 @@ func (p *CloneDatabaseParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["Database"].Commands["clone"].Params["nw-mask-len"].ValidateFunc
-		errs := validator("--nw-mask-len", p.NwMaskLen)
+		validator := define.Resources["Database"].Commands["clone"].Params["source-networks"].ValidateFunc
+		errs := validator("--source-networks", p.SourceNetworks)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["clone"].Params["backup-weekdays"].ValidateFunc
+		errs := validator("--backup-weekdays", p.BackupWeekdays)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["clone"].Params["port"].ValidateFunc
+		errs := validator("--port", p.Port)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2022,6 +2045,14 @@ func (p *CloneDatabaseParam) validate() error {
 	}
 
 	{
+		validator := define.Resources["Database"].Commands["clone"].Params["nw-mask-len"].ValidateFunc
+		errs := validator("--nw-mask-len", p.NwMaskLen)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
 		validator := define.Resources["Database"].Commands["clone"].Params["default-route"].ValidateFunc
 		errs := validator("--default-route", p.DefaultRoute)
 		if errs != nil {
@@ -2030,31 +2061,8 @@ func (p *CloneDatabaseParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Database"].Commands["clone"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["clone"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["clone"].Params["replica-user-password"].ValidateFunc
-		errs := validator("--replica-user-password", p.ReplicaUserPassword)
+		validator := define.Resources["Database"].Commands["clone"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2069,14 +2077,6 @@ func (p *CloneDatabaseParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["Database"].Commands["clone"].Params["port"].ValidateFunc
-		errs := validator("--port", p.Port)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
 		validator := define.Resources["Database"].Commands["clone"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
 		if errs != nil {
@@ -2085,8 +2085,8 @@ func (p *CloneDatabaseParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["Database"].Commands["clone"].Params["source-networks"].ValidateFunc
-		errs := validator("--source-networks", p.SourceNetworks)
+		validator := define.Resources["Database"].Commands["clone"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2101,8 +2101,8 @@ func (p *CloneDatabaseParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["Database"].Commands["clone"].Params["backup-weekdays"].ValidateFunc
-		errs := validator("--backup-weekdays", p.BackupWeekdays)
+		validator := define.Resources["Database"].Commands["clone"].Params["replica-user-password"].ValidateFunc
+		errs := validator("--replica-user-password", p.ReplicaUserPassword)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2135,12 +2135,12 @@ func (p *CloneDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CloneDatabaseParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
+func (p *CloneDatabaseParam) SetName(v string) {
+	p.Name = v
 }
 
-func (p *CloneDatabaseParam) GetIconId() sacloud.ID {
-	return p.IconId
+func (p *CloneDatabaseParam) GetName() string {
+	return p.Name
 }
 func (p *CloneDatabaseParam) SetPlan(v int) {
 	p.Plan = v
@@ -2149,12 +2149,26 @@ func (p *CloneDatabaseParam) SetPlan(v int) {
 func (p *CloneDatabaseParam) GetPlan() int {
 	return p.Plan
 }
-func (p *CloneDatabaseParam) SetNwMaskLen(v int) {
-	p.NwMaskLen = v
+func (p *CloneDatabaseParam) SetSourceNetworks(v []string) {
+	p.SourceNetworks = v
 }
 
-func (p *CloneDatabaseParam) GetNwMaskLen() int {
-	return p.NwMaskLen
+func (p *CloneDatabaseParam) GetSourceNetworks() []string {
+	return p.SourceNetworks
+}
+func (p *CloneDatabaseParam) SetBackupWeekdays(v []string) {
+	p.BackupWeekdays = v
+}
+
+func (p *CloneDatabaseParam) GetBackupWeekdays() []string {
+	return p.BackupWeekdays
+}
+func (p *CloneDatabaseParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *CloneDatabaseParam) GetPort() int {
+	return p.Port
 }
 func (p *CloneDatabaseParam) SetIpaddress1(v string) {
 	p.Ipaddress1 = v
@@ -2163,6 +2177,13 @@ func (p *CloneDatabaseParam) SetIpaddress1(v string) {
 func (p *CloneDatabaseParam) GetIpaddress1() string {
 	return p.Ipaddress1
 }
+func (p *CloneDatabaseParam) SetNwMaskLen(v int) {
+	p.NwMaskLen = v
+}
+
+func (p *CloneDatabaseParam) GetNwMaskLen() int {
+	return p.NwMaskLen
+}
 func (p *CloneDatabaseParam) SetDefaultRoute(v string) {
 	p.DefaultRoute = v
 }
@@ -2170,26 +2191,12 @@ func (p *CloneDatabaseParam) SetDefaultRoute(v string) {
 func (p *CloneDatabaseParam) GetDefaultRoute() string {
 	return p.DefaultRoute
 }
-func (p *CloneDatabaseParam) SetName(v string) {
-	p.Name = v
+func (p *CloneDatabaseParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
 }
 
-func (p *CloneDatabaseParam) GetName() string {
-	return p.Name
-}
-func (p *CloneDatabaseParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CloneDatabaseParam) GetTags() []string {
-	return p.Tags
-}
-func (p *CloneDatabaseParam) SetReplicaUserPassword(v string) {
-	p.ReplicaUserPassword = v
-}
-
-func (p *CloneDatabaseParam) GetReplicaUserPassword() string {
-	return p.ReplicaUserPassword
+func (p *CloneDatabaseParam) GetIconId() sacloud.ID {
+	return p.IconId
 }
 func (p *CloneDatabaseParam) SetEnableWebUi(v bool) {
 	p.EnableWebUi = v
@@ -2205,12 +2212,12 @@ func (p *CloneDatabaseParam) SetBackupTime(v string) {
 func (p *CloneDatabaseParam) GetBackupTime() string {
 	return p.BackupTime
 }
-func (p *CloneDatabaseParam) SetPort(v int) {
-	p.Port = v
+func (p *CloneDatabaseParam) SetEnableBackup(v bool) {
+	p.EnableBackup = v
 }
 
-func (p *CloneDatabaseParam) GetPort() int {
-	return p.Port
+func (p *CloneDatabaseParam) GetEnableBackup() bool {
+	return p.EnableBackup
 }
 func (p *CloneDatabaseParam) SetDescription(v string) {
 	p.Description = v
@@ -2219,19 +2226,12 @@ func (p *CloneDatabaseParam) SetDescription(v string) {
 func (p *CloneDatabaseParam) GetDescription() string {
 	return p.Description
 }
-func (p *CloneDatabaseParam) SetSourceNetworks(v []string) {
-	p.SourceNetworks = v
+func (p *CloneDatabaseParam) SetTags(v []string) {
+	p.Tags = v
 }
 
-func (p *CloneDatabaseParam) GetSourceNetworks() []string {
-	return p.SourceNetworks
-}
-func (p *CloneDatabaseParam) SetEnableBackup(v bool) {
-	p.EnableBackup = v
-}
-
-func (p *CloneDatabaseParam) GetEnableBackup() bool {
-	return p.EnableBackup
+func (p *CloneDatabaseParam) GetTags() []string {
+	return p.Tags
 }
 func (p *CloneDatabaseParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
@@ -2240,24 +2240,24 @@ func (p *CloneDatabaseParam) SetSwitchId(v sacloud.ID) {
 func (p *CloneDatabaseParam) GetSwitchId() sacloud.ID {
 	return p.SwitchId
 }
-func (p *CloneDatabaseParam) SetBackupWeekdays(v []string) {
-	p.BackupWeekdays = v
+func (p *CloneDatabaseParam) SetReplicaUserPassword(v string) {
+	p.ReplicaUserPassword = v
 }
 
-func (p *CloneDatabaseParam) GetBackupWeekdays() []string {
-	return p.BackupWeekdays
+func (p *CloneDatabaseParam) GetReplicaUserPassword() string {
+	return p.ReplicaUserPassword
 }
 
 // ReplicaCreateDatabaseParam is input parameters for the sacloud API
 type ReplicaCreateDatabaseParam struct {
-	NwMaskLen    int
-	DefaultRoute string
-	Name         string
 	Description  string
 	Tags         []string
 	IconId       sacloud.ID
 	SwitchId     sacloud.ID
 	Ipaddress1   string
+	NwMaskLen    int
+	DefaultRoute string
+	Name         string
 
 	input Input
 }
@@ -2282,15 +2282,6 @@ func (p *ReplicaCreateDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReplicaCreateDatabaseParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.NwMaskLen) {
-		p.NwMaskLen = 0
-	}
-	if utils.IsEmpty(p.DefaultRoute) {
-		p.DefaultRoute = ""
-	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
@@ -2306,42 +2297,20 @@ func (p *ReplicaCreateDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
 	}
+	if utils.IsEmpty(p.NwMaskLen) {
+		p.NwMaskLen = 0
+	}
+	if utils.IsEmpty(p.DefaultRoute) {
+		p.DefaultRoute = ""
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
 
 }
 
 func (p *ReplicaCreateDatabaseParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Database"].Commands["replica-create"].Params["nw-mask-len"].ValidateFunc
-		errs := validator("--nw-mask-len", p.NwMaskLen)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["replica-create"].Params["default-route"].ValidateFunc
-		errs := validator("--default-route", p.DefaultRoute)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Database"].Commands["replica-create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Database"].Commands["replica-create"].Params["description"].ValidateFunc
@@ -2390,6 +2359,37 @@ func (p *ReplicaCreateDatabaseParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["Database"].Commands["replica-create"].Params["nw-mask-len"].ValidateFunc
+		errs := validator("--nw-mask-len", p.NwMaskLen)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["replica-create"].Params["default-route"].ValidateFunc
+		errs := validator("--default-route", p.DefaultRoute)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["replica-create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
@@ -2417,27 +2417,6 @@ func (p *ReplicaCreateDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ReplicaCreateDatabaseParam) SetNwMaskLen(v int) {
-	p.NwMaskLen = v
-}
-
-func (p *ReplicaCreateDatabaseParam) GetNwMaskLen() int {
-	return p.NwMaskLen
-}
-func (p *ReplicaCreateDatabaseParam) SetDefaultRoute(v string) {
-	p.DefaultRoute = v
-}
-
-func (p *ReplicaCreateDatabaseParam) GetDefaultRoute() string {
-	return p.DefaultRoute
-}
-func (p *ReplicaCreateDatabaseParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *ReplicaCreateDatabaseParam) GetName() string {
-	return p.Name
-}
 func (p *ReplicaCreateDatabaseParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -2473,12 +2452,33 @@ func (p *ReplicaCreateDatabaseParam) SetIpaddress1(v string) {
 func (p *ReplicaCreateDatabaseParam) GetIpaddress1() string {
 	return p.Ipaddress1
 }
+func (p *ReplicaCreateDatabaseParam) SetNwMaskLen(v int) {
+	p.NwMaskLen = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetNwMaskLen() int {
+	return p.NwMaskLen
+}
+func (p *ReplicaCreateDatabaseParam) SetDefaultRoute(v string) {
+	p.DefaultRoute = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetDefaultRoute() string {
+	return p.DefaultRoute
+}
+func (p *ReplicaCreateDatabaseParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetName() string {
+	return p.Name
+}
 
 // MonitorCPUDatabaseParam is input parameters for the sacloud API
 type MonitorCPUDatabaseParam struct {
+	Start     string
 	End       string
 	KeyFormat string
-	Start     string
 
 	input Input
 }
@@ -2504,20 +2504,28 @@ func (p *MonitorCPUDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *MonitorCPUDatabaseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Start) {
+		p.Start = ""
+	}
 	if utils.IsEmpty(p.End) {
 		p.End = ""
 	}
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
-	if utils.IsEmpty(p.Start) {
-		p.Start = ""
-	}
 
 }
 
 func (p *MonitorCPUDatabaseParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["Database"].Commands["monitor-cpu"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["Database"].Commands["monitor-cpu"].Params["end"].ValidateFunc
@@ -2530,14 +2538,6 @@ func (p *MonitorCPUDatabaseParam) validate() error {
 	{
 		validator := validateRequired
 		errs := validator("--key-format", p.KeyFormat)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["monitor-cpu"].Params["start"].ValidateFunc
-		errs := validator("--start", p.Start)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2570,6 +2570,13 @@ func (p *MonitorCPUDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *MonitorCPUDatabaseParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorCPUDatabaseParam) GetStart() string {
+	return p.Start
+}
 func (p *MonitorCPUDatabaseParam) SetEnd(v string) {
 	p.End = v
 }
@@ -2583,13 +2590,6 @@ func (p *MonitorCPUDatabaseParam) SetKeyFormat(v string) {
 
 func (p *MonitorCPUDatabaseParam) GetKeyFormat() string {
 	return p.KeyFormat
-}
-func (p *MonitorCPUDatabaseParam) SetStart(v string) {
-	p.Start = v
-}
-
-func (p *MonitorCPUDatabaseParam) GetStart() string {
-	return p.Start
 }
 
 // MonitorMemoryDatabaseParam is input parameters for the sacloud API
@@ -2830,9 +2830,9 @@ func (p *MonitorNicDatabaseParam) GetEnd() string {
 
 // MonitorSystemDiskDatabaseParam is input parameters for the sacloud API
 type MonitorSystemDiskDatabaseParam struct {
+	Start     string
 	End       string
 	KeyFormat string
-	Start     string
 
 	input Input
 }
@@ -2858,20 +2858,28 @@ func (p *MonitorSystemDiskDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *MonitorSystemDiskDatabaseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Start) {
+		p.Start = ""
+	}
 	if utils.IsEmpty(p.End) {
 		p.End = ""
 	}
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
-	if utils.IsEmpty(p.Start) {
-		p.Start = ""
-	}
 
 }
 
 func (p *MonitorSystemDiskDatabaseParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["Database"].Commands["monitor-system-disk"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["Database"].Commands["monitor-system-disk"].Params["end"].ValidateFunc
@@ -2884,14 +2892,6 @@ func (p *MonitorSystemDiskDatabaseParam) validate() error {
 	{
 		validator := validateRequired
 		errs := validator("--key-format", p.KeyFormat)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["monitor-system-disk"].Params["start"].ValidateFunc
-		errs := validator("--start", p.Start)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2924,6 +2924,13 @@ func (p *MonitorSystemDiskDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *MonitorSystemDiskDatabaseParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetStart() string {
+	return p.Start
+}
 func (p *MonitorSystemDiskDatabaseParam) SetEnd(v string) {
 	p.End = v
 }
@@ -2938,19 +2945,12 @@ func (p *MonitorSystemDiskDatabaseParam) SetKeyFormat(v string) {
 func (p *MonitorSystemDiskDatabaseParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
-func (p *MonitorSystemDiskDatabaseParam) SetStart(v string) {
-	p.Start = v
-}
-
-func (p *MonitorSystemDiskDatabaseParam) GetStart() string {
-	return p.Start
-}
 
 // MonitorBackupDiskDatabaseParam is input parameters for the sacloud API
 type MonitorBackupDiskDatabaseParam struct {
-	Start     string
 	End       string
 	KeyFormat string
+	Start     string
 
 	input Input
 }
@@ -2976,28 +2976,20 @@ func (p *MonitorBackupDiskDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *MonitorBackupDiskDatabaseParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Start) {
-		p.Start = ""
-	}
 	if utils.IsEmpty(p.End) {
 		p.End = ""
 	}
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
+	if utils.IsEmpty(p.Start) {
+		p.Start = ""
+	}
 
 }
 
 func (p *MonitorBackupDiskDatabaseParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Database"].Commands["monitor-backup-disk"].Params["start"].ValidateFunc
-		errs := validator("--start", p.Start)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Database"].Commands["monitor-backup-disk"].Params["end"].ValidateFunc
@@ -3010,6 +3002,14 @@ func (p *MonitorBackupDiskDatabaseParam) validate() error {
 	{
 		validator := validateRequired
 		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["monitor-backup-disk"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3042,13 +3042,6 @@ func (p *MonitorBackupDiskDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *MonitorBackupDiskDatabaseParam) SetStart(v string) {
-	p.Start = v
-}
-
-func (p *MonitorBackupDiskDatabaseParam) GetStart() string {
-	return p.Start
-}
 func (p *MonitorBackupDiskDatabaseParam) SetEnd(v string) {
 	p.End = v
 }
@@ -3063,12 +3056,19 @@ func (p *MonitorBackupDiskDatabaseParam) SetKeyFormat(v string) {
 func (p *MonitorBackupDiskDatabaseParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
+func (p *MonitorBackupDiskDatabaseParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetStart() string {
+	return p.Start
+}
 
 // MonitorSystemDiskSizeDatabaseParam is input parameters for the sacloud API
 type MonitorSystemDiskSizeDatabaseParam struct {
+	KeyFormat string
 	Start     string
 	End       string
-	KeyFormat string
 
 	input Input
 }
@@ -3094,20 +3094,28 @@ func (p *MonitorSystemDiskSizeDatabaseParam) WriteSkeleton(writer io.Writer) err
 }
 
 func (p *MonitorSystemDiskSizeDatabaseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
 	if utils.IsEmpty(p.Start) {
 		p.Start = ""
 	}
 	if utils.IsEmpty(p.End) {
 		p.End = ""
 	}
-	if utils.IsEmpty(p.KeyFormat) {
-		p.KeyFormat = ""
-	}
 
 }
 
 func (p *MonitorSystemDiskSizeDatabaseParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["Database"].Commands["monitor-system-disk-size"].Params["start"].ValidateFunc
@@ -3120,14 +3128,6 @@ func (p *MonitorSystemDiskSizeDatabaseParam) validate() error {
 	{
 		validator := define.Resources["Database"].Commands["monitor-system-disk-size"].Params["end"].ValidateFunc
 		errs := validator("--end", p.End)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--key-format", p.KeyFormat)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3160,6 +3160,13 @@ func (p *MonitorSystemDiskSizeDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *MonitorSystemDiskSizeDatabaseParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
 func (p *MonitorSystemDiskSizeDatabaseParam) SetStart(v string) {
 	p.Start = v
 }
@@ -3174,19 +3181,12 @@ func (p *MonitorSystemDiskSizeDatabaseParam) SetEnd(v string) {
 func (p *MonitorSystemDiskSizeDatabaseParam) GetEnd() string {
 	return p.End
 }
-func (p *MonitorSystemDiskSizeDatabaseParam) SetKeyFormat(v string) {
-	p.KeyFormat = v
-}
-
-func (p *MonitorSystemDiskSizeDatabaseParam) GetKeyFormat() string {
-	return p.KeyFormat
-}
 
 // MonitorBackupDiskSizeDatabaseParam is input parameters for the sacloud API
 type MonitorBackupDiskSizeDatabaseParam struct {
-	Start     string
 	End       string
 	KeyFormat string
+	Start     string
 
 	input Input
 }
@@ -3212,28 +3212,20 @@ func (p *MonitorBackupDiskSizeDatabaseParam) WriteSkeleton(writer io.Writer) err
 }
 
 func (p *MonitorBackupDiskSizeDatabaseParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Start) {
-		p.Start = ""
-	}
 	if utils.IsEmpty(p.End) {
 		p.End = ""
 	}
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
+	if utils.IsEmpty(p.Start) {
+		p.Start = ""
+	}
 
 }
 
 func (p *MonitorBackupDiskSizeDatabaseParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Database"].Commands["monitor-backup-disk-size"].Params["start"].ValidateFunc
-		errs := validator("--start", p.Start)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Database"].Commands["monitor-backup-disk-size"].Params["end"].ValidateFunc
@@ -3246,6 +3238,14 @@ func (p *MonitorBackupDiskSizeDatabaseParam) validate() error {
 	{
 		validator := validateRequired
 		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["monitor-backup-disk-size"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3278,13 +3278,6 @@ func (p *MonitorBackupDiskSizeDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *MonitorBackupDiskSizeDatabaseParam) SetStart(v string) {
-	p.Start = v
-}
-
-func (p *MonitorBackupDiskSizeDatabaseParam) GetStart() string {
-	return p.Start
-}
 func (p *MonitorBackupDiskSizeDatabaseParam) SetEnd(v string) {
 	p.End = v
 }
@@ -3298,6 +3291,13 @@ func (p *MonitorBackupDiskSizeDatabaseParam) SetKeyFormat(v string) {
 
 func (p *MonitorBackupDiskSizeDatabaseParam) GetKeyFormat() string {
 	return p.KeyFormat
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetStart() string {
+	return p.Start
 }
 
 // LogsDatabaseParam is input parameters for the sacloud API

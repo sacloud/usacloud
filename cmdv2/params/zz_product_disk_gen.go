@@ -29,11 +29,11 @@ import (
 
 // ListProductDiskParam is input parameters for the sacloud API
 type ListProductDiskParam struct {
-	Sort []string
 	Name []string
 	Id   []sacloud.ID
 	From int
 	Max  int
+	Sort []string
 
 	input Input
 }
@@ -58,9 +58,6 @@ func (p *ListProductDiskParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListProductDiskParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -72,6 +69,9 @@ func (p *ListProductDiskParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
+	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
 	}
 
 }
@@ -133,13 +133,6 @@ func (p *ListProductDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListProductDiskParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListProductDiskParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListProductDiskParam) SetName(v []string) {
 	p.Name = v
 }
@@ -167,6 +160,13 @@ func (p *ListProductDiskParam) SetMax(v int) {
 
 func (p *ListProductDiskParam) GetMax() int {
 	return p.Max
+}
+func (p *ListProductDiskParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListProductDiskParam) GetSort() []string {
+	return p.Sort
 }
 
 // ReadProductDiskParam is input parameters for the sacloud API

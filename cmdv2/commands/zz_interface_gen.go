@@ -59,11 +59,11 @@ var interfaceListCmd = &cobra.Command{
 
 func interfaceListCmdInit() {
 	fs := interfaceListCmd.Flags()
-	fs.StringSliceVarP(&interfaceListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &interfaceListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&interfaceListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&interfaceListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&interfaceListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&interfaceListParam.Name, "name", "", []string{}, "set filter by name(s)")
 }
 
 var interfacePacketFilterConnectCmd = &cobra.Command{

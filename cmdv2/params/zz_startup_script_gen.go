@@ -32,11 +32,11 @@ type ListStartupScriptParam struct {
 	Scope string
 	Tags  []string
 	Class []string
+	Sort  []string
 	Name  []string
 	Id    []sacloud.ID
 	From  int
 	Max   int
-	Sort  []string
 
 	input Input
 }
@@ -70,6 +70,9 @@ func (p *ListStartupScriptParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Class) {
 		p.Class = []string{""}
 	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -81,9 +84,6 @@ func (p *ListStartupScriptParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
-	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
 	}
 
 }
@@ -182,6 +182,13 @@ func (p *ListStartupScriptParam) SetClass(v []string) {
 func (p *ListStartupScriptParam) GetClass() []string {
 	return p.Class
 }
+func (p *ListStartupScriptParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListStartupScriptParam) GetSort() []string {
+	return p.Sort
+}
 func (p *ListStartupScriptParam) SetName(v []string) {
 	p.Name = v
 }
@@ -210,22 +217,15 @@ func (p *ListStartupScriptParam) SetMax(v int) {
 func (p *ListStartupScriptParam) GetMax() int {
 	return p.Max
 }
-func (p *ListStartupScriptParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListStartupScriptParam) GetSort() []string {
-	return p.Sort
-}
 
 // CreateStartupScriptParam is input parameters for the sacloud API
 type CreateStartupScriptParam struct {
-	Script        string
 	Class         string
 	Name          string
 	Tags          []string
 	IconId        sacloud.ID
 	ScriptContent string
+	Script        string
 
 	input Input
 }
@@ -251,9 +251,6 @@ func (p *CreateStartupScriptParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateStartupScriptParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Script) {
-		p.Script = ""
-	}
 	if utils.IsEmpty(p.Class) {
 		p.Class = ""
 	}
@@ -269,19 +266,14 @@ func (p *CreateStartupScriptParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.ScriptContent) {
 		p.ScriptContent = ""
 	}
+	if utils.IsEmpty(p.Script) {
+		p.Script = ""
+	}
 
 }
 
 func (p *CreateStartupScriptParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["StartupScript"].Commands["create"].Params["script"].ValidateFunc
-		errs := validator("--script", p.Script)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -339,6 +331,14 @@ func (p *CreateStartupScriptParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["StartupScript"].Commands["create"].Params["script"].ValidateFunc
+		errs := validator("--script", p.Script)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
@@ -366,13 +366,6 @@ func (p *CreateStartupScriptParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateStartupScriptParam) SetScript(v string) {
-	p.Script = v
-}
-
-func (p *CreateStartupScriptParam) GetScript() string {
-	return p.Script
-}
 func (p *CreateStartupScriptParam) SetClass(v string) {
 	p.Class = v
 }
@@ -407,6 +400,13 @@ func (p *CreateStartupScriptParam) SetScriptContent(v string) {
 
 func (p *CreateStartupScriptParam) GetScriptContent() string {
 	return p.ScriptContent
+}
+func (p *CreateStartupScriptParam) SetScript(v string) {
+	p.Script = v
+}
+
+func (p *CreateStartupScriptParam) GetScript() string {
+	return p.Script
 }
 
 // ReadStartupScriptParam is input parameters for the sacloud API
@@ -469,12 +469,12 @@ func (p *ReadStartupScriptParam) ColumnDefs() []output.ColumnDef {
 
 // UpdateStartupScriptParam is input parameters for the sacloud API
 type UpdateStartupScriptParam struct {
-	ScriptContent string
 	Script        string
 	Class         string
 	Name          string
 	Tags          []string
 	IconId        sacloud.ID
+	ScriptContent string
 
 	input Input
 }
@@ -499,9 +499,6 @@ func (p *UpdateStartupScriptParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateStartupScriptParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.ScriptContent) {
-		p.ScriptContent = ""
-	}
 	if utils.IsEmpty(p.Script) {
 		p.Script = ""
 	}
@@ -517,21 +514,14 @@ func (p *UpdateStartupScriptParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
+	if utils.IsEmpty(p.ScriptContent) {
+		p.ScriptContent = ""
+	}
 
 }
 
 func (p *UpdateStartupScriptParam) validate() error {
 	var errors []error
-
-	{
-		errs := validation.ConflictsWith("--script-content", p.ScriptContent, map[string]interface{}{
-
-			"--script": p.Script,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["StartupScript"].Commands["update"].Params["script"].ValidateFunc
@@ -573,6 +563,16 @@ func (p *UpdateStartupScriptParam) validate() error {
 		}
 	}
 
+	{
+		errs := validation.ConflictsWith("--script-content", p.ScriptContent, map[string]interface{}{
+
+			"--script": p.Script,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
@@ -600,13 +600,6 @@ func (p *UpdateStartupScriptParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateStartupScriptParam) SetScriptContent(v string) {
-	p.ScriptContent = v
-}
-
-func (p *UpdateStartupScriptParam) GetScriptContent() string {
-	return p.ScriptContent
-}
 func (p *UpdateStartupScriptParam) SetScript(v string) {
 	p.Script = v
 }
@@ -641,6 +634,13 @@ func (p *UpdateStartupScriptParam) SetIconId(v sacloud.ID) {
 
 func (p *UpdateStartupScriptParam) GetIconId() sacloud.ID {
 	return p.IconId
+}
+func (p *UpdateStartupScriptParam) SetScriptContent(v string) {
+	p.ScriptContent = v
+}
+
+func (p *UpdateStartupScriptParam) GetScriptContent() string {
+	return p.ScriptContent
 }
 
 // DeleteStartupScriptParam is input parameters for the sacloud API

@@ -29,8 +29,8 @@ import (
 
 // ListAutoBackupParam is input parameters for the sacloud API
 type ListAutoBackupParam struct {
-	Tags []string
 	Name []string
+	Tags []string
 	Id   []sacloud.ID
 	From int
 	Max  int
@@ -59,11 +59,11 @@ func (p *ListAutoBackupParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListAutoBackupParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
@@ -84,18 +84,18 @@ func (p *ListAutoBackupParam) validate() error {
 	var errors []error
 
 	{
-		validator := define.Resources["AutoBackup"].Commands["list"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
 	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
+		validator := define.Resources["AutoBackup"].Commands["list"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -145,19 +145,19 @@ func (p *ListAutoBackupParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListAutoBackupParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *ListAutoBackupParam) GetTags() []string {
-	return p.Tags
-}
 func (p *ListAutoBackupParam) SetName(v []string) {
 	p.Name = v
 }
 
 func (p *ListAutoBackupParam) GetName() []string {
 	return p.Name
+}
+func (p *ListAutoBackupParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *ListAutoBackupParam) GetTags() []string {
+	return p.Tags
 }
 func (p *ListAutoBackupParam) SetId(v []sacloud.ID) {
 	p.Id = v
@@ -470,12 +470,12 @@ func (p *ReadAutoBackupParam) ColumnDefs() []output.ColumnDef {
 
 // UpdateAutoBackupParam is input parameters for the sacloud API
 type UpdateAutoBackupParam struct {
-	IconId      sacloud.ID
-	Weekdays    []string
-	Generation  int
 	Name        string
 	Description string
 	Tags        []string
+	IconId      sacloud.ID
+	Weekdays    []string
+	Generation  int
 
 	input Input
 }
@@ -500,15 +500,6 @@ func (p *UpdateAutoBackupParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateAutoBackupParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.Weekdays) {
-		p.Weekdays = []string{""}
-	}
-	if utils.IsEmpty(p.Generation) {
-		p.Generation = 0
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -518,35 +509,20 @@ func (p *UpdateAutoBackupParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Weekdays) {
+		p.Weekdays = []string{""}
+	}
+	if utils.IsEmpty(p.Generation) {
+		p.Generation = 0
+	}
 
 }
 
 func (p *UpdateAutoBackupParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["AutoBackup"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["AutoBackup"].Commands["update"].Params["weekdays"].ValidateFunc
-		errs := validator("--weekdays", p.Weekdays)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["AutoBackup"].Commands["update"].Params["generation"].ValidateFunc
-		errs := validator("--generation", p.Generation)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["AutoBackup"].Commands["update"].Params["name"].ValidateFunc
@@ -567,6 +543,30 @@ func (p *UpdateAutoBackupParam) validate() error {
 	{
 		validator := define.Resources["AutoBackup"].Commands["update"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["AutoBackup"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["AutoBackup"].Commands["update"].Params["weekdays"].ValidateFunc
+		errs := validator("--weekdays", p.Weekdays)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["AutoBackup"].Commands["update"].Params["generation"].ValidateFunc
+		errs := validator("--generation", p.Generation)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -599,27 +599,6 @@ func (p *UpdateAutoBackupParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateAutoBackupParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *UpdateAutoBackupParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
-func (p *UpdateAutoBackupParam) SetWeekdays(v []string) {
-	p.Weekdays = v
-}
-
-func (p *UpdateAutoBackupParam) GetWeekdays() []string {
-	return p.Weekdays
-}
-func (p *UpdateAutoBackupParam) SetGeneration(v int) {
-	p.Generation = v
-}
-
-func (p *UpdateAutoBackupParam) GetGeneration() int {
-	return p.Generation
-}
 func (p *UpdateAutoBackupParam) SetName(v string) {
 	p.Name = v
 }
@@ -640,6 +619,27 @@ func (p *UpdateAutoBackupParam) SetTags(v []string) {
 
 func (p *UpdateAutoBackupParam) GetTags() []string {
 	return p.Tags
+}
+func (p *UpdateAutoBackupParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *UpdateAutoBackupParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+func (p *UpdateAutoBackupParam) SetWeekdays(v []string) {
+	p.Weekdays = v
+}
+
+func (p *UpdateAutoBackupParam) GetWeekdays() []string {
+	return p.Weekdays
+}
+func (p *UpdateAutoBackupParam) SetGeneration(v int) {
+	p.Generation = v
+}
+
+func (p *UpdateAutoBackupParam) GetGeneration() int {
+	return p.Generation
 }
 
 // DeleteAutoBackupParam is input parameters for the sacloud API

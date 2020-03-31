@@ -78,12 +78,12 @@ var proxyLBListCmd = &cobra.Command{
 
 func proxyLBListCmdInit() {
 	fs := proxyLBListCmd.Flags()
-	fs.StringSliceVarP(&proxyLBListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &proxyLBListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&proxyLBListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&proxyLBListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&proxyLBListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&proxyLBListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.StringSliceVarP(&proxyLBListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &proxyLBListParam.Id), "id", "", "set filter by id(s)")
 }
 
 var proxyLBCreateCmd = &cobra.Command{
@@ -101,19 +101,19 @@ var proxyLBCreateCmd = &cobra.Command{
 
 func proxyLBCreateCmdInit() {
 	fs := proxyLBCreateCmd.Flags()
-	fs.IntVarP(&proxyLBCreateParam.SorryServerPort, "sorry-server-port", "", 0, "set sorry-server ports")
-	fs.StringVarP(&proxyLBCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringSliceVarP(&proxyLBCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.StringVarP(&proxyLBCreateParam.Protocol, "protocol", "", "tcp", "set healthcheck protocol[http/tcp]")
+	fs.StringVarP(&proxyLBCreateParam.Path, "path", "", "/", "set path of http/https healthcheck request")
 	fs.IntVarP(&proxyLBCreateParam.DelayLoop, "delay-loop", "", 10, "set delay-loop of healthcheck")
 	fs.StringVarP(&proxyLBCreateParam.SorryServerIpaddress, "sorry-server-ipaddress", "", "", "set sorry-server ip address")
-	fs.BoolVarP(&proxyLBCreateParam.StickySession, "sticky-session", "", false, "enable sticky-session")
+	fs.IntVarP(&proxyLBCreateParam.SorryServerPort, "sorry-server-port", "", 0, "set sorry-server ports")
 	fs.IntVarP(&proxyLBCreateParam.Timeout, "timeout", "", 10, "set timeout")
+	fs.StringVarP(&proxyLBCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&proxyLBCreateParam.Protocol, "protocol", "", "tcp", "set healthcheck protocol[http/tcp]")
+	fs.StringVarP(&proxyLBCreateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
 	fs.StringVarP(&proxyLBCreateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&proxyLBCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &proxyLBCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.IntVarP(&proxyLBCreateParam.Plan, "plan", "", 1000, "set plan")
-	fs.StringVarP(&proxyLBCreateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
-	fs.StringVarP(&proxyLBCreateParam.Path, "path", "", "/", "set path of http/https healthcheck request")
+	fs.BoolVarP(&proxyLBCreateParam.StickySession, "sticky-session", "", false, "enable sticky-session")
 }
 
 var proxyLBReadCmd = &cobra.Command{
@@ -147,18 +147,18 @@ var proxyLBUpdateCmd = &cobra.Command{
 
 func proxyLBUpdateCmdInit() {
 	fs := proxyLBUpdateCmd.Flags()
-	fs.StringVarP(&proxyLBUpdateParam.Path, "path", "", "", "set path of http/https healthcheck request")
+	fs.StringVarP(&proxyLBUpdateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
 	fs.IntVarP(&proxyLBUpdateParam.DelayLoop, "delay-loop", "", 0, "set delay-loop of healthcheck")
-	fs.StringVarP(&proxyLBUpdateParam.SorryServerIpaddress, "sorry-server-ipaddress", "", "", "set sorry-server ip address")
+	fs.BoolVarP(&proxyLBUpdateParam.StickySession, "sticky-session", "", false, "enable sticky-session")
+	fs.IntVarP(&proxyLBUpdateParam.Timeout, "timeout", "", 10, "set timeout")
 	fs.StringVarP(&proxyLBUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.VarP(newIDValue(0, &proxyLBUpdateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringSliceVarP(&proxyLBUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.StringVarP(&proxyLBUpdateParam.Protocol, "protocol", "", "", "set healthcheck protocol[http/tcp]")
-	fs.StringVarP(&proxyLBUpdateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
-	fs.BoolVarP(&proxyLBUpdateParam.StickySession, "sticky-session", "", false, "enable sticky-session")
+	fs.StringVarP(&proxyLBUpdateParam.Path, "path", "", "", "set path of http/https healthcheck request")
+	fs.StringVarP(&proxyLBUpdateParam.SorryServerIpaddress, "sorry-server-ipaddress", "", "", "set sorry-server ip address")
 	fs.IntVarP(&proxyLBUpdateParam.SorryServerPort, "sorry-server-port", "", 0, "set sorry-server ports")
-	fs.IntVarP(&proxyLBUpdateParam.Timeout, "timeout", "", 10, "set timeout")
 	fs.StringVarP(&proxyLBUpdateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&proxyLBUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 }
 
 var proxyLBDeleteCmd = &cobra.Command{
@@ -381,9 +381,9 @@ var proxyLBACMESettingCmd = &cobra.Command{
 
 func proxyLBACMESettingCmdInit() {
 	fs := proxyLBACMESettingCmd.Flags()
+	fs.StringVarP(&proxyLBACMESettingParam.CommonName, "common-name", "", "", "set common name")
 	fs.BoolVarP(&proxyLBACMESettingParam.Disable, "disable", "", false, "the flag of disable Let's Encrypt")
 	fs.BoolVarP(&proxyLBACMESettingParam.AcceptTos, "accept-tos", "", false, "the flag of accept Let's Encrypt's terms of services: https://letsencrypt.org/repository/")
-	fs.StringVarP(&proxyLBACMESettingParam.CommonName, "common-name", "", "", "set common name")
 }
 
 var proxyLBACMERenewCmd = &cobra.Command{
@@ -528,9 +528,9 @@ var proxyLBCertificateUpdateCmd = &cobra.Command{
 
 func proxyLBCertificateUpdateCmdInit() {
 	fs := proxyLBCertificateUpdateCmd.Flags()
+	fs.StringVarP(&proxyLBCertificateUpdateParam.PrivateKey, "private-key", "", "", "")
 	fs.StringVarP(&proxyLBCertificateUpdateParam.ServerCertificate, "server-certificate", "", "", "")
 	fs.StringVarP(&proxyLBCertificateUpdateParam.IntermediateCertificate, "intermediate-certificate", "", "", "")
-	fs.StringVarP(&proxyLBCertificateUpdateParam.PrivateKey, "private-key", "", "", "")
 }
 
 var proxyLBCertificateDeleteCmd = &cobra.Command{

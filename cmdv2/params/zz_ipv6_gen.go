@@ -29,13 +29,13 @@ import (
 
 // ListIPv6Param is input parameters for the sacloud API
 type ListIPv6Param struct {
-	From       int
-	IPv6netId  sacloud.ID
-	InternetId sacloud.ID
 	Max        int
 	Sort       []string
 	Name       []string
 	Id         []sacloud.ID
+	From       int
+	IPv6netId  sacloud.ID
+	InternetId sacloud.ID
 
 	input Input
 }
@@ -60,15 +60,6 @@ func (p *ListIPv6Param) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListIPv6Param) fillValueToSkeleton() {
-	if utils.IsEmpty(p.From) {
-		p.From = 0
-	}
-	if utils.IsEmpty(p.IPv6netId) {
-		p.IPv6netId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.InternetId) {
-		p.InternetId = sacloud.ID(0)
-	}
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
 	}
@@ -81,27 +72,20 @@ func (p *ListIPv6Param) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
+	if utils.IsEmpty(p.From) {
+		p.From = 0
+	}
+	if utils.IsEmpty(p.IPv6netId) {
+		p.IPv6netId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.InternetId) {
+		p.InternetId = sacloud.ID(0)
+	}
 
 }
 
 func (p *ListIPv6Param) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["IPv6"].Commands["list"].Params["ipv6net-id"].ValidateFunc
-		errs := validator("--ipv6net-id", p.IPv6netId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["IPv6"].Commands["list"].Params["internet-id"].ValidateFunc
-		errs := validator("--internet-id", p.InternetId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
@@ -125,6 +109,22 @@ func (p *ListIPv6Param) validate() error {
 
 			"--name": p.Name,
 		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["IPv6"].Commands["list"].Params["ipv6net-id"].ValidateFunc
+		errs := validator("--ipv6net-id", p.IPv6netId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["IPv6"].Commands["list"].Params["internet-id"].ValidateFunc
+		errs := validator("--internet-id", p.InternetId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -157,27 +157,6 @@ func (p *ListIPv6Param) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListIPv6Param) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListIPv6Param) GetFrom() int {
-	return p.From
-}
-func (p *ListIPv6Param) SetIPv6netId(v sacloud.ID) {
-	p.IPv6netId = v
-}
-
-func (p *ListIPv6Param) GetIPv6netId() sacloud.ID {
-	return p.IPv6netId
-}
-func (p *ListIPv6Param) SetInternetId(v sacloud.ID) {
-	p.InternetId = v
-}
-
-func (p *ListIPv6Param) GetInternetId() sacloud.ID {
-	return p.InternetId
-}
 func (p *ListIPv6Param) SetMax(v int) {
 	p.Max = v
 }
@@ -205,6 +184,27 @@ func (p *ListIPv6Param) SetId(v []sacloud.ID) {
 
 func (p *ListIPv6Param) GetId() []sacloud.ID {
 	return p.Id
+}
+func (p *ListIPv6Param) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListIPv6Param) GetFrom() int {
+	return p.From
+}
+func (p *ListIPv6Param) SetIPv6netId(v sacloud.ID) {
+	p.IPv6netId = v
+}
+
+func (p *ListIPv6Param) GetIPv6netId() sacloud.ID {
+	return p.IPv6netId
+}
+func (p *ListIPv6Param) SetInternetId(v sacloud.ID) {
+	p.InternetId = v
+}
+
+func (p *ListIPv6Param) GetInternetId() sacloud.ID {
+	return p.InternetId
 }
 
 // PtrAddIPv6Param is input parameters for the sacloud API

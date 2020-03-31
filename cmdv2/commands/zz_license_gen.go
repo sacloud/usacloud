@@ -57,11 +57,11 @@ var licenseListCmd = &cobra.Command{
 
 func licenseListCmdInit() {
 	fs := licenseListCmd.Flags()
+	fs.StringSliceVarP(&licenseListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &licenseListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&licenseListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&licenseListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&licenseListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&licenseListParam.Name, "name", "", []string{}, "set filter by name(s)")
 }
 
 var licenseCreateCmd = &cobra.Command{
@@ -79,8 +79,8 @@ var licenseCreateCmd = &cobra.Command{
 
 func licenseCreateCmdInit() {
 	fs := licenseCreateCmd.Flags()
-	fs.VarP(newIDValue(0, &licenseCreateParam.LicenseInfoId), "license-info-id", "", "set LicenseInfo ID")
 	fs.StringVarP(&licenseCreateParam.Name, "name", "", "", "set resource display name")
+	fs.VarP(newIDValue(0, &licenseCreateParam.LicenseInfoId), "license-info-id", "", "set LicenseInfo ID")
 }
 
 var licenseReadCmd = &cobra.Command{

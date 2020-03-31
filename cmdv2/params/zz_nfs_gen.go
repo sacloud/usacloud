@@ -29,12 +29,12 @@ import (
 
 // ListNFSParam is input parameters for the sacloud API
 type ListNFSParam struct {
-	Tags []string
-	Sort []string
 	Name []string
 	Id   []sacloud.ID
 	From int
 	Max  int
+	Sort []string
+	Tags []string
 
 	input Input
 }
@@ -59,12 +59,6 @@ func (p *ListNFSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListNFSParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -77,19 +71,17 @@ func (p *ListNFSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
 	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
 
 }
 
 func (p *ListNFSParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["NFS"].Commands["list"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
@@ -113,6 +105,14 @@ func (p *ListNFSParam) validate() error {
 
 			"--name": p.Name,
 		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["NFS"].Commands["list"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -145,20 +145,6 @@ func (p *ListNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListNFSParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *ListNFSParam) GetTags() []string {
-	return p.Tags
-}
-func (p *ListNFSParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListNFSParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListNFSParam) SetName(v []string) {
 	p.Name = v
 }
@@ -187,18 +173,32 @@ func (p *ListNFSParam) SetMax(v int) {
 func (p *ListNFSParam) GetMax() int {
 	return p.Max
 }
+func (p *ListNFSParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListNFSParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListNFSParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *ListNFSParam) GetTags() []string {
+	return p.Tags
+}
 
 // CreateNFSParam is input parameters for the sacloud API
 type CreateNFSParam struct {
-	Plan         string
 	NwMaskLen    int
 	DefaultRoute string
 	Name         string
+	Description  string
 	IconId       sacloud.ID
-	SwitchId     sacloud.ID
+	Plan         string
 	Size         int
 	Ipaddress    string
-	Description  string
+	SwitchId     sacloud.ID
 	Tags         []string
 
 	input Input
@@ -225,9 +225,6 @@ func (p *CreateNFSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateNFSParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Plan) {
-		p.Plan = ""
-	}
 	if utils.IsEmpty(p.NwMaskLen) {
 		p.NwMaskLen = 0
 	}
@@ -237,11 +234,14 @@ func (p *CreateNFSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.SwitchId) {
-		p.SwitchId = sacloud.ID(0)
+	if utils.IsEmpty(p.Plan) {
+		p.Plan = ""
 	}
 	if utils.IsEmpty(p.Size) {
 		p.Size = 0
@@ -249,8 +249,8 @@ func (p *CreateNFSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
+	if utils.IsEmpty(p.SwitchId) {
+		p.SwitchId = sacloud.ID(0)
 	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -260,21 +260,6 @@ func (p *CreateNFSParam) fillValueToSkeleton() {
 
 func (p *CreateNFSParam) validate() error {
 	var errors []error
-
-	{
-		validator := validateRequired
-		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["NFS"].Commands["create"].Params["plan"].ValidateFunc
-		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -315,6 +300,14 @@ func (p *CreateNFSParam) validate() error {
 	}
 
 	{
+		validator := define.Resources["NFS"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
 		validator := define.Resources["NFS"].Commands["create"].Params["icon-id"].ValidateFunc
 		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
@@ -324,14 +317,14 @@ func (p *CreateNFSParam) validate() error {
 
 	{
 		validator := validateRequired
-		errs := validator("--switch-id", p.SwitchId)
+		errs := validator("--plan", p.Plan)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["NFS"].Commands["create"].Params["switch-id"].ValidateFunc
-		errs := validator("--switch-id", p.SwitchId)
+		validator := define.Resources["NFS"].Commands["create"].Params["plan"].ValidateFunc
+		errs := validator("--plan", p.Plan)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -368,8 +361,15 @@ func (p *CreateNFSParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["NFS"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
+		validator := validateRequired
+		errs := validator("--switch-id", p.SwitchId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["NFS"].Commands["create"].Params["switch-id"].ValidateFunc
+		errs := validator("--switch-id", p.SwitchId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -410,13 +410,6 @@ func (p *CreateNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateNFSParam) SetPlan(v string) {
-	p.Plan = v
-}
-
-func (p *CreateNFSParam) GetPlan() string {
-	return p.Plan
-}
 func (p *CreateNFSParam) SetNwMaskLen(v int) {
 	p.NwMaskLen = v
 }
@@ -438,6 +431,13 @@ func (p *CreateNFSParam) SetName(v string) {
 func (p *CreateNFSParam) GetName() string {
 	return p.Name
 }
+func (p *CreateNFSParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *CreateNFSParam) GetDescription() string {
+	return p.Description
+}
 func (p *CreateNFSParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
@@ -445,12 +445,12 @@ func (p *CreateNFSParam) SetIconId(v sacloud.ID) {
 func (p *CreateNFSParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *CreateNFSParam) SetSwitchId(v sacloud.ID) {
-	p.SwitchId = v
+func (p *CreateNFSParam) SetPlan(v string) {
+	p.Plan = v
 }
 
-func (p *CreateNFSParam) GetSwitchId() sacloud.ID {
-	return p.SwitchId
+func (p *CreateNFSParam) GetPlan() string {
+	return p.Plan
 }
 func (p *CreateNFSParam) SetSize(v int) {
 	p.Size = v
@@ -466,12 +466,12 @@ func (p *CreateNFSParam) SetIpaddress(v string) {
 func (p *CreateNFSParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *CreateNFSParam) SetDescription(v string) {
-	p.Description = v
+func (p *CreateNFSParam) SetSwitchId(v sacloud.ID) {
+	p.SwitchId = v
 }
 
-func (p *CreateNFSParam) GetDescription() string {
-	return p.Description
+func (p *CreateNFSParam) GetSwitchId() sacloud.ID {
+	return p.SwitchId
 }
 func (p *CreateNFSParam) SetTags(v []string) {
 	p.Tags = v
@@ -541,10 +541,10 @@ func (p *ReadNFSParam) ColumnDefs() []output.ColumnDef {
 
 // UpdateNFSParam is input parameters for the sacloud API
 type UpdateNFSParam struct {
-	Name        string
-	Description string
 	Tags        []string
 	IconId      sacloud.ID
+	Name        string
+	Description string
 
 	input Input
 }
@@ -569,39 +569,23 @@ func (p *UpdateNFSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateNFSParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
 
 }
 
 func (p *UpdateNFSParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["NFS"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["NFS"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["NFS"].Commands["update"].Params["tags"].ValidateFunc
@@ -614,6 +598,22 @@ func (p *UpdateNFSParam) validate() error {
 	{
 		validator := define.Resources["NFS"].Commands["update"].Params["icon-id"].ValidateFunc
 		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["NFS"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["NFS"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -646,20 +646,6 @@ func (p *UpdateNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateNFSParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateNFSParam) GetName() string {
-	return p.Name
-}
-func (p *UpdateNFSParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *UpdateNFSParam) GetDescription() string {
-	return p.Description
-}
 func (p *UpdateNFSParam) SetTags(v []string) {
 	p.Tags = v
 }
@@ -673,6 +659,20 @@ func (p *UpdateNFSParam) SetIconId(v sacloud.ID) {
 
 func (p *UpdateNFSParam) GetIconId() sacloud.ID {
 	return p.IconId
+}
+func (p *UpdateNFSParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateNFSParam) GetName() string {
+	return p.Name
+}
+func (p *UpdateNFSParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *UpdateNFSParam) GetDescription() string {
+	return p.Description
 }
 
 // DeleteNFSParam is input parameters for the sacloud API
@@ -1096,9 +1096,9 @@ func (p *WaitForDownNFSParam) ColumnDefs() []output.ColumnDef {
 
 // MonitorNicNFSParam is input parameters for the sacloud API
 type MonitorNicNFSParam struct {
-	Start     string
 	End       string
 	KeyFormat string
+	Start     string
 
 	input Input
 }
@@ -1124,28 +1124,20 @@ func (p *MonitorNicNFSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *MonitorNicNFSParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Start) {
-		p.Start = ""
-	}
 	if utils.IsEmpty(p.End) {
 		p.End = ""
 	}
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
+	if utils.IsEmpty(p.Start) {
+		p.Start = ""
+	}
 
 }
 
 func (p *MonitorNicNFSParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["NFS"].Commands["monitor-nic"].Params["start"].ValidateFunc
-		errs := validator("--start", p.Start)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["NFS"].Commands["monitor-nic"].Params["end"].ValidateFunc
@@ -1158,6 +1150,14 @@ func (p *MonitorNicNFSParam) validate() error {
 	{
 		validator := validateRequired
 		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["NFS"].Commands["monitor-nic"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1190,13 +1190,6 @@ func (p *MonitorNicNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *MonitorNicNFSParam) SetStart(v string) {
-	p.Start = v
-}
-
-func (p *MonitorNicNFSParam) GetStart() string {
-	return p.Start
-}
 func (p *MonitorNicNFSParam) SetEnd(v string) {
 	p.End = v
 }
@@ -1211,12 +1204,19 @@ func (p *MonitorNicNFSParam) SetKeyFormat(v string) {
 func (p *MonitorNicNFSParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
+func (p *MonitorNicNFSParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorNicNFSParam) GetStart() string {
+	return p.Start
+}
 
 // MonitorFreeDiskSizeNFSParam is input parameters for the sacloud API
 type MonitorFreeDiskSizeNFSParam struct {
+	Start     string
 	End       string
 	KeyFormat string
-	Start     string
 
 	input Input
 }
@@ -1242,20 +1242,28 @@ func (p *MonitorFreeDiskSizeNFSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *MonitorFreeDiskSizeNFSParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Start) {
+		p.Start = ""
+	}
 	if utils.IsEmpty(p.End) {
 		p.End = ""
 	}
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
-	if utils.IsEmpty(p.Start) {
-		p.Start = ""
-	}
 
 }
 
 func (p *MonitorFreeDiskSizeNFSParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["NFS"].Commands["monitor-free-disk-size"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["NFS"].Commands["monitor-free-disk-size"].Params["end"].ValidateFunc
@@ -1268,14 +1276,6 @@ func (p *MonitorFreeDiskSizeNFSParam) validate() error {
 	{
 		validator := validateRequired
 		errs := validator("--key-format", p.KeyFormat)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["NFS"].Commands["monitor-free-disk-size"].Params["start"].ValidateFunc
-		errs := validator("--start", p.Start)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1308,6 +1308,13 @@ func (p *MonitorFreeDiskSizeNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *MonitorFreeDiskSizeNFSParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetStart() string {
+	return p.Start
+}
 func (p *MonitorFreeDiskSizeNFSParam) SetEnd(v string) {
 	p.End = v
 }
@@ -1321,11 +1328,4 @@ func (p *MonitorFreeDiskSizeNFSParam) SetKeyFormat(v string) {
 
 func (p *MonitorFreeDiskSizeNFSParam) GetKeyFormat() string {
 	return p.KeyFormat
-}
-func (p *MonitorFreeDiskSizeNFSParam) SetStart(v string) {
-	p.Start = v
-}
-
-func (p *MonitorFreeDiskSizeNFSParam) GetStart() string {
-	return p.Start
 }

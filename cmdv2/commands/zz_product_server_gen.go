@@ -54,11 +54,11 @@ var productServerListCmd = &cobra.Command{
 
 func productServerListCmdInit() {
 	fs := productServerListCmd.Flags()
+	fs.IntVarP(&productServerListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&productServerListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&productServerListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &productServerListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&productServerListParam.From, "from", "", 0, "set offset")
-	fs.IntVarP(&productServerListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&productServerListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 }
 
 var productServerReadCmd = &cobra.Command{

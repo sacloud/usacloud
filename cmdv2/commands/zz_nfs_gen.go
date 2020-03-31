@@ -89,14 +89,14 @@ var nfsCreateCmd = &cobra.Command{
 func nfsCreateCmdInit() {
 	fs := nfsCreateCmd.Flags()
 	fs.IntVarP(&nfsCreateParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
-	fs.StringVarP(&nfsCreateParam.DefaultRoute, "default-route", "", "", "set default route")
 	fs.StringVarP(&nfsCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&nfsCreateParam.Description, "description", "", "", "set resource description")
-	fs.StringVarP(&nfsCreateParam.Plan, "plan", "", "hdd", "set plan[ssd/hdd]")
-	fs.StringVarP(&nfsCreateParam.Ipaddress, "ipaddress", "", "", "set ipaddress(#)")
-	fs.StringSliceVarP(&nfsCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &nfsCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.VarP(newIDValue(0, &nfsCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
+	fs.StringVarP(&nfsCreateParam.Ipaddress, "ipaddress", "", "", "set ipaddress(#)")
+	fs.StringVarP(&nfsCreateParam.DefaultRoute, "default-route", "", "", "set default route")
+	fs.StringVarP(&nfsCreateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&nfsCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.StringVarP(&nfsCreateParam.Plan, "plan", "", "hdd", "set plan[ssd/hdd]")
 	fs.IntVarP(&nfsCreateParam.Size, "size", "", 100, "set plan[100/500/1024/2048/4096/8192/12288]")
 }
 
@@ -131,10 +131,10 @@ var nfsUpdateCmd = &cobra.Command{
 
 func nfsUpdateCmdInit() {
 	fs := nfsUpdateCmd.Flags()
-	fs.VarP(newIDValue(0, &nfsUpdateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.StringVarP(&nfsUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&nfsUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&nfsUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &nfsUpdateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
 var nfsDeleteCmd = &cobra.Command{
@@ -266,9 +266,9 @@ var nfsMonitorNicCmd = &cobra.Command{
 
 func nfsMonitorNicCmdInit() {
 	fs := nfsMonitorNicCmd.Flags()
-	fs.StringVarP(&nfsMonitorNicParam.KeyFormat, "key-format", "", "sakuracloud.disk.{{.ID}}.nic", "set monitoring value key-format")
 	fs.StringVarP(&nfsMonitorNicParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&nfsMonitorNicParam.End, "end", "", "", "set end-time")
+	fs.StringVarP(&nfsMonitorNicParam.KeyFormat, "key-format", "", "sakuracloud.disk.{{.ID}}.nic", "set monitoring value key-format")
 }
 
 var nfsMonitorFreeDiskSizeCmd = &cobra.Command{
@@ -286,9 +286,9 @@ var nfsMonitorFreeDiskSizeCmd = &cobra.Command{
 
 func nfsMonitorFreeDiskSizeCmdInit() {
 	fs := nfsMonitorFreeDiskSizeCmd.Flags()
+	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.KeyFormat, "key-format", "", "sakuracloud.disk.{{.ID}}.free-disk-size", "set monitoring value key-format")
-	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.Start, "start", "", "", "set start-time")
 }
 
 func init() {

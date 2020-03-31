@@ -66,11 +66,11 @@ var internetListCmd = &cobra.Command{
 
 func internetListCmdInit() {
 	fs := internetListCmd.Flags()
+	fs.IntVarP(&internetListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&internetListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&internetListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &internetListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&internetListParam.From, "from", "", 0, "set offset")
-	fs.IntVarP(&internetListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&internetListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&internetListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 }
 
@@ -128,11 +128,11 @@ var internetUpdateCmd = &cobra.Command{
 
 func internetUpdateCmdInit() {
 	fs := internetUpdateCmd.Flags()
-	fs.VarP(newIDValue(0, &internetUpdateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.IntVarP(&internetUpdateParam.BandWidth, "band-width", "", 0, "set band-width(Mbpm)")
 	fs.StringVarP(&internetUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&internetUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&internetUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &internetUpdateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
 var internetDeleteCmd = &cobra.Command{

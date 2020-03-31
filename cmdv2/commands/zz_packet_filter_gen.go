@@ -63,11 +63,11 @@ var packetFilterListCmd = &cobra.Command{
 
 func packetFilterListCmdInit() {
 	fs := packetFilterListCmd.Flags()
+	fs.StringSliceVarP(&packetFilterListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &packetFilterListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&packetFilterListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&packetFilterListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&packetFilterListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&packetFilterListParam.Name, "name", "", []string{}, "set filter by name(s)")
 }
 
 var packetFilterCreateCmd = &cobra.Command{
@@ -120,8 +120,8 @@ var packetFilterUpdateCmd = &cobra.Command{
 
 func packetFilterUpdateCmdInit() {
 	fs := packetFilterUpdateCmd.Flags()
-	fs.StringVarP(&packetFilterUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringVarP(&packetFilterUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&packetFilterUpdateParam.Description, "description", "", "", "set resource description")
 }
 
 var packetFilterDeleteCmd = &cobra.Command{
@@ -171,13 +171,13 @@ var packetFilterRuleAddCmd = &cobra.Command{
 
 func packetFilterRuleAddCmdInit() {
 	fs := packetFilterRuleAddCmd.Flags()
+	fs.IntVarP(&packetFilterRuleAddParam.Index, "index", "", 1, "index to insert rule into")
+	fs.StringVarP(&packetFilterRuleAddParam.Protocol, "protocol", "", "", "set target protocol[tcp/udp/icmp/fragment/ip]")
 	fs.StringVarP(&packetFilterRuleAddParam.SourceNetwork, "source-network", "", "", "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]")
 	fs.StringVarP(&packetFilterRuleAddParam.SourcePort, "source-port", "", "", "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]")
 	fs.StringVarP(&packetFilterRuleAddParam.DestinationPort, "destination-port", "", "", "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]")
 	fs.StringVarP(&packetFilterRuleAddParam.Action, "action", "", "", "set action[allow/deny]")
 	fs.StringVarP(&packetFilterRuleAddParam.Description, "description", "", "", "set resource description")
-	fs.IntVarP(&packetFilterRuleAddParam.Index, "index", "", 1, "index to insert rule into")
-	fs.StringVarP(&packetFilterRuleAddParam.Protocol, "protocol", "", "", "set target protocol[tcp/udp/icmp/fragment/ip]")
 }
 
 var packetFilterRuleUpdateCmd = &cobra.Command{
@@ -195,13 +195,13 @@ var packetFilterRuleUpdateCmd = &cobra.Command{
 
 func packetFilterRuleUpdateCmdInit() {
 	fs := packetFilterRuleUpdateCmd.Flags()
-	fs.IntVarP(&packetFilterRuleUpdateParam.Index, "index", "", 0, "index of target rule")
 	fs.StringVarP(&packetFilterRuleUpdateParam.Protocol, "protocol", "", "", "set target protocol[tcp/udp/icmp/fragment/ip]")
 	fs.StringVarP(&packetFilterRuleUpdateParam.SourceNetwork, "source-network", "", "", "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]")
 	fs.StringVarP(&packetFilterRuleUpdateParam.SourcePort, "source-port", "", "", "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]")
 	fs.StringVarP(&packetFilterRuleUpdateParam.DestinationPort, "destination-port", "", "", "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]")
 	fs.StringVarP(&packetFilterRuleUpdateParam.Action, "action", "", "", "set action[allow/deny]")
 	fs.StringVarP(&packetFilterRuleUpdateParam.Description, "description", "", "", "set resource description")
+	fs.IntVarP(&packetFilterRuleUpdateParam.Index, "index", "", 0, "index of target rule")
 }
 
 var packetFilterRuleDeleteCmd = &cobra.Command{

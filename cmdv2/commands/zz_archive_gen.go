@@ -62,15 +62,15 @@ var archiveListCmd = &cobra.Command{
 
 func archiveListCmdInit() {
 	fs := archiveListCmd.Flags()
-	fs.StringSliceVarP(&archiveListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &archiveListParam.Id), "id", "", "set filter by id(s)")
-	fs.StringSliceVarP(&archiveListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringVarP(&archiveListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
-	fs.StringSliceVarP(&archiveListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
-	fs.VarP(newIDValue(0, &archiveListParam.SourceDiskId), "source-disk-id", "", "set filter by source-disk-id")
+	fs.VarP(newIDValue(0, &archiveListParam.SourceArchiveId), "source-archive-id", "", "set filter by source-archive-id")
 	fs.IntVarP(&archiveListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&archiveListParam.Max, "max", "", 0, "set limit")
-	fs.VarP(newIDValue(0, &archiveListParam.SourceArchiveId), "source-archive-id", "", "set filter by source-archive-id")
+	fs.StringSliceVarP(&archiveListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.StringVarP(&archiveListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
+	fs.VarP(newIDValue(0, &archiveListParam.SourceDiskId), "source-disk-id", "", "set filter by source-disk-id")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &archiveListParam.Id), "id", "", "set filter by id(s)")
+	fs.StringSliceVarP(&archiveListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&archiveListParam.Name, "name", "", []string{}, "set filter by name(s)")
 }
 
 var archiveCreateCmd = &cobra.Command{
@@ -88,14 +88,14 @@ var archiveCreateCmd = &cobra.Command{
 
 func archiveCreateCmdInit() {
 	fs := archiveCreateCmd.Flags()
-	fs.StringSliceVarP(&archiveCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &archiveCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.VarP(newIDValue(0, &archiveCreateParam.SourceDiskId), "source-disk-id", "", "set source disk ID")
 	fs.VarP(newIDValue(0, &archiveCreateParam.SourceArchiveId), "source-archive-id", "", "set source archive ID")
 	fs.IntVarP(&archiveCreateParam.Size, "size", "", 0, "set archive size(GB)")
 	fs.StringVarP(&archiveCreateParam.ArchiveFile, "archive-file", "", "", "set archive image file")
 	fs.StringVarP(&archiveCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&archiveCreateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&archiveCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &archiveCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.VarP(newIDValue(0, &archiveCreateParam.SourceDiskId), "source-disk-id", "", "set source disk ID")
 }
 
 var archiveReadCmd = &cobra.Command{

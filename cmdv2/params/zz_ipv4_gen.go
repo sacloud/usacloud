@@ -29,11 +29,11 @@ import (
 
 // ListIPv4Param is input parameters for the sacloud API
 type ListIPv4Param struct {
+	Name []string
+	Id   []sacloud.ID
 	From int
 	Max  int
 	Sort []string
-	Name []string
-	Id   []sacloud.ID
 
 	input Input
 }
@@ -58,6 +58,12 @@ func (p *ListIPv4Param) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListIPv4Param) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = []sacloud.ID{}
+	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
@@ -66,12 +72,6 @@ func (p *ListIPv4Param) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
-	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
-	if utils.IsEmpty(p.Id) {
-		p.Id = []sacloud.ID{}
 	}
 
 }
@@ -133,6 +133,20 @@ func (p *ListIPv4Param) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListIPv4Param) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListIPv4Param) GetName() []string {
+	return p.Name
+}
+func (p *ListIPv4Param) SetId(v []sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ListIPv4Param) GetId() []sacloud.ID {
+	return p.Id
+}
 func (p *ListIPv4Param) SetFrom(v int) {
 	p.From = v
 }
@@ -153,20 +167,6 @@ func (p *ListIPv4Param) SetSort(v []string) {
 
 func (p *ListIPv4Param) GetSort() []string {
 	return p.Sort
-}
-func (p *ListIPv4Param) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListIPv4Param) GetName() []string {
-	return p.Name
-}
-func (p *ListIPv4Param) SetId(v []sacloud.ID) {
-	p.Id = v
-}
-
-func (p *ListIPv4Param) GetId() []sacloud.ID {
-	return p.Id
 }
 
 // PtrAddIPv4Param is input parameters for the sacloud API

@@ -123,10 +123,10 @@ var dnsCreateCmd = &cobra.Command{
 
 func dnsCreateCmdInit() {
 	fs := dnsCreateCmd.Flags()
-	fs.StringVarP(&dnsCreateParam.Name, "name", "", "", "set DNS zone name")
 	fs.StringVarP(&dnsCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&dnsCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &dnsCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringVarP(&dnsCreateParam.Name, "name", "", "", "set DNS zone name")
 }
 
 var dnsRecordAddCmd = &cobra.Command{
@@ -144,15 +144,15 @@ var dnsRecordAddCmd = &cobra.Command{
 
 func dnsRecordAddCmdInit() {
 	fs := dnsRecordAddCmd.Flags()
-	fs.StringVarP(&dnsRecordAddParam.Type, "type", "", "", "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]")
-	fs.IntVarP(&dnsRecordAddParam.Ttl, "ttl", "", 3600, "set ttl")
+	fs.StringVarP(&dnsRecordAddParam.Name, "name", "", "", "set name")
 	fs.IntVarP(&dnsRecordAddParam.MxPriority, "mx-priority", "", 10, "set MX priority")
+	fs.IntVarP(&dnsRecordAddParam.SrvWeight, "srv-weight", "", 0, "set SRV priority")
 	fs.IntVarP(&dnsRecordAddParam.SrvPort, "srv-port", "", 0, "set SRV priority")
 	fs.StringVarP(&dnsRecordAddParam.SrvTarget, "srv-target", "", "", "set SRV priority")
-	fs.StringVarP(&dnsRecordAddParam.Name, "name", "", "", "set name")
+	fs.StringVarP(&dnsRecordAddParam.Type, "type", "", "", "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]")
 	fs.StringVarP(&dnsRecordAddParam.Value, "value", "", "", "set record data")
+	fs.IntVarP(&dnsRecordAddParam.Ttl, "ttl", "", 3600, "set ttl")
 	fs.IntVarP(&dnsRecordAddParam.SrvPriority, "srv-priority", "", 0, "set SRV priority")
-	fs.IntVarP(&dnsRecordAddParam.SrvWeight, "srv-weight", "", 0, "set SRV priority")
 }
 
 var dnsReadCmd = &cobra.Command{
@@ -186,14 +186,14 @@ var dnsRecordUpdateCmd = &cobra.Command{
 
 func dnsRecordUpdateCmdInit() {
 	fs := dnsRecordUpdateCmd.Flags()
-	fs.IntVarP(&dnsRecordUpdateParam.Ttl, "ttl", "", 0, "set ttl")
-	fs.IntVarP(&dnsRecordUpdateParam.MxPriority, "mx-priority", "", 0, "set MX priority")
-	fs.IntVarP(&dnsRecordUpdateParam.SrvPriority, "srv-priority", "", 0, "set SRV priority")
 	fs.IntVarP(&dnsRecordUpdateParam.Index, "index", "", 0, "index of target record")
 	fs.StringVarP(&dnsRecordUpdateParam.Name, "name", "", "", "set name")
+	fs.IntVarP(&dnsRecordUpdateParam.SrvPriority, "srv-priority", "", 0, "set SRV priority")
+	fs.IntVarP(&dnsRecordUpdateParam.SrvWeight, "srv-weight", "", 0, "set SRV priority")
 	fs.StringVarP(&dnsRecordUpdateParam.Type, "type", "", "", "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]")
 	fs.StringVarP(&dnsRecordUpdateParam.Value, "value", "", "", "set record data")
-	fs.IntVarP(&dnsRecordUpdateParam.SrvWeight, "srv-weight", "", 0, "set SRV priority")
+	fs.IntVarP(&dnsRecordUpdateParam.Ttl, "ttl", "", 0, "set ttl")
+	fs.IntVarP(&dnsRecordUpdateParam.MxPriority, "mx-priority", "", 0, "set MX priority")
 	fs.IntVarP(&dnsRecordUpdateParam.SrvPort, "srv-port", "", 0, "set SRV priority")
 	fs.StringVarP(&dnsRecordUpdateParam.SrvTarget, "srv-target", "", "", "set SRV priority")
 }

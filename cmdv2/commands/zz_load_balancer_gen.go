@@ -72,12 +72,12 @@ var loadBalancerListCmd = &cobra.Command{
 
 func loadBalancerListCmdInit() {
 	fs := loadBalancerListCmd.Flags()
-	fs.IntVarP(&loadBalancerListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&loadBalancerListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&loadBalancerListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
-	fs.StringSliceVarP(&loadBalancerListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &loadBalancerListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&loadBalancerListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&loadBalancerListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&loadBalancerListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.StringSliceVarP(&loadBalancerListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&loadBalancerListParam.Name, "name", "", []string{}, "set filter by name(s)")
 }
 
 var loadBalancerCreateCmd = &cobra.Command{
@@ -95,18 +95,18 @@ var loadBalancerCreateCmd = &cobra.Command{
 
 func loadBalancerCreateCmdInit() {
 	fs := loadBalancerCreateCmd.Flags()
+	fs.StringVarP(&loadBalancerCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
+	fs.StringVarP(&loadBalancerCreateParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
 	fs.IntVarP(&loadBalancerCreateParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
 	fs.StringVarP(&loadBalancerCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&loadBalancerCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&loadBalancerCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.IntVarP(&loadBalancerCreateParam.Vrid, "vrid", "", 1, "set VRID")
+	fs.StringVarP(&loadBalancerCreateParam.Plan, "plan", "", "standard", "set plan[standard/highspec]")
+	fs.StringVarP(&loadBalancerCreateParam.DefaultRoute, "default-route", "", "", "set default route")
+	fs.StringVarP(&loadBalancerCreateParam.Description, "description", "", "", "set resource description")
 	fs.VarP(newIDValue(0, &loadBalancerCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.VarP(newIDValue(0, &loadBalancerCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.BoolVarP(&loadBalancerCreateParam.HighAvailability, "high-availability", "", false, "use HA(High-Availability) mode")
-	fs.StringVarP(&loadBalancerCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
-	fs.StringVarP(&loadBalancerCreateParam.DefaultRoute, "default-route", "", "", "set default route")
-	fs.IntVarP(&loadBalancerCreateParam.Vrid, "vrid", "", 1, "set VRID")
-	fs.StringVarP(&loadBalancerCreateParam.Plan, "plan", "", "standard", "set plan[standard/highspec]")
-	fs.StringVarP(&loadBalancerCreateParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
 }
 
 var loadBalancerReadCmd = &cobra.Command{
@@ -140,10 +140,10 @@ var loadBalancerUpdateCmd = &cobra.Command{
 
 func loadBalancerUpdateCmdInit() {
 	fs := loadBalancerUpdateCmd.Flags()
+	fs.StringVarP(&loadBalancerUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&loadBalancerUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&loadBalancerUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &loadBalancerUpdateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringVarP(&loadBalancerUpdateParam.Name, "name", "", "", "set resource display name")
 }
 
 var loadBalancerDeleteCmd = &cobra.Command{
@@ -291,11 +291,11 @@ var loadBalancerVipAddCmd = &cobra.Command{
 
 func loadBalancerVipAddCmdInit() {
 	fs := loadBalancerVipAddCmd.Flags()
-	fs.StringVarP(&loadBalancerVipAddParam.SorryServer, "sorry-server", "", "", "set IPAddress of sorry-server")
-	fs.StringVarP(&loadBalancerVipAddParam.Description, "description", "", "", "set Description of VIP")
 	fs.StringVarP(&loadBalancerVipAddParam.Vip, "vip", "", "", "set VirtualIPAddress")
 	fs.IntVarP(&loadBalancerVipAddParam.Port, "port", "", 0, "set port")
 	fs.IntVarP(&loadBalancerVipAddParam.DelayLoop, "delay-loop", "", 10, "set delay-loop")
+	fs.StringVarP(&loadBalancerVipAddParam.SorryServer, "sorry-server", "", "", "set IPAddress of sorry-server")
+	fs.StringVarP(&loadBalancerVipAddParam.Description, "description", "", "", "set Description of VIP")
 }
 
 var loadBalancerVipUpdateCmd = &cobra.Command{
@@ -313,12 +313,12 @@ var loadBalancerVipUpdateCmd = &cobra.Command{
 
 func loadBalancerVipUpdateCmdInit() {
 	fs := loadBalancerVipUpdateCmd.Flags()
+	fs.StringVarP(&loadBalancerVipUpdateParam.SorryServer, "sorry-server", "", "", "set IPAddress of sorry-server")
+	fs.StringVarP(&loadBalancerVipUpdateParam.Description, "description", "", "", "set Description of VIP")
 	fs.IntVarP(&loadBalancerVipUpdateParam.Index, "index", "", 0, "index of target VIP")
 	fs.StringVarP(&loadBalancerVipUpdateParam.Vip, "vip", "", "", "set VirtualIPAddress")
 	fs.IntVarP(&loadBalancerVipUpdateParam.Port, "port", "", 0, "set port")
 	fs.IntVarP(&loadBalancerVipUpdateParam.DelayLoop, "delay-loop", "", 10, "set delay-loop")
-	fs.StringVarP(&loadBalancerVipUpdateParam.SorryServer, "sorry-server", "", "", "set IPAddress of sorry-server")
-	fs.StringVarP(&loadBalancerVipUpdateParam.Description, "description", "", "", "set Description of VIP")
 }
 
 var loadBalancerVipDeleteCmd = &cobra.Command{
@@ -354,9 +354,9 @@ var loadBalancerServerInfoCmd = &cobra.Command{
 
 func loadBalancerServerInfoCmdInit() {
 	fs := loadBalancerServerInfoCmd.Flags()
-	fs.IntVarP(&loadBalancerServerInfoParam.VipIndex, "vip-index", "", 0, "index of target VIP")
 	fs.StringVarP(&loadBalancerServerInfoParam.Vip, "vip", "", "", "set VirtualIPAddress")
 	fs.IntVarP(&loadBalancerServerInfoParam.Port, "port", "", 0, "set port")
+	fs.IntVarP(&loadBalancerServerInfoParam.VipIndex, "vip-index", "", 0, "index of target VIP")
 }
 
 var loadBalancerServerAddCmd = &cobra.Command{
@@ -374,14 +374,14 @@ var loadBalancerServerAddCmd = &cobra.Command{
 
 func loadBalancerServerAddCmdInit() {
 	fs := loadBalancerServerAddCmd.Flags()
-	fs.StringVarP(&loadBalancerServerAddParam.Vip, "vip", "", "", "set VirtualIPAddress")
-	fs.IntVarP(&loadBalancerServerAddParam.Port, "port", "", 0, "set port")
-	fs.StringVarP(&loadBalancerServerAddParam.Ipaddress, "ipaddress", "", "", "set real server IPAddress")
-	fs.StringVarP(&loadBalancerServerAddParam.Protocol, "protocol", "", "ping", "set health check protocol[http/https/ping/tcp]")
 	fs.StringVarP(&loadBalancerServerAddParam.Path, "path", "", "", "set path of http/https health check request")
 	fs.IntVarP(&loadBalancerServerAddParam.ResponseCode, "response-code", "", 0, "set expect response-code of http/https health check request")
 	fs.BoolVarP(&loadBalancerServerAddParam.Disabled, "disabled", "", false, "set disable")
 	fs.IntVarP(&loadBalancerServerAddParam.VipIndex, "vip-index", "", 0, "index of target VIP")
+	fs.StringVarP(&loadBalancerServerAddParam.Vip, "vip", "", "", "set VirtualIPAddress")
+	fs.IntVarP(&loadBalancerServerAddParam.Port, "port", "", 0, "set port")
+	fs.StringVarP(&loadBalancerServerAddParam.Ipaddress, "ipaddress", "", "", "set real server IPAddress")
+	fs.StringVarP(&loadBalancerServerAddParam.Protocol, "protocol", "", "ping", "set health check protocol[http/https/ping/tcp]")
 }
 
 var loadBalancerServerUpdateCmd = &cobra.Command{
@@ -399,14 +399,14 @@ var loadBalancerServerUpdateCmd = &cobra.Command{
 
 func loadBalancerServerUpdateCmdInit() {
 	fs := loadBalancerServerUpdateCmd.Flags()
+	fs.StringVarP(&loadBalancerServerUpdateParam.Protocol, "protocol", "", "", "set health check protocol[http/https/ping/tcp]")
+	fs.StringVarP(&loadBalancerServerUpdateParam.Path, "path", "", "", "set path of http/https health check request")
+	fs.IntVarP(&loadBalancerServerUpdateParam.ResponseCode, "response-code", "", 0, "set expect response-code of http/https health check request")
 	fs.BoolVarP(&loadBalancerServerUpdateParam.Disabled, "disabled", "", false, "set enable/disable")
 	fs.IntVarP(&loadBalancerServerUpdateParam.VipIndex, "vip-index", "", 0, "index of target VIP")
 	fs.StringVarP(&loadBalancerServerUpdateParam.Vip, "vip", "", "", "set VirtualIPAddress")
 	fs.IntVarP(&loadBalancerServerUpdateParam.Port, "port", "", 0, "set port")
 	fs.StringVarP(&loadBalancerServerUpdateParam.Ipaddress, "ipaddress", "", "", "set real server IPAddress")
-	fs.StringVarP(&loadBalancerServerUpdateParam.Protocol, "protocol", "", "", "set health check protocol[http/https/ping/tcp]")
-	fs.StringVarP(&loadBalancerServerUpdateParam.Path, "path", "", "", "set path of http/https health check request")
-	fs.IntVarP(&loadBalancerServerUpdateParam.ResponseCode, "response-code", "", 0, "set expect response-code of http/https health check request")
 }
 
 var loadBalancerServerDeleteCmd = &cobra.Command{
@@ -424,10 +424,10 @@ var loadBalancerServerDeleteCmd = &cobra.Command{
 
 func loadBalancerServerDeleteCmdInit() {
 	fs := loadBalancerServerDeleteCmd.Flags()
-	fs.IntVarP(&loadBalancerServerDeleteParam.VipIndex, "vip-index", "", 0, "index of target VIP")
 	fs.StringVarP(&loadBalancerServerDeleteParam.Vip, "vip", "", "", "set VirtualIPAddress")
 	fs.IntVarP(&loadBalancerServerDeleteParam.Port, "port", "", 0, "set port")
 	fs.StringVarP(&loadBalancerServerDeleteParam.Ipaddress, "ipaddress", "", "", "set real server IPAddress")
+	fs.IntVarP(&loadBalancerServerDeleteParam.VipIndex, "vip-index", "", 0, "index of target VIP")
 }
 
 var loadBalancerMonitorCmd = &cobra.Command{

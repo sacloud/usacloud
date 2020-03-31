@@ -67,12 +67,12 @@ var simListCmd = &cobra.Command{
 
 func simListCmdInit() {
 	fs := simListCmd.Flags()
+	fs.StringSliceVarP(&simListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&simListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.StringSliceVarP(&simListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &simListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&simListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&simListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&simListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&simListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 }
 
 var simCreateCmd = &cobra.Command{
@@ -90,15 +90,15 @@ var simCreateCmd = &cobra.Command{
 
 func simCreateCmdInit() {
 	fs := simCreateCmd.Flags()
-	fs.VarP(newIDValue(0, &simCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.StringVarP(&simCreateParam.Iccid, "iccid", "", "", "")
-	fs.StringVarP(&simCreateParam.Passcode, "passcode", "", "", "")
-	fs.BoolVarP(&simCreateParam.Disabled, "disabled", "", false, "")
-	fs.StringSliceVarP(&simCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.StringVarP(&simCreateParam.Imei, "imei", "", "", "")
 	fs.StringSliceVarP(&simCreateParam.Carrier, "carrier", "", []string{}, "")
-	fs.StringVarP(&simCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&simCreateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&simCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &simCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringVarP(&simCreateParam.Passcode, "passcode", "", "", "")
+	fs.BoolVarP(&simCreateParam.Disabled, "disabled", "", false, "")
+	fs.StringVarP(&simCreateParam.Name, "name", "", "", "set resource display name")
 }
 
 var simReadCmd = &cobra.Command{
@@ -132,10 +132,10 @@ var simUpdateCmd = &cobra.Command{
 
 func simUpdateCmdInit() {
 	fs := simUpdateCmd.Flags()
-	fs.StringSliceVarP(&simUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &simUpdateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.StringVarP(&simUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&simUpdateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&simUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &simUpdateParam.IconId), "icon-id", "", "set Icon ID")
 }
 
 var simDeleteCmd = &cobra.Command{

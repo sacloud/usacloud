@@ -37,13 +37,15 @@ var rootCmd = &cobra.Command{
 	Use:   "usacloud [global options] <command> <sub-command> [options] [arguments]",
 	Short: "Usacloud is CLI for manage to resources on the SAKURA Cloud",
 	Long:  `CLI to manage to resources on the SAKURA Cloud`,
-	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
-		cliOption.loadGlobalFlags(cmd.PersistentFlags())
-		return utils.FlattenErrors(cliOption.Validate(true))
-	},
+}
+
+func rootCmdPersistPreRunE(cmd *cobra.Command, args []string) error {
+	cliOption.loadGlobalFlags(rootCmd.PersistentFlags())
+	return utils.FlattenErrors(cliOption.Validate(true))
 }
 
 func init() {
+	rootCmd.PersistentPreRunE = rootCmdPersistPreRunE
 	rootCmd.Flags().SortFlags = false
 	rootCmd.PersistentFlags().SortFlags = false
 

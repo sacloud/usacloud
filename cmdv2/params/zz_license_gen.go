@@ -29,11 +29,11 @@ import (
 
 // ListLicenseParam is input parameters for the sacloud API
 type ListLicenseParam struct {
-	Max  int
 	Sort []string
 	Name []string
 	Id   []sacloud.ID
 	From int
+	Max  int
 
 	input Input
 }
@@ -58,9 +58,6 @@ func (p *ListLicenseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListLicenseParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
-	}
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
@@ -72,6 +69,9 @@ func (p *ListLicenseParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
+	}
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
 	}
 
 }
@@ -133,13 +133,6 @@ func (p *ListLicenseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListLicenseParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListLicenseParam) GetMax() int {
-	return p.Max
-}
 func (p *ListLicenseParam) SetSort(v []string) {
 	p.Sort = v
 }
@@ -167,6 +160,13 @@ func (p *ListLicenseParam) SetFrom(v int) {
 
 func (p *ListLicenseParam) GetFrom() int {
 	return p.From
+}
+func (p *ListLicenseParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListLicenseParam) GetMax() int {
+	return p.Max
 }
 
 // CreateLicenseParam is input parameters for the sacloud API
