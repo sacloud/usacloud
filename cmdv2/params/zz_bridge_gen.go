@@ -155,14 +155,15 @@ func (p *ListBridgeParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -436,14 +437,15 @@ func (p *CreateBridgeParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -680,14 +682,15 @@ func (p *ReadBridgeParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -938,14 +941,15 @@ func (p *UpdateBridgeParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1193,14 +1197,15 @@ func (p *DeleteBridgeParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

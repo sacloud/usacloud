@@ -147,16 +147,16 @@ func (p *{{.InputParameterTypeName}}) validate() error {
 	{{ range .Params }}
 	{{.ValidatorStatements}}
 	{{ end -}}
-	{{ if .HasOutputOption }}
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type" , p.OutputType )
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors , errs...)
 		}
 	}
+	{{ if .HasOutputOption }}
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type" , p.OutputType )
 		if errs != nil {
 			errors = append(errors , errs...)
 		}

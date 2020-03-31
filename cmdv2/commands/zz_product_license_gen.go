@@ -31,7 +31,7 @@ var (
 
 // productLicenseCmd represents the command to manage SAKURA Cloud ProductLicense
 var productLicenseCmd = &cobra.Command{
-	Use:   "productLicense",
+	Use:   "product-license",
 	Short: "A manage commands of ProductLicense",
 	Long:  `A manage commands of ProductLicense`,
 	Run: func(cmd *cobra.Command, args []string) {

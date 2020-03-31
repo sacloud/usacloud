@@ -49,7 +49,7 @@ var (
 
 // loadBalancerCmd represents the command to manage SAKURA Cloud LoadBalancer
 var loadBalancerCmd = &cobra.Command{
-	Use:   "loadBalancer",
+	Use:   "load-balancer",
 	Short: "A manage commands of LoadBalancer",
 	Long:  `A manage commands of LoadBalancer`,
 	Run: func(cmd *cobra.Command, args []string) {

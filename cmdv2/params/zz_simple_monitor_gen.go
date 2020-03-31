@@ -179,14 +179,15 @@ func (p *ListSimpleMonitorParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -622,14 +623,15 @@ func (p *CreateSimpleMonitorParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1003,14 +1005,15 @@ func (p *ReadSimpleMonitorParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1401,14 +1404,15 @@ func (p *UpdateSimpleMonitorParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1793,14 +1797,15 @@ func (p *DeleteSimpleMonitorParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2041,14 +2046,15 @@ func (p *HealthSimpleMonitorParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

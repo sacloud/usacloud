@@ -34,7 +34,7 @@ var (
 
 // webAccelCmd represents the command to manage SAKURA Cloud WebAccel
 var webAccelCmd = &cobra.Command{
-	Use:   "webAccel",
+	Use:   "web-accel",
 	Short: "A manage commands of WebAccel",
 	Long:  `A manage commands of WebAccel`,
 	Run: func(cmd *cobra.Command, args []string) {

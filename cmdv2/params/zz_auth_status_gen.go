@@ -106,14 +106,15 @@ func (p *ShowAuthStatusParam) validate() error {
 	var errors []error
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

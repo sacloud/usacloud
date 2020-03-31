@@ -77,6 +77,12 @@ func (p *InfoSelfParam) fillValueToSkeleton() {
 func (p *InfoSelfParam) validate() error {
 	var errors []error
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 

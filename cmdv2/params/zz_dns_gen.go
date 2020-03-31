@@ -167,14 +167,15 @@ func (p *ListDNSParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -460,14 +461,15 @@ func (p *RecordInfoDNSParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -758,14 +760,15 @@ func (p *RecordBulkUpdateDNSParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1063,14 +1066,15 @@ func (p *CreateDNSParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1444,14 +1448,15 @@ func (p *RecordAddDNSParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1755,14 +1760,15 @@ func (p *ReadDNSParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2112,14 +2118,15 @@ func (p *RecordUpdateDNSParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2446,14 +2453,15 @@ func (p *RecordDeleteDNSParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2741,14 +2749,15 @@ func (p *UpdateDNSParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3014,14 +3023,15 @@ func (p *DeleteDNSParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

@@ -29,7 +29,7 @@ var (
 
 // authStatusCmd represents the command to manage SAKURA Cloud AuthStatus
 var authStatusCmd = &cobra.Command{
-	Use:   "authStatus",
+	Use:   "auth-status",
 	Short: "A manage commands of AuthStatus",
 	Long:  `A manage commands of AuthStatus`,
 	Run: func(cmd *cobra.Command, args []string) {

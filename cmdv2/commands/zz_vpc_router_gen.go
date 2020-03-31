@@ -85,7 +85,7 @@ var (
 
 // vpcRouterCmd represents the command to manage SAKURA Cloud VPCRouter
 var vpcRouterCmd = &cobra.Command{
-	Use:   "vpcRouter",
+	Use:   "vpc-router",
 	Short: "A manage commands of VPCRouter",
 	Long:  `A manage commands of VPCRouter`,
 	Run: func(cmd *cobra.Command, args []string) {

@@ -34,7 +34,7 @@ var (
 
 // startupScriptCmd represents the command to manage SAKURA Cloud StartupScript
 var startupScriptCmd = &cobra.Command{
-	Use:   "startupScript",
+	Use:   "startup-script",
 	Short: "A manage commands of StartupScript",
 	Long:  `A manage commands of StartupScript`,
 	Run: func(cmd *cobra.Command, args []string) {

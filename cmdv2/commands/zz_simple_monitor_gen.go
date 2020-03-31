@@ -35,7 +35,7 @@ var (
 
 // simpleMonitorCmd represents the command to manage SAKURA Cloud SimpleMonitor
 var simpleMonitorCmd = &cobra.Command{
-	Use:   "simpleMonitor",
+	Use:   "simple-monitor",
 	Short: "A manage commands of SimpleMonitor",
 	Long:  `A manage commands of SimpleMonitor`,
 	Run: func(cmd *cobra.Command, args []string) {

@@ -31,7 +31,7 @@ var (
 
 // productDiskCmd represents the command to manage SAKURA Cloud ProductDisk
 var productDiskCmd = &cobra.Command{
-	Use:   "productDisk",
+	Use:   "product-disk",
 	Short: "A manage commands of ProductDisk",
 	Long:  `A manage commands of ProductDisk`,
 	Run: func(cmd *cobra.Command, args []string) {

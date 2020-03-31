@@ -167,14 +167,15 @@ func (p *ListMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -483,14 +484,15 @@ func (p *CreateMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -752,14 +754,15 @@ func (p *ReadMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1049,14 +1052,15 @@ func (p *UpdateMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1340,14 +1344,15 @@ func (p *DeleteMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1570,6 +1575,12 @@ func (p *BootMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1726,6 +1737,12 @@ func (p *ShutdownMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1882,6 +1899,12 @@ func (p *ShutdownForceMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -2038,6 +2061,12 @@ func (p *ResetMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -2190,6 +2219,12 @@ func (p *WaitForBootMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -2335,6 +2370,12 @@ func (p *WaitForDownMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -2509,14 +2550,15 @@ func (p *InterfaceInfoMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2776,6 +2818,12 @@ func (p *InterfaceConnectMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -2978,6 +3026,12 @@ func (p *InterfaceUpdateMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -3148,6 +3202,12 @@ func (p *InterfaceDisconnectMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -3329,14 +3389,15 @@ func (p *TrafficControlInfoMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3597,6 +3658,12 @@ func (p *TrafficControlEnableMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -3832,6 +3899,12 @@ func (p *TrafficControlUpdateMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -4023,6 +4096,12 @@ func (p *TrafficControlDisableMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -4204,14 +4283,15 @@ func (p *StaticRouteInfoMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4458,6 +4538,12 @@ func (p *StaticRouteAddMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -4664,6 +4750,12 @@ func (p *StaticRouteUpdateMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -4853,6 +4945,12 @@ func (p *StaticRouteDeleteMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -5041,14 +5139,15 @@ func (p *SIMInfoMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5295,6 +5394,12 @@ func (p *SIMAddMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -5496,6 +5601,12 @@ func (p *SIMUpdateMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -5685,6 +5796,12 @@ func (p *SIMDeleteMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -5873,14 +5990,15 @@ func (p *SIMRouteInfoMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
+		errs := validateParameterOptions(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
+
 	{
-		errs := validateInputOption(p)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -6127,6 +6245,12 @@ func (p *SIMRouteAddMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -6333,6 +6457,12 @@ func (p *SIMRouteUpdateMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -6522,6 +6652,12 @@ func (p *SIMRouteDeleteMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -6723,6 +6859,12 @@ func (p *DNSUpdateMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -6906,6 +7048,12 @@ func (p *LogsMobileGatewayParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 

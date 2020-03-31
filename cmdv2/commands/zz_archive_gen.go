@@ -53,7 +53,6 @@ var archiveListCmd = &cobra.Command{
 	Short:   "List Archive",
 	Long:    `List Archive`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(cliOption))
 		err := archiveListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
 		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(archiveListParam))

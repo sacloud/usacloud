@@ -35,7 +35,7 @@ var (
 
 // sshKeyCmd represents the command to manage SAKURA Cloud SSHKey
 var sshKeyCmd = &cobra.Command{
-	Use:   "sshKey",
+	Use:   "ssh-key",
 	Short: "A manage commands of SSHKey",
 	Long:  `A manage commands of SSHKey`,
 	Run: func(cmd *cobra.Command, args []string) {

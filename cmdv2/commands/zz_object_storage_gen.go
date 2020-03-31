@@ -32,7 +32,7 @@ var (
 
 // objectStorageCmd represents the command to manage SAKURA Cloud ObjectStorage
 var objectStorageCmd = &cobra.Command{
-	Use:   "objectStorage",
+	Use:   "object-storage",
 	Short: "A manage commands of ObjectStorage",
 	Long:  `A manage commands of ObjectStorage`,
 	Run: func(cmd *cobra.Command, args []string) {

@@ -77,6 +77,12 @@ func (p *CurrentConfigParam) fillValueToSkeleton() {
 func (p *CurrentConfigParam) validate() error {
 	var errors []error
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -196,6 +202,12 @@ func (p *DeleteConfigParam) fillValueToSkeleton() {
 func (p *DeleteConfigParam) validate() error {
 	var errors []error
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -350,6 +362,12 @@ func (p *EditConfigParam) validate() error {
 		}
 	}
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -493,6 +511,12 @@ func (p *ListConfigParam) fillValueToSkeleton() {
 func (p *ListConfigParam) validate() error {
 	var errors []error
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -608,6 +632,12 @@ func (p *MigrateConfigParam) fillValueToSkeleton() {
 func (p *MigrateConfigParam) validate() error {
 	var errors []error
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -723,6 +753,12 @@ func (p *ShowConfigParam) fillValueToSkeleton() {
 func (p *ShowConfigParam) validate() error {
 	var errors []error
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -838,6 +874,12 @@ func (p *UseConfigParam) fillValueToSkeleton() {
 func (p *UseConfigParam) validate() error {
 	var errors []error
 
+	{
+		errs := validateParameterOptions(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 

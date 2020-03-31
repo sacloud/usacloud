@@ -37,7 +37,7 @@ var (
 
 // privateHostCmd represents the command to manage SAKURA Cloud PrivateHost
 var privateHostCmd = &cobra.Command{
-	Use:   "privateHost",
+	Use:   "private-host",
 	Short: "A manage commands of PrivateHost",
 	Long:  `A manage commands of PrivateHost`,
 	Run: func(cmd *cobra.Command, args []string) {

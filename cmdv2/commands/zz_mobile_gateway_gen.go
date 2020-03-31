@@ -62,7 +62,7 @@ var (
 
 // mobileGatewayCmd represents the command to manage SAKURA Cloud MobileGateway
 var mobileGatewayCmd = &cobra.Command{
-	Use:   "mobileGateway",
+	Use:   "mobile-gateway",
 	Short: "A manage commands of MobileGateway",
 	Long:  `A manage commands of MobileGateway`,
 	Run: func(cmd *cobra.Command, args []string) {

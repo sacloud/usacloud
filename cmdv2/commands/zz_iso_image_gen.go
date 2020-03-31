@@ -38,7 +38,7 @@ var (
 
 // isoImageCmd represents the command to manage SAKURA Cloud ISOImage
 var isoImageCmd = &cobra.Command{
-	Use:   "isoImage",
+	Use:   "iso-image",
 	Short: "A manage commands of ISOImage",
 	Long:  `A manage commands of ISOImage`,
 	Run: func(cmd *cobra.Command, args []string) {

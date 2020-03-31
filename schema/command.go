@@ -86,7 +86,7 @@ func (c *Command) ParamCategory(key string) *Category {
 	}
 }
 
-func (c *Command) BuildedParams() SortableParams {
+func (c *Command) BuiltParams() SortableParams {
 
 	// Notice: ここで追加されるパラメータはdefine.Resourcesからは見えない。
 	//         (コード生成時に追加されるため)

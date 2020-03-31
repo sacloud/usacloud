@@ -119,7 +119,7 @@ func buildCommandParams(command *schema.Command) (map[string]interface{}, error)
 
 	var res map[string]interface{}
 
-	fields, initializers, skeletonInitializers, validators, err := buildFieldsParams(command.BuildedParams())
+	fields, initializers, skeletonInitializers, validators, err := buildFieldsParams(command.BuiltParams())
 	if err != nil {
 		return res, err
 	}

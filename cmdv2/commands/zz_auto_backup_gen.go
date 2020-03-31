@@ -34,7 +34,7 @@ var (
 
 // autoBackupCmd represents the command to manage SAKURA Cloud AutoBackup
 var autoBackupCmd = &cobra.Command{
-	Use:   "autoBackup",
+	Use:   "auto-backup",
 	Short: "A manage commands of AutoBackup",
 	Long:  `A manage commands of AutoBackup`,
 	Run: func(cmd *cobra.Command, args []string) {

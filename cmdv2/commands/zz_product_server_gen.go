@@ -31,7 +31,7 @@ var (
 
 // productServerCmd represents the command to manage SAKURA Cloud ProductServer
 var productServerCmd = &cobra.Command{
-	Use:   "productServer",
+	Use:   "product-server",
 	Short: "A manage commands of ProductServer",
 	Long:  `A manage commands of ProductServer`,
 	Run: func(cmd *cobra.Command, args []string) {

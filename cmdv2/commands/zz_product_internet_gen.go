@@ -31,7 +31,7 @@ var (
 
 // productInternetCmd represents the command to manage SAKURA Cloud ProductInternet
 var productInternetCmd = &cobra.Command{
-	Use:   "productInternet",
+	Use:   "product-internet",
 	Short: "A manage commands of ProductInternet",
 	Long:  `A manage commands of ProductInternet`,
 	Run: func(cmd *cobra.Command, args []string) {

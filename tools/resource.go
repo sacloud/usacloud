@@ -44,7 +44,7 @@ func NewResource(name string, resource *schema.Resource) *Resource {
 }
 
 func (r *Resource) CLIName() string {
-	return ToCamelWithFirstLower(r.Name)
+	return ToDashedName(r.Name)
 }
 
 func (r *Resource) AliasesLiteral() string {

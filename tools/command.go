@@ -38,7 +38,7 @@ func NewCommand(name string, command *schema.Command, category *schema.Category,
 		Category: category,
 	}
 	var params []*Parameter
-	for _, p := range c.Command.BuildedParams() {
+	for _, p := range c.Command.BuiltParams() {
 		params = append(params, NewParameter(p.ParamKey, p.Param, p.Category, c))
 	}
 

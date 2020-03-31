@@ -40,7 +40,7 @@ var (
 
 // packetFilterCmd represents the command to manage SAKURA Cloud PacketFilter
 var packetFilterCmd = &cobra.Command{
-	Use:   "packetFilter",
+	Use:   "packet-filter",
 	Short: "A manage commands of PacketFilter",
 	Long:  `A manage commands of PacketFilter`,
 	Run: func(cmd *cobra.Command, args []string) {

@@ -55,7 +55,7 @@ var (
 
 // proxyLBCmd represents the command to manage SAKURA Cloud ProxyLB
 var proxyLBCmd = &cobra.Command{
-	Use:   "proxyLB",
+	Use:   "proxy-lb",
 	Short: "A manage commands of ProxyLB",
 	Long:  `A manage commands of ProxyLB`,
 	Run: func(cmd *cobra.Command, args []string) {
