@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
 	"sync"
 	"time"
@@ -40,6 +41,7 @@ type Context interface {
 	Output() output.Output
 	Client() sacloud.APICaller
 	Zone() string
+	IO() IO
 	context.Context
 }
 
@@ -47,6 +49,7 @@ type cliContext struct {
 	parentCtx context.Context
 	option    *CLIOptions
 	output    output.Output
+	cliIO     *cliIO
 
 	client     sacloud.APICaller
 	clientOnce sync.Once
@@ -55,7 +58,16 @@ type cliContext struct {
 func newCLIContext(globalFlags *pflag.FlagSet, formatter interface{}) (Context, error) {
 	// TODO あとで変更する
 	ctx := context.TODO()
-	option, err := initCLIOptions(globalFlags)
+
+	// TODO あとで切り替え処理を実装
+	io := &cliIO{
+		in:       os.Stdin,
+		out:      os.Stdout,
+		progress: os.Stderr,
+		err:      os.Stderr,
+	}
+
+	option, err := initCLIOptions(globalFlags, io)
 	if err != nil {
 		return nil, err
 	}
@@ -63,8 +75,13 @@ func newCLIContext(globalFlags *pflag.FlagSet, formatter interface{}) (Context, 
 	return &cliContext{
 		parentCtx: ctx,
 		option:    option,
-		output:    getOutputWriter(formatter),
+		output:    getOutputWriter(io, formatter),
+		cliIO:     io,
 	}, nil
+}
+
+func (c *cliContext) IO() IO {
+	return c.cliIO
 }
 
 func (c *cliContext) Option() *CLIOptions {
@@ -184,37 +201,39 @@ func (c *cliContext) Value(key interface{}) interface{} {
 	return c.parentCtx.Value(key)
 }
 
-func getOutputWriter(rawformatter interface{}) output.Output {
-	if rawformatter == nil {
+func getOutputWriter(io IO, rawFormatter interface{}) output.Output {
+	if rawFormatter == nil {
 		return nil
 	}
-	formatter, ok := rawformatter.(output.Formatter)
+	formatter, ok := rawFormatter.(output.Formatter)
 	if !ok {
 		return nil
 	}
 
-	o := cliIO
+	out := io.Out()
+	err := io.Err()
+
 	if formatter.GetQuiet() {
-		return output.NewIDOutput(o.Out, o.Err)
+		return output.NewIDOutput(out, err)
 	}
 	if formatter.GetFormat() != "" || formatter.GetFormatFile() != "" {
-		return output.NewFreeOutput(o.Out, o.Err, formatter)
+		return output.NewFreeOutput(out, err, formatter)
 	}
 	switch formatter.GetOutputType() {
 	case "csv":
-		return output.NewRowOutput(o.Out, o.Err, ',', formatter)
+		return output.NewRowOutput(out, err, ',', formatter)
 	case "tsv":
-		return output.NewRowOutput(o.Out, o.Err, '\t', formatter)
+		return output.NewRowOutput(out, err, '\t', formatter)
 	case "json":
 		query := formatter.GetQuery()
 		if query == "" {
 			bQuery, _ := ioutil.ReadFile(formatter.GetQueryFile()) // nolint: err was already checked
 			query = string(bQuery)
 		}
-		return output.NewJSONOutput(o.Out, o.Err, query)
+		return output.NewJSONOutput(out, err, query)
 	case "yaml":
-		return output.NewYAMLOutput(o.Out, o.Err)
+		return output.NewYAMLOutput(out, err)
 	default:
-		return output.NewTableOutput(o.Out, o.Err, formatter)
+		return output.NewTableOutput(out, err, formatter)
 	}
 }

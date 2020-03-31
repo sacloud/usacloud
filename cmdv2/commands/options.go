@@ -16,7 +16,6 @@ package commands
 
 import (
 	"fmt"
-	"io"
 	"os"
 	"strconv"
 	"strings"
@@ -31,23 +30,6 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud/profile"
 	"github.com/spf13/pflag"
 )
-
-var (
-	cliIO = &IO{
-		In:       os.Stdin,
-		Out:      os.Stdout,
-		Progress: os.Stderr,
-		Err:      os.Stderr,
-	}
-)
-
-// IO TODO 名前
-type IO struct {
-	In       *os.File
-	Out      io.Writer
-	Progress io.Writer
-	Err      io.Writer
-}
 
 // CLIOptions CLIオプション
 type CLIOptions struct {
@@ -92,17 +74,17 @@ func initDebugFlags(flags *pflag.FlagSet) {
 	flags.AddFlagSet(fs)
 }
 
-func initCLIOptions(flags *pflag.FlagSet) (*CLIOptions, error) {
+func initCLIOptions(flags *pflag.FlagSet, io *cliIO) (*CLIOptions, error) {
 	o := &CLIOptions{}
-	o.loadGlobalFlags(flags)
+	o.loadGlobalFlags(flags, io)
 
 	return o, utils.FlattenErrors(o.Validate(true))
 }
 
-func (o *CLIOptions) loadGlobalFlags(flags *pflag.FlagSet) {
+func (o *CLIOptions) loadGlobalFlags(flags *pflag.FlagSet, io *cliIO) {
 	o.loadFromEnv()
-	o.loadFromProfile()
-	o.loadFromFlags(flags)
+	o.loadFromProfile(io)
+	o.loadFromFlags(flags, io)
 	o.fillDefaults()
 }
 
@@ -130,17 +112,17 @@ func (o *CLIOptions) loadFromEnv() {
 	o.FakeStorePath = stringFromEnv("SAKURACLOUD_FAKE_STORE_PATH", "")
 }
 
-func (o *CLIOptions) loadFromProfile() {
+func (o *CLIOptions) loadFromProfile(io IO) {
 	if o.Profile != "" {
 		if err := profile.Load(o.Profile, o); err != nil {
-			fmt.Fprintf(cliIO.Err, "[WARN] loading profile %q is failed: %s", o.Profile, err) // nolint
+			fmt.Fprintf(io.Err(), "[WARN] loading profile %q is failed: %s", o.Profile, err) // nolint
 			return
 		}
 	}
 }
 
-func (o *CLIOptions) loadFromFlags(flags *pflag.FlagSet) {
-	out := cliIO.Err
+func (o *CLIOptions) loadFromFlags(flags *pflag.FlagSet, io IO) {
+	out := io.Err()
 	if flags.Changed("token") {
 		v, err := flags.GetString("token")
 		if err != nil {
