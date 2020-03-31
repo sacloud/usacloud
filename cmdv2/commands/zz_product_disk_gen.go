@@ -24,44 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	productDiskListParam = params.NewListProductDiskParam()
-	productDiskReadParam = params.NewReadProductDiskParam()
-)
-
 // productDiskCmd represents the command to manage SAKURA Cloud ProductDisk
-var productDiskCmd = &cobra.Command{
-	Use:   "product-disk",
-	Short: "A manage commands of ProductDisk",
-	Long:  `A manage commands of ProductDisk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements: call list func as default
-	},
+func productDiskCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "product-disk",
+		Short: "A manage commands of ProductDisk",
+		Long:  `A manage commands of ProductDisk`,
+		Run: func(cmd *cobra.Command, args []string) {
+			// TODO not implements: call list func as default
+		},
+	}
 }
 
-var productDiskListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find"},
-	Short:   "List ProductDisk (default)",
-	Long:    `List ProductDisk (default)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return productDiskListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), productDiskListParam)
-		if err != nil {
-			return err
-		}
+func productDiskListCmd() *cobra.Command {
+	productDiskListParam := params.NewListProductDiskParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find"},
+		Short:   "List ProductDisk (default)",
+		Long:    `List ProductDisk (default)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return productDiskListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), productDiskListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(productDiskListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(productDiskListParam))
+			return nil
+		},
+	}
 
-func productDiskListCmdInit() {
-	fs := productDiskListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&productDiskListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &productDiskListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&productDiskListParam.From, "from", "", 0, "set offset")
@@ -79,31 +77,33 @@ func productDiskListCmdInit() {
 	fs.StringVarP(&productDiskListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&productDiskListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&productDiskListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var productDiskReadCmd = &cobra.Command{
-	Use: "read",
+func productDiskReadCmd() *cobra.Command {
+	productDiskReadParam := params.NewReadProductDiskParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read ProductDisk",
-	Long:  `Read ProductDisk`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return productDiskReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), productDiskReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read ProductDisk",
+		Long:  `Read ProductDisk`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return productDiskReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), productDiskReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(productDiskReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(productDiskReadParam))
+			return nil
+		},
+	}
 
-func productDiskReadCmdInit() {
-	fs := productDiskReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&productDiskReadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&productDiskReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&productDiskReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -118,16 +118,12 @@ func productDiskReadCmdInit() {
 	fs.StringVarP(&productDiskReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&productDiskReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &productDiskReadParam.Id), "id", "", "set resource ID")
+	return cmd
 }
 
 func init() {
-	parent := productDiskCmd
-
-	productDiskListCmdInit()
-	parent.AddCommand(productDiskListCmd)
-
-	productDiskReadCmdInit()
-	parent.AddCommand(productDiskReadCmd)
-
+	parent := productDiskCmd()
+	parent.AddCommand(productDiskListCmd())
+	parent.AddCommand(productDiskReadCmd())
 	rootCmd.AddCommand(parent)
 }

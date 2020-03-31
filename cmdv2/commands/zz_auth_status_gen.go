@@ -23,43 +23,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	authStatusShowParam = params.NewShowAuthStatusParam()
-)
-
 // authStatusCmd represents the command to manage SAKURA Cloud AuthStatus
-var authStatusCmd = &cobra.Command{
-	Use:   "auth-status",
-	Short: "A manage commands of AuthStatus",
-	Long:  `A manage commands of AuthStatus`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements: call show func as default
-	},
+func authStatusCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "auth-status",
+		Short: "A manage commands of AuthStatus",
+		Long:  `A manage commands of AuthStatus`,
+		Run: func(cmd *cobra.Command, args []string) {
+			// TODO not implements: call show func as default
+		},
+	}
 }
 
-var authStatusShowCmd = &cobra.Command{
-	Use: "show",
+func authStatusShowCmd() *cobra.Command {
+	authStatusShowParam := params.NewShowAuthStatusParam()
+	cmd := &cobra.Command{
+		Use: "show",
 
-	Short: "Show AuthStatus (default)",
-	Long:  `Show AuthStatus (default)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return authStatusShowParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), authStatusShowParam)
-		if err != nil {
-			return err
-		}
+		Short: "Show AuthStatus (default)",
+		Long:  `Show AuthStatus (default)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return authStatusShowParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), authStatusShowParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("show local parameter: \n%s\n", debugMarshalIndent(authStatusShowParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("show local parameter: \n%s\n", debugMarshalIndent(authStatusShowParam))
+			return nil
+		},
+	}
 
-func authStatusShowCmdInit() {
-	fs := authStatusShowCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&authStatusShowParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&authStatusShowParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&authStatusShowParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
@@ -72,13 +71,11 @@ func authStatusShowCmdInit() {
 	fs.StringVarP(&authStatusShowParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&authStatusShowParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&authStatusShowParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
 func init() {
-	parent := authStatusCmd
-
-	authStatusShowCmdInit()
-	parent.AddCommand(authStatusShowCmd)
-
+	parent := authStatusCmd()
+	parent.AddCommand(authStatusShowCmd())
 	rootCmd.AddCommand(parent)
 }

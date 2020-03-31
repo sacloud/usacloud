@@ -23,110 +23,107 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	configCurrentParam = params.NewCurrentConfigParam()
-	configDeleteParam  = params.NewDeleteConfigParam()
-	configEditParam    = params.NewEditConfigParam()
-	configListParam    = params.NewListConfigParam()
-	configMigrateParam = params.NewMigrateConfigParam()
-	configShowParam    = params.NewShowConfigParam()
-	configUseParam     = params.NewUseConfigParam()
-)
-
 // configCmd represents the command to manage SAKURA Cloud Config
-var configCmd = &cobra.Command{
-	Use:   "config",
-	Short: "A manage command of APIKey settings",
-	Long:  `A manage command of APIKey settings`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements: call edit func as default
-	},
+func configCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "config",
+		Short: "A manage command of APIKey settings",
+		Long:  `A manage command of APIKey settings`,
+		Run: func(cmd *cobra.Command, args []string) {
+			// TODO not implements: call edit func as default
+		},
+	}
 }
 
-var configCurrentCmd = &cobra.Command{
-	Use: "current",
+func configCurrentCmd() *cobra.Command {
+	configCurrentParam := params.NewCurrentConfigParam()
+	cmd := &cobra.Command{
+		Use: "current",
 
-	Short: "Current Config",
-	Long:  `Current Config`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return configCurrentParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), configCurrentParam)
-		if err != nil {
-			return err
-		}
+		Short: "Current Config",
+		Long:  `Current Config`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return configCurrentParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), configCurrentParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("current local parameter: \n%s\n", debugMarshalIndent(configCurrentParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("current local parameter: \n%s\n", debugMarshalIndent(configCurrentParam))
+			return nil
+		},
+	}
 
-func configCurrentCmdInit() {
-	fs := configCurrentCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&configCurrentParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&configCurrentParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&configCurrentParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configCurrentParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configCurrentParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	return cmd
 }
 
-var configDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete Config",
-	Long:    `Delete Config`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return configDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), configDeleteParam)
-		if err != nil {
-			return err
-		}
+func configDeleteCmd() *cobra.Command {
+	configDeleteParam := params.NewDeleteConfigParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete Config",
+		Long:    `Delete Config`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return configDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), configDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(configDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(configDeleteParam))
+			return nil
+		},
+	}
 
-func configDeleteCmdInit() {
-	fs := configDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&configDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&configDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&configDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&configDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	return cmd
 }
 
-var configEditCmd = &cobra.Command{
-	Use: "edit",
+func configEditCmd() *cobra.Command {
+	configEditParam := params.NewEditConfigParam()
+	cmd := &cobra.Command{
+		Use: "edit",
 
-	Short: "Edit Config (default)",
-	Long:  `Edit Config (default)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return configEditParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), configEditParam)
-		if err != nil {
-			return err
-		}
+		Short: "Edit Config (default)",
+		Long:  `Edit Config (default)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return configEditParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), configEditParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("edit local parameter: \n%s\n", debugMarshalIndent(configEditParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("edit local parameter: \n%s\n", debugMarshalIndent(configEditParam))
+			return nil
+		},
+	}
 
-func configEditCmdInit() {
-	fs := configEditCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&configEditParam.Token, "token", "", "", "API Token of SakuraCloud")
 	fs.StringVarP(&configEditParam.Secret, "secret", "", "", "API Secret of SakuraCloud")
 	fs.StringVarP(&configEditParam.Zone, "zone", "", "", "Target zone of SakuraCloud")
@@ -136,151 +133,145 @@ func configEditCmdInit() {
 	fs.StringVarP(&configEditParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configEditParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configEditParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	return cmd
 }
 
-var configListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls"},
-	Short:   "List Config",
-	Long:    `List Config`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return configListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), configListParam)
-		if err != nil {
-			return err
-		}
+func configListCmd() *cobra.Command {
+	configListParam := params.NewListConfigParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls"},
+		Short:   "List Config",
+		Long:    `List Config`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return configListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), configListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(configListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(configListParam))
+			return nil
+		},
+	}
 
-func configListCmdInit() {
-	fs := configListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&configListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&configListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&configListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	return cmd
 }
 
-var configMigrateCmd = &cobra.Command{
-	Use: "migrate",
+func configMigrateCmd() *cobra.Command {
+	configMigrateParam := params.NewMigrateConfigParam()
+	cmd := &cobra.Command{
+		Use: "migrate",
 
-	Short: "Migrate Config",
-	Long:  `Migrate Config`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return configMigrateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), configMigrateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Migrate Config",
+		Long:  `Migrate Config`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return configMigrateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), configMigrateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("migrate local parameter: \n%s\n", debugMarshalIndent(configMigrateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("migrate local parameter: \n%s\n", debugMarshalIndent(configMigrateParam))
+			return nil
+		},
+	}
 
-func configMigrateCmdInit() {
-	fs := configMigrateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&configMigrateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&configMigrateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&configMigrateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configMigrateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configMigrateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	return cmd
 }
 
-var configShowCmd = &cobra.Command{
-	Use: "show",
+func configShowCmd() *cobra.Command {
+	configShowParam := params.NewShowConfigParam()
+	cmd := &cobra.Command{
+		Use: "show",
 
-	Short: "Show Config",
-	Long:  `Show Config`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return configShowParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), configShowParam)
-		if err != nil {
-			return err
-		}
+		Short: "Show Config",
+		Long:  `Show Config`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return configShowParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), configShowParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("show local parameter: \n%s\n", debugMarshalIndent(configShowParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("show local parameter: \n%s\n", debugMarshalIndent(configShowParam))
+			return nil
+		},
+	}
 
-func configShowCmdInit() {
-	fs := configShowCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&configShowParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&configShowParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&configShowParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configShowParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configShowParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	return cmd
 }
 
-var configUseCmd = &cobra.Command{
-	Use: "use",
+func configUseCmd() *cobra.Command {
+	configUseParam := params.NewUseConfigParam()
+	cmd := &cobra.Command{
+		Use: "use",
 
-	Short: "Use Config",
-	Long:  `Use Config`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return configUseParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), configUseParam)
-		if err != nil {
-			return err
-		}
+		Short: "Use Config",
+		Long:  `Use Config`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return configUseParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), configUseParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("use local parameter: \n%s\n", debugMarshalIndent(configUseParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("use local parameter: \n%s\n", debugMarshalIndent(configUseParam))
+			return nil
+		},
+	}
 
-func configUseCmdInit() {
-	fs := configUseCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&configUseParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&configUseParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&configUseParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configUseParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configUseParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	return cmd
 }
 
 func init() {
-	parent := configCmd
-
-	configCurrentCmdInit()
-	parent.AddCommand(configCurrentCmd)
-
-	configDeleteCmdInit()
-	parent.AddCommand(configDeleteCmd)
-
-	configEditCmdInit()
-	parent.AddCommand(configEditCmd)
-
-	configListCmdInit()
-	parent.AddCommand(configListCmd)
-
-	configMigrateCmdInit()
-	parent.AddCommand(configMigrateCmd)
-
-	configShowCmdInit()
-	parent.AddCommand(configShowCmd)
-
-	configUseCmdInit()
-	parent.AddCommand(configUseCmd)
-
+	parent := configCmd()
+	parent.AddCommand(configCurrentCmd())
+	parent.AddCommand(configDeleteCmd())
+	parent.AddCommand(configEditCmd())
+	parent.AddCommand(configListCmd())
+	parent.AddCommand(configMigrateCmd())
+	parent.AddCommand(configShowCmd())
+	parent.AddCommand(configUseCmd())
 	rootCmd.AddCommand(parent)
 }

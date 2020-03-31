@@ -24,51 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	gslbListParam         = params.NewListGSLBParam()
-	gslbServerInfoParam   = params.NewServerInfoGSLBParam()
-	gslbCreateParam       = params.NewCreateGSLBParam()
-	gslbServerAddParam    = params.NewServerAddGSLBParam()
-	gslbReadParam         = params.NewReadGSLBParam()
-	gslbServerUpdateParam = params.NewServerUpdateGSLBParam()
-	gslbServerDeleteParam = params.NewServerDeleteGSLBParam()
-	gslbUpdateParam       = params.NewUpdateGSLBParam()
-	gslbDeleteParam       = params.NewDeleteGSLBParam()
-)
-
 // gslbCmd represents the command to manage SAKURA Cloud GSLB
-var gslbCmd = &cobra.Command{
-	Use:   "gslb",
-	Short: "A manage commands of GSLB",
-	Long:  `A manage commands of GSLB`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func gslbCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "gslb",
+		Short: "A manage commands of GSLB",
+		Long:  `A manage commands of GSLB`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var gslbListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List GSLB",
-	Long:    `List GSLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return gslbListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), gslbListParam)
-		if err != nil {
-			return err
-		}
+func gslbListCmd() *cobra.Command {
+	gslbListParam := params.NewListGSLBParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List GSLB",
+		Long:    `List GSLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return gslbListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), gslbListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(gslbListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(gslbListParam))
+			return nil
+		},
+	}
 
-func gslbListCmdInit() {
-	fs := gslbListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&gslbListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &gslbListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&gslbListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
@@ -87,31 +78,33 @@ func gslbListCmdInit() {
 	fs.StringVarP(&gslbListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&gslbListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var gslbServerInfoCmd = &cobra.Command{
-	Use:     "server-info",
-	Aliases: []string{"server-list"},
-	Short:   "ServerInfo GSLB",
-	Long:    `ServerInfo GSLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return gslbServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), gslbServerInfoParam)
-		if err != nil {
-			return err
-		}
+func gslbServerInfoCmd() *cobra.Command {
+	gslbServerInfoParam := params.NewServerInfoGSLBParam()
+	cmd := &cobra.Command{
+		Use:     "server-info",
+		Aliases: []string{"server-list"},
+		Short:   "ServerInfo GSLB",
+		Long:    `ServerInfo GSLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return gslbServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), gslbServerInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("server-info local parameter: \n%s\n", debugMarshalIndent(gslbServerInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("server-info local parameter: \n%s\n", debugMarshalIndent(gslbServerInfoParam))
+			return nil
+		},
+	}
 
-func gslbServerInfoCmdInit() {
-	fs := gslbServerInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&gslbServerInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&gslbServerInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&gslbServerInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -126,31 +119,33 @@ func gslbServerInfoCmdInit() {
 	fs.StringVarP(&gslbServerInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbServerInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &gslbServerInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var gslbCreateCmd = &cobra.Command{
-	Use: "create",
+func gslbCreateCmd() *cobra.Command {
+	gslbCreateParam := params.NewCreateGSLBParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create GSLB",
-	Long:  `Create GSLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return gslbCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), gslbCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create GSLB",
+		Long:  `Create GSLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return gslbCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), gslbCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(gslbCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(gslbCreateParam))
+			return nil
+		},
+	}
 
-func gslbCreateCmdInit() {
-	fs := gslbCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&gslbCreateParam.Protocol, "protocol", "", "ping", "set healthcheck protocol[http/https/ping/tcp]")
 	fs.StringVarP(&gslbCreateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
 	fs.StringVarP(&gslbCreateParam.Path, "path", "", "/", "set path of http/https healthcheck request")
@@ -176,31 +171,33 @@ func gslbCreateCmdInit() {
 	fs.StringVarP(&gslbCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&gslbCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var gslbServerAddCmd = &cobra.Command{
-	Use: "server-add",
+func gslbServerAddCmd() *cobra.Command {
+	gslbServerAddParam := params.NewServerAddGSLBParam()
+	cmd := &cobra.Command{
+		Use: "server-add",
 
-	Short: "ServerAdd GSLB",
-	Long:  `ServerAdd GSLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return gslbServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), gslbServerAddParam)
-		if err != nil {
-			return err
-		}
+		Short: "ServerAdd GSLB",
+		Long:  `ServerAdd GSLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return gslbServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), gslbServerAddParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("server-add local parameter: \n%s\n", debugMarshalIndent(gslbServerAddParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("server-add local parameter: \n%s\n", debugMarshalIndent(gslbServerAddParam))
+			return nil
+		},
+	}
 
-func gslbServerAddCmdInit() {
-	fs := gslbServerAddCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&gslbServerAddParam.Ipaddress, "ipaddress", "", "", "set target ipaddress")
 	fs.BoolVarP(&gslbServerAddParam.Disabled, "disabled", "", false, "set disabled")
 	fs.IntVarP(&gslbServerAddParam.Weight, "weight", "", 0, "set weight")
@@ -219,31 +216,33 @@ func gslbServerAddCmdInit() {
 	fs.StringVarP(&gslbServerAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbServerAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &gslbServerAddParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var gslbReadCmd = &cobra.Command{
-	Use: "read",
+func gslbReadCmd() *cobra.Command {
+	gslbReadParam := params.NewReadGSLBParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read GSLB",
-	Long:  `Read GSLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return gslbReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), gslbReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read GSLB",
+		Long:  `Read GSLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return gslbReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), gslbReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(gslbReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(gslbReadParam))
+			return nil
+		},
+	}
 
-func gslbReadCmdInit() {
-	fs := gslbReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&gslbReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&gslbReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&gslbReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -258,31 +257,33 @@ func gslbReadCmdInit() {
 	fs.StringVarP(&gslbReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &gslbReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var gslbServerUpdateCmd = &cobra.Command{
-	Use: "server-update",
+func gslbServerUpdateCmd() *cobra.Command {
+	gslbServerUpdateParam := params.NewServerUpdateGSLBParam()
+	cmd := &cobra.Command{
+		Use: "server-update",
 
-	Short: "ServerUpdate GSLB",
-	Long:  `ServerUpdate GSLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return gslbServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), gslbServerUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "ServerUpdate GSLB",
+		Long:  `ServerUpdate GSLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return gslbServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), gslbServerUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("server-update local parameter: \n%s\n", debugMarshalIndent(gslbServerUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("server-update local parameter: \n%s\n", debugMarshalIndent(gslbServerUpdateParam))
+			return nil
+		},
+	}
 
-func gslbServerUpdateCmdInit() {
-	fs := gslbServerUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&gslbServerUpdateParam.Index, "index", "", 0, "index of target server")
 	fs.StringVarP(&gslbServerUpdateParam.Ipaddress, "ipaddress", "", "", "set target ipaddress")
 	fs.BoolVarP(&gslbServerUpdateParam.Disabled, "disabled", "", false, "set disabled")
@@ -302,31 +303,33 @@ func gslbServerUpdateCmdInit() {
 	fs.StringVarP(&gslbServerUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbServerUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &gslbServerUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var gslbServerDeleteCmd = &cobra.Command{
-	Use: "server-delete",
+func gslbServerDeleteCmd() *cobra.Command {
+	gslbServerDeleteParam := params.NewServerDeleteGSLBParam()
+	cmd := &cobra.Command{
+		Use: "server-delete",
 
-	Short: "ServerDelete GSLB",
-	Long:  `ServerDelete GSLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return gslbServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), gslbServerDeleteParam)
-		if err != nil {
-			return err
-		}
+		Short: "ServerDelete GSLB",
+		Long:  `ServerDelete GSLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return gslbServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), gslbServerDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("server-delete local parameter: \n%s\n", debugMarshalIndent(gslbServerDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("server-delete local parameter: \n%s\n", debugMarshalIndent(gslbServerDeleteParam))
+			return nil
+		},
+	}
 
-func gslbServerDeleteCmdInit() {
-	fs := gslbServerDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&gslbServerDeleteParam.Index, "index", "", 0, "index of target server")
 	fs.StringSliceVarP(&gslbServerDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&gslbServerDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -343,31 +346,33 @@ func gslbServerDeleteCmdInit() {
 	fs.StringVarP(&gslbServerDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbServerDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &gslbServerDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var gslbUpdateCmd = &cobra.Command{
-	Use: "update",
+func gslbUpdateCmd() *cobra.Command {
+	gslbUpdateParam := params.NewUpdateGSLBParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update GSLB",
-	Long:  `Update GSLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return gslbUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), gslbUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update GSLB",
+		Long:  `Update GSLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return gslbUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), gslbUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(gslbUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(gslbUpdateParam))
+			return nil
+		},
+	}
 
-func gslbUpdateCmdInit() {
-	fs := gslbUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&gslbUpdateParam.Protocol, "protocol", "", "", "set healthcheck protocol[http/https/ping/tcp]")
 	fs.StringVarP(&gslbUpdateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
 	fs.StringVarP(&gslbUpdateParam.Path, "path", "", "", "set path of http/https healthcheck request")
@@ -395,31 +400,33 @@ func gslbUpdateCmdInit() {
 	fs.StringVarP(&gslbUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &gslbUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var gslbDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete GSLB",
-	Long:    `Delete GSLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return gslbDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), gslbDeleteParam)
-		if err != nil {
-			return err
-		}
+func gslbDeleteCmd() *cobra.Command {
+	gslbDeleteParam := params.NewDeleteGSLBParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete GSLB",
+		Long:    `Delete GSLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return gslbDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), gslbDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(gslbDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(gslbDeleteParam))
+			return nil
+		},
+	}
 
-func gslbDeleteCmdInit() {
-	fs := gslbDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&gslbDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&gslbDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&gslbDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -435,37 +442,19 @@ func gslbDeleteCmdInit() {
 	fs.StringVarP(&gslbDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &gslbDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := gslbCmd
-
-	gslbListCmdInit()
-	parent.AddCommand(gslbListCmd)
-
-	gslbServerInfoCmdInit()
-	parent.AddCommand(gslbServerInfoCmd)
-
-	gslbCreateCmdInit()
-	parent.AddCommand(gslbCreateCmd)
-
-	gslbServerAddCmdInit()
-	parent.AddCommand(gslbServerAddCmd)
-
-	gslbReadCmdInit()
-	parent.AddCommand(gslbReadCmd)
-
-	gslbServerUpdateCmdInit()
-	parent.AddCommand(gslbServerUpdateCmd)
-
-	gslbServerDeleteCmdInit()
-	parent.AddCommand(gslbServerDeleteCmd)
-
-	gslbUpdateCmdInit()
-	parent.AddCommand(gslbUpdateCmd)
-
-	gslbDeleteCmdInit()
-	parent.AddCommand(gslbDeleteCmd)
-
+	parent := gslbCmd()
+	parent.AddCommand(gslbListCmd())
+	parent.AddCommand(gslbServerInfoCmd())
+	parent.AddCommand(gslbCreateCmd())
+	parent.AddCommand(gslbServerAddCmd())
+	parent.AddCommand(gslbReadCmd())
+	parent.AddCommand(gslbServerUpdateCmd())
+	parent.AddCommand(gslbServerDeleteCmd())
+	parent.AddCommand(gslbUpdateCmd())
+	parent.AddCommand(gslbDeleteCmd())
 	rootCmd.AddCommand(parent)
 }

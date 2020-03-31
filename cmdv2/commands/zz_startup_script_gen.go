@@ -24,47 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	startupScriptListParam   = params.NewListStartupScriptParam()
-	startupScriptCreateParam = params.NewCreateStartupScriptParam()
-	startupScriptReadParam   = params.NewReadStartupScriptParam()
-	startupScriptUpdateParam = params.NewUpdateStartupScriptParam()
-	startupScriptDeleteParam = params.NewDeleteStartupScriptParam()
-)
-
 // startupScriptCmd represents the command to manage SAKURA Cloud StartupScript
-var startupScriptCmd = &cobra.Command{
-	Use:   "startup-script",
-	Short: "A manage commands of StartupScript",
-	Long:  `A manage commands of StartupScript`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func startupScriptCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "startup-script",
+		Short: "A manage commands of StartupScript",
+		Long:  `A manage commands of StartupScript`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var startupScriptListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List StartupScript",
-	Long:    `List StartupScript`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return startupScriptListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), startupScriptListParam)
-		if err != nil {
-			return err
-		}
+func startupScriptListCmd() *cobra.Command {
+	startupScriptListParam := params.NewListStartupScriptParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List StartupScript",
+		Long:    `List StartupScript`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return startupScriptListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), startupScriptListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(startupScriptListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(startupScriptListParam))
+			return nil
+		},
+	}
 
-func startupScriptListCmdInit() {
-	fs := startupScriptListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&startupScriptListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &startupScriptListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringVarP(&startupScriptListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
@@ -85,31 +80,33 @@ func startupScriptListCmdInit() {
 	fs.StringVarP(&startupScriptListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&startupScriptListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&startupScriptListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var startupScriptCreateCmd = &cobra.Command{
-	Use: "create",
+func startupScriptCreateCmd() *cobra.Command {
+	startupScriptCreateParam := params.NewCreateStartupScriptParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create StartupScript",
-	Long:  `Create StartupScript`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return startupScriptCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), startupScriptCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create StartupScript",
+		Long:  `Create StartupScript`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return startupScriptCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), startupScriptCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(startupScriptCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(startupScriptCreateParam))
+			return nil
+		},
+	}
 
-func startupScriptCreateCmdInit() {
-	fs := startupScriptCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&startupScriptCreateParam.Script, "script", "", "", "set script from file")
 	fs.StringVarP(&startupScriptCreateParam.ScriptContent, "script-content", "", "", "set script content")
 	fs.StringVarP(&startupScriptCreateParam.Class, "class", "", "shell", "set script class[shell/cloud-config-yaml]")
@@ -129,31 +126,33 @@ func startupScriptCreateCmdInit() {
 	fs.StringVarP(&startupScriptCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&startupScriptCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&startupScriptCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var startupScriptReadCmd = &cobra.Command{
-	Use: "read",
+func startupScriptReadCmd() *cobra.Command {
+	startupScriptReadParam := params.NewReadStartupScriptParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read StartupScript",
-	Long:  `Read StartupScript`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return startupScriptReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), startupScriptReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read StartupScript",
+		Long:  `Read StartupScript`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return startupScriptReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), startupScriptReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(startupScriptReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(startupScriptReadParam))
+			return nil
+		},
+	}
 
-func startupScriptReadCmdInit() {
-	fs := startupScriptReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&startupScriptReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&startupScriptReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&startupScriptReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -168,31 +167,33 @@ func startupScriptReadCmdInit() {
 	fs.StringVarP(&startupScriptReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&startupScriptReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &startupScriptReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var startupScriptUpdateCmd = &cobra.Command{
-	Use: "update",
+func startupScriptUpdateCmd() *cobra.Command {
+	startupScriptUpdateParam := params.NewUpdateStartupScriptParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update StartupScript",
-	Long:  `Update StartupScript`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return startupScriptUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), startupScriptUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update StartupScript",
+		Long:  `Update StartupScript`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return startupScriptUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), startupScriptUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(startupScriptUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(startupScriptUpdateParam))
+			return nil
+		},
+	}
 
-func startupScriptUpdateCmdInit() {
-	fs := startupScriptUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&startupScriptUpdateParam.Script, "script", "", "", "set script from file")
 	fs.StringVarP(&startupScriptUpdateParam.ScriptContent, "script-content", "", "", "set script content")
 	fs.StringVarP(&startupScriptUpdateParam.Class, "class", "", "", "set script class[shell/cloud-config-yaml]")
@@ -214,31 +215,33 @@ func startupScriptUpdateCmdInit() {
 	fs.StringVarP(&startupScriptUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&startupScriptUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &startupScriptUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var startupScriptDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete StartupScript",
-	Long:    `Delete StartupScript`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return startupScriptDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), startupScriptDeleteParam)
-		if err != nil {
-			return err
-		}
+func startupScriptDeleteCmd() *cobra.Command {
+	startupScriptDeleteParam := params.NewDeleteStartupScriptParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete StartupScript",
+		Long:    `Delete StartupScript`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return startupScriptDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), startupScriptDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(startupScriptDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(startupScriptDeleteParam))
+			return nil
+		},
+	}
 
-func startupScriptDeleteCmdInit() {
-	fs := startupScriptDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&startupScriptDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&startupScriptDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&startupScriptDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -254,25 +257,15 @@ func startupScriptDeleteCmdInit() {
 	fs.StringVarP(&startupScriptDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&startupScriptDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &startupScriptDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := startupScriptCmd
-
-	startupScriptListCmdInit()
-	parent.AddCommand(startupScriptListCmd)
-
-	startupScriptCreateCmdInit()
-	parent.AddCommand(startupScriptCreateCmd)
-
-	startupScriptReadCmdInit()
-	parent.AddCommand(startupScriptReadCmd)
-
-	startupScriptUpdateCmdInit()
-	parent.AddCommand(startupScriptUpdateCmd)
-
-	startupScriptDeleteCmdInit()
-	parent.AddCommand(startupScriptDeleteCmd)
-
+	parent := startupScriptCmd()
+	parent.AddCommand(startupScriptListCmd())
+	parent.AddCommand(startupScriptCreateCmd())
+	parent.AddCommand(startupScriptReadCmd())
+	parent.AddCommand(startupScriptUpdateCmd())
+	parent.AddCommand(startupScriptDeleteCmd())
 	rootCmd.AddCommand(parent)
 }

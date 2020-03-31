@@ -24,50 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	privateHostListParam         = params.NewListPrivateHostParam()
-	privateHostCreateParam       = params.NewCreatePrivateHostParam()
-	privateHostReadParam         = params.NewReadPrivateHostParam()
-	privateHostUpdateParam       = params.NewUpdatePrivateHostParam()
-	privateHostDeleteParam       = params.NewDeletePrivateHostParam()
-	privateHostServerInfoParam   = params.NewServerInfoPrivateHostParam()
-	privateHostServerAddParam    = params.NewServerAddPrivateHostParam()
-	privateHostServerDeleteParam = params.NewServerDeletePrivateHostParam()
-)
-
 // privateHostCmd represents the command to manage SAKURA Cloud PrivateHost
-var privateHostCmd = &cobra.Command{
-	Use:   "private-host",
-	Short: "A manage commands of PrivateHost",
-	Long:  `A manage commands of PrivateHost`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func privateHostCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "private-host",
+		Short: "A manage commands of PrivateHost",
+		Long:  `A manage commands of PrivateHost`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var privateHostListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List PrivateHost",
-	Long:    `List PrivateHost`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return privateHostListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), privateHostListParam)
-		if err != nil {
-			return err
-		}
+func privateHostListCmd() *cobra.Command {
+	privateHostListParam := params.NewListPrivateHostParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List PrivateHost",
+		Long:    `List PrivateHost`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return privateHostListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), privateHostListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(privateHostListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(privateHostListParam))
+			return nil
+		},
+	}
 
-func privateHostListCmdInit() {
-	fs := privateHostListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&privateHostListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &privateHostListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&privateHostListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
@@ -86,31 +78,33 @@ func privateHostListCmdInit() {
 	fs.StringVarP(&privateHostListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&privateHostListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&privateHostListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var privateHostCreateCmd = &cobra.Command{
-	Use: "create",
+func privateHostCreateCmd() *cobra.Command {
+	privateHostCreateParam := params.NewCreatePrivateHostParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create PrivateHost",
-	Long:  `Create PrivateHost`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return privateHostCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), privateHostCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create PrivateHost",
+		Long:  `Create PrivateHost`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return privateHostCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), privateHostCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(privateHostCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(privateHostCreateParam))
+			return nil
+		},
+	}
 
-func privateHostCreateCmdInit() {
-	fs := privateHostCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&privateHostCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&privateHostCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&privateHostCreateParam.Tags, "tags", "", []string{}, "set resource tags")
@@ -128,31 +122,33 @@ func privateHostCreateCmdInit() {
 	fs.StringVarP(&privateHostCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&privateHostCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&privateHostCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var privateHostReadCmd = &cobra.Command{
-	Use: "read",
+func privateHostReadCmd() *cobra.Command {
+	privateHostReadParam := params.NewReadPrivateHostParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read PrivateHost",
-	Long:  `Read PrivateHost`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return privateHostReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), privateHostReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read PrivateHost",
+		Long:  `Read PrivateHost`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return privateHostReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), privateHostReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(privateHostReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(privateHostReadParam))
+			return nil
+		},
+	}
 
-func privateHostReadCmdInit() {
-	fs := privateHostReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&privateHostReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&privateHostReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&privateHostReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -167,31 +163,33 @@ func privateHostReadCmdInit() {
 	fs.StringVarP(&privateHostReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&privateHostReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &privateHostReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var privateHostUpdateCmd = &cobra.Command{
-	Use: "update",
+func privateHostUpdateCmd() *cobra.Command {
+	privateHostUpdateParam := params.NewUpdatePrivateHostParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update PrivateHost",
-	Long:  `Update PrivateHost`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return privateHostUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), privateHostUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update PrivateHost",
+		Long:  `Update PrivateHost`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return privateHostUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), privateHostUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(privateHostUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(privateHostUpdateParam))
+			return nil
+		},
+	}
 
-func privateHostUpdateCmdInit() {
-	fs := privateHostUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&privateHostUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&privateHostUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&privateHostUpdateParam.Description, "description", "", "", "set resource description")
@@ -211,31 +209,33 @@ func privateHostUpdateCmdInit() {
 	fs.StringVarP(&privateHostUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&privateHostUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &privateHostUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var privateHostDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete PrivateHost",
-	Long:    `Delete PrivateHost`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return privateHostDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), privateHostDeleteParam)
-		if err != nil {
-			return err
-		}
+func privateHostDeleteCmd() *cobra.Command {
+	privateHostDeleteParam := params.NewDeletePrivateHostParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete PrivateHost",
+		Long:    `Delete PrivateHost`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return privateHostDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), privateHostDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(privateHostDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(privateHostDeleteParam))
+			return nil
+		},
+	}
 
-func privateHostDeleteCmdInit() {
-	fs := privateHostDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&privateHostDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&privateHostDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&privateHostDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -251,31 +251,33 @@ func privateHostDeleteCmdInit() {
 	fs.StringVarP(&privateHostDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&privateHostDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &privateHostDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var privateHostServerInfoCmd = &cobra.Command{
-	Use:     "server-info",
-	Aliases: []string{"server-list"},
-	Short:   "ServerInfo PrivateHost",
-	Long:    `ServerInfo PrivateHost`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return privateHostServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), privateHostServerInfoParam)
-		if err != nil {
-			return err
-		}
+func privateHostServerInfoCmd() *cobra.Command {
+	privateHostServerInfoParam := params.NewServerInfoPrivateHostParam()
+	cmd := &cobra.Command{
+		Use:     "server-info",
+		Aliases: []string{"server-list"},
+		Short:   "ServerInfo PrivateHost",
+		Long:    `ServerInfo PrivateHost`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return privateHostServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), privateHostServerInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("server-info local parameter: \n%s\n", debugMarshalIndent(privateHostServerInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("server-info local parameter: \n%s\n", debugMarshalIndent(privateHostServerInfoParam))
+			return nil
+		},
+	}
 
-func privateHostServerInfoCmdInit() {
-	fs := privateHostServerInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&privateHostServerInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&privateHostServerInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&privateHostServerInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -290,31 +292,33 @@ func privateHostServerInfoCmdInit() {
 	fs.StringVarP(&privateHostServerInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&privateHostServerInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &privateHostServerInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var privateHostServerAddCmd = &cobra.Command{
-	Use: "server-add",
+func privateHostServerAddCmd() *cobra.Command {
+	privateHostServerAddParam := params.NewServerAddPrivateHostParam()
+	cmd := &cobra.Command{
+		Use: "server-add",
 
-	Short: "ServerAdd PrivateHost",
-	Long:  `ServerAdd PrivateHost`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return privateHostServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), privateHostServerAddParam)
-		if err != nil {
-			return err
-		}
+		Short: "ServerAdd PrivateHost",
+		Long:  `ServerAdd PrivateHost`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return privateHostServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), privateHostServerAddParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("server-add local parameter: \n%s\n", debugMarshalIndent(privateHostServerAddParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("server-add local parameter: \n%s\n", debugMarshalIndent(privateHostServerAddParam))
+			return nil
+		},
+	}
 
-func privateHostServerAddCmdInit() {
-	fs := privateHostServerAddCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &privateHostServerAddParam.ServerId), "server-id", "", "set server ID")
 	fs.StringSliceVarP(&privateHostServerAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&privateHostServerAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -331,31 +335,33 @@ func privateHostServerAddCmdInit() {
 	fs.StringVarP(&privateHostServerAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&privateHostServerAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &privateHostServerAddParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var privateHostServerDeleteCmd = &cobra.Command{
-	Use: "server-delete",
+func privateHostServerDeleteCmd() *cobra.Command {
+	privateHostServerDeleteParam := params.NewServerDeletePrivateHostParam()
+	cmd := &cobra.Command{
+		Use: "server-delete",
 
-	Short: "ServerDelete PrivateHost",
-	Long:  `ServerDelete PrivateHost`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return privateHostServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), privateHostServerDeleteParam)
-		if err != nil {
-			return err
-		}
+		Short: "ServerDelete PrivateHost",
+		Long:  `ServerDelete PrivateHost`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return privateHostServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), privateHostServerDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("server-delete local parameter: \n%s\n", debugMarshalIndent(privateHostServerDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("server-delete local parameter: \n%s\n", debugMarshalIndent(privateHostServerDeleteParam))
+			return nil
+		},
+	}
 
-func privateHostServerDeleteCmdInit() {
-	fs := privateHostServerDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &privateHostServerDeleteParam.ServerId), "server-id", "", "set server ID")
 	fs.StringSliceVarP(&privateHostServerDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&privateHostServerDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -372,34 +378,18 @@ func privateHostServerDeleteCmdInit() {
 	fs.StringVarP(&privateHostServerDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&privateHostServerDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &privateHostServerDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := privateHostCmd
-
-	privateHostListCmdInit()
-	parent.AddCommand(privateHostListCmd)
-
-	privateHostCreateCmdInit()
-	parent.AddCommand(privateHostCreateCmd)
-
-	privateHostReadCmdInit()
-	parent.AddCommand(privateHostReadCmd)
-
-	privateHostUpdateCmdInit()
-	parent.AddCommand(privateHostUpdateCmd)
-
-	privateHostDeleteCmdInit()
-	parent.AddCommand(privateHostDeleteCmd)
-
-	privateHostServerInfoCmdInit()
-	parent.AddCommand(privateHostServerInfoCmd)
-
-	privateHostServerAddCmdInit()
-	parent.AddCommand(privateHostServerAddCmd)
-
-	privateHostServerDeleteCmdInit()
-	parent.AddCommand(privateHostServerDeleteCmd)
-
+	parent := privateHostCmd()
+	parent.AddCommand(privateHostListCmd())
+	parent.AddCommand(privateHostCreateCmd())
+	parent.AddCommand(privateHostReadCmd())
+	parent.AddCommand(privateHostUpdateCmd())
+	parent.AddCommand(privateHostDeleteCmd())
+	parent.AddCommand(privateHostServerInfoCmd())
+	parent.AddCommand(privateHostServerAddCmd())
+	parent.AddCommand(privateHostServerDeleteCmd())
 	rootCmd.AddCommand(parent)
 }

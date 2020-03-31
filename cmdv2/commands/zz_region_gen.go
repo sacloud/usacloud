@@ -24,44 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	regionListParam = params.NewListRegionParam()
-	regionReadParam = params.NewReadRegionParam()
-)
-
 // regionCmd represents the command to manage SAKURA Cloud Region
-var regionCmd = &cobra.Command{
-	Use:   "region",
-	Short: "A manage commands of Region",
-	Long:  `A manage commands of Region`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements: call list func as default
-	},
+func regionCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "region",
+		Short: "A manage commands of Region",
+		Long:  `A manage commands of Region`,
+		Run: func(cmd *cobra.Command, args []string) {
+			// TODO not implements: call list func as default
+		},
+	}
 }
 
-var regionListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find"},
-	Short:   "List Region (default)",
-	Long:    `List Region (default)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return regionListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), regionListParam)
-		if err != nil {
-			return err
-		}
+func regionListCmd() *cobra.Command {
+	regionListParam := params.NewListRegionParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find"},
+		Short:   "List Region (default)",
+		Long:    `List Region (default)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return regionListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), regionListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(regionListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(regionListParam))
+			return nil
+		},
+	}
 
-func regionListCmdInit() {
-	fs := regionListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&regionListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &regionListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&regionListParam.From, "from", "", 0, "set offset")
@@ -79,31 +77,33 @@ func regionListCmdInit() {
 	fs.StringVarP(&regionListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&regionListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&regionListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var regionReadCmd = &cobra.Command{
-	Use: "read",
+func regionReadCmd() *cobra.Command {
+	regionReadParam := params.NewReadRegionParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read Region",
-	Long:  `Read Region`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return regionReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), regionReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read Region",
+		Long:  `Read Region`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return regionReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), regionReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(regionReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(regionReadParam))
+			return nil
+		},
+	}
 
-func regionReadCmdInit() {
-	fs := regionReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&regionReadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&regionReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&regionReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -118,16 +118,12 @@ func regionReadCmdInit() {
 	fs.StringVarP(&regionReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&regionReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &regionReadParam.Id), "id", "", "set resource ID")
+	return cmd
 }
 
 func init() {
-	parent := regionCmd
-
-	regionListCmdInit()
-	parent.AddCommand(regionListCmd)
-
-	regionReadCmdInit()
-	parent.AddCommand(regionReadCmd)
-
+	parent := regionCmd()
+	parent.AddCommand(regionListCmd())
+	parent.AddCommand(regionReadCmd())
 	rootCmd.AddCommand(parent)
 }

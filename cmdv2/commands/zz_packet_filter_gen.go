@@ -24,53 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	packetFilterListParam                = params.NewListPacketFilterParam()
-	packetFilterCreateParam              = params.NewCreatePacketFilterParam()
-	packetFilterReadParam                = params.NewReadPacketFilterParam()
-	packetFilterUpdateParam              = params.NewUpdatePacketFilterParam()
-	packetFilterDeleteParam              = params.NewDeletePacketFilterParam()
-	packetFilterRuleInfoParam            = params.NewRuleInfoPacketFilterParam()
-	packetFilterRuleAddParam             = params.NewRuleAddPacketFilterParam()
-	packetFilterRuleUpdateParam          = params.NewRuleUpdatePacketFilterParam()
-	packetFilterRuleDeleteParam          = params.NewRuleDeletePacketFilterParam()
-	packetFilterInterfaceConnectParam    = params.NewInterfaceConnectPacketFilterParam()
-	packetFilterInterfaceDisconnectParam = params.NewInterfaceDisconnectPacketFilterParam()
-)
-
 // packetFilterCmd represents the command to manage SAKURA Cloud PacketFilter
-var packetFilterCmd = &cobra.Command{
-	Use:   "packet-filter",
-	Short: "A manage commands of PacketFilter",
-	Long:  `A manage commands of PacketFilter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func packetFilterCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "packet-filter",
+		Short: "A manage commands of PacketFilter",
+		Long:  `A manage commands of PacketFilter`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var packetFilterListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find"},
-	Short:   "List PacketFilter",
-	Long:    `List PacketFilter`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return packetFilterListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), packetFilterListParam)
-		if err != nil {
-			return err
-		}
+func packetFilterListCmd() *cobra.Command {
+	packetFilterListParam := params.NewListPacketFilterParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find"},
+		Short:   "List PacketFilter",
+		Long:    `List PacketFilter`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return packetFilterListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), packetFilterListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(packetFilterListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(packetFilterListParam))
+			return nil
+		},
+	}
 
-func packetFilterListCmdInit() {
-	fs := packetFilterListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&packetFilterListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &packetFilterListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&packetFilterListParam.From, "from", "", 0, "set offset")
@@ -88,31 +77,33 @@ func packetFilterListCmdInit() {
 	fs.StringVarP(&packetFilterListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&packetFilterListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var packetFilterCreateCmd = &cobra.Command{
-	Use: "create",
+func packetFilterCreateCmd() *cobra.Command {
+	packetFilterCreateParam := params.NewCreatePacketFilterParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create PacketFilter",
-	Long:  `Create PacketFilter`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return packetFilterCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), packetFilterCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create PacketFilter",
+		Long:  `Create PacketFilter`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return packetFilterCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), packetFilterCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(packetFilterCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(packetFilterCreateParam))
+			return nil
+		},
+	}
 
-func packetFilterCreateCmdInit() {
-	fs := packetFilterCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&packetFilterCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&packetFilterCreateParam.Description, "description", "", "", "set resource description")
 	fs.BoolVarP(&packetFilterCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -128,31 +119,33 @@ func packetFilterCreateCmdInit() {
 	fs.StringVarP(&packetFilterCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&packetFilterCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var packetFilterReadCmd = &cobra.Command{
-	Use: "read",
+func packetFilterReadCmd() *cobra.Command {
+	packetFilterReadParam := params.NewReadPacketFilterParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read PacketFilter",
-	Long:  `Read PacketFilter`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return packetFilterReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), packetFilterReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read PacketFilter",
+		Long:  `Read PacketFilter`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return packetFilterReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), packetFilterReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(packetFilterReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(packetFilterReadParam))
+			return nil
+		},
+	}
 
-func packetFilterReadCmdInit() {
-	fs := packetFilterReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&packetFilterReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&packetFilterReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&packetFilterReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
@@ -166,31 +159,33 @@ func packetFilterReadCmdInit() {
 	fs.StringVarP(&packetFilterReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &packetFilterReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var packetFilterUpdateCmd = &cobra.Command{
-	Use: "update",
+func packetFilterUpdateCmd() *cobra.Command {
+	packetFilterUpdateParam := params.NewUpdatePacketFilterParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update PacketFilter",
-	Long:  `Update PacketFilter`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return packetFilterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), packetFilterUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update PacketFilter",
+		Long:  `Update PacketFilter`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return packetFilterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), packetFilterUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(packetFilterUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(packetFilterUpdateParam))
+			return nil
+		},
+	}
 
-func packetFilterUpdateCmdInit() {
-	fs := packetFilterUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&packetFilterUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&packetFilterUpdateParam.Description, "description", "", "", "set resource description")
 	fs.BoolVarP(&packetFilterUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -207,31 +202,33 @@ func packetFilterUpdateCmdInit() {
 	fs.StringVarP(&packetFilterUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &packetFilterUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var packetFilterDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete PacketFilter",
-	Long:    `Delete PacketFilter`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return packetFilterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), packetFilterDeleteParam)
-		if err != nil {
-			return err
-		}
+func packetFilterDeleteCmd() *cobra.Command {
+	packetFilterDeleteParam := params.NewDeletePacketFilterParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete PacketFilter",
+		Long:    `Delete PacketFilter`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return packetFilterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), packetFilterDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(packetFilterDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(packetFilterDeleteParam))
+			return nil
+		},
+	}
 
-func packetFilterDeleteCmdInit() {
-	fs := packetFilterDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&packetFilterDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&packetFilterDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&packetFilterDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -246,31 +243,33 @@ func packetFilterDeleteCmdInit() {
 	fs.StringVarP(&packetFilterDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &packetFilterDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var packetFilterRuleInfoCmd = &cobra.Command{
-	Use:     "rule-info",
-	Aliases: []string{"rules", "rule-list"},
-	Short:   "RuleInfo PacketFilter",
-	Long:    `RuleInfo PacketFilter`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return packetFilterRuleInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), packetFilterRuleInfoParam)
-		if err != nil {
-			return err
-		}
+func packetFilterRuleInfoCmd() *cobra.Command {
+	packetFilterRuleInfoParam := params.NewRuleInfoPacketFilterParam()
+	cmd := &cobra.Command{
+		Use:     "rule-info",
+		Aliases: []string{"rules", "rule-list"},
+		Short:   "RuleInfo PacketFilter",
+		Long:    `RuleInfo PacketFilter`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return packetFilterRuleInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), packetFilterRuleInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("rule-info local parameter: \n%s\n", debugMarshalIndent(packetFilterRuleInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("rule-info local parameter: \n%s\n", debugMarshalIndent(packetFilterRuleInfoParam))
+			return nil
+		},
+	}
 
-func packetFilterRuleInfoCmdInit() {
-	fs := packetFilterRuleInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&packetFilterRuleInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&packetFilterRuleInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&packetFilterRuleInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
@@ -284,31 +283,33 @@ func packetFilterRuleInfoCmdInit() {
 	fs.StringVarP(&packetFilterRuleInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterRuleInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &packetFilterRuleInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var packetFilterRuleAddCmd = &cobra.Command{
-	Use: "rule-add",
+func packetFilterRuleAddCmd() *cobra.Command {
+	packetFilterRuleAddParam := params.NewRuleAddPacketFilterParam()
+	cmd := &cobra.Command{
+		Use: "rule-add",
 
-	Short: "RuleAdd PacketFilter",
-	Long:  `RuleAdd PacketFilter`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return packetFilterRuleAddParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), packetFilterRuleAddParam)
-		if err != nil {
-			return err
-		}
+		Short: "RuleAdd PacketFilter",
+		Long:  `RuleAdd PacketFilter`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return packetFilterRuleAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), packetFilterRuleAddParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("rule-add local parameter: \n%s\n", debugMarshalIndent(packetFilterRuleAddParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("rule-add local parameter: \n%s\n", debugMarshalIndent(packetFilterRuleAddParam))
+			return nil
+		},
+	}
 
-func packetFilterRuleAddCmdInit() {
-	fs := packetFilterRuleAddCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&packetFilterRuleAddParam.Index, "index", "", 1, "index to insert rule into")
 	fs.StringVarP(&packetFilterRuleAddParam.Protocol, "protocol", "", "", "set target protocol[tcp/udp/icmp/fragment/ip]")
 	fs.StringVarP(&packetFilterRuleAddParam.SourceNetwork, "source-network", "", "", "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]")
@@ -330,31 +331,33 @@ func packetFilterRuleAddCmdInit() {
 	fs.StringVarP(&packetFilterRuleAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterRuleAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &packetFilterRuleAddParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var packetFilterRuleUpdateCmd = &cobra.Command{
-	Use: "rule-update",
+func packetFilterRuleUpdateCmd() *cobra.Command {
+	packetFilterRuleUpdateParam := params.NewRuleUpdatePacketFilterParam()
+	cmd := &cobra.Command{
+		Use: "rule-update",
 
-	Short: "RuleUpdate PacketFilter",
-	Long:  `RuleUpdate PacketFilter`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return packetFilterRuleUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), packetFilterRuleUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "RuleUpdate PacketFilter",
+		Long:  `RuleUpdate PacketFilter`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return packetFilterRuleUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), packetFilterRuleUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("rule-update local parameter: \n%s\n", debugMarshalIndent(packetFilterRuleUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("rule-update local parameter: \n%s\n", debugMarshalIndent(packetFilterRuleUpdateParam))
+			return nil
+		},
+	}
 
-func packetFilterRuleUpdateCmdInit() {
-	fs := packetFilterRuleUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&packetFilterRuleUpdateParam.Index, "index", "", 0, "index of target rule")
 	fs.StringVarP(&packetFilterRuleUpdateParam.Protocol, "protocol", "", "", "set target protocol[tcp/udp/icmp/fragment/ip]")
 	fs.StringVarP(&packetFilterRuleUpdateParam.SourceNetwork, "source-network", "", "", "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]")
@@ -376,31 +379,33 @@ func packetFilterRuleUpdateCmdInit() {
 	fs.StringVarP(&packetFilterRuleUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterRuleUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &packetFilterRuleUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var packetFilterRuleDeleteCmd = &cobra.Command{
-	Use: "rule-delete",
+func packetFilterRuleDeleteCmd() *cobra.Command {
+	packetFilterRuleDeleteParam := params.NewRuleDeletePacketFilterParam()
+	cmd := &cobra.Command{
+		Use: "rule-delete",
 
-	Short: "RuleDelete PacketFilter",
-	Long:  `RuleDelete PacketFilter`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return packetFilterRuleDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), packetFilterRuleDeleteParam)
-		if err != nil {
-			return err
-		}
+		Short: "RuleDelete PacketFilter",
+		Long:  `RuleDelete PacketFilter`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return packetFilterRuleDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), packetFilterRuleDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("rule-delete local parameter: \n%s\n", debugMarshalIndent(packetFilterRuleDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("rule-delete local parameter: \n%s\n", debugMarshalIndent(packetFilterRuleDeleteParam))
+			return nil
+		},
+	}
 
-func packetFilterRuleDeleteCmdInit() {
-	fs := packetFilterRuleDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&packetFilterRuleDeleteParam.Index, "index", "", 0, "index of target rule")
 	fs.BoolVarP(&packetFilterRuleDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&packetFilterRuleDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -416,31 +421,33 @@ func packetFilterRuleDeleteCmdInit() {
 	fs.StringVarP(&packetFilterRuleDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterRuleDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &packetFilterRuleDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var packetFilterInterfaceConnectCmd = &cobra.Command{
-	Use: "interface-connect",
+func packetFilterInterfaceConnectCmd() *cobra.Command {
+	packetFilterInterfaceConnectParam := params.NewInterfaceConnectPacketFilterParam()
+	cmd := &cobra.Command{
+		Use: "interface-connect",
 
-	Short: "InterfaceConnect PacketFilter",
-	Long:  `InterfaceConnect PacketFilter`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return packetFilterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), packetFilterInterfaceConnectParam)
-		if err != nil {
-			return err
-		}
+		Short: "InterfaceConnect PacketFilter",
+		Long:  `InterfaceConnect PacketFilter`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return packetFilterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), packetFilterInterfaceConnectParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("interface-connect local parameter: \n%s\n", debugMarshalIndent(packetFilterInterfaceConnectParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("interface-connect local parameter: \n%s\n", debugMarshalIndent(packetFilterInterfaceConnectParam))
+			return nil
+		},
+	}
 
-func packetFilterInterfaceConnectCmdInit() {
-	fs := packetFilterInterfaceConnectCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &packetFilterInterfaceConnectParam.InterfaceId), "interface-id", "", "set interface ID")
 	fs.BoolVarP(&packetFilterInterfaceConnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&packetFilterInterfaceConnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -449,31 +456,33 @@ func packetFilterInterfaceConnectCmdInit() {
 	fs.StringVarP(&packetFilterInterfaceConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&packetFilterInterfaceConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &packetFilterInterfaceConnectParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var packetFilterInterfaceDisconnectCmd = &cobra.Command{
-	Use: "interface-disconnect",
+func packetFilterInterfaceDisconnectCmd() *cobra.Command {
+	packetFilterInterfaceDisconnectParam := params.NewInterfaceDisconnectPacketFilterParam()
+	cmd := &cobra.Command{
+		Use: "interface-disconnect",
 
-	Short: "InterfaceDisconnect PacketFilter",
-	Long:  `InterfaceDisconnect PacketFilter`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return packetFilterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), packetFilterInterfaceDisconnectParam)
-		if err != nil {
-			return err
-		}
+		Short: "InterfaceDisconnect PacketFilter",
+		Long:  `InterfaceDisconnect PacketFilter`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return packetFilterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), packetFilterInterfaceDisconnectParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("interface-disconnect local parameter: \n%s\n", debugMarshalIndent(packetFilterInterfaceDisconnectParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("interface-disconnect local parameter: \n%s\n", debugMarshalIndent(packetFilterInterfaceDisconnectParam))
+			return nil
+		},
+	}
 
-func packetFilterInterfaceDisconnectCmdInit() {
-	fs := packetFilterInterfaceDisconnectCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &packetFilterInterfaceDisconnectParam.InterfaceId), "interface-id", "", "set interface ID")
 	fs.BoolVarP(&packetFilterInterfaceDisconnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&packetFilterInterfaceDisconnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -482,43 +491,21 @@ func packetFilterInterfaceDisconnectCmdInit() {
 	fs.StringVarP(&packetFilterInterfaceDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&packetFilterInterfaceDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &packetFilterInterfaceDisconnectParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := packetFilterCmd
-
-	packetFilterListCmdInit()
-	parent.AddCommand(packetFilterListCmd)
-
-	packetFilterCreateCmdInit()
-	parent.AddCommand(packetFilterCreateCmd)
-
-	packetFilterReadCmdInit()
-	parent.AddCommand(packetFilterReadCmd)
-
-	packetFilterUpdateCmdInit()
-	parent.AddCommand(packetFilterUpdateCmd)
-
-	packetFilterDeleteCmdInit()
-	parent.AddCommand(packetFilterDeleteCmd)
-
-	packetFilterRuleInfoCmdInit()
-	parent.AddCommand(packetFilterRuleInfoCmd)
-
-	packetFilterRuleAddCmdInit()
-	parent.AddCommand(packetFilterRuleAddCmd)
-
-	packetFilterRuleUpdateCmdInit()
-	parent.AddCommand(packetFilterRuleUpdateCmd)
-
-	packetFilterRuleDeleteCmdInit()
-	parent.AddCommand(packetFilterRuleDeleteCmd)
-
-	packetFilterInterfaceConnectCmdInit()
-	parent.AddCommand(packetFilterInterfaceConnectCmd)
-
-	packetFilterInterfaceDisconnectCmdInit()
-	parent.AddCommand(packetFilterInterfaceDisconnectCmd)
-
+	parent := packetFilterCmd()
+	parent.AddCommand(packetFilterListCmd())
+	parent.AddCommand(packetFilterCreateCmd())
+	parent.AddCommand(packetFilterReadCmd())
+	parent.AddCommand(packetFilterUpdateCmd())
+	parent.AddCommand(packetFilterDeleteCmd())
+	parent.AddCommand(packetFilterRuleInfoCmd())
+	parent.AddCommand(packetFilterRuleAddCmd())
+	parent.AddCommand(packetFilterRuleUpdateCmd())
+	parent.AddCommand(packetFilterRuleDeleteCmd())
+	parent.AddCommand(packetFilterInterfaceConnectCmd())
+	parent.AddCommand(packetFilterInterfaceDisconnectCmd())
 	rootCmd.AddCommand(parent)
 }

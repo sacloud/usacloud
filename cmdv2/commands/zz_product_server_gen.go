@@ -24,44 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	productServerListParam = params.NewListProductServerParam()
-	productServerReadParam = params.NewReadProductServerParam()
-)
-
 // productServerCmd represents the command to manage SAKURA Cloud ProductServer
-var productServerCmd = &cobra.Command{
-	Use:   "product-server",
-	Short: "A manage commands of ProductServer",
-	Long:  `A manage commands of ProductServer`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements: call list func as default
-	},
+func productServerCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "product-server",
+		Short: "A manage commands of ProductServer",
+		Long:  `A manage commands of ProductServer`,
+		Run: func(cmd *cobra.Command, args []string) {
+			// TODO not implements: call list func as default
+		},
+	}
 }
 
-var productServerListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find"},
-	Short:   "List ProductServer (default)",
-	Long:    `List ProductServer (default)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return productServerListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), productServerListParam)
-		if err != nil {
-			return err
-		}
+func productServerListCmd() *cobra.Command {
+	productServerListParam := params.NewListProductServerParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find"},
+		Short:   "List ProductServer (default)",
+		Long:    `List ProductServer (default)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return productServerListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), productServerListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(productServerListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(productServerListParam))
+			return nil
+		},
+	}
 
-func productServerListCmdInit() {
-	fs := productServerListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&productServerListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &productServerListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&productServerListParam.From, "from", "", 0, "set offset")
@@ -79,31 +77,33 @@ func productServerListCmdInit() {
 	fs.StringVarP(&productServerListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&productServerListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&productServerListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var productServerReadCmd = &cobra.Command{
-	Use: "read",
+func productServerReadCmd() *cobra.Command {
+	productServerReadParam := params.NewReadProductServerParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read ProductServer",
-	Long:  `Read ProductServer`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return productServerReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), productServerReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read ProductServer",
+		Long:  `Read ProductServer`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return productServerReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), productServerReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(productServerReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(productServerReadParam))
+			return nil
+		},
+	}
 
-func productServerReadCmdInit() {
-	fs := productServerReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&productServerReadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&productServerReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&productServerReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -118,16 +118,12 @@ func productServerReadCmdInit() {
 	fs.StringVarP(&productServerReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&productServerReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &productServerReadParam.Id), "id", "", "set resource ID")
+	return cmd
 }
 
 func init() {
-	parent := productServerCmd
-
-	productServerListCmdInit()
-	parent.AddCommand(productServerListCmd)
-
-	productServerReadCmdInit()
-	parent.AddCommand(productServerReadCmd)
-
+	parent := productServerCmd()
+	parent.AddCommand(productServerListCmd())
+	parent.AddCommand(productServerReadCmd())
 	rootCmd.AddCommand(parent)
 }

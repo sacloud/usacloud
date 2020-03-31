@@ -24,47 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	bridgeListParam   = params.NewListBridgeParam()
-	bridgeCreateParam = params.NewCreateBridgeParam()
-	bridgeReadParam   = params.NewReadBridgeParam()
-	bridgeUpdateParam = params.NewUpdateBridgeParam()
-	bridgeDeleteParam = params.NewDeleteBridgeParam()
-)
-
 // bridgeCmd represents the command to manage SAKURA Cloud Bridge
-var bridgeCmd = &cobra.Command{
-	Use:   "bridge",
-	Short: "A manage commands of Bridge",
-	Long:  `A manage commands of Bridge`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func bridgeCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "bridge",
+		Short: "A manage commands of Bridge",
+		Long:  `A manage commands of Bridge`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var bridgeListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find"},
-	Short:   "List Bridge",
-	Long:    `List Bridge`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return bridgeListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), bridgeListParam)
-		if err != nil {
-			return err
-		}
+func bridgeListCmd() *cobra.Command {
+	bridgeListParam := params.NewListBridgeParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find"},
+		Short:   "List Bridge",
+		Long:    `List Bridge`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return bridgeListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), bridgeListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(bridgeListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(bridgeListParam))
+			return nil
+		},
+	}
 
-func bridgeListCmdInit() {
-	fs := bridgeListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&bridgeListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &bridgeListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&bridgeListParam.From, "from", "", 0, "set offset")
@@ -82,31 +77,33 @@ func bridgeListCmdInit() {
 	fs.StringVarP(&bridgeListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&bridgeListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&bridgeListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var bridgeCreateCmd = &cobra.Command{
-	Use: "create",
+func bridgeCreateCmd() *cobra.Command {
+	bridgeCreateParam := params.NewCreateBridgeParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create Bridge",
-	Long:  `Create Bridge`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return bridgeCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), bridgeCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create Bridge",
+		Long:  `Create Bridge`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return bridgeCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), bridgeCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(bridgeCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(bridgeCreateParam))
+			return nil
+		},
+	}
 
-func bridgeCreateCmdInit() {
-	fs := bridgeCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&bridgeCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&bridgeCreateParam.Description, "description", "", "", "set resource description")
 	fs.BoolVarP(&bridgeCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -122,31 +119,33 @@ func bridgeCreateCmdInit() {
 	fs.StringVarP(&bridgeCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&bridgeCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&bridgeCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var bridgeReadCmd = &cobra.Command{
-	Use: "read",
+func bridgeReadCmd() *cobra.Command {
+	bridgeReadParam := params.NewReadBridgeParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read Bridge",
-	Long:  `Read Bridge`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return bridgeReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), bridgeReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read Bridge",
+		Long:  `Read Bridge`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return bridgeReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), bridgeReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(bridgeReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(bridgeReadParam))
+			return nil
+		},
+	}
 
-func bridgeReadCmdInit() {
-	fs := bridgeReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&bridgeReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&bridgeReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&bridgeReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
@@ -160,31 +159,33 @@ func bridgeReadCmdInit() {
 	fs.StringVarP(&bridgeReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&bridgeReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &bridgeReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var bridgeUpdateCmd = &cobra.Command{
-	Use: "update",
+func bridgeUpdateCmd() *cobra.Command {
+	bridgeUpdateParam := params.NewUpdateBridgeParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update Bridge",
-	Long:  `Update Bridge`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return bridgeUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), bridgeUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update Bridge",
+		Long:  `Update Bridge`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return bridgeUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), bridgeUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(bridgeUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(bridgeUpdateParam))
+			return nil
+		},
+	}
 
-func bridgeUpdateCmdInit() {
-	fs := bridgeUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&bridgeUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&bridgeUpdateParam.Description, "description", "", "", "set resource description")
 	fs.BoolVarP(&bridgeUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -201,31 +202,33 @@ func bridgeUpdateCmdInit() {
 	fs.StringVarP(&bridgeUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&bridgeUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &bridgeUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var bridgeDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete Bridge",
-	Long:    `Delete Bridge`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return bridgeDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), bridgeDeleteParam)
-		if err != nil {
-			return err
-		}
+func bridgeDeleteCmd() *cobra.Command {
+	bridgeDeleteParam := params.NewDeleteBridgeParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete Bridge",
+		Long:    `Delete Bridge`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return bridgeDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), bridgeDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(bridgeDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(bridgeDeleteParam))
+			return nil
+		},
+	}
 
-func bridgeDeleteCmdInit() {
-	fs := bridgeDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&bridgeDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&bridgeDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&bridgeDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -240,25 +243,15 @@ func bridgeDeleteCmdInit() {
 	fs.StringVarP(&bridgeDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&bridgeDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &bridgeDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := bridgeCmd
-
-	bridgeListCmdInit()
-	parent.AddCommand(bridgeListCmd)
-
-	bridgeCreateCmdInit()
-	parent.AddCommand(bridgeCreateCmd)
-
-	bridgeReadCmdInit()
-	parent.AddCommand(bridgeReadCmd)
-
-	bridgeUpdateCmdInit()
-	parent.AddCommand(bridgeUpdateCmd)
-
-	bridgeDeleteCmdInit()
-	parent.AddCommand(bridgeDeleteCmd)
-
+	parent := bridgeCmd()
+	parent.AddCommand(bridgeListCmd())
+	parent.AddCommand(bridgeCreateCmd())
+	parent.AddCommand(bridgeReadCmd())
+	parent.AddCommand(bridgeUpdateCmd())
+	parent.AddCommand(bridgeDeleteCmd())
 	rootCmd.AddCommand(parent)
 }

@@ -24,56 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	internetListParam            = params.NewListInternetParam()
-	internetCreateParam          = params.NewCreateInternetParam()
-	internetReadParam            = params.NewReadInternetParam()
-	internetUpdateParam          = params.NewUpdateInternetParam()
-	internetDeleteParam          = params.NewDeleteInternetParam()
-	internetUpdateBandwidthParam = params.NewUpdateBandwidthInternetParam()
-	internetSubnetInfoParam      = params.NewSubnetInfoInternetParam()
-	internetSubnetAddParam       = params.NewSubnetAddInternetParam()
-	internetSubnetDeleteParam    = params.NewSubnetDeleteInternetParam()
-	internetSubnetUpdateParam    = params.NewSubnetUpdateInternetParam()
-	internetIPv6InfoParam        = params.NewIPv6InfoInternetParam()
-	internetIPv6EnableParam      = params.NewIPv6EnableInternetParam()
-	internetIPv6DisableParam     = params.NewIPv6DisableInternetParam()
-	internetMonitorParam         = params.NewMonitorInternetParam()
-)
-
 // internetCmd represents the command to manage SAKURA Cloud Internet
-var internetCmd = &cobra.Command{
-	Use:   "internet",
-	Short: "A manage commands of Internet",
-	Long:  `A manage commands of Internet`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func internetCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "internet",
+		Short: "A manage commands of Internet",
+		Long:  `A manage commands of Internet`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var internetListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Internet",
-	Long:    `List Internet`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return internetListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), internetListParam)
-		if err != nil {
-			return err
-		}
+func internetListCmd() *cobra.Command {
+	internetListParam := params.NewListInternetParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List Internet",
+		Long:    `List Internet`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return internetListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), internetListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(internetListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(internetListParam))
+			return nil
+		},
+	}
 
-func internetListCmdInit() {
-	fs := internetListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&internetListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &internetListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&internetListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
@@ -92,31 +78,33 @@ func internetListCmdInit() {
 	fs.StringVarP(&internetListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&internetListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var internetCreateCmd = &cobra.Command{
-	Use: "create",
+func internetCreateCmd() *cobra.Command {
+	internetCreateParam := params.NewCreateInternetParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create Internet",
-	Long:  `Create Internet`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return internetCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), internetCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create Internet",
+		Long:  `Create Internet`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return internetCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), internetCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(internetCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(internetCreateParam))
+			return nil
+		},
+	}
 
-func internetCreateCmdInit() {
-	fs := internetCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&internetCreateParam.NwMasklen, "nw-masklen", "", 28, "set Global-IPAddress prefix")
 	fs.IntVarP(&internetCreateParam.BandWidth, "band-width", "", 100, "set band-width(Mbpm)")
 	fs.StringVarP(&internetCreateParam.Name, "name", "", "", "set resource display name")
@@ -136,31 +124,33 @@ func internetCreateCmdInit() {
 	fs.StringVarP(&internetCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&internetCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var internetReadCmd = &cobra.Command{
-	Use: "read",
+func internetReadCmd() *cobra.Command {
+	internetReadParam := params.NewReadInternetParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read Internet",
-	Long:  `Read Internet`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return internetReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), internetReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read Internet",
+		Long:  `Read Internet`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return internetReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), internetReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(internetReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(internetReadParam))
+			return nil
+		},
+	}
 
-func internetReadCmdInit() {
-	fs := internetReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&internetReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&internetReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&internetReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -175,31 +165,33 @@ func internetReadCmdInit() {
 	fs.StringVarP(&internetReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var internetUpdateCmd = &cobra.Command{
-	Use: "update",
+func internetUpdateCmd() *cobra.Command {
+	internetUpdateParam := params.NewUpdateInternetParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update Internet",
-	Long:  `Update Internet`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return internetUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), internetUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update Internet",
+		Long:  `Update Internet`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return internetUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), internetUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(internetUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(internetUpdateParam))
+			return nil
+		},
+	}
 
-func internetUpdateCmdInit() {
-	fs := internetUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&internetUpdateParam.BandWidth, "band-width", "", 0, "set band-width(Mbpm)")
 	fs.StringSliceVarP(&internetUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&internetUpdateParam.Name, "name", "", "", "set resource display name")
@@ -220,31 +212,33 @@ func internetUpdateCmdInit() {
 	fs.StringVarP(&internetUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var internetDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete Internet",
-	Long:    `Delete Internet`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return internetDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), internetDeleteParam)
-		if err != nil {
-			return err
-		}
+func internetDeleteCmd() *cobra.Command {
+	internetDeleteParam := params.NewDeleteInternetParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete Internet",
+		Long:    `Delete Internet`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return internetDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), internetDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(internetDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(internetDeleteParam))
+			return nil
+		},
+	}
 
-func internetDeleteCmdInit() {
-	fs := internetDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&internetDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&internetDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&internetDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -260,31 +254,33 @@ func internetDeleteCmdInit() {
 	fs.StringVarP(&internetDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var internetUpdateBandwidthCmd = &cobra.Command{
-	Use: "update-bandwidth",
+func internetUpdateBandwidthCmd() *cobra.Command {
+	internetUpdateBandwidthParam := params.NewUpdateBandwidthInternetParam()
+	cmd := &cobra.Command{
+		Use: "update-bandwidth",
 
-	Short: "UpdateBandwidth Internet",
-	Long:  `UpdateBandwidth Internet`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return internetUpdateBandwidthParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), internetUpdateBandwidthParam)
-		if err != nil {
-			return err
-		}
+		Short: "UpdateBandwidth Internet",
+		Long:  `UpdateBandwidth Internet`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return internetUpdateBandwidthParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), internetUpdateBandwidthParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update-bandwidth local parameter: \n%s\n", debugMarshalIndent(internetUpdateBandwidthParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update-bandwidth local parameter: \n%s\n", debugMarshalIndent(internetUpdateBandwidthParam))
+			return nil
+		},
+	}
 
-func internetUpdateBandwidthCmdInit() {
-	fs := internetUpdateBandwidthCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&internetUpdateBandwidthParam.BandWidth, "band-width", "", 100, "set band-width(Mbpm)")
 	fs.StringSliceVarP(&internetUpdateBandwidthParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&internetUpdateBandwidthParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -301,31 +297,33 @@ func internetUpdateBandwidthCmdInit() {
 	fs.StringVarP(&internetUpdateBandwidthParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetUpdateBandwidthParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetUpdateBandwidthParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var internetSubnetInfoCmd = &cobra.Command{
-	Use: "subnet-info",
+func internetSubnetInfoCmd() *cobra.Command {
+	internetSubnetInfoParam := params.NewSubnetInfoInternetParam()
+	cmd := &cobra.Command{
+		Use: "subnet-info",
 
-	Short: "SubnetInfo Internet",
-	Long:  `SubnetInfo Internet`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return internetSubnetInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), internetSubnetInfoParam)
-		if err != nil {
-			return err
-		}
+		Short: "SubnetInfo Internet",
+		Long:  `SubnetInfo Internet`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return internetSubnetInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), internetSubnetInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("subnet-info local parameter: \n%s\n", debugMarshalIndent(internetSubnetInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("subnet-info local parameter: \n%s\n", debugMarshalIndent(internetSubnetInfoParam))
+			return nil
+		},
+	}
 
-func internetSubnetInfoCmdInit() {
-	fs := internetSubnetInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&internetSubnetInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&internetSubnetInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&internetSubnetInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -340,31 +338,33 @@ func internetSubnetInfoCmdInit() {
 	fs.StringVarP(&internetSubnetInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetSubnetInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetSubnetInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var internetSubnetAddCmd = &cobra.Command{
-	Use: "subnet-add",
+func internetSubnetAddCmd() *cobra.Command {
+	internetSubnetAddParam := params.NewSubnetAddInternetParam()
+	cmd := &cobra.Command{
+		Use: "subnet-add",
 
-	Short: "SubnetAdd Internet",
-	Long:  `SubnetAdd Internet`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return internetSubnetAddParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), internetSubnetAddParam)
-		if err != nil {
-			return err
-		}
+		Short: "SubnetAdd Internet",
+		Long:  `SubnetAdd Internet`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return internetSubnetAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), internetSubnetAddParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("subnet-add local parameter: \n%s\n", debugMarshalIndent(internetSubnetAddParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("subnet-add local parameter: \n%s\n", debugMarshalIndent(internetSubnetAddParam))
+			return nil
+		},
+	}
 
-func internetSubnetAddCmdInit() {
-	fs := internetSubnetAddCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&internetSubnetAddParam.NextHop, "next-hop", "", "", "set NextHop IPAddress")
 	fs.IntVarP(&internetSubnetAddParam.NwMasklen, "nw-masklen", "", 28, "set Global-IPAddress(subnet) prefix")
 	fs.StringSliceVarP(&internetSubnetAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -382,31 +382,33 @@ func internetSubnetAddCmdInit() {
 	fs.StringVarP(&internetSubnetAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetSubnetAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetSubnetAddParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var internetSubnetDeleteCmd = &cobra.Command{
-	Use: "subnet-delete",
+func internetSubnetDeleteCmd() *cobra.Command {
+	internetSubnetDeleteParam := params.NewSubnetDeleteInternetParam()
+	cmd := &cobra.Command{
+		Use: "subnet-delete",
 
-	Short: "SubnetDelete Internet",
-	Long:  `SubnetDelete Internet`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return internetSubnetDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), internetSubnetDeleteParam)
-		if err != nil {
-			return err
-		}
+		Short: "SubnetDelete Internet",
+		Long:  `SubnetDelete Internet`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return internetSubnetDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), internetSubnetDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("subnet-delete local parameter: \n%s\n", debugMarshalIndent(internetSubnetDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("subnet-delete local parameter: \n%s\n", debugMarshalIndent(internetSubnetDeleteParam))
+			return nil
+		},
+	}
 
-func internetSubnetDeleteCmdInit() {
-	fs := internetSubnetDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &internetSubnetDeleteParam.SubnetId), "subnet-id", "", "set Target Subnet ID")
 	fs.StringSliceVarP(&internetSubnetDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&internetSubnetDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -416,31 +418,33 @@ func internetSubnetDeleteCmdInit() {
 	fs.StringVarP(&internetSubnetDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&internetSubnetDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &internetSubnetDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var internetSubnetUpdateCmd = &cobra.Command{
-	Use: "subnet-update",
+func internetSubnetUpdateCmd() *cobra.Command {
+	internetSubnetUpdateParam := params.NewSubnetUpdateInternetParam()
+	cmd := &cobra.Command{
+		Use: "subnet-update",
 
-	Short: "SubnetUpdate Internet",
-	Long:  `SubnetUpdate Internet`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return internetSubnetUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), internetSubnetUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "SubnetUpdate Internet",
+		Long:  `SubnetUpdate Internet`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return internetSubnetUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), internetSubnetUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("subnet-update local parameter: \n%s\n", debugMarshalIndent(internetSubnetUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("subnet-update local parameter: \n%s\n", debugMarshalIndent(internetSubnetUpdateParam))
+			return nil
+		},
+	}
 
-func internetSubnetUpdateCmdInit() {
-	fs := internetSubnetUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&internetSubnetUpdateParam.NextHop, "next-hop", "", "", "set NextHop IPAddress")
 	fs.VarP(newIDValue(0, &internetSubnetUpdateParam.SubnetId), "subnet-id", "", "set Target Subnet ID")
 	fs.StringSliceVarP(&internetSubnetUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -458,31 +462,33 @@ func internetSubnetUpdateCmdInit() {
 	fs.StringVarP(&internetSubnetUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetSubnetUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetSubnetUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var internetIPv6InfoCmd = &cobra.Command{
-	Use: "ipv6-info",
+func internetIPv6InfoCmd() *cobra.Command {
+	internetIPv6InfoParam := params.NewIPv6InfoInternetParam()
+	cmd := &cobra.Command{
+		Use: "ipv6-info",
 
-	Short: "IPv6Info Internet",
-	Long:  `IPv6Info Internet`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return internetIPv6InfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), internetIPv6InfoParam)
-		if err != nil {
-			return err
-		}
+		Short: "IPv6Info Internet",
+		Long:  `IPv6Info Internet`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return internetIPv6InfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), internetIPv6InfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ipv6-info local parameter: \n%s\n", debugMarshalIndent(internetIPv6InfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ipv6-info local parameter: \n%s\n", debugMarshalIndent(internetIPv6InfoParam))
+			return nil
+		},
+	}
 
-func internetIPv6InfoCmdInit() {
-	fs := internetIPv6InfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&internetIPv6InfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&internetIPv6InfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&internetIPv6InfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -497,31 +503,33 @@ func internetIPv6InfoCmdInit() {
 	fs.StringVarP(&internetIPv6InfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetIPv6InfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetIPv6InfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var internetIPv6EnableCmd = &cobra.Command{
-	Use: "ipv6-enable",
+func internetIPv6EnableCmd() *cobra.Command {
+	internetIPv6EnableParam := params.NewIPv6EnableInternetParam()
+	cmd := &cobra.Command{
+		Use: "ipv6-enable",
 
-	Short: "IPv6Enable Internet",
-	Long:  `IPv6Enable Internet`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return internetIPv6EnableParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), internetIPv6EnableParam)
-		if err != nil {
-			return err
-		}
+		Short: "IPv6Enable Internet",
+		Long:  `IPv6Enable Internet`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return internetIPv6EnableParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), internetIPv6EnableParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ipv6-enable local parameter: \n%s\n", debugMarshalIndent(internetIPv6EnableParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ipv6-enable local parameter: \n%s\n", debugMarshalIndent(internetIPv6EnableParam))
+			return nil
+		},
+	}
 
-func internetIPv6EnableCmdInit() {
-	fs := internetIPv6EnableCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&internetIPv6EnableParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&internetIPv6EnableParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&internetIPv6EnableParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -537,31 +545,33 @@ func internetIPv6EnableCmdInit() {
 	fs.StringVarP(&internetIPv6EnableParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetIPv6EnableParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetIPv6EnableParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var internetIPv6DisableCmd = &cobra.Command{
-	Use: "ipv6-disable",
+func internetIPv6DisableCmd() *cobra.Command {
+	internetIPv6DisableParam := params.NewIPv6DisableInternetParam()
+	cmd := &cobra.Command{
+		Use: "ipv6-disable",
 
-	Short: "IPv6Disable Internet",
-	Long:  `IPv6Disable Internet`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return internetIPv6DisableParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), internetIPv6DisableParam)
-		if err != nil {
-			return err
-		}
+		Short: "IPv6Disable Internet",
+		Long:  `IPv6Disable Internet`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return internetIPv6DisableParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), internetIPv6DisableParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ipv6-disable local parameter: \n%s\n", debugMarshalIndent(internetIPv6DisableParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ipv6-disable local parameter: \n%s\n", debugMarshalIndent(internetIPv6DisableParam))
+			return nil
+		},
+	}
 
-func internetIPv6DisableCmdInit() {
-	fs := internetIPv6DisableCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&internetIPv6DisableParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&internetIPv6DisableParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&internetIPv6DisableParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -570,31 +580,33 @@ func internetIPv6DisableCmdInit() {
 	fs.StringVarP(&internetIPv6DisableParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&internetIPv6DisableParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &internetIPv6DisableParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var internetMonitorCmd = &cobra.Command{
-	Use: "monitor",
+func internetMonitorCmd() *cobra.Command {
+	internetMonitorParam := params.NewMonitorInternetParam()
+	cmd := &cobra.Command{
+		Use: "monitor",
 
-	Short: "Monitor Internet",
-	Long:  `Monitor Internet`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return internetMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), internetMonitorParam)
-		if err != nil {
-			return err
-		}
+		Short: "Monitor Internet",
+		Long:  `Monitor Internet`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return internetMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), internetMonitorParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(internetMonitorParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(internetMonitorParam))
+			return nil
+		},
+	}
 
-func internetMonitorCmdInit() {
-	fs := internetMonitorCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&internetMonitorParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&internetMonitorParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&internetMonitorParam.KeyFormat, "key-format", "", "sakuracloud.internet.{{.ID}}.nic", "set monitoring value key-format")
@@ -612,52 +624,24 @@ func internetMonitorCmdInit() {
 	fs.StringVarP(&internetMonitorParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetMonitorParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetMonitorParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := internetCmd
-
-	internetListCmdInit()
-	parent.AddCommand(internetListCmd)
-
-	internetCreateCmdInit()
-	parent.AddCommand(internetCreateCmd)
-
-	internetReadCmdInit()
-	parent.AddCommand(internetReadCmd)
-
-	internetUpdateCmdInit()
-	parent.AddCommand(internetUpdateCmd)
-
-	internetDeleteCmdInit()
-	parent.AddCommand(internetDeleteCmd)
-
-	internetUpdateBandwidthCmdInit()
-	parent.AddCommand(internetUpdateBandwidthCmd)
-
-	internetSubnetInfoCmdInit()
-	parent.AddCommand(internetSubnetInfoCmd)
-
-	internetSubnetAddCmdInit()
-	parent.AddCommand(internetSubnetAddCmd)
-
-	internetSubnetDeleteCmdInit()
-	parent.AddCommand(internetSubnetDeleteCmd)
-
-	internetSubnetUpdateCmdInit()
-	parent.AddCommand(internetSubnetUpdateCmd)
-
-	internetIPv6InfoCmdInit()
-	parent.AddCommand(internetIPv6InfoCmd)
-
-	internetIPv6EnableCmdInit()
-	parent.AddCommand(internetIPv6EnableCmd)
-
-	internetIPv6DisableCmdInit()
-	parent.AddCommand(internetIPv6DisableCmd)
-
-	internetMonitorCmdInit()
-	parent.AddCommand(internetMonitorCmd)
-
+	parent := internetCmd()
+	parent.AddCommand(internetListCmd())
+	parent.AddCommand(internetCreateCmd())
+	parent.AddCommand(internetReadCmd())
+	parent.AddCommand(internetUpdateCmd())
+	parent.AddCommand(internetDeleteCmd())
+	parent.AddCommand(internetUpdateBandwidthCmd())
+	parent.AddCommand(internetSubnetInfoCmd())
+	parent.AddCommand(internetSubnetAddCmd())
+	parent.AddCommand(internetSubnetDeleteCmd())
+	parent.AddCommand(internetSubnetUpdateCmd())
+	parent.AddCommand(internetIPv6InfoCmd())
+	parent.AddCommand(internetIPv6EnableCmd())
+	parent.AddCommand(internetIPv6DisableCmd())
+	parent.AddCommand(internetMonitorCmd())
 	rootCmd.AddCommand(parent)
 }

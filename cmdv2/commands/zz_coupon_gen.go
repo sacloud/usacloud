@@ -23,43 +23,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	couponListParam = params.NewListCouponParam()
-)
-
 // couponCmd represents the command to manage SAKURA Cloud Coupon
-var couponCmd = &cobra.Command{
-	Use:   "coupon",
-	Short: "A manage commands of Coupon",
-	Long:  `A manage commands of Coupon`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements: call list func as default
-	},
+func couponCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "coupon",
+		Short: "A manage commands of Coupon",
+		Long:  `A manage commands of Coupon`,
+		Run: func(cmd *cobra.Command, args []string) {
+			// TODO not implements: call list func as default
+		},
+	}
 }
 
-var couponListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find"},
-	Short:   "List Coupon (default)",
-	Long:    `List Coupon (default)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return couponListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), couponListParam)
-		if err != nil {
-			return err
-		}
+func couponListCmd() *cobra.Command {
+	couponListParam := params.NewListCouponParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find"},
+		Short:   "List Coupon (default)",
+		Long:    `List Coupon (default)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return couponListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), couponListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(couponListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(couponListParam))
+			return nil
+		},
+	}
 
-func couponListCmdInit() {
-	fs := couponListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&couponListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&couponListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&couponListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
@@ -73,13 +72,11 @@ func couponListCmdInit() {
 	fs.StringVarP(&couponListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&couponListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&couponListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
 func init() {
-	parent := couponCmd
-
-	couponListCmdInit()
-	parent.AddCommand(couponListCmd)
-
+	parent := couponCmd()
+	parent.AddCommand(couponListCmd())
 	rootCmd.AddCommand(parent)
 }

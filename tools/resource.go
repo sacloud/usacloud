@@ -59,7 +59,7 @@ func (r *Resource) Usage() string {
 	return usage
 }
 
-func (r *Resource) CLIVariableName() string {
+func (r *Resource) CLIVariableFuncName() string {
 	return fmt.Sprintf("%sCmd", ToCamelWithFirstLower(r.Name))
 }
 

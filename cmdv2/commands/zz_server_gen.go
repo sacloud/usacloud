@@ -24,78 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	serverListParam                     = params.NewListServerParam()
-	serverBuildParam                    = params.NewBuildServerParam()
-	serverReadParam                     = params.NewReadServerParam()
-	serverUpdateParam                   = params.NewUpdateServerParam()
-	serverDeleteParam                   = params.NewDeleteServerParam()
-	serverPlanChangeParam               = params.NewPlanChangeServerParam()
-	serverBootParam                     = params.NewBootServerParam()
-	serverShutdownParam                 = params.NewShutdownServerParam()
-	serverShutdownForceParam            = params.NewShutdownForceServerParam()
-	serverResetParam                    = params.NewResetServerParam()
-	serverWaitForBootParam              = params.NewWaitForBootServerParam()
-	serverWaitForDownParam              = params.NewWaitForDownServerParam()
-	serverSSHParam                      = params.NewSSHServerParam()
-	serverSSHExecParam                  = params.NewSSHExecServerParam()
-	serverScpParam                      = params.NewScpServerParam()
-	serverVncParam                      = params.NewVncServerParam()
-	serverVncInfoParam                  = params.NewVncInfoServerParam()
-	serverVncSendParam                  = params.NewVncSendServerParam()
-	serverVncSnapshotParam              = params.NewVncSnapshotServerParam()
-	serverRemoteDesktopParam            = params.NewRemoteDesktopServerParam()
-	serverRemoteDesktopInfoParam        = params.NewRemoteDesktopInfoServerParam()
-	serverDiskInfoParam                 = params.NewDiskInfoServerParam()
-	serverDiskConnectParam              = params.NewDiskConnectServerParam()
-	serverDiskDisconnectParam           = params.NewDiskDisconnectServerParam()
-	serverInterfaceInfoParam            = params.NewInterfaceInfoServerParam()
-	serverInterfaceAddForInternetParam  = params.NewInterfaceAddForInternetServerParam()
-	serverInterfaceAddForRouterParam    = params.NewInterfaceAddForRouterServerParam()
-	serverInterfaceAddForSwitchParam    = params.NewInterfaceAddForSwitchServerParam()
-	serverInterfaceAddDisconnectedParam = params.NewInterfaceAddDisconnectedServerParam()
-	serverISOInfoParam                  = params.NewISOInfoServerParam()
-	serverISOInsertParam                = params.NewISOInsertServerParam()
-	serverISOEjectParam                 = params.NewISOEjectServerParam()
-	serverMonitorCPUParam               = params.NewMonitorCPUServerParam()
-	serverMonitorNicParam               = params.NewMonitorNicServerParam()
-	serverMonitorDiskParam              = params.NewMonitorDiskServerParam()
-	serverMaintenanceInfoParam          = params.NewMaintenanceInfoServerParam()
-)
-
 // serverCmd represents the command to manage SAKURA Cloud Server
-var serverCmd = &cobra.Command{
-	Use:   "server",
-	Short: "A manage commands of Server",
-	Long:  `A manage commands of Server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func serverCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "server",
+		Short: "A manage commands of Server",
+		Long:  `A manage commands of Server`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var serverListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Server",
-	Long:    `List Server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverListParam)
-		if err != nil {
-			return err
-		}
+func serverListCmd() *cobra.Command {
+	serverListParam := params.NewListServerParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List Server",
+		Long:    `List Server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(serverListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(serverListParam))
+			return nil
+		},
+	}
 
-func serverListCmdInit() {
-	fs := serverListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&serverListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &serverListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&serverListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
@@ -114,31 +78,33 @@ func serverListCmdInit() {
 	fs.StringVarP(&serverListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&serverListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var serverBuildCmd = &cobra.Command{
-	Use: "build",
+func serverBuildCmd() *cobra.Command {
+	serverBuildParam := params.NewBuildServerParam()
+	cmd := &cobra.Command{
+		Use: "build",
 
-	Short: "Build Server",
-	Long:  `Build Server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverBuildParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverBuildParam)
-		if err != nil {
-			return err
-		}
+		Short: "Build Server",
+		Long:  `Build Server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverBuildParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverBuildParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("build local parameter: \n%s\n", debugMarshalIndent(serverBuildParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("build local parameter: \n%s\n", debugMarshalIndent(serverBuildParam))
+			return nil
+		},
+	}
 
-func serverBuildCmdInit() {
-	fs := serverBuildCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&serverBuildParam.Core, "core", "", 1, "set CPU core count")
 	fs.IntVarP(&serverBuildParam.Memory, "memory", "", 1, "set memory size(GB)")
 	fs.StringVarP(&serverBuildParam.Commitment, "commitment", "", "standard", "set plan of core assignment")
@@ -194,31 +160,33 @@ func serverBuildCmdInit() {
 	fs.StringVarP(&serverBuildParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.BoolVarP(&serverBuildParam.UsKeyboard, "us-keyboard", "", false, "use us-keyboard")
 	fs.BoolVarP(&serverBuildParam.DisableBootAfterCreate, "disable-boot-after-create", "", false, "boot after create")
+	return cmd
 }
 
-var serverReadCmd = &cobra.Command{
-	Use: "read",
+func serverReadCmd() *cobra.Command {
+	serverReadParam := params.NewReadServerParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read Server",
-	Long:  `Read Server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read Server",
+		Long:  `Read Server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(serverReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(serverReadParam))
+			return nil
+		},
+	}
 
-func serverReadCmdInit() {
-	fs := serverReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&serverReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&serverReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&serverReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -233,31 +201,33 @@ func serverReadCmdInit() {
 	fs.StringVarP(&serverReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverUpdateCmd = &cobra.Command{
-	Use: "update",
+func serverUpdateCmd() *cobra.Command {
+	serverUpdateParam := params.NewUpdateServerParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update Server",
-	Long:  `Update Server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update Server",
+		Long:  `Update Server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(serverUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(serverUpdateParam))
+			return nil
+		},
+	}
 
-func serverUpdateCmdInit() {
-	fs := serverUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&serverUpdateParam.InterfaceDriver, "interface-driver", "", "virtio", "set interface driver[virtio/e1000]")
 	fs.StringSliceVarP(&serverUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&serverUpdateParam.Name, "name", "", "", "set resource display name")
@@ -278,31 +248,33 @@ func serverUpdateCmdInit() {
 	fs.StringVarP(&serverUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete Server",
-	Long:    `Delete Server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverDeleteParam)
-		if err != nil {
-			return err
-		}
+func serverDeleteCmd() *cobra.Command {
+	serverDeleteParam := params.NewDeleteServerParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete Server",
+		Long:    `Delete Server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(serverDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(serverDeleteParam))
+			return nil
+		},
+	}
 
-func serverDeleteCmdInit() {
-	fs := serverDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&serverDeleteParam.Force, "force", "f", false, "forced-shutdown flag if server is running")
 	fs.BoolVarP(&serverDeleteParam.WithoutDisk, "without-disk", "", false, "don't delete connected disks with server")
 	fs.StringSliceVarP(&serverDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -320,31 +292,33 @@ func serverDeleteCmdInit() {
 	fs.StringVarP(&serverDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverPlanChangeCmd = &cobra.Command{
-	Use: "plan-change",
+func serverPlanChangeCmd() *cobra.Command {
+	serverPlanChangeParam := params.NewPlanChangeServerParam()
+	cmd := &cobra.Command{
+		Use: "plan-change",
 
-	Short: "Change server plan(core/memory)",
-	Long:  `Change server plan(core/memory)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverPlanChangeParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverPlanChangeParam)
-		if err != nil {
-			return err
-		}
+		Short: "Change server plan(core/memory)",
+		Long:  `Change server plan(core/memory)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverPlanChangeParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverPlanChangeParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("plan-change local parameter: \n%s\n", debugMarshalIndent(serverPlanChangeParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("plan-change local parameter: \n%s\n", debugMarshalIndent(serverPlanChangeParam))
+			return nil
+		},
+	}
 
-func serverPlanChangeCmdInit() {
-	fs := serverPlanChangeCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&serverPlanChangeParam.Core, "core", "", 0, "set CPU core count")
 	fs.IntVarP(&serverPlanChangeParam.Memory, "memory", "", 0, "set memory size(GB)")
 	fs.StringVarP(&serverPlanChangeParam.Commitment, "commitment", "", "standard", "set plan of core assignment")
@@ -363,31 +337,33 @@ func serverPlanChangeCmdInit() {
 	fs.StringVarP(&serverPlanChangeParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverPlanChangeParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverPlanChangeParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverBootCmd = &cobra.Command{
-	Use:     "boot",
-	Aliases: []string{"power-on"},
-	Short:   "Boot Server",
-	Long:    `Boot Server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverBootParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverBootParam)
-		if err != nil {
-			return err
-		}
+func serverBootCmd() *cobra.Command {
+	serverBootParam := params.NewBootServerParam()
+	cmd := &cobra.Command{
+		Use:     "boot",
+		Aliases: []string{"power-on"},
+		Short:   "Boot Server",
+		Long:    `Boot Server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverBootParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(serverBootParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(serverBootParam))
+			return nil
+		},
+	}
 
-func serverBootCmdInit() {
-	fs := serverBootCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&serverBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&serverBootParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&serverBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -396,31 +372,33 @@ func serverBootCmdInit() {
 	fs.StringVarP(&serverBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverBootParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverShutdownCmd = &cobra.Command{
-	Use:     "shutdown",
-	Aliases: []string{"power-off"},
-	Short:   "Shutdown Server",
-	Long:    `Shutdown Server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverShutdownParam)
-		if err != nil {
-			return err
-		}
+func serverShutdownCmd() *cobra.Command {
+	serverShutdownParam := params.NewShutdownServerParam()
+	cmd := &cobra.Command{
+		Use:     "shutdown",
+		Aliases: []string{"power-off"},
+		Short:   "Shutdown Server",
+		Long:    `Shutdown Server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverShutdownParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(serverShutdownParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(serverShutdownParam))
+			return nil
+		},
+	}
 
-func serverShutdownCmdInit() {
-	fs := serverShutdownCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&serverShutdownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&serverShutdownParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&serverShutdownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -429,31 +407,33 @@ func serverShutdownCmdInit() {
 	fs.StringVarP(&serverShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverShutdownParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverShutdownForceCmd = &cobra.Command{
-	Use:     "shutdown-force",
-	Aliases: []string{"stop"},
-	Short:   "ShutdownForce Server",
-	Long:    `ShutdownForce Server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverShutdownForceParam)
-		if err != nil {
-			return err
-		}
+func serverShutdownForceCmd() *cobra.Command {
+	serverShutdownForceParam := params.NewShutdownForceServerParam()
+	cmd := &cobra.Command{
+		Use:     "shutdown-force",
+		Aliases: []string{"stop"},
+		Short:   "ShutdownForce Server",
+		Long:    `ShutdownForce Server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverShutdownForceParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(serverShutdownForceParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(serverShutdownForceParam))
+			return nil
+		},
+	}
 
-func serverShutdownForceCmdInit() {
-	fs := serverShutdownForceCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&serverShutdownForceParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&serverShutdownForceParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&serverShutdownForceParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -462,31 +442,33 @@ func serverShutdownForceCmdInit() {
 	fs.StringVarP(&serverShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverShutdownForceParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverResetCmd = &cobra.Command{
-	Use: "reset",
+func serverResetCmd() *cobra.Command {
+	serverResetParam := params.NewResetServerParam()
+	cmd := &cobra.Command{
+		Use: "reset",
 
-	Short: "Reset Server",
-	Long:  `Reset Server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverResetParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverResetParam)
-		if err != nil {
-			return err
-		}
+		Short: "Reset Server",
+		Long:  `Reset Server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverResetParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(serverResetParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(serverResetParam))
+			return nil
+		},
+	}
 
-func serverResetCmdInit() {
-	fs := serverResetCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&serverResetParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&serverResetParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&serverResetParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -495,31 +477,33 @@ func serverResetCmdInit() {
 	fs.StringVarP(&serverResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverResetParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverWaitForBootCmd = &cobra.Command{
-	Use: "wait-for-boot",
+func serverWaitForBootCmd() *cobra.Command {
+	serverWaitForBootParam := params.NewWaitForBootServerParam()
+	cmd := &cobra.Command{
+		Use: "wait-for-boot",
 
-	Short: "Wait until boot is completed",
-	Long:  `Wait until boot is completed`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverWaitForBootParam)
-		if err != nil {
-			return err
-		}
+		Short: "Wait until boot is completed",
+		Long:  `Wait until boot is completed`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverWaitForBootParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(serverWaitForBootParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(serverWaitForBootParam))
+			return nil
+		},
+	}
 
-func serverWaitForBootCmdInit() {
-	fs := serverWaitForBootCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&serverWaitForBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&serverWaitForBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&serverWaitForBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -527,31 +511,33 @@ func serverWaitForBootCmdInit() {
 	fs.StringVarP(&serverWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverWaitForBootParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverWaitForDownCmd = &cobra.Command{
-	Use: "wait-for-down",
+func serverWaitForDownCmd() *cobra.Command {
+	serverWaitForDownParam := params.NewWaitForDownServerParam()
+	cmd := &cobra.Command{
+		Use: "wait-for-down",
 
-	Short: "Wait until shutdown is completed",
-	Long:  `Wait until shutdown is completed`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverWaitForDownParam)
-		if err != nil {
-			return err
-		}
+		Short: "Wait until shutdown is completed",
+		Long:  `Wait until shutdown is completed`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverWaitForDownParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(serverWaitForDownParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(serverWaitForDownParam))
+			return nil
+		},
+	}
 
-func serverWaitForDownCmdInit() {
-	fs := serverWaitForDownCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&serverWaitForDownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&serverWaitForDownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&serverWaitForDownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -559,31 +545,33 @@ func serverWaitForDownCmdInit() {
 	fs.StringVarP(&serverWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverWaitForDownParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverSSHCmd = &cobra.Command{
-	Use: "ssh",
+func serverSSHCmd() *cobra.Command {
+	serverSSHParam := params.NewSSHServerParam()
+	cmd := &cobra.Command{
+		Use: "ssh",
 
-	Short: "Connect to server by SSH",
-	Long:  `Connect to server by SSH`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverSSHParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverSSHParam)
-		if err != nil {
-			return err
-		}
+		Short: "Connect to server by SSH",
+		Long:  `Connect to server by SSH`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverSSHParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverSSHParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ssh local parameter: \n%s\n", debugMarshalIndent(serverSSHParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ssh local parameter: \n%s\n", debugMarshalIndent(serverSSHParam))
+			return nil
+		},
+	}
 
-func serverSSHCmdInit() {
-	fs := serverSSHCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&serverSSHParam.Key, "key", "i", "", "private-key file path")
 	fs.StringVarP(&serverSSHParam.User, "user", "l", "", "user name")
 	fs.IntVarP(&serverSSHParam.Port, "port", "p", 22, "port")
@@ -596,31 +584,33 @@ func serverSSHCmdInit() {
 	fs.BoolVarP(&serverSSHParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.BoolVarP(&serverSSHParam.Quiet, "quiet", "q", false, "disable information messages")
 	fs.VarP(newIDValue(0, &serverSSHParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverSSHExecCmd = &cobra.Command{
-	Use: "ssh-exec",
+func serverSSHExecCmd() *cobra.Command {
+	serverSSHExecParam := params.NewSSHExecServerParam()
+	cmd := &cobra.Command{
+		Use: "ssh-exec",
 
-	Short: "Execute command on server connected by SSH",
-	Long:  `Execute command on server connected by SSH`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverSSHExecParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverSSHExecParam)
-		if err != nil {
-			return err
-		}
+		Short: "Execute command on server connected by SSH",
+		Long:  `Execute command on server connected by SSH`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverSSHExecParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverSSHExecParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ssh-exec local parameter: \n%s\n", debugMarshalIndent(serverSSHExecParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ssh-exec local parameter: \n%s\n", debugMarshalIndent(serverSSHExecParam))
+			return nil
+		},
+	}
 
-func serverSSHExecCmdInit() {
-	fs := serverSSHExecCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&serverSSHExecParam.Key, "key", "i", "", "private-key file path")
 	fs.StringVarP(&serverSSHExecParam.User, "user", "l", "", "user name")
 	fs.IntVarP(&serverSSHExecParam.Port, "port", "p", 22, "port")
@@ -632,31 +622,33 @@ func serverSSHExecCmdInit() {
 	fs.BoolVarP(&serverSSHExecParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.BoolVarP(&serverSSHExecParam.Quiet, "quiet", "q", false, "disable information messages")
 	fs.VarP(newIDValue(0, &serverSSHExecParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverScpCmd = &cobra.Command{
-	Use: "scp",
+func serverScpCmd() *cobra.Command {
+	serverScpParam := params.NewScpServerParam()
+	cmd := &cobra.Command{
+		Use: "scp",
 
-	Short: "Copy files/directories by SSH",
-	Long:  `Copy files/directories by SSH`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverScpParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverScpParam)
-		if err != nil {
-			return err
-		}
+		Short: "Copy files/directories by SSH",
+		Long:  `Copy files/directories by SSH`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverScpParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverScpParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("scp local parameter: \n%s\n", debugMarshalIndent(serverScpParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("scp local parameter: \n%s\n", debugMarshalIndent(serverScpParam))
+			return nil
+		},
+	}
 
-func serverScpCmdInit() {
-	fs := serverScpCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&serverScpParam.Key, "key", "i", "", "private-key file path")
 	fs.BoolVarP(&serverScpParam.Recursive, "recursive", "r", false, "set recursive copy flag")
 	fs.StringVarP(&serverScpParam.User, "user", "l", "", "user name")
@@ -669,31 +661,33 @@ func serverScpCmdInit() {
 	fs.StringVarP(&serverScpParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverScpParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.BoolVarP(&serverScpParam.Quiet, "quiet", "q", false, "disable information messages")
+	return cmd
 }
 
-var serverVncCmd = &cobra.Command{
-	Use: "vnc",
+func serverVncCmd() *cobra.Command {
+	serverVncParam := params.NewVncServerParam()
+	cmd := &cobra.Command{
+		Use: "vnc",
 
-	Short: "Open VNC client using the OS's default application",
-	Long:  `Open VNC client using the OS's default application`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverVncParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverVncParam)
-		if err != nil {
-			return err
-		}
+		Short: "Open VNC client using the OS's default application",
+		Long:  `Open VNC client using the OS's default application`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverVncParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverVncParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("vnc local parameter: \n%s\n", debugMarshalIndent(serverVncParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("vnc local parameter: \n%s\n", debugMarshalIndent(serverVncParam))
+			return nil
+		},
+	}
 
-func serverVncCmdInit() {
-	fs := serverVncCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&serverVncParam.WaitForBoot, "wait-for-boot", "", false, "wait until the server starts up")
 	fs.StringSliceVarP(&serverVncParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&serverVncParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -702,31 +696,33 @@ func serverVncCmdInit() {
 	fs.StringVarP(&serverVncParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverVncParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverVncParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverVncInfoCmd = &cobra.Command{
-	Use: "vnc-info",
+func serverVncInfoCmd() *cobra.Command {
+	serverVncInfoParam := params.NewVncInfoServerParam()
+	cmd := &cobra.Command{
+		Use: "vnc-info",
 
-	Short: "Show VNC proxy information",
-	Long:  `Show VNC proxy information`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverVncInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverVncInfoParam)
-		if err != nil {
-			return err
-		}
+		Short: "Show VNC proxy information",
+		Long:  `Show VNC proxy information`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverVncInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverVncInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("vnc-info local parameter: \n%s\n", debugMarshalIndent(serverVncInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("vnc-info local parameter: \n%s\n", debugMarshalIndent(serverVncInfoParam))
+			return nil
+		},
+	}
 
-func serverVncInfoCmdInit() {
-	fs := serverVncInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&serverVncInfoParam.WaitForBoot, "wait-for-boot", "", false, "wait until the server starts up")
 	fs.StringSliceVarP(&serverVncInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&serverVncInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -742,31 +738,33 @@ func serverVncInfoCmdInit() {
 	fs.StringVarP(&serverVncInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverVncInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverVncInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverVncSendCmd = &cobra.Command{
-	Use: "vnc-send",
+func serverVncSendCmd() *cobra.Command {
+	serverVncSendParam := params.NewVncSendServerParam()
+	cmd := &cobra.Command{
+		Use: "vnc-send",
 
-	Short: "Send keys over VNC connection",
-	Long:  `Send keys over VNC connection`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverVncSendParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverVncSendParam)
-		if err != nil {
-			return err
-		}
+		Short: "Send keys over VNC connection",
+		Long:  `Send keys over VNC connection`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverVncSendParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverVncSendParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("vnc-send local parameter: \n%s\n", debugMarshalIndent(serverVncSendParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("vnc-send local parameter: \n%s\n", debugMarshalIndent(serverVncSendParam))
+			return nil
+		},
+	}
 
-func serverVncSendCmdInit() {
-	fs := serverVncSendCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&serverVncSendParam.Command, "command", "c", "", "command(compatible with HashiCorp Packer's boot_command)")
 	fs.StringVarP(&serverVncSendParam.CommandFile, "command-file", "f", "", "command file(compatible with HashiCorp Packer's boot_command)")
 	fs.BoolVarP(&serverVncSendParam.UseUsKeyboard, "use-us-keyboard", "", false, "use US Keyboard")
@@ -787,31 +785,33 @@ func serverVncSendCmdInit() {
 	fs.StringVarP(&serverVncSendParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverVncSendParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverVncSendParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverVncSnapshotCmd = &cobra.Command{
-	Use: "vnc-snapshot",
+func serverVncSnapshotCmd() *cobra.Command {
+	serverVncSnapshotParam := params.NewVncSnapshotServerParam()
+	cmd := &cobra.Command{
+		Use: "vnc-snapshot",
 
-	Short: "Capture VNC snapshot",
-	Long:  `Capture VNC snapshot`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverVncSnapshotParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverVncSnapshotParam)
-		if err != nil {
-			return err
-		}
+		Short: "Capture VNC snapshot",
+		Long:  `Capture VNC snapshot`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverVncSnapshotParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverVncSnapshotParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("vnc-snapshot local parameter: \n%s\n", debugMarshalIndent(serverVncSnapshotParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("vnc-snapshot local parameter: \n%s\n", debugMarshalIndent(serverVncSnapshotParam))
+			return nil
+		},
+	}
 
-func serverVncSnapshotCmdInit() {
-	fs := serverVncSnapshotCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&serverVncSnapshotParam.WaitForBoot, "wait-for-boot", "", false, "wait until the server starts up")
 	fs.StringVarP(&serverVncSnapshotParam.OutputPath, "output-path", "", "", "snapshot output filepath")
 	fs.StringSliceVarP(&serverVncSnapshotParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -829,31 +829,33 @@ func serverVncSnapshotCmdInit() {
 	fs.StringVarP(&serverVncSnapshotParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverVncSnapshotParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverVncSnapshotParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverRemoteDesktopCmd = &cobra.Command{
-	Use:     "remote-desktop",
-	Aliases: []string{"rdp"},
-	Short:   "Open RDP client using the OS's default application",
-	Long:    `Open RDP client using the OS's default application`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverRemoteDesktopParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverRemoteDesktopParam)
-		if err != nil {
-			return err
-		}
+func serverRemoteDesktopCmd() *cobra.Command {
+	serverRemoteDesktopParam := params.NewRemoteDesktopServerParam()
+	cmd := &cobra.Command{
+		Use:     "remote-desktop",
+		Aliases: []string{"rdp"},
+		Short:   "Open RDP client using the OS's default application",
+		Long:    `Open RDP client using the OS's default application`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverRemoteDesktopParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverRemoteDesktopParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("remote-desktop local parameter: \n%s\n", debugMarshalIndent(serverRemoteDesktopParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("remote-desktop local parameter: \n%s\n", debugMarshalIndent(serverRemoteDesktopParam))
+			return nil
+		},
+	}
 
-func serverRemoteDesktopCmdInit() {
-	fs := serverRemoteDesktopCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&serverRemoteDesktopParam.User, "user", "l", "Administrator", "user name")
 	fs.IntVarP(&serverRemoteDesktopParam.Port, "port", "p", 3389, "port")
 	fs.StringSliceVarP(&serverRemoteDesktopParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -863,31 +865,33 @@ func serverRemoteDesktopCmdInit() {
 	fs.StringVarP(&serverRemoteDesktopParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverRemoteDesktopParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverRemoteDesktopParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverRemoteDesktopInfoCmd = &cobra.Command{
-	Use:     "remote-desktop-info",
-	Aliases: []string{"rdp-info"},
-	Short:   "Show RDP information(.rdp)",
-	Long:    `Show RDP information(.rdp)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverRemoteDesktopInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverRemoteDesktopInfoParam)
-		if err != nil {
-			return err
-		}
+func serverRemoteDesktopInfoCmd() *cobra.Command {
+	serverRemoteDesktopInfoParam := params.NewRemoteDesktopInfoServerParam()
+	cmd := &cobra.Command{
+		Use:     "remote-desktop-info",
+		Aliases: []string{"rdp-info"},
+		Short:   "Show RDP information(.rdp)",
+		Long:    `Show RDP information(.rdp)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverRemoteDesktopInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverRemoteDesktopInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("remote-desktop-info local parameter: \n%s\n", debugMarshalIndent(serverRemoteDesktopInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("remote-desktop-info local parameter: \n%s\n", debugMarshalIndent(serverRemoteDesktopInfoParam))
+			return nil
+		},
+	}
 
-func serverRemoteDesktopInfoCmdInit() {
-	fs := serverRemoteDesktopInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&serverRemoteDesktopInfoParam.User, "user", "l", "Administrator", "user name")
 	fs.IntVarP(&serverRemoteDesktopInfoParam.Port, "port", "p", 3389, "port")
 	fs.StringSliceVarP(&serverRemoteDesktopInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -904,31 +908,33 @@ func serverRemoteDesktopInfoCmdInit() {
 	fs.StringVarP(&serverRemoteDesktopInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverRemoteDesktopInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverRemoteDesktopInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverDiskInfoCmd = &cobra.Command{
-	Use:     "disk-info",
-	Aliases: []string{"disk-list"},
-	Short:   "Show information of disk(s) connected to server",
-	Long:    `Show information of disk(s) connected to server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverDiskInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverDiskInfoParam)
-		if err != nil {
-			return err
-		}
+func serverDiskInfoCmd() *cobra.Command {
+	serverDiskInfoParam := params.NewDiskInfoServerParam()
+	cmd := &cobra.Command{
+		Use:     "disk-info",
+		Aliases: []string{"disk-list"},
+		Short:   "Show information of disk(s) connected to server",
+		Long:    `Show information of disk(s) connected to server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverDiskInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverDiskInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("disk-info local parameter: \n%s\n", debugMarshalIndent(serverDiskInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("disk-info local parameter: \n%s\n", debugMarshalIndent(serverDiskInfoParam))
+			return nil
+		},
+	}
 
-func serverDiskInfoCmdInit() {
-	fs := serverDiskInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&serverDiskInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&serverDiskInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&serverDiskInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -943,31 +949,33 @@ func serverDiskInfoCmdInit() {
 	fs.StringVarP(&serverDiskInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverDiskInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverDiskInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverDiskConnectCmd = &cobra.Command{
-	Use: "disk-connect",
+func serverDiskConnectCmd() *cobra.Command {
+	serverDiskConnectParam := params.NewDiskConnectServerParam()
+	cmd := &cobra.Command{
+		Use: "disk-connect",
 
-	Short: "Connect disk to server",
-	Long:  `Connect disk to server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverDiskConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverDiskConnectParam)
-		if err != nil {
-			return err
-		}
+		Short: "Connect disk to server",
+		Long:  `Connect disk to server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverDiskConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverDiskConnectParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("disk-connect local parameter: \n%s\n", debugMarshalIndent(serverDiskConnectParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("disk-connect local parameter: \n%s\n", debugMarshalIndent(serverDiskConnectParam))
+			return nil
+		},
+	}
 
-func serverDiskConnectCmdInit() {
-	fs := serverDiskConnectCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &serverDiskConnectParam.DiskId), "disk-id", "", "set target disk ID")
 	fs.StringSliceVarP(&serverDiskConnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&serverDiskConnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -977,31 +985,33 @@ func serverDiskConnectCmdInit() {
 	fs.StringVarP(&serverDiskConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverDiskConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverDiskConnectParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverDiskDisconnectCmd = &cobra.Command{
-	Use: "disk-disconnect",
+func serverDiskDisconnectCmd() *cobra.Command {
+	serverDiskDisconnectParam := params.NewDiskDisconnectServerParam()
+	cmd := &cobra.Command{
+		Use: "disk-disconnect",
 
-	Short: "Disconnect disk from server",
-	Long:  `Disconnect disk from server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverDiskDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverDiskDisconnectParam)
-		if err != nil {
-			return err
-		}
+		Short: "Disconnect disk from server",
+		Long:  `Disconnect disk from server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverDiskDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverDiskDisconnectParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("disk-disconnect local parameter: \n%s\n", debugMarshalIndent(serverDiskDisconnectParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("disk-disconnect local parameter: \n%s\n", debugMarshalIndent(serverDiskDisconnectParam))
+			return nil
+		},
+	}
 
-func serverDiskDisconnectCmdInit() {
-	fs := serverDiskDisconnectCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &serverDiskDisconnectParam.DiskId), "disk-id", "", "set target disk ID")
 	fs.StringSliceVarP(&serverDiskDisconnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&serverDiskDisconnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -1011,31 +1021,33 @@ func serverDiskDisconnectCmdInit() {
 	fs.StringVarP(&serverDiskDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverDiskDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverDiskDisconnectParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverInterfaceInfoCmd = &cobra.Command{
-	Use:     "interface-info",
-	Aliases: []string{"interface-list"},
-	Short:   "Show information of NIC(s) connected to server",
-	Long:    `Show information of NIC(s) connected to server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverInterfaceInfoParam)
-		if err != nil {
-			return err
-		}
+func serverInterfaceInfoCmd() *cobra.Command {
+	serverInterfaceInfoParam := params.NewInterfaceInfoServerParam()
+	cmd := &cobra.Command{
+		Use:     "interface-info",
+		Aliases: []string{"interface-list"},
+		Short:   "Show information of NIC(s) connected to server",
+		Long:    `Show information of NIC(s) connected to server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverInterfaceInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("interface-info local parameter: \n%s\n", debugMarshalIndent(serverInterfaceInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("interface-info local parameter: \n%s\n", debugMarshalIndent(serverInterfaceInfoParam))
+			return nil
+		},
+	}
 
-func serverInterfaceInfoCmdInit() {
-	fs := serverInterfaceInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&serverInterfaceInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&serverInterfaceInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&serverInterfaceInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -1050,31 +1062,33 @@ func serverInterfaceInfoCmdInit() {
 	fs.StringVarP(&serverInterfaceInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverInterfaceInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverInterfaceInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverInterfaceAddForInternetCmd = &cobra.Command{
-	Use: "interface-add-for-internet",
+func serverInterfaceAddForInternetCmd() *cobra.Command {
+	serverInterfaceAddForInternetParam := params.NewInterfaceAddForInternetServerParam()
+	cmd := &cobra.Command{
+		Use: "interface-add-for-internet",
 
-	Short: "Create and connect NIC connected to the internet",
-	Long:  `Create and connect NIC connected to the internet`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverInterfaceAddForInternetParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverInterfaceAddForInternetParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create and connect NIC connected to the internet",
+		Long:  `Create and connect NIC connected to the internet`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverInterfaceAddForInternetParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverInterfaceAddForInternetParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("interface-add-for-internet local parameter: \n%s\n", debugMarshalIndent(serverInterfaceAddForInternetParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("interface-add-for-internet local parameter: \n%s\n", debugMarshalIndent(serverInterfaceAddForInternetParam))
+			return nil
+		},
+	}
 
-func serverInterfaceAddForInternetCmdInit() {
-	fs := serverInterfaceAddForInternetCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&serverInterfaceAddForInternetParam.WithoutDiskEdit, "without-disk-edit", "", false, "set skip edit-disk flag. if true, don't call DiskEdit API after interface added")
 	fs.StringSliceVarP(&serverInterfaceAddForInternetParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&serverInterfaceAddForInternetParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -1084,31 +1098,33 @@ func serverInterfaceAddForInternetCmdInit() {
 	fs.StringVarP(&serverInterfaceAddForInternetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverInterfaceAddForInternetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverInterfaceAddForInternetParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverInterfaceAddForRouterCmd = &cobra.Command{
-	Use: "interface-add-for-router",
+func serverInterfaceAddForRouterCmd() *cobra.Command {
+	serverInterfaceAddForRouterParam := params.NewInterfaceAddForRouterServerParam()
+	cmd := &cobra.Command{
+		Use: "interface-add-for-router",
 
-	Short: "Create and connect NIC connected to the router",
-	Long:  `Create and connect NIC connected to the router`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverInterfaceAddForRouterParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverInterfaceAddForRouterParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create and connect NIC connected to the router",
+		Long:  `Create and connect NIC connected to the router`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverInterfaceAddForRouterParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverInterfaceAddForRouterParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("interface-add-for-router local parameter: \n%s\n", debugMarshalIndent(serverInterfaceAddForRouterParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("interface-add-for-router local parameter: \n%s\n", debugMarshalIndent(serverInterfaceAddForRouterParam))
+			return nil
+		},
+	}
 
-func serverInterfaceAddForRouterCmdInit() {
-	fs := serverInterfaceAddForRouterCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &serverInterfaceAddForRouterParam.SwitchId), "switch-id", "", "set connect switch(connected to router) ID")
 	fs.BoolVarP(&serverInterfaceAddForRouterParam.WithoutDiskEdit, "without-disk-edit", "", false, "set skip edit-disk flag. if true, don't call DiskEdit API after interface added")
 	fs.StringVarP(&serverInterfaceAddForRouterParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
@@ -1122,31 +1138,33 @@ func serverInterfaceAddForRouterCmdInit() {
 	fs.StringVarP(&serverInterfaceAddForRouterParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverInterfaceAddForRouterParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverInterfaceAddForRouterParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverInterfaceAddForSwitchCmd = &cobra.Command{
-	Use: "interface-add-for-switch",
+func serverInterfaceAddForSwitchCmd() *cobra.Command {
+	serverInterfaceAddForSwitchParam := params.NewInterfaceAddForSwitchServerParam()
+	cmd := &cobra.Command{
+		Use: "interface-add-for-switch",
 
-	Short: "Create and connect NIC connected to the switch",
-	Long:  `Create and connect NIC connected to the switch`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverInterfaceAddForSwitchParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverInterfaceAddForSwitchParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create and connect NIC connected to the switch",
+		Long:  `Create and connect NIC connected to the switch`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverInterfaceAddForSwitchParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverInterfaceAddForSwitchParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("interface-add-for-switch local parameter: \n%s\n", debugMarshalIndent(serverInterfaceAddForSwitchParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("interface-add-for-switch local parameter: \n%s\n", debugMarshalIndent(serverInterfaceAddForSwitchParam))
+			return nil
+		},
+	}
 
-func serverInterfaceAddForSwitchCmdInit() {
-	fs := serverInterfaceAddForSwitchCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &serverInterfaceAddForSwitchParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.BoolVarP(&serverInterfaceAddForSwitchParam.WithoutDiskEdit, "without-disk-edit", "", false, "set skip edit-disk flag. if true, don't call DiskEdit API after interface added")
 	fs.StringVarP(&serverInterfaceAddForSwitchParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
@@ -1160,31 +1178,33 @@ func serverInterfaceAddForSwitchCmdInit() {
 	fs.StringVarP(&serverInterfaceAddForSwitchParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverInterfaceAddForSwitchParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverInterfaceAddForSwitchParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverInterfaceAddDisconnectedCmd = &cobra.Command{
-	Use: "interface-add-disconnected",
+func serverInterfaceAddDisconnectedCmd() *cobra.Command {
+	serverInterfaceAddDisconnectedParam := params.NewInterfaceAddDisconnectedServerParam()
+	cmd := &cobra.Command{
+		Use: "interface-add-disconnected",
 
-	Short: "Create and connect a disconnected NIC",
-	Long:  `Create and connect a disconnected NIC`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverInterfaceAddDisconnectedParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverInterfaceAddDisconnectedParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create and connect a disconnected NIC",
+		Long:  `Create and connect a disconnected NIC`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverInterfaceAddDisconnectedParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverInterfaceAddDisconnectedParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("interface-add-disconnected local parameter: \n%s\n", debugMarshalIndent(serverInterfaceAddDisconnectedParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("interface-add-disconnected local parameter: \n%s\n", debugMarshalIndent(serverInterfaceAddDisconnectedParam))
+			return nil
+		},
+	}
 
-func serverInterfaceAddDisconnectedCmdInit() {
-	fs := serverInterfaceAddDisconnectedCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&serverInterfaceAddDisconnectedParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&serverInterfaceAddDisconnectedParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&serverInterfaceAddDisconnectedParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -1193,31 +1213,33 @@ func serverInterfaceAddDisconnectedCmdInit() {
 	fs.StringVarP(&serverInterfaceAddDisconnectedParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverInterfaceAddDisconnectedParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverInterfaceAddDisconnectedParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverISOInfoCmd = &cobra.Command{
-	Use: "iso-info",
+func serverISOInfoCmd() *cobra.Command {
+	serverISOInfoParam := params.NewISOInfoServerParam()
+	cmd := &cobra.Command{
+		Use: "iso-info",
 
-	Short: "Show information of ISO-Image inserted to server",
-	Long:  `Show information of ISO-Image inserted to server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverISOInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverISOInfoParam)
-		if err != nil {
-			return err
-		}
+		Short: "Show information of ISO-Image inserted to server",
+		Long:  `Show information of ISO-Image inserted to server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverISOInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverISOInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("iso-info local parameter: \n%s\n", debugMarshalIndent(serverISOInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("iso-info local parameter: \n%s\n", debugMarshalIndent(serverISOInfoParam))
+			return nil
+		},
+	}
 
-func serverISOInfoCmdInit() {
-	fs := serverISOInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&serverISOInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&serverISOInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&serverISOInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -1232,31 +1254,33 @@ func serverISOInfoCmdInit() {
 	fs.StringVarP(&serverISOInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverISOInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverISOInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverISOInsertCmd = &cobra.Command{
-	Use: "iso-insert",
+func serverISOInsertCmd() *cobra.Command {
+	serverISOInsertParam := params.NewISOInsertServerParam()
+	cmd := &cobra.Command{
+		Use: "iso-insert",
 
-	Short: "Insert ISO-Image to server",
-	Long:  `Insert ISO-Image to server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverISOInsertParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverISOInsertParam)
-		if err != nil {
-			return err
-		}
+		Short: "Insert ISO-Image to server",
+		Long:  `Insert ISO-Image to server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverISOInsertParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverISOInsertParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("iso-insert local parameter: \n%s\n", debugMarshalIndent(serverISOInsertParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("iso-insert local parameter: \n%s\n", debugMarshalIndent(serverISOInsertParam))
+			return nil
+		},
+	}
 
-func serverISOInsertCmdInit() {
-	fs := serverISOInsertCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &serverISOInsertParam.ISOImageId), "iso-image-id", "", "set iso-image ID")
 	fs.IntVarP(&serverISOInsertParam.Size, "size", "", 5, "set iso size(GB)")
 	fs.StringVarP(&serverISOInsertParam.ISOFile, "iso-file", "", "", "set iso image file")
@@ -1272,31 +1296,33 @@ func serverISOInsertCmdInit() {
 	fs.StringVarP(&serverISOInsertParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverISOInsertParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverISOInsertParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverISOEjectCmd = &cobra.Command{
-	Use: "iso-eject",
+func serverISOEjectCmd() *cobra.Command {
+	serverISOEjectParam := params.NewISOEjectServerParam()
+	cmd := &cobra.Command{
+		Use: "iso-eject",
 
-	Short: "Eject ISO-Image from server",
-	Long:  `Eject ISO-Image from server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverISOEjectParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverISOEjectParam)
-		if err != nil {
-			return err
-		}
+		Short: "Eject ISO-Image from server",
+		Long:  `Eject ISO-Image from server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverISOEjectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverISOEjectParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("iso-eject local parameter: \n%s\n", debugMarshalIndent(serverISOEjectParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("iso-eject local parameter: \n%s\n", debugMarshalIndent(serverISOEjectParam))
+			return nil
+		},
+	}
 
-func serverISOEjectCmdInit() {
-	fs := serverISOEjectCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&serverISOEjectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&serverISOEjectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&serverISOEjectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -1305,31 +1331,33 @@ func serverISOEjectCmdInit() {
 	fs.StringVarP(&serverISOEjectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverISOEjectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverISOEjectParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverMonitorCPUCmd = &cobra.Command{
-	Use: "monitor-cpu",
+func serverMonitorCPUCmd() *cobra.Command {
+	serverMonitorCPUParam := params.NewMonitorCPUServerParam()
+	cmd := &cobra.Command{
+		Use: "monitor-cpu",
 
-	Short: "Collect CPU monitor values",
-	Long:  `Collect CPU monitor values`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverMonitorCPUParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverMonitorCPUParam)
-		if err != nil {
-			return err
-		}
+		Short: "Collect CPU monitor values",
+		Long:  `Collect CPU monitor values`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverMonitorCPUParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverMonitorCPUParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("monitor-cpu local parameter: \n%s\n", debugMarshalIndent(serverMonitorCPUParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("monitor-cpu local parameter: \n%s\n", debugMarshalIndent(serverMonitorCPUParam))
+			return nil
+		},
+	}
 
-func serverMonitorCPUCmdInit() {
-	fs := serverMonitorCPUCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&serverMonitorCPUParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&serverMonitorCPUParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&serverMonitorCPUParam.KeyFormat, "key-format", "", "sakuracloud.server.{{.ID}}.cpu", "set monitoring value key-format")
@@ -1347,31 +1375,33 @@ func serverMonitorCPUCmdInit() {
 	fs.StringVarP(&serverMonitorCPUParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverMonitorCPUParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverMonitorCPUParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverMonitorNicCmd = &cobra.Command{
-	Use: "monitor-nic",
+func serverMonitorNicCmd() *cobra.Command {
+	serverMonitorNicParam := params.NewMonitorNicServerParam()
+	cmd := &cobra.Command{
+		Use: "monitor-nic",
 
-	Short: "Collect NIC(s) monitor values",
-	Long:  `Collect NIC(s) monitor values`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverMonitorNicParam)
-		if err != nil {
-			return err
-		}
+		Short: "Collect NIC(s) monitor values",
+		Long:  `Collect NIC(s) monitor values`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverMonitorNicParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("monitor-nic local parameter: \n%s\n", debugMarshalIndent(serverMonitorNicParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("monitor-nic local parameter: \n%s\n", debugMarshalIndent(serverMonitorNicParam))
+			return nil
+		},
+	}
 
-func serverMonitorNicCmdInit() {
-	fs := serverMonitorNicCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&serverMonitorNicParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&serverMonitorNicParam.End, "end", "", "", "set end-time")
 	fs.IntSliceVarP(&serverMonitorNicParam.Index, "index", "", []int{}, "target index(es)")
@@ -1390,31 +1420,33 @@ func serverMonitorNicCmdInit() {
 	fs.StringVarP(&serverMonitorNicParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverMonitorNicParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverMonitorNicParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverMonitorDiskCmd = &cobra.Command{
-	Use: "monitor-disk",
+func serverMonitorDiskCmd() *cobra.Command {
+	serverMonitorDiskParam := params.NewMonitorDiskServerParam()
+	cmd := &cobra.Command{
+		Use: "monitor-disk",
 
-	Short: "Collect Disk(s) monitor values",
-	Long:  `Collect Disk(s) monitor values`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverMonitorDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverMonitorDiskParam)
-		if err != nil {
-			return err
-		}
+		Short: "Collect Disk(s) monitor values",
+		Long:  `Collect Disk(s) monitor values`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverMonitorDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverMonitorDiskParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("monitor-disk local parameter: \n%s\n", debugMarshalIndent(serverMonitorDiskParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("monitor-disk local parameter: \n%s\n", debugMarshalIndent(serverMonitorDiskParam))
+			return nil
+		},
+	}
 
-func serverMonitorDiskCmdInit() {
-	fs := serverMonitorDiskCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&serverMonitorDiskParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&serverMonitorDiskParam.End, "end", "", "", "set end-time")
 	fs.IntSliceVarP(&serverMonitorDiskParam.Index, "index", "", []int{}, "target index(es)")
@@ -1433,31 +1465,33 @@ func serverMonitorDiskCmdInit() {
 	fs.StringVarP(&serverMonitorDiskParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverMonitorDiskParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverMonitorDiskParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var serverMaintenanceInfoCmd = &cobra.Command{
-	Use: "maintenance-info",
+func serverMaintenanceInfoCmd() *cobra.Command {
+	serverMaintenanceInfoParam := params.NewMaintenanceInfoServerParam()
+	cmd := &cobra.Command{
+		Use: "maintenance-info",
 
-	Short: "MaintenanceInfo Server",
-	Long:  `MaintenanceInfo Server`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return serverMaintenanceInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), serverMaintenanceInfoParam)
-		if err != nil {
-			return err
-		}
+		Short: "MaintenanceInfo Server",
+		Long:  `MaintenanceInfo Server`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return serverMaintenanceInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), serverMaintenanceInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("maintenance-info local parameter: \n%s\n", debugMarshalIndent(serverMaintenanceInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("maintenance-info local parameter: \n%s\n", debugMarshalIndent(serverMaintenanceInfoParam))
+			return nil
+		},
+	}
 
-func serverMaintenanceInfoCmdInit() {
-	fs := serverMaintenanceInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&serverMaintenanceInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&serverMaintenanceInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&serverMaintenanceInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
@@ -1470,118 +1504,46 @@ func serverMaintenanceInfoCmdInit() {
 	fs.StringVarP(&serverMaintenanceInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&serverMaintenanceInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverMaintenanceInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
 func init() {
-	parent := serverCmd
-
-	serverListCmdInit()
-	parent.AddCommand(serverListCmd)
-
-	serverBuildCmdInit()
-	parent.AddCommand(serverBuildCmd)
-
-	serverReadCmdInit()
-	parent.AddCommand(serverReadCmd)
-
-	serverUpdateCmdInit()
-	parent.AddCommand(serverUpdateCmd)
-
-	serverDeleteCmdInit()
-	parent.AddCommand(serverDeleteCmd)
-
-	serverPlanChangeCmdInit()
-	parent.AddCommand(serverPlanChangeCmd)
-
-	serverBootCmdInit()
-	parent.AddCommand(serverBootCmd)
-
-	serverShutdownCmdInit()
-	parent.AddCommand(serverShutdownCmd)
-
-	serverShutdownForceCmdInit()
-	parent.AddCommand(serverShutdownForceCmd)
-
-	serverResetCmdInit()
-	parent.AddCommand(serverResetCmd)
-
-	serverWaitForBootCmdInit()
-	parent.AddCommand(serverWaitForBootCmd)
-
-	serverWaitForDownCmdInit()
-	parent.AddCommand(serverWaitForDownCmd)
-
-	serverSSHCmdInit()
-	parent.AddCommand(serverSSHCmd)
-
-	serverSSHExecCmdInit()
-	parent.AddCommand(serverSSHExecCmd)
-
-	serverScpCmdInit()
-	parent.AddCommand(serverScpCmd)
-
-	serverVncCmdInit()
-	parent.AddCommand(serverVncCmd)
-
-	serverVncInfoCmdInit()
-	parent.AddCommand(serverVncInfoCmd)
-
-	serverVncSendCmdInit()
-	parent.AddCommand(serverVncSendCmd)
-
-	serverVncSnapshotCmdInit()
-	parent.AddCommand(serverVncSnapshotCmd)
-
-	serverRemoteDesktopCmdInit()
-	parent.AddCommand(serverRemoteDesktopCmd)
-
-	serverRemoteDesktopInfoCmdInit()
-	parent.AddCommand(serverRemoteDesktopInfoCmd)
-
-	serverDiskInfoCmdInit()
-	parent.AddCommand(serverDiskInfoCmd)
-
-	serverDiskConnectCmdInit()
-	parent.AddCommand(serverDiskConnectCmd)
-
-	serverDiskDisconnectCmdInit()
-	parent.AddCommand(serverDiskDisconnectCmd)
-
-	serverInterfaceInfoCmdInit()
-	parent.AddCommand(serverInterfaceInfoCmd)
-
-	serverInterfaceAddForInternetCmdInit()
-	parent.AddCommand(serverInterfaceAddForInternetCmd)
-
-	serverInterfaceAddForRouterCmdInit()
-	parent.AddCommand(serverInterfaceAddForRouterCmd)
-
-	serverInterfaceAddForSwitchCmdInit()
-	parent.AddCommand(serverInterfaceAddForSwitchCmd)
-
-	serverInterfaceAddDisconnectedCmdInit()
-	parent.AddCommand(serverInterfaceAddDisconnectedCmd)
-
-	serverISOInfoCmdInit()
-	parent.AddCommand(serverISOInfoCmd)
-
-	serverISOInsertCmdInit()
-	parent.AddCommand(serverISOInsertCmd)
-
-	serverISOEjectCmdInit()
-	parent.AddCommand(serverISOEjectCmd)
-
-	serverMonitorCPUCmdInit()
-	parent.AddCommand(serverMonitorCPUCmd)
-
-	serverMonitorNicCmdInit()
-	parent.AddCommand(serverMonitorNicCmd)
-
-	serverMonitorDiskCmdInit()
-	parent.AddCommand(serverMonitorDiskCmd)
-
-	serverMaintenanceInfoCmdInit()
-	parent.AddCommand(serverMaintenanceInfoCmd)
-
+	parent := serverCmd()
+	parent.AddCommand(serverListCmd())
+	parent.AddCommand(serverBuildCmd())
+	parent.AddCommand(serverReadCmd())
+	parent.AddCommand(serverUpdateCmd())
+	parent.AddCommand(serverDeleteCmd())
+	parent.AddCommand(serverPlanChangeCmd())
+	parent.AddCommand(serverBootCmd())
+	parent.AddCommand(serverShutdownCmd())
+	parent.AddCommand(serverShutdownForceCmd())
+	parent.AddCommand(serverResetCmd())
+	parent.AddCommand(serverWaitForBootCmd())
+	parent.AddCommand(serverWaitForDownCmd())
+	parent.AddCommand(serverSSHCmd())
+	parent.AddCommand(serverSSHExecCmd())
+	parent.AddCommand(serverScpCmd())
+	parent.AddCommand(serverVncCmd())
+	parent.AddCommand(serverVncInfoCmd())
+	parent.AddCommand(serverVncSendCmd())
+	parent.AddCommand(serverVncSnapshotCmd())
+	parent.AddCommand(serverRemoteDesktopCmd())
+	parent.AddCommand(serverRemoteDesktopInfoCmd())
+	parent.AddCommand(serverDiskInfoCmd())
+	parent.AddCommand(serverDiskConnectCmd())
+	parent.AddCommand(serverDiskDisconnectCmd())
+	parent.AddCommand(serverInterfaceInfoCmd())
+	parent.AddCommand(serverInterfaceAddForInternetCmd())
+	parent.AddCommand(serverInterfaceAddForRouterCmd())
+	parent.AddCommand(serverInterfaceAddForSwitchCmd())
+	parent.AddCommand(serverInterfaceAddDisconnectedCmd())
+	parent.AddCommand(serverISOInfoCmd())
+	parent.AddCommand(serverISOInsertCmd())
+	parent.AddCommand(serverISOEjectCmd())
+	parent.AddCommand(serverMonitorCPUCmd())
+	parent.AddCommand(serverMonitorNicCmd())
+	parent.AddCommand(serverMonitorDiskCmd())
+	parent.AddCommand(serverMaintenanceInfoCmd())
 	rootCmd.AddCommand(parent)
 }

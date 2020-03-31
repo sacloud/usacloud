@@ -24,48 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	sshKeyListParam     = params.NewListSSHKeyParam()
-	sshKeyCreateParam   = params.NewCreateSSHKeyParam()
-	sshKeyReadParam     = params.NewReadSSHKeyParam()
-	sshKeyUpdateParam   = params.NewUpdateSSHKeyParam()
-	sshKeyDeleteParam   = params.NewDeleteSSHKeyParam()
-	sshKeyGenerateParam = params.NewGenerateSSHKeyParam()
-)
-
 // sshKeyCmd represents the command to manage SAKURA Cloud SSHKey
-var sshKeyCmd = &cobra.Command{
-	Use:   "ssh-key",
-	Short: "A manage commands of SSHKey",
-	Long:  `A manage commands of SSHKey`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func sshKeyCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "ssh-key",
+		Short: "A manage commands of SSHKey",
+		Long:  `A manage commands of SSHKey`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var sshKeyListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find"},
-	Short:   "List SSHKey",
-	Long:    `List SSHKey`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return sshKeyListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), sshKeyListParam)
-		if err != nil {
-			return err
-		}
+func sshKeyListCmd() *cobra.Command {
+	sshKeyListParam := params.NewListSSHKeyParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find"},
+		Short:   "List SSHKey",
+		Long:    `List SSHKey`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return sshKeyListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), sshKeyListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(sshKeyListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(sshKeyListParam))
+			return nil
+		},
+	}
 
-func sshKeyListCmdInit() {
-	fs := sshKeyListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&sshKeyListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &sshKeyListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&sshKeyListParam.From, "from", "", 0, "set offset")
@@ -83,31 +77,33 @@ func sshKeyListCmdInit() {
 	fs.StringVarP(&sshKeyListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&sshKeyListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&sshKeyListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var sshKeyCreateCmd = &cobra.Command{
-	Use: "create",
+func sshKeyCreateCmd() *cobra.Command {
+	sshKeyCreateParam := params.NewCreateSSHKeyParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create SSHKey",
-	Long:  `Create SSHKey`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return sshKeyCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), sshKeyCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create SSHKey",
+		Long:  `Create SSHKey`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return sshKeyCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), sshKeyCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(sshKeyCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(sshKeyCreateParam))
+			return nil
+		},
+	}
 
-func sshKeyCreateCmdInit() {
-	fs := sshKeyCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&sshKeyCreateParam.PublicKey, "public-key", "", "", "set public-key from file")
 	fs.StringVarP(&sshKeyCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&sshKeyCreateParam.Description, "description", "", "", "set resource description")
@@ -125,31 +121,33 @@ func sshKeyCreateCmdInit() {
 	fs.StringVarP(&sshKeyCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&sshKeyCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&sshKeyCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var sshKeyReadCmd = &cobra.Command{
-	Use: "read",
+func sshKeyReadCmd() *cobra.Command {
+	sshKeyReadParam := params.NewReadSSHKeyParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read SSHKey",
-	Long:  `Read SSHKey`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return sshKeyReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), sshKeyReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read SSHKey",
+		Long:  `Read SSHKey`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return sshKeyReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), sshKeyReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(sshKeyReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(sshKeyReadParam))
+			return nil
+		},
+	}
 
-func sshKeyReadCmdInit() {
-	fs := sshKeyReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&sshKeyReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&sshKeyReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&sshKeyReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
@@ -163,31 +161,33 @@ func sshKeyReadCmdInit() {
 	fs.StringVarP(&sshKeyReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&sshKeyReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &sshKeyReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var sshKeyUpdateCmd = &cobra.Command{
-	Use: "update",
+func sshKeyUpdateCmd() *cobra.Command {
+	sshKeyUpdateParam := params.NewUpdateSSHKeyParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update SSHKey",
-	Long:  `Update SSHKey`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return sshKeyUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), sshKeyUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update SSHKey",
+		Long:  `Update SSHKey`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return sshKeyUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), sshKeyUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(sshKeyUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(sshKeyUpdateParam))
+			return nil
+		},
+	}
 
-func sshKeyUpdateCmdInit() {
-	fs := sshKeyUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&sshKeyUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&sshKeyUpdateParam.Description, "description", "", "", "set resource description")
 	fs.BoolVarP(&sshKeyUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -204,31 +204,33 @@ func sshKeyUpdateCmdInit() {
 	fs.StringVarP(&sshKeyUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&sshKeyUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &sshKeyUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var sshKeyDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete SSHKey",
-	Long:    `Delete SSHKey`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return sshKeyDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), sshKeyDeleteParam)
-		if err != nil {
-			return err
-		}
+func sshKeyDeleteCmd() *cobra.Command {
+	sshKeyDeleteParam := params.NewDeleteSSHKeyParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete SSHKey",
+		Long:    `Delete SSHKey`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return sshKeyDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), sshKeyDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(sshKeyDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(sshKeyDeleteParam))
+			return nil
+		},
+	}
 
-func sshKeyDeleteCmdInit() {
-	fs := sshKeyDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&sshKeyDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&sshKeyDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&sshKeyDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -243,31 +245,33 @@ func sshKeyDeleteCmdInit() {
 	fs.StringVarP(&sshKeyDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&sshKeyDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &sshKeyDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var sshKeyGenerateCmd = &cobra.Command{
-	Use:     "generate",
-	Aliases: []string{"gen"},
-	Short:   "Generate SSHKey",
-	Long:    `Generate SSHKey`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return sshKeyGenerateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), sshKeyGenerateParam)
-		if err != nil {
-			return err
-		}
+func sshKeyGenerateCmd() *cobra.Command {
+	sshKeyGenerateParam := params.NewGenerateSSHKeyParam()
+	cmd := &cobra.Command{
+		Use:     "generate",
+		Aliases: []string{"gen"},
+		Short:   "Generate SSHKey",
+		Long:    `Generate SSHKey`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return sshKeyGenerateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), sshKeyGenerateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("generate local parameter: \n%s\n", debugMarshalIndent(sshKeyGenerateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("generate local parameter: \n%s\n", debugMarshalIndent(sshKeyGenerateParam))
+			return nil
+		},
+	}
 
-func sshKeyGenerateCmdInit() {
-	fs := sshKeyGenerateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&sshKeyGenerateParam.PassPhrase, "pass-phrase", "", "", "set ssh-key pass phrase")
 	fs.StringVarP(&sshKeyGenerateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&sshKeyGenerateParam.Description, "description", "", "", "set resource description")
@@ -285,28 +289,16 @@ func sshKeyGenerateCmdInit() {
 	fs.StringVarP(&sshKeyGenerateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&sshKeyGenerateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&sshKeyGenerateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
 func init() {
-	parent := sshKeyCmd
-
-	sshKeyListCmdInit()
-	parent.AddCommand(sshKeyListCmd)
-
-	sshKeyCreateCmdInit()
-	parent.AddCommand(sshKeyCreateCmd)
-
-	sshKeyReadCmdInit()
-	parent.AddCommand(sshKeyReadCmd)
-
-	sshKeyUpdateCmdInit()
-	parent.AddCommand(sshKeyUpdateCmd)
-
-	sshKeyDeleteCmdInit()
-	parent.AddCommand(sshKeyDeleteCmd)
-
-	sshKeyGenerateCmdInit()
-	parent.AddCommand(sshKeyGenerateCmd)
-
+	parent := sshKeyCmd()
+	parent.AddCommand(sshKeyListCmd())
+	parent.AddCommand(sshKeyCreateCmd())
+	parent.AddCommand(sshKeyReadCmd())
+	parent.AddCommand(sshKeyUpdateCmd())
+	parent.AddCommand(sshKeyDeleteCmd())
+	parent.AddCommand(sshKeyGenerateCmd())
 	rootCmd.AddCommand(parent)
 }

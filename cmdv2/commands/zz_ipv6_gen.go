@@ -24,47 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	ipv6ListParam      = params.NewListIPv6Param()
-	ipv6PtrAddParam    = params.NewPtrAddIPv6Param()
-	ipv6PtrReadParam   = params.NewPtrReadIPv6Param()
-	ipv6PtrUpdateParam = params.NewPtrUpdateIPv6Param()
-	ipv6PtrDeleteParam = params.NewPtrDeleteIPv6Param()
-)
-
 // ipv6Cmd represents the command to manage SAKURA Cloud IPv6
-var ipv6Cmd = &cobra.Command{
-	Use:   "ipv6",
-	Short: "A manage commands of IPv6",
-	Long:  `A manage commands of IPv6`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func ipv6Cmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "ipv6",
+		Short: "A manage commands of IPv6",
+		Long:  `A manage commands of IPv6`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var ipv6ListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find"},
-	Short:   "List IPv6",
-	Long:    `List IPv6`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return ipv6ListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), ipv6ListParam)
-		if err != nil {
-			return err
-		}
+func ipv6ListCmd() *cobra.Command {
+	ipv6ListParam := params.NewListIPv6Param()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find"},
+		Short:   "List IPv6",
+		Long:    `List IPv6`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return ipv6ListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), ipv6ListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(ipv6ListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(ipv6ListParam))
+			return nil
+		},
+	}
 
-func ipv6ListCmdInit() {
-	fs := ipv6ListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&ipv6ListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &ipv6ListParam.Id), "id", "", "set filter by id(s)")
 	fs.VarP(newIDValue(0, &ipv6ListParam.IPv6netId), "ipv6net-id", "", "set filter by ipv6net-id")
@@ -84,31 +79,33 @@ func ipv6ListCmdInit() {
 	fs.StringVarP(&ipv6ListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&ipv6ListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&ipv6ListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var ipv6PtrAddCmd = &cobra.Command{
-	Use: "ptr-add",
+func ipv6PtrAddCmd() *cobra.Command {
+	ipv6PtrAddParam := params.NewPtrAddIPv6Param()
+	cmd := &cobra.Command{
+		Use: "ptr-add",
 
-	Short: "PtrAdd IPv6",
-	Long:  `PtrAdd IPv6`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return ipv6PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), ipv6PtrAddParam)
-		if err != nil {
-			return err
-		}
+		Short: "PtrAdd IPv6",
+		Long:  `PtrAdd IPv6`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return ipv6PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), ipv6PtrAddParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ptr-add local parameter: \n%s\n", debugMarshalIndent(ipv6PtrAddParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ptr-add local parameter: \n%s\n", debugMarshalIndent(ipv6PtrAddParam))
+			return nil
+		},
+	}
 
-func ipv6PtrAddCmdInit() {
-	fs := ipv6PtrAddCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&ipv6PtrAddParam.Hostname, "hostname", "", "", "set server hostname")
 	fs.BoolVarP(&ipv6PtrAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&ipv6PtrAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -123,31 +120,33 @@ func ipv6PtrAddCmdInit() {
 	fs.StringVarP(&ipv6PtrAddParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&ipv6PtrAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&ipv6PtrAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var ipv6PtrReadCmd = &cobra.Command{
-	Use: "ptr-read",
+func ipv6PtrReadCmd() *cobra.Command {
+	ipv6PtrReadParam := params.NewPtrReadIPv6Param()
+	cmd := &cobra.Command{
+		Use: "ptr-read",
 
-	Short: "PtrRead IPv6",
-	Long:  `PtrRead IPv6`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return ipv6PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), ipv6PtrReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "PtrRead IPv6",
+		Long:  `PtrRead IPv6`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return ipv6PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), ipv6PtrReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ptr-read local parameter: \n%s\n", debugMarshalIndent(ipv6PtrReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ptr-read local parameter: \n%s\n", debugMarshalIndent(ipv6PtrReadParam))
+			return nil
+		},
+	}
 
-func ipv6PtrReadCmdInit() {
-	fs := ipv6PtrReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&ipv6PtrReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&ipv6PtrReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&ipv6PtrReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
@@ -160,31 +159,33 @@ func ipv6PtrReadCmdInit() {
 	fs.StringVarP(&ipv6PtrReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&ipv6PtrReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&ipv6PtrReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var ipv6PtrUpdateCmd = &cobra.Command{
-	Use: "ptr-update",
+func ipv6PtrUpdateCmd() *cobra.Command {
+	ipv6PtrUpdateParam := params.NewPtrUpdateIPv6Param()
+	cmd := &cobra.Command{
+		Use: "ptr-update",
 
-	Short: "PtrUpdate IPv6",
-	Long:  `PtrUpdate IPv6`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return ipv6PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), ipv6PtrUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "PtrUpdate IPv6",
+		Long:  `PtrUpdate IPv6`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return ipv6PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), ipv6PtrUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ptr-update local parameter: \n%s\n", debugMarshalIndent(ipv6PtrUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ptr-update local parameter: \n%s\n", debugMarshalIndent(ipv6PtrUpdateParam))
+			return nil
+		},
+	}
 
-func ipv6PtrUpdateCmdInit() {
-	fs := ipv6PtrUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&ipv6PtrUpdateParam.Hostname, "hostname", "", "", "set server hostname")
 	fs.BoolVarP(&ipv6PtrUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&ipv6PtrUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -199,31 +200,33 @@ func ipv6PtrUpdateCmdInit() {
 	fs.StringVarP(&ipv6PtrUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&ipv6PtrUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&ipv6PtrUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var ipv6PtrDeleteCmd = &cobra.Command{
-	Use: "ptr-delete",
+func ipv6PtrDeleteCmd() *cobra.Command {
+	ipv6PtrDeleteParam := params.NewPtrDeleteIPv6Param()
+	cmd := &cobra.Command{
+		Use: "ptr-delete",
 
-	Short: "PtrDelete IPv6",
-	Long:  `PtrDelete IPv6`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return ipv6PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), ipv6PtrDeleteParam)
-		if err != nil {
-			return err
-		}
+		Short: "PtrDelete IPv6",
+		Long:  `PtrDelete IPv6`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return ipv6PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), ipv6PtrDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ptr-delete local parameter: \n%s\n", debugMarshalIndent(ipv6PtrDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ptr-delete local parameter: \n%s\n", debugMarshalIndent(ipv6PtrDeleteParam))
+			return nil
+		},
+	}
 
-func ipv6PtrDeleteCmdInit() {
-	fs := ipv6PtrDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&ipv6PtrDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&ipv6PtrDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&ipv6PtrDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -237,25 +240,15 @@ func ipv6PtrDeleteCmdInit() {
 	fs.StringVarP(&ipv6PtrDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&ipv6PtrDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&ipv6PtrDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
 func init() {
-	parent := ipv6Cmd
-
-	ipv6ListCmdInit()
-	parent.AddCommand(ipv6ListCmd)
-
-	ipv6PtrAddCmdInit()
-	parent.AddCommand(ipv6PtrAddCmd)
-
-	ipv6PtrReadCmdInit()
-	parent.AddCommand(ipv6PtrReadCmd)
-
-	ipv6PtrUpdateCmdInit()
-	parent.AddCommand(ipv6PtrUpdateCmd)
-
-	ipv6PtrDeleteCmdInit()
-	parent.AddCommand(ipv6PtrDeleteCmd)
-
+	parent := ipv6Cmd()
+	parent.AddCommand(ipv6ListCmd())
+	parent.AddCommand(ipv6PtrAddCmd())
+	parent.AddCommand(ipv6PtrReadCmd())
+	parent.AddCommand(ipv6PtrUpdateCmd())
+	parent.AddCommand(ipv6PtrDeleteCmd())
 	rootCmd.AddCommand(parent)
 }

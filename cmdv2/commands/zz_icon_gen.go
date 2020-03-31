@@ -24,47 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	iconListParam   = params.NewListIconParam()
-	iconCreateParam = params.NewCreateIconParam()
-	iconReadParam   = params.NewReadIconParam()
-	iconUpdateParam = params.NewUpdateIconParam()
-	iconDeleteParam = params.NewDeleteIconParam()
-)
-
 // iconCmd represents the command to manage SAKURA Cloud Icon
-var iconCmd = &cobra.Command{
-	Use:   "icon",
-	Short: "A manage commands of Icon",
-	Long:  `A manage commands of Icon`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func iconCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "icon",
+		Short: "A manage commands of Icon",
+		Long:  `A manage commands of Icon`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var iconListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Icon",
-	Long:    `List Icon`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return iconListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), iconListParam)
-		if err != nil {
-			return err
-		}
+func iconListCmd() *cobra.Command {
+	iconListParam := params.NewListIconParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List Icon",
+		Long:    `List Icon`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return iconListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), iconListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(iconListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(iconListParam))
+			return nil
+		},
+	}
 
-func iconListCmdInit() {
-	fs := iconListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&iconListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &iconListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringVarP(&iconListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
@@ -84,31 +79,33 @@ func iconListCmdInit() {
 	fs.StringVarP(&iconListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&iconListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&iconListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var iconCreateCmd = &cobra.Command{
-	Use: "create",
+func iconCreateCmd() *cobra.Command {
+	iconCreateParam := params.NewCreateIconParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create Icon",
-	Long:  `Create Icon`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return iconCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), iconCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create Icon",
+		Long:  `Create Icon`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return iconCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), iconCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(iconCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(iconCreateParam))
+			return nil
+		},
+	}
 
-func iconCreateCmdInit() {
-	fs := iconCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&iconCreateParam.Image, "image", "", "", "set file path for upload")
 	fs.StringVarP(&iconCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringSliceVarP(&iconCreateParam.Tags, "tags", "", []string{}, "set resource tags")
@@ -125,31 +122,33 @@ func iconCreateCmdInit() {
 	fs.StringVarP(&iconCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&iconCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&iconCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var iconReadCmd = &cobra.Command{
-	Use: "read",
+func iconReadCmd() *cobra.Command {
+	iconReadParam := params.NewReadIconParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read Icon",
-	Long:  `Read Icon`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return iconReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), iconReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read Icon",
+		Long:  `Read Icon`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return iconReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), iconReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(iconReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(iconReadParam))
+			return nil
+		},
+	}
 
-func iconReadCmdInit() {
-	fs := iconReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&iconReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&iconReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&iconReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -164,31 +163,33 @@ func iconReadCmdInit() {
 	fs.StringVarP(&iconReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&iconReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &iconReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var iconUpdateCmd = &cobra.Command{
-	Use: "update",
+func iconUpdateCmd() *cobra.Command {
+	iconUpdateParam := params.NewUpdateIconParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update Icon",
-	Long:  `Update Icon`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return iconUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), iconUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update Icon",
+		Long:  `Update Icon`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return iconUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), iconUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(iconUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(iconUpdateParam))
+			return nil
+		},
+	}
 
-func iconUpdateCmdInit() {
-	fs := iconUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&iconUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&iconUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringSliceVarP(&iconUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
@@ -206,31 +207,33 @@ func iconUpdateCmdInit() {
 	fs.StringVarP(&iconUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&iconUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &iconUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var iconDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete Icon",
-	Long:    `Delete Icon`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return iconDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), iconDeleteParam)
-		if err != nil {
-			return err
-		}
+func iconDeleteCmd() *cobra.Command {
+	iconDeleteParam := params.NewDeleteIconParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete Icon",
+		Long:    `Delete Icon`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return iconDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), iconDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(iconDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(iconDeleteParam))
+			return nil
+		},
+	}
 
-func iconDeleteCmdInit() {
-	fs := iconDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&iconDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&iconDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&iconDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -246,25 +249,15 @@ func iconDeleteCmdInit() {
 	fs.StringVarP(&iconDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&iconDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &iconDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := iconCmd
-
-	iconListCmdInit()
-	parent.AddCommand(iconListCmd)
-
-	iconCreateCmdInit()
-	parent.AddCommand(iconCreateCmd)
-
-	iconReadCmdInit()
-	parent.AddCommand(iconReadCmd)
-
-	iconUpdateCmdInit()
-	parent.AddCommand(iconUpdateCmd)
-
-	iconDeleteCmdInit()
-	parent.AddCommand(iconDeleteCmd)
-
+	parent := iconCmd()
+	parent.AddCommand(iconListCmd())
+	parent.AddCommand(iconCreateCmd())
+	parent.AddCommand(iconReadCmd())
+	parent.AddCommand(iconUpdateCmd())
+	parent.AddCommand(iconDeleteCmd())
 	rootCmd.AddCommand(parent)
 }

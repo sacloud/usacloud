@@ -23,46 +23,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	objectStorageListParam   = params.NewListObjectStorageParam()
-	objectStoragePutParam    = params.NewPutObjectStorageParam()
-	objectStorageGetParam    = params.NewGetObjectStorageParam()
-	objectStorageDeleteParam = params.NewDeleteObjectStorageParam()
-)
-
 // objectStorageCmd represents the command to manage SAKURA Cloud ObjectStorage
-var objectStorageCmd = &cobra.Command{
-	Use:   "object-storage",
-	Short: "A manage commands of ObjectStorage",
-	Long:  `A manage commands of ObjectStorage`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func objectStorageCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "object-storage",
+		Short: "A manage commands of ObjectStorage",
+		Long:  `A manage commands of ObjectStorage`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var objectStorageListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls"},
-	Short:   "List ObjectStorage",
-	Long:    `List ObjectStorage`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return objectStorageListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), objectStorageListParam)
-		if err != nil {
-			return err
-		}
+func objectStorageListCmd() *cobra.Command {
+	objectStorageListParam := params.NewListObjectStorageParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls"},
+		Short:   "List ObjectStorage",
+		Long:    `List ObjectStorage`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return objectStorageListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), objectStorageListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(objectStorageListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(objectStorageListParam))
+			return nil
+		},
+	}
 
-func objectStorageListCmdInit() {
-	fs := objectStorageListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&objectStorageListParam.AccessKey, "access-key", "", "", "set access-key")
 	fs.StringVarP(&objectStorageListParam.SecretKey, "secret-key", "", "", "set access-key")
 	fs.StringVarP(&objectStorageListParam.Bucket, "bucket", "", "", "set bucket")
@@ -78,31 +74,33 @@ func objectStorageListCmdInit() {
 	fs.StringVarP(&objectStorageListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&objectStorageListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&objectStorageListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var objectStoragePutCmd = &cobra.Command{
-	Use: "put",
+func objectStoragePutCmd() *cobra.Command {
+	objectStoragePutParam := params.NewPutObjectStorageParam()
+	cmd := &cobra.Command{
+		Use: "put",
 
-	Short: "Put ObjectStorage",
-	Long:  `Put ObjectStorage`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return objectStoragePutParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), objectStoragePutParam)
-		if err != nil {
-			return err
-		}
+		Short: "Put ObjectStorage",
+		Long:  `Put ObjectStorage`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return objectStoragePutParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), objectStoragePutParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("put local parameter: \n%s\n", debugMarshalIndent(objectStoragePutParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("put local parameter: \n%s\n", debugMarshalIndent(objectStoragePutParam))
+			return nil
+		},
+	}
 
-func objectStoragePutCmdInit() {
-	fs := objectStoragePutCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&objectStoragePutParam.AccessKey, "access-key", "", "", "set access-key")
 	fs.StringVarP(&objectStoragePutParam.ContentType, "content-type", "", "application/octet-stream", "set content-type")
 	fs.BoolVarP(&objectStoragePutParam.Recursive, "recursive", "r", false, "put objects recursive")
@@ -114,31 +112,33 @@ func objectStoragePutCmdInit() {
 	fs.StringVarP(&objectStoragePutParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&objectStoragePutParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&objectStoragePutParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	return cmd
 }
 
-var objectStorageGetCmd = &cobra.Command{
-	Use: "get",
+func objectStorageGetCmd() *cobra.Command {
+	objectStorageGetParam := params.NewGetObjectStorageParam()
+	cmd := &cobra.Command{
+		Use: "get",
 
-	Short: "Get ObjectStorage",
-	Long:  `Get ObjectStorage`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return objectStorageGetParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), objectStorageGetParam)
-		if err != nil {
-			return err
-		}
+		Short: "Get ObjectStorage",
+		Long:  `Get ObjectStorage`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return objectStorageGetParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), objectStorageGetParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("get local parameter: \n%s\n", debugMarshalIndent(objectStorageGetParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("get local parameter: \n%s\n", debugMarshalIndent(objectStorageGetParam))
+			return nil
+		},
+	}
 
-func objectStorageGetCmdInit() {
-	fs := objectStorageGetCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&objectStorageGetParam.AccessKey, "access-key", "", "", "set access-key")
 	fs.BoolVarP(&objectStorageGetParam.Recursive, "recursive", "r", false, "get objects recursive")
 	fs.StringVarP(&objectStorageGetParam.SecretKey, "secret-key", "", "", "set access-key")
@@ -148,31 +148,33 @@ func objectStorageGetCmdInit() {
 	fs.StringVarP(&objectStorageGetParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&objectStorageGetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&objectStorageGetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	return cmd
 }
 
-var objectStorageDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm", "del"},
-	Short:   "Delete ObjectStorage",
-	Long:    `Delete ObjectStorage`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return objectStorageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), objectStorageDeleteParam)
-		if err != nil {
-			return err
-		}
+func objectStorageDeleteCmd() *cobra.Command {
+	objectStorageDeleteParam := params.NewDeleteObjectStorageParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm", "del"},
+		Short:   "Delete ObjectStorage",
+		Long:    `Delete ObjectStorage`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return objectStorageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), objectStorageDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(objectStorageDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(objectStorageDeleteParam))
+			return nil
+		},
+	}
 
-func objectStorageDeleteCmdInit() {
-	fs := objectStorageDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&objectStorageDeleteParam.AccessKey, "access-key", "", "", "set access-key")
 	fs.BoolVarP(&objectStorageDeleteParam.Recursive, "recursive", "r", false, "delete objects recursive")
 	fs.StringVarP(&objectStorageDeleteParam.SecretKey, "secret-key", "", "", "set access-key")
@@ -183,22 +185,14 @@ func objectStorageDeleteCmdInit() {
 	fs.StringVarP(&objectStorageDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&objectStorageDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&objectStorageDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	return cmd
 }
 
 func init() {
-	parent := objectStorageCmd
-
-	objectStorageListCmdInit()
-	parent.AddCommand(objectStorageListCmd)
-
-	objectStoragePutCmdInit()
-	parent.AddCommand(objectStoragePutCmd)
-
-	objectStorageGetCmdInit()
-	parent.AddCommand(objectStorageGetCmd)
-
-	objectStorageDeleteCmdInit()
-	parent.AddCommand(objectStorageDeleteCmd)
-
+	parent := objectStorageCmd()
+	parent.AddCommand(objectStorageListCmd())
+	parent.AddCommand(objectStoragePutCmd())
+	parent.AddCommand(objectStorageGetCmd())
+	parent.AddCommand(objectStorageDeleteCmd())
 	rootCmd.AddCommand(parent)
 }

@@ -24,56 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	diskListParam                 = params.NewListDiskParam()
-	diskCreateParam               = params.NewCreateDiskParam()
-	diskReadParam                 = params.NewReadDiskParam()
-	diskUpdateParam               = params.NewUpdateDiskParam()
-	diskDeleteParam               = params.NewDeleteDiskParam()
-	diskEditParam                 = params.NewEditDiskParam()
-	diskResizePartitionParam      = params.NewResizePartitionDiskParam()
-	diskReinstallFromArchiveParam = params.NewReinstallFromArchiveDiskParam()
-	diskReinstallFromDiskParam    = params.NewReinstallFromDiskDiskParam()
-	diskReinstallToBlankParam     = params.NewReinstallToBlankDiskParam()
-	diskServerConnectParam        = params.NewServerConnectDiskParam()
-	diskServerDisconnectParam     = params.NewServerDisconnectDiskParam()
-	diskMonitorParam              = params.NewMonitorDiskParam()
-	diskWaitForCopyParam          = params.NewWaitForCopyDiskParam()
-)
-
 // diskCmd represents the command to manage SAKURA Cloud Disk
-var diskCmd = &cobra.Command{
-	Use:   "disk",
-	Short: "A manage commands of Disk",
-	Long:  `A manage commands of Disk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func diskCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "disk",
+		Short: "A manage commands of Disk",
+		Long:  `A manage commands of Disk`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var diskListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Disk",
-	Long:    `List Disk`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return diskListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), diskListParam)
-		if err != nil {
-			return err
-		}
+func diskListCmd() *cobra.Command {
+	diskListParam := params.NewListDiskParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List Disk",
+		Long:    `List Disk`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return diskListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), diskListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(diskListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(diskListParam))
+			return nil
+		},
+	}
 
-func diskListCmdInit() {
-	fs := diskListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&diskListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringVarP(&diskListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
@@ -96,31 +82,33 @@ func diskListCmdInit() {
 	fs.StringVarP(&diskListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&diskListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&diskListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var diskCreateCmd = &cobra.Command{
-	Use: "create",
+func diskCreateCmd() *cobra.Command {
+	diskCreateParam := params.NewCreateDiskParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create Disk",
-	Long:  `Create Disk`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return diskCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), diskCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create Disk",
+		Long:  `Create Disk`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return diskCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), diskCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(diskCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(diskCreateParam))
+			return nil
+		},
+	}
 
-func diskCreateCmdInit() {
-	fs := diskCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&diskCreateParam.Plan, "plan", "", "ssd", "set disk plan('hdd' or 'ssd')")
 	fs.StringVarP(&diskCreateParam.Connection, "connection", "", "virtio", "set disk connection('virtio' or 'ide')")
 	fs.VarP(newIDValue(0, &diskCreateParam.SourceArchiveId), "source-archive-id", "", "set source disk ID")
@@ -144,31 +132,33 @@ func diskCreateCmdInit() {
 	fs.StringVarP(&diskCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&diskCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&diskCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var diskReadCmd = &cobra.Command{
-	Use: "read",
+func diskReadCmd() *cobra.Command {
+	diskReadParam := params.NewReadDiskParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read Disk",
-	Long:  `Read Disk`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return diskReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), diskReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read Disk",
+		Long:  `Read Disk`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return diskReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), diskReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(diskReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(diskReadParam))
+			return nil
+		},
+	}
 
-func diskReadCmdInit() {
-	fs := diskReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&diskReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&diskReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -183,31 +173,33 @@ func diskReadCmdInit() {
 	fs.StringVarP(&diskReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&diskReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &diskReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var diskUpdateCmd = &cobra.Command{
-	Use: "update",
+func diskUpdateCmd() *cobra.Command {
+	diskUpdateParam := params.NewUpdateDiskParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update Disk",
-	Long:  `Update Disk`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return diskUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), diskUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update Disk",
+		Long:  `Update Disk`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return diskUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), diskUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(diskUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(diskUpdateParam))
+			return nil
+		},
+	}
 
-func diskUpdateCmdInit() {
-	fs := diskUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&diskUpdateParam.Connection, "connection", "", "", "set disk connection('virtio' or 'ide')")
 	fs.StringSliceVarP(&diskUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&diskUpdateParam.Name, "name", "", "", "set resource display name")
@@ -228,31 +220,33 @@ func diskUpdateCmdInit() {
 	fs.StringVarP(&diskUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&diskUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &diskUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var diskDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete Disk",
-	Long:    `Delete Disk`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return diskDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), diskDeleteParam)
-		if err != nil {
-			return err
-		}
+func diskDeleteCmd() *cobra.Command {
+	diskDeleteParam := params.NewDeleteDiskParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete Disk",
+		Long:    `Delete Disk`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return diskDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), diskDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(diskDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(diskDeleteParam))
+			return nil
+		},
+	}
 
-func diskDeleteCmdInit() {
-	fs := diskDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&diskDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&diskDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&diskDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -268,31 +262,33 @@ func diskDeleteCmdInit() {
 	fs.StringVarP(&diskDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&diskDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &diskDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var diskEditCmd = &cobra.Command{
-	Use:     "edit",
-	Aliases: []string{"config"},
-	Short:   "Edit Disk",
-	Long:    `Edit Disk`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return diskEditParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), diskEditParam)
-		if err != nil {
-			return err
-		}
+func diskEditCmd() *cobra.Command {
+	diskEditParam := params.NewEditDiskParam()
+	cmd := &cobra.Command{
+		Use:     "edit",
+		Aliases: []string{"config"},
+		Short:   "Edit Disk",
+		Long:    `Edit Disk`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return diskEditParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), diskEditParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("edit local parameter: \n%s\n", debugMarshalIndent(diskEditParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("edit local parameter: \n%s\n", debugMarshalIndent(diskEditParam))
+			return nil
+		},
+	}
 
-func diskEditCmdInit() {
-	fs := diskEditCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&diskEditParam.Hostname, "hostname", "", "", "set hostname")
 	fs.StringVarP(&diskEditParam.Password, "password", "", "", "set password")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskEditParam.SSHKeyIds), "ssh-key-ids", "", "set ssh-key ID(s)")
@@ -316,31 +312,33 @@ func diskEditCmdInit() {
 	fs.StringVarP(&diskEditParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&diskEditParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &diskEditParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var diskResizePartitionCmd = &cobra.Command{
-	Use: "resize-partition",
+func diskResizePartitionCmd() *cobra.Command {
+	diskResizePartitionParam := params.NewResizePartitionDiskParam()
+	cmd := &cobra.Command{
+		Use: "resize-partition",
 
-	Short: "ResizePartition Disk",
-	Long:  `ResizePartition Disk`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return diskResizePartitionParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), diskResizePartitionParam)
-		if err != nil {
-			return err
-		}
+		Short: "ResizePartition Disk",
+		Long:  `ResizePartition Disk`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return diskResizePartitionParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), diskResizePartitionParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("resize-partition local parameter: \n%s\n", debugMarshalIndent(diskResizePartitionParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("resize-partition local parameter: \n%s\n", debugMarshalIndent(diskResizePartitionParam))
+			return nil
+		},
+	}
 
-func diskResizePartitionCmdInit() {
-	fs := diskResizePartitionCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&diskResizePartitionParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&diskResizePartitionParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&diskResizePartitionParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -356,31 +354,33 @@ func diskResizePartitionCmdInit() {
 	fs.StringVarP(&diskResizePartitionParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&diskResizePartitionParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &diskResizePartitionParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var diskReinstallFromArchiveCmd = &cobra.Command{
-	Use: "reinstall-from-archive",
+func diskReinstallFromArchiveCmd() *cobra.Command {
+	diskReinstallFromArchiveParam := params.NewReinstallFromArchiveDiskParam()
+	cmd := &cobra.Command{
+		Use: "reinstall-from-archive",
 
-	Short: "ReinstallFromArchive Disk",
-	Long:  `ReinstallFromArchive Disk`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return diskReinstallFromArchiveParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), diskReinstallFromArchiveParam)
-		if err != nil {
-			return err
-		}
+		Short: "ReinstallFromArchive Disk",
+		Long:  `ReinstallFromArchive Disk`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return diskReinstallFromArchiveParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), diskReinstallFromArchiveParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("reinstall-from-archive local parameter: \n%s\n", debugMarshalIndent(diskReinstallFromArchiveParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("reinstall-from-archive local parameter: \n%s\n", debugMarshalIndent(diskReinstallFromArchiveParam))
+			return nil
+		},
+	}
 
-func diskReinstallFromArchiveCmdInit() {
-	fs := diskReinstallFromArchiveCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &diskReinstallFromArchiveParam.SourceArchiveId), "source-archive-id", "", "set source archive ID")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskReinstallFromArchiveParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
 	fs.StringSliceVarP(&diskReinstallFromArchiveParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -391,31 +391,33 @@ func diskReinstallFromArchiveCmdInit() {
 	fs.StringVarP(&diskReinstallFromArchiveParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskReinstallFromArchiveParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskReinstallFromArchiveParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var diskReinstallFromDiskCmd = &cobra.Command{
-	Use: "reinstall-from-disk",
+func diskReinstallFromDiskCmd() *cobra.Command {
+	diskReinstallFromDiskParam := params.NewReinstallFromDiskDiskParam()
+	cmd := &cobra.Command{
+		Use: "reinstall-from-disk",
 
-	Short: "ReinstallFromDisk Disk",
-	Long:  `ReinstallFromDisk Disk`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return diskReinstallFromDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), diskReinstallFromDiskParam)
-		if err != nil {
-			return err
-		}
+		Short: "ReinstallFromDisk Disk",
+		Long:  `ReinstallFromDisk Disk`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return diskReinstallFromDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), diskReinstallFromDiskParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("reinstall-from-disk local parameter: \n%s\n", debugMarshalIndent(diskReinstallFromDiskParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("reinstall-from-disk local parameter: \n%s\n", debugMarshalIndent(diskReinstallFromDiskParam))
+			return nil
+		},
+	}
 
-func diskReinstallFromDiskCmdInit() {
-	fs := diskReinstallFromDiskCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &diskReinstallFromDiskParam.SourceDiskId), "source-disk-id", "", "set source disk ID")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskReinstallFromDiskParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
 	fs.StringSliceVarP(&diskReinstallFromDiskParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -426,31 +428,33 @@ func diskReinstallFromDiskCmdInit() {
 	fs.StringVarP(&diskReinstallFromDiskParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskReinstallFromDiskParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskReinstallFromDiskParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var diskReinstallToBlankCmd = &cobra.Command{
-	Use: "reinstall-to-blank",
+func diskReinstallToBlankCmd() *cobra.Command {
+	diskReinstallToBlankParam := params.NewReinstallToBlankDiskParam()
+	cmd := &cobra.Command{
+		Use: "reinstall-to-blank",
 
-	Short: "ReinstallToBlank Disk",
-	Long:  `ReinstallToBlank Disk`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return diskReinstallToBlankParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), diskReinstallToBlankParam)
-		if err != nil {
-			return err
-		}
+		Short: "ReinstallToBlank Disk",
+		Long:  `ReinstallToBlank Disk`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return diskReinstallToBlankParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), diskReinstallToBlankParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("reinstall-to-blank local parameter: \n%s\n", debugMarshalIndent(diskReinstallToBlankParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("reinstall-to-blank local parameter: \n%s\n", debugMarshalIndent(diskReinstallToBlankParam))
+			return nil
+		},
+	}
 
-func diskReinstallToBlankCmdInit() {
-	fs := diskReinstallToBlankCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskReinstallToBlankParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
 	fs.StringSliceVarP(&diskReinstallToBlankParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&diskReinstallToBlankParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -460,31 +464,33 @@ func diskReinstallToBlankCmdInit() {
 	fs.StringVarP(&diskReinstallToBlankParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskReinstallToBlankParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskReinstallToBlankParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var diskServerConnectCmd = &cobra.Command{
-	Use: "server-connect",
+func diskServerConnectCmd() *cobra.Command {
+	diskServerConnectParam := params.NewServerConnectDiskParam()
+	cmd := &cobra.Command{
+		Use: "server-connect",
 
-	Short: "ServerConnect Disk",
-	Long:  `ServerConnect Disk`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return diskServerConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), diskServerConnectParam)
-		if err != nil {
-			return err
-		}
+		Short: "ServerConnect Disk",
+		Long:  `ServerConnect Disk`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return diskServerConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), diskServerConnectParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("server-connect local parameter: \n%s\n", debugMarshalIndent(diskServerConnectParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("server-connect local parameter: \n%s\n", debugMarshalIndent(diskServerConnectParam))
+			return nil
+		},
+	}
 
-func diskServerConnectCmdInit() {
-	fs := diskServerConnectCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &diskServerConnectParam.ServerId), "server-id", "", "set target server ID")
 	fs.StringSliceVarP(&diskServerConnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&diskServerConnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -494,31 +500,33 @@ func diskServerConnectCmdInit() {
 	fs.StringVarP(&diskServerConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskServerConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskServerConnectParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var diskServerDisconnectCmd = &cobra.Command{
-	Use: "server-disconnect",
+func diskServerDisconnectCmd() *cobra.Command {
+	diskServerDisconnectParam := params.NewServerDisconnectDiskParam()
+	cmd := &cobra.Command{
+		Use: "server-disconnect",
 
-	Short: "ServerDisconnect Disk",
-	Long:  `ServerDisconnect Disk`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return diskServerDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), diskServerDisconnectParam)
-		if err != nil {
-			return err
-		}
+		Short: "ServerDisconnect Disk",
+		Long:  `ServerDisconnect Disk`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return diskServerDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), diskServerDisconnectParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("server-disconnect local parameter: \n%s\n", debugMarshalIndent(diskServerDisconnectParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("server-disconnect local parameter: \n%s\n", debugMarshalIndent(diskServerDisconnectParam))
+			return nil
+		},
+	}
 
-func diskServerDisconnectCmdInit() {
-	fs := diskServerDisconnectCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&diskServerDisconnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&diskServerDisconnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&diskServerDisconnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -527,31 +535,33 @@ func diskServerDisconnectCmdInit() {
 	fs.StringVarP(&diskServerDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskServerDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskServerDisconnectParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var diskMonitorCmd = &cobra.Command{
-	Use: "monitor",
+func diskMonitorCmd() *cobra.Command {
+	diskMonitorParam := params.NewMonitorDiskParam()
+	cmd := &cobra.Command{
+		Use: "monitor",
 
-	Short: "Monitor Disk",
-	Long:  `Monitor Disk`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return diskMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), diskMonitorParam)
-		if err != nil {
-			return err
-		}
+		Short: "Monitor Disk",
+		Long:  `Monitor Disk`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return diskMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), diskMonitorParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(diskMonitorParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(diskMonitorParam))
+			return nil
+		},
+	}
 
-func diskMonitorCmdInit() {
-	fs := diskMonitorCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&diskMonitorParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&diskMonitorParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskMonitorParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -569,31 +579,33 @@ func diskMonitorCmdInit() {
 	fs.VarP(newIDValue(0, &diskMonitorParam.Id), "id", "", "Set target ID")
 	fs.StringVarP(&diskMonitorParam.KeyFormat, "key-format", "", "sakuracloud.disk.{{.ID}}.disk", "set monitoring value key-format")
 	fs.StringVarP(&diskMonitorParam.Start, "start", "", "", "set start-time")
+	return cmd
 }
 
-var diskWaitForCopyCmd = &cobra.Command{
-	Use:     "wait-for-copy",
-	Aliases: []string{"wait"},
-	Short:   "WaitForCopy Disk",
-	Long:    `WaitForCopy Disk`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return diskWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), diskWaitForCopyParam)
-		if err != nil {
-			return err
-		}
+func diskWaitForCopyCmd() *cobra.Command {
+	diskWaitForCopyParam := params.NewWaitForCopyDiskParam()
+	cmd := &cobra.Command{
+		Use:     "wait-for-copy",
+		Aliases: []string{"wait"},
+		Short:   "WaitForCopy Disk",
+		Long:    `WaitForCopy Disk`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return diskWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), diskWaitForCopyParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("wait-for-copy local parameter: \n%s\n", debugMarshalIndent(diskWaitForCopyParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("wait-for-copy local parameter: \n%s\n", debugMarshalIndent(diskWaitForCopyParam))
+			return nil
+		},
+	}
 
-func diskWaitForCopyCmdInit() {
-	fs := diskWaitForCopyCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&diskWaitForCopyParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&diskWaitForCopyParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskWaitForCopyParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -601,52 +613,24 @@ func diskWaitForCopyCmdInit() {
 	fs.StringVarP(&diskWaitForCopyParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskWaitForCopyParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskWaitForCopyParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := diskCmd
-
-	diskListCmdInit()
-	parent.AddCommand(diskListCmd)
-
-	diskCreateCmdInit()
-	parent.AddCommand(diskCreateCmd)
-
-	diskReadCmdInit()
-	parent.AddCommand(diskReadCmd)
-
-	diskUpdateCmdInit()
-	parent.AddCommand(diskUpdateCmd)
-
-	diskDeleteCmdInit()
-	parent.AddCommand(diskDeleteCmd)
-
-	diskEditCmdInit()
-	parent.AddCommand(diskEditCmd)
-
-	diskResizePartitionCmdInit()
-	parent.AddCommand(diskResizePartitionCmd)
-
-	diskReinstallFromArchiveCmdInit()
-	parent.AddCommand(diskReinstallFromArchiveCmd)
-
-	diskReinstallFromDiskCmdInit()
-	parent.AddCommand(diskReinstallFromDiskCmd)
-
-	diskReinstallToBlankCmdInit()
-	parent.AddCommand(diskReinstallToBlankCmd)
-
-	diskServerConnectCmdInit()
-	parent.AddCommand(diskServerConnectCmd)
-
-	diskServerDisconnectCmdInit()
-	parent.AddCommand(diskServerDisconnectCmd)
-
-	diskMonitorCmdInit()
-	parent.AddCommand(diskMonitorCmd)
-
-	diskWaitForCopyCmdInit()
-	parent.AddCommand(diskWaitForCopyCmd)
-
+	parent := diskCmd()
+	parent.AddCommand(diskListCmd())
+	parent.AddCommand(diskCreateCmd())
+	parent.AddCommand(diskReadCmd())
+	parent.AddCommand(diskUpdateCmd())
+	parent.AddCommand(diskDeleteCmd())
+	parent.AddCommand(diskEditCmd())
+	parent.AddCommand(diskResizePartitionCmd())
+	parent.AddCommand(diskReinstallFromArchiveCmd())
+	parent.AddCommand(diskReinstallFromDiskCmd())
+	parent.AddCommand(diskReinstallToBlankCmd())
+	parent.AddCommand(diskServerConnectCmd())
+	parent.AddCommand(diskServerDisconnectCmd())
+	parent.AddCommand(diskMonitorCmd())
+	parent.AddCommand(diskWaitForCopyCmd())
 	rootCmd.AddCommand(parent)
 }

@@ -23,55 +23,52 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	selfInfoParam = params.NewInfoSelfParam()
-)
-
 // selfCmd represents the command to manage SAKURA Cloud Self
-var selfCmd = &cobra.Command{
-	Use:   "self",
-	Short: "Show self info",
-	Long:  `Show self info`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements: call info func as default
-	},
+func selfCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "self",
+		Short: "Show self info",
+		Long:  `Show self info`,
+		Run: func(cmd *cobra.Command, args []string) {
+			// TODO not implements: call info func as default
+		},
+	}
 }
 
-var selfInfoCmd = &cobra.Command{
-	Use: "info",
+func selfInfoCmd() *cobra.Command {
+	selfInfoParam := params.NewInfoSelfParam()
+	cmd := &cobra.Command{
+		Use: "info",
 
-	Short: "Info Self (default)",
-	Long:  `Info Self (default)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return selfInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), selfInfoParam)
-		if err != nil {
-			return err
-		}
+		Short: "Info Self (default)",
+		Long:  `Info Self (default)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return selfInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), selfInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("info local parameter: \n%s\n", debugMarshalIndent(selfInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("info local parameter: \n%s\n", debugMarshalIndent(selfInfoParam))
+			return nil
+		},
+	}
 
-func selfInfoCmdInit() {
-	fs := selfInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&selfInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&selfInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&selfInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&selfInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&selfInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	return cmd
 }
 
 func init() {
-	parent := selfCmd
-
-	selfInfoCmdInit()
-	parent.AddCommand(selfInfoCmd)
-
+	parent := selfCmd()
+	parent.AddCommand(selfInfoCmd())
 	rootCmd.AddCommand(parent)
 }

@@ -24,47 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	autoBackupListParam   = params.NewListAutoBackupParam()
-	autoBackupCreateParam = params.NewCreateAutoBackupParam()
-	autoBackupReadParam   = params.NewReadAutoBackupParam()
-	autoBackupUpdateParam = params.NewUpdateAutoBackupParam()
-	autoBackupDeleteParam = params.NewDeleteAutoBackupParam()
-)
-
 // autoBackupCmd represents the command to manage SAKURA Cloud AutoBackup
-var autoBackupCmd = &cobra.Command{
-	Use:   "auto-backup",
-	Short: "A manage commands of AutoBackup",
-	Long:  `A manage commands of AutoBackup`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func autoBackupCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "auto-backup",
+		Short: "A manage commands of AutoBackup",
+		Long:  `A manage commands of AutoBackup`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var autoBackupListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List AutoBackup",
-	Long:    `List AutoBackup`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return autoBackupListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), autoBackupListParam)
-		if err != nil {
-			return err
-		}
+func autoBackupListCmd() *cobra.Command {
+	autoBackupListParam := params.NewListAutoBackupParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List AutoBackup",
+		Long:    `List AutoBackup`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return autoBackupListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), autoBackupListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(autoBackupListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(autoBackupListParam))
+			return nil
+		},
+	}
 
-func autoBackupListCmdInit() {
-	fs := autoBackupListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&autoBackupListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &autoBackupListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&autoBackupListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
@@ -83,31 +78,33 @@ func autoBackupListCmdInit() {
 	fs.StringVarP(&autoBackupListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&autoBackupListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&autoBackupListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var autoBackupCreateCmd = &cobra.Command{
-	Use: "create",
+func autoBackupCreateCmd() *cobra.Command {
+	autoBackupCreateParam := params.NewCreateAutoBackupParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create AutoBackup",
-	Long:  `Create AutoBackup`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return autoBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), autoBackupCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create AutoBackup",
+		Long:  `Create AutoBackup`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return autoBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), autoBackupCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(autoBackupCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(autoBackupCreateParam))
+			return nil
+		},
+	}
 
-func autoBackupCreateCmdInit() {
-	fs := autoBackupCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &autoBackupCreateParam.DiskId), "disk-id", "", "set target diskID ")
 	fs.StringSliceVarP(&autoBackupCreateParam.Weekdays, "weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
 	fs.IntVarP(&autoBackupCreateParam.Generation, "generation", "", 1, "set backup generation[1-10]")
@@ -128,31 +125,33 @@ func autoBackupCreateCmdInit() {
 	fs.StringVarP(&autoBackupCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&autoBackupCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&autoBackupCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var autoBackupReadCmd = &cobra.Command{
-	Use: "read",
+func autoBackupReadCmd() *cobra.Command {
+	autoBackupReadParam := params.NewReadAutoBackupParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read AutoBackup",
-	Long:  `Read AutoBackup`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return autoBackupReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), autoBackupReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read AutoBackup",
+		Long:  `Read AutoBackup`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return autoBackupReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), autoBackupReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(autoBackupReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(autoBackupReadParam))
+			return nil
+		},
+	}
 
-func autoBackupReadCmdInit() {
-	fs := autoBackupReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&autoBackupReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&autoBackupReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&autoBackupReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -167,31 +166,33 @@ func autoBackupReadCmdInit() {
 	fs.StringVarP(&autoBackupReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&autoBackupReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &autoBackupReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var autoBackupUpdateCmd = &cobra.Command{
-	Use: "update",
+func autoBackupUpdateCmd() *cobra.Command {
+	autoBackupUpdateParam := params.NewUpdateAutoBackupParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update AutoBackup",
-	Long:  `Update AutoBackup`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return autoBackupUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), autoBackupUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update AutoBackup",
+		Long:  `Update AutoBackup`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return autoBackupUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), autoBackupUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(autoBackupUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(autoBackupUpdateParam))
+			return nil
+		},
+	}
 
-func autoBackupUpdateCmdInit() {
-	fs := autoBackupUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&autoBackupUpdateParam.Weekdays, "weekdays", "", []string{}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
 	fs.IntVarP(&autoBackupUpdateParam.Generation, "generation", "", 0, "set backup generation[1-10]")
 	fs.StringSliceVarP(&autoBackupUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -213,31 +214,33 @@ func autoBackupUpdateCmdInit() {
 	fs.StringVarP(&autoBackupUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&autoBackupUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &autoBackupUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var autoBackupDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete AutoBackup",
-	Long:    `Delete AutoBackup`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return autoBackupDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), autoBackupDeleteParam)
-		if err != nil {
-			return err
-		}
+func autoBackupDeleteCmd() *cobra.Command {
+	autoBackupDeleteParam := params.NewDeleteAutoBackupParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete AutoBackup",
+		Long:    `Delete AutoBackup`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return autoBackupDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), autoBackupDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(autoBackupDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(autoBackupDeleteParam))
+			return nil
+		},
+	}
 
-func autoBackupDeleteCmdInit() {
-	fs := autoBackupDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&autoBackupDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&autoBackupDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&autoBackupDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -253,25 +256,15 @@ func autoBackupDeleteCmdInit() {
 	fs.StringVarP(&autoBackupDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&autoBackupDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &autoBackupDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := autoBackupCmd
-
-	autoBackupListCmdInit()
-	parent.AddCommand(autoBackupListCmd)
-
-	autoBackupCreateCmdInit()
-	parent.AddCommand(autoBackupCreateCmd)
-
-	autoBackupReadCmdInit()
-	parent.AddCommand(autoBackupReadCmd)
-
-	autoBackupUpdateCmdInit()
-	parent.AddCommand(autoBackupUpdateCmd)
-
-	autoBackupDeleteCmdInit()
-	parent.AddCommand(autoBackupDeleteCmd)
-
+	parent := autoBackupCmd()
+	parent.AddCommand(autoBackupListCmd())
+	parent.AddCommand(autoBackupCreateCmd())
+	parent.AddCommand(autoBackupReadCmd())
+	parent.AddCommand(autoBackupUpdateCmd())
+	parent.AddCommand(autoBackupDeleteCmd())
 	rootCmd.AddCommand(parent)
 }

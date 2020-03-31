@@ -24,49 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	switchListParam             = params.NewListSwitchParam()
-	switchCreateParam           = params.NewCreateSwitchParam()
-	switchReadParam             = params.NewReadSwitchParam()
-	switchUpdateParam           = params.NewUpdateSwitchParam()
-	switchDeleteParam           = params.NewDeleteSwitchParam()
-	switchBridgeConnectParam    = params.NewBridgeConnectSwitchParam()
-	switchBridgeDisconnectParam = params.NewBridgeDisconnectSwitchParam()
-)
-
 // switchCmd represents the command to manage SAKURA Cloud Switch
-var switchCmd = &cobra.Command{
-	Use:   "switch",
-	Short: "A manage commands of Switch",
-	Long:  `A manage commands of Switch`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func switchCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "switch",
+		Short: "A manage commands of Switch",
+		Long:  `A manage commands of Switch`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var switchListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Switch",
-	Long:    `List Switch`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return switchListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), switchListParam)
-		if err != nil {
-			return err
-		}
+func switchListCmd() *cobra.Command {
+	switchListParam := params.NewListSwitchParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List Switch",
+		Long:    `List Switch`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return switchListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), switchListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(switchListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(switchListParam))
+			return nil
+		},
+	}
 
-func switchListCmdInit() {
-	fs := switchListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&switchListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &switchListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&switchListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
@@ -85,31 +78,33 @@ func switchListCmdInit() {
 	fs.StringVarP(&switchListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&switchListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&switchListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var switchCreateCmd = &cobra.Command{
-	Use: "create",
+func switchCreateCmd() *cobra.Command {
+	switchCreateParam := params.NewCreateSwitchParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create Switch",
-	Long:  `Create Switch`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return switchCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), switchCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create Switch",
+		Long:  `Create Switch`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return switchCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), switchCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(switchCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(switchCreateParam))
+			return nil
+		},
+	}
 
-func switchCreateCmdInit() {
-	fs := switchCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&switchCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&switchCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&switchCreateParam.Tags, "tags", "", []string{}, "set resource tags")
@@ -127,31 +122,33 @@ func switchCreateCmdInit() {
 	fs.StringVarP(&switchCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&switchCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&switchCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var switchReadCmd = &cobra.Command{
-	Use: "read",
+func switchReadCmd() *cobra.Command {
+	switchReadParam := params.NewReadSwitchParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read Switch",
-	Long:  `Read Switch`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return switchReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), switchReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read Switch",
+		Long:  `Read Switch`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return switchReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), switchReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(switchReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(switchReadParam))
+			return nil
+		},
+	}
 
-func switchReadCmdInit() {
-	fs := switchReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&switchReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&switchReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&switchReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -166,31 +163,33 @@ func switchReadCmdInit() {
 	fs.StringVarP(&switchReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&switchReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &switchReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var switchUpdateCmd = &cobra.Command{
-	Use: "update",
+func switchUpdateCmd() *cobra.Command {
+	switchUpdateParam := params.NewUpdateSwitchParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update Switch",
-	Long:  `Update Switch`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return switchUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), switchUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update Switch",
+		Long:  `Update Switch`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return switchUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), switchUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(switchUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(switchUpdateParam))
+			return nil
+		},
+	}
 
-func switchUpdateCmdInit() {
-	fs := switchUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&switchUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&switchUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&switchUpdateParam.Description, "description", "", "", "set resource description")
@@ -210,31 +209,33 @@ func switchUpdateCmdInit() {
 	fs.StringVarP(&switchUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&switchUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &switchUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var switchDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete Switch",
-	Long:    `Delete Switch`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return switchDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), switchDeleteParam)
-		if err != nil {
-			return err
-		}
+func switchDeleteCmd() *cobra.Command {
+	switchDeleteParam := params.NewDeleteSwitchParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete Switch",
+		Long:    `Delete Switch`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return switchDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), switchDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(switchDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(switchDeleteParam))
+			return nil
+		},
+	}
 
-func switchDeleteCmdInit() {
-	fs := switchDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&switchDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&switchDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&switchDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -250,31 +251,33 @@ func switchDeleteCmdInit() {
 	fs.StringVarP(&switchDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&switchDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &switchDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var switchBridgeConnectCmd = &cobra.Command{
-	Use: "bridge-connect",
+func switchBridgeConnectCmd() *cobra.Command {
+	switchBridgeConnectParam := params.NewBridgeConnectSwitchParam()
+	cmd := &cobra.Command{
+		Use: "bridge-connect",
 
-	Short: "BridgeConnect Switch",
-	Long:  `BridgeConnect Switch`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return switchBridgeConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), switchBridgeConnectParam)
-		if err != nil {
-			return err
-		}
+		Short: "BridgeConnect Switch",
+		Long:  `BridgeConnect Switch`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return switchBridgeConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), switchBridgeConnectParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("bridge-connect local parameter: \n%s\n", debugMarshalIndent(switchBridgeConnectParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("bridge-connect local parameter: \n%s\n", debugMarshalIndent(switchBridgeConnectParam))
+			return nil
+		},
+	}
 
-func switchBridgeConnectCmdInit() {
-	fs := switchBridgeConnectCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &switchBridgeConnectParam.BridgeId), "bridge-id", "", "set Bridge ID")
 	fs.StringSliceVarP(&switchBridgeConnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&switchBridgeConnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -284,31 +287,33 @@ func switchBridgeConnectCmdInit() {
 	fs.StringVarP(&switchBridgeConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&switchBridgeConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &switchBridgeConnectParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var switchBridgeDisconnectCmd = &cobra.Command{
-	Use: "bridge-disconnect",
+func switchBridgeDisconnectCmd() *cobra.Command {
+	switchBridgeDisconnectParam := params.NewBridgeDisconnectSwitchParam()
+	cmd := &cobra.Command{
+		Use: "bridge-disconnect",
 
-	Short: "BridgeDisconnect Switch",
-	Long:  `BridgeDisconnect Switch`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return switchBridgeDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), switchBridgeDisconnectParam)
-		if err != nil {
-			return err
-		}
+		Short: "BridgeDisconnect Switch",
+		Long:  `BridgeDisconnect Switch`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return switchBridgeDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), switchBridgeDisconnectParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("bridge-disconnect local parameter: \n%s\n", debugMarshalIndent(switchBridgeDisconnectParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("bridge-disconnect local parameter: \n%s\n", debugMarshalIndent(switchBridgeDisconnectParam))
+			return nil
+		},
+	}
 
-func switchBridgeDisconnectCmdInit() {
-	fs := switchBridgeDisconnectCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&switchBridgeDisconnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&switchBridgeDisconnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&switchBridgeDisconnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -317,31 +322,17 @@ func switchBridgeDisconnectCmdInit() {
 	fs.StringVarP(&switchBridgeDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&switchBridgeDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &switchBridgeDisconnectParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := switchCmd
-
-	switchListCmdInit()
-	parent.AddCommand(switchListCmd)
-
-	switchCreateCmdInit()
-	parent.AddCommand(switchCreateCmd)
-
-	switchReadCmdInit()
-	parent.AddCommand(switchReadCmd)
-
-	switchUpdateCmdInit()
-	parent.AddCommand(switchUpdateCmd)
-
-	switchDeleteCmdInit()
-	parent.AddCommand(switchDeleteCmd)
-
-	switchBridgeConnectCmdInit()
-	parent.AddCommand(switchBridgeConnectCmd)
-
-	switchBridgeDisconnectCmdInit()
-	parent.AddCommand(switchBridgeDisconnectCmd)
-
+	parent := switchCmd()
+	parent.AddCommand(switchListCmd())
+	parent.AddCommand(switchCreateCmd())
+	parent.AddCommand(switchReadCmd())
+	parent.AddCommand(switchUpdateCmd())
+	parent.AddCommand(switchDeleteCmd())
+	parent.AddCommand(switchBridgeConnectCmd())
+	parent.AddCommand(switchBridgeDisconnectCmd())
 	rootCmd.AddCommand(parent)
 }

@@ -24,44 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	zoneListParam = params.NewListZoneParam()
-	zoneReadParam = params.NewReadZoneParam()
-)
-
 // zoneCmd represents the command to manage SAKURA Cloud Zone
-var zoneCmd = &cobra.Command{
-	Use:   "zone",
-	Short: "A manage commands of Zone",
-	Long:  `A manage commands of Zone`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements: call list func as default
-	},
+func zoneCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "zone",
+		Short: "A manage commands of Zone",
+		Long:  `A manage commands of Zone`,
+		Run: func(cmd *cobra.Command, args []string) {
+			// TODO not implements: call list func as default
+		},
+	}
 }
 
-var zoneListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find"},
-	Short:   "List Zone (default)",
-	Long:    `List Zone (default)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return zoneListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), zoneListParam)
-		if err != nil {
-			return err
-		}
+func zoneListCmd() *cobra.Command {
+	zoneListParam := params.NewListZoneParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find"},
+		Short:   "List Zone (default)",
+		Long:    `List Zone (default)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return zoneListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), zoneListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(zoneListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(zoneListParam))
+			return nil
+		},
+	}
 
-func zoneListCmdInit() {
-	fs := zoneListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&zoneListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &zoneListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&zoneListParam.From, "from", "", 0, "set offset")
@@ -79,31 +77,33 @@ func zoneListCmdInit() {
 	fs.StringVarP(&zoneListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&zoneListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&zoneListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var zoneReadCmd = &cobra.Command{
-	Use: "read",
+func zoneReadCmd() *cobra.Command {
+	zoneReadParam := params.NewReadZoneParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read Zone",
-	Long:  `Read Zone`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return zoneReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), zoneReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read Zone",
+		Long:  `Read Zone`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return zoneReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), zoneReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(zoneReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(zoneReadParam))
+			return nil
+		},
+	}
 
-func zoneReadCmdInit() {
-	fs := zoneReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&zoneReadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&zoneReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&zoneReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -118,16 +118,12 @@ func zoneReadCmdInit() {
 	fs.StringVarP(&zoneReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&zoneReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &zoneReadParam.Id), "id", "", "set resource ID")
+	return cmd
 }
 
 func init() {
-	parent := zoneCmd
-
-	zoneListCmdInit()
-	parent.AddCommand(zoneListCmd)
-
-	zoneReadCmdInit()
-	parent.AddCommand(zoneReadCmd)
-
+	parent := zoneCmd()
+	parent.AddCommand(zoneListCmd())
+	parent.AddCommand(zoneReadCmd())
 	rootCmd.AddCommand(parent)
 }

@@ -23,48 +23,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	webAccelListParam              = params.NewListWebAccelParam()
-	webAccelReadParam              = params.NewReadWebAccelParam()
-	webAccelCertificateInfoParam   = params.NewCertificateInfoWebAccelParam()
-	webAccelCertificateNewParam    = params.NewCertificateNewWebAccelParam()
-	webAccelCertificateUpdateParam = params.NewCertificateUpdateWebAccelParam()
-	webAccelDeleteCacheParam       = params.NewDeleteCacheWebAccelParam()
-)
-
 // webAccelCmd represents the command to manage SAKURA Cloud WebAccel
-var webAccelCmd = &cobra.Command{
-	Use:   "web-accel",
-	Short: "A manage commands of WebAccel",
-	Long:  `A manage commands of WebAccel`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func webAccelCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "web-accel",
+		Short: "A manage commands of WebAccel",
+		Long:  `A manage commands of WebAccel`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var webAccelListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List WebAccel",
-	Long:    `List WebAccel`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return webAccelListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), webAccelListParam)
-		if err != nil {
-			return err
-		}
+func webAccelListCmd() *cobra.Command {
+	webAccelListParam := params.NewListWebAccelParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List WebAccel",
+		Long:    `List WebAccel`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return webAccelListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), webAccelListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(webAccelListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(webAccelListParam))
+			return nil
+		},
+	}
 
-func webAccelListCmdInit() {
-	fs := webAccelListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&webAccelListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&webAccelListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&webAccelListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
@@ -77,31 +71,33 @@ func webAccelListCmdInit() {
 	fs.StringVarP(&webAccelListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&webAccelListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&webAccelListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var webAccelReadCmd = &cobra.Command{
-	Use: "read",
+func webAccelReadCmd() *cobra.Command {
+	webAccelReadParam := params.NewReadWebAccelParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read WebAccel",
-	Long:  `Read WebAccel`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return webAccelReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), webAccelReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read WebAccel",
+		Long:  `Read WebAccel`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return webAccelReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), webAccelReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(webAccelReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(webAccelReadParam))
+			return nil
+		},
+	}
 
-func webAccelReadCmdInit() {
-	fs := webAccelReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&webAccelReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&webAccelReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&webAccelReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -116,31 +112,33 @@ func webAccelReadCmdInit() {
 	fs.StringVarP(&webAccelReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&webAccelReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &webAccelReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var webAccelCertificateInfoCmd = &cobra.Command{
-	Use:     "certificate-info",
-	Aliases: []string{"cert-info"},
-	Short:   "CertificateInfo WebAccel",
-	Long:    `CertificateInfo WebAccel`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return webAccelCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), webAccelCertificateInfoParam)
-		if err != nil {
-			return err
-		}
+func webAccelCertificateInfoCmd() *cobra.Command {
+	webAccelCertificateInfoParam := params.NewCertificateInfoWebAccelParam()
+	cmd := &cobra.Command{
+		Use:     "certificate-info",
+		Aliases: []string{"cert-info"},
+		Short:   "CertificateInfo WebAccel",
+		Long:    `CertificateInfo WebAccel`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return webAccelCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), webAccelCertificateInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("certificate-info local parameter: \n%s\n", debugMarshalIndent(webAccelCertificateInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("certificate-info local parameter: \n%s\n", debugMarshalIndent(webAccelCertificateInfoParam))
+			return nil
+		},
+	}
 
-func webAccelCertificateInfoCmdInit() {
-	fs := webAccelCertificateInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&webAccelCertificateInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&webAccelCertificateInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&webAccelCertificateInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -155,31 +153,33 @@ func webAccelCertificateInfoCmdInit() {
 	fs.StringVarP(&webAccelCertificateInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&webAccelCertificateInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &webAccelCertificateInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var webAccelCertificateNewCmd = &cobra.Command{
-	Use:     "certificate-new",
-	Aliases: []string{"cert-new", "cert-create", "certificate-create"},
-	Short:   "CertificateNew WebAccel",
-	Long:    `CertificateNew WebAccel`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return webAccelCertificateNewParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), webAccelCertificateNewParam)
-		if err != nil {
-			return err
-		}
+func webAccelCertificateNewCmd() *cobra.Command {
+	webAccelCertificateNewParam := params.NewCertificateNewWebAccelParam()
+	cmd := &cobra.Command{
+		Use:     "certificate-new",
+		Aliases: []string{"cert-new", "cert-create", "certificate-create"},
+		Short:   "CertificateNew WebAccel",
+		Long:    `CertificateNew WebAccel`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return webAccelCertificateNewParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), webAccelCertificateNewParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("certificate-new local parameter: \n%s\n", debugMarshalIndent(webAccelCertificateNewParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("certificate-new local parameter: \n%s\n", debugMarshalIndent(webAccelCertificateNewParam))
+			return nil
+		},
+	}
 
-func webAccelCertificateNewCmdInit() {
-	fs := webAccelCertificateNewCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&webAccelCertificateNewParam.Cert, "cert", "", "", "set certificate(from file)")
 	fs.StringVarP(&webAccelCertificateNewParam.Key, "key", "", "", "set private key(from file)")
 	fs.StringVarP(&webAccelCertificateNewParam.CertContent, "cert-content", "", "", "set certificate(from text)")
@@ -199,31 +199,33 @@ func webAccelCertificateNewCmdInit() {
 	fs.StringVarP(&webAccelCertificateNewParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&webAccelCertificateNewParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &webAccelCertificateNewParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var webAccelCertificateUpdateCmd = &cobra.Command{
-	Use:     "certificate-update",
-	Aliases: []string{"cert-update"},
-	Short:   "CertificateUpdate WebAccel",
-	Long:    `CertificateUpdate WebAccel`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return webAccelCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), webAccelCertificateUpdateParam)
-		if err != nil {
-			return err
-		}
+func webAccelCertificateUpdateCmd() *cobra.Command {
+	webAccelCertificateUpdateParam := params.NewCertificateUpdateWebAccelParam()
+	cmd := &cobra.Command{
+		Use:     "certificate-update",
+		Aliases: []string{"cert-update"},
+		Short:   "CertificateUpdate WebAccel",
+		Long:    `CertificateUpdate WebAccel`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return webAccelCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), webAccelCertificateUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("certificate-update local parameter: \n%s\n", debugMarshalIndent(webAccelCertificateUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("certificate-update local parameter: \n%s\n", debugMarshalIndent(webAccelCertificateUpdateParam))
+			return nil
+		},
+	}
 
-func webAccelCertificateUpdateCmdInit() {
-	fs := webAccelCertificateUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&webAccelCertificateUpdateParam.Cert, "cert", "", "", "set certificate(from file)")
 	fs.StringVarP(&webAccelCertificateUpdateParam.Key, "key", "", "", "set private key(from file)")
 	fs.StringVarP(&webAccelCertificateUpdateParam.CertContent, "cert-content", "", "", "set certificate(from text)")
@@ -243,31 +245,33 @@ func webAccelCertificateUpdateCmdInit() {
 	fs.StringVarP(&webAccelCertificateUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&webAccelCertificateUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &webAccelCertificateUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var webAccelDeleteCacheCmd = &cobra.Command{
-	Use:     "delete-cache",
-	Aliases: []string{"purge"},
-	Short:   "DeleteCache WebAccel",
-	Long:    `DeleteCache WebAccel`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return webAccelDeleteCacheParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), webAccelDeleteCacheParam)
-		if err != nil {
-			return err
-		}
+func webAccelDeleteCacheCmd() *cobra.Command {
+	webAccelDeleteCacheParam := params.NewDeleteCacheWebAccelParam()
+	cmd := &cobra.Command{
+		Use:     "delete-cache",
+		Aliases: []string{"purge"},
+		Short:   "DeleteCache WebAccel",
+		Long:    `DeleteCache WebAccel`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return webAccelDeleteCacheParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), webAccelDeleteCacheParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete-cache local parameter: \n%s\n", debugMarshalIndent(webAccelDeleteCacheParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete-cache local parameter: \n%s\n", debugMarshalIndent(webAccelDeleteCacheParam))
+			return nil
+		},
+	}
 
-func webAccelDeleteCacheCmdInit() {
-	fs := webAccelDeleteCacheCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&webAccelDeleteCacheParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&webAccelDeleteCacheParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&webAccelDeleteCacheParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -281,28 +285,16 @@ func webAccelDeleteCacheCmdInit() {
 	fs.StringVarP(&webAccelDeleteCacheParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&webAccelDeleteCacheParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&webAccelDeleteCacheParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
 func init() {
-	parent := webAccelCmd
-
-	webAccelListCmdInit()
-	parent.AddCommand(webAccelListCmd)
-
-	webAccelReadCmdInit()
-	parent.AddCommand(webAccelReadCmd)
-
-	webAccelCertificateInfoCmdInit()
-	parent.AddCommand(webAccelCertificateInfoCmd)
-
-	webAccelCertificateNewCmdInit()
-	parent.AddCommand(webAccelCertificateNewCmd)
-
-	webAccelCertificateUpdateCmdInit()
-	parent.AddCommand(webAccelCertificateUpdateCmd)
-
-	webAccelDeleteCacheCmdInit()
-	parent.AddCommand(webAccelDeleteCacheCmd)
-
+	parent := webAccelCmd()
+	parent.AddCommand(webAccelListCmd())
+	parent.AddCommand(webAccelReadCmd())
+	parent.AddCommand(webAccelCertificateInfoCmd())
+	parent.AddCommand(webAccelCertificateNewCmd())
+	parent.AddCommand(webAccelCertificateUpdateCmd())
+	parent.AddCommand(webAccelDeleteCacheCmd())
 	rootCmd.AddCommand(parent)
 }

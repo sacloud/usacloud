@@ -24,52 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	dnsListParam             = params.NewListDNSParam()
-	dnsRecordInfoParam       = params.NewRecordInfoDNSParam()
-	dnsRecordBulkUpdateParam = params.NewRecordBulkUpdateDNSParam()
-	dnsCreateParam           = params.NewCreateDNSParam()
-	dnsRecordAddParam        = params.NewRecordAddDNSParam()
-	dnsReadParam             = params.NewReadDNSParam()
-	dnsRecordUpdateParam     = params.NewRecordUpdateDNSParam()
-	dnsRecordDeleteParam     = params.NewRecordDeleteDNSParam()
-	dnsUpdateParam           = params.NewUpdateDNSParam()
-	dnsDeleteParam           = params.NewDeleteDNSParam()
-)
-
 // dnsCmd represents the command to manage SAKURA Cloud DNS
-var dnsCmd = &cobra.Command{
-	Use:   "dns",
-	Short: "A manage commands of DNS",
-	Long:  `A manage commands of DNS`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func dnsCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "dns",
+		Short: "A manage commands of DNS",
+		Long:  `A manage commands of DNS`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var dnsListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List DNS",
-	Long:    `List DNS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return dnsListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), dnsListParam)
-		if err != nil {
-			return err
-		}
+func dnsListCmd() *cobra.Command {
+	dnsListParam := params.NewListDNSParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List DNS",
+		Long:    `List DNS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return dnsListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), dnsListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(dnsListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(dnsListParam))
+			return nil
+		},
+	}
 
-func dnsListCmdInit() {
-	fs := dnsListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&dnsListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &dnsListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&dnsListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
@@ -88,31 +78,33 @@ func dnsListCmdInit() {
 	fs.StringVarP(&dnsListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&dnsListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var dnsRecordInfoCmd = &cobra.Command{
-	Use:     "record-info",
-	Aliases: []string{"record-list"},
-	Short:   "RecordInfo DNS",
-	Long:    `RecordInfo DNS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return dnsRecordInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), dnsRecordInfoParam)
-		if err != nil {
-			return err
-		}
+func dnsRecordInfoCmd() *cobra.Command {
+	dnsRecordInfoParam := params.NewRecordInfoDNSParam()
+	cmd := &cobra.Command{
+		Use:     "record-info",
+		Aliases: []string{"record-list"},
+		Short:   "RecordInfo DNS",
+		Long:    `RecordInfo DNS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return dnsRecordInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), dnsRecordInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("record-info local parameter: \n%s\n", debugMarshalIndent(dnsRecordInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("record-info local parameter: \n%s\n", debugMarshalIndent(dnsRecordInfoParam))
+			return nil
+		},
+	}
 
-func dnsRecordInfoCmdInit() {
-	fs := dnsRecordInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&dnsRecordInfoParam.Name, "name", "", "", "set name")
 	fs.StringVarP(&dnsRecordInfoParam.Type, "type", "", "", "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]")
 	fs.StringSliceVarP(&dnsRecordInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -129,31 +121,33 @@ func dnsRecordInfoCmdInit() {
 	fs.StringVarP(&dnsRecordInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsRecordInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &dnsRecordInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var dnsRecordBulkUpdateCmd = &cobra.Command{
-	Use: "record-bulk-update",
+func dnsRecordBulkUpdateCmd() *cobra.Command {
+	dnsRecordBulkUpdateParam := params.NewRecordBulkUpdateDNSParam()
+	cmd := &cobra.Command{
+		Use: "record-bulk-update",
 
-	Short: "RecordBulkUpdate DNS",
-	Long:  `RecordBulkUpdate DNS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return dnsRecordBulkUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), dnsRecordBulkUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "RecordBulkUpdate DNS",
+		Long:  `RecordBulkUpdate DNS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return dnsRecordBulkUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), dnsRecordBulkUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("record-bulk-update local parameter: \n%s\n", debugMarshalIndent(dnsRecordBulkUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("record-bulk-update local parameter: \n%s\n", debugMarshalIndent(dnsRecordBulkUpdateParam))
+			return nil
+		},
+	}
 
-func dnsRecordBulkUpdateCmdInit() {
-	fs := dnsRecordBulkUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&dnsRecordBulkUpdateParam.File, "file", "", "", "set name")
 	fs.StringVarP(&dnsRecordBulkUpdateParam.Mode, "mode", "", "upsert-only", "set name")
 	fs.StringSliceVarP(&dnsRecordBulkUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -171,31 +165,33 @@ func dnsRecordBulkUpdateCmdInit() {
 	fs.StringVarP(&dnsRecordBulkUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsRecordBulkUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &dnsRecordBulkUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var dnsCreateCmd = &cobra.Command{
-	Use: "create",
+func dnsCreateCmd() *cobra.Command {
+	dnsCreateParam := params.NewCreateDNSParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create DNS",
-	Long:  `Create DNS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return dnsCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), dnsCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create DNS",
+		Long:  `Create DNS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return dnsCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), dnsCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(dnsCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(dnsCreateParam))
+			return nil
+		},
+	}
 
-func dnsCreateCmdInit() {
-	fs := dnsCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&dnsCreateParam.Name, "name", "", "", "set DNS zone name")
 	fs.StringVarP(&dnsCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&dnsCreateParam.Tags, "tags", "", []string{}, "set resource tags")
@@ -213,31 +209,33 @@ func dnsCreateCmdInit() {
 	fs.StringVarP(&dnsCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&dnsCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var dnsRecordAddCmd = &cobra.Command{
-	Use: "record-add",
+func dnsRecordAddCmd() *cobra.Command {
+	dnsRecordAddParam := params.NewRecordAddDNSParam()
+	cmd := &cobra.Command{
+		Use: "record-add",
 
-	Short: "RecordAdd DNS",
-	Long:  `RecordAdd DNS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return dnsRecordAddParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), dnsRecordAddParam)
-		if err != nil {
-			return err
-		}
+		Short: "RecordAdd DNS",
+		Long:  `RecordAdd DNS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return dnsRecordAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), dnsRecordAddParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("record-add local parameter: \n%s\n", debugMarshalIndent(dnsRecordAddParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("record-add local parameter: \n%s\n", debugMarshalIndent(dnsRecordAddParam))
+			return nil
+		},
+	}
 
-func dnsRecordAddCmdInit() {
-	fs := dnsRecordAddCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&dnsRecordAddParam.Name, "name", "", "", "set name")
 	fs.StringVarP(&dnsRecordAddParam.Type, "type", "", "", "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]")
 	fs.StringVarP(&dnsRecordAddParam.Value, "value", "", "", "set record data")
@@ -262,31 +260,33 @@ func dnsRecordAddCmdInit() {
 	fs.StringVarP(&dnsRecordAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsRecordAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &dnsRecordAddParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var dnsReadCmd = &cobra.Command{
-	Use: "read",
+func dnsReadCmd() *cobra.Command {
+	dnsReadParam := params.NewReadDNSParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read DNS",
-	Long:  `Read DNS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return dnsReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), dnsReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read DNS",
+		Long:  `Read DNS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return dnsReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), dnsReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(dnsReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(dnsReadParam))
+			return nil
+		},
+	}
 
-func dnsReadCmdInit() {
-	fs := dnsReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&dnsReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&dnsReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&dnsReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -301,31 +301,33 @@ func dnsReadCmdInit() {
 	fs.StringVarP(&dnsReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &dnsReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var dnsRecordUpdateCmd = &cobra.Command{
-	Use: "record-update",
+func dnsRecordUpdateCmd() *cobra.Command {
+	dnsRecordUpdateParam := params.NewRecordUpdateDNSParam()
+	cmd := &cobra.Command{
+		Use: "record-update",
 
-	Short: "RecordUpdate DNS",
-	Long:  `RecordUpdate DNS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return dnsRecordUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), dnsRecordUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "RecordUpdate DNS",
+		Long:  `RecordUpdate DNS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return dnsRecordUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), dnsRecordUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("record-update local parameter: \n%s\n", debugMarshalIndent(dnsRecordUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("record-update local parameter: \n%s\n", debugMarshalIndent(dnsRecordUpdateParam))
+			return nil
+		},
+	}
 
-func dnsRecordUpdateCmdInit() {
-	fs := dnsRecordUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&dnsRecordUpdateParam.Index, "index", "", 0, "index of target record")
 	fs.StringVarP(&dnsRecordUpdateParam.Name, "name", "", "", "set name")
 	fs.StringVarP(&dnsRecordUpdateParam.Type, "type", "", "", "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]")
@@ -351,31 +353,33 @@ func dnsRecordUpdateCmdInit() {
 	fs.StringVarP(&dnsRecordUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsRecordUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &dnsRecordUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var dnsRecordDeleteCmd = &cobra.Command{
-	Use: "record-delete",
+func dnsRecordDeleteCmd() *cobra.Command {
+	dnsRecordDeleteParam := params.NewRecordDeleteDNSParam()
+	cmd := &cobra.Command{
+		Use: "record-delete",
 
-	Short: "RecordDelete DNS",
-	Long:  `RecordDelete DNS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return dnsRecordDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), dnsRecordDeleteParam)
-		if err != nil {
-			return err
-		}
+		Short: "RecordDelete DNS",
+		Long:  `RecordDelete DNS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return dnsRecordDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), dnsRecordDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("record-delete local parameter: \n%s\n", debugMarshalIndent(dnsRecordDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("record-delete local parameter: \n%s\n", debugMarshalIndent(dnsRecordDeleteParam))
+			return nil
+		},
+	}
 
-func dnsRecordDeleteCmdInit() {
-	fs := dnsRecordDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&dnsRecordDeleteParam.Index, "index", "", 0, "index of target record")
 	fs.StringSliceVarP(&dnsRecordDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&dnsRecordDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -392,31 +396,33 @@ func dnsRecordDeleteCmdInit() {
 	fs.StringVarP(&dnsRecordDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsRecordDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &dnsRecordDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var dnsUpdateCmd = &cobra.Command{
-	Use: "update",
+func dnsUpdateCmd() *cobra.Command {
+	dnsUpdateParam := params.NewUpdateDNSParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update DNS",
-	Long:  `Update DNS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return dnsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), dnsUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update DNS",
+		Long:  `Update DNS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return dnsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), dnsUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(dnsUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(dnsUpdateParam))
+			return nil
+		},
+	}
 
-func dnsUpdateCmdInit() {
-	fs := dnsUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&dnsUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&dnsUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&dnsUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
@@ -435,31 +441,33 @@ func dnsUpdateCmdInit() {
 	fs.StringVarP(&dnsUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &dnsUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var dnsDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete DNS",
-	Long:    `Delete DNS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return dnsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), dnsDeleteParam)
-		if err != nil {
-			return err
-		}
+func dnsDeleteCmd() *cobra.Command {
+	dnsDeleteParam := params.NewDeleteDNSParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete DNS",
+		Long:    `Delete DNS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return dnsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), dnsDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(dnsDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(dnsDeleteParam))
+			return nil
+		},
+	}
 
-func dnsDeleteCmdInit() {
-	fs := dnsDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&dnsDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&dnsDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&dnsDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -475,40 +483,20 @@ func dnsDeleteCmdInit() {
 	fs.StringVarP(&dnsDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &dnsDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := dnsCmd
-
-	dnsListCmdInit()
-	parent.AddCommand(dnsListCmd)
-
-	dnsRecordInfoCmdInit()
-	parent.AddCommand(dnsRecordInfoCmd)
-
-	dnsRecordBulkUpdateCmdInit()
-	parent.AddCommand(dnsRecordBulkUpdateCmd)
-
-	dnsCreateCmdInit()
-	parent.AddCommand(dnsCreateCmd)
-
-	dnsRecordAddCmdInit()
-	parent.AddCommand(dnsRecordAddCmd)
-
-	dnsReadCmdInit()
-	parent.AddCommand(dnsReadCmd)
-
-	dnsRecordUpdateCmdInit()
-	parent.AddCommand(dnsRecordUpdateCmd)
-
-	dnsRecordDeleteCmdInit()
-	parent.AddCommand(dnsRecordDeleteCmd)
-
-	dnsUpdateCmdInit()
-	parent.AddCommand(dnsUpdateCmd)
-
-	dnsDeleteCmdInit()
-	parent.AddCommand(dnsDeleteCmd)
-
+	parent := dnsCmd()
+	parent.AddCommand(dnsListCmd())
+	parent.AddCommand(dnsRecordInfoCmd())
+	parent.AddCommand(dnsRecordBulkUpdateCmd())
+	parent.AddCommand(dnsCreateCmd())
+	parent.AddCommand(dnsRecordAddCmd())
+	parent.AddCommand(dnsReadCmd())
+	parent.AddCommand(dnsRecordUpdateCmd())
+	parent.AddCommand(dnsRecordDeleteCmd())
+	parent.AddCommand(dnsUpdateCmd())
+	parent.AddCommand(dnsDeleteCmd())
 	rootCmd.AddCommand(parent)
 }

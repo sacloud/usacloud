@@ -24,48 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	simpleMonitorListParam   = params.NewListSimpleMonitorParam()
-	simpleMonitorCreateParam = params.NewCreateSimpleMonitorParam()
-	simpleMonitorReadParam   = params.NewReadSimpleMonitorParam()
-	simpleMonitorUpdateParam = params.NewUpdateSimpleMonitorParam()
-	simpleMonitorDeleteParam = params.NewDeleteSimpleMonitorParam()
-	simpleMonitorHealthParam = params.NewHealthSimpleMonitorParam()
-)
-
 // simpleMonitorCmd represents the command to manage SAKURA Cloud SimpleMonitor
-var simpleMonitorCmd = &cobra.Command{
-	Use:   "simple-monitor",
-	Short: "A manage commands of SimpleMonitor",
-	Long:  `A manage commands of SimpleMonitor`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func simpleMonitorCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "simple-monitor",
+		Short: "A manage commands of SimpleMonitor",
+		Long:  `A manage commands of SimpleMonitor`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var simpleMonitorListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List SimpleMonitor",
-	Long:    `List SimpleMonitor`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simpleMonitorListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simpleMonitorListParam)
-		if err != nil {
-			return err
-		}
+func simpleMonitorListCmd() *cobra.Command {
+	simpleMonitorListParam := params.NewListSimpleMonitorParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List SimpleMonitor",
+		Long:    `List SimpleMonitor`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simpleMonitorListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simpleMonitorListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(simpleMonitorListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(simpleMonitorListParam))
+			return nil
+		},
+	}
 
-func simpleMonitorListCmdInit() {
-	fs := simpleMonitorListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&simpleMonitorListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &simpleMonitorListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&simpleMonitorListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
@@ -85,31 +79,33 @@ func simpleMonitorListCmdInit() {
 	fs.StringVarP(&simpleMonitorListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&simpleMonitorListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simpleMonitorListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var simpleMonitorCreateCmd = &cobra.Command{
-	Use: "create",
+func simpleMonitorCreateCmd() *cobra.Command {
+	simpleMonitorCreateParam := params.NewCreateSimpleMonitorParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create SimpleMonitor",
-	Long:  `Create SimpleMonitor`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simpleMonitorCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simpleMonitorCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create SimpleMonitor",
+		Long:  `Create SimpleMonitor`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simpleMonitorCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simpleMonitorCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(simpleMonitorCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(simpleMonitorCreateParam))
+			return nil
+		},
+	}
 
-func simpleMonitorCreateCmdInit() {
-	fs := simpleMonitorCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&simpleMonitorCreateParam.Target, "target", "", "", "set monitoring target IP or Hostname")
 	fs.StringVarP(&simpleMonitorCreateParam.Protocol, "protocol", "", "ping", "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3/ssl-certificate]")
 	fs.IntVarP(&simpleMonitorCreateParam.Port, "port", "", 0, "set port of tcp monitoring")
@@ -144,31 +140,33 @@ func simpleMonitorCreateCmdInit() {
 	fs.StringVarP(&simpleMonitorCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&simpleMonitorCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simpleMonitorCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var simpleMonitorReadCmd = &cobra.Command{
-	Use: "read",
+func simpleMonitorReadCmd() *cobra.Command {
+	simpleMonitorReadParam := params.NewReadSimpleMonitorParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read SimpleMonitor",
-	Long:  `Read SimpleMonitor`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simpleMonitorReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simpleMonitorReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read SimpleMonitor",
+		Long:  `Read SimpleMonitor`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simpleMonitorReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simpleMonitorReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(simpleMonitorReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(simpleMonitorReadParam))
+			return nil
+		},
+	}
 
-func simpleMonitorReadCmdInit() {
-	fs := simpleMonitorReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&simpleMonitorReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&simpleMonitorReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&simpleMonitorReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -183,31 +181,33 @@ func simpleMonitorReadCmdInit() {
 	fs.StringVarP(&simpleMonitorReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simpleMonitorReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simpleMonitorReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var simpleMonitorUpdateCmd = &cobra.Command{
-	Use: "update",
+func simpleMonitorUpdateCmd() *cobra.Command {
+	simpleMonitorUpdateParam := params.NewUpdateSimpleMonitorParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update SimpleMonitor",
-	Long:  `Update SimpleMonitor`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simpleMonitorUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simpleMonitorUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update SimpleMonitor",
+		Long:  `Update SimpleMonitor`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simpleMonitorUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simpleMonitorUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(simpleMonitorUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(simpleMonitorUpdateParam))
+			return nil
+		},
+	}
 
-func simpleMonitorUpdateCmdInit() {
-	fs := simpleMonitorUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&simpleMonitorUpdateParam.Protocol, "protocol", "", "", "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3/ssl-certificate]")
 	fs.IntVarP(&simpleMonitorUpdateParam.Port, "port", "", 0, "set port of tcp monitoring")
 	fs.IntVarP(&simpleMonitorUpdateParam.DelayLoop, "delay-loop", "", 0, "set delay-loop of monitoring(minute)")
@@ -243,31 +243,33 @@ func simpleMonitorUpdateCmdInit() {
 	fs.StringVarP(&simpleMonitorUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simpleMonitorUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simpleMonitorUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var simpleMonitorDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete SimpleMonitor",
-	Long:    `Delete SimpleMonitor`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simpleMonitorDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simpleMonitorDeleteParam)
-		if err != nil {
-			return err
-		}
+func simpleMonitorDeleteCmd() *cobra.Command {
+	simpleMonitorDeleteParam := params.NewDeleteSimpleMonitorParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete SimpleMonitor",
+		Long:    `Delete SimpleMonitor`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simpleMonitorDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simpleMonitorDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(simpleMonitorDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(simpleMonitorDeleteParam))
+			return nil
+		},
+	}
 
-func simpleMonitorDeleteCmdInit() {
-	fs := simpleMonitorDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&simpleMonitorDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&simpleMonitorDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&simpleMonitorDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -283,31 +285,33 @@ func simpleMonitorDeleteCmdInit() {
 	fs.StringVarP(&simpleMonitorDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simpleMonitorDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simpleMonitorDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var simpleMonitorHealthCmd = &cobra.Command{
-	Use: "health",
+func simpleMonitorHealthCmd() *cobra.Command {
+	simpleMonitorHealthParam := params.NewHealthSimpleMonitorParam()
+	cmd := &cobra.Command{
+		Use: "health",
 
-	Short: "Health SimpleMonitor",
-	Long:  `Health SimpleMonitor`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simpleMonitorHealthParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simpleMonitorHealthParam)
-		if err != nil {
-			return err
-		}
+		Short: "Health SimpleMonitor",
+		Long:  `Health SimpleMonitor`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simpleMonitorHealthParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simpleMonitorHealthParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("health local parameter: \n%s\n", debugMarshalIndent(simpleMonitorHealthParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("health local parameter: \n%s\n", debugMarshalIndent(simpleMonitorHealthParam))
+			return nil
+		},
+	}
 
-func simpleMonitorHealthCmdInit() {
-	fs := simpleMonitorHealthCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&simpleMonitorHealthParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&simpleMonitorHealthParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&simpleMonitorHealthParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -322,28 +326,16 @@ func simpleMonitorHealthCmdInit() {
 	fs.StringVarP(&simpleMonitorHealthParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simpleMonitorHealthParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simpleMonitorHealthParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := simpleMonitorCmd
-
-	simpleMonitorListCmdInit()
-	parent.AddCommand(simpleMonitorListCmd)
-
-	simpleMonitorCreateCmdInit()
-	parent.AddCommand(simpleMonitorCreateCmd)
-
-	simpleMonitorReadCmdInit()
-	parent.AddCommand(simpleMonitorReadCmd)
-
-	simpleMonitorUpdateCmdInit()
-	parent.AddCommand(simpleMonitorUpdateCmd)
-
-	simpleMonitorDeleteCmdInit()
-	parent.AddCommand(simpleMonitorDeleteCmd)
-
-	simpleMonitorHealthCmdInit()
-	parent.AddCommand(simpleMonitorHealthCmd)
-
+	parent := simpleMonitorCmd()
+	parent.AddCommand(simpleMonitorListCmd())
+	parent.AddCommand(simpleMonitorCreateCmd())
+	parent.AddCommand(simpleMonitorReadCmd())
+	parent.AddCommand(simpleMonitorUpdateCmd())
+	parent.AddCommand(simpleMonitorDeleteCmd())
+	parent.AddCommand(simpleMonitorHealthCmd())
 	rootCmd.AddCommand(parent)
 }

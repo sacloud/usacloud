@@ -89,7 +89,7 @@ func (c *Command) HasOutputOption() bool {
 	return !c.NoOutput
 }
 
-func (c *Command) CLIVariableName() string {
+func (c *Command) CLIVariableFuncName() string {
 	return fmt.Sprintf("%s%sCmd", ToCamelWithFirstLower(c.Resource.Name), ToCamelCaseName(c.Name))
 }
 

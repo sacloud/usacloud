@@ -24,68 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	proxyLBListParam                 = params.NewListProxyLBParam()
-	proxyLBCreateParam               = params.NewCreateProxyLBParam()
-	proxyLBReadParam                 = params.NewReadProxyLBParam()
-	proxyLBUpdateParam               = params.NewUpdateProxyLBParam()
-	proxyLBDeleteParam               = params.NewDeleteProxyLBParam()
-	proxyLBPlanChangeParam           = params.NewPlanChangeProxyLBParam()
-	proxyLBBindPortInfoParam         = params.NewBindPortInfoProxyLBParam()
-	proxyLBBindPortAddParam          = params.NewBindPortAddProxyLBParam()
-	proxyLBBindPortUpdateParam       = params.NewBindPortUpdateProxyLBParam()
-	proxyLBBindPortDeleteParam       = params.NewBindPortDeleteProxyLBParam()
-	proxyLBResponseHeaderInfoParam   = params.NewResponseHeaderInfoProxyLBParam()
-	proxyLBResponseHeaderAddParam    = params.NewResponseHeaderAddProxyLBParam()
-	proxyLBResponseHeaderUpdateParam = params.NewResponseHeaderUpdateProxyLBParam()
-	proxyLBResponseHeaderDeleteParam = params.NewResponseHeaderDeleteProxyLBParam()
-	proxyLBACMEInfoParam             = params.NewACMEInfoProxyLBParam()
-	proxyLBACMESettingParam          = params.NewACMESettingProxyLBParam()
-	proxyLBACMERenewParam            = params.NewACMERenewProxyLBParam()
-	proxyLBServerInfoParam           = params.NewServerInfoProxyLBParam()
-	proxyLBServerAddParam            = params.NewServerAddProxyLBParam()
-	proxyLBServerUpdateParam         = params.NewServerUpdateProxyLBParam()
-	proxyLBServerDeleteParam         = params.NewServerDeleteProxyLBParam()
-	proxyLBCertificateInfoParam      = params.NewCertificateInfoProxyLBParam()
-	proxyLBCertificateAddParam       = params.NewCertificateAddProxyLBParam()
-	proxyLBCertificateUpdateParam    = params.NewCertificateUpdateProxyLBParam()
-	proxyLBCertificateDeleteParam    = params.NewCertificateDeleteProxyLBParam()
-	proxyLBMonitorParam              = params.NewMonitorProxyLBParam()
-)
-
 // proxyLBCmd represents the command to manage SAKURA Cloud ProxyLB
-var proxyLBCmd = &cobra.Command{
-	Use:   "proxy-lb",
-	Short: "A manage commands of ProxyLB",
-	Long:  `A manage commands of ProxyLB`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func proxyLBCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "proxy-lb",
+		Short: "A manage commands of ProxyLB",
+		Long:  `A manage commands of ProxyLB`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var proxyLBListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List ProxyLB",
-	Long:    `List ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBListParam)
-		if err != nil {
-			return err
-		}
+func proxyLBListCmd() *cobra.Command {
+	proxyLBListParam := params.NewListProxyLBParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List ProxyLB",
+		Long:    `List ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(proxyLBListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(proxyLBListParam))
+			return nil
+		},
+	}
 
-func proxyLBListCmdInit() {
-	fs := proxyLBListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&proxyLBListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &proxyLBListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&proxyLBListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
@@ -104,31 +78,33 @@ func proxyLBListCmdInit() {
 	fs.StringVarP(&proxyLBListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&proxyLBListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var proxyLBCreateCmd = &cobra.Command{
-	Use: "create",
+func proxyLBCreateCmd() *cobra.Command {
+	proxyLBCreateParam := params.NewCreateProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create ProxyLB",
-	Long:  `Create ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create ProxyLB",
+		Long:  `Create ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(proxyLBCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(proxyLBCreateParam))
+			return nil
+		},
+	}
 
-func proxyLBCreateCmdInit() {
-	fs := proxyLBCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&proxyLBCreateParam.Plan, "plan", "", 1000, "set plan")
 	fs.StringVarP(&proxyLBCreateParam.Protocol, "protocol", "", "tcp", "set healthcheck protocol[http/tcp]")
 	fs.StringVarP(&proxyLBCreateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
@@ -155,31 +131,33 @@ func proxyLBCreateCmdInit() {
 	fs.StringVarP(&proxyLBCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&proxyLBCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var proxyLBReadCmd = &cobra.Command{
-	Use: "read",
+func proxyLBReadCmd() *cobra.Command {
+	proxyLBReadParam := params.NewReadProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read ProxyLB",
-	Long:  `Read ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read ProxyLB",
+		Long:  `Read ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(proxyLBReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(proxyLBReadParam))
+			return nil
+		},
+	}
 
-func proxyLBReadCmdInit() {
-	fs := proxyLBReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&proxyLBReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&proxyLBReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&proxyLBReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -194,31 +172,33 @@ func proxyLBReadCmdInit() {
 	fs.StringVarP(&proxyLBReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBUpdateCmd = &cobra.Command{
-	Use: "update",
+func proxyLBUpdateCmd() *cobra.Command {
+	proxyLBUpdateParam := params.NewUpdateProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update ProxyLB",
-	Long:  `Update ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update ProxyLB",
+		Long:  `Update ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(proxyLBUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(proxyLBUpdateParam))
+			return nil
+		},
+	}
 
-func proxyLBUpdateCmdInit() {
-	fs := proxyLBUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&proxyLBUpdateParam.Protocol, "protocol", "", "", "set healthcheck protocol[http/tcp]")
 	fs.StringVarP(&proxyLBUpdateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
 	fs.StringVarP(&proxyLBUpdateParam.Path, "path", "", "", "set path of http/https healthcheck request")
@@ -246,31 +226,33 @@ func proxyLBUpdateCmdInit() {
 	fs.StringVarP(&proxyLBUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete ProxyLB",
-	Long:    `Delete ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBDeleteParam)
-		if err != nil {
-			return err
-		}
+func proxyLBDeleteCmd() *cobra.Command {
+	proxyLBDeleteParam := params.NewDeleteProxyLBParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete ProxyLB",
+		Long:    `Delete ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(proxyLBDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(proxyLBDeleteParam))
+			return nil
+		},
+	}
 
-func proxyLBDeleteCmdInit() {
-	fs := proxyLBDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&proxyLBDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&proxyLBDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&proxyLBDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -286,31 +268,33 @@ func proxyLBDeleteCmdInit() {
 	fs.StringVarP(&proxyLBDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBPlanChangeCmd = &cobra.Command{
-	Use: "plan-change",
+func proxyLBPlanChangeCmd() *cobra.Command {
+	proxyLBPlanChangeParam := params.NewPlanChangeProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "plan-change",
 
-	Short: "Change ProxyLB plan",
-	Long:  `Change ProxyLB plan`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBPlanChangeParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBPlanChangeParam)
-		if err != nil {
-			return err
-		}
+		Short: "Change ProxyLB plan",
+		Long:  `Change ProxyLB plan`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBPlanChangeParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBPlanChangeParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("plan-change local parameter: \n%s\n", debugMarshalIndent(proxyLBPlanChangeParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("plan-change local parameter: \n%s\n", debugMarshalIndent(proxyLBPlanChangeParam))
+			return nil
+		},
+	}
 
-func proxyLBPlanChangeCmdInit() {
-	fs := proxyLBPlanChangeCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&proxyLBPlanChangeParam.Plan, "plan", "", 0, "set plan")
 	fs.StringSliceVarP(&proxyLBPlanChangeParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&proxyLBPlanChangeParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -327,31 +311,33 @@ func proxyLBPlanChangeCmdInit() {
 	fs.StringVarP(&proxyLBPlanChangeParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBPlanChangeParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBPlanChangeParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBBindPortInfoCmd = &cobra.Command{
-	Use:     "bind-port-info",
-	Aliases: []string{"bind-port-list"},
-	Short:   "BindPortInfo ProxyLB",
-	Long:    `BindPortInfo ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBBindPortInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBBindPortInfoParam)
-		if err != nil {
-			return err
-		}
+func proxyLBBindPortInfoCmd() *cobra.Command {
+	proxyLBBindPortInfoParam := params.NewBindPortInfoProxyLBParam()
+	cmd := &cobra.Command{
+		Use:     "bind-port-info",
+		Aliases: []string{"bind-port-list"},
+		Short:   "BindPortInfo ProxyLB",
+		Long:    `BindPortInfo ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBBindPortInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBBindPortInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("bind-port-info local parameter: \n%s\n", debugMarshalIndent(proxyLBBindPortInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("bind-port-info local parameter: \n%s\n", debugMarshalIndent(proxyLBBindPortInfoParam))
+			return nil
+		},
+	}
 
-func proxyLBBindPortInfoCmdInit() {
-	fs := proxyLBBindPortInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&proxyLBBindPortInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&proxyLBBindPortInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&proxyLBBindPortInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -366,31 +352,33 @@ func proxyLBBindPortInfoCmdInit() {
 	fs.StringVarP(&proxyLBBindPortInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBBindPortInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBBindPortInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBBindPortAddCmd = &cobra.Command{
-	Use: "bind-port-add",
+func proxyLBBindPortAddCmd() *cobra.Command {
+	proxyLBBindPortAddParam := params.NewBindPortAddProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "bind-port-add",
 
-	Short: "BindPortAdd ProxyLB",
-	Long:  `BindPortAdd ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBBindPortAddParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBBindPortAddParam)
-		if err != nil {
-			return err
-		}
+		Short: "BindPortAdd ProxyLB",
+		Long:  `BindPortAdd ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBBindPortAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBBindPortAddParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("bind-port-add local parameter: \n%s\n", debugMarshalIndent(proxyLBBindPortAddParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("bind-port-add local parameter: \n%s\n", debugMarshalIndent(proxyLBBindPortAddParam))
+			return nil
+		},
+	}
 
-func proxyLBBindPortAddCmdInit() {
-	fs := proxyLBBindPortAddCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&proxyLBBindPortAddParam.Mode, "mode", "", "", "set bind mode[http/https/tcp]")
 	fs.IntVarP(&proxyLBBindPortAddParam.Port, "port", "", 0, "set port number")
 	fs.BoolVarP(&proxyLBBindPortAddParam.RedirectToHttps, "redirect-to-https", "", false, "enable to redirect to https")
@@ -410,31 +398,33 @@ func proxyLBBindPortAddCmdInit() {
 	fs.StringVarP(&proxyLBBindPortAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBBindPortAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBBindPortAddParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBBindPortUpdateCmd = &cobra.Command{
-	Use: "bind-port-update",
+func proxyLBBindPortUpdateCmd() *cobra.Command {
+	proxyLBBindPortUpdateParam := params.NewBindPortUpdateProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "bind-port-update",
 
-	Short: "BindPortUpdate ProxyLB",
-	Long:  `BindPortUpdate ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBBindPortUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBBindPortUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "BindPortUpdate ProxyLB",
+		Long:  `BindPortUpdate ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBBindPortUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBBindPortUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("bind-port-update local parameter: \n%s\n", debugMarshalIndent(proxyLBBindPortUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("bind-port-update local parameter: \n%s\n", debugMarshalIndent(proxyLBBindPortUpdateParam))
+			return nil
+		},
+	}
 
-func proxyLBBindPortUpdateCmdInit() {
-	fs := proxyLBBindPortUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&proxyLBBindPortUpdateParam.Index, "index", "", 0, "index of target server")
 	fs.StringVarP(&proxyLBBindPortUpdateParam.Mode, "mode", "", "", "set bind mode[http/https/tcp]")
 	fs.IntVarP(&proxyLBBindPortUpdateParam.Port, "port", "", 0, "set port number")
@@ -455,31 +445,33 @@ func proxyLBBindPortUpdateCmdInit() {
 	fs.StringVarP(&proxyLBBindPortUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBBindPortUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBBindPortUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBBindPortDeleteCmd = &cobra.Command{
-	Use: "bind-port-delete",
+func proxyLBBindPortDeleteCmd() *cobra.Command {
+	proxyLBBindPortDeleteParam := params.NewBindPortDeleteProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "bind-port-delete",
 
-	Short: "BindPortDelete ProxyLB",
-	Long:  `BindPortDelete ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBBindPortDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBBindPortDeleteParam)
-		if err != nil {
-			return err
-		}
+		Short: "BindPortDelete ProxyLB",
+		Long:  `BindPortDelete ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBBindPortDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBBindPortDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("bind-port-delete local parameter: \n%s\n", debugMarshalIndent(proxyLBBindPortDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("bind-port-delete local parameter: \n%s\n", debugMarshalIndent(proxyLBBindPortDeleteParam))
+			return nil
+		},
+	}
 
-func proxyLBBindPortDeleteCmdInit() {
-	fs := proxyLBBindPortDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&proxyLBBindPortDeleteParam.Index, "index", "", 0, "index of target bind-port")
 	fs.StringSliceVarP(&proxyLBBindPortDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&proxyLBBindPortDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -496,31 +488,33 @@ func proxyLBBindPortDeleteCmdInit() {
 	fs.StringVarP(&proxyLBBindPortDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBBindPortDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBBindPortDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBResponseHeaderInfoCmd = &cobra.Command{
-	Use:     "response-header-info",
-	Aliases: []string{"response-header-list"},
-	Short:   "ResponseHeaderInfo ProxyLB",
-	Long:    `ResponseHeaderInfo ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBResponseHeaderInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBResponseHeaderInfoParam)
-		if err != nil {
-			return err
-		}
+func proxyLBResponseHeaderInfoCmd() *cobra.Command {
+	proxyLBResponseHeaderInfoParam := params.NewResponseHeaderInfoProxyLBParam()
+	cmd := &cobra.Command{
+		Use:     "response-header-info",
+		Aliases: []string{"response-header-list"},
+		Short:   "ResponseHeaderInfo ProxyLB",
+		Long:    `ResponseHeaderInfo ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBResponseHeaderInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBResponseHeaderInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("response-header-info local parameter: \n%s\n", debugMarshalIndent(proxyLBResponseHeaderInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("response-header-info local parameter: \n%s\n", debugMarshalIndent(proxyLBResponseHeaderInfoParam))
+			return nil
+		},
+	}
 
-func proxyLBResponseHeaderInfoCmdInit() {
-	fs := proxyLBResponseHeaderInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&proxyLBResponseHeaderInfoParam.PortIndex, "port-index", "", 0, "index of target bind-port")
 	fs.StringSliceVarP(&proxyLBResponseHeaderInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&proxyLBResponseHeaderInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -536,31 +530,33 @@ func proxyLBResponseHeaderInfoCmdInit() {
 	fs.StringVarP(&proxyLBResponseHeaderInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBResponseHeaderInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBResponseHeaderInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBResponseHeaderAddCmd = &cobra.Command{
-	Use: "response-header-add",
+func proxyLBResponseHeaderAddCmd() *cobra.Command {
+	proxyLBResponseHeaderAddParam := params.NewResponseHeaderAddProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "response-header-add",
 
-	Short: "ResponseHeaderAdd ProxyLB",
-	Long:  `ResponseHeaderAdd ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBResponseHeaderAddParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBResponseHeaderAddParam)
-		if err != nil {
-			return err
-		}
+		Short: "ResponseHeaderAdd ProxyLB",
+		Long:  `ResponseHeaderAdd ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBResponseHeaderAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBResponseHeaderAddParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("response-header-add local parameter: \n%s\n", debugMarshalIndent(proxyLBResponseHeaderAddParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("response-header-add local parameter: \n%s\n", debugMarshalIndent(proxyLBResponseHeaderAddParam))
+			return nil
+		},
+	}
 
-func proxyLBResponseHeaderAddCmdInit() {
-	fs := proxyLBResponseHeaderAddCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&proxyLBResponseHeaderAddParam.PortIndex, "port-index", "", 0, "index of target bind-port")
 	fs.StringVarP(&proxyLBResponseHeaderAddParam.Header, "header", "", "", "set Header")
 	fs.StringVarP(&proxyLBResponseHeaderAddParam.Value, "value", "", "", "set Value")
@@ -579,31 +575,33 @@ func proxyLBResponseHeaderAddCmdInit() {
 	fs.StringVarP(&proxyLBResponseHeaderAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBResponseHeaderAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBResponseHeaderAddParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBResponseHeaderUpdateCmd = &cobra.Command{
-	Use: "response-header-update",
+func proxyLBResponseHeaderUpdateCmd() *cobra.Command {
+	proxyLBResponseHeaderUpdateParam := params.NewResponseHeaderUpdateProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "response-header-update",
 
-	Short: "ResponseHeaderUpdate ProxyLB",
-	Long:  `ResponseHeaderUpdate ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBResponseHeaderUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBResponseHeaderUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "ResponseHeaderUpdate ProxyLB",
+		Long:  `ResponseHeaderUpdate ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBResponseHeaderUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBResponseHeaderUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("response-header-update local parameter: \n%s\n", debugMarshalIndent(proxyLBResponseHeaderUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("response-header-update local parameter: \n%s\n", debugMarshalIndent(proxyLBResponseHeaderUpdateParam))
+			return nil
+		},
+	}
 
-func proxyLBResponseHeaderUpdateCmdInit() {
-	fs := proxyLBResponseHeaderUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&proxyLBResponseHeaderUpdateParam.Index, "index", "", 0, "index of target server")
 	fs.IntVarP(&proxyLBResponseHeaderUpdateParam.PortIndex, "port-index", "", 0, "index of target bind-port")
 	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.Header, "header", "", "", "set Header")
@@ -623,31 +621,33 @@ func proxyLBResponseHeaderUpdateCmdInit() {
 	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBResponseHeaderUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBResponseHeaderDeleteCmd = &cobra.Command{
-	Use: "response-header-delete",
+func proxyLBResponseHeaderDeleteCmd() *cobra.Command {
+	proxyLBResponseHeaderDeleteParam := params.NewResponseHeaderDeleteProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "response-header-delete",
 
-	Short: "ResponseHeaderDelete ProxyLB",
-	Long:  `ResponseHeaderDelete ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBResponseHeaderDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBResponseHeaderDeleteParam)
-		if err != nil {
-			return err
-		}
+		Short: "ResponseHeaderDelete ProxyLB",
+		Long:  `ResponseHeaderDelete ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBResponseHeaderDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBResponseHeaderDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("response-header-delete local parameter: \n%s\n", debugMarshalIndent(proxyLBResponseHeaderDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("response-header-delete local parameter: \n%s\n", debugMarshalIndent(proxyLBResponseHeaderDeleteParam))
+			return nil
+		},
+	}
 
-func proxyLBResponseHeaderDeleteCmdInit() {
-	fs := proxyLBResponseHeaderDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&proxyLBResponseHeaderDeleteParam.Index, "index", "", 0, "index of target bind-port")
 	fs.IntVarP(&proxyLBResponseHeaderDeleteParam.PortIndex, "port-index", "", 0, "index of target bind-port")
 	fs.StringSliceVarP(&proxyLBResponseHeaderDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -665,31 +665,33 @@ func proxyLBResponseHeaderDeleteCmdInit() {
 	fs.StringVarP(&proxyLBResponseHeaderDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBResponseHeaderDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBResponseHeaderDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBACMEInfoCmd = &cobra.Command{
-	Use: "acme-info",
+func proxyLBACMEInfoCmd() *cobra.Command {
+	proxyLBACMEInfoParam := params.NewACMEInfoProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "acme-info",
 
-	Short: "ACMEInfo ProxyLB",
-	Long:  `ACMEInfo ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBACMEInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBACMEInfoParam)
-		if err != nil {
-			return err
-		}
+		Short: "ACMEInfo ProxyLB",
+		Long:  `ACMEInfo ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBACMEInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBACMEInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("acme-info local parameter: \n%s\n", debugMarshalIndent(proxyLBACMEInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("acme-info local parameter: \n%s\n", debugMarshalIndent(proxyLBACMEInfoParam))
+			return nil
+		},
+	}
 
-func proxyLBACMEInfoCmdInit() {
-	fs := proxyLBACMEInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&proxyLBACMEInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&proxyLBACMEInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&proxyLBACMEInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -704,31 +706,33 @@ func proxyLBACMEInfoCmdInit() {
 	fs.StringVarP(&proxyLBACMEInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBACMEInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBACMEInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBACMESettingCmd = &cobra.Command{
-	Use: "acme-setting",
+func proxyLBACMESettingCmd() *cobra.Command {
+	proxyLBACMESettingParam := params.NewACMESettingProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "acme-setting",
 
-	Short: "ACMESetting ProxyLB",
-	Long:  `ACMESetting ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBACMESettingParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBACMESettingParam)
-		if err != nil {
-			return err
-		}
+		Short: "ACMESetting ProxyLB",
+		Long:  `ACMESetting ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBACMESettingParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBACMESettingParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("acme-setting local parameter: \n%s\n", debugMarshalIndent(proxyLBACMESettingParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("acme-setting local parameter: \n%s\n", debugMarshalIndent(proxyLBACMESettingParam))
+			return nil
+		},
+	}
 
-func proxyLBACMESettingCmdInit() {
-	fs := proxyLBACMESettingCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&proxyLBACMESettingParam.AcceptTos, "accept-tos", "", false, "the flag of accept Let's Encrypt's terms of services: https://letsencrypt.org/repository/")
 	fs.StringVarP(&proxyLBACMESettingParam.CommonName, "common-name", "", "", "set common name")
 	fs.BoolVarP(&proxyLBACMESettingParam.Disable, "disable", "", false, "the flag of disable Let's Encrypt")
@@ -747,31 +751,33 @@ func proxyLBACMESettingCmdInit() {
 	fs.StringVarP(&proxyLBACMESettingParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBACMESettingParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBACMESettingParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBACMERenewCmd = &cobra.Command{
-	Use: "acme-renew",
+func proxyLBACMERenewCmd() *cobra.Command {
+	proxyLBACMERenewParam := params.NewACMERenewProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "acme-renew",
 
-	Short: "ACMERenew ProxyLB",
-	Long:  `ACMERenew ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBACMERenewParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBACMERenewParam)
-		if err != nil {
-			return err
-		}
+		Short: "ACMERenew ProxyLB",
+		Long:  `ACMERenew ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBACMERenewParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBACMERenewParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("acme-renew local parameter: \n%s\n", debugMarshalIndent(proxyLBACMERenewParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("acme-renew local parameter: \n%s\n", debugMarshalIndent(proxyLBACMERenewParam))
+			return nil
+		},
+	}
 
-func proxyLBACMERenewCmdInit() {
-	fs := proxyLBACMERenewCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&proxyLBACMERenewParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&proxyLBACMERenewParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&proxyLBACMERenewParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -780,31 +786,33 @@ func proxyLBACMERenewCmdInit() {
 	fs.StringVarP(&proxyLBACMERenewParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&proxyLBACMERenewParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &proxyLBACMERenewParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBServerInfoCmd = &cobra.Command{
-	Use:     "server-info",
-	Aliases: []string{"server-list"},
-	Short:   "ServerInfo ProxyLB",
-	Long:    `ServerInfo ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBServerInfoParam)
-		if err != nil {
-			return err
-		}
+func proxyLBServerInfoCmd() *cobra.Command {
+	proxyLBServerInfoParam := params.NewServerInfoProxyLBParam()
+	cmd := &cobra.Command{
+		Use:     "server-info",
+		Aliases: []string{"server-list"},
+		Short:   "ServerInfo ProxyLB",
+		Long:    `ServerInfo ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBServerInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("server-info local parameter: \n%s\n", debugMarshalIndent(proxyLBServerInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("server-info local parameter: \n%s\n", debugMarshalIndent(proxyLBServerInfoParam))
+			return nil
+		},
+	}
 
-func proxyLBServerInfoCmdInit() {
-	fs := proxyLBServerInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&proxyLBServerInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&proxyLBServerInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&proxyLBServerInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -819,31 +827,33 @@ func proxyLBServerInfoCmdInit() {
 	fs.StringVarP(&proxyLBServerInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBServerInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBServerInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBServerAddCmd = &cobra.Command{
-	Use: "server-add",
+func proxyLBServerAddCmd() *cobra.Command {
+	proxyLBServerAddParam := params.NewServerAddProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "server-add",
 
-	Short: "ServerAdd ProxyLB",
-	Long:  `ServerAdd ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBServerAddParam)
-		if err != nil {
-			return err
-		}
+		Short: "ServerAdd ProxyLB",
+		Long:  `ServerAdd ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBServerAddParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("server-add local parameter: \n%s\n", debugMarshalIndent(proxyLBServerAddParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("server-add local parameter: \n%s\n", debugMarshalIndent(proxyLBServerAddParam))
+			return nil
+		},
+	}
 
-func proxyLBServerAddCmdInit() {
-	fs := proxyLBServerAddCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&proxyLBServerAddParam.Ipaddress, "ipaddress", "", "", "set target ipaddress")
 	fs.BoolVarP(&proxyLBServerAddParam.Disabled, "disabled", "", false, "set disabled")
 	fs.IntVarP(&proxyLBServerAddParam.Port, "port", "", 0, "set server ports")
@@ -862,31 +872,33 @@ func proxyLBServerAddCmdInit() {
 	fs.StringVarP(&proxyLBServerAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBServerAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBServerAddParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBServerUpdateCmd = &cobra.Command{
-	Use: "server-update",
+func proxyLBServerUpdateCmd() *cobra.Command {
+	proxyLBServerUpdateParam := params.NewServerUpdateProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "server-update",
 
-	Short: "ServerUpdate ProxyLB",
-	Long:  `ServerUpdate ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBServerUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "ServerUpdate ProxyLB",
+		Long:  `ServerUpdate ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBServerUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("server-update local parameter: \n%s\n", debugMarshalIndent(proxyLBServerUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("server-update local parameter: \n%s\n", debugMarshalIndent(proxyLBServerUpdateParam))
+			return nil
+		},
+	}
 
-func proxyLBServerUpdateCmdInit() {
-	fs := proxyLBServerUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&proxyLBServerUpdateParam.Index, "index", "", 0, "index of target server")
 	fs.StringVarP(&proxyLBServerUpdateParam.Ipaddress, "ipaddress", "", "", "set target ipaddress")
 	fs.BoolVarP(&proxyLBServerUpdateParam.Disabled, "disabled", "", false, "set disabled")
@@ -906,31 +918,33 @@ func proxyLBServerUpdateCmdInit() {
 	fs.StringVarP(&proxyLBServerUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBServerUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBServerUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBServerDeleteCmd = &cobra.Command{
-	Use: "server-delete",
+func proxyLBServerDeleteCmd() *cobra.Command {
+	proxyLBServerDeleteParam := params.NewServerDeleteProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "server-delete",
 
-	Short: "ServerDelete ProxyLB",
-	Long:  `ServerDelete ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBServerDeleteParam)
-		if err != nil {
-			return err
-		}
+		Short: "ServerDelete ProxyLB",
+		Long:  `ServerDelete ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBServerDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("server-delete local parameter: \n%s\n", debugMarshalIndent(proxyLBServerDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("server-delete local parameter: \n%s\n", debugMarshalIndent(proxyLBServerDeleteParam))
+			return nil
+		},
+	}
 
-func proxyLBServerDeleteCmdInit() {
-	fs := proxyLBServerDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&proxyLBServerDeleteParam.Index, "index", "", 0, "index of target server")
 	fs.StringSliceVarP(&proxyLBServerDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&proxyLBServerDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -947,31 +961,33 @@ func proxyLBServerDeleteCmdInit() {
 	fs.StringVarP(&proxyLBServerDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBServerDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBServerDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBCertificateInfoCmd = &cobra.Command{
-	Use:     "certificate-info",
-	Aliases: []string{"certificate-list", "cert-list", "cert-info"},
-	Short:   "CertificateInfo ProxyLB",
-	Long:    `CertificateInfo ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBCertificateInfoParam)
-		if err != nil {
-			return err
-		}
+func proxyLBCertificateInfoCmd() *cobra.Command {
+	proxyLBCertificateInfoParam := params.NewCertificateInfoProxyLBParam()
+	cmd := &cobra.Command{
+		Use:     "certificate-info",
+		Aliases: []string{"certificate-list", "cert-list", "cert-info"},
+		Short:   "CertificateInfo ProxyLB",
+		Long:    `CertificateInfo ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBCertificateInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("certificate-info local parameter: \n%s\n", debugMarshalIndent(proxyLBCertificateInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("certificate-info local parameter: \n%s\n", debugMarshalIndent(proxyLBCertificateInfoParam))
+			return nil
+		},
+	}
 
-func proxyLBCertificateInfoCmdInit() {
-	fs := proxyLBCertificateInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&proxyLBCertificateInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&proxyLBCertificateInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&proxyLBCertificateInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -986,31 +1002,33 @@ func proxyLBCertificateInfoCmdInit() {
 	fs.StringVarP(&proxyLBCertificateInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBCertificateInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBCertificateInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBCertificateAddCmd = &cobra.Command{
-	Use:     "certificate-add",
-	Aliases: []string{"cert-add"},
-	Short:   "CertificateAdd ProxyLB",
-	Long:    `CertificateAdd ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBCertificateAddParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBCertificateAddParam)
-		if err != nil {
-			return err
-		}
+func proxyLBCertificateAddCmd() *cobra.Command {
+	proxyLBCertificateAddParam := params.NewCertificateAddProxyLBParam()
+	cmd := &cobra.Command{
+		Use:     "certificate-add",
+		Aliases: []string{"cert-add"},
+		Short:   "CertificateAdd ProxyLB",
+		Long:    `CertificateAdd ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBCertificateAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBCertificateAddParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("certificate-add local parameter: \n%s\n", debugMarshalIndent(proxyLBCertificateAddParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("certificate-add local parameter: \n%s\n", debugMarshalIndent(proxyLBCertificateAddParam))
+			return nil
+		},
+	}
 
-func proxyLBCertificateAddCmdInit() {
-	fs := proxyLBCertificateAddCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&proxyLBCertificateAddParam.ServerCertificate, "server-certificate", "", "", "")
 	fs.StringVarP(&proxyLBCertificateAddParam.IntermediateCertificate, "intermediate-certificate", "", "", "")
 	fs.StringVarP(&proxyLBCertificateAddParam.PrivateKey, "private-key", "", "", "")
@@ -1029,31 +1047,33 @@ func proxyLBCertificateAddCmdInit() {
 	fs.StringVarP(&proxyLBCertificateAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBCertificateAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBCertificateAddParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBCertificateUpdateCmd = &cobra.Command{
-	Use:     "certificate-update",
-	Aliases: []string{"cert-update"},
-	Short:   "CertificateUpdate ProxyLB",
-	Long:    `CertificateUpdate ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBCertificateUpdateParam)
-		if err != nil {
-			return err
-		}
+func proxyLBCertificateUpdateCmd() *cobra.Command {
+	proxyLBCertificateUpdateParam := params.NewCertificateUpdateProxyLBParam()
+	cmd := &cobra.Command{
+		Use:     "certificate-update",
+		Aliases: []string{"cert-update"},
+		Short:   "CertificateUpdate ProxyLB",
+		Long:    `CertificateUpdate ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBCertificateUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("certificate-update local parameter: \n%s\n", debugMarshalIndent(proxyLBCertificateUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("certificate-update local parameter: \n%s\n", debugMarshalIndent(proxyLBCertificateUpdateParam))
+			return nil
+		},
+	}
 
-func proxyLBCertificateUpdateCmdInit() {
-	fs := proxyLBCertificateUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&proxyLBCertificateUpdateParam.ServerCertificate, "server-certificate", "", "", "")
 	fs.StringVarP(&proxyLBCertificateUpdateParam.IntermediateCertificate, "intermediate-certificate", "", "", "")
 	fs.StringVarP(&proxyLBCertificateUpdateParam.PrivateKey, "private-key", "", "", "")
@@ -1072,31 +1092,33 @@ func proxyLBCertificateUpdateCmdInit() {
 	fs.StringVarP(&proxyLBCertificateUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBCertificateUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBCertificateUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBCertificateDeleteCmd = &cobra.Command{
-	Use:     "certificate-delete",
-	Aliases: []string{"cert-delete"},
-	Short:   "CertificateDelete ProxyLB",
-	Long:    `CertificateDelete ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBCertificateDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBCertificateDeleteParam)
-		if err != nil {
-			return err
-		}
+func proxyLBCertificateDeleteCmd() *cobra.Command {
+	proxyLBCertificateDeleteParam := params.NewCertificateDeleteProxyLBParam()
+	cmd := &cobra.Command{
+		Use:     "certificate-delete",
+		Aliases: []string{"cert-delete"},
+		Short:   "CertificateDelete ProxyLB",
+		Long:    `CertificateDelete ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBCertificateDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBCertificateDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("certificate-delete local parameter: \n%s\n", debugMarshalIndent(proxyLBCertificateDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("certificate-delete local parameter: \n%s\n", debugMarshalIndent(proxyLBCertificateDeleteParam))
+			return nil
+		},
+	}
 
-func proxyLBCertificateDeleteCmdInit() {
-	fs := proxyLBCertificateDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&proxyLBCertificateDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&proxyLBCertificateDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&proxyLBCertificateDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -1112,31 +1134,33 @@ func proxyLBCertificateDeleteCmdInit() {
 	fs.StringVarP(&proxyLBCertificateDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBCertificateDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBCertificateDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var proxyLBMonitorCmd = &cobra.Command{
-	Use: "monitor",
+func proxyLBMonitorCmd() *cobra.Command {
+	proxyLBMonitorParam := params.NewMonitorProxyLBParam()
+	cmd := &cobra.Command{
+		Use: "monitor",
 
-	Short: "Monitor ProxyLB",
-	Long:  `Monitor ProxyLB`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return proxyLBMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), proxyLBMonitorParam)
-		if err != nil {
-			return err
-		}
+		Short: "Monitor ProxyLB",
+		Long:  `Monitor ProxyLB`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return proxyLBMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), proxyLBMonitorParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(proxyLBMonitorParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(proxyLBMonitorParam))
+			return nil
+		},
+	}
 
-func proxyLBMonitorCmdInit() {
-	fs := proxyLBMonitorCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&proxyLBMonitorParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&proxyLBMonitorParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&proxyLBMonitorParam.KeyFormat, "key-format", "", "sakuracloud.proxylb.{{.ID}}", "set monitoring value key-format")
@@ -1154,88 +1178,36 @@ func proxyLBMonitorCmdInit() {
 	fs.StringVarP(&proxyLBMonitorParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBMonitorParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBMonitorParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := proxyLBCmd
-
-	proxyLBListCmdInit()
-	parent.AddCommand(proxyLBListCmd)
-
-	proxyLBCreateCmdInit()
-	parent.AddCommand(proxyLBCreateCmd)
-
-	proxyLBReadCmdInit()
-	parent.AddCommand(proxyLBReadCmd)
-
-	proxyLBUpdateCmdInit()
-	parent.AddCommand(proxyLBUpdateCmd)
-
-	proxyLBDeleteCmdInit()
-	parent.AddCommand(proxyLBDeleteCmd)
-
-	proxyLBPlanChangeCmdInit()
-	parent.AddCommand(proxyLBPlanChangeCmd)
-
-	proxyLBBindPortInfoCmdInit()
-	parent.AddCommand(proxyLBBindPortInfoCmd)
-
-	proxyLBBindPortAddCmdInit()
-	parent.AddCommand(proxyLBBindPortAddCmd)
-
-	proxyLBBindPortUpdateCmdInit()
-	parent.AddCommand(proxyLBBindPortUpdateCmd)
-
-	proxyLBBindPortDeleteCmdInit()
-	parent.AddCommand(proxyLBBindPortDeleteCmd)
-
-	proxyLBResponseHeaderInfoCmdInit()
-	parent.AddCommand(proxyLBResponseHeaderInfoCmd)
-
-	proxyLBResponseHeaderAddCmdInit()
-	parent.AddCommand(proxyLBResponseHeaderAddCmd)
-
-	proxyLBResponseHeaderUpdateCmdInit()
-	parent.AddCommand(proxyLBResponseHeaderUpdateCmd)
-
-	proxyLBResponseHeaderDeleteCmdInit()
-	parent.AddCommand(proxyLBResponseHeaderDeleteCmd)
-
-	proxyLBACMEInfoCmdInit()
-	parent.AddCommand(proxyLBACMEInfoCmd)
-
-	proxyLBACMESettingCmdInit()
-	parent.AddCommand(proxyLBACMESettingCmd)
-
-	proxyLBACMERenewCmdInit()
-	parent.AddCommand(proxyLBACMERenewCmd)
-
-	proxyLBServerInfoCmdInit()
-	parent.AddCommand(proxyLBServerInfoCmd)
-
-	proxyLBServerAddCmdInit()
-	parent.AddCommand(proxyLBServerAddCmd)
-
-	proxyLBServerUpdateCmdInit()
-	parent.AddCommand(proxyLBServerUpdateCmd)
-
-	proxyLBServerDeleteCmdInit()
-	parent.AddCommand(proxyLBServerDeleteCmd)
-
-	proxyLBCertificateInfoCmdInit()
-	parent.AddCommand(proxyLBCertificateInfoCmd)
-
-	proxyLBCertificateAddCmdInit()
-	parent.AddCommand(proxyLBCertificateAddCmd)
-
-	proxyLBCertificateUpdateCmdInit()
-	parent.AddCommand(proxyLBCertificateUpdateCmd)
-
-	proxyLBCertificateDeleteCmdInit()
-	parent.AddCommand(proxyLBCertificateDeleteCmd)
-
-	proxyLBMonitorCmdInit()
-	parent.AddCommand(proxyLBMonitorCmd)
-
+	parent := proxyLBCmd()
+	parent.AddCommand(proxyLBListCmd())
+	parent.AddCommand(proxyLBCreateCmd())
+	parent.AddCommand(proxyLBReadCmd())
+	parent.AddCommand(proxyLBUpdateCmd())
+	parent.AddCommand(proxyLBDeleteCmd())
+	parent.AddCommand(proxyLBPlanChangeCmd())
+	parent.AddCommand(proxyLBBindPortInfoCmd())
+	parent.AddCommand(proxyLBBindPortAddCmd())
+	parent.AddCommand(proxyLBBindPortUpdateCmd())
+	parent.AddCommand(proxyLBBindPortDeleteCmd())
+	parent.AddCommand(proxyLBResponseHeaderInfoCmd())
+	parent.AddCommand(proxyLBResponseHeaderAddCmd())
+	parent.AddCommand(proxyLBResponseHeaderUpdateCmd())
+	parent.AddCommand(proxyLBResponseHeaderDeleteCmd())
+	parent.AddCommand(proxyLBACMEInfoCmd())
+	parent.AddCommand(proxyLBACMESettingCmd())
+	parent.AddCommand(proxyLBACMERenewCmd())
+	parent.AddCommand(proxyLBServerInfoCmd())
+	parent.AddCommand(proxyLBServerAddCmd())
+	parent.AddCommand(proxyLBServerUpdateCmd())
+	parent.AddCommand(proxyLBServerDeleteCmd())
+	parent.AddCommand(proxyLBCertificateInfoCmd())
+	parent.AddCommand(proxyLBCertificateAddCmd())
+	parent.AddCommand(proxyLBCertificateUpdateCmd())
+	parent.AddCommand(proxyLBCertificateDeleteCmd())
+	parent.AddCommand(proxyLBMonitorCmd())
 	rootCmd.AddCommand(parent)
 }

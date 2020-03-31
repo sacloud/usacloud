@@ -24,49 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	interfaceListParam                   = params.NewListInterfaceParam()
-	interfacePacketFilterConnectParam    = params.NewPacketFilterConnectInterfaceParam()
-	interfaceCreateParam                 = params.NewCreateInterfaceParam()
-	interfacePacketFilterDisconnectParam = params.NewPacketFilterDisconnectInterfaceParam()
-	interfaceReadParam                   = params.NewReadInterfaceParam()
-	interfaceUpdateParam                 = params.NewUpdateInterfaceParam()
-	interfaceDeleteParam                 = params.NewDeleteInterfaceParam()
-)
-
 // interfaceCmd represents the command to manage SAKURA Cloud Interface
-var interfaceCmd = &cobra.Command{
-	Use:   "interface",
-	Short: "A manage commands of Interface",
-	Long:  `A manage commands of Interface`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func interfaceCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "interface",
+		Short: "A manage commands of Interface",
+		Long:  `A manage commands of Interface`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var interfaceListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find"},
-	Short:   "List Interface",
-	Long:    `List Interface`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return interfaceListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), interfaceListParam)
-		if err != nil {
-			return err
-		}
+func interfaceListCmd() *cobra.Command {
+	interfaceListParam := params.NewListInterfaceParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find"},
+		Short:   "List Interface",
+		Long:    `List Interface`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return interfaceListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), interfaceListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(interfaceListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(interfaceListParam))
+			return nil
+		},
+	}
 
-func interfaceListCmdInit() {
-	fs := interfaceListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&interfaceListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &interfaceListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&interfaceListParam.From, "from", "", 0, "set offset")
@@ -84,31 +77,33 @@ func interfaceListCmdInit() {
 	fs.StringVarP(&interfaceListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&interfaceListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&interfaceListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var interfacePacketFilterConnectCmd = &cobra.Command{
-	Use: "packet-filter-connect",
+func interfacePacketFilterConnectCmd() *cobra.Command {
+	interfacePacketFilterConnectParam := params.NewPacketFilterConnectInterfaceParam()
+	cmd := &cobra.Command{
+		Use: "packet-filter-connect",
 
-	Short: "PacketFilterConnect Interface",
-	Long:  `PacketFilterConnect Interface`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return interfacePacketFilterConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), interfacePacketFilterConnectParam)
-		if err != nil {
-			return err
-		}
+		Short: "PacketFilterConnect Interface",
+		Long:  `PacketFilterConnect Interface`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return interfacePacketFilterConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), interfacePacketFilterConnectParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("packet-filter-connect local parameter: \n%s\n", debugMarshalIndent(interfacePacketFilterConnectParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("packet-filter-connect local parameter: \n%s\n", debugMarshalIndent(interfacePacketFilterConnectParam))
+			return nil
+		},
+	}
 
-func interfacePacketFilterConnectCmdInit() {
-	fs := interfacePacketFilterConnectCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &interfacePacketFilterConnectParam.PacketFilterId), "packet-filter-id", "", "set packet filter ID")
 	fs.BoolVarP(&interfacePacketFilterConnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&interfacePacketFilterConnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -117,31 +112,33 @@ func interfacePacketFilterConnectCmdInit() {
 	fs.StringVarP(&interfacePacketFilterConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&interfacePacketFilterConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &interfacePacketFilterConnectParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var interfaceCreateCmd = &cobra.Command{
-	Use: "create",
+func interfaceCreateCmd() *cobra.Command {
+	interfaceCreateParam := params.NewCreateInterfaceParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create Interface",
-	Long:  `Create Interface`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return interfaceCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), interfaceCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create Interface",
+		Long:  `Create Interface`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return interfaceCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), interfaceCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(interfaceCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(interfaceCreateParam))
+			return nil
+		},
+	}
 
-func interfaceCreateCmdInit() {
-	fs := interfaceCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &interfaceCreateParam.ServerId), "server-id", "", "set server ID")
 	fs.BoolVarP(&interfaceCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&interfaceCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -156,31 +153,33 @@ func interfaceCreateCmdInit() {
 	fs.StringVarP(&interfaceCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&interfaceCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&interfaceCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var interfacePacketFilterDisconnectCmd = &cobra.Command{
-	Use: "packet-filter-disconnect",
+func interfacePacketFilterDisconnectCmd() *cobra.Command {
+	interfacePacketFilterDisconnectParam := params.NewPacketFilterDisconnectInterfaceParam()
+	cmd := &cobra.Command{
+		Use: "packet-filter-disconnect",
 
-	Short: "PacketFilterDisconnect Interface",
-	Long:  `PacketFilterDisconnect Interface`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return interfacePacketFilterDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), interfacePacketFilterDisconnectParam)
-		if err != nil {
-			return err
-		}
+		Short: "PacketFilterDisconnect Interface",
+		Long:  `PacketFilterDisconnect Interface`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return interfacePacketFilterDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), interfacePacketFilterDisconnectParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("packet-filter-disconnect local parameter: \n%s\n", debugMarshalIndent(interfacePacketFilterDisconnectParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("packet-filter-disconnect local parameter: \n%s\n", debugMarshalIndent(interfacePacketFilterDisconnectParam))
+			return nil
+		},
+	}
 
-func interfacePacketFilterDisconnectCmdInit() {
-	fs := interfacePacketFilterDisconnectCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &interfacePacketFilterDisconnectParam.PacketFilterId), "packet-filter-id", "", "set packet filter ID")
 	fs.BoolVarP(&interfacePacketFilterDisconnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&interfacePacketFilterDisconnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -189,31 +188,33 @@ func interfacePacketFilterDisconnectCmdInit() {
 	fs.StringVarP(&interfacePacketFilterDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&interfacePacketFilterDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &interfacePacketFilterDisconnectParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var interfaceReadCmd = &cobra.Command{
-	Use: "read",
+func interfaceReadCmd() *cobra.Command {
+	interfaceReadParam := params.NewReadInterfaceParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read Interface",
-	Long:  `Read Interface`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return interfaceReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), interfaceReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read Interface",
+		Long:  `Read Interface`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return interfaceReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), interfaceReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(interfaceReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(interfaceReadParam))
+			return nil
+		},
+	}
 
-func interfaceReadCmdInit() {
-	fs := interfaceReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&interfaceReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&interfaceReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&interfaceReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
@@ -227,31 +228,33 @@ func interfaceReadCmdInit() {
 	fs.StringVarP(&interfaceReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&interfaceReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &interfaceReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var interfaceUpdateCmd = &cobra.Command{
-	Use: "update",
+func interfaceUpdateCmd() *cobra.Command {
+	interfaceUpdateParam := params.NewUpdateInterfaceParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update Interface",
-	Long:  `Update Interface`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return interfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), interfaceUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update Interface",
+		Long:  `Update Interface`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return interfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), interfaceUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(interfaceUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(interfaceUpdateParam))
+			return nil
+		},
+	}
 
-func interfaceUpdateCmdInit() {
-	fs := interfaceUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&interfaceUpdateParam.UserIpaddress, "user-ipaddress", "", "", "set user-ipaddress")
 	fs.BoolVarP(&interfaceUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&interfaceUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -267,31 +270,33 @@ func interfaceUpdateCmdInit() {
 	fs.StringVarP(&interfaceUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&interfaceUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &interfaceUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var interfaceDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete Interface",
-	Long:    `Delete Interface`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return interfaceDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), interfaceDeleteParam)
-		if err != nil {
-			return err
-		}
+func interfaceDeleteCmd() *cobra.Command {
+	interfaceDeleteParam := params.NewDeleteInterfaceParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete Interface",
+		Long:    `Delete Interface`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return interfaceDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), interfaceDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(interfaceDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(interfaceDeleteParam))
+			return nil
+		},
+	}
 
-func interfaceDeleteCmdInit() {
-	fs := interfaceDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&interfaceDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&interfaceDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&interfaceDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -306,31 +311,17 @@ func interfaceDeleteCmdInit() {
 	fs.StringVarP(&interfaceDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&interfaceDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &interfaceDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := interfaceCmd
-
-	interfaceListCmdInit()
-	parent.AddCommand(interfaceListCmd)
-
-	interfacePacketFilterConnectCmdInit()
-	parent.AddCommand(interfacePacketFilterConnectCmd)
-
-	interfaceCreateCmdInit()
-	parent.AddCommand(interfaceCreateCmd)
-
-	interfacePacketFilterDisconnectCmdInit()
-	parent.AddCommand(interfacePacketFilterDisconnectCmd)
-
-	interfaceReadCmdInit()
-	parent.AddCommand(interfaceReadCmd)
-
-	interfaceUpdateCmdInit()
-	parent.AddCommand(interfaceUpdateCmd)
-
-	interfaceDeleteCmdInit()
-	parent.AddCommand(interfaceDeleteCmd)
-
+	parent := interfaceCmd()
+	parent.AddCommand(interfaceListCmd())
+	parent.AddCommand(interfacePacketFilterConnectCmd())
+	parent.AddCommand(interfaceCreateCmd())
+	parent.AddCommand(interfacePacketFilterDisconnectCmd())
+	parent.AddCommand(interfaceReadCmd())
+	parent.AddCommand(interfaceUpdateCmd())
+	parent.AddCommand(interfaceDeleteCmd())
 	rootCmd.AddCommand(parent)
 }

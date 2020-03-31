@@ -24,47 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	licenseListParam   = params.NewListLicenseParam()
-	licenseCreateParam = params.NewCreateLicenseParam()
-	licenseReadParam   = params.NewReadLicenseParam()
-	licenseUpdateParam = params.NewUpdateLicenseParam()
-	licenseDeleteParam = params.NewDeleteLicenseParam()
-)
-
 // licenseCmd represents the command to manage SAKURA Cloud License
-var licenseCmd = &cobra.Command{
-	Use:   "license",
-	Short: "A manage commands of License",
-	Long:  `A manage commands of License`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func licenseCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "license",
+		Short: "A manage commands of License",
+		Long:  `A manage commands of License`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var licenseListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find"},
-	Short:   "List License",
-	Long:    `List License`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return licenseListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), licenseListParam)
-		if err != nil {
-			return err
-		}
+func licenseListCmd() *cobra.Command {
+	licenseListParam := params.NewListLicenseParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find"},
+		Short:   "List License",
+		Long:    `List License`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return licenseListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), licenseListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(licenseListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(licenseListParam))
+			return nil
+		},
+	}
 
-func licenseListCmdInit() {
-	fs := licenseListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&licenseListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &licenseListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&licenseListParam.From, "from", "", 0, "set offset")
@@ -82,31 +77,33 @@ func licenseListCmdInit() {
 	fs.StringVarP(&licenseListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&licenseListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&licenseListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var licenseCreateCmd = &cobra.Command{
-	Use: "create",
+func licenseCreateCmd() *cobra.Command {
+	licenseCreateParam := params.NewCreateLicenseParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create License",
-	Long:  `Create License`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return licenseCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), licenseCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create License",
+		Long:  `Create License`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return licenseCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), licenseCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(licenseCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(licenseCreateParam))
+			return nil
+		},
+	}
 
-func licenseCreateCmdInit() {
-	fs := licenseCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &licenseCreateParam.LicenseInfoId), "license-info-id", "", "set LicenseInfo ID")
 	fs.StringVarP(&licenseCreateParam.Name, "name", "", "", "set resource display name")
 	fs.BoolVarP(&licenseCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -122,31 +119,33 @@ func licenseCreateCmdInit() {
 	fs.StringVarP(&licenseCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&licenseCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&licenseCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var licenseReadCmd = &cobra.Command{
-	Use: "read",
+func licenseReadCmd() *cobra.Command {
+	licenseReadParam := params.NewReadLicenseParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read License",
-	Long:  `Read License`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return licenseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), licenseReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read License",
+		Long:  `Read License`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return licenseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), licenseReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(licenseReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(licenseReadParam))
+			return nil
+		},
+	}
 
-func licenseReadCmdInit() {
-	fs := licenseReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&licenseReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&licenseReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&licenseReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
@@ -160,31 +159,33 @@ func licenseReadCmdInit() {
 	fs.StringVarP(&licenseReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&licenseReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &licenseReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var licenseUpdateCmd = &cobra.Command{
-	Use: "update",
+func licenseUpdateCmd() *cobra.Command {
+	licenseUpdateParam := params.NewUpdateLicenseParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update License",
-	Long:  `Update License`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return licenseUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), licenseUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update License",
+		Long:  `Update License`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return licenseUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), licenseUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(licenseUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(licenseUpdateParam))
+			return nil
+		},
+	}
 
-func licenseUpdateCmdInit() {
-	fs := licenseUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&licenseUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.BoolVarP(&licenseUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&licenseUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -200,31 +201,33 @@ func licenseUpdateCmdInit() {
 	fs.StringVarP(&licenseUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&licenseUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &licenseUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var licenseDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete License",
-	Long:    `Delete License`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return licenseDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), licenseDeleteParam)
-		if err != nil {
-			return err
-		}
+func licenseDeleteCmd() *cobra.Command {
+	licenseDeleteParam := params.NewDeleteLicenseParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete License",
+		Long:    `Delete License`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return licenseDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), licenseDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(licenseDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(licenseDeleteParam))
+			return nil
+		},
+	}
 
-func licenseDeleteCmdInit() {
-	fs := licenseDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&licenseDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&licenseDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&licenseDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -239,25 +242,15 @@ func licenseDeleteCmdInit() {
 	fs.StringVarP(&licenseDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&licenseDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &licenseDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := licenseCmd
-
-	licenseListCmdInit()
-	parent.AddCommand(licenseListCmd)
-
-	licenseCreateCmdInit()
-	parent.AddCommand(licenseCreateCmd)
-
-	licenseReadCmdInit()
-	parent.AddCommand(licenseReadCmd)
-
-	licenseUpdateCmdInit()
-	parent.AddCommand(licenseUpdateCmd)
-
-	licenseDeleteCmdInit()
-	parent.AddCommand(licenseDeleteCmd)
-
+	parent := licenseCmd()
+	parent.AddCommand(licenseListCmd())
+	parent.AddCommand(licenseCreateCmd())
+	parent.AddCommand(licenseReadCmd())
+	parent.AddCommand(licenseUpdateCmd())
+	parent.AddCommand(licenseDeleteCmd())
 	rootCmd.AddCommand(parent)
 }

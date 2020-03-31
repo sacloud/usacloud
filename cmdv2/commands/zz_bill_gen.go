@@ -23,44 +23,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	billCsvParam  = params.NewCsvBillParam()
-	billListParam = params.NewListBillParam()
-)
-
 // billCmd represents the command to manage SAKURA Cloud Bill
-var billCmd = &cobra.Command{
-	Use:   "bill",
-	Short: "A manage commands of Bill",
-	Long:  `A manage commands of Bill`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements: call list func as default
-	},
+func billCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "bill",
+		Short: "A manage commands of Bill",
+		Long:  `A manage commands of Bill`,
+		Run: func(cmd *cobra.Command, args []string) {
+			// TODO not implements: call list func as default
+		},
+	}
 }
 
-var billCsvCmd = &cobra.Command{
-	Use: "csv",
+func billCsvCmd() *cobra.Command {
+	billCsvParam := params.NewCsvBillParam()
+	cmd := &cobra.Command{
+		Use: "csv",
 
-	Short: "Csv Bill",
-	Long:  `Csv Bill`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return billCsvParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), billCsvParam)
-		if err != nil {
-			return err
-		}
+		Short: "Csv Bill",
+		Long:  `Csv Bill`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return billCsvParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), billCsvParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("csv local parameter: \n%s\n", debugMarshalIndent(billCsvParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("csv local parameter: \n%s\n", debugMarshalIndent(billCsvParam))
+			return nil
+		},
+	}
 
-func billCsvCmdInit() {
-	fs := billCsvCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&billCsvParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&billCsvParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&billCsvParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
@@ -69,31 +67,33 @@ func billCsvCmdInit() {
 	fs.BoolVarP(&billCsvParam.NoHeader, "no-header", "", false, "set output header flag")
 	fs.StringVarP(&billCsvParam.BillOutput, "bill-output", "", "", "set bill-detail output path")
 	fs.VarP(newIDValue(0, &billCsvParam.BillId), "bill-id", "", "set bill ID")
+	return cmd
 }
 
-var billListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find"},
-	Short:   "List Bill (default)",
-	Long:    `List Bill (default)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return billListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), billListParam)
-		if err != nil {
-			return err
-		}
+func billListCmd() *cobra.Command {
+	billListParam := params.NewListBillParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find"},
+		Short:   "List Bill (default)",
+		Long:    `List Bill (default)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return billListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), billListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(billListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(billListParam))
+			return nil
+		},
+	}
 
-func billListCmdInit() {
-	fs := billListCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&billListParam.Year, "year", "", 0, "set year")
 	fs.IntVarP(&billListParam.Month, "month", "", 0, "set month")
 	fs.StringVarP(&billListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -108,16 +108,12 @@ func billListCmdInit() {
 	fs.StringVarP(&billListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&billListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&billListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
 func init() {
-	parent := billCmd
-
-	billCsvCmdInit()
-	parent.AddCommand(billCsvCmd)
-
-	billListCmdInit()
-	parent.AddCommand(billListCmd)
-
+	parent := billCmd()
+	parent.AddCommand(billCsvCmd())
+	parent.AddCommand(billListCmd())
 	rootCmd.AddCommand(parent)
 }

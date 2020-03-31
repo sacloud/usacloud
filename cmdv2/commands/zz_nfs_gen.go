@@ -24,55 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	nfsListParam                = params.NewListNFSParam()
-	nfsCreateParam              = params.NewCreateNFSParam()
-	nfsReadParam                = params.NewReadNFSParam()
-	nfsUpdateParam              = params.NewUpdateNFSParam()
-	nfsDeleteParam              = params.NewDeleteNFSParam()
-	nfsBootParam                = params.NewBootNFSParam()
-	nfsShutdownParam            = params.NewShutdownNFSParam()
-	nfsShutdownForceParam       = params.NewShutdownForceNFSParam()
-	nfsResetParam               = params.NewResetNFSParam()
-	nfsWaitForBootParam         = params.NewWaitForBootNFSParam()
-	nfsWaitForDownParam         = params.NewWaitForDownNFSParam()
-	nfsMonitorNicParam          = params.NewMonitorNicNFSParam()
-	nfsMonitorFreeDiskSizeParam = params.NewMonitorFreeDiskSizeNFSParam()
-)
-
 // nfsCmd represents the command to manage SAKURA Cloud NFS
-var nfsCmd = &cobra.Command{
-	Use:   "nfs",
-	Short: "A manage commands of NFS",
-	Long:  `A manage commands of NFS`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func nfsCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "nfs",
+		Short: "A manage commands of NFS",
+		Long:  `A manage commands of NFS`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var nfsListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List NFS",
-	Long:    `List NFS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return nfsListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), nfsListParam)
-		if err != nil {
-			return err
-		}
+func nfsListCmd() *cobra.Command {
+	nfsListParam := params.NewListNFSParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List NFS",
+		Long:    `List NFS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return nfsListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), nfsListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(nfsListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(nfsListParam))
+			return nil
+		},
+	}
 
-func nfsListCmdInit() {
-	fs := nfsListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&nfsListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &nfsListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&nfsListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
@@ -91,31 +78,33 @@ func nfsListCmdInit() {
 	fs.StringVarP(&nfsListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&nfsListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&nfsListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var nfsCreateCmd = &cobra.Command{
-	Use: "create",
+func nfsCreateCmd() *cobra.Command {
+	nfsCreateParam := params.NewCreateNFSParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create NFS",
-	Long:  `Create NFS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return nfsCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), nfsCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create NFS",
+		Long:  `Create NFS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return nfsCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), nfsCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(nfsCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(nfsCreateParam))
+			return nil
+		},
+	}
 
-func nfsCreateCmdInit() {
-	fs := nfsCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &nfsCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.StringVarP(&nfsCreateParam.Plan, "plan", "", "hdd", "set plan[ssd/hdd]")
 	fs.IntVarP(&nfsCreateParam.Size, "size", "", 100, "set plan[100/500/1024/2048/4096/8192/12288]")
@@ -139,31 +128,33 @@ func nfsCreateCmdInit() {
 	fs.StringVarP(&nfsCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&nfsCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&nfsCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var nfsReadCmd = &cobra.Command{
-	Use: "read",
+func nfsReadCmd() *cobra.Command {
+	nfsReadParam := params.NewReadNFSParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read NFS",
-	Long:  `Read NFS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return nfsReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), nfsReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read NFS",
+		Long:  `Read NFS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return nfsReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), nfsReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(nfsReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(nfsReadParam))
+			return nil
+		},
+	}
 
-func nfsReadCmdInit() {
-	fs := nfsReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&nfsReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&nfsReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&nfsReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -178,31 +169,33 @@ func nfsReadCmdInit() {
 	fs.StringVarP(&nfsReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&nfsReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &nfsReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var nfsUpdateCmd = &cobra.Command{
-	Use: "update",
+func nfsUpdateCmd() *cobra.Command {
+	nfsUpdateParam := params.NewUpdateNFSParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update NFS",
-	Long:  `Update NFS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return nfsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), nfsUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update NFS",
+		Long:  `Update NFS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return nfsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), nfsUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(nfsUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(nfsUpdateParam))
+			return nil
+		},
+	}
 
-func nfsUpdateCmdInit() {
-	fs := nfsUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&nfsUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&nfsUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&nfsUpdateParam.Description, "description", "", "", "set resource description")
@@ -222,31 +215,33 @@ func nfsUpdateCmdInit() {
 	fs.StringVarP(&nfsUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&nfsUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &nfsUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var nfsDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete NFS",
-	Long:    `Delete NFS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return nfsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), nfsDeleteParam)
-		if err != nil {
-			return err
-		}
+func nfsDeleteCmd() *cobra.Command {
+	nfsDeleteParam := params.NewDeleteNFSParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete NFS",
+		Long:    `Delete NFS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return nfsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), nfsDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(nfsDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(nfsDeleteParam))
+			return nil
+		},
+	}
 
-func nfsDeleteCmdInit() {
-	fs := nfsDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&nfsDeleteParam.Force, "force", "f", false, "forced-shutdown flag if server is running")
 	fs.StringSliceVarP(&nfsDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&nfsDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -263,31 +258,33 @@ func nfsDeleteCmdInit() {
 	fs.StringVarP(&nfsDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&nfsDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &nfsDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var nfsBootCmd = &cobra.Command{
-	Use:     "boot",
-	Aliases: []string{"power-on"},
-	Short:   "Boot NFS",
-	Long:    `Boot NFS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return nfsBootParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), nfsBootParam)
-		if err != nil {
-			return err
-		}
+func nfsBootCmd() *cobra.Command {
+	nfsBootParam := params.NewBootNFSParam()
+	cmd := &cobra.Command{
+		Use:     "boot",
+		Aliases: []string{"power-on"},
+		Short:   "Boot NFS",
+		Long:    `Boot NFS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return nfsBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), nfsBootParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(nfsBootParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(nfsBootParam))
+			return nil
+		},
+	}
 
-func nfsBootCmdInit() {
-	fs := nfsBootCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&nfsBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&nfsBootParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&nfsBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -296,31 +293,33 @@ func nfsBootCmdInit() {
 	fs.StringVarP(&nfsBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&nfsBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &nfsBootParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var nfsShutdownCmd = &cobra.Command{
-	Use:     "shutdown",
-	Aliases: []string{"power-off"},
-	Short:   "Shutdown NFS",
-	Long:    `Shutdown NFS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return nfsShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), nfsShutdownParam)
-		if err != nil {
-			return err
-		}
+func nfsShutdownCmd() *cobra.Command {
+	nfsShutdownParam := params.NewShutdownNFSParam()
+	cmd := &cobra.Command{
+		Use:     "shutdown",
+		Aliases: []string{"power-off"},
+		Short:   "Shutdown NFS",
+		Long:    `Shutdown NFS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return nfsShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), nfsShutdownParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(nfsShutdownParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(nfsShutdownParam))
+			return nil
+		},
+	}
 
-func nfsShutdownCmdInit() {
-	fs := nfsShutdownCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&nfsShutdownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&nfsShutdownParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&nfsShutdownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -329,31 +328,33 @@ func nfsShutdownCmdInit() {
 	fs.StringVarP(&nfsShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&nfsShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &nfsShutdownParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var nfsShutdownForceCmd = &cobra.Command{
-	Use:     "shutdown-force",
-	Aliases: []string{"stop"},
-	Short:   "ShutdownForce NFS",
-	Long:    `ShutdownForce NFS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return nfsShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), nfsShutdownForceParam)
-		if err != nil {
-			return err
-		}
+func nfsShutdownForceCmd() *cobra.Command {
+	nfsShutdownForceParam := params.NewShutdownForceNFSParam()
+	cmd := &cobra.Command{
+		Use:     "shutdown-force",
+		Aliases: []string{"stop"},
+		Short:   "ShutdownForce NFS",
+		Long:    `ShutdownForce NFS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return nfsShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), nfsShutdownForceParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(nfsShutdownForceParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(nfsShutdownForceParam))
+			return nil
+		},
+	}
 
-func nfsShutdownForceCmdInit() {
-	fs := nfsShutdownForceCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&nfsShutdownForceParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&nfsShutdownForceParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&nfsShutdownForceParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -362,31 +363,33 @@ func nfsShutdownForceCmdInit() {
 	fs.StringVarP(&nfsShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&nfsShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &nfsShutdownForceParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var nfsResetCmd = &cobra.Command{
-	Use: "reset",
+func nfsResetCmd() *cobra.Command {
+	nfsResetParam := params.NewResetNFSParam()
+	cmd := &cobra.Command{
+		Use: "reset",
 
-	Short: "Reset NFS",
-	Long:  `Reset NFS`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return nfsResetParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), nfsResetParam)
-		if err != nil {
-			return err
-		}
+		Short: "Reset NFS",
+		Long:  `Reset NFS`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return nfsResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), nfsResetParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(nfsResetParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(nfsResetParam))
+			return nil
+		},
+	}
 
-func nfsResetCmdInit() {
-	fs := nfsResetCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&nfsResetParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&nfsResetParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&nfsResetParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -395,31 +398,33 @@ func nfsResetCmdInit() {
 	fs.StringVarP(&nfsResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&nfsResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &nfsResetParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var nfsWaitForBootCmd = &cobra.Command{
-	Use: "wait-for-boot",
+func nfsWaitForBootCmd() *cobra.Command {
+	nfsWaitForBootParam := params.NewWaitForBootNFSParam()
+	cmd := &cobra.Command{
+		Use: "wait-for-boot",
 
-	Short: "Wait until boot is completed",
-	Long:  `Wait until boot is completed`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return nfsWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), nfsWaitForBootParam)
-		if err != nil {
-			return err
-		}
+		Short: "Wait until boot is completed",
+		Long:  `Wait until boot is completed`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return nfsWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), nfsWaitForBootParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(nfsWaitForBootParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(nfsWaitForBootParam))
+			return nil
+		},
+	}
 
-func nfsWaitForBootCmdInit() {
-	fs := nfsWaitForBootCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&nfsWaitForBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&nfsWaitForBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&nfsWaitForBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -427,31 +432,33 @@ func nfsWaitForBootCmdInit() {
 	fs.StringVarP(&nfsWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&nfsWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &nfsWaitForBootParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var nfsWaitForDownCmd = &cobra.Command{
-	Use: "wait-for-down",
+func nfsWaitForDownCmd() *cobra.Command {
+	nfsWaitForDownParam := params.NewWaitForDownNFSParam()
+	cmd := &cobra.Command{
+		Use: "wait-for-down",
 
-	Short: "Wait until shutdown is completed",
-	Long:  `Wait until shutdown is completed`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return nfsWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), nfsWaitForDownParam)
-		if err != nil {
-			return err
-		}
+		Short: "Wait until shutdown is completed",
+		Long:  `Wait until shutdown is completed`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return nfsWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), nfsWaitForDownParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(nfsWaitForDownParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(nfsWaitForDownParam))
+			return nil
+		},
+	}
 
-func nfsWaitForDownCmdInit() {
-	fs := nfsWaitForDownCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&nfsWaitForDownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&nfsWaitForDownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&nfsWaitForDownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -459,31 +466,33 @@ func nfsWaitForDownCmdInit() {
 	fs.StringVarP(&nfsWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&nfsWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &nfsWaitForDownParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var nfsMonitorNicCmd = &cobra.Command{
-	Use: "monitor-nic",
+func nfsMonitorNicCmd() *cobra.Command {
+	nfsMonitorNicParam := params.NewMonitorNicNFSParam()
+	cmd := &cobra.Command{
+		Use: "monitor-nic",
 
-	Short: "Collect NIC(s) monitor values",
-	Long:  `Collect NIC(s) monitor values`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return nfsMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), nfsMonitorNicParam)
-		if err != nil {
-			return err
-		}
+		Short: "Collect NIC(s) monitor values",
+		Long:  `Collect NIC(s) monitor values`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return nfsMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), nfsMonitorNicParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("monitor-nic local parameter: \n%s\n", debugMarshalIndent(nfsMonitorNicParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("monitor-nic local parameter: \n%s\n", debugMarshalIndent(nfsMonitorNicParam))
+			return nil
+		},
+	}
 
-func nfsMonitorNicCmdInit() {
-	fs := nfsMonitorNicCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&nfsMonitorNicParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&nfsMonitorNicParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&nfsMonitorNicParam.KeyFormat, "key-format", "", "sakuracloud.disk.{{.ID}}.nic", "set monitoring value key-format")
@@ -501,31 +510,33 @@ func nfsMonitorNicCmdInit() {
 	fs.StringVarP(&nfsMonitorNicParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&nfsMonitorNicParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &nfsMonitorNicParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var nfsMonitorFreeDiskSizeCmd = &cobra.Command{
-	Use: "monitor-free-disk-size",
+func nfsMonitorFreeDiskSizeCmd() *cobra.Command {
+	nfsMonitorFreeDiskSizeParam := params.NewMonitorFreeDiskSizeNFSParam()
+	cmd := &cobra.Command{
+		Use: "monitor-free-disk-size",
 
-	Short: "Collect system-disk monitor values(IO)",
-	Long:  `Collect system-disk monitor values(IO)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return nfsMonitorFreeDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), nfsMonitorFreeDiskSizeParam)
-		if err != nil {
-			return err
-		}
+		Short: "Collect system-disk monitor values(IO)",
+		Long:  `Collect system-disk monitor values(IO)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return nfsMonitorFreeDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), nfsMonitorFreeDiskSizeParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("monitor-free-disk-size local parameter: \n%s\n", debugMarshalIndent(nfsMonitorFreeDiskSizeParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("monitor-free-disk-size local parameter: \n%s\n", debugMarshalIndent(nfsMonitorFreeDiskSizeParam))
+			return nil
+		},
+	}
 
-func nfsMonitorFreeDiskSizeCmdInit() {
-	fs := nfsMonitorFreeDiskSizeCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.KeyFormat, "key-format", "", "sakuracloud.disk.{{.ID}}.free-disk-size", "set monitoring value key-format")
@@ -543,49 +554,23 @@ func nfsMonitorFreeDiskSizeCmdInit() {
 	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &nfsMonitorFreeDiskSizeParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := nfsCmd
-
-	nfsListCmdInit()
-	parent.AddCommand(nfsListCmd)
-
-	nfsCreateCmdInit()
-	parent.AddCommand(nfsCreateCmd)
-
-	nfsReadCmdInit()
-	parent.AddCommand(nfsReadCmd)
-
-	nfsUpdateCmdInit()
-	parent.AddCommand(nfsUpdateCmd)
-
-	nfsDeleteCmdInit()
-	parent.AddCommand(nfsDeleteCmd)
-
-	nfsBootCmdInit()
-	parent.AddCommand(nfsBootCmd)
-
-	nfsShutdownCmdInit()
-	parent.AddCommand(nfsShutdownCmd)
-
-	nfsShutdownForceCmdInit()
-	parent.AddCommand(nfsShutdownForceCmd)
-
-	nfsResetCmdInit()
-	parent.AddCommand(nfsResetCmd)
-
-	nfsWaitForBootCmdInit()
-	parent.AddCommand(nfsWaitForBootCmd)
-
-	nfsWaitForDownCmdInit()
-	parent.AddCommand(nfsWaitForDownCmd)
-
-	nfsMonitorNicCmdInit()
-	parent.AddCommand(nfsMonitorNicCmd)
-
-	nfsMonitorFreeDiskSizeCmdInit()
-	parent.AddCommand(nfsMonitorFreeDiskSizeCmd)
-
+	parent := nfsCmd()
+	parent.AddCommand(nfsListCmd())
+	parent.AddCommand(nfsCreateCmd())
+	parent.AddCommand(nfsReadCmd())
+	parent.AddCommand(nfsUpdateCmd())
+	parent.AddCommand(nfsDeleteCmd())
+	parent.AddCommand(nfsBootCmd())
+	parent.AddCommand(nfsShutdownCmd())
+	parent.AddCommand(nfsShutdownForceCmd())
+	parent.AddCommand(nfsResetCmd())
+	parent.AddCommand(nfsWaitForBootCmd())
+	parent.AddCommand(nfsWaitForDownCmd())
+	parent.AddCommand(nfsMonitorNicCmd())
+	parent.AddCommand(nfsMonitorFreeDiskSizeCmd())
 	rootCmd.AddCommand(parent)
 }

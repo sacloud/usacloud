@@ -23,43 +23,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	summaryShowParam = params.NewShowSummaryParam()
-)
-
 // summaryCmd represents the command to manage SAKURA Cloud Summary
-var summaryCmd = &cobra.Command{
-	Use:   "summary",
-	Short: "Show summary of resource usage",
-	Long:  `Show summary of resource usage`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements: call show func as default
-	},
+func summaryCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "summary",
+		Short: "Show summary of resource usage",
+		Long:  `Show summary of resource usage`,
+		Run: func(cmd *cobra.Command, args []string) {
+			// TODO not implements: call show func as default
+		},
+	}
 }
 
-var summaryShowCmd = &cobra.Command{
-	Use: "show",
+func summaryShowCmd() *cobra.Command {
+	summaryShowParam := params.NewShowSummaryParam()
+	cmd := &cobra.Command{
+		Use: "show",
 
-	Short: "Show Summary (default)",
-	Long:  `Show Summary (default)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return summaryShowParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), summaryShowParam)
-		if err != nil {
-			return err
-		}
+		Short: "Show Summary (default)",
+		Long:  `Show Summary (default)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return summaryShowParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), summaryShowParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("show local parameter: \n%s\n", debugMarshalIndent(summaryShowParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("show local parameter: \n%s\n", debugMarshalIndent(summaryShowParam))
+			return nil
+		},
+	}
 
-func summaryShowCmdInit() {
-	fs := summaryShowCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&summaryShowParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&summaryShowParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&summaryShowParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
@@ -73,13 +72,11 @@ func summaryShowCmdInit() {
 	fs.StringVarP(&summaryShowParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&summaryShowParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.BoolVarP(&summaryShowParam.PaidResourcesOnly, "paid-resources-only", "", false, "Show paid-resource only")
+	return cmd
 }
 
 func init() {
-	parent := summaryCmd
-
-	summaryShowCmdInit()
-	parent.AddCommand(summaryShowCmd)
-
+	parent := summaryCmd()
+	parent.AddCommand(summaryShowCmd())
 	rootCmd.AddCommand(parent)
 }

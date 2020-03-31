@@ -24,52 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	archiveListParam        = params.NewListArchiveParam()
-	archiveCreateParam      = params.NewCreateArchiveParam()
-	archiveReadParam        = params.NewReadArchiveParam()
-	archiveUpdateParam      = params.NewUpdateArchiveParam()
-	archiveDeleteParam      = params.NewDeleteArchiveParam()
-	archiveUploadParam      = params.NewUploadArchiveParam()
-	archiveDownloadParam    = params.NewDownloadArchiveParam()
-	archiveFTPOpenParam     = params.NewFTPOpenArchiveParam()
-	archiveFTPCloseParam    = params.NewFTPCloseArchiveParam()
-	archiveWaitForCopyParam = params.NewWaitForCopyArchiveParam()
-)
-
 // archiveCmd represents the command to manage SAKURA Cloud Archive
-var archiveCmd = &cobra.Command{
-	Use:   "archive",
-	Short: "A manage commands of Archive",
-	Long:  `A manage commands of Archive`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func archiveCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "archive",
+		Short: "A manage commands of Archive",
+		Long:  `A manage commands of Archive`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var archiveListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Archive",
-	Long:    `List Archive`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return archiveListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), archiveListParam)
-		if err != nil {
-			return err
-		}
+func archiveListCmd() *cobra.Command {
+	archiveListParam := params.NewListArchiveParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List Archive",
+		Long:    `List Archive`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return archiveListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), archiveListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(archiveListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(archiveListParam))
+			return nil
+		},
+	}
 
-func archiveListCmdInit() {
-	fs := archiveListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&archiveListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &archiveListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringVarP(&archiveListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
@@ -91,31 +81,33 @@ func archiveListCmdInit() {
 	fs.StringVarP(&archiveListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&archiveListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&archiveListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var archiveCreateCmd = &cobra.Command{
-	Use: "create",
+func archiveCreateCmd() *cobra.Command {
+	archiveCreateParam := params.NewCreateArchiveParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create Archive",
-	Long:  `Create Archive`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return archiveCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), archiveCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create Archive",
+		Long:  `Create Archive`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return archiveCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), archiveCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(archiveCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(archiveCreateParam))
+			return nil
+		},
+	}
 
-func archiveCreateCmdInit() {
-	fs := archiveCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &archiveCreateParam.SourceDiskId), "source-disk-id", "", "set source disk ID")
 	fs.VarP(newIDValue(0, &archiveCreateParam.SourceArchiveId), "source-archive-id", "", "set source archive ID")
 	fs.IntVarP(&archiveCreateParam.Size, "size", "", 0, "set archive size(GB)")
@@ -137,31 +129,33 @@ func archiveCreateCmdInit() {
 	fs.StringVarP(&archiveCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&archiveCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&archiveCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var archiveReadCmd = &cobra.Command{
-	Use: "read",
+func archiveReadCmd() *cobra.Command {
+	archiveReadParam := params.NewReadArchiveParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read Archive",
-	Long:  `Read Archive`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return archiveReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), archiveReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read Archive",
+		Long:  `Read Archive`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return archiveReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), archiveReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(archiveReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(archiveReadParam))
+			return nil
+		},
+	}
 
-func archiveReadCmdInit() {
-	fs := archiveReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&archiveReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&archiveReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&archiveReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -176,31 +170,33 @@ func archiveReadCmdInit() {
 	fs.StringVarP(&archiveReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&archiveReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &archiveReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var archiveUpdateCmd = &cobra.Command{
-	Use: "update",
+func archiveUpdateCmd() *cobra.Command {
+	archiveUpdateParam := params.NewUpdateArchiveParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update Archive",
-	Long:  `Update Archive`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return archiveUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), archiveUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update Archive",
+		Long:  `Update Archive`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return archiveUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), archiveUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(archiveUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(archiveUpdateParam))
+			return nil
+		},
+	}
 
-func archiveUpdateCmdInit() {
-	fs := archiveUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&archiveUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&archiveUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&archiveUpdateParam.Description, "description", "", "", "set resource description")
@@ -220,31 +216,33 @@ func archiveUpdateCmdInit() {
 	fs.StringVarP(&archiveUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&archiveUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &archiveUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var archiveDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete Archive",
-	Long:    `Delete Archive`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return archiveDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), archiveDeleteParam)
-		if err != nil {
-			return err
-		}
+func archiveDeleteCmd() *cobra.Command {
+	archiveDeleteParam := params.NewDeleteArchiveParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete Archive",
+		Long:    `Delete Archive`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return archiveDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), archiveDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(archiveDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(archiveDeleteParam))
+			return nil
+		},
+	}
 
-func archiveDeleteCmdInit() {
-	fs := archiveDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&archiveDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&archiveDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&archiveDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -260,31 +258,33 @@ func archiveDeleteCmdInit() {
 	fs.StringVarP(&archiveDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&archiveDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &archiveDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var archiveUploadCmd = &cobra.Command{
-	Use: "upload",
+func archiveUploadCmd() *cobra.Command {
+	archiveUploadParam := params.NewUploadArchiveParam()
+	cmd := &cobra.Command{
+		Use: "upload",
 
-	Short: "Upload Archive",
-	Long:  `Upload Archive`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return archiveUploadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), archiveUploadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Upload Archive",
+		Long:  `Upload Archive`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return archiveUploadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), archiveUploadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("upload local parameter: \n%s\n", debugMarshalIndent(archiveUploadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("upload local parameter: \n%s\n", debugMarshalIndent(archiveUploadParam))
+			return nil
+		},
+	}
 
-func archiveUploadCmdInit() {
-	fs := archiveUploadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&archiveUploadParam.ArchiveFile, "archive-file", "", "", "set archive image file")
 	fs.StringSliceVarP(&archiveUploadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&archiveUploadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -301,31 +301,33 @@ func archiveUploadCmdInit() {
 	fs.StringVarP(&archiveUploadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&archiveUploadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &archiveUploadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var archiveDownloadCmd = &cobra.Command{
-	Use: "download",
+func archiveDownloadCmd() *cobra.Command {
+	archiveDownloadParam := params.NewDownloadArchiveParam()
+	cmd := &cobra.Command{
+		Use: "download",
 
-	Short: "Download Archive",
-	Long:  `Download Archive`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return archiveDownloadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), archiveDownloadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Download Archive",
+		Long:  `Download Archive`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return archiveDownloadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), archiveDownloadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("download local parameter: \n%s\n", debugMarshalIndent(archiveDownloadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("download local parameter: \n%s\n", debugMarshalIndent(archiveDownloadParam))
+			return nil
+		},
+	}
 
-func archiveDownloadCmdInit() {
-	fs := archiveDownloadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&archiveDownloadParam.FileDestination, "file-destination", "", "", "set file destination path")
 	fs.StringSliceVarP(&archiveDownloadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&archiveDownloadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -335,31 +337,33 @@ func archiveDownloadCmdInit() {
 	fs.StringVarP(&archiveDownloadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&archiveDownloadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &archiveDownloadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var archiveFTPOpenCmd = &cobra.Command{
-	Use: "ftp-open",
+func archiveFTPOpenCmd() *cobra.Command {
+	archiveFTPOpenParam := params.NewFTPOpenArchiveParam()
+	cmd := &cobra.Command{
+		Use: "ftp-open",
 
-	Short: "FTPOpen Archive",
-	Long:  `FTPOpen Archive`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return archiveFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), archiveFTPOpenParam)
-		if err != nil {
-			return err
-		}
+		Short: "FTPOpen Archive",
+		Long:  `FTPOpen Archive`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return archiveFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), archiveFTPOpenParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ftp-open local parameter: \n%s\n", debugMarshalIndent(archiveFTPOpenParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ftp-open local parameter: \n%s\n", debugMarshalIndent(archiveFTPOpenParam))
+			return nil
+		},
+	}
 
-func archiveFTPOpenCmdInit() {
-	fs := archiveFTPOpenCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&archiveFTPOpenParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&archiveFTPOpenParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&archiveFTPOpenParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -375,31 +379,33 @@ func archiveFTPOpenCmdInit() {
 	fs.StringVarP(&archiveFTPOpenParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&archiveFTPOpenParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &archiveFTPOpenParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var archiveFTPCloseCmd = &cobra.Command{
-	Use: "ftp-close",
+func archiveFTPCloseCmd() *cobra.Command {
+	archiveFTPCloseParam := params.NewFTPCloseArchiveParam()
+	cmd := &cobra.Command{
+		Use: "ftp-close",
 
-	Short: "FTPClose Archive",
-	Long:  `FTPClose Archive`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return archiveFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), archiveFTPCloseParam)
-		if err != nil {
-			return err
-		}
+		Short: "FTPClose Archive",
+		Long:  `FTPClose Archive`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return archiveFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), archiveFTPCloseParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ftp-close local parameter: \n%s\n", debugMarshalIndent(archiveFTPCloseParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ftp-close local parameter: \n%s\n", debugMarshalIndent(archiveFTPCloseParam))
+			return nil
+		},
+	}
 
-func archiveFTPCloseCmdInit() {
-	fs := archiveFTPCloseCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&archiveFTPCloseParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&archiveFTPCloseParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&archiveFTPCloseParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -408,31 +414,33 @@ func archiveFTPCloseCmdInit() {
 	fs.StringVarP(&archiveFTPCloseParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&archiveFTPCloseParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &archiveFTPCloseParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var archiveWaitForCopyCmd = &cobra.Command{
-	Use: "wait-for-copy",
+func archiveWaitForCopyCmd() *cobra.Command {
+	archiveWaitForCopyParam := params.NewWaitForCopyArchiveParam()
+	cmd := &cobra.Command{
+		Use: "wait-for-copy",
 
-	Short: "WaitForCopy Archive",
-	Long:  `WaitForCopy Archive`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return archiveWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), archiveWaitForCopyParam)
-		if err != nil {
-			return err
-		}
+		Short: "WaitForCopy Archive",
+		Long:  `WaitForCopy Archive`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return archiveWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), archiveWaitForCopyParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("wait-for-copy local parameter: \n%s\n", debugMarshalIndent(archiveWaitForCopyParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("wait-for-copy local parameter: \n%s\n", debugMarshalIndent(archiveWaitForCopyParam))
+			return nil
+		},
+	}
 
-func archiveWaitForCopyCmdInit() {
-	fs := archiveWaitForCopyCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&archiveWaitForCopyParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&archiveWaitForCopyParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&archiveWaitForCopyParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -440,40 +448,20 @@ func archiveWaitForCopyCmdInit() {
 	fs.StringVarP(&archiveWaitForCopyParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&archiveWaitForCopyParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &archiveWaitForCopyParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := archiveCmd
-
-	archiveListCmdInit()
-	parent.AddCommand(archiveListCmd)
-
-	archiveCreateCmdInit()
-	parent.AddCommand(archiveCreateCmd)
-
-	archiveReadCmdInit()
-	parent.AddCommand(archiveReadCmd)
-
-	archiveUpdateCmdInit()
-	parent.AddCommand(archiveUpdateCmd)
-
-	archiveDeleteCmdInit()
-	parent.AddCommand(archiveDeleteCmd)
-
-	archiveUploadCmdInit()
-	parent.AddCommand(archiveUploadCmd)
-
-	archiveDownloadCmdInit()
-	parent.AddCommand(archiveDownloadCmd)
-
-	archiveFTPOpenCmdInit()
-	parent.AddCommand(archiveFTPOpenCmd)
-
-	archiveFTPCloseCmdInit()
-	parent.AddCommand(archiveFTPCloseCmd)
-
-	archiveWaitForCopyCmdInit()
-	parent.AddCommand(archiveWaitForCopyCmd)
-
+	parent := archiveCmd()
+	parent.AddCommand(archiveListCmd())
+	parent.AddCommand(archiveCreateCmd())
+	parent.AddCommand(archiveReadCmd())
+	parent.AddCommand(archiveUpdateCmd())
+	parent.AddCommand(archiveDeleteCmd())
+	parent.AddCommand(archiveUploadCmd())
+	parent.AddCommand(archiveDownloadCmd())
+	parent.AddCommand(archiveFTPOpenCmd())
+	parent.AddCommand(archiveFTPCloseCmd())
+	parent.AddCommand(archiveWaitForCopyCmd())
 	rootCmd.AddCommand(parent)
 }

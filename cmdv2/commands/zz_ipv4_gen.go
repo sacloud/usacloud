@@ -24,47 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	ipv4ListParam      = params.NewListIPv4Param()
-	ipv4PtrAddParam    = params.NewPtrAddIPv4Param()
-	ipv4PtrReadParam   = params.NewPtrReadIPv4Param()
-	ipv4PtrUpdateParam = params.NewPtrUpdateIPv4Param()
-	ipv4PtrDeleteParam = params.NewPtrDeleteIPv4Param()
-)
-
 // ipv4Cmd represents the command to manage SAKURA Cloud IPv4
-var ipv4Cmd = &cobra.Command{
-	Use:   "ipv4",
-	Short: "A manage commands of IPv4",
-	Long:  `A manage commands of IPv4`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func ipv4Cmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "ipv4",
+		Short: "A manage commands of IPv4",
+		Long:  `A manage commands of IPv4`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var ipv4ListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find"},
-	Short:   "List IPv4",
-	Long:    `List IPv4`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return ipv4ListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), ipv4ListParam)
-		if err != nil {
-			return err
-		}
+func ipv4ListCmd() *cobra.Command {
+	ipv4ListParam := params.NewListIPv4Param()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find"},
+		Short:   "List IPv4",
+		Long:    `List IPv4`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return ipv4ListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), ipv4ListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(ipv4ListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(ipv4ListParam))
+			return nil
+		},
+	}
 
-func ipv4ListCmdInit() {
-	fs := ipv4ListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&ipv4ListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &ipv4ListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&ipv4ListParam.From, "from", "", 0, "set offset")
@@ -82,31 +77,33 @@ func ipv4ListCmdInit() {
 	fs.StringVarP(&ipv4ListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&ipv4ListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&ipv4ListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var ipv4PtrAddCmd = &cobra.Command{
-	Use: "ptr-add",
+func ipv4PtrAddCmd() *cobra.Command {
+	ipv4PtrAddParam := params.NewPtrAddIPv4Param()
+	cmd := &cobra.Command{
+		Use: "ptr-add",
 
-	Short: "PtrAdd IPv4",
-	Long:  `PtrAdd IPv4`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return ipv4PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), ipv4PtrAddParam)
-		if err != nil {
-			return err
-		}
+		Short: "PtrAdd IPv4",
+		Long:  `PtrAdd IPv4`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return ipv4PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), ipv4PtrAddParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ptr-add local parameter: \n%s\n", debugMarshalIndent(ipv4PtrAddParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ptr-add local parameter: \n%s\n", debugMarshalIndent(ipv4PtrAddParam))
+			return nil
+		},
+	}
 
-func ipv4PtrAddCmdInit() {
-	fs := ipv4PtrAddCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&ipv4PtrAddParam.Hostname, "hostname", "", "", "set server hostname")
 	fs.BoolVarP(&ipv4PtrAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&ipv4PtrAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -121,31 +118,33 @@ func ipv4PtrAddCmdInit() {
 	fs.StringVarP(&ipv4PtrAddParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&ipv4PtrAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&ipv4PtrAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var ipv4PtrReadCmd = &cobra.Command{
-	Use: "ptr-read",
+func ipv4PtrReadCmd() *cobra.Command {
+	ipv4PtrReadParam := params.NewPtrReadIPv4Param()
+	cmd := &cobra.Command{
+		Use: "ptr-read",
 
-	Short: "PtrRead IPv4",
-	Long:  `PtrRead IPv4`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return ipv4PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), ipv4PtrReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "PtrRead IPv4",
+		Long:  `PtrRead IPv4`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return ipv4PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), ipv4PtrReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ptr-read local parameter: \n%s\n", debugMarshalIndent(ipv4PtrReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ptr-read local parameter: \n%s\n", debugMarshalIndent(ipv4PtrReadParam))
+			return nil
+		},
+	}
 
-func ipv4PtrReadCmdInit() {
-	fs := ipv4PtrReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&ipv4PtrReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&ipv4PtrReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
 	fs.StringVarP(&ipv4PtrReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
@@ -158,31 +157,33 @@ func ipv4PtrReadCmdInit() {
 	fs.StringVarP(&ipv4PtrReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&ipv4PtrReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&ipv4PtrReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var ipv4PtrUpdateCmd = &cobra.Command{
-	Use: "ptr-update",
+func ipv4PtrUpdateCmd() *cobra.Command {
+	ipv4PtrUpdateParam := params.NewPtrUpdateIPv4Param()
+	cmd := &cobra.Command{
+		Use: "ptr-update",
 
-	Short: "PtrUpdate IPv4",
-	Long:  `PtrUpdate IPv4`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return ipv4PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), ipv4PtrUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "PtrUpdate IPv4",
+		Long:  `PtrUpdate IPv4`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return ipv4PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), ipv4PtrUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ptr-update local parameter: \n%s\n", debugMarshalIndent(ipv4PtrUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ptr-update local parameter: \n%s\n", debugMarshalIndent(ipv4PtrUpdateParam))
+			return nil
+		},
+	}
 
-func ipv4PtrUpdateCmdInit() {
-	fs := ipv4PtrUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&ipv4PtrUpdateParam.Hostname, "hostname", "", "", "set server hostname")
 	fs.BoolVarP(&ipv4PtrUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&ipv4PtrUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -197,31 +198,33 @@ func ipv4PtrUpdateCmdInit() {
 	fs.StringVarP(&ipv4PtrUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&ipv4PtrUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&ipv4PtrUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var ipv4PtrDeleteCmd = &cobra.Command{
-	Use: "ptr-delete",
+func ipv4PtrDeleteCmd() *cobra.Command {
+	ipv4PtrDeleteParam := params.NewPtrDeleteIPv4Param()
+	cmd := &cobra.Command{
+		Use: "ptr-delete",
 
-	Short: "PtrDelete IPv4",
-	Long:  `PtrDelete IPv4`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return ipv4PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), ipv4PtrDeleteParam)
-		if err != nil {
-			return err
-		}
+		Short: "PtrDelete IPv4",
+		Long:  `PtrDelete IPv4`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return ipv4PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), ipv4PtrDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ptr-delete local parameter: \n%s\n", debugMarshalIndent(ipv4PtrDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ptr-delete local parameter: \n%s\n", debugMarshalIndent(ipv4PtrDeleteParam))
+			return nil
+		},
+	}
 
-func ipv4PtrDeleteCmdInit() {
-	fs := ipv4PtrDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&ipv4PtrDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&ipv4PtrDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&ipv4PtrDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -235,25 +238,15 @@ func ipv4PtrDeleteCmdInit() {
 	fs.StringVarP(&ipv4PtrDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&ipv4PtrDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&ipv4PtrDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
 func init() {
-	parent := ipv4Cmd
-
-	ipv4ListCmdInit()
-	parent.AddCommand(ipv4ListCmd)
-
-	ipv4PtrAddCmdInit()
-	parent.AddCommand(ipv4PtrAddCmd)
-
-	ipv4PtrReadCmdInit()
-	parent.AddCommand(ipv4PtrReadCmd)
-
-	ipv4PtrUpdateCmdInit()
-	parent.AddCommand(ipv4PtrUpdateCmd)
-
-	ipv4PtrDeleteCmdInit()
-	parent.AddCommand(ipv4PtrDeleteCmd)
-
+	parent := ipv4Cmd()
+	parent.AddCommand(ipv4ListCmd())
+	parent.AddCommand(ipv4PtrAddCmd())
+	parent.AddCommand(ipv4PtrReadCmd())
+	parent.AddCommand(ipv4PtrUpdateCmd())
+	parent.AddCommand(ipv4PtrDeleteCmd())
 	rootCmd.AddCommand(parent)
 }

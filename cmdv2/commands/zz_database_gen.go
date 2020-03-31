@@ -24,69 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	databaseListParam                  = params.NewListDatabaseParam()
-	databaseCreateParam                = params.NewCreateDatabaseParam()
-	databaseReadParam                  = params.NewReadDatabaseParam()
-	databaseUpdateParam                = params.NewUpdateDatabaseParam()
-	databaseDeleteParam                = params.NewDeleteDatabaseParam()
-	databaseBootParam                  = params.NewBootDatabaseParam()
-	databaseShutdownParam              = params.NewShutdownDatabaseParam()
-	databaseShutdownForceParam         = params.NewShutdownForceDatabaseParam()
-	databaseResetParam                 = params.NewResetDatabaseParam()
-	databaseWaitForBootParam           = params.NewWaitForBootDatabaseParam()
-	databaseWaitForDownParam           = params.NewWaitForDownDatabaseParam()
-	databaseBackupInfoParam            = params.NewBackupInfoDatabaseParam()
-	databaseBackupCreateParam          = params.NewBackupCreateDatabaseParam()
-	databaseBackupRestoreParam         = params.NewBackupRestoreDatabaseParam()
-	databaseBackupLockParam            = params.NewBackupLockDatabaseParam()
-	databaseBackupUnlockParam          = params.NewBackupUnlockDatabaseParam()
-	databaseBackupRemoveParam          = params.NewBackupRemoveDatabaseParam()
-	databaseCloneParam                 = params.NewCloneDatabaseParam()
-	databaseReplicaCreateParam         = params.NewReplicaCreateDatabaseParam()
-	databaseMonitorCPUParam            = params.NewMonitorCPUDatabaseParam()
-	databaseMonitorMemoryParam         = params.NewMonitorMemoryDatabaseParam()
-	databaseMonitorNicParam            = params.NewMonitorNicDatabaseParam()
-	databaseMonitorSystemDiskParam     = params.NewMonitorSystemDiskDatabaseParam()
-	databaseMonitorBackupDiskParam     = params.NewMonitorBackupDiskDatabaseParam()
-	databaseMonitorSystemDiskSizeParam = params.NewMonitorSystemDiskSizeDatabaseParam()
-	databaseMonitorBackupDiskSizeParam = params.NewMonitorBackupDiskSizeDatabaseParam()
-	databaseLogsParam                  = params.NewLogsDatabaseParam()
-)
-
 // databaseCmd represents the command to manage SAKURA Cloud Database
-var databaseCmd = &cobra.Command{
-	Use:   "database",
-	Short: "A manage commands of Database",
-	Long:  `A manage commands of Database`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func databaseCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "database",
+		Short: "A manage commands of Database",
+		Long:  `A manage commands of Database`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var databaseListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List Database",
-	Long:    `List Database`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseListParam)
-		if err != nil {
-			return err
-		}
+func databaseListCmd() *cobra.Command {
+	databaseListParam := params.NewListDatabaseParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List Database",
+		Long:    `List Database`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(databaseListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(databaseListParam))
+			return nil
+		},
+	}
 
-func databaseListCmdInit() {
-	fs := databaseListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &databaseListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&databaseListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
@@ -105,31 +78,33 @@ func databaseListCmdInit() {
 	fs.StringVarP(&databaseListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&databaseListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var databaseCreateCmd = &cobra.Command{
-	Use: "create",
+func databaseCreateCmd() *cobra.Command {
+	databaseCreateParam := params.NewCreateDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create Database",
-	Long:  `Create Database`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create Database",
+		Long:  `Create Database`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(databaseCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(databaseCreateParam))
+			return nil
+		},
+	}
 
-func databaseCreateCmdInit() {
-	fs := databaseCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &databaseCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.IntVarP(&databaseCreateParam.Plan, "plan", "", 10, "set plan[10/30/90/240/500/1000]")
 	fs.StringVarP(&databaseCreateParam.Database, "database", "", "", "set database type[postgresql/mariadb]")
@@ -162,31 +137,33 @@ func databaseCreateCmdInit() {
 	fs.StringVarP(&databaseCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&databaseCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var databaseReadCmd = &cobra.Command{
-	Use: "read",
+func databaseReadCmd() *cobra.Command {
+	databaseReadParam := params.NewReadDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read Database",
-	Long:  `Read Database`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read Database",
+		Long:  `Read Database`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(databaseReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(databaseReadParam))
+			return nil
+		},
+	}
 
-func databaseReadCmdInit() {
-	fs := databaseReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&databaseReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -201,31 +178,33 @@ func databaseReadCmdInit() {
 	fs.StringVarP(&databaseReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseUpdateCmd = &cobra.Command{
-	Use: "update",
+func databaseUpdateCmd() *cobra.Command {
+	databaseUpdateParam := params.NewUpdateDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update Database",
-	Long:  `Update Database`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update Database",
+		Long:  `Update Database`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(databaseUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(databaseUpdateParam))
+			return nil
+		},
+	}
 
-func databaseUpdateCmdInit() {
-	fs := databaseUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&databaseUpdateParam.Password, "password", "", "", "set database default user password")
 	fs.StringVarP(&databaseUpdateParam.ReplicaUserPassword, "replica-user-password", "", "", "set database replica user password")
 	fs.BoolVarP(&databaseUpdateParam.EnableReplication, "enable-replication", "", false, "enable replication")
@@ -254,31 +233,33 @@ func databaseUpdateCmdInit() {
 	fs.StringVarP(&databaseUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete Database",
-	Long:    `Delete Database`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseDeleteParam)
-		if err != nil {
-			return err
-		}
+func databaseDeleteCmd() *cobra.Command {
+	databaseDeleteParam := params.NewDeleteDatabaseParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete Database",
+		Long:    `Delete Database`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(databaseDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(databaseDeleteParam))
+			return nil
+		},
+	}
 
-func databaseDeleteCmdInit() {
-	fs := databaseDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&databaseDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&databaseDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -295,31 +276,33 @@ func databaseDeleteCmdInit() {
 	fs.StringVarP(&databaseDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.BoolVarP(&databaseDeleteParam.Force, "force", "f", false, "forced-shutdown flag if database is running")
 	fs.VarP(newIDValue(0, &databaseDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseBootCmd = &cobra.Command{
-	Use:     "boot",
-	Aliases: []string{"power-on"},
-	Short:   "Boot Database",
-	Long:    `Boot Database`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseBootParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseBootParam)
-		if err != nil {
-			return err
-		}
+func databaseBootCmd() *cobra.Command {
+	databaseBootParam := params.NewBootDatabaseParam()
+	cmd := &cobra.Command{
+		Use:     "boot",
+		Aliases: []string{"power-on"},
+		Short:   "Boot Database",
+		Long:    `Boot Database`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseBootParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(databaseBootParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(databaseBootParam))
+			return nil
+		},
+	}
 
-func databaseBootCmdInit() {
-	fs := databaseBootCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&databaseBootParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&databaseBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -328,31 +311,33 @@ func databaseBootCmdInit() {
 	fs.StringVarP(&databaseBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseBootParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseShutdownCmd = &cobra.Command{
-	Use:     "shutdown",
-	Aliases: []string{"power-off"},
-	Short:   "Shutdown Database",
-	Long:    `Shutdown Database`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseShutdownParam)
-		if err != nil {
-			return err
-		}
+func databaseShutdownCmd() *cobra.Command {
+	databaseShutdownParam := params.NewShutdownDatabaseParam()
+	cmd := &cobra.Command{
+		Use:     "shutdown",
+		Aliases: []string{"power-off"},
+		Short:   "Shutdown Database",
+		Long:    `Shutdown Database`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseShutdownParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(databaseShutdownParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(databaseShutdownParam))
+			return nil
+		},
+	}
 
-func databaseShutdownCmdInit() {
-	fs := databaseShutdownCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseShutdownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&databaseShutdownParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&databaseShutdownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -361,31 +346,33 @@ func databaseShutdownCmdInit() {
 	fs.StringVarP(&databaseShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseShutdownParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseShutdownForceCmd = &cobra.Command{
-	Use:     "shutdown-force",
-	Aliases: []string{"stop"},
-	Short:   "ShutdownForce Database",
-	Long:    `ShutdownForce Database`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseShutdownForceParam)
-		if err != nil {
-			return err
-		}
+func databaseShutdownForceCmd() *cobra.Command {
+	databaseShutdownForceParam := params.NewShutdownForceDatabaseParam()
+	cmd := &cobra.Command{
+		Use:     "shutdown-force",
+		Aliases: []string{"stop"},
+		Short:   "ShutdownForce Database",
+		Long:    `ShutdownForce Database`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseShutdownForceParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(databaseShutdownForceParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(databaseShutdownForceParam))
+			return nil
+		},
+	}
 
-func databaseShutdownForceCmdInit() {
-	fs := databaseShutdownForceCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseShutdownForceParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&databaseShutdownForceParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&databaseShutdownForceParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -394,31 +381,33 @@ func databaseShutdownForceCmdInit() {
 	fs.StringVarP(&databaseShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseShutdownForceParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseResetCmd = &cobra.Command{
-	Use: "reset",
+func databaseResetCmd() *cobra.Command {
+	databaseResetParam := params.NewResetDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "reset",
 
-	Short: "Reset Database",
-	Long:  `Reset Database`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseResetParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseResetParam)
-		if err != nil {
-			return err
-		}
+		Short: "Reset Database",
+		Long:  `Reset Database`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseResetParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(databaseResetParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(databaseResetParam))
+			return nil
+		},
+	}
 
-func databaseResetCmdInit() {
-	fs := databaseResetCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseResetParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&databaseResetParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&databaseResetParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -427,31 +416,33 @@ func databaseResetCmdInit() {
 	fs.StringVarP(&databaseResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseResetParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseWaitForBootCmd = &cobra.Command{
-	Use: "wait-for-boot",
+func databaseWaitForBootCmd() *cobra.Command {
+	databaseWaitForBootParam := params.NewWaitForBootDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "wait-for-boot",
 
-	Short: "Wait until boot is completed",
-	Long:  `Wait until boot is completed`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseWaitForBootParam)
-		if err != nil {
-			return err
-		}
+		Short: "Wait until boot is completed",
+		Long:  `Wait until boot is completed`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseWaitForBootParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(databaseWaitForBootParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(databaseWaitForBootParam))
+			return nil
+		},
+	}
 
-func databaseWaitForBootCmdInit() {
-	fs := databaseWaitForBootCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseWaitForBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&databaseWaitForBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseWaitForBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -459,31 +450,33 @@ func databaseWaitForBootCmdInit() {
 	fs.StringVarP(&databaseWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseWaitForBootParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseWaitForDownCmd = &cobra.Command{
-	Use: "wait-for-down",
+func databaseWaitForDownCmd() *cobra.Command {
+	databaseWaitForDownParam := params.NewWaitForDownDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "wait-for-down",
 
-	Short: "Wait until shutdown is completed",
-	Long:  `Wait until shutdown is completed`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseWaitForDownParam)
-		if err != nil {
-			return err
-		}
+		Short: "Wait until shutdown is completed",
+		Long:  `Wait until shutdown is completed`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseWaitForDownParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(databaseWaitForDownParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(databaseWaitForDownParam))
+			return nil
+		},
+	}
 
-func databaseWaitForDownCmdInit() {
-	fs := databaseWaitForDownCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseWaitForDownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&databaseWaitForDownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseWaitForDownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -491,31 +484,33 @@ func databaseWaitForDownCmdInit() {
 	fs.StringVarP(&databaseWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseWaitForDownParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseBackupInfoCmd = &cobra.Command{
-	Use:     "backup-info",
-	Aliases: []string{"backups", "backup-list"},
-	Short:   "Show information of backup",
-	Long:    `Show information of backup`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseBackupInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseBackupInfoParam)
-		if err != nil {
-			return err
-		}
+func databaseBackupInfoCmd() *cobra.Command {
+	databaseBackupInfoParam := params.NewBackupInfoDatabaseParam()
+	cmd := &cobra.Command{
+		Use:     "backup-info",
+		Aliases: []string{"backups", "backup-list"},
+		Short:   "Show information of backup",
+		Long:    `Show information of backup`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseBackupInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseBackupInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("backup-info local parameter: \n%s\n", debugMarshalIndent(databaseBackupInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("backup-info local parameter: \n%s\n", debugMarshalIndent(databaseBackupInfoParam))
+			return nil
+		},
+	}
 
-func databaseBackupInfoCmdInit() {
-	fs := databaseBackupInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseBackupInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&databaseBackupInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseBackupInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -530,31 +525,33 @@ func databaseBackupInfoCmdInit() {
 	fs.StringVarP(&databaseBackupInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseBackupInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseBackupInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseBackupCreateCmd = &cobra.Command{
-	Use: "backup-create",
+func databaseBackupCreateCmd() *cobra.Command {
+	databaseBackupCreateParam := params.NewBackupCreateDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "backup-create",
 
-	Short: "Make new database backup",
-	Long:  `Make new database backup`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseBackupCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Make new database backup",
+		Long:  `Make new database backup`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseBackupCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("backup-create local parameter: \n%s\n", debugMarshalIndent(databaseBackupCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("backup-create local parameter: \n%s\n", debugMarshalIndent(databaseBackupCreateParam))
+			return nil
+		},
+	}
 
-func databaseBackupCreateCmdInit() {
-	fs := databaseBackupCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&databaseBackupCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&databaseBackupCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseBackupCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -569,31 +566,33 @@ func databaseBackupCreateCmdInit() {
 	fs.StringVarP(&databaseBackupCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseBackupCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseBackupCreateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseBackupRestoreCmd = &cobra.Command{
-	Use: "backup-restore",
+func databaseBackupRestoreCmd() *cobra.Command {
+	databaseBackupRestoreParam := params.NewBackupRestoreDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "backup-restore",
 
-	Short: "Restore database from backup",
-	Long:  `Restore database from backup`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseBackupRestoreParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseBackupRestoreParam)
-		if err != nil {
-			return err
-		}
+		Short: "Restore database from backup",
+		Long:  `Restore database from backup`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseBackupRestoreParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseBackupRestoreParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("backup-restore local parameter: \n%s\n", debugMarshalIndent(databaseBackupRestoreParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("backup-restore local parameter: \n%s\n", debugMarshalIndent(databaseBackupRestoreParam))
+			return nil
+		},
+	}
 
-func databaseBackupRestoreCmdInit() {
-	fs := databaseBackupRestoreCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&databaseBackupRestoreParam.Index, "index", "", 0, "index of target backup")
 	fs.BoolVarP(&databaseBackupRestoreParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&databaseBackupRestoreParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -609,31 +608,33 @@ func databaseBackupRestoreCmdInit() {
 	fs.StringVarP(&databaseBackupRestoreParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseBackupRestoreParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseBackupRestoreParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseBackupLockCmd = &cobra.Command{
-	Use: "backup-lock",
+func databaseBackupLockCmd() *cobra.Command {
+	databaseBackupLockParam := params.NewBackupLockDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "backup-lock",
 
-	Short: "Lock backup",
-	Long:  `Lock backup`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseBackupLockParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseBackupLockParam)
-		if err != nil {
-			return err
-		}
+		Short: "Lock backup",
+		Long:  `Lock backup`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseBackupLockParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseBackupLockParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("backup-lock local parameter: \n%s\n", debugMarshalIndent(databaseBackupLockParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("backup-lock local parameter: \n%s\n", debugMarshalIndent(databaseBackupLockParam))
+			return nil
+		},
+	}
 
-func databaseBackupLockCmdInit() {
-	fs := databaseBackupLockCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&databaseBackupLockParam.Index, "index", "", 0, "index of target backup")
 	fs.BoolVarP(&databaseBackupLockParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&databaseBackupLockParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -649,31 +650,33 @@ func databaseBackupLockCmdInit() {
 	fs.StringVarP(&databaseBackupLockParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseBackupLockParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseBackupLockParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseBackupUnlockCmd = &cobra.Command{
-	Use: "backup-unlock",
+func databaseBackupUnlockCmd() *cobra.Command {
+	databaseBackupUnlockParam := params.NewBackupUnlockDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "backup-unlock",
 
-	Short: "Unlock backup",
-	Long:  `Unlock backup`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseBackupUnlockParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseBackupUnlockParam)
-		if err != nil {
-			return err
-		}
+		Short: "Unlock backup",
+		Long:  `Unlock backup`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseBackupUnlockParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseBackupUnlockParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("backup-unlock local parameter: \n%s\n", debugMarshalIndent(databaseBackupUnlockParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("backup-unlock local parameter: \n%s\n", debugMarshalIndent(databaseBackupUnlockParam))
+			return nil
+		},
+	}
 
-func databaseBackupUnlockCmdInit() {
-	fs := databaseBackupUnlockCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&databaseBackupUnlockParam.Index, "index", "", 0, "index of target backup")
 	fs.BoolVarP(&databaseBackupUnlockParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&databaseBackupUnlockParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -689,31 +692,33 @@ func databaseBackupUnlockCmdInit() {
 	fs.StringVarP(&databaseBackupUnlockParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseBackupUnlockParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseBackupUnlockParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseBackupRemoveCmd = &cobra.Command{
-	Use: "backup-remove",
+func databaseBackupRemoveCmd() *cobra.Command {
+	databaseBackupRemoveParam := params.NewBackupRemoveDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "backup-remove",
 
-	Short: "Remove backup",
-	Long:  `Remove backup`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseBackupRemoveParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseBackupRemoveParam)
-		if err != nil {
-			return err
-		}
+		Short: "Remove backup",
+		Long:  `Remove backup`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseBackupRemoveParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseBackupRemoveParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("backup-remove local parameter: \n%s\n", debugMarshalIndent(databaseBackupRemoveParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("backup-remove local parameter: \n%s\n", debugMarshalIndent(databaseBackupRemoveParam))
+			return nil
+		},
+	}
 
-func databaseBackupRemoveCmdInit() {
-	fs := databaseBackupRemoveCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&databaseBackupRemoveParam.Index, "index", "", 0, "index of target backup")
 	fs.BoolVarP(&databaseBackupRemoveParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&databaseBackupRemoveParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -729,31 +734,33 @@ func databaseBackupRemoveCmdInit() {
 	fs.StringVarP(&databaseBackupRemoveParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseBackupRemoveParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseBackupRemoveParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseCloneCmd = &cobra.Command{
-	Use: "clone",
+func databaseCloneCmd() *cobra.Command {
+	databaseCloneParam := params.NewCloneDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "clone",
 
-	Short: "Create clone instance",
-	Long:  `Create clone instance`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseCloneParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseCloneParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create clone instance",
+		Long:  `Create clone instance`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseCloneParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseCloneParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("clone local parameter: \n%s\n", debugMarshalIndent(databaseCloneParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("clone local parameter: \n%s\n", debugMarshalIndent(databaseCloneParam))
+			return nil
+		},
+	}
 
-func databaseCloneCmdInit() {
-	fs := databaseCloneCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&databaseCloneParam.Port, "port", "", 0, "set database port")
 	fs.VarP(newIDValue(0, &databaseCloneParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.StringVarP(&databaseCloneParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
@@ -784,31 +791,33 @@ func databaseCloneCmdInit() {
 	fs.StringVarP(&databaseCloneParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseCloneParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseCloneParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseReplicaCreateCmd = &cobra.Command{
-	Use: "replica-create",
+func databaseReplicaCreateCmd() *cobra.Command {
+	databaseReplicaCreateParam := params.NewReplicaCreateDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "replica-create",
 
-	Short: "Create replication slave instance",
-	Long:  `Create replication slave instance`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseReplicaCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseReplicaCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create replication slave instance",
+		Long:  `Create replication slave instance`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseReplicaCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseReplicaCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("replica-create local parameter: \n%s\n", debugMarshalIndent(databaseReplicaCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("replica-create local parameter: \n%s\n", debugMarshalIndent(databaseReplicaCreateParam))
+			return nil
+		},
+	}
 
-func databaseReplicaCreateCmdInit() {
-	fs := databaseReplicaCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &databaseReplicaCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.StringVarP(&databaseReplicaCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
 	fs.IntVarP(&databaseReplicaCreateParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
@@ -831,31 +840,33 @@ func databaseReplicaCreateCmdInit() {
 	fs.StringVarP(&databaseReplicaCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseReplicaCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseReplicaCreateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseMonitorCPUCmd = &cobra.Command{
-	Use: "monitor-cpu",
+func databaseMonitorCPUCmd() *cobra.Command {
+	databaseMonitorCPUParam := params.NewMonitorCPUDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "monitor-cpu",
 
-	Short: "Collect CPU monitor values",
-	Long:  `Collect CPU monitor values`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseMonitorCPUParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseMonitorCPUParam)
-		if err != nil {
-			return err
-		}
+		Short: "Collect CPU monitor values",
+		Long:  `Collect CPU monitor values`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseMonitorCPUParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseMonitorCPUParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("monitor-cpu local parameter: \n%s\n", debugMarshalIndent(databaseMonitorCPUParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("monitor-cpu local parameter: \n%s\n", debugMarshalIndent(databaseMonitorCPUParam))
+			return nil
+		},
+	}
 
-func databaseMonitorCPUCmdInit() {
-	fs := databaseMonitorCPUCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&databaseMonitorCPUParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&databaseMonitorCPUParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorCPUParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.cpu", "set monitoring value key-format")
@@ -873,31 +884,33 @@ func databaseMonitorCPUCmdInit() {
 	fs.StringVarP(&databaseMonitorCPUParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseMonitorCPUParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseMonitorCPUParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseMonitorMemoryCmd = &cobra.Command{
-	Use: "monitor-memory",
+func databaseMonitorMemoryCmd() *cobra.Command {
+	databaseMonitorMemoryParam := params.NewMonitorMemoryDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "monitor-memory",
 
-	Short: "Collect memory monitor values",
-	Long:  `Collect memory monitor values`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseMonitorMemoryParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseMonitorMemoryParam)
-		if err != nil {
-			return err
-		}
+		Short: "Collect memory monitor values",
+		Long:  `Collect memory monitor values`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseMonitorMemoryParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseMonitorMemoryParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("monitor-memory local parameter: \n%s\n", debugMarshalIndent(databaseMonitorMemoryParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("monitor-memory local parameter: \n%s\n", debugMarshalIndent(databaseMonitorMemoryParam))
+			return nil
+		},
+	}
 
-func databaseMonitorMemoryCmdInit() {
-	fs := databaseMonitorMemoryCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&databaseMonitorMemoryParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&databaseMonitorMemoryParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorMemoryParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.memory", "set monitoring value key-format")
@@ -915,31 +928,33 @@ func databaseMonitorMemoryCmdInit() {
 	fs.StringVarP(&databaseMonitorMemoryParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseMonitorMemoryParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseMonitorMemoryParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseMonitorNicCmd = &cobra.Command{
-	Use: "monitor-nic",
+func databaseMonitorNicCmd() *cobra.Command {
+	databaseMonitorNicParam := params.NewMonitorNicDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "monitor-nic",
 
-	Short: "Collect NIC(s) monitor values",
-	Long:  `Collect NIC(s) monitor values`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseMonitorNicParam)
-		if err != nil {
-			return err
-		}
+		Short: "Collect NIC(s) monitor values",
+		Long:  `Collect NIC(s) monitor values`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseMonitorNicParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("monitor-nic local parameter: \n%s\n", debugMarshalIndent(databaseMonitorNicParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("monitor-nic local parameter: \n%s\n", debugMarshalIndent(databaseMonitorNicParam))
+			return nil
+		},
+	}
 
-func databaseMonitorNicCmdInit() {
-	fs := databaseMonitorNicCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&databaseMonitorNicParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&databaseMonitorNicParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorNicParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.nic", "set monitoring value key-format")
@@ -957,31 +972,33 @@ func databaseMonitorNicCmdInit() {
 	fs.StringVarP(&databaseMonitorNicParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseMonitorNicParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseMonitorNicParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseMonitorSystemDiskCmd = &cobra.Command{
-	Use: "monitor-system-disk",
+func databaseMonitorSystemDiskCmd() *cobra.Command {
+	databaseMonitorSystemDiskParam := params.NewMonitorSystemDiskDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "monitor-system-disk",
 
-	Short: "Collect system-disk monitor values(IO)",
-	Long:  `Collect system-disk monitor values(IO)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseMonitorSystemDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseMonitorSystemDiskParam)
-		if err != nil {
-			return err
-		}
+		Short: "Collect system-disk monitor values(IO)",
+		Long:  `Collect system-disk monitor values(IO)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseMonitorSystemDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseMonitorSystemDiskParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("monitor-system-disk local parameter: \n%s\n", debugMarshalIndent(databaseMonitorSystemDiskParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("monitor-system-disk local parameter: \n%s\n", debugMarshalIndent(databaseMonitorSystemDiskParam))
+			return nil
+		},
+	}
 
-func databaseMonitorSystemDiskCmdInit() {
-	fs := databaseMonitorSystemDiskCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&databaseMonitorSystemDiskParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&databaseMonitorSystemDiskParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorSystemDiskParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.disk1", "set monitoring value key-format")
@@ -999,31 +1016,33 @@ func databaseMonitorSystemDiskCmdInit() {
 	fs.StringVarP(&databaseMonitorSystemDiskParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseMonitorSystemDiskParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseMonitorSystemDiskParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseMonitorBackupDiskCmd = &cobra.Command{
-	Use: "monitor-backup-disk",
+func databaseMonitorBackupDiskCmd() *cobra.Command {
+	databaseMonitorBackupDiskParam := params.NewMonitorBackupDiskDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "monitor-backup-disk",
 
-	Short: "Collect backup-disk monitor values(IO)",
-	Long:  `Collect backup-disk monitor values(IO)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseMonitorBackupDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseMonitorBackupDiskParam)
-		if err != nil {
-			return err
-		}
+		Short: "Collect backup-disk monitor values(IO)",
+		Long:  `Collect backup-disk monitor values(IO)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseMonitorBackupDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseMonitorBackupDiskParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("monitor-backup-disk local parameter: \n%s\n", debugMarshalIndent(databaseMonitorBackupDiskParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("monitor-backup-disk local parameter: \n%s\n", debugMarshalIndent(databaseMonitorBackupDiskParam))
+			return nil
+		},
+	}
 
-func databaseMonitorBackupDiskCmdInit() {
-	fs := databaseMonitorBackupDiskCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&databaseMonitorBackupDiskParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&databaseMonitorBackupDiskParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorBackupDiskParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.disk2", "set monitoring value key-format")
@@ -1041,31 +1060,33 @@ func databaseMonitorBackupDiskCmdInit() {
 	fs.StringVarP(&databaseMonitorBackupDiskParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseMonitorBackupDiskParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseMonitorBackupDiskParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseMonitorSystemDiskSizeCmd = &cobra.Command{
-	Use: "monitor-system-disk-size",
+func databaseMonitorSystemDiskSizeCmd() *cobra.Command {
+	databaseMonitorSystemDiskSizeParam := params.NewMonitorSystemDiskSizeDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "monitor-system-disk-size",
 
-	Short: "Collect system-disk monitor values(usage)",
-	Long:  `Collect system-disk monitor values(usage)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseMonitorSystemDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseMonitorSystemDiskSizeParam)
-		if err != nil {
-			return err
-		}
+		Short: "Collect system-disk monitor values(usage)",
+		Long:  `Collect system-disk monitor values(usage)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseMonitorSystemDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseMonitorSystemDiskSizeParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("monitor-system-disk-size local parameter: \n%s\n", debugMarshalIndent(databaseMonitorSystemDiskSizeParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("monitor-system-disk-size local parameter: \n%s\n", debugMarshalIndent(databaseMonitorSystemDiskSizeParam))
+			return nil
+		},
+	}
 
-func databaseMonitorSystemDiskSizeCmdInit() {
-	fs := databaseMonitorSystemDiskSizeCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.disk1", "set monitoring value key-format")
@@ -1083,31 +1104,33 @@ func databaseMonitorSystemDiskSizeCmdInit() {
 	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseMonitorSystemDiskSizeParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseMonitorBackupDiskSizeCmd = &cobra.Command{
-	Use: "monitor-backup-disk-size",
+func databaseMonitorBackupDiskSizeCmd() *cobra.Command {
+	databaseMonitorBackupDiskSizeParam := params.NewMonitorBackupDiskSizeDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "monitor-backup-disk-size",
 
-	Short: "Collect backup-disk monitor values(usage)",
-	Long:  `Collect backup-disk monitor values(usage)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseMonitorBackupDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseMonitorBackupDiskSizeParam)
-		if err != nil {
-			return err
-		}
+		Short: "Collect backup-disk monitor values(usage)",
+		Long:  `Collect backup-disk monitor values(usage)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseMonitorBackupDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseMonitorBackupDiskSizeParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("monitor-backup-disk-size local parameter: \n%s\n", debugMarshalIndent(databaseMonitorBackupDiskSizeParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("monitor-backup-disk-size local parameter: \n%s\n", debugMarshalIndent(databaseMonitorBackupDiskSizeParam))
+			return nil
+		},
+	}
 
-func databaseMonitorBackupDiskSizeCmdInit() {
-	fs := databaseMonitorBackupDiskSizeCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.disk2", "set monitoring value key-format")
@@ -1125,31 +1148,33 @@ func databaseMonitorBackupDiskSizeCmdInit() {
 	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseMonitorBackupDiskSizeParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var databaseLogsCmd = &cobra.Command{
-	Use: "logs",
+func databaseLogsCmd() *cobra.Command {
+	databaseLogsParam := params.NewLogsDatabaseParam()
+	cmd := &cobra.Command{
+		Use: "logs",
 
-	Short: "Logs Database",
-	Long:  `Logs Database`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return databaseLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), databaseLogsParam)
-		if err != nil {
-			return err
-		}
+		Short: "Logs Database",
+		Long:  `Logs Database`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return databaseLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), databaseLogsParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("logs local parameter: \n%s\n", debugMarshalIndent(databaseLogsParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("logs local parameter: \n%s\n", debugMarshalIndent(databaseLogsParam))
+			return nil
+		},
+	}
 
-func databaseLogsCmdInit() {
-	fs := databaseLogsCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&databaseLogsParam.LogName, "log-name", "", "all", "set target logfile name")
 	fs.BoolVarP(&databaseLogsParam.Follow, "follow", "f", false, "follow log output")
 	fs.VarP(newIDValue(0, &databaseLogsParam.RefreshInterval), "refresh-interval", "", "log refresh interval second")
@@ -1161,91 +1186,37 @@ func databaseLogsCmdInit() {
 	fs.StringVarP(&databaseLogsParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseLogsParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseLogsParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := databaseCmd
-
-	databaseListCmdInit()
-	parent.AddCommand(databaseListCmd)
-
-	databaseCreateCmdInit()
-	parent.AddCommand(databaseCreateCmd)
-
-	databaseReadCmdInit()
-	parent.AddCommand(databaseReadCmd)
-
-	databaseUpdateCmdInit()
-	parent.AddCommand(databaseUpdateCmd)
-
-	databaseDeleteCmdInit()
-	parent.AddCommand(databaseDeleteCmd)
-
-	databaseBootCmdInit()
-	parent.AddCommand(databaseBootCmd)
-
-	databaseShutdownCmdInit()
-	parent.AddCommand(databaseShutdownCmd)
-
-	databaseShutdownForceCmdInit()
-	parent.AddCommand(databaseShutdownForceCmd)
-
-	databaseResetCmdInit()
-	parent.AddCommand(databaseResetCmd)
-
-	databaseWaitForBootCmdInit()
-	parent.AddCommand(databaseWaitForBootCmd)
-
-	databaseWaitForDownCmdInit()
-	parent.AddCommand(databaseWaitForDownCmd)
-
-	databaseBackupInfoCmdInit()
-	parent.AddCommand(databaseBackupInfoCmd)
-
-	databaseBackupCreateCmdInit()
-	parent.AddCommand(databaseBackupCreateCmd)
-
-	databaseBackupRestoreCmdInit()
-	parent.AddCommand(databaseBackupRestoreCmd)
-
-	databaseBackupLockCmdInit()
-	parent.AddCommand(databaseBackupLockCmd)
-
-	databaseBackupUnlockCmdInit()
-	parent.AddCommand(databaseBackupUnlockCmd)
-
-	databaseBackupRemoveCmdInit()
-	parent.AddCommand(databaseBackupRemoveCmd)
-
-	databaseCloneCmdInit()
-	parent.AddCommand(databaseCloneCmd)
-
-	databaseReplicaCreateCmdInit()
-	parent.AddCommand(databaseReplicaCreateCmd)
-
-	databaseMonitorCPUCmdInit()
-	parent.AddCommand(databaseMonitorCPUCmd)
-
-	databaseMonitorMemoryCmdInit()
-	parent.AddCommand(databaseMonitorMemoryCmd)
-
-	databaseMonitorNicCmdInit()
-	parent.AddCommand(databaseMonitorNicCmd)
-
-	databaseMonitorSystemDiskCmdInit()
-	parent.AddCommand(databaseMonitorSystemDiskCmd)
-
-	databaseMonitorBackupDiskCmdInit()
-	parent.AddCommand(databaseMonitorBackupDiskCmd)
-
-	databaseMonitorSystemDiskSizeCmdInit()
-	parent.AddCommand(databaseMonitorSystemDiskSizeCmd)
-
-	databaseMonitorBackupDiskSizeCmdInit()
-	parent.AddCommand(databaseMonitorBackupDiskSizeCmd)
-
-	databaseLogsCmdInit()
-	parent.AddCommand(databaseLogsCmd)
-
+	parent := databaseCmd()
+	parent.AddCommand(databaseListCmd())
+	parent.AddCommand(databaseCreateCmd())
+	parent.AddCommand(databaseReadCmd())
+	parent.AddCommand(databaseUpdateCmd())
+	parent.AddCommand(databaseDeleteCmd())
+	parent.AddCommand(databaseBootCmd())
+	parent.AddCommand(databaseShutdownCmd())
+	parent.AddCommand(databaseShutdownForceCmd())
+	parent.AddCommand(databaseResetCmd())
+	parent.AddCommand(databaseWaitForBootCmd())
+	parent.AddCommand(databaseWaitForDownCmd())
+	parent.AddCommand(databaseBackupInfoCmd())
+	parent.AddCommand(databaseBackupCreateCmd())
+	parent.AddCommand(databaseBackupRestoreCmd())
+	parent.AddCommand(databaseBackupLockCmd())
+	parent.AddCommand(databaseBackupUnlockCmd())
+	parent.AddCommand(databaseBackupRemoveCmd())
+	parent.AddCommand(databaseCloneCmd())
+	parent.AddCommand(databaseReplicaCreateCmd())
+	parent.AddCommand(databaseMonitorCPUCmd())
+	parent.AddCommand(databaseMonitorMemoryCmd())
+	parent.AddCommand(databaseMonitorNicCmd())
+	parent.AddCommand(databaseMonitorSystemDiskCmd())
+	parent.AddCommand(databaseMonitorBackupDiskCmd())
+	parent.AddCommand(databaseMonitorSystemDiskSizeCmd())
+	parent.AddCommand(databaseMonitorBackupDiskSizeCmd())
+	parent.AddCommand(databaseLogsCmd())
 	rootCmd.AddCommand(parent)
 }

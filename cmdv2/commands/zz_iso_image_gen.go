@@ -24,51 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	isoImageListParam     = params.NewListISOImageParam()
-	isoImageCreateParam   = params.NewCreateISOImageParam()
-	isoImageReadParam     = params.NewReadISOImageParam()
-	isoImageUpdateParam   = params.NewUpdateISOImageParam()
-	isoImageDeleteParam   = params.NewDeleteISOImageParam()
-	isoImageUploadParam   = params.NewUploadISOImageParam()
-	isoImageDownloadParam = params.NewDownloadISOImageParam()
-	isoImageFTPOpenParam  = params.NewFTPOpenISOImageParam()
-	isoImageFTPCloseParam = params.NewFTPCloseISOImageParam()
-)
-
 // isoImageCmd represents the command to manage SAKURA Cloud ISOImage
-var isoImageCmd = &cobra.Command{
-	Use:   "iso-image",
-	Short: "A manage commands of ISOImage",
-	Long:  `A manage commands of ISOImage`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func isoImageCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "iso-image",
+		Short: "A manage commands of ISOImage",
+		Long:  `A manage commands of ISOImage`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var isoImageListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List ISOImage",
-	Long:    `List ISOImage`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return isoImageListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), isoImageListParam)
-		if err != nil {
-			return err
-		}
+func isoImageListCmd() *cobra.Command {
+	isoImageListParam := params.NewListISOImageParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List ISOImage",
+		Long:    `List ISOImage`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return isoImageListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), isoImageListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(isoImageListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(isoImageListParam))
+			return nil
+		},
+	}
 
-func isoImageListCmdInit() {
-	fs := isoImageListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&isoImageListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &isoImageListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringVarP(&isoImageListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
@@ -88,31 +79,33 @@ func isoImageListCmdInit() {
 	fs.StringVarP(&isoImageListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&isoImageListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&isoImageListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var isoImageCreateCmd = &cobra.Command{
-	Use: "create",
+func isoImageCreateCmd() *cobra.Command {
+	isoImageCreateParam := params.NewCreateISOImageParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create ISOImage",
-	Long:  `Create ISOImage`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return isoImageCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), isoImageCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create ISOImage",
+		Long:  `Create ISOImage`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return isoImageCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), isoImageCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(isoImageCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(isoImageCreateParam))
+			return nil
+		},
+	}
 
-func isoImageCreateCmdInit() {
-	fs := isoImageCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&isoImageCreateParam.Size, "size", "", 5, "set iso size(GB)")
 	fs.StringVarP(&isoImageCreateParam.ISOFile, "iso-file", "", "", "set iso image file")
 	fs.StringVarP(&isoImageCreateParam.Name, "name", "", "", "set resource display name")
@@ -132,31 +125,33 @@ func isoImageCreateCmdInit() {
 	fs.StringVarP(&isoImageCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&isoImageCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&isoImageCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var isoImageReadCmd = &cobra.Command{
-	Use: "read",
+func isoImageReadCmd() *cobra.Command {
+	isoImageReadParam := params.NewReadISOImageParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read ISOImage",
-	Long:  `Read ISOImage`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return isoImageReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), isoImageReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read ISOImage",
+		Long:  `Read ISOImage`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return isoImageReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), isoImageReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(isoImageReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(isoImageReadParam))
+			return nil
+		},
+	}
 
-func isoImageReadCmdInit() {
-	fs := isoImageReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&isoImageReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&isoImageReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&isoImageReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -171,31 +166,33 @@ func isoImageReadCmdInit() {
 	fs.StringVarP(&isoImageReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&isoImageReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &isoImageReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var isoImageUpdateCmd = &cobra.Command{
-	Use: "update",
+func isoImageUpdateCmd() *cobra.Command {
+	isoImageUpdateParam := params.NewUpdateISOImageParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update ISOImage",
-	Long:  `Update ISOImage`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return isoImageUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), isoImageUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update ISOImage",
+		Long:  `Update ISOImage`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return isoImageUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), isoImageUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(isoImageUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(isoImageUpdateParam))
+			return nil
+		},
+	}
 
-func isoImageUpdateCmdInit() {
-	fs := isoImageUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&isoImageUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&isoImageUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&isoImageUpdateParam.Description, "description", "", "", "set resource description")
@@ -215,31 +212,33 @@ func isoImageUpdateCmdInit() {
 	fs.StringVarP(&isoImageUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&isoImageUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &isoImageUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var isoImageDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete ISOImage",
-	Long:    `Delete ISOImage`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return isoImageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), isoImageDeleteParam)
-		if err != nil {
-			return err
-		}
+func isoImageDeleteCmd() *cobra.Command {
+	isoImageDeleteParam := params.NewDeleteISOImageParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete ISOImage",
+		Long:    `Delete ISOImage`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return isoImageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), isoImageDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(isoImageDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(isoImageDeleteParam))
+			return nil
+		},
+	}
 
-func isoImageDeleteCmdInit() {
-	fs := isoImageDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&isoImageDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&isoImageDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&isoImageDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -255,31 +254,33 @@ func isoImageDeleteCmdInit() {
 	fs.StringVarP(&isoImageDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&isoImageDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &isoImageDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var isoImageUploadCmd = &cobra.Command{
-	Use: "upload",
+func isoImageUploadCmd() *cobra.Command {
+	isoImageUploadParam := params.NewUploadISOImageParam()
+	cmd := &cobra.Command{
+		Use: "upload",
 
-	Short: "Upload ISOImage",
-	Long:  `Upload ISOImage`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return isoImageUploadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), isoImageUploadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Upload ISOImage",
+		Long:  `Upload ISOImage`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return isoImageUploadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), isoImageUploadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("upload local parameter: \n%s\n", debugMarshalIndent(isoImageUploadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("upload local parameter: \n%s\n", debugMarshalIndent(isoImageUploadParam))
+			return nil
+		},
+	}
 
-func isoImageUploadCmdInit() {
-	fs := isoImageUploadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&isoImageUploadParam.ISOFile, "iso-file", "", "", "set iso image file")
 	fs.StringSliceVarP(&isoImageUploadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&isoImageUploadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -296,31 +297,33 @@ func isoImageUploadCmdInit() {
 	fs.StringVarP(&isoImageUploadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&isoImageUploadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &isoImageUploadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var isoImageDownloadCmd = &cobra.Command{
-	Use: "download",
+func isoImageDownloadCmd() *cobra.Command {
+	isoImageDownloadParam := params.NewDownloadISOImageParam()
+	cmd := &cobra.Command{
+		Use: "download",
 
-	Short: "Download ISOImage",
-	Long:  `Download ISOImage`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return isoImageDownloadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), isoImageDownloadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Download ISOImage",
+		Long:  `Download ISOImage`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return isoImageDownloadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), isoImageDownloadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("download local parameter: \n%s\n", debugMarshalIndent(isoImageDownloadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("download local parameter: \n%s\n", debugMarshalIndent(isoImageDownloadParam))
+			return nil
+		},
+	}
 
-func isoImageDownloadCmdInit() {
-	fs := isoImageDownloadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&isoImageDownloadParam.FileDestination, "file-destination", "", "", "set file destination path")
 	fs.StringSliceVarP(&isoImageDownloadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&isoImageDownloadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -330,31 +333,33 @@ func isoImageDownloadCmdInit() {
 	fs.StringVarP(&isoImageDownloadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&isoImageDownloadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &isoImageDownloadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var isoImageFTPOpenCmd = &cobra.Command{
-	Use: "ftp-open",
+func isoImageFTPOpenCmd() *cobra.Command {
+	isoImageFTPOpenParam := params.NewFTPOpenISOImageParam()
+	cmd := &cobra.Command{
+		Use: "ftp-open",
 
-	Short: "FTPOpen ISOImage",
-	Long:  `FTPOpen ISOImage`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return isoImageFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), isoImageFTPOpenParam)
-		if err != nil {
-			return err
-		}
+		Short: "FTPOpen ISOImage",
+		Long:  `FTPOpen ISOImage`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return isoImageFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), isoImageFTPOpenParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ftp-open local parameter: \n%s\n", debugMarshalIndent(isoImageFTPOpenParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ftp-open local parameter: \n%s\n", debugMarshalIndent(isoImageFTPOpenParam))
+			return nil
+		},
+	}
 
-func isoImageFTPOpenCmdInit() {
-	fs := isoImageFTPOpenCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&isoImageFTPOpenParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&isoImageFTPOpenParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&isoImageFTPOpenParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -370,31 +375,33 @@ func isoImageFTPOpenCmdInit() {
 	fs.StringVarP(&isoImageFTPOpenParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&isoImageFTPOpenParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &isoImageFTPOpenParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var isoImageFTPCloseCmd = &cobra.Command{
-	Use: "ftp-close",
+func isoImageFTPCloseCmd() *cobra.Command {
+	isoImageFTPCloseParam := params.NewFTPCloseISOImageParam()
+	cmd := &cobra.Command{
+		Use: "ftp-close",
 
-	Short: "FTPClose ISOImage",
-	Long:  `FTPClose ISOImage`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return isoImageFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), isoImageFTPCloseParam)
-		if err != nil {
-			return err
-		}
+		Short: "FTPClose ISOImage",
+		Long:  `FTPClose ISOImage`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return isoImageFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), isoImageFTPCloseParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ftp-close local parameter: \n%s\n", debugMarshalIndent(isoImageFTPCloseParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ftp-close local parameter: \n%s\n", debugMarshalIndent(isoImageFTPCloseParam))
+			return nil
+		},
+	}
 
-func isoImageFTPCloseCmdInit() {
-	fs := isoImageFTPCloseCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&isoImageFTPCloseParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&isoImageFTPCloseParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&isoImageFTPCloseParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -403,37 +410,19 @@ func isoImageFTPCloseCmdInit() {
 	fs.StringVarP(&isoImageFTPCloseParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&isoImageFTPCloseParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &isoImageFTPCloseParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := isoImageCmd
-
-	isoImageListCmdInit()
-	parent.AddCommand(isoImageListCmd)
-
-	isoImageCreateCmdInit()
-	parent.AddCommand(isoImageCreateCmd)
-
-	isoImageReadCmdInit()
-	parent.AddCommand(isoImageReadCmd)
-
-	isoImageUpdateCmdInit()
-	parent.AddCommand(isoImageUpdateCmd)
-
-	isoImageDeleteCmdInit()
-	parent.AddCommand(isoImageDeleteCmd)
-
-	isoImageUploadCmdInit()
-	parent.AddCommand(isoImageUploadCmd)
-
-	isoImageDownloadCmdInit()
-	parent.AddCommand(isoImageDownloadCmd)
-
-	isoImageFTPOpenCmdInit()
-	parent.AddCommand(isoImageFTPOpenCmd)
-
-	isoImageFTPCloseCmdInit()
-	parent.AddCommand(isoImageFTPCloseCmd)
-
+	parent := isoImageCmd()
+	parent.AddCommand(isoImageListCmd())
+	parent.AddCommand(isoImageCreateCmd())
+	parent.AddCommand(isoImageReadCmd())
+	parent.AddCommand(isoImageUpdateCmd())
+	parent.AddCommand(isoImageDeleteCmd())
+	parent.AddCommand(isoImageUploadCmd())
+	parent.AddCommand(isoImageDownloadCmd())
+	parent.AddCommand(isoImageFTPOpenCmd())
+	parent.AddCommand(isoImageFTPCloseCmd())
 	rootCmd.AddCommand(parent)
 }

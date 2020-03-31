@@ -24,43 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	priceListParam = params.NewListPriceParam()
-)
-
 // priceCmd represents the command to manage SAKURA Cloud Price
-var priceCmd = &cobra.Command{
-	Use:   "price",
-	Short: "A manage commands of Price",
-	Long:  `A manage commands of Price`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements: call list func as default
-	},
+func priceCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "price",
+		Short: "A manage commands of Price",
+		Long:  `A manage commands of Price`,
+		Run: func(cmd *cobra.Command, args []string) {
+			// TODO not implements: call list func as default
+		},
+	}
 }
 
-var priceListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find"},
-	Short:   "List Price (default)",
-	Long:    `List Price (default)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return priceListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), priceListParam)
-		if err != nil {
-			return err
-		}
+func priceListCmd() *cobra.Command {
+	priceListParam := params.NewListPriceParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find"},
+		Short:   "List Price (default)",
+		Long:    `List Price (default)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return priceListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), priceListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(priceListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(priceListParam))
+			return nil
+		},
+	}
 
-func priceListCmdInit() {
-	fs := priceListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&priceListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &priceListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&priceListParam.From, "from", "", 0, "set offset")
@@ -78,13 +77,11 @@ func priceListCmdInit() {
 	fs.StringVarP(&priceListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&priceListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&priceListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
 func init() {
-	parent := priceCmd
-
-	priceListCmdInit()
-	parent.AddCommand(priceListCmd)
-
+	parent := priceCmd()
+	parent.AddCommand(priceListCmd())
 	rootCmd.AddCommand(parent)
 }

@@ -24,57 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	simListParam          = params.NewListSIMParam()
-	simCreateParam        = params.NewCreateSIMParam()
-	simReadParam          = params.NewReadSIMParam()
-	simUpdateParam        = params.NewUpdateSIMParam()
-	simDeleteParam        = params.NewDeleteSIMParam()
-	simCarrierInfoParam   = params.NewCarrierInfoSIMParam()
-	simCarrierUpdateParam = params.NewCarrierUpdateSIMParam()
-	simActivateParam      = params.NewActivateSIMParam()
-	simDeactivateParam    = params.NewDeactivateSIMParam()
-	simImeiLockParam      = params.NewImeiLockSIMParam()
-	simIpAddParam         = params.NewIpAddSIMParam()
-	simImeiUnlockParam    = params.NewImeiUnlockSIMParam()
-	simIpDeleteParam      = params.NewIpDeleteSIMParam()
-	simLogsParam          = params.NewLogsSIMParam()
-	simMonitorParam       = params.NewMonitorSIMParam()
-)
-
 // simCmd represents the command to manage SAKURA Cloud SIM
-var simCmd = &cobra.Command{
-	Use:   "sim",
-	Short: "A manage commands of SIM",
-	Long:  `A manage commands of SIM`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func simCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "sim",
+		Short: "A manage commands of SIM",
+		Long:  `A manage commands of SIM`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var simListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List SIM",
-	Long:    `List SIM`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simListParam)
-		if err != nil {
-			return err
-		}
+func simListCmd() *cobra.Command {
+	simListParam := params.NewListSIMParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List SIM",
+		Long:    `List SIM`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(simListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(simListParam))
+			return nil
+		},
+	}
 
-func simListCmdInit() {
-	fs := simListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&simListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &simListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&simListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
@@ -93,31 +78,33 @@ func simListCmdInit() {
 	fs.StringVarP(&simListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&simListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var simCreateCmd = &cobra.Command{
-	Use: "create",
+func simCreateCmd() *cobra.Command {
+	simCreateParam := params.NewCreateSIMParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create SIM",
-	Long:  `Create SIM`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create SIM",
+		Long:  `Create SIM`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(simCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(simCreateParam))
+			return nil
+		},
+	}
 
-func simCreateCmdInit() {
-	fs := simCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&simCreateParam.Iccid, "iccid", "", "", "")
 	fs.StringVarP(&simCreateParam.Passcode, "passcode", "", "", "")
 	fs.BoolVarP(&simCreateParam.Disabled, "disabled", "", false, "")
@@ -140,31 +127,33 @@ func simCreateCmdInit() {
 	fs.StringVarP(&simCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&simCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var simReadCmd = &cobra.Command{
-	Use: "read",
+func simReadCmd() *cobra.Command {
+	simReadParam := params.NewReadSIMParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read SIM",
-	Long:  `Read SIM`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read SIM",
+		Long:  `Read SIM`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(simReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(simReadParam))
+			return nil
+		},
+	}
 
-func simReadCmdInit() {
-	fs := simReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&simReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&simReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&simReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -179,31 +168,33 @@ func simReadCmdInit() {
 	fs.StringVarP(&simReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var simUpdateCmd = &cobra.Command{
-	Use: "update",
+func simUpdateCmd() *cobra.Command {
+	simUpdateParam := params.NewUpdateSIMParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update SIM",
-	Long:  `Update SIM`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update SIM",
+		Long:  `Update SIM`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(simUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(simUpdateParam))
+			return nil
+		},
+	}
 
-func simUpdateCmdInit() {
-	fs := simUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&simUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&simUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&simUpdateParam.Description, "description", "", "", "set resource description")
@@ -223,31 +214,33 @@ func simUpdateCmdInit() {
 	fs.StringVarP(&simUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var simDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete SIM",
-	Long:    `Delete SIM`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simDeleteParam)
-		if err != nil {
-			return err
-		}
+func simDeleteCmd() *cobra.Command {
+	simDeleteParam := params.NewDeleteSIMParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete SIM",
+		Long:    `Delete SIM`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(simDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(simDeleteParam))
+			return nil
+		},
+	}
 
-func simDeleteCmdInit() {
-	fs := simDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&simDeleteParam.Force, "force", "f", false, "forced-delete flag if SIM is still activating")
 	fs.StringSliceVarP(&simDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&simDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -257,31 +250,33 @@ func simDeleteCmdInit() {
 	fs.StringVarP(&simDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&simDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &simDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var simCarrierInfoCmd = &cobra.Command{
-	Use:     "carrier-info",
-	Aliases: []string{"carrier-list"},
-	Short:   "CarrierInfo SIM",
-	Long:    `CarrierInfo SIM`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simCarrierInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simCarrierInfoParam)
-		if err != nil {
-			return err
-		}
+func simCarrierInfoCmd() *cobra.Command {
+	simCarrierInfoParam := params.NewCarrierInfoSIMParam()
+	cmd := &cobra.Command{
+		Use:     "carrier-info",
+		Aliases: []string{"carrier-list"},
+		Short:   "CarrierInfo SIM",
+		Long:    `CarrierInfo SIM`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simCarrierInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simCarrierInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("carrier-info local parameter: \n%s\n", debugMarshalIndent(simCarrierInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("carrier-info local parameter: \n%s\n", debugMarshalIndent(simCarrierInfoParam))
+			return nil
+		},
+	}
 
-func simCarrierInfoCmdInit() {
-	fs := simCarrierInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&simCarrierInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&simCarrierInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&simCarrierInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -296,31 +291,33 @@ func simCarrierInfoCmdInit() {
 	fs.StringVarP(&simCarrierInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simCarrierInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simCarrierInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var simCarrierUpdateCmd = &cobra.Command{
-	Use: "carrier-update",
+func simCarrierUpdateCmd() *cobra.Command {
+	simCarrierUpdateParam := params.NewCarrierUpdateSIMParam()
+	cmd := &cobra.Command{
+		Use: "carrier-update",
 
-	Short: "CarrierUpdate SIM",
-	Long:  `CarrierUpdate SIM`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simCarrierUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simCarrierUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "CarrierUpdate SIM",
+		Long:  `CarrierUpdate SIM`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simCarrierUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simCarrierUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("carrier-update local parameter: \n%s\n", debugMarshalIndent(simCarrierUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("carrier-update local parameter: \n%s\n", debugMarshalIndent(simCarrierUpdateParam))
+			return nil
+		},
+	}
 
-func simCarrierUpdateCmdInit() {
-	fs := simCarrierUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&simCarrierUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&simCarrierUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&simCarrierUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -330,31 +327,33 @@ func simCarrierUpdateCmdInit() {
 	fs.BoolVarP(&simCarrierUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &simCarrierUpdateParam.Id), "id", "", "Set target ID")
 	fs.StringSliceVarP(&simCarrierUpdateParam.Carrier, "carrier", "", []string{}, "")
+	return cmd
 }
 
-var simActivateCmd = &cobra.Command{
-	Use: "activate",
+func simActivateCmd() *cobra.Command {
+	simActivateParam := params.NewActivateSIMParam()
+	cmd := &cobra.Command{
+		Use: "activate",
 
-	Short: "Activate SIM",
-	Long:  `Activate SIM`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simActivateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simActivateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Activate SIM",
+		Long:  `Activate SIM`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simActivateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simActivateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("activate local parameter: \n%s\n", debugMarshalIndent(simActivateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("activate local parameter: \n%s\n", debugMarshalIndent(simActivateParam))
+			return nil
+		},
+	}
 
-func simActivateCmdInit() {
-	fs := simActivateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&simActivateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&simActivateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&simActivateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -363,31 +362,33 @@ func simActivateCmdInit() {
 	fs.StringVarP(&simActivateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&simActivateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &simActivateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var simDeactivateCmd = &cobra.Command{
-	Use: "deactivate",
+func simDeactivateCmd() *cobra.Command {
+	simDeactivateParam := params.NewDeactivateSIMParam()
+	cmd := &cobra.Command{
+		Use: "deactivate",
 
-	Short: "Deactivate SIM",
-	Long:  `Deactivate SIM`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simDeactivateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simDeactivateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Deactivate SIM",
+		Long:  `Deactivate SIM`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simDeactivateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simDeactivateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("deactivate local parameter: \n%s\n", debugMarshalIndent(simDeactivateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("deactivate local parameter: \n%s\n", debugMarshalIndent(simDeactivateParam))
+			return nil
+		},
+	}
 
-func simDeactivateCmdInit() {
-	fs := simDeactivateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&simDeactivateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&simDeactivateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&simDeactivateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -396,31 +397,33 @@ func simDeactivateCmdInit() {
 	fs.StringVarP(&simDeactivateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&simDeactivateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &simDeactivateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var simImeiLockCmd = &cobra.Command{
-	Use: "imei-lock",
+func simImeiLockCmd() *cobra.Command {
+	simImeiLockParam := params.NewImeiLockSIMParam()
+	cmd := &cobra.Command{
+		Use: "imei-lock",
 
-	Short: "ImeiLock SIM",
-	Long:  `ImeiLock SIM`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simImeiLockParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simImeiLockParam)
-		if err != nil {
-			return err
-		}
+		Short: "ImeiLock SIM",
+		Long:  `ImeiLock SIM`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simImeiLockParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simImeiLockParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("imei-lock local parameter: \n%s\n", debugMarshalIndent(simImeiLockParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("imei-lock local parameter: \n%s\n", debugMarshalIndent(simImeiLockParam))
+			return nil
+		},
+	}
 
-func simImeiLockCmdInit() {
-	fs := simImeiLockCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&simImeiLockParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&simImeiLockParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&simImeiLockParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -430,31 +433,33 @@ func simImeiLockCmdInit() {
 	fs.BoolVarP(&simImeiLockParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &simImeiLockParam.Id), "id", "", "Set target ID")
 	fs.StringVarP(&simImeiLockParam.Imei, "imei", "", "", "")
+	return cmd
 }
 
-var simIpAddCmd = &cobra.Command{
-	Use: "ip-add",
+func simIpAddCmd() *cobra.Command {
+	simIpAddParam := params.NewIpAddSIMParam()
+	cmd := &cobra.Command{
+		Use: "ip-add",
 
-	Short: "IpAdd SIM",
-	Long:  `IpAdd SIM`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simIpAddParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simIpAddParam)
-		if err != nil {
-			return err
-		}
+		Short: "IpAdd SIM",
+		Long:  `IpAdd SIM`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simIpAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simIpAddParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ip-add local parameter: \n%s\n", debugMarshalIndent(simIpAddParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ip-add local parameter: \n%s\n", debugMarshalIndent(simIpAddParam))
+			return nil
+		},
+	}
 
-func simIpAddCmdInit() {
-	fs := simIpAddCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&simIpAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&simIpAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&simIpAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -464,31 +469,33 @@ func simIpAddCmdInit() {
 	fs.BoolVarP(&simIpAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &simIpAddParam.Id), "id", "", "Set target ID")
 	fs.StringVarP(&simIpAddParam.Ip, "ip", "", "", "")
+	return cmd
 }
 
-var simImeiUnlockCmd = &cobra.Command{
-	Use: "imei-unlock",
+func simImeiUnlockCmd() *cobra.Command {
+	simImeiUnlockParam := params.NewImeiUnlockSIMParam()
+	cmd := &cobra.Command{
+		Use: "imei-unlock",
 
-	Short: "ImeiUnlock SIM",
-	Long:  `ImeiUnlock SIM`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simImeiUnlockParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simImeiUnlockParam)
-		if err != nil {
-			return err
-		}
+		Short: "ImeiUnlock SIM",
+		Long:  `ImeiUnlock SIM`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simImeiUnlockParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simImeiUnlockParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("imei-unlock local parameter: \n%s\n", debugMarshalIndent(simImeiUnlockParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("imei-unlock local parameter: \n%s\n", debugMarshalIndent(simImeiUnlockParam))
+			return nil
+		},
+	}
 
-func simImeiUnlockCmdInit() {
-	fs := simImeiUnlockCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&simImeiUnlockParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&simImeiUnlockParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&simImeiUnlockParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -497,31 +504,33 @@ func simImeiUnlockCmdInit() {
 	fs.StringVarP(&simImeiUnlockParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&simImeiUnlockParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &simImeiUnlockParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var simIpDeleteCmd = &cobra.Command{
-	Use:     "ip-delete",
-	Aliases: []string{"ip-del"},
-	Short:   "IpDelete SIM",
-	Long:    `IpDelete SIM`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simIpDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simIpDeleteParam)
-		if err != nil {
-			return err
-		}
+func simIpDeleteCmd() *cobra.Command {
+	simIpDeleteParam := params.NewIpDeleteSIMParam()
+	cmd := &cobra.Command{
+		Use:     "ip-delete",
+		Aliases: []string{"ip-del"},
+		Short:   "IpDelete SIM",
+		Long:    `IpDelete SIM`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simIpDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simIpDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("ip-delete local parameter: \n%s\n", debugMarshalIndent(simIpDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("ip-delete local parameter: \n%s\n", debugMarshalIndent(simIpDeleteParam))
+			return nil
+		},
+	}
 
-func simIpDeleteCmdInit() {
-	fs := simIpDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&simIpDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&simIpDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&simIpDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -530,31 +539,33 @@ func simIpDeleteCmdInit() {
 	fs.StringVarP(&simIpDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&simIpDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &simIpDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var simLogsCmd = &cobra.Command{
-	Use: "logs",
+func simLogsCmd() *cobra.Command {
+	simLogsParam := params.NewLogsSIMParam()
+	cmd := &cobra.Command{
+		Use: "logs",
 
-	Short: "Logs SIM",
-	Long:  `Logs SIM`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simLogsParam)
-		if err != nil {
-			return err
-		}
+		Short: "Logs SIM",
+		Long:  `Logs SIM`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simLogsParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("logs local parameter: \n%s\n", debugMarshalIndent(simLogsParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("logs local parameter: \n%s\n", debugMarshalIndent(simLogsParam))
+			return nil
+		},
+	}
 
-func simLogsCmdInit() {
-	fs := simLogsCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&simLogsParam.Follow, "follow", "f", false, "follow log output")
 	fs.Int64VarP(&simLogsParam.RefreshInterval, "refresh-interval", "", 3, "log refresh interval second")
 	fs.StringSliceVarP(&simLogsParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -571,31 +582,33 @@ func simLogsCmdInit() {
 	fs.StringVarP(&simLogsParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simLogsParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simLogsParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var simMonitorCmd = &cobra.Command{
-	Use: "monitor",
+func simMonitorCmd() *cobra.Command {
+	simMonitorParam := params.NewMonitorSIMParam()
+	cmd := &cobra.Command{
+		Use: "monitor",
 
-	Short: "Monitor SIM",
-	Long:  `Monitor SIM`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return simMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), simMonitorParam)
-		if err != nil {
-			return err
-		}
+		Short: "Monitor SIM",
+		Long:  `Monitor SIM`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return simMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), simMonitorParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(simMonitorParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(simMonitorParam))
+			return nil
+		},
+	}
 
-func simMonitorCmdInit() {
-	fs := simMonitorCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&simMonitorParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&simMonitorParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&simMonitorParam.KeyFormat, "key-format", "", "sakuracloud.sim.{{.ID}}", "set monitoring value key-format")
@@ -613,55 +626,25 @@ func simMonitorCmdInit() {
 	fs.StringVarP(&simMonitorParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simMonitorParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simMonitorParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := simCmd
-
-	simListCmdInit()
-	parent.AddCommand(simListCmd)
-
-	simCreateCmdInit()
-	parent.AddCommand(simCreateCmd)
-
-	simReadCmdInit()
-	parent.AddCommand(simReadCmd)
-
-	simUpdateCmdInit()
-	parent.AddCommand(simUpdateCmd)
-
-	simDeleteCmdInit()
-	parent.AddCommand(simDeleteCmd)
-
-	simCarrierInfoCmdInit()
-	parent.AddCommand(simCarrierInfoCmd)
-
-	simCarrierUpdateCmdInit()
-	parent.AddCommand(simCarrierUpdateCmd)
-
-	simActivateCmdInit()
-	parent.AddCommand(simActivateCmd)
-
-	simDeactivateCmdInit()
-	parent.AddCommand(simDeactivateCmd)
-
-	simImeiLockCmdInit()
-	parent.AddCommand(simImeiLockCmd)
-
-	simIpAddCmdInit()
-	parent.AddCommand(simIpAddCmd)
-
-	simImeiUnlockCmdInit()
-	parent.AddCommand(simImeiUnlockCmd)
-
-	simIpDeleteCmdInit()
-	parent.AddCommand(simIpDeleteCmd)
-
-	simLogsCmdInit()
-	parent.AddCommand(simLogsCmd)
-
-	simMonitorCmdInit()
-	parent.AddCommand(simMonitorCmd)
-
+	parent := simCmd()
+	parent.AddCommand(simListCmd())
+	parent.AddCommand(simCreateCmd())
+	parent.AddCommand(simReadCmd())
+	parent.AddCommand(simUpdateCmd())
+	parent.AddCommand(simDeleteCmd())
+	parent.AddCommand(simCarrierInfoCmd())
+	parent.AddCommand(simCarrierUpdateCmd())
+	parent.AddCommand(simActivateCmd())
+	parent.AddCommand(simDeactivateCmd())
+	parent.AddCommand(simImeiLockCmd())
+	parent.AddCommand(simIpAddCmd())
+	parent.AddCommand(simImeiUnlockCmd())
+	parent.AddCommand(simIpDeleteCmd())
+	parent.AddCommand(simLogsCmd())
+	parent.AddCommand(simMonitorCmd())
 	rootCmd.AddCommand(parent)
 }

@@ -79,61 +79,58 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-{{ range .Commands -}}
-	{{ .InputParameterVariable }} = params.New{{ .InputParameterTypeName }}()
-{{ end }}
-)
-
-// {{ .CLIVariableName }} represents the command to manage SAKURA Cloud {{ .Name }}
-var {{ .CLIVariableName }} = &cobra.Command{
-	Use:   "{{ .CLIName }}",
-	Short: "{{ .Usage }}",
-	Long: ` + "`{{.Usage}}`" + `,
-	Run: func(cmd *cobra.Command, args []string) {
-		{{ if .DefaultCommand }}// TODO not implements: call {{.DefaultCommand}} func as default{{ else }}cmd.HelpFunc()(cmd,args){{ end }}
-	},
+// {{ .CLIVariableFuncName }} represents the command to manage SAKURA Cloud {{ .Name }}
+func {{ .CLIVariableFuncName }}() *cobra.Command {
+	return &cobra.Command {
+		Use:   "{{ .CLIName }}",
+		Short: "{{ .Usage }}",
+		Long: ` + "`{{.Usage}}`" + `,
+		Run: func(cmd *cobra.Command, args []string) {
+			{{ if .DefaultCommand }}// TODO not implements: call {{.DefaultCommand}} func as default{{ else }}cmd.HelpFunc()(cmd,args){{ end }}
+		},
+	}
 }
 
-{{ range .Commands -}}
-var {{ .CLIVariableName }} = &cobra.Command{
-	Use:   "{{ .Name }}",
-	{{ if .Aliases }}Aliases: []string{ {{ .AliasesLiteral }} },{{ end }}
-	Short: "{{ .Usage }}",
-	Long: ` + "`{{ .Usage }}`" + `,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return {{ .InputParameterVariable }}.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), {{ .InputParameterVariable }})
-		if err != nil {
-			return err
-		}
+{{ range .Commands }}
+func {{ .CLIVariableFuncName }}() *cobra.Command {
+	{{ .InputParameterVariable }} := params.New{{ .InputParameterTypeName }}()
+	cmd := &cobra.Command{
+		Use:   "{{ .Name }}",
+		{{ if .Aliases }}Aliases: []string{ {{ .AliasesLiteral }} },{{ end }}
+		Short: "{{ .Usage }}",
+		Long: ` + "`{{ .Usage }}`" + `,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return {{ .InputParameterVariable }}.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), {{ .InputParameterVariable }})
+			if err != nil {
+				return err
+			}
+	
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("{{.Name}} local parameter: \n%s\n", debugMarshalIndent({{ .InputParameterVariable }}))
+			return nil
+		},
+	}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("{{.Name}} local parameter: \n%s\n", debugMarshalIndent({{ .InputParameterVariable }}))
-		return nil
-	},
-}
-
-func {{ .CLIVariableName }}Init() {
-{{ if .Params -}}
-	fs := {{ .CLIVariableName }}.Flags()
+	{{ if .Params -}}
+	fs := cmd.Flags()
 {{ range .Params -}}
 	fs.{{ .FlagDefinitionStatement }}
 {{ end -}}
 {{ end -}}
+
+	return cmd
 }
 {{ end }}
 
 func init() {
-	parent := {{ .CLIVariableName }}
-{{ range .Commands }}
-	{{ .CLIVariableName }}Init()
-	parent.AddCommand({{ .CLIVariableName }})
-{{ end }}
+	parent := {{ .CLIVariableFuncName }}()
+{{ range .Commands -}}
+	parent.AddCommand({{ .CLIVariableFuncName }}())
+{{ end -}}
 	rootCmd.AddCommand(parent)
 }
-
 `

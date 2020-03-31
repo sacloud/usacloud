@@ -24,75 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	mobileGatewayListParam                  = params.NewListMobileGatewayParam()
-	mobileGatewayCreateParam                = params.NewCreateMobileGatewayParam()
-	mobileGatewayReadParam                  = params.NewReadMobileGatewayParam()
-	mobileGatewayUpdateParam                = params.NewUpdateMobileGatewayParam()
-	mobileGatewayDeleteParam                = params.NewDeleteMobileGatewayParam()
-	mobileGatewayBootParam                  = params.NewBootMobileGatewayParam()
-	mobileGatewayShutdownParam              = params.NewShutdownMobileGatewayParam()
-	mobileGatewayShutdownForceParam         = params.NewShutdownForceMobileGatewayParam()
-	mobileGatewayResetParam                 = params.NewResetMobileGatewayParam()
-	mobileGatewayWaitForBootParam           = params.NewWaitForBootMobileGatewayParam()
-	mobileGatewayWaitForDownParam           = params.NewWaitForDownMobileGatewayParam()
-	mobileGatewayInterfaceInfoParam         = params.NewInterfaceInfoMobileGatewayParam()
-	mobileGatewayInterfaceConnectParam      = params.NewInterfaceConnectMobileGatewayParam()
-	mobileGatewayInterfaceUpdateParam       = params.NewInterfaceUpdateMobileGatewayParam()
-	mobileGatewayInterfaceDisconnectParam   = params.NewInterfaceDisconnectMobileGatewayParam()
-	mobileGatewayTrafficControlInfoParam    = params.NewTrafficControlInfoMobileGatewayParam()
-	mobileGatewayTrafficControlEnableParam  = params.NewTrafficControlEnableMobileGatewayParam()
-	mobileGatewayTrafficControlUpdateParam  = params.NewTrafficControlUpdateMobileGatewayParam()
-	mobileGatewayTrafficControlDisableParam = params.NewTrafficControlDisableMobileGatewayParam()
-	mobileGatewayStaticRouteInfoParam       = params.NewStaticRouteInfoMobileGatewayParam()
-	mobileGatewayStaticRouteAddParam        = params.NewStaticRouteAddMobileGatewayParam()
-	mobileGatewayStaticRouteUpdateParam     = params.NewStaticRouteUpdateMobileGatewayParam()
-	mobileGatewayStaticRouteDeleteParam     = params.NewStaticRouteDeleteMobileGatewayParam()
-	mobileGatewaySIMInfoParam               = params.NewSIMInfoMobileGatewayParam()
-	mobileGatewaySIMAddParam                = params.NewSIMAddMobileGatewayParam()
-	mobileGatewaySIMUpdateParam             = params.NewSIMUpdateMobileGatewayParam()
-	mobileGatewaySIMDeleteParam             = params.NewSIMDeleteMobileGatewayParam()
-	mobileGatewaySIMRouteInfoParam          = params.NewSIMRouteInfoMobileGatewayParam()
-	mobileGatewaySIMRouteAddParam           = params.NewSIMRouteAddMobileGatewayParam()
-	mobileGatewaySIMRouteUpdateParam        = params.NewSIMRouteUpdateMobileGatewayParam()
-	mobileGatewaySIMRouteDeleteParam        = params.NewSIMRouteDeleteMobileGatewayParam()
-	mobileGatewayDNSUpdateParam             = params.NewDNSUpdateMobileGatewayParam()
-	mobileGatewayLogsParam                  = params.NewLogsMobileGatewayParam()
-)
-
 // mobileGatewayCmd represents the command to manage SAKURA Cloud MobileGateway
-var mobileGatewayCmd = &cobra.Command{
-	Use:   "mobile-gateway",
-	Short: "A manage commands of MobileGateway",
-	Long:  `A manage commands of MobileGateway`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.HelpFunc()(cmd, args)
-	},
+func mobileGatewayCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "mobile-gateway",
+		Short: "A manage commands of MobileGateway",
+		Long:  `A manage commands of MobileGateway`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.HelpFunc()(cmd, args)
+		},
+	}
 }
 
-var mobileGatewayListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find", "selector"},
-	Short:   "List MobileGateway",
-	Long:    `List MobileGateway`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayListParam)
-		if err != nil {
-			return err
-		}
+func mobileGatewayListCmd() *cobra.Command {
+	mobileGatewayListParam := params.NewListMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find", "selector"},
+		Short:   "List MobileGateway",
+		Long:    `List MobileGateway`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(mobileGatewayListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(mobileGatewayListParam))
+			return nil
+		},
+	}
 
-func mobileGatewayListCmdInit() {
-	fs := mobileGatewayListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&mobileGatewayListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &mobileGatewayListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&mobileGatewayListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
@@ -111,31 +78,33 @@ func mobileGatewayListCmdInit() {
 	fs.StringVarP(&mobileGatewayListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&mobileGatewayListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewayListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var mobileGatewayCreateCmd = &cobra.Command{
-	Use: "create",
+func mobileGatewayCreateCmd() *cobra.Command {
+	mobileGatewayCreateParam := params.NewCreateMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "create",
 
-	Short: "Create MobileGateway",
-	Long:  `Create MobileGateway`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayCreateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Create MobileGateway",
+		Long:  `Create MobileGateway`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayCreateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(mobileGatewayCreateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(mobileGatewayCreateParam))
+			return nil
+		},
+	}
 
-func mobileGatewayCreateCmdInit() {
-	fs := mobileGatewayCreateCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&mobileGatewayCreateParam.InternetConnection, "internet-connection", "", false, "connect to internet")
 	fs.StringVarP(&mobileGatewayCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&mobileGatewayCreateParam.Description, "description", "", "", "set resource description")
@@ -154,31 +123,33 @@ func mobileGatewayCreateCmdInit() {
 	fs.StringVarP(&mobileGatewayCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&mobileGatewayCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewayCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var mobileGatewayReadCmd = &cobra.Command{
-	Use: "read",
+func mobileGatewayReadCmd() *cobra.Command {
+	mobileGatewayReadParam := params.NewReadMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read MobileGateway",
-	Long:  `Read MobileGateway`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read MobileGateway",
+		Long:  `Read MobileGateway`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(mobileGatewayReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(mobileGatewayReadParam))
+			return nil
+		},
+	}
 
-func mobileGatewayReadCmdInit() {
-	fs := mobileGatewayReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&mobileGatewayReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&mobileGatewayReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&mobileGatewayReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -193,31 +164,33 @@ func mobileGatewayReadCmdInit() {
 	fs.StringVarP(&mobileGatewayReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewayReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &mobileGatewayReadParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayUpdateCmd = &cobra.Command{
-	Use: "update",
+func mobileGatewayUpdateCmd() *cobra.Command {
+	mobileGatewayUpdateParam := params.NewUpdateMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "update",
 
-	Short: "Update MobileGateway",
-	Long:  `Update MobileGateway`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update MobileGateway",
+		Long:  `Update MobileGateway`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayUpdateParam))
+			return nil
+		},
+	}
 
-func mobileGatewayUpdateCmdInit() {
-	fs := mobileGatewayUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&mobileGatewayUpdateParam.InternetConnection, "internet-connection", "", false, "connect to internet")
 	fs.StringSliceVarP(&mobileGatewayUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&mobileGatewayUpdateParam.Name, "name", "", "", "set resource display name")
@@ -238,31 +211,33 @@ func mobileGatewayUpdateCmdInit() {
 	fs.StringVarP(&mobileGatewayUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewayUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &mobileGatewayUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayDeleteCmd = &cobra.Command{
-	Use:     "delete",
-	Aliases: []string{"rm"},
-	Short:   "Delete MobileGateway",
-	Long:    `Delete MobileGateway`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayDeleteParam)
-		if err != nil {
-			return err
-		}
+func mobileGatewayDeleteCmd() *cobra.Command {
+	mobileGatewayDeleteParam := params.NewDeleteMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use:     "delete",
+		Aliases: []string{"rm"},
+		Short:   "Delete MobileGateway",
+		Long:    `Delete MobileGateway`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(mobileGatewayDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(mobileGatewayDeleteParam))
+			return nil
+		},
+	}
 
-func mobileGatewayDeleteCmdInit() {
-	fs := mobileGatewayDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&mobileGatewayDeleteParam.Force, "force", "f", false, "forced-shutdown flag if mobile-gateway is running")
 	fs.StringSliceVarP(&mobileGatewayDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&mobileGatewayDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -279,31 +254,33 @@ func mobileGatewayDeleteCmdInit() {
 	fs.StringVarP(&mobileGatewayDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewayDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &mobileGatewayDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayBootCmd = &cobra.Command{
-	Use:     "boot",
-	Aliases: []string{"power-on"},
-	Short:   "Boot MobileGateway",
-	Long:    `Boot MobileGateway`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayBootParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayBootParam)
-		if err != nil {
-			return err
-		}
+func mobileGatewayBootCmd() *cobra.Command {
+	mobileGatewayBootParam := params.NewBootMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use:     "boot",
+		Aliases: []string{"power-on"},
+		Short:   "Boot MobileGateway",
+		Long:    `Boot MobileGateway`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayBootParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(mobileGatewayBootParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(mobileGatewayBootParam))
+			return nil
+		},
+	}
 
-func mobileGatewayBootCmdInit() {
-	fs := mobileGatewayBootCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&mobileGatewayBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&mobileGatewayBootParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&mobileGatewayBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -312,31 +289,33 @@ func mobileGatewayBootCmdInit() {
 	fs.StringVarP(&mobileGatewayBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayBootParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayShutdownCmd = &cobra.Command{
-	Use:     "shutdown",
-	Aliases: []string{"power-off"},
-	Short:   "Shutdown MobileGateway",
-	Long:    `Shutdown MobileGateway`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayShutdownParam)
-		if err != nil {
-			return err
-		}
+func mobileGatewayShutdownCmd() *cobra.Command {
+	mobileGatewayShutdownParam := params.NewShutdownMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use:     "shutdown",
+		Aliases: []string{"power-off"},
+		Short:   "Shutdown MobileGateway",
+		Long:    `Shutdown MobileGateway`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayShutdownParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(mobileGatewayShutdownParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(mobileGatewayShutdownParam))
+			return nil
+		},
+	}
 
-func mobileGatewayShutdownCmdInit() {
-	fs := mobileGatewayShutdownCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&mobileGatewayShutdownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&mobileGatewayShutdownParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&mobileGatewayShutdownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -345,31 +324,33 @@ func mobileGatewayShutdownCmdInit() {
 	fs.StringVarP(&mobileGatewayShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayShutdownParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayShutdownForceCmd = &cobra.Command{
-	Use:     "shutdown-force",
-	Aliases: []string{"stop"},
-	Short:   "ShutdownForce MobileGateway",
-	Long:    `ShutdownForce MobileGateway`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayShutdownForceParam)
-		if err != nil {
-			return err
-		}
+func mobileGatewayShutdownForceCmd() *cobra.Command {
+	mobileGatewayShutdownForceParam := params.NewShutdownForceMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use:     "shutdown-force",
+		Aliases: []string{"stop"},
+		Short:   "ShutdownForce MobileGateway",
+		Long:    `ShutdownForce MobileGateway`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayShutdownForceParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(mobileGatewayShutdownForceParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(mobileGatewayShutdownForceParam))
+			return nil
+		},
+	}
 
-func mobileGatewayShutdownForceCmdInit() {
-	fs := mobileGatewayShutdownForceCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&mobileGatewayShutdownForceParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&mobileGatewayShutdownForceParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&mobileGatewayShutdownForceParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -378,31 +359,33 @@ func mobileGatewayShutdownForceCmdInit() {
 	fs.StringVarP(&mobileGatewayShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayShutdownForceParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayResetCmd = &cobra.Command{
-	Use: "reset",
+func mobileGatewayResetCmd() *cobra.Command {
+	mobileGatewayResetParam := params.NewResetMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "reset",
 
-	Short: "Reset MobileGateway",
-	Long:  `Reset MobileGateway`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayResetParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayResetParam)
-		if err != nil {
-			return err
-		}
+		Short: "Reset MobileGateway",
+		Long:  `Reset MobileGateway`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayResetParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(mobileGatewayResetParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(mobileGatewayResetParam))
+			return nil
+		},
+	}
 
-func mobileGatewayResetCmdInit() {
-	fs := mobileGatewayResetCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&mobileGatewayResetParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&mobileGatewayResetParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&mobileGatewayResetParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -411,31 +394,33 @@ func mobileGatewayResetCmdInit() {
 	fs.StringVarP(&mobileGatewayResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayResetParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayWaitForBootCmd = &cobra.Command{
-	Use: "wait-for-boot",
+func mobileGatewayWaitForBootCmd() *cobra.Command {
+	mobileGatewayWaitForBootParam := params.NewWaitForBootMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "wait-for-boot",
 
-	Short: "Wait until boot is completed",
-	Long:  `Wait until boot is completed`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayWaitForBootParam)
-		if err != nil {
-			return err
-		}
+		Short: "Wait until boot is completed",
+		Long:  `Wait until boot is completed`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayWaitForBootParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(mobileGatewayWaitForBootParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(mobileGatewayWaitForBootParam))
+			return nil
+		},
+	}
 
-func mobileGatewayWaitForBootCmdInit() {
-	fs := mobileGatewayWaitForBootCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&mobileGatewayWaitForBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&mobileGatewayWaitForBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&mobileGatewayWaitForBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -443,31 +428,33 @@ func mobileGatewayWaitForBootCmdInit() {
 	fs.StringVarP(&mobileGatewayWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayWaitForBootParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayWaitForDownCmd = &cobra.Command{
-	Use: "wait-for-down",
+func mobileGatewayWaitForDownCmd() *cobra.Command {
+	mobileGatewayWaitForDownParam := params.NewWaitForDownMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "wait-for-down",
 
-	Short: "Wait until shutdown is completed",
-	Long:  `Wait until shutdown is completed`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayWaitForDownParam)
-		if err != nil {
-			return err
-		}
+		Short: "Wait until shutdown is completed",
+		Long:  `Wait until shutdown is completed`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayWaitForDownParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(mobileGatewayWaitForDownParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(mobileGatewayWaitForDownParam))
+			return nil
+		},
+	}
 
-func mobileGatewayWaitForDownCmdInit() {
-	fs := mobileGatewayWaitForDownCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&mobileGatewayWaitForDownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&mobileGatewayWaitForDownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&mobileGatewayWaitForDownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -475,31 +462,33 @@ func mobileGatewayWaitForDownCmdInit() {
 	fs.StringVarP(&mobileGatewayWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayWaitForDownParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayInterfaceInfoCmd = &cobra.Command{
-	Use:     "interface-info",
-	Aliases: []string{"interface-list"},
-	Short:   "Show information of NIC(s) connected to mobile-gateway",
-	Long:    `Show information of NIC(s) connected to mobile-gateway`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayInterfaceInfoParam)
-		if err != nil {
-			return err
-		}
+func mobileGatewayInterfaceInfoCmd() *cobra.Command {
+	mobileGatewayInterfaceInfoParam := params.NewInterfaceInfoMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use:     "interface-info",
+		Aliases: []string{"interface-list"},
+		Short:   "Show information of NIC(s) connected to mobile-gateway",
+		Long:    `Show information of NIC(s) connected to mobile-gateway`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayInterfaceInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("interface-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("interface-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceInfoParam))
+			return nil
+		},
+	}
 
-func mobileGatewayInterfaceInfoCmdInit() {
-	fs := mobileGatewayInterfaceInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&mobileGatewayInterfaceInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&mobileGatewayInterfaceInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&mobileGatewayInterfaceInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -514,31 +503,33 @@ func mobileGatewayInterfaceInfoCmdInit() {
 	fs.StringVarP(&mobileGatewayInterfaceInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewayInterfaceInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &mobileGatewayInterfaceInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayInterfaceConnectCmd = &cobra.Command{
-	Use: "interface-connect",
+func mobileGatewayInterfaceConnectCmd() *cobra.Command {
+	mobileGatewayInterfaceConnectParam := params.NewInterfaceConnectMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "interface-connect",
 
-	Short: "Connected to switch",
-	Long:  `Connected to switch`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayInterfaceConnectParam)
-		if err != nil {
-			return err
-		}
+		Short: "Connected to switch",
+		Long:  `Connected to switch`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayInterfaceConnectParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("interface-connect local parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceConnectParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("interface-connect local parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceConnectParam))
+			return nil
+		},
+	}
 
-func mobileGatewayInterfaceConnectCmdInit() {
-	fs := mobileGatewayInterfaceConnectCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&mobileGatewayInterfaceConnectParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
 	fs.VarP(newIDValue(0, &mobileGatewayInterfaceConnectParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.IntVarP(&mobileGatewayInterfaceConnectParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress prefix")
@@ -550,31 +541,33 @@ func mobileGatewayInterfaceConnectCmdInit() {
 	fs.StringVarP(&mobileGatewayInterfaceConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayInterfaceConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayInterfaceConnectParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayInterfaceUpdateCmd = &cobra.Command{
-	Use: "interface-update",
+func mobileGatewayInterfaceUpdateCmd() *cobra.Command {
+	mobileGatewayInterfaceUpdateParam := params.NewInterfaceUpdateMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "interface-update",
 
-	Short: "Update interface",
-	Long:  `Update interface`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayInterfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayInterfaceUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update interface",
+		Long:  `Update interface`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayInterfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayInterfaceUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("interface-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("interface-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceUpdateParam))
+			return nil
+		},
+	}
 
-func mobileGatewayInterfaceUpdateCmdInit() {
-	fs := mobileGatewayInterfaceUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&mobileGatewayInterfaceUpdateParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
 	fs.IntVarP(&mobileGatewayInterfaceUpdateParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress prefix")
 	fs.StringSliceVarP(&mobileGatewayInterfaceUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -585,31 +578,33 @@ func mobileGatewayInterfaceUpdateCmdInit() {
 	fs.StringVarP(&mobileGatewayInterfaceUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayInterfaceUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayInterfaceUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayInterfaceDisconnectCmd = &cobra.Command{
-	Use: "interface-disconnect",
+func mobileGatewayInterfaceDisconnectCmd() *cobra.Command {
+	mobileGatewayInterfaceDisconnectParam := params.NewInterfaceDisconnectMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "interface-disconnect",
 
-	Short: "Disconnected to switch",
-	Long:  `Disconnected to switch`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayInterfaceDisconnectParam)
-		if err != nil {
-			return err
-		}
+		Short: "Disconnected to switch",
+		Long:  `Disconnected to switch`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayInterfaceDisconnectParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("interface-disconnect local parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceDisconnectParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("interface-disconnect local parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceDisconnectParam))
+			return nil
+		},
+	}
 
-func mobileGatewayInterfaceDisconnectCmdInit() {
-	fs := mobileGatewayInterfaceDisconnectCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&mobileGatewayInterfaceDisconnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&mobileGatewayInterfaceDisconnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&mobileGatewayInterfaceDisconnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -618,31 +613,33 @@ func mobileGatewayInterfaceDisconnectCmdInit() {
 	fs.StringVarP(&mobileGatewayInterfaceDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayInterfaceDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayInterfaceDisconnectParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayTrafficControlInfoCmd = &cobra.Command{
-	Use: "traffic-control-info",
+func mobileGatewayTrafficControlInfoCmd() *cobra.Command {
+	mobileGatewayTrafficControlInfoParam := params.NewTrafficControlInfoMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "traffic-control-info",
 
-	Short: "Show information of traffic-control",
-	Long:  `Show information of traffic-control`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayTrafficControlInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayTrafficControlInfoParam)
-		if err != nil {
-			return err
-		}
+		Short: "Show information of traffic-control",
+		Long:  `Show information of traffic-control`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayTrafficControlInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayTrafficControlInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("traffic-control-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("traffic-control-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlInfoParam))
+			return nil
+		},
+	}
 
-func mobileGatewayTrafficControlInfoCmdInit() {
-	fs := mobileGatewayTrafficControlInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&mobileGatewayTrafficControlInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&mobileGatewayTrafficControlInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&mobileGatewayTrafficControlInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -657,31 +654,33 @@ func mobileGatewayTrafficControlInfoCmdInit() {
 	fs.StringVarP(&mobileGatewayTrafficControlInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewayTrafficControlInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &mobileGatewayTrafficControlInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayTrafficControlEnableCmd = &cobra.Command{
-	Use: "traffic-control-enable",
+func mobileGatewayTrafficControlEnableCmd() *cobra.Command {
+	mobileGatewayTrafficControlEnableParam := params.NewTrafficControlEnableMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "traffic-control-enable",
 
-	Short: "Enable traffic-control",
-	Long:  `Enable traffic-control`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayTrafficControlEnableParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayTrafficControlEnableParam)
-		if err != nil {
-			return err
-		}
+		Short: "Enable traffic-control",
+		Long:  `Enable traffic-control`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayTrafficControlEnableParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayTrafficControlEnableParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("traffic-control-enable local parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlEnableParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("traffic-control-enable local parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlEnableParam))
+			return nil
+		},
+	}
 
-func mobileGatewayTrafficControlEnableCmdInit() {
-	fs := mobileGatewayTrafficControlEnableCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&mobileGatewayTrafficControlEnableParam.Quota, "quota", "", 512, "")
 	fs.IntVarP(&mobileGatewayTrafficControlEnableParam.BandWidthLimit, "band-width-limit", "", 0, "")
 	fs.BoolVarP(&mobileGatewayTrafficControlEnableParam.EnableEmail, "enable-email", "", false, "")
@@ -695,31 +694,33 @@ func mobileGatewayTrafficControlEnableCmdInit() {
 	fs.StringVarP(&mobileGatewayTrafficControlEnableParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayTrafficControlEnableParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayTrafficControlEnableParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayTrafficControlUpdateCmd = &cobra.Command{
-	Use: "traffic-control-update",
+func mobileGatewayTrafficControlUpdateCmd() *cobra.Command {
+	mobileGatewayTrafficControlUpdateParam := params.NewTrafficControlUpdateMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "traffic-control-update",
 
-	Short: "Update traffic-control config",
-	Long:  `Update traffic-control config`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayTrafficControlUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayTrafficControlUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update traffic-control config",
+		Long:  `Update traffic-control config`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayTrafficControlUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayTrafficControlUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("traffic-control-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("traffic-control-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlUpdateParam))
+			return nil
+		},
+	}
 
-func mobileGatewayTrafficControlUpdateCmdInit() {
-	fs := mobileGatewayTrafficControlUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&mobileGatewayTrafficControlUpdateParam.Quota, "quota", "", 0, "")
 	fs.IntVarP(&mobileGatewayTrafficControlUpdateParam.BandWidthLimit, "band-width-limit", "", 0, "")
 	fs.BoolVarP(&mobileGatewayTrafficControlUpdateParam.EnableEmail, "enable-email", "", false, "")
@@ -733,31 +734,33 @@ func mobileGatewayTrafficControlUpdateCmdInit() {
 	fs.StringVarP(&mobileGatewayTrafficControlUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayTrafficControlUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayTrafficControlUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayTrafficControlDisableCmd = &cobra.Command{
-	Use:     "traffic-control-disable",
-	Aliases: []string{"traffic-control-delete"},
-	Short:   "Disable traffic-control config",
-	Long:    `Disable traffic-control config`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayTrafficControlDisableParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayTrafficControlDisableParam)
-		if err != nil {
-			return err
-		}
+func mobileGatewayTrafficControlDisableCmd() *cobra.Command {
+	mobileGatewayTrafficControlDisableParam := params.NewTrafficControlDisableMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use:     "traffic-control-disable",
+		Aliases: []string{"traffic-control-delete"},
+		Short:   "Disable traffic-control config",
+		Long:    `Disable traffic-control config`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayTrafficControlDisableParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayTrafficControlDisableParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("traffic-control-disable local parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlDisableParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("traffic-control-disable local parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlDisableParam))
+			return nil
+		},
+	}
 
-func mobileGatewayTrafficControlDisableCmdInit() {
-	fs := mobileGatewayTrafficControlDisableCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&mobileGatewayTrafficControlDisableParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&mobileGatewayTrafficControlDisableParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&mobileGatewayTrafficControlDisableParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -766,31 +769,33 @@ func mobileGatewayTrafficControlDisableCmdInit() {
 	fs.StringVarP(&mobileGatewayTrafficControlDisableParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayTrafficControlDisableParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayTrafficControlDisableParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayStaticRouteInfoCmd = &cobra.Command{
-	Use:     "static-route-info",
-	Aliases: []string{"static-route-list"},
-	Short:   "Show information of static-routes",
-	Long:    `Show information of static-routes`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayStaticRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayStaticRouteInfoParam)
-		if err != nil {
-			return err
-		}
+func mobileGatewayStaticRouteInfoCmd() *cobra.Command {
+	mobileGatewayStaticRouteInfoParam := params.NewStaticRouteInfoMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use:     "static-route-info",
+		Aliases: []string{"static-route-list"},
+		Short:   "Show information of static-routes",
+		Long:    `Show information of static-routes`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayStaticRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayStaticRouteInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("static-route-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("static-route-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteInfoParam))
+			return nil
+		},
+	}
 
-func mobileGatewayStaticRouteInfoCmdInit() {
-	fs := mobileGatewayStaticRouteInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&mobileGatewayStaticRouteInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&mobileGatewayStaticRouteInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&mobileGatewayStaticRouteInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -805,31 +810,33 @@ func mobileGatewayStaticRouteInfoCmdInit() {
 	fs.StringVarP(&mobileGatewayStaticRouteInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewayStaticRouteInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &mobileGatewayStaticRouteInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayStaticRouteAddCmd = &cobra.Command{
-	Use: "static-route-add",
+func mobileGatewayStaticRouteAddCmd() *cobra.Command {
+	mobileGatewayStaticRouteAddParam := params.NewStaticRouteAddMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "static-route-add",
 
-	Short: "Add static-route",
-	Long:  `Add static-route`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayStaticRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayStaticRouteAddParam)
-		if err != nil {
-			return err
-		}
+		Short: "Add static-route",
+		Long:  `Add static-route`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayStaticRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayStaticRouteAddParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("static-route-add local parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteAddParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("static-route-add local parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteAddParam))
+			return nil
+		},
+	}
 
-func mobileGatewayStaticRouteAddCmdInit() {
-	fs := mobileGatewayStaticRouteAddCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&mobileGatewayStaticRouteAddParam.Prefix, "prefix", "", "", "set prefix")
 	fs.StringVarP(&mobileGatewayStaticRouteAddParam.NextHop, "next-hop", "", "", "set next-hop")
 	fs.StringSliceVarP(&mobileGatewayStaticRouteAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -840,31 +847,33 @@ func mobileGatewayStaticRouteAddCmdInit() {
 	fs.StringVarP(&mobileGatewayStaticRouteAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayStaticRouteAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayStaticRouteAddParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayStaticRouteUpdateCmd = &cobra.Command{
-	Use: "static-route-update",
+func mobileGatewayStaticRouteUpdateCmd() *cobra.Command {
+	mobileGatewayStaticRouteUpdateParam := params.NewStaticRouteUpdateMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "static-route-update",
 
-	Short: "Update static-route",
-	Long:  `Update static-route`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayStaticRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayStaticRouteUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update static-route",
+		Long:  `Update static-route`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayStaticRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayStaticRouteUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("static-route-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("static-route-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteUpdateParam))
+			return nil
+		},
+	}
 
-func mobileGatewayStaticRouteUpdateCmdInit() {
-	fs := mobileGatewayStaticRouteUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&mobileGatewayStaticRouteUpdateParam.Index, "index", "", 0, "index of target static-route")
 	fs.StringVarP(&mobileGatewayStaticRouteUpdateParam.Prefix, "prefix", "", "", "set prefix")
 	fs.StringVarP(&mobileGatewayStaticRouteUpdateParam.NextHop, "next-hop", "", "", "set next-hop")
@@ -876,31 +885,33 @@ func mobileGatewayStaticRouteUpdateCmdInit() {
 	fs.StringVarP(&mobileGatewayStaticRouteUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayStaticRouteUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayStaticRouteUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayStaticRouteDeleteCmd = &cobra.Command{
-	Use: "static-route-delete",
+func mobileGatewayStaticRouteDeleteCmd() *cobra.Command {
+	mobileGatewayStaticRouteDeleteParam := params.NewStaticRouteDeleteMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "static-route-delete",
 
-	Short: "Delete static-route",
-	Long:  `Delete static-route`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayStaticRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayStaticRouteDeleteParam)
-		if err != nil {
-			return err
-		}
+		Short: "Delete static-route",
+		Long:  `Delete static-route`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayStaticRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayStaticRouteDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("static-route-delete local parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("static-route-delete local parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteDeleteParam))
+			return nil
+		},
+	}
 
-func mobileGatewayStaticRouteDeleteCmdInit() {
-	fs := mobileGatewayStaticRouteDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&mobileGatewayStaticRouteDeleteParam.Index, "index", "", 0, "index of target static-route")
 	fs.StringSliceVarP(&mobileGatewayStaticRouteDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&mobileGatewayStaticRouteDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -910,31 +921,33 @@ func mobileGatewayStaticRouteDeleteCmdInit() {
 	fs.StringVarP(&mobileGatewayStaticRouteDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayStaticRouteDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayStaticRouteDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewaySIMInfoCmd = &cobra.Command{
-	Use:     "sim-info",
-	Aliases: []string{"interface-list"},
-	Short:   "Show information of NIC(s) connected to mobile-gateway",
-	Long:    `Show information of NIC(s) connected to mobile-gateway`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewaySIMInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMInfoParam)
-		if err != nil {
-			return err
-		}
+func mobileGatewaySIMInfoCmd() *cobra.Command {
+	mobileGatewaySIMInfoParam := params.NewSIMInfoMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use:     "sim-info",
+		Aliases: []string{"interface-list"},
+		Short:   "Show information of NIC(s) connected to mobile-gateway",
+		Long:    `Show information of NIC(s) connected to mobile-gateway`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewaySIMInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("sim-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("sim-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMInfoParam))
+			return nil
+		},
+	}
 
-func mobileGatewaySIMInfoCmdInit() {
-	fs := mobileGatewaySIMInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&mobileGatewaySIMInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&mobileGatewaySIMInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&mobileGatewaySIMInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -949,31 +962,33 @@ func mobileGatewaySIMInfoCmdInit() {
 	fs.StringVarP(&mobileGatewaySIMInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewaySIMInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewaySIMAddCmd = &cobra.Command{
-	Use: "sim-add",
+func mobileGatewaySIMAddCmd() *cobra.Command {
+	mobileGatewaySIMAddParam := params.NewSIMAddMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "sim-add",
 
-	Short: "Connected to switch",
-	Long:  `Connected to switch`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewaySIMAddParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMAddParam)
-		if err != nil {
-			return err
-		}
+		Short: "Connected to switch",
+		Long:  `Connected to switch`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewaySIMAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMAddParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("sim-add local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMAddParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("sim-add local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMAddParam))
+			return nil
+		},
+	}
 
-func mobileGatewaySIMAddCmdInit() {
-	fs := mobileGatewaySIMAddCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&mobileGatewaySIMAddParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMAddParam.SIMId), "sim-id", "", "")
 	fs.StringSliceVarP(&mobileGatewaySIMAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -984,31 +999,33 @@ func mobileGatewaySIMAddCmdInit() {
 	fs.StringVarP(&mobileGatewaySIMAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewaySIMAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMAddParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewaySIMUpdateCmd = &cobra.Command{
-	Use: "sim-update",
+func mobileGatewaySIMUpdateCmd() *cobra.Command {
+	mobileGatewaySIMUpdateParam := params.NewSIMUpdateMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "sim-update",
 
-	Short: "Connected to switch",
-	Long:  `Connected to switch`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewaySIMUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Connected to switch",
+		Long:  `Connected to switch`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewaySIMUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("sim-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("sim-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMUpdateParam))
+			return nil
+		},
+	}
 
-func mobileGatewaySIMUpdateCmdInit() {
-	fs := mobileGatewaySIMUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&mobileGatewaySIMUpdateParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMUpdateParam.SIMId), "sim-id", "", "")
 	fs.StringSliceVarP(&mobileGatewaySIMUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -1019,31 +1036,33 @@ func mobileGatewaySIMUpdateCmdInit() {
 	fs.StringVarP(&mobileGatewaySIMUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewaySIMUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewaySIMDeleteCmd = &cobra.Command{
-	Use: "sim-delete",
+func mobileGatewaySIMDeleteCmd() *cobra.Command {
+	mobileGatewaySIMDeleteParam := params.NewSIMDeleteMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "sim-delete",
 
-	Short: "Disconnected to switch",
-	Long:  `Disconnected to switch`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewaySIMDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMDeleteParam)
-		if err != nil {
-			return err
-		}
+		Short: "Disconnected to switch",
+		Long:  `Disconnected to switch`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewaySIMDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("sim-delete local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("sim-delete local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMDeleteParam))
+			return nil
+		},
+	}
 
-func mobileGatewaySIMDeleteCmdInit() {
-	fs := mobileGatewaySIMDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &mobileGatewaySIMDeleteParam.SIMId), "sim-id", "", "")
 	fs.StringSliceVarP(&mobileGatewaySIMDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&mobileGatewaySIMDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -1053,31 +1072,33 @@ func mobileGatewaySIMDeleteCmdInit() {
 	fs.StringVarP(&mobileGatewaySIMDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewaySIMDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewaySIMRouteInfoCmd = &cobra.Command{
-	Use:     "sim-route-info",
-	Aliases: []string{"sim-route-list"},
-	Short:   "Show information of sim-routes",
-	Long:    `Show information of sim-routes`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewaySIMRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMRouteInfoParam)
-		if err != nil {
-			return err
-		}
+func mobileGatewaySIMRouteInfoCmd() *cobra.Command {
+	mobileGatewaySIMRouteInfoParam := params.NewSIMRouteInfoMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use:     "sim-route-info",
+		Aliases: []string{"sim-route-list"},
+		Short:   "Show information of sim-routes",
+		Long:    `Show information of sim-routes`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewaySIMRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMRouteInfoParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("sim-route-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteInfoParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("sim-route-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteInfoParam))
+			return nil
+		},
+	}
 
-func mobileGatewaySIMRouteInfoCmdInit() {
-	fs := mobileGatewaySIMRouteInfoCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&mobileGatewaySIMRouteInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&mobileGatewaySIMRouteInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&mobileGatewaySIMRouteInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -1092,31 +1113,33 @@ func mobileGatewaySIMRouteInfoCmdInit() {
 	fs.StringVarP(&mobileGatewaySIMRouteInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewaySIMRouteInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMRouteInfoParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewaySIMRouteAddCmd = &cobra.Command{
-	Use: "sim-route-add",
+func mobileGatewaySIMRouteAddCmd() *cobra.Command {
+	mobileGatewaySIMRouteAddParam := params.NewSIMRouteAddMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "sim-route-add",
 
-	Short: "Add sim-route",
-	Long:  `Add sim-route`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewaySIMRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMRouteAddParam)
-		if err != nil {
-			return err
-		}
+		Short: "Add sim-route",
+		Long:  `Add sim-route`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewaySIMRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMRouteAddParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("sim-route-add local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteAddParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("sim-route-add local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteAddParam))
+			return nil
+		},
+	}
 
-func mobileGatewaySIMRouteAddCmdInit() {
-	fs := mobileGatewaySIMRouteAddCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&mobileGatewaySIMRouteAddParam.Prefix, "prefix", "", "", "set prefix")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMRouteAddParam.SIM), "sim", "", "set sim")
 	fs.StringSliceVarP(&mobileGatewaySIMRouteAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -1127,31 +1150,33 @@ func mobileGatewaySIMRouteAddCmdInit() {
 	fs.StringVarP(&mobileGatewaySIMRouteAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewaySIMRouteAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMRouteAddParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewaySIMRouteUpdateCmd = &cobra.Command{
-	Use: "sim-route-update",
+func mobileGatewaySIMRouteUpdateCmd() *cobra.Command {
+	mobileGatewaySIMRouteUpdateParam := params.NewSIMRouteUpdateMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "sim-route-update",
 
-	Short: "Update sim-route",
-	Long:  `Update sim-route`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewaySIMRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMRouteUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update sim-route",
+		Long:  `Update sim-route`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewaySIMRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMRouteUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("sim-route-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("sim-route-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteUpdateParam))
+			return nil
+		},
+	}
 
-func mobileGatewaySIMRouteUpdateCmdInit() {
-	fs := mobileGatewaySIMRouteUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&mobileGatewaySIMRouteUpdateParam.Index, "index", "", 0, "index of target sim-route")
 	fs.StringVarP(&mobileGatewaySIMRouteUpdateParam.Prefix, "prefix", "", "", "set prefix")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMRouteUpdateParam.SIM), "sim", "", "set sim")
@@ -1163,31 +1188,33 @@ func mobileGatewaySIMRouteUpdateCmdInit() {
 	fs.StringVarP(&mobileGatewaySIMRouteUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewaySIMRouteUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMRouteUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewaySIMRouteDeleteCmd = &cobra.Command{
-	Use: "sim-route-delete",
+func mobileGatewaySIMRouteDeleteCmd() *cobra.Command {
+	mobileGatewaySIMRouteDeleteParam := params.NewSIMRouteDeleteMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "sim-route-delete",
 
-	Short: "Delete sim-route",
-	Long:  `Delete sim-route`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewaySIMRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMRouteDeleteParam)
-		if err != nil {
-			return err
-		}
+		Short: "Delete sim-route",
+		Long:  `Delete sim-route`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewaySIMRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewaySIMRouteDeleteParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("sim-route-delete local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteDeleteParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("sim-route-delete local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteDeleteParam))
+			return nil
+		},
+	}
 
-func mobileGatewaySIMRouteDeleteCmdInit() {
-	fs := mobileGatewaySIMRouteDeleteCmd.Flags()
+	fs := cmd.Flags()
 	fs.IntVarP(&mobileGatewaySIMRouteDeleteParam.Index, "index", "", 0, "index of target sim-route")
 	fs.StringSliceVarP(&mobileGatewaySIMRouteDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&mobileGatewaySIMRouteDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
@@ -1197,31 +1224,33 @@ func mobileGatewaySIMRouteDeleteCmdInit() {
 	fs.StringVarP(&mobileGatewaySIMRouteDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewaySIMRouteDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMRouteDeleteParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayDNSUpdateCmd = &cobra.Command{
-	Use: "dns-update",
+func mobileGatewayDNSUpdateCmd() *cobra.Command {
+	mobileGatewayDNSUpdateParam := params.NewDNSUpdateMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "dns-update",
 
-	Short: "Update interface",
-	Long:  `Update interface`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayDNSUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayDNSUpdateParam)
-		if err != nil {
-			return err
-		}
+		Short: "Update interface",
+		Long:  `Update interface`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayDNSUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayDNSUpdateParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("dns-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayDNSUpdateParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("dns-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayDNSUpdateParam))
+			return nil
+		},
+	}
 
-func mobileGatewayDNSUpdateCmdInit() {
-	fs := mobileGatewayDNSUpdateCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringVarP(&mobileGatewayDNSUpdateParam.DNS1, "dns-1", "", "", "set DNS server address")
 	fs.StringVarP(&mobileGatewayDNSUpdateParam.DNS2, "dns-2", "", "", "set DNS server address")
 	fs.StringSliceVarP(&mobileGatewayDNSUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -1232,31 +1261,33 @@ func mobileGatewayDNSUpdateCmdInit() {
 	fs.StringVarP(&mobileGatewayDNSUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayDNSUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayDNSUpdateParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
-var mobileGatewayLogsCmd = &cobra.Command{
-	Use: "logs",
+func mobileGatewayLogsCmd() *cobra.Command {
+	mobileGatewayLogsParam := params.NewLogsMobileGatewayParam()
+	cmd := &cobra.Command{
+		Use: "logs",
 
-	Short: "Logs MobileGateway",
-	Long:  `Logs MobileGateway`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return mobileGatewayLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), mobileGatewayLogsParam)
-		if err != nil {
-			return err
-		}
+		Short: "Logs MobileGateway",
+		Long:  `Logs MobileGateway`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return mobileGatewayLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), mobileGatewayLogsParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("logs local parameter: \n%s\n", debugMarshalIndent(mobileGatewayLogsParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("logs local parameter: \n%s\n", debugMarshalIndent(mobileGatewayLogsParam))
+			return nil
+		},
+	}
 
-func mobileGatewayLogsCmdInit() {
-	fs := mobileGatewayLogsCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&mobileGatewayLogsParam.Follow, "follow", "f", false, "follow log output")
 	fs.Int64VarP(&mobileGatewayLogsParam.RefreshInterval, "refresh-interval", "", 3, "log refresh interval second")
 	fs.StringSliceVarP(&mobileGatewayLogsParam.Selector, "selector", "", []string{}, "Set target filter by tag")
@@ -1266,109 +1297,43 @@ func mobileGatewayLogsCmdInit() {
 	fs.StringVarP(&mobileGatewayLogsParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayLogsParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayLogsParam.Id), "id", "", "Set target ID")
+	return cmd
 }
 
 func init() {
-	parent := mobileGatewayCmd
-
-	mobileGatewayListCmdInit()
-	parent.AddCommand(mobileGatewayListCmd)
-
-	mobileGatewayCreateCmdInit()
-	parent.AddCommand(mobileGatewayCreateCmd)
-
-	mobileGatewayReadCmdInit()
-	parent.AddCommand(mobileGatewayReadCmd)
-
-	mobileGatewayUpdateCmdInit()
-	parent.AddCommand(mobileGatewayUpdateCmd)
-
-	mobileGatewayDeleteCmdInit()
-	parent.AddCommand(mobileGatewayDeleteCmd)
-
-	mobileGatewayBootCmdInit()
-	parent.AddCommand(mobileGatewayBootCmd)
-
-	mobileGatewayShutdownCmdInit()
-	parent.AddCommand(mobileGatewayShutdownCmd)
-
-	mobileGatewayShutdownForceCmdInit()
-	parent.AddCommand(mobileGatewayShutdownForceCmd)
-
-	mobileGatewayResetCmdInit()
-	parent.AddCommand(mobileGatewayResetCmd)
-
-	mobileGatewayWaitForBootCmdInit()
-	parent.AddCommand(mobileGatewayWaitForBootCmd)
-
-	mobileGatewayWaitForDownCmdInit()
-	parent.AddCommand(mobileGatewayWaitForDownCmd)
-
-	mobileGatewayInterfaceInfoCmdInit()
-	parent.AddCommand(mobileGatewayInterfaceInfoCmd)
-
-	mobileGatewayInterfaceConnectCmdInit()
-	parent.AddCommand(mobileGatewayInterfaceConnectCmd)
-
-	mobileGatewayInterfaceUpdateCmdInit()
-	parent.AddCommand(mobileGatewayInterfaceUpdateCmd)
-
-	mobileGatewayInterfaceDisconnectCmdInit()
-	parent.AddCommand(mobileGatewayInterfaceDisconnectCmd)
-
-	mobileGatewayTrafficControlInfoCmdInit()
-	parent.AddCommand(mobileGatewayTrafficControlInfoCmd)
-
-	mobileGatewayTrafficControlEnableCmdInit()
-	parent.AddCommand(mobileGatewayTrafficControlEnableCmd)
-
-	mobileGatewayTrafficControlUpdateCmdInit()
-	parent.AddCommand(mobileGatewayTrafficControlUpdateCmd)
-
-	mobileGatewayTrafficControlDisableCmdInit()
-	parent.AddCommand(mobileGatewayTrafficControlDisableCmd)
-
-	mobileGatewayStaticRouteInfoCmdInit()
-	parent.AddCommand(mobileGatewayStaticRouteInfoCmd)
-
-	mobileGatewayStaticRouteAddCmdInit()
-	parent.AddCommand(mobileGatewayStaticRouteAddCmd)
-
-	mobileGatewayStaticRouteUpdateCmdInit()
-	parent.AddCommand(mobileGatewayStaticRouteUpdateCmd)
-
-	mobileGatewayStaticRouteDeleteCmdInit()
-	parent.AddCommand(mobileGatewayStaticRouteDeleteCmd)
-
-	mobileGatewaySIMInfoCmdInit()
-	parent.AddCommand(mobileGatewaySIMInfoCmd)
-
-	mobileGatewaySIMAddCmdInit()
-	parent.AddCommand(mobileGatewaySIMAddCmd)
-
-	mobileGatewaySIMUpdateCmdInit()
-	parent.AddCommand(mobileGatewaySIMUpdateCmd)
-
-	mobileGatewaySIMDeleteCmdInit()
-	parent.AddCommand(mobileGatewaySIMDeleteCmd)
-
-	mobileGatewaySIMRouteInfoCmdInit()
-	parent.AddCommand(mobileGatewaySIMRouteInfoCmd)
-
-	mobileGatewaySIMRouteAddCmdInit()
-	parent.AddCommand(mobileGatewaySIMRouteAddCmd)
-
-	mobileGatewaySIMRouteUpdateCmdInit()
-	parent.AddCommand(mobileGatewaySIMRouteUpdateCmd)
-
-	mobileGatewaySIMRouteDeleteCmdInit()
-	parent.AddCommand(mobileGatewaySIMRouteDeleteCmd)
-
-	mobileGatewayDNSUpdateCmdInit()
-	parent.AddCommand(mobileGatewayDNSUpdateCmd)
-
-	mobileGatewayLogsCmdInit()
-	parent.AddCommand(mobileGatewayLogsCmd)
-
+	parent := mobileGatewayCmd()
+	parent.AddCommand(mobileGatewayListCmd())
+	parent.AddCommand(mobileGatewayCreateCmd())
+	parent.AddCommand(mobileGatewayReadCmd())
+	parent.AddCommand(mobileGatewayUpdateCmd())
+	parent.AddCommand(mobileGatewayDeleteCmd())
+	parent.AddCommand(mobileGatewayBootCmd())
+	parent.AddCommand(mobileGatewayShutdownCmd())
+	parent.AddCommand(mobileGatewayShutdownForceCmd())
+	parent.AddCommand(mobileGatewayResetCmd())
+	parent.AddCommand(mobileGatewayWaitForBootCmd())
+	parent.AddCommand(mobileGatewayWaitForDownCmd())
+	parent.AddCommand(mobileGatewayInterfaceInfoCmd())
+	parent.AddCommand(mobileGatewayInterfaceConnectCmd())
+	parent.AddCommand(mobileGatewayInterfaceUpdateCmd())
+	parent.AddCommand(mobileGatewayInterfaceDisconnectCmd())
+	parent.AddCommand(mobileGatewayTrafficControlInfoCmd())
+	parent.AddCommand(mobileGatewayTrafficControlEnableCmd())
+	parent.AddCommand(mobileGatewayTrafficControlUpdateCmd())
+	parent.AddCommand(mobileGatewayTrafficControlDisableCmd())
+	parent.AddCommand(mobileGatewayStaticRouteInfoCmd())
+	parent.AddCommand(mobileGatewayStaticRouteAddCmd())
+	parent.AddCommand(mobileGatewayStaticRouteUpdateCmd())
+	parent.AddCommand(mobileGatewayStaticRouteDeleteCmd())
+	parent.AddCommand(mobileGatewaySIMInfoCmd())
+	parent.AddCommand(mobileGatewaySIMAddCmd())
+	parent.AddCommand(mobileGatewaySIMUpdateCmd())
+	parent.AddCommand(mobileGatewaySIMDeleteCmd())
+	parent.AddCommand(mobileGatewaySIMRouteInfoCmd())
+	parent.AddCommand(mobileGatewaySIMRouteAddCmd())
+	parent.AddCommand(mobileGatewaySIMRouteUpdateCmd())
+	parent.AddCommand(mobileGatewaySIMRouteDeleteCmd())
+	parent.AddCommand(mobileGatewayDNSUpdateCmd())
+	parent.AddCommand(mobileGatewayLogsCmd())
 	rootCmd.AddCommand(parent)
 }

@@ -24,44 +24,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	productLicenseListParam = params.NewListProductLicenseParam()
-	productLicenseReadParam = params.NewReadProductLicenseParam()
-)
-
 // productLicenseCmd represents the command to manage SAKURA Cloud ProductLicense
-var productLicenseCmd = &cobra.Command{
-	Use:   "product-license",
-	Short: "A manage commands of ProductLicense",
-	Long:  `A manage commands of ProductLicense`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements: call list func as default
-	},
+func productLicenseCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "product-license",
+		Short: "A manage commands of ProductLicense",
+		Long:  `A manage commands of ProductLicense`,
+		Run: func(cmd *cobra.Command, args []string) {
+			// TODO not implements: call list func as default
+		},
+	}
 }
 
-var productLicenseListCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls", "find"},
-	Short:   "List ProductLicense (default)",
-	Long:    `List ProductLicense (default)`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return productLicenseListParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), productLicenseListParam)
-		if err != nil {
-			return err
-		}
+func productLicenseListCmd() *cobra.Command {
+	productLicenseListParam := params.NewListProductLicenseParam()
+	cmd := &cobra.Command{
+		Use:     "list",
+		Aliases: []string{"ls", "find"},
+		Short:   "List ProductLicense (default)",
+		Long:    `List ProductLicense (default)`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return productLicenseListParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), productLicenseListParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(productLicenseListParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(productLicenseListParam))
+			return nil
+		},
+	}
 
-func productLicenseListCmdInit() {
-	fs := productLicenseListCmd.Flags()
+	fs := cmd.Flags()
 	fs.StringSliceVarP(&productLicenseListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &productLicenseListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&productLicenseListParam.From, "from", "", 0, "set offset")
@@ -79,31 +77,33 @@ func productLicenseListCmdInit() {
 	fs.StringVarP(&productLicenseListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&productLicenseListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&productLicenseListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	return cmd
 }
 
-var productLicenseReadCmd = &cobra.Command{
-	Use: "read",
+func productLicenseReadCmd() *cobra.Command {
+	productLicenseReadParam := params.NewReadProductLicenseParam()
+	cmd := &cobra.Command{
+		Use: "read",
 
-	Short: "Read ProductLicense",
-	Long:  `Read ProductLicense`,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
-		return productLicenseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx, err := newCLIContext(globalFlags(), productLicenseReadParam)
-		if err != nil {
-			return err
-		}
+		Short: "Read ProductLicense",
+		Long:  `Read ProductLicense`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return productLicenseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx, err := newCLIContext(globalFlags(), productLicenseReadParam)
+			if err != nil {
+				return err
+			}
 
-		// TODO DEBUG
-		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-		fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(productLicenseReadParam))
-		return nil
-	},
-}
+			// TODO DEBUG
+			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
+			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(productLicenseReadParam))
+			return nil
+		},
+	}
 
-func productLicenseReadCmdInit() {
-	fs := productLicenseReadCmd.Flags()
+	fs := cmd.Flags()
 	fs.BoolVarP(&productLicenseReadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&productLicenseReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&productLicenseReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
@@ -118,16 +118,12 @@ func productLicenseReadCmdInit() {
 	fs.StringVarP(&productLicenseReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&productLicenseReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &productLicenseReadParam.Id), "id", "", "set resource ID")
+	return cmd
 }
 
 func init() {
-	parent := productLicenseCmd
-
-	productLicenseListCmdInit()
-	parent.AddCommand(productLicenseListCmd)
-
-	productLicenseReadCmdInit()
-	parent.AddCommand(productLicenseReadCmd)
-
+	parent := productLicenseCmd()
+	parent.AddCommand(productLicenseListCmd())
+	parent.AddCommand(productLicenseReadCmd())
 	rootCmd.AddCommand(parent)
 }
