@@ -45,6 +45,13 @@ type Context interface {
 	Zone() string
 	IO() IO
 	context.Context
+
+	// v0の互換性維持のための実装
+	GetOutput() output.Output
+	GetAPIClient() *api.Client
+	Args() []string
+	NArgs() int
+	IsSet(name string) bool
 }
 
 type cliContext struct {
