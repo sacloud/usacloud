@@ -17,9 +17,8 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -50,11 +49,7 @@ func summaryShowCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("show local parameter: \n%s\n", debugMarshalIndent(summaryShowParam))
-			return nil
+			return funcs.SummaryShow(ctx, summaryShowParam.ToV0())
 		},
 	}
 

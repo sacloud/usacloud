@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -213,6 +214,33 @@ func (p *ListDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListDNSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["DNS"]
+}
+
+func (p *ListDNSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListDNSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListDNSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListDNSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListDNSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListDNSParam) SetName(v []string) {
 	p.Name = v
 }
@@ -343,6 +371,29 @@ func (p *ListDNSParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListDNSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListDNSParam) ToV0() *v0params.ListDNSParam {
+	return &v0params.ListDNSParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Tags:              p.Tags,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // RecordInfoDNSParam is input parameters for the sacloud API
@@ -512,6 +563,33 @@ func (p *RecordInfoDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *RecordInfoDNSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["DNS"]
+}
+
+func (p *RecordInfoDNSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["record-info"]
+}
+
+func (p *RecordInfoDNSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *RecordInfoDNSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *RecordInfoDNSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *RecordInfoDNSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *RecordInfoDNSParam) SetName(v string) {
 	p.Name = v
 }
@@ -628,6 +706,27 @@ func (p *RecordInfoDNSParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *RecordInfoDNSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *RecordInfoDNSParam) ToV0() *v0params.RecordInfoDNSParam {
+	return &v0params.RecordInfoDNSParam{
+		Name:              p.Name,
+		Type:              p.Type,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // RecordBulkUpdateDNSParam is input parameters for the sacloud API
@@ -816,6 +915,33 @@ func (p *RecordBulkUpdateDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *RecordBulkUpdateDNSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["DNS"]
+}
+
+func (p *RecordBulkUpdateDNSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["record-bulk-update"]
+}
+
+func (p *RecordBulkUpdateDNSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *RecordBulkUpdateDNSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *RecordBulkUpdateDNSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *RecordBulkUpdateDNSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *RecordBulkUpdateDNSParam) SetFile(v string) {
 	p.File = v
 }
@@ -939,6 +1065,28 @@ func (p *RecordBulkUpdateDNSParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *RecordBulkUpdateDNSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *RecordBulkUpdateDNSParam) ToV0() *v0params.RecordBulkUpdateDNSParam {
+	return &v0params.RecordBulkUpdateDNSParam{
+		File:              p.File,
+		Mode:              p.Mode,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // CreateDNSParam is input parameters for the sacloud API
@@ -1127,6 +1275,33 @@ func (p *CreateDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateDNSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["DNS"]
+}
+
+func (p *CreateDNSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateDNSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateDNSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateDNSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateDNSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateDNSParam) SetName(v string) {
 	p.Name = v
 }
@@ -1250,6 +1425,28 @@ func (p *CreateDNSParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CreateDNSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CreateDNSParam) ToV0() *v0params.CreateDNSParam {
+	return &v0params.CreateDNSParam{
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // RecordAddDNSParam is input parameters for the sacloud API
@@ -1514,6 +1711,33 @@ func (p *RecordAddDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *RecordAddDNSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["DNS"]
+}
+
+func (p *RecordAddDNSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["record-add"]
+}
+
+func (p *RecordAddDNSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *RecordAddDNSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *RecordAddDNSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *RecordAddDNSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *RecordAddDNSParam) SetName(v string) {
 	p.Name = v
 }
@@ -1688,6 +1912,35 @@ func (p *RecordAddDNSParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *RecordAddDNSParam) ToV0() *v0params.RecordAddDNSParam {
+	return &v0params.RecordAddDNSParam{
+		Name:              p.Name,
+		Type:              p.Type,
+		Value:             p.Value,
+		Ttl:               p.Ttl,
+		MxPriority:        p.MxPriority,
+		SrvPriority:       p.SrvPriority,
+		SrvWeight:         p.SrvWeight,
+		SrvPort:           p.SrvPort,
+		SrvTarget:         p.SrvTarget,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // ReadDNSParam is input parameters for the sacloud API
 type ReadDNSParam struct {
 	Selector          []string
@@ -1831,6 +2084,33 @@ func (p *ReadDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadDNSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["DNS"]
+}
+
+func (p *ReadDNSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadDNSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadDNSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadDNSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadDNSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadDNSParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1933,6 +2213,25 @@ func (p *ReadDNSParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadDNSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadDNSParam) ToV0() *v0params.ReadDNSParam {
+	return &v0params.ReadDNSParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // RecordUpdateDNSParam is input parameters for the sacloud API
@@ -2194,6 +2493,33 @@ func (p *RecordUpdateDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *RecordUpdateDNSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["DNS"]
+}
+
+func (p *RecordUpdateDNSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["record-update"]
+}
+
+func (p *RecordUpdateDNSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *RecordUpdateDNSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *RecordUpdateDNSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *RecordUpdateDNSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *RecordUpdateDNSParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -2375,6 +2701,36 @@ func (p *RecordUpdateDNSParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *RecordUpdateDNSParam) ToV0() *v0params.RecordUpdateDNSParam {
+	return &v0params.RecordUpdateDNSParam{
+		Index:             p.Index,
+		Name:              p.Name,
+		Type:              p.Type,
+		Value:             p.Value,
+		Ttl:               p.Ttl,
+		MxPriority:        p.MxPriority,
+		SrvPriority:       p.SrvPriority,
+		SrvWeight:         p.SrvWeight,
+		SrvPort:           p.SrvPort,
+		SrvTarget:         p.SrvTarget,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // RecordDeleteDNSParam is input parameters for the sacloud API
 type RecordDeleteDNSParam struct {
 	Index             int
@@ -2534,6 +2890,33 @@ func (p *RecordDeleteDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *RecordDeleteDNSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["DNS"]
+}
+
+func (p *RecordDeleteDNSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["record-delete"]
+}
+
+func (p *RecordDeleteDNSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *RecordDeleteDNSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *RecordDeleteDNSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *RecordDeleteDNSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *RecordDeleteDNSParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -2650,6 +3033,27 @@ func (p *RecordDeleteDNSParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *RecordDeleteDNSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *RecordDeleteDNSParam) ToV0() *v0params.RecordDeleteDNSParam {
+	return &v0params.RecordDeleteDNSParam{
+		Index:             p.Index,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateDNSParam is input parameters for the sacloud API
@@ -2835,6 +3239,33 @@ func (p *UpdateDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateDNSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["DNS"]
+}
+
+func (p *UpdateDNSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateDNSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateDNSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateDNSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateDNSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateDNSParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2965,6 +3396,29 @@ func (p *UpdateDNSParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdateDNSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdateDNSParam) ToV0() *v0params.UpdateDNSParam {
+	return &v0params.UpdateDNSParam{
+		Selector:          p.Selector,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DeleteDNSParam is input parameters for the sacloud API
@@ -3114,6 +3568,33 @@ func (p *DeleteDNSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteDNSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["DNS"]
+}
+
+func (p *DeleteDNSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteDNSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteDNSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteDNSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteDNSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteDNSParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -3223,4 +3704,24 @@ func (p *DeleteDNSParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteDNSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteDNSParam) ToV0() *v0params.DeleteDNSParam {
+	return &v0params.DeleteDNSParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

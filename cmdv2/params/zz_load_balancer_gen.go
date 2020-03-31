@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -213,6 +214,33 @@ func (p *ListLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *ListLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListLoadBalancerParam) SetName(v []string) {
 	p.Name = v
 }
@@ -343,6 +371,29 @@ func (p *ListLoadBalancerParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListLoadBalancerParam) ToV0() *v0params.ListLoadBalancerParam {
+	return &v0params.ListLoadBalancerParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Tags:              p.Tags,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateLoadBalancerParam is input parameters for the sacloud API
@@ -641,6 +692,33 @@ func (p *CreateLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *CreateLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateLoadBalancerParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
@@ -822,6 +900,36 @@ func (p *CreateLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *CreateLoadBalancerParam) ToV0() *v0params.CreateLoadBalancerParam {
+	return &v0params.CreateLoadBalancerParam{
+		SwitchId:          p.SwitchId,
+		Vrid:              p.Vrid,
+		HighAvailability:  p.HighAvailability,
+		Plan:              p.Plan,
+		Ipaddress1:        p.Ipaddress1,
+		Ipaddress2:        p.Ipaddress2,
+		NwMaskLen:         p.NwMaskLen,
+		DefaultRoute:      p.DefaultRoute,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
+}
+
 // ReadLoadBalancerParam is input parameters for the sacloud API
 type ReadLoadBalancerParam struct {
 	Selector          []string
@@ -965,6 +1073,33 @@ func (p *ReadLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *ReadLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1067,6 +1202,25 @@ func (p *ReadLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadLoadBalancerParam) ToV0() *v0params.ReadLoadBalancerParam {
+	return &v0params.ReadLoadBalancerParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateLoadBalancerParam is input parameters for the sacloud API
@@ -1264,6 +1418,33 @@ func (p *UpdateLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *UpdateLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1401,6 +1582,30 @@ func (p *UpdateLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdateLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdateLoadBalancerParam) ToV0() *v0params.UpdateLoadBalancerParam {
+	return &v0params.UpdateLoadBalancerParam{
+		Selector:          p.Selector,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DeleteLoadBalancerParam is input parameters for the sacloud API
@@ -1554,6 +1759,33 @@ func (p *DeleteLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *DeleteLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteLoadBalancerParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -1672,6 +1904,27 @@ func (p *DeleteLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *DeleteLoadBalancerParam) ToV0() *v0params.DeleteLoadBalancerParam {
+	return &v0params.DeleteLoadBalancerParam{
+		Force:             p.Force,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // BootLoadBalancerParam is input parameters for the sacloud API
 type BootLoadBalancerParam struct {
 	Selector          []string
@@ -1777,6 +2030,33 @@ func (p *BootLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BootLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *BootLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["boot"]
+}
+
+func (p *BootLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BootLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BootLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BootLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BootLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1837,6 +2117,19 @@ func (p *BootLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BootLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BootLoadBalancerParam) ToV0() *v0params.BootLoadBalancerParam {
+	return &v0params.BootLoadBalancerParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ShutdownLoadBalancerParam is input parameters for the sacloud API
@@ -1944,6 +2237,33 @@ func (p *ShutdownLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ShutdownLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *ShutdownLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["shutdown"]
+}
+
+func (p *ShutdownLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ShutdownLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ShutdownLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ShutdownLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ShutdownLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2004,6 +2324,19 @@ func (p *ShutdownLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ShutdownLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ShutdownLoadBalancerParam) ToV0() *v0params.ShutdownLoadBalancerParam {
+	return &v0params.ShutdownLoadBalancerParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ShutdownForceLoadBalancerParam is input parameters for the sacloud API
@@ -2111,6 +2444,33 @@ func (p *ShutdownForceLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ShutdownForceLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["shutdown-force"]
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ShutdownForceLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2171,6 +2531,19 @@ func (p *ShutdownForceLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ShutdownForceLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ShutdownForceLoadBalancerParam) ToV0() *v0params.ShutdownForceLoadBalancerParam {
+	return &v0params.ShutdownForceLoadBalancerParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ResetLoadBalancerParam is input parameters for the sacloud API
@@ -2278,6 +2651,33 @@ func (p *ResetLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ResetLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *ResetLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["reset"]
+}
+
+func (p *ResetLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ResetLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ResetLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ResetLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ResetLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2338,6 +2738,19 @@ func (p *ResetLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ResetLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ResetLoadBalancerParam) ToV0() *v0params.ResetLoadBalancerParam {
+	return &v0params.ResetLoadBalancerParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // WaitForBootLoadBalancerParam is input parameters for the sacloud API
@@ -2441,6 +2854,33 @@ func (p *WaitForBootLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *WaitForBootLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *WaitForBootLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["wait-for-boot"]
+}
+
+func (p *WaitForBootLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *WaitForBootLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *WaitForBootLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *WaitForBootLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *WaitForBootLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2494,6 +2934,18 @@ func (p *WaitForBootLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *WaitForBootLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *WaitForBootLoadBalancerParam) ToV0() *v0params.WaitForBootLoadBalancerParam {
+	return &v0params.WaitForBootLoadBalancerParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // WaitForDownLoadBalancerParam is input parameters for the sacloud API
@@ -2597,6 +3049,33 @@ func (p *WaitForDownLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *WaitForDownLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *WaitForDownLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["wait-for-down"]
+}
+
+func (p *WaitForDownLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *WaitForDownLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *WaitForDownLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *WaitForDownLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *WaitForDownLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2650,6 +3129,18 @@ func (p *WaitForDownLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *WaitForDownLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *WaitForDownLoadBalancerParam) ToV0() *v0params.WaitForDownLoadBalancerParam {
+	return &v0params.WaitForDownLoadBalancerParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // VipInfoLoadBalancerParam is input parameters for the sacloud API
@@ -2795,6 +3286,33 @@ func (p *VipInfoLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *VipInfoLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *VipInfoLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["vip-info"]
+}
+
+func (p *VipInfoLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *VipInfoLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *VipInfoLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *VipInfoLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *VipInfoLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2897,6 +3415,25 @@ func (p *VipInfoLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *VipInfoLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *VipInfoLoadBalancerParam) ToV0() *v0params.VipInfoLoadBalancerParam {
+	return &v0params.VipInfoLoadBalancerParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // VipAddLoadBalancerParam is input parameters for the sacloud API
@@ -3071,6 +3608,33 @@ func (p *VipAddLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *VipAddLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *VipAddLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["vip-add"]
+}
+
+func (p *VipAddLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *VipAddLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *VipAddLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *VipAddLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *VipAddLoadBalancerParam) SetVip(v string) {
 	p.Vip = v
 }
@@ -3166,6 +3730,24 @@ func (p *VipAddLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *VipAddLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *VipAddLoadBalancerParam) ToV0() *v0params.VipAddLoadBalancerParam {
+	return &v0params.VipAddLoadBalancerParam{
+		Vip:               p.Vip,
+		Port:              p.Port,
+		DelayLoop:         p.DelayLoop,
+		SorryServer:       p.SorryServer,
+		Description:       p.Description,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // VipUpdateLoadBalancerParam is input parameters for the sacloud API
@@ -3338,6 +3920,33 @@ func (p *VipUpdateLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *VipUpdateLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *VipUpdateLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["vip-update"]
+}
+
+func (p *VipUpdateLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *VipUpdateLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *VipUpdateLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *VipUpdateLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *VipUpdateLoadBalancerParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -3440,6 +4049,25 @@ func (p *VipUpdateLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *VipUpdateLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *VipUpdateLoadBalancerParam) ToV0() *v0params.VipUpdateLoadBalancerParam {
+	return &v0params.VipUpdateLoadBalancerParam{
+		Index:             p.Index,
+		Vip:               p.Vip,
+		Port:              p.Port,
+		DelayLoop:         p.DelayLoop,
+		SorryServer:       p.SorryServer,
+		Description:       p.Description,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // VipDeleteLoadBalancerParam is input parameters for the sacloud API
@@ -3559,6 +4187,33 @@ func (p *VipDeleteLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *VipDeleteLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *VipDeleteLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["vip-delete"]
+}
+
+func (p *VipDeleteLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *VipDeleteLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *VipDeleteLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *VipDeleteLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *VipDeleteLoadBalancerParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -3626,6 +4281,20 @@ func (p *VipDeleteLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *VipDeleteLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *VipDeleteLoadBalancerParam) ToV0() *v0params.VipDeleteLoadBalancerParam {
+	return &v0params.VipDeleteLoadBalancerParam{
+		Index:             p.Index,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ServerInfoLoadBalancerParam is input parameters for the sacloud API
@@ -3828,6 +4497,33 @@ func (p *ServerInfoLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerInfoLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *ServerInfoLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-info"]
+}
+
+func (p *ServerInfoLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerInfoLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerInfoLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerInfoLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerInfoLoadBalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
@@ -3951,6 +4647,28 @@ func (p *ServerInfoLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerInfoLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerInfoLoadBalancerParam) ToV0() *v0params.ServerInfoLoadBalancerParam {
+	return &v0params.ServerInfoLoadBalancerParam{
+		VipIndex:          p.VipIndex,
+		Vip:               p.Vip,
+		Port:              p.Port,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ServerAddLoadBalancerParam is input parameters for the sacloud API
@@ -4166,6 +4884,33 @@ func (p *ServerAddLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerAddLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *ServerAddLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-add"]
+}
+
+func (p *ServerAddLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerAddLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerAddLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerAddLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerAddLoadBalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
@@ -4282,6 +5027,27 @@ func (p *ServerAddLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerAddLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerAddLoadBalancerParam) ToV0() *v0params.ServerAddLoadBalancerParam {
+	return &v0params.ServerAddLoadBalancerParam{
+		VipIndex:          p.VipIndex,
+		Vip:               p.Vip,
+		Port:              p.Port,
+		Ipaddress:         p.Ipaddress,
+		Protocol:          p.Protocol,
+		Path:              p.Path,
+		ResponseCode:      p.ResponseCode,
+		Disabled:          p.Disabled,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ServerUpdateLoadBalancerParam is input parameters for the sacloud API
@@ -4489,6 +5255,33 @@ func (p *ServerUpdateLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerUpdateLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-update"]
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerUpdateLoadBalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
@@ -4605,6 +5398,27 @@ func (p *ServerUpdateLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerUpdateLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerUpdateLoadBalancerParam) ToV0() *v0params.ServerUpdateLoadBalancerParam {
+	return &v0params.ServerUpdateLoadBalancerParam{
+		VipIndex:          p.VipIndex,
+		Vip:               p.Vip,
+		Port:              p.Port,
+		Ipaddress:         p.Ipaddress,
+		Protocol:          p.Protocol,
+		Path:              p.Path,
+		ResponseCode:      p.ResponseCode,
+		Disabled:          p.Disabled,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ServerDeleteLoadBalancerParam is input parameters for the sacloud API
@@ -4788,6 +5602,33 @@ func (p *ServerDeleteLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerDeleteLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-delete"]
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerDeleteLoadBalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
@@ -4876,6 +5717,23 @@ func (p *ServerDeleteLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerDeleteLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerDeleteLoadBalancerParam) ToV0() *v0params.ServerDeleteLoadBalancerParam {
+	return &v0params.ServerDeleteLoadBalancerParam{
+		VipIndex:          p.VipIndex,
+		Vip:               p.Vip,
+		Port:              p.Port,
+		Ipaddress:         p.Ipaddress,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // MonitorLoadBalancerParam is input parameters for the sacloud API
@@ -5058,6 +5916,33 @@ func (p *MonitorLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorLoadBalancerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["LoadBalancer"]
+}
+
+func (p *MonitorLoadBalancerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor"]
+}
+
+func (p *MonitorLoadBalancerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorLoadBalancerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorLoadBalancerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorLoadBalancerParam) SetStart(v string) {
 	p.Start = v
 }
@@ -5181,4 +6066,26 @@ func (p *MonitorLoadBalancerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *MonitorLoadBalancerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *MonitorLoadBalancerParam) ToV0() *v0params.MonitorLoadBalancerParam {
+	return &v0params.MonitorLoadBalancerParam{
+		Start:             p.Start,
+		End:               p.End,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

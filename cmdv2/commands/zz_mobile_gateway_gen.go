@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func mobileGatewayListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(mobileGatewayListParam))
-			return nil
+			return funcs.MobileGatewayList(ctx, mobileGatewayListParam.ToV0())
 		},
 	}
 
@@ -96,11 +91,7 @@ func mobileGatewayCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(mobileGatewayCreateParam))
-			return nil
+			return funcs.MobileGatewayCreate(ctx, mobileGatewayCreateParam.ToV0())
 		},
 	}
 
@@ -141,11 +132,7 @@ func mobileGatewayReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(mobileGatewayReadParam))
-			return nil
+			return funcs.MobileGatewayRead(ctx, mobileGatewayReadParam.ToV0())
 		},
 	}
 
@@ -182,11 +169,7 @@ func mobileGatewayUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayUpdateParam))
-			return nil
+			return funcs.MobileGatewayUpdate(ctx, mobileGatewayUpdateParam.ToV0())
 		},
 	}
 
@@ -229,11 +212,7 @@ func mobileGatewayDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(mobileGatewayDeleteParam))
-			return nil
+			return funcs.MobileGatewayDelete(ctx, mobileGatewayDeleteParam.ToV0())
 		},
 	}
 
@@ -272,11 +251,7 @@ func mobileGatewayBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(mobileGatewayBootParam))
-			return nil
+			return funcs.MobileGatewayBoot(ctx, mobileGatewayBootParam.ToV0())
 		},
 	}
 
@@ -307,11 +282,7 @@ func mobileGatewayShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(mobileGatewayShutdownParam))
-			return nil
+			return funcs.MobileGatewayShutdown(ctx, mobileGatewayShutdownParam.ToV0())
 		},
 	}
 
@@ -342,11 +313,7 @@ func mobileGatewayShutdownForceCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(mobileGatewayShutdownForceParam))
-			return nil
+			return funcs.MobileGatewayShutdownForce(ctx, mobileGatewayShutdownForceParam.ToV0())
 		},
 	}
 
@@ -377,11 +344,7 @@ func mobileGatewayResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(mobileGatewayResetParam))
-			return nil
+			return funcs.MobileGatewayReset(ctx, mobileGatewayResetParam.ToV0())
 		},
 	}
 
@@ -412,11 +375,7 @@ func mobileGatewayWaitForBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(mobileGatewayWaitForBootParam))
-			return nil
+			return funcs.MobileGatewayWaitForBoot(ctx, mobileGatewayWaitForBootParam.ToV0())
 		},
 	}
 
@@ -446,11 +405,7 @@ func mobileGatewayWaitForDownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(mobileGatewayWaitForDownParam))
-			return nil
+			return funcs.MobileGatewayWaitForDown(ctx, mobileGatewayWaitForDownParam.ToV0())
 		},
 	}
 
@@ -480,11 +435,7 @@ func mobileGatewayInterfaceInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("interface-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceInfoParam))
-			return nil
+			return funcs.MobileGatewayInterfaceInfo(ctx, mobileGatewayInterfaceInfoParam.ToV0())
 		},
 	}
 
@@ -521,11 +472,7 @@ func mobileGatewayInterfaceConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("interface-connect local parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceConnectParam))
-			return nil
+			return funcs.MobileGatewayInterfaceConnect(ctx, mobileGatewayInterfaceConnectParam.ToV0())
 		},
 	}
 
@@ -559,11 +506,7 @@ func mobileGatewayInterfaceUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("interface-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceUpdateParam))
-			return nil
+			return funcs.MobileGatewayInterfaceUpdate(ctx, mobileGatewayInterfaceUpdateParam.ToV0())
 		},
 	}
 
@@ -596,11 +539,7 @@ func mobileGatewayInterfaceDisconnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("interface-disconnect local parameter: \n%s\n", debugMarshalIndent(mobileGatewayInterfaceDisconnectParam))
-			return nil
+			return funcs.MobileGatewayInterfaceDisconnect(ctx, mobileGatewayInterfaceDisconnectParam.ToV0())
 		},
 	}
 
@@ -631,11 +570,7 @@ func mobileGatewayTrafficControlInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("traffic-control-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlInfoParam))
-			return nil
+			return funcs.MobileGatewayTrafficControlInfo(ctx, mobileGatewayTrafficControlInfoParam.ToV0())
 		},
 	}
 
@@ -672,11 +607,7 @@ func mobileGatewayTrafficControlEnableCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("traffic-control-enable local parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlEnableParam))
-			return nil
+			return funcs.MobileGatewayTrafficControlEnable(ctx, mobileGatewayTrafficControlEnableParam.ToV0())
 		},
 	}
 
@@ -712,11 +643,7 @@ func mobileGatewayTrafficControlUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("traffic-control-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlUpdateParam))
-			return nil
+			return funcs.MobileGatewayTrafficControlUpdate(ctx, mobileGatewayTrafficControlUpdateParam.ToV0())
 		},
 	}
 
@@ -752,11 +679,7 @@ func mobileGatewayTrafficControlDisableCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("traffic-control-disable local parameter: \n%s\n", debugMarshalIndent(mobileGatewayTrafficControlDisableParam))
-			return nil
+			return funcs.MobileGatewayTrafficControlDisable(ctx, mobileGatewayTrafficControlDisableParam.ToV0())
 		},
 	}
 
@@ -787,11 +710,7 @@ func mobileGatewayStaticRouteInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("static-route-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteInfoParam))
-			return nil
+			return funcs.MobileGatewayStaticRouteInfo(ctx, mobileGatewayStaticRouteInfoParam.ToV0())
 		},
 	}
 
@@ -828,11 +747,7 @@ func mobileGatewayStaticRouteAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("static-route-add local parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteAddParam))
-			return nil
+			return funcs.MobileGatewayStaticRouteAdd(ctx, mobileGatewayStaticRouteAddParam.ToV0())
 		},
 	}
 
@@ -865,11 +780,7 @@ func mobileGatewayStaticRouteUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("static-route-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteUpdateParam))
-			return nil
+			return funcs.MobileGatewayStaticRouteUpdate(ctx, mobileGatewayStaticRouteUpdateParam.ToV0())
 		},
 	}
 
@@ -903,11 +814,7 @@ func mobileGatewayStaticRouteDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("static-route-delete local parameter: \n%s\n", debugMarshalIndent(mobileGatewayStaticRouteDeleteParam))
-			return nil
+			return funcs.MobileGatewayStaticRouteDelete(ctx, mobileGatewayStaticRouteDeleteParam.ToV0())
 		},
 	}
 
@@ -939,11 +846,7 @@ func mobileGatewaySIMInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("sim-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMInfoParam))
-			return nil
+			return funcs.MobileGatewaySIMInfo(ctx, mobileGatewaySIMInfoParam.ToV0())
 		},
 	}
 
@@ -980,11 +883,7 @@ func mobileGatewaySIMAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("sim-add local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMAddParam))
-			return nil
+			return funcs.MobileGatewaySIMAdd(ctx, mobileGatewaySIMAddParam.ToV0())
 		},
 	}
 
@@ -1017,11 +916,7 @@ func mobileGatewaySIMUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("sim-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMUpdateParam))
-			return nil
+			return funcs.MobileGatewaySIMUpdate(ctx, mobileGatewaySIMUpdateParam.ToV0())
 		},
 	}
 
@@ -1054,11 +949,7 @@ func mobileGatewaySIMDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("sim-delete local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMDeleteParam))
-			return nil
+			return funcs.MobileGatewaySIMDelete(ctx, mobileGatewaySIMDeleteParam.ToV0())
 		},
 	}
 
@@ -1090,11 +981,7 @@ func mobileGatewaySIMRouteInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("sim-route-info local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteInfoParam))
-			return nil
+			return funcs.MobileGatewaySIMRouteInfo(ctx, mobileGatewaySIMRouteInfoParam.ToV0())
 		},
 	}
 
@@ -1131,11 +1018,7 @@ func mobileGatewaySIMRouteAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("sim-route-add local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteAddParam))
-			return nil
+			return funcs.MobileGatewaySIMRouteAdd(ctx, mobileGatewaySIMRouteAddParam.ToV0())
 		},
 	}
 
@@ -1168,11 +1051,7 @@ func mobileGatewaySIMRouteUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("sim-route-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteUpdateParam))
-			return nil
+			return funcs.MobileGatewaySIMRouteUpdate(ctx, mobileGatewaySIMRouteUpdateParam.ToV0())
 		},
 	}
 
@@ -1206,11 +1085,7 @@ func mobileGatewaySIMRouteDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("sim-route-delete local parameter: \n%s\n", debugMarshalIndent(mobileGatewaySIMRouteDeleteParam))
-			return nil
+			return funcs.MobileGatewaySIMRouteDelete(ctx, mobileGatewaySIMRouteDeleteParam.ToV0())
 		},
 	}
 
@@ -1242,11 +1117,7 @@ func mobileGatewayDNSUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("dns-update local parameter: \n%s\n", debugMarshalIndent(mobileGatewayDNSUpdateParam))
-			return nil
+			return funcs.MobileGatewayDNSUpdate(ctx, mobileGatewayDNSUpdateParam.ToV0())
 		},
 	}
 
@@ -1279,11 +1150,7 @@ func mobileGatewayLogsCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("logs local parameter: \n%s\n", debugMarshalIndent(mobileGatewayLogsParam))
-			return nil
+			return funcs.MobileGatewayLogs(ctx, mobileGatewayLogsParam.ToV0())
 		},
 	}
 

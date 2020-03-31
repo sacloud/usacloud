@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func loadBalancerListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(loadBalancerListParam))
-			return nil
+			return funcs.LoadBalancerList(ctx, loadBalancerListParam.ToV0())
 		},
 	}
 
@@ -96,11 +91,7 @@ func loadBalancerCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(loadBalancerCreateParam))
-			return nil
+			return funcs.LoadBalancerCreate(ctx, loadBalancerCreateParam.ToV0())
 		},
 	}
 
@@ -148,11 +139,7 @@ func loadBalancerReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(loadBalancerReadParam))
-			return nil
+			return funcs.LoadBalancerRead(ctx, loadBalancerReadParam.ToV0())
 		},
 	}
 
@@ -189,11 +176,7 @@ func loadBalancerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(loadBalancerUpdateParam))
-			return nil
+			return funcs.LoadBalancerUpdate(ctx, loadBalancerUpdateParam.ToV0())
 		},
 	}
 
@@ -235,11 +218,7 @@ func loadBalancerDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(loadBalancerDeleteParam))
-			return nil
+			return funcs.LoadBalancerDelete(ctx, loadBalancerDeleteParam.ToV0())
 		},
 	}
 
@@ -278,11 +257,7 @@ func loadBalancerBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(loadBalancerBootParam))
-			return nil
+			return funcs.LoadBalancerBoot(ctx, loadBalancerBootParam.ToV0())
 		},
 	}
 
@@ -313,11 +288,7 @@ func loadBalancerShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(loadBalancerShutdownParam))
-			return nil
+			return funcs.LoadBalancerShutdown(ctx, loadBalancerShutdownParam.ToV0())
 		},
 	}
 
@@ -348,11 +319,7 @@ func loadBalancerShutdownForceCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(loadBalancerShutdownForceParam))
-			return nil
+			return funcs.LoadBalancerShutdownForce(ctx, loadBalancerShutdownForceParam.ToV0())
 		},
 	}
 
@@ -383,11 +350,7 @@ func loadBalancerResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(loadBalancerResetParam))
-			return nil
+			return funcs.LoadBalancerReset(ctx, loadBalancerResetParam.ToV0())
 		},
 	}
 
@@ -418,11 +381,7 @@ func loadBalancerWaitForBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(loadBalancerWaitForBootParam))
-			return nil
+			return funcs.LoadBalancerWaitForBoot(ctx, loadBalancerWaitForBootParam.ToV0())
 		},
 	}
 
@@ -452,11 +411,7 @@ func loadBalancerWaitForDownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(loadBalancerWaitForDownParam))
-			return nil
+			return funcs.LoadBalancerWaitForDown(ctx, loadBalancerWaitForDownParam.ToV0())
 		},
 	}
 
@@ -486,11 +441,7 @@ func loadBalancerVipInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("vip-info local parameter: \n%s\n", debugMarshalIndent(loadBalancerVipInfoParam))
-			return nil
+			return funcs.LoadBalancerVipInfo(ctx, loadBalancerVipInfoParam.ToV0())
 		},
 	}
 
@@ -527,11 +478,7 @@ func loadBalancerVipAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("vip-add local parameter: \n%s\n", debugMarshalIndent(loadBalancerVipAddParam))
-			return nil
+			return funcs.LoadBalancerVipAdd(ctx, loadBalancerVipAddParam.ToV0())
 		},
 	}
 
@@ -567,11 +514,7 @@ func loadBalancerVipUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("vip-update local parameter: \n%s\n", debugMarshalIndent(loadBalancerVipUpdateParam))
-			return nil
+			return funcs.LoadBalancerVipUpdate(ctx, loadBalancerVipUpdateParam.ToV0())
 		},
 	}
 
@@ -608,11 +551,7 @@ func loadBalancerVipDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("vip-delete local parameter: \n%s\n", debugMarshalIndent(loadBalancerVipDeleteParam))
-			return nil
+			return funcs.LoadBalancerVipDelete(ctx, loadBalancerVipDeleteParam.ToV0())
 		},
 	}
 
@@ -644,11 +583,7 @@ func loadBalancerServerInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("server-info local parameter: \n%s\n", debugMarshalIndent(loadBalancerServerInfoParam))
-			return nil
+			return funcs.LoadBalancerServerInfo(ctx, loadBalancerServerInfoParam.ToV0())
 		},
 	}
 
@@ -688,11 +623,7 @@ func loadBalancerServerAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("server-add local parameter: \n%s\n", debugMarshalIndent(loadBalancerServerAddParam))
-			return nil
+			return funcs.LoadBalancerServerAdd(ctx, loadBalancerServerAddParam.ToV0())
 		},
 	}
 
@@ -731,11 +662,7 @@ func loadBalancerServerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("server-update local parameter: \n%s\n", debugMarshalIndent(loadBalancerServerUpdateParam))
-			return nil
+			return funcs.LoadBalancerServerUpdate(ctx, loadBalancerServerUpdateParam.ToV0())
 		},
 	}
 
@@ -774,11 +701,7 @@ func loadBalancerServerDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("server-delete local parameter: \n%s\n", debugMarshalIndent(loadBalancerServerDeleteParam))
-			return nil
+			return funcs.LoadBalancerServerDelete(ctx, loadBalancerServerDeleteParam.ToV0())
 		},
 	}
 
@@ -813,11 +736,7 @@ func loadBalancerMonitorCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(loadBalancerMonitorParam))
-			return nil
+			return funcs.LoadBalancerMonitor(ctx, loadBalancerMonitorParam.ToV0())
 		},
 	}
 

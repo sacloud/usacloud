@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func productDiskListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(productDiskListParam))
-			return nil
+			return funcs.ProductDiskList(ctx, productDiskListParam.ToV0())
 		},
 	}
 
@@ -95,11 +90,7 @@ func productDiskReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(productDiskReadParam))
-			return nil
+			return funcs.ProductDiskRead(ctx, productDiskReadParam.ToV0())
 		},
 	}
 

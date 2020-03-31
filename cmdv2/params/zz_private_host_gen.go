@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -213,6 +214,33 @@ func (p *ListPrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListPrivateHostParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PrivateHost"]
+}
+
+func (p *ListPrivateHostParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListPrivateHostParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListPrivateHostParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListPrivateHostParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListPrivateHostParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListPrivateHostParam) SetName(v []string) {
 	p.Name = v
 }
@@ -343,6 +371,29 @@ func (p *ListPrivateHostParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListPrivateHostParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListPrivateHostParam) ToV0() *v0params.ListPrivateHostParam {
+	return &v0params.ListPrivateHostParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Tags:              p.Tags,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreatePrivateHostParam is input parameters for the sacloud API
@@ -531,6 +582,33 @@ func (p *CreatePrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreatePrivateHostParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PrivateHost"]
+}
+
+func (p *CreatePrivateHostParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreatePrivateHostParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreatePrivateHostParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreatePrivateHostParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreatePrivateHostParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreatePrivateHostParam) SetName(v string) {
 	p.Name = v
 }
@@ -654,6 +732,28 @@ func (p *CreatePrivateHostParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CreatePrivateHostParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CreatePrivateHostParam) ToV0() *v0params.CreatePrivateHostParam {
+	return &v0params.CreatePrivateHostParam{
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // ReadPrivateHostParam is input parameters for the sacloud API
@@ -799,6 +899,33 @@ func (p *ReadPrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadPrivateHostParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PrivateHost"]
+}
+
+func (p *ReadPrivateHostParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadPrivateHostParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadPrivateHostParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadPrivateHostParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadPrivateHostParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadPrivateHostParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -901,6 +1028,25 @@ func (p *ReadPrivateHostParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadPrivateHostParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadPrivateHostParam) ToV0() *v0params.ReadPrivateHostParam {
+	return &v0params.ReadPrivateHostParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdatePrivateHostParam is input parameters for the sacloud API
@@ -1098,6 +1244,33 @@ func (p *UpdatePrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdatePrivateHostParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PrivateHost"]
+}
+
+func (p *UpdatePrivateHostParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdatePrivateHostParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdatePrivateHostParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdatePrivateHostParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdatePrivateHostParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdatePrivateHostParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1235,6 +1408,30 @@ func (p *UpdatePrivateHostParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdatePrivateHostParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdatePrivateHostParam) ToV0() *v0params.UpdatePrivateHostParam {
+	return &v0params.UpdatePrivateHostParam{
+		Selector:          p.Selector,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DeletePrivateHostParam is input parameters for the sacloud API
@@ -1384,6 +1581,33 @@ func (p *DeletePrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeletePrivateHostParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PrivateHost"]
+}
+
+func (p *DeletePrivateHostParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeletePrivateHostParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeletePrivateHostParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeletePrivateHostParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeletePrivateHostParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeletePrivateHostParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1493,6 +1717,26 @@ func (p *DeletePrivateHostParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeletePrivateHostParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeletePrivateHostParam) ToV0() *v0params.DeletePrivateHostParam {
+	return &v0params.DeletePrivateHostParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ServerInfoPrivateHostParam is input parameters for the sacloud API
@@ -1638,6 +1882,33 @@ func (p *ServerInfoPrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerInfoPrivateHostParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PrivateHost"]
+}
+
+func (p *ServerInfoPrivateHostParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-info"]
+}
+
+func (p *ServerInfoPrivateHostParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerInfoPrivateHostParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerInfoPrivateHostParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerInfoPrivateHostParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerInfoPrivateHostParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1740,6 +2011,25 @@ func (p *ServerInfoPrivateHostParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerInfoPrivateHostParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerInfoPrivateHostParam) ToV0() *v0params.ServerInfoPrivateHostParam {
+	return &v0params.ServerInfoPrivateHostParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ServerAddPrivateHostParam is input parameters for the sacloud API
@@ -1908,6 +2198,33 @@ func (p *ServerAddPrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerAddPrivateHostParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PrivateHost"]
+}
+
+func (p *ServerAddPrivateHostParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-add"]
+}
+
+func (p *ServerAddPrivateHostParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerAddPrivateHostParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerAddPrivateHostParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerAddPrivateHostParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerAddPrivateHostParam) SetServerId(v sacloud.ID) {
 	p.ServerId = v
 }
@@ -2024,6 +2341,27 @@ func (p *ServerAddPrivateHostParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerAddPrivateHostParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerAddPrivateHostParam) ToV0() *v0params.ServerAddPrivateHostParam {
+	return &v0params.ServerAddPrivateHostParam{
+		ServerId:          p.ServerId,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ServerDeletePrivateHostParam is input parameters for the sacloud API
@@ -2192,6 +2530,33 @@ func (p *ServerDeletePrivateHostParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerDeletePrivateHostParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PrivateHost"]
+}
+
+func (p *ServerDeletePrivateHostParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-delete"]
+}
+
+func (p *ServerDeletePrivateHostParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerDeletePrivateHostParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerDeletePrivateHostParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerDeletePrivateHostParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerDeletePrivateHostParam) SetServerId(v sacloud.ID) {
 	p.ServerId = v
 }
@@ -2308,4 +2673,25 @@ func (p *ServerDeletePrivateHostParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerDeletePrivateHostParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerDeletePrivateHostParam) ToV0() *v0params.ServerDeletePrivateHostParam {
+	return &v0params.ServerDeletePrivateHostParam{
+		ServerId:          p.ServerId,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

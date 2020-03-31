@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -213,6 +214,33 @@ func (p *ListSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *ListSIMParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListSIMParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListSIMParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListSIMParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListSIMParam) SetName(v []string) {
 	p.Name = v
 }
@@ -343,6 +371,29 @@ func (p *ListSIMParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListSIMParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListSIMParam) ToV0() *v0params.ListSIMParam {
+	return &v0params.ListSIMParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Tags:              p.Tags,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateSIMParam is input parameters for the sacloud API
@@ -588,6 +639,33 @@ func (p *CreateSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *CreateSIMParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateSIMParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateSIMParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateSIMParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateSIMParam) SetIccid(v string) {
 	p.Iccid = v
 }
@@ -748,6 +826,33 @@ func (p *CreateSIMParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *CreateSIMParam) ToV0() *v0params.CreateSIMParam {
+	return &v0params.CreateSIMParam{
+		Iccid:             p.Iccid,
+		Passcode:          p.Passcode,
+		Disabled:          p.Disabled,
+		Imei:              p.Imei,
+		Carrier:           p.Carrier,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
+}
+
 // ReadSIMParam is input parameters for the sacloud API
 type ReadSIMParam struct {
 	Selector          []string
@@ -891,6 +996,33 @@ func (p *ReadSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *ReadSIMParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadSIMParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadSIMParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadSIMParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -993,6 +1125,25 @@ func (p *ReadSIMParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadSIMParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadSIMParam) ToV0() *v0params.ReadSIMParam {
+	return &v0params.ReadSIMParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateSIMParam is input parameters for the sacloud API
@@ -1190,6 +1341,33 @@ func (p *UpdateSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *UpdateSIMParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateSIMParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateSIMParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateSIMParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1329,6 +1507,30 @@ func (p *UpdateSIMParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *UpdateSIMParam) ToV0() *v0params.UpdateSIMParam {
+	return &v0params.UpdateSIMParam{
+		Selector:          p.Selector,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // DeleteSIMParam is input parameters for the sacloud API
 type DeleteSIMParam struct {
 	Force             bool
@@ -1438,6 +1640,33 @@ func (p *DeleteSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *DeleteSIMParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteSIMParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteSIMParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteSIMParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteSIMParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -1505,6 +1734,20 @@ func (p *DeleteSIMParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteSIMParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteSIMParam) ToV0() *v0params.DeleteSIMParam {
+	return &v0params.DeleteSIMParam{
+		Force:             p.Force,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // CarrierInfoSIMParam is input parameters for the sacloud API
@@ -1650,6 +1893,33 @@ func (p *CarrierInfoSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CarrierInfoSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *CarrierInfoSIMParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["carrier-info"]
+}
+
+func (p *CarrierInfoSIMParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CarrierInfoSIMParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CarrierInfoSIMParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CarrierInfoSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CarrierInfoSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1752,6 +2022,25 @@ func (p *CarrierInfoSIMParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CarrierInfoSIMParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CarrierInfoSIMParam) ToV0() *v0params.CarrierInfoSIMParam {
+	return &v0params.CarrierInfoSIMParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // CarrierUpdateSIMParam is input parameters for the sacloud API
@@ -1884,6 +2173,33 @@ func (p *CarrierUpdateSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CarrierUpdateSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *CarrierUpdateSIMParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["carrier-update"]
+}
+
+func (p *CarrierUpdateSIMParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CarrierUpdateSIMParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CarrierUpdateSIMParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CarrierUpdateSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CarrierUpdateSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1951,6 +2267,20 @@ func (p *CarrierUpdateSIMParam) GetCarrier() []string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CarrierUpdateSIMParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CarrierUpdateSIMParam) ToV0() *v0params.CarrierUpdateSIMParam {
+	return &v0params.CarrierUpdateSIMParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+		Carrier:           p.Carrier,
+	}
 }
 
 // ActivateSIMParam is input parameters for the sacloud API
@@ -2058,6 +2388,33 @@ func (p *ActivateSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ActivateSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *ActivateSIMParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["activate"]
+}
+
+func (p *ActivateSIMParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ActivateSIMParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ActivateSIMParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ActivateSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ActivateSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2118,6 +2475,19 @@ func (p *ActivateSIMParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ActivateSIMParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ActivateSIMParam) ToV0() *v0params.ActivateSIMParam {
+	return &v0params.ActivateSIMParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // DeactivateSIMParam is input parameters for the sacloud API
@@ -2225,6 +2595,33 @@ func (p *DeactivateSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeactivateSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *DeactivateSIMParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["deactivate"]
+}
+
+func (p *DeactivateSIMParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeactivateSIMParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeactivateSIMParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeactivateSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeactivateSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2285,6 +2682,19 @@ func (p *DeactivateSIMParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeactivateSIMParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeactivateSIMParam) ToV0() *v0params.DeactivateSIMParam {
+	return &v0params.DeactivateSIMParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ImeiLockSIMParam is input parameters for the sacloud API
@@ -2404,6 +2814,33 @@ func (p *ImeiLockSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ImeiLockSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *ImeiLockSIMParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["imei-lock"]
+}
+
+func (p *ImeiLockSIMParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ImeiLockSIMParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ImeiLockSIMParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ImeiLockSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ImeiLockSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2471,6 +2908,20 @@ func (p *ImeiLockSIMParam) GetImei() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ImeiLockSIMParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ImeiLockSIMParam) ToV0() *v0params.ImeiLockSIMParam {
+	return &v0params.ImeiLockSIMParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+		Imei:              p.Imei,
+	}
 }
 
 // IpAddSIMParam is input parameters for the sacloud API
@@ -2597,6 +3048,33 @@ func (p *IpAddSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *IpAddSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *IpAddSIMParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["ip-add"]
+}
+
+func (p *IpAddSIMParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *IpAddSIMParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *IpAddSIMParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *IpAddSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *IpAddSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2664,6 +3142,20 @@ func (p *IpAddSIMParam) GetIp() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *IpAddSIMParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *IpAddSIMParam) ToV0() *v0params.IpAddSIMParam {
+	return &v0params.IpAddSIMParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+		Ip:                p.Ip,
+	}
 }
 
 // ImeiUnlockSIMParam is input parameters for the sacloud API
@@ -2771,6 +3263,33 @@ func (p *ImeiUnlockSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ImeiUnlockSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *ImeiUnlockSIMParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["imei-unlock"]
+}
+
+func (p *ImeiUnlockSIMParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ImeiUnlockSIMParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ImeiUnlockSIMParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ImeiUnlockSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ImeiUnlockSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2831,6 +3350,19 @@ func (p *ImeiUnlockSIMParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ImeiUnlockSIMParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ImeiUnlockSIMParam) ToV0() *v0params.ImeiUnlockSIMParam {
+	return &v0params.ImeiUnlockSIMParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // IpDeleteSIMParam is input parameters for the sacloud API
@@ -2938,6 +3470,33 @@ func (p *IpDeleteSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *IpDeleteSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *IpDeleteSIMParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["ip-delete"]
+}
+
+func (p *IpDeleteSIMParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *IpDeleteSIMParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *IpDeleteSIMParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *IpDeleteSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *IpDeleteSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2998,6 +3557,19 @@ func (p *IpDeleteSIMParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *IpDeleteSIMParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *IpDeleteSIMParam) ToV0() *v0params.IpDeleteSIMParam {
+	return &v0params.IpDeleteSIMParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // LogsSIMParam is input parameters for the sacloud API
@@ -3160,6 +3732,33 @@ func (p *LogsSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *LogsSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *LogsSIMParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["logs"]
+}
+
+func (p *LogsSIMParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *LogsSIMParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *LogsSIMParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *LogsSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *LogsSIMParam) SetFollow(v bool) {
 	p.Follow = v
 }
@@ -3276,6 +3875,27 @@ func (p *LogsSIMParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *LogsSIMParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *LogsSIMParam) ToV0() *v0params.LogsSIMParam {
+	return &v0params.LogsSIMParam{
+		Follow:            p.Follow,
+		RefreshInterval:   p.RefreshInterval,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // MonitorSIMParam is input parameters for the sacloud API
@@ -3458,6 +4078,33 @@ func (p *MonitorSIMParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *MonitorSIMParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor"]
+}
+
+func (p *MonitorSIMParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorSIMParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorSIMParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorSIMParam) SetStart(v string) {
 	p.Start = v
 }
@@ -3581,4 +4228,26 @@ func (p *MonitorSIMParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *MonitorSIMParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *MonitorSIMParam) ToV0() *v0params.MonitorSIMParam {
+	return &v0params.MonitorSIMParam{
+		Start:             p.Start,
+		End:               p.End,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

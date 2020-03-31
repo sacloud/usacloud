@@ -19,6 +19,7 @@ package params
 import (
 	"io"
 
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -152,6 +153,33 @@ func (p *ShowAuthStatusParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ShowAuthStatusParam) GetResourceDef() *schema.Resource {
+	return define.Resources["AuthStatus"]
+}
+
+func (p *ShowAuthStatusParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["show"]
+}
+
+func (p *ShowAuthStatusParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ShowAuthStatusParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ShowAuthStatusParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ShowAuthStatusParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ShowAuthStatusParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -240,4 +268,21 @@ func (p *ShowAuthStatusParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ShowAuthStatusParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ShowAuthStatusParam) ToV0() *v0params.ShowAuthStatusParam {
+	return &v0params.ShowAuthStatusParam{
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }

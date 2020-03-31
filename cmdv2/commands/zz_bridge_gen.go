@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func bridgeListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(bridgeListParam))
-			return nil
+			return funcs.BridgeList(ctx, bridgeListParam.ToV0())
 		},
 	}
 
@@ -95,11 +90,7 @@ func bridgeCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(bridgeCreateParam))
-			return nil
+			return funcs.BridgeCreate(ctx, bridgeCreateParam.ToV0())
 		},
 	}
 
@@ -137,11 +128,7 @@ func bridgeReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(bridgeReadParam))
-			return nil
+			return funcs.BridgeRead(ctx, bridgeReadParam.ToV0())
 		},
 	}
 
@@ -177,11 +164,7 @@ func bridgeUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(bridgeUpdateParam))
-			return nil
+			return funcs.BridgeUpdate(ctx, bridgeUpdateParam.ToV0())
 		},
 	}
 
@@ -220,11 +203,7 @@ func bridgeDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(bridgeDeleteParam))
-			return nil
+			return funcs.BridgeDelete(ctx, bridgeDeleteParam.ToV0())
 		},
 	}
 

@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -213,6 +214,33 @@ func (p *ListNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListNFSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["NFS"]
+}
+
+func (p *ListNFSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListNFSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListNFSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListNFSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListNFSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListNFSParam) SetName(v []string) {
 	p.Name = v
 }
@@ -343,6 +371,29 @@ func (p *ListNFSParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListNFSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListNFSParam) ToV0() *v0params.ListNFSParam {
+	return &v0params.ListNFSParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Tags:              p.Tags,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateNFSParam is input parameters for the sacloud API
@@ -639,6 +690,33 @@ func (p *CreateNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateNFSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["NFS"]
+}
+
+func (p *CreateNFSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateNFSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateNFSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateNFSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateNFSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateNFSParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
@@ -806,6 +884,34 @@ func (p *CreateNFSParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *CreateNFSParam) ToV0() *v0params.CreateNFSParam {
+	return &v0params.CreateNFSParam{
+		SwitchId:          p.SwitchId,
+		Plan:              p.Plan,
+		Size:              p.Size,
+		Ipaddress:         p.Ipaddress,
+		NwMaskLen:         p.NwMaskLen,
+		DefaultRoute:      p.DefaultRoute,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
+}
+
 // ReadNFSParam is input parameters for the sacloud API
 type ReadNFSParam struct {
 	Selector          []string
@@ -949,6 +1055,33 @@ func (p *ReadNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadNFSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["NFS"]
+}
+
+func (p *ReadNFSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadNFSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadNFSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadNFSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadNFSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadNFSParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1051,6 +1184,25 @@ func (p *ReadNFSParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadNFSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadNFSParam) ToV0() *v0params.ReadNFSParam {
+	return &v0params.ReadNFSParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateNFSParam is input parameters for the sacloud API
@@ -1248,6 +1400,33 @@ func (p *UpdateNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateNFSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["NFS"]
+}
+
+func (p *UpdateNFSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateNFSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateNFSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateNFSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateNFSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateNFSParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1385,6 +1564,30 @@ func (p *UpdateNFSParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdateNFSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdateNFSParam) ToV0() *v0params.UpdateNFSParam {
+	return &v0params.UpdateNFSParam{
+		Selector:          p.Selector,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DeleteNFSParam is input parameters for the sacloud API
@@ -1538,6 +1741,33 @@ func (p *DeleteNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteNFSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["NFS"]
+}
+
+func (p *DeleteNFSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteNFSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteNFSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteNFSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteNFSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteNFSParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -1656,6 +1886,27 @@ func (p *DeleteNFSParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *DeleteNFSParam) ToV0() *v0params.DeleteNFSParam {
+	return &v0params.DeleteNFSParam{
+		Force:             p.Force,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // BootNFSParam is input parameters for the sacloud API
 type BootNFSParam struct {
 	Selector          []string
@@ -1761,6 +2012,33 @@ func (p *BootNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BootNFSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["NFS"]
+}
+
+func (p *BootNFSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["boot"]
+}
+
+func (p *BootNFSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BootNFSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BootNFSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BootNFSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BootNFSParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1821,6 +2099,19 @@ func (p *BootNFSParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BootNFSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BootNFSParam) ToV0() *v0params.BootNFSParam {
+	return &v0params.BootNFSParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ShutdownNFSParam is input parameters for the sacloud API
@@ -1928,6 +2219,33 @@ func (p *ShutdownNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ShutdownNFSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["NFS"]
+}
+
+func (p *ShutdownNFSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["shutdown"]
+}
+
+func (p *ShutdownNFSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ShutdownNFSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ShutdownNFSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ShutdownNFSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ShutdownNFSParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1988,6 +2306,19 @@ func (p *ShutdownNFSParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ShutdownNFSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ShutdownNFSParam) ToV0() *v0params.ShutdownNFSParam {
+	return &v0params.ShutdownNFSParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ShutdownForceNFSParam is input parameters for the sacloud API
@@ -2095,6 +2426,33 @@ func (p *ShutdownForceNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ShutdownForceNFSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["NFS"]
+}
+
+func (p *ShutdownForceNFSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["shutdown-force"]
+}
+
+func (p *ShutdownForceNFSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ShutdownForceNFSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ShutdownForceNFSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ShutdownForceNFSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ShutdownForceNFSParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2155,6 +2513,19 @@ func (p *ShutdownForceNFSParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ShutdownForceNFSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ShutdownForceNFSParam) ToV0() *v0params.ShutdownForceNFSParam {
+	return &v0params.ShutdownForceNFSParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ResetNFSParam is input parameters for the sacloud API
@@ -2262,6 +2633,33 @@ func (p *ResetNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ResetNFSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["NFS"]
+}
+
+func (p *ResetNFSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["reset"]
+}
+
+func (p *ResetNFSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ResetNFSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ResetNFSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ResetNFSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ResetNFSParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2322,6 +2720,19 @@ func (p *ResetNFSParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ResetNFSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ResetNFSParam) ToV0() *v0params.ResetNFSParam {
+	return &v0params.ResetNFSParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // WaitForBootNFSParam is input parameters for the sacloud API
@@ -2425,6 +2836,33 @@ func (p *WaitForBootNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *WaitForBootNFSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["NFS"]
+}
+
+func (p *WaitForBootNFSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["wait-for-boot"]
+}
+
+func (p *WaitForBootNFSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *WaitForBootNFSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *WaitForBootNFSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *WaitForBootNFSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *WaitForBootNFSParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2478,6 +2916,18 @@ func (p *WaitForBootNFSParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *WaitForBootNFSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *WaitForBootNFSParam) ToV0() *v0params.WaitForBootNFSParam {
+	return &v0params.WaitForBootNFSParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // WaitForDownNFSParam is input parameters for the sacloud API
@@ -2581,6 +3031,33 @@ func (p *WaitForDownNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *WaitForDownNFSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["NFS"]
+}
+
+func (p *WaitForDownNFSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["wait-for-down"]
+}
+
+func (p *WaitForDownNFSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *WaitForDownNFSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *WaitForDownNFSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *WaitForDownNFSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *WaitForDownNFSParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2634,6 +3111,18 @@ func (p *WaitForDownNFSParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *WaitForDownNFSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *WaitForDownNFSParam) ToV0() *v0params.WaitForDownNFSParam {
+	return &v0params.WaitForDownNFSParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // MonitorNicNFSParam is input parameters for the sacloud API
@@ -2816,6 +3305,33 @@ func (p *MonitorNicNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorNicNFSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["NFS"]
+}
+
+func (p *MonitorNicNFSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor-nic"]
+}
+
+func (p *MonitorNicNFSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorNicNFSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorNicNFSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorNicNFSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorNicNFSParam) SetStart(v string) {
 	p.Start = v
 }
@@ -2939,6 +3455,28 @@ func (p *MonitorNicNFSParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *MonitorNicNFSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *MonitorNicNFSParam) ToV0() *v0params.MonitorNicNFSParam {
+	return &v0params.MonitorNicNFSParam{
+		Start:             p.Start,
+		End:               p.End,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // MonitorFreeDiskSizeNFSParam is input parameters for the sacloud API
@@ -3121,6 +3659,33 @@ func (p *MonitorFreeDiskSizeNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorFreeDiskSizeNFSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["NFS"]
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor-free-disk-size"]
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorFreeDiskSizeNFSParam) SetStart(v string) {
 	p.Start = v
 }
@@ -3244,4 +3809,26 @@ func (p *MonitorFreeDiskSizeNFSParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *MonitorFreeDiskSizeNFSParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) ToV0() *v0params.MonitorFreeDiskSizeNFSParam {
+	return &v0params.MonitorFreeDiskSizeNFSParam{
+		Start:             p.Start,
+		End:               p.End,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func serverListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(serverListParam))
-			return nil
+			return funcs.ServerList(ctx, serverListParam.ToV0())
 		},
 	}
 
@@ -96,11 +91,7 @@ func serverBuildCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("build local parameter: \n%s\n", debugMarshalIndent(serverBuildParam))
-			return nil
+			return funcs.ServerBuild(ctx, serverBuildParam.ToV0())
 		},
 	}
 
@@ -178,11 +169,7 @@ func serverReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(serverReadParam))
-			return nil
+			return funcs.ServerRead(ctx, serverReadParam.ToV0())
 		},
 	}
 
@@ -219,11 +206,7 @@ func serverUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(serverUpdateParam))
-			return nil
+			return funcs.ServerUpdate(ctx, serverUpdateParam.ToV0())
 		},
 	}
 
@@ -266,11 +249,7 @@ func serverDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(serverDeleteParam))
-			return nil
+			return funcs.ServerDelete(ctx, serverDeleteParam.ToV0())
 		},
 	}
 
@@ -310,11 +289,7 @@ func serverPlanChangeCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("plan-change local parameter: \n%s\n", debugMarshalIndent(serverPlanChangeParam))
-			return nil
+			return funcs.ServerPlanChange(ctx, serverPlanChangeParam.ToV0())
 		},
 	}
 
@@ -355,11 +330,7 @@ func serverBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(serverBootParam))
-			return nil
+			return funcs.ServerBoot(ctx, serverBootParam.ToV0())
 		},
 	}
 
@@ -390,11 +361,7 @@ func serverShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(serverShutdownParam))
-			return nil
+			return funcs.ServerShutdown(ctx, serverShutdownParam.ToV0())
 		},
 	}
 
@@ -425,11 +392,7 @@ func serverShutdownForceCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(serverShutdownForceParam))
-			return nil
+			return funcs.ServerShutdownForce(ctx, serverShutdownForceParam.ToV0())
 		},
 	}
 
@@ -460,11 +423,7 @@ func serverResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(serverResetParam))
-			return nil
+			return funcs.ServerReset(ctx, serverResetParam.ToV0())
 		},
 	}
 
@@ -495,11 +454,7 @@ func serverWaitForBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(serverWaitForBootParam))
-			return nil
+			return funcs.ServerWaitForBoot(ctx, serverWaitForBootParam.ToV0())
 		},
 	}
 
@@ -529,11 +484,7 @@ func serverWaitForDownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(serverWaitForDownParam))
-			return nil
+			return funcs.ServerWaitForDown(ctx, serverWaitForDownParam.ToV0())
 		},
 	}
 
@@ -563,11 +514,7 @@ func serverSSHCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ssh local parameter: \n%s\n", debugMarshalIndent(serverSSHParam))
-			return nil
+			return funcs.ServerSSH(ctx, serverSSHParam.ToV0())
 		},
 	}
 
@@ -602,11 +549,7 @@ func serverSSHExecCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ssh-exec local parameter: \n%s\n", debugMarshalIndent(serverSSHExecParam))
-			return nil
+			return funcs.ServerSSHExec(ctx, serverSSHExecParam.ToV0())
 		},
 	}
 
@@ -640,11 +583,7 @@ func serverScpCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("scp local parameter: \n%s\n", debugMarshalIndent(serverScpParam))
-			return nil
+			return funcs.ServerScp(ctx, serverScpParam.ToV0())
 		},
 	}
 
@@ -679,11 +618,7 @@ func serverVncCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("vnc local parameter: \n%s\n", debugMarshalIndent(serverVncParam))
-			return nil
+			return funcs.ServerVnc(ctx, serverVncParam.ToV0())
 		},
 	}
 
@@ -714,11 +649,7 @@ func serverVncInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("vnc-info local parameter: \n%s\n", debugMarshalIndent(serverVncInfoParam))
-			return nil
+			return funcs.ServerVncInfo(ctx, serverVncInfoParam.ToV0())
 		},
 	}
 
@@ -756,11 +687,7 @@ func serverVncSendCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("vnc-send local parameter: \n%s\n", debugMarshalIndent(serverVncSendParam))
-			return nil
+			return funcs.ServerVncSend(ctx, serverVncSendParam.ToV0())
 		},
 	}
 
@@ -803,11 +730,7 @@ func serverVncSnapshotCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("vnc-snapshot local parameter: \n%s\n", debugMarshalIndent(serverVncSnapshotParam))
-			return nil
+			return funcs.ServerVncSnapshot(ctx, serverVncSnapshotParam.ToV0())
 		},
 	}
 
@@ -847,11 +770,7 @@ func serverRemoteDesktopCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("remote-desktop local parameter: \n%s\n", debugMarshalIndent(serverRemoteDesktopParam))
-			return nil
+			return funcs.ServerRemoteDesktop(ctx, serverRemoteDesktopParam.ToV0())
 		},
 	}
 
@@ -883,11 +802,7 @@ func serverRemoteDesktopInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("remote-desktop-info local parameter: \n%s\n", debugMarshalIndent(serverRemoteDesktopInfoParam))
-			return nil
+			return funcs.ServerRemoteDesktopInfo(ctx, serverRemoteDesktopInfoParam.ToV0())
 		},
 	}
 
@@ -926,11 +841,7 @@ func serverDiskInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("disk-info local parameter: \n%s\n", debugMarshalIndent(serverDiskInfoParam))
-			return nil
+			return funcs.ServerDiskInfo(ctx, serverDiskInfoParam.ToV0())
 		},
 	}
 
@@ -967,11 +878,7 @@ func serverDiskConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("disk-connect local parameter: \n%s\n", debugMarshalIndent(serverDiskConnectParam))
-			return nil
+			return funcs.ServerDiskConnect(ctx, serverDiskConnectParam.ToV0())
 		},
 	}
 
@@ -1003,11 +910,7 @@ func serverDiskDisconnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("disk-disconnect local parameter: \n%s\n", debugMarshalIndent(serverDiskDisconnectParam))
-			return nil
+			return funcs.ServerDiskDisconnect(ctx, serverDiskDisconnectParam.ToV0())
 		},
 	}
 
@@ -1039,11 +942,7 @@ func serverInterfaceInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("interface-info local parameter: \n%s\n", debugMarshalIndent(serverInterfaceInfoParam))
-			return nil
+			return funcs.ServerInterfaceInfo(ctx, serverInterfaceInfoParam.ToV0())
 		},
 	}
 
@@ -1080,11 +979,7 @@ func serverInterfaceAddForInternetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("interface-add-for-internet local parameter: \n%s\n", debugMarshalIndent(serverInterfaceAddForInternetParam))
-			return nil
+			return funcs.ServerInterfaceAddForInternet(ctx, serverInterfaceAddForInternetParam.ToV0())
 		},
 	}
 
@@ -1116,11 +1011,7 @@ func serverInterfaceAddForRouterCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("interface-add-for-router local parameter: \n%s\n", debugMarshalIndent(serverInterfaceAddForRouterParam))
-			return nil
+			return funcs.ServerInterfaceAddForRouter(ctx, serverInterfaceAddForRouterParam.ToV0())
 		},
 	}
 
@@ -1156,11 +1047,7 @@ func serverInterfaceAddForSwitchCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("interface-add-for-switch local parameter: \n%s\n", debugMarshalIndent(serverInterfaceAddForSwitchParam))
-			return nil
+			return funcs.ServerInterfaceAddForSwitch(ctx, serverInterfaceAddForSwitchParam.ToV0())
 		},
 	}
 
@@ -1196,11 +1083,7 @@ func serverInterfaceAddDisconnectedCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("interface-add-disconnected local parameter: \n%s\n", debugMarshalIndent(serverInterfaceAddDisconnectedParam))
-			return nil
+			return funcs.ServerInterfaceAddDisconnected(ctx, serverInterfaceAddDisconnectedParam.ToV0())
 		},
 	}
 
@@ -1231,11 +1114,7 @@ func serverISOInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("iso-info local parameter: \n%s\n", debugMarshalIndent(serverISOInfoParam))
-			return nil
+			return funcs.ServerISOInfo(ctx, serverISOInfoParam.ToV0())
 		},
 	}
 
@@ -1272,11 +1151,7 @@ func serverISOInsertCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("iso-insert local parameter: \n%s\n", debugMarshalIndent(serverISOInsertParam))
-			return nil
+			return funcs.ServerISOInsert(ctx, serverISOInsertParam.ToV0())
 		},
 	}
 
@@ -1314,11 +1189,7 @@ func serverISOEjectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("iso-eject local parameter: \n%s\n", debugMarshalIndent(serverISOEjectParam))
-			return nil
+			return funcs.ServerISOEject(ctx, serverISOEjectParam.ToV0())
 		},
 	}
 
@@ -1349,11 +1220,7 @@ func serverMonitorCPUCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor-cpu local parameter: \n%s\n", debugMarshalIndent(serverMonitorCPUParam))
-			return nil
+			return funcs.ServerMonitorCPU(ctx, serverMonitorCPUParam.ToV0())
 		},
 	}
 
@@ -1393,18 +1260,14 @@ func serverMonitorNicCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor-nic local parameter: \n%s\n", debugMarshalIndent(serverMonitorNicParam))
-			return nil
+			return funcs.ServerMonitorNic(ctx, serverMonitorNicParam.ToV0())
 		},
 	}
 
 	fs := cmd.Flags()
 	fs.StringVarP(&serverMonitorNicParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&serverMonitorNicParam.End, "end", "", "", "set end-time")
-	fs.IntSliceVarP(&serverMonitorNicParam.Index, "index", "", []int{}, "target index(es)")
+	fs.Int64SliceVarP(&serverMonitorNicParam.Index, "index", "", []int64{}, "target index(es)")
 	fs.StringVarP(&serverMonitorNicParam.KeyFormat, "key-format", "", "sakuracloud.server.{{.ID}}.nic.{{.Index}}", "set monitoring value key-format")
 	fs.StringSliceVarP(&serverMonitorNicParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&serverMonitorNicParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -1438,18 +1301,14 @@ func serverMonitorDiskCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor-disk local parameter: \n%s\n", debugMarshalIndent(serverMonitorDiskParam))
-			return nil
+			return funcs.ServerMonitorDisk(ctx, serverMonitorDiskParam.ToV0())
 		},
 	}
 
 	fs := cmd.Flags()
 	fs.StringVarP(&serverMonitorDiskParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&serverMonitorDiskParam.End, "end", "", "", "set end-time")
-	fs.IntSliceVarP(&serverMonitorDiskParam.Index, "index", "", []int{}, "target index(es)")
+	fs.Int64SliceVarP(&serverMonitorDiskParam.Index, "index", "", []int64{}, "target index(es)")
 	fs.StringVarP(&serverMonitorDiskParam.KeyFormat, "key-format", "", "sakuracloud.server.{{.ID}}.disk.{{.Index}}", "set monitoring value key-format")
 	fs.StringSliceVarP(&serverMonitorDiskParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&serverMonitorDiskParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
@@ -1483,11 +1342,7 @@ func serverMaintenanceInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("maintenance-info local parameter: \n%s\n", debugMarshalIndent(serverMaintenanceInfoParam))
-			return nil
+			return funcs.ServerMaintenanceInfo(ctx, serverMaintenanceInfoParam.ToV0())
 		},
 	}
 

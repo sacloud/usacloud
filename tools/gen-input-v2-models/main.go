@@ -96,6 +96,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/schema"
 	"github.com/sacloud/usacloud/output"
@@ -195,6 +196,34 @@ func (p *{{.InputParameterTypeName}}) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *{{.InputParameterTypeName}}) GetResourceDef() *schema.Resource {
+	return define.Resources["{{.Resource.Name}}"]
+}
+
+func (p *{{.InputParameterTypeName}}) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["{{.Name}}"]
+}
+
+func (p *{{.InputParameterTypeName}}) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *{{.InputParameterTypeName}}) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *{{.InputParameterTypeName}}) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *{{.InputParameterTypeName}}) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 {{ range .Params -}}
 func (p *{{.Command.InputParameterTypeName}}) Set{{.FieldName}}(v {{.FieldTypeName}}) {
 	p.{{.FieldName}} = v
@@ -210,5 +239,12 @@ func (p *{{.InputParameterTypeName}}) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *{{.InputParameterTypeName }}) ToV0() *v0params.{{.InputParameterTypeName}} {
+	return &v0params.{{.InputParameterTypeName}}{
+{{ range .Params -}}
+		{{.FieldName}}: p.{{.FieldName}},
+{{ end }}
+	}
+}
 {{ end }}
 `

@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -201,6 +202,33 @@ func (p *ListLicenseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListLicenseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["License"]
+}
+
+func (p *ListLicenseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListLicenseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListLicenseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListLicenseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListLicenseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListLicenseParam) SetName(v []string) {
 	p.Name = v
 }
@@ -324,6 +352,28 @@ func (p *ListLicenseParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListLicenseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListLicenseParam) ToV0() *v0params.ListLicenseParam {
+	return &v0params.ListLicenseParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateLicenseParam is input parameters for the sacloud API
@@ -480,6 +530,33 @@ func (p *CreateLicenseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateLicenseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["License"]
+}
+
+func (p *CreateLicenseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateLicenseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateLicenseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateLicenseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateLicenseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateLicenseParam) SetLicenseInfoId(v sacloud.ID) {
 	p.LicenseInfoId = v
 }
@@ -589,6 +666,26 @@ func (p *CreateLicenseParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CreateLicenseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CreateLicenseParam) ToV0() *v0params.CreateLicenseParam {
+	return &v0params.CreateLicenseParam{
+		LicenseInfoId:     p.LicenseInfoId,
+		Name:              p.Name,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // ReadLicenseParam is input parameters for the sacloud API
@@ -730,6 +827,33 @@ func (p *ReadLicenseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadLicenseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["License"]
+}
+
+func (p *ReadLicenseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadLicenseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadLicenseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadLicenseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadLicenseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadLicenseParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -825,6 +949,24 @@ func (p *ReadLicenseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadLicenseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadLicenseParam) ToV0() *v0params.ReadLicenseParam {
+	return &v0params.ReadLicenseParam{
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateLicenseParam is input parameters for the sacloud API
@@ -982,6 +1124,33 @@ func (p *UpdateLicenseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateLicenseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["License"]
+}
+
+func (p *UpdateLicenseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateLicenseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateLicenseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateLicenseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateLicenseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateLicenseParam) SetName(v string) {
 	p.Name = v
 }
@@ -1091,6 +1260,26 @@ func (p *UpdateLicenseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdateLicenseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdateLicenseParam) ToV0() *v0params.UpdateLicenseParam {
+	return &v0params.UpdateLicenseParam{
+		Name:              p.Name,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DeleteLicenseParam is input parameters for the sacloud API
@@ -1236,6 +1425,33 @@ func (p *DeleteLicenseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteLicenseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["License"]
+}
+
+func (p *DeleteLicenseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteLicenseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteLicenseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteLicenseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteLicenseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteLicenseParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1338,4 +1554,23 @@ func (p *DeleteLicenseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteLicenseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteLicenseParam) ToV0() *v0params.DeleteLicenseParam {
+	return &v0params.DeleteLicenseParam{
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

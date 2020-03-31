@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func internetListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(internetListParam))
-			return nil
+			return funcs.InternetList(ctx, internetListParam.ToV0())
 		},
 	}
 
@@ -96,11 +91,7 @@ func internetCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(internetCreateParam))
-			return nil
+			return funcs.InternetCreate(ctx, internetCreateParam.ToV0())
 		},
 	}
 
@@ -142,11 +133,7 @@ func internetReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(internetReadParam))
-			return nil
+			return funcs.InternetRead(ctx, internetReadParam.ToV0())
 		},
 	}
 
@@ -183,11 +170,7 @@ func internetUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(internetUpdateParam))
-			return nil
+			return funcs.InternetUpdate(ctx, internetUpdateParam.ToV0())
 		},
 	}
 
@@ -230,11 +213,7 @@ func internetDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(internetDeleteParam))
-			return nil
+			return funcs.InternetDelete(ctx, internetDeleteParam.ToV0())
 		},
 	}
 
@@ -272,11 +251,7 @@ func internetUpdateBandwidthCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update-bandwidth local parameter: \n%s\n", debugMarshalIndent(internetUpdateBandwidthParam))
-			return nil
+			return funcs.InternetUpdateBandwidth(ctx, internetUpdateBandwidthParam.ToV0())
 		},
 	}
 
@@ -315,11 +290,7 @@ func internetSubnetInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("subnet-info local parameter: \n%s\n", debugMarshalIndent(internetSubnetInfoParam))
-			return nil
+			return funcs.InternetSubnetInfo(ctx, internetSubnetInfoParam.ToV0())
 		},
 	}
 
@@ -356,11 +327,7 @@ func internetSubnetAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("subnet-add local parameter: \n%s\n", debugMarshalIndent(internetSubnetAddParam))
-			return nil
+			return funcs.InternetSubnetAdd(ctx, internetSubnetAddParam.ToV0())
 		},
 	}
 
@@ -400,11 +367,7 @@ func internetSubnetDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("subnet-delete local parameter: \n%s\n", debugMarshalIndent(internetSubnetDeleteParam))
-			return nil
+			return funcs.InternetSubnetDelete(ctx, internetSubnetDeleteParam.ToV0())
 		},
 	}
 
@@ -436,11 +399,7 @@ func internetSubnetUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("subnet-update local parameter: \n%s\n", debugMarshalIndent(internetSubnetUpdateParam))
-			return nil
+			return funcs.InternetSubnetUpdate(ctx, internetSubnetUpdateParam.ToV0())
 		},
 	}
 
@@ -480,11 +439,7 @@ func internetIPv6InfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ipv6-info local parameter: \n%s\n", debugMarshalIndent(internetIPv6InfoParam))
-			return nil
+			return funcs.InternetIPv6Info(ctx, internetIPv6InfoParam.ToV0())
 		},
 	}
 
@@ -521,11 +476,7 @@ func internetIPv6EnableCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ipv6-enable local parameter: \n%s\n", debugMarshalIndent(internetIPv6EnableParam))
-			return nil
+			return funcs.InternetIPv6Enable(ctx, internetIPv6EnableParam.ToV0())
 		},
 	}
 
@@ -563,11 +514,7 @@ func internetIPv6DisableCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ipv6-disable local parameter: \n%s\n", debugMarshalIndent(internetIPv6DisableParam))
-			return nil
+			return funcs.InternetIPv6Disable(ctx, internetIPv6DisableParam.ToV0())
 		},
 	}
 
@@ -598,11 +545,7 @@ func internetMonitorCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(internetMonitorParam))
-			return nil
+			return funcs.InternetMonitor(ctx, internetMonitorParam.ToV0())
 		},
 	}
 

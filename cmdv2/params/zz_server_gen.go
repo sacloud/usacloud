@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -213,6 +214,33 @@ func (p *ListServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *ListServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListServerParam) SetName(v []string) {
 	p.Name = v
 }
@@ -343,6 +371,29 @@ func (p *ListServerParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListServerParam) ToV0() *v0params.ListServerParam {
+	return &v0params.ListServerParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Tags:              p.Tags,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // BuildServerParam is input parameters for the sacloud API
@@ -906,6 +957,33 @@ func (p *BuildServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BuildServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *BuildServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["build"]
+}
+
+func (p *BuildServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BuildServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BuildServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BuildServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BuildServerParam) SetCore(v int) {
 	p.Core = v
 }
@@ -1297,6 +1375,66 @@ func (p *BuildServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *BuildServerParam) ToV0() *v0params.BuildServerParam {
+	return &v0params.BuildServerParam{
+		Core:                    p.Core,
+		Memory:                  p.Memory,
+		Commitment:              p.Commitment,
+		PrivateHostId:           p.PrivateHostId,
+		DiskMode:                p.DiskMode,
+		OsType:                  p.OsType,
+		DiskPlan:                p.DiskPlan,
+		DiskConnection:          p.DiskConnection,
+		DiskSize:                p.DiskSize,
+		SourceArchiveId:         p.SourceArchiveId,
+		SourceDiskId:            p.SourceDiskId,
+		DistantFrom:             p.DistantFrom,
+		DiskId:                  p.DiskId,
+		ISOImageId:              p.ISOImageId,
+		NetworkMode:             p.NetworkMode,
+		InterfaceDriver:         p.InterfaceDriver,
+		PacketFilterId:          p.PacketFilterId,
+		SwitchId:                p.SwitchId,
+		Hostname:                p.Hostname,
+		Password:                p.Password,
+		DisablePasswordAuth:     p.DisablePasswordAuth,
+		Ipaddress:               p.Ipaddress,
+		NwMasklen:               p.NwMasklen,
+		DefaultRoute:            p.DefaultRoute,
+		StartupScripts:          p.StartupScripts,
+		StartupScriptIds:        p.StartupScriptIds,
+		StartupScriptsEphemeral: p.StartupScriptsEphemeral,
+		SSHKeyMode:              p.SSHKeyMode,
+		SSHKeyName:              p.SSHKeyName,
+		SSHKeyIds:               p.SSHKeyIds,
+		SSHKeyPassPhrase:        p.SSHKeyPassPhrase,
+		SSHKeyDescription:       p.SSHKeyDescription,
+		SSHKeyPrivateKeyOutput:  p.SSHKeyPrivateKeyOutput,
+		SSHKeyPublicKeys:        p.SSHKeyPublicKeys,
+		SSHKeyPublicKeyFiles:    p.SSHKeyPublicKeyFiles,
+		SSHKeyEphemeral:         p.SSHKeyEphemeral,
+		Name:                    p.Name,
+		Description:             p.Description,
+		Tags:                    p.Tags,
+		IconId:                  p.IconId,
+		Assumeyes:               p.Assumeyes,
+		ParamTemplate:           p.ParamTemplate,
+		Parameters:              p.Parameters,
+		ParamTemplateFile:       p.ParamTemplateFile,
+		ParameterFile:           p.ParameterFile,
+		GenerateSkeleton:        p.GenerateSkeleton,
+		OutputType:              p.OutputType,
+		Column:                  p.Column,
+		Quiet:                   p.Quiet,
+		Format:                  p.Format,
+		FormatFile:              p.FormatFile,
+		Query:                   p.Query,
+		QueryFile:               p.QueryFile,
+		UsKeyboard:              p.UsKeyboard,
+		DisableBootAfterCreate:  p.DisableBootAfterCreate,
+	}
+}
+
 // ReadServerParam is input parameters for the sacloud API
 type ReadServerParam struct {
 	Selector          []string
@@ -1440,6 +1578,33 @@ func (p *ReadServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *ReadServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1542,6 +1707,25 @@ func (p *ReadServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadServerParam) ToV0() *v0params.ReadServerParam {
+	return &v0params.ReadServerParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateServerParam is input parameters for the sacloud API
@@ -1752,6 +1936,33 @@ func (p *UpdateServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *UpdateServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateServerParam) SetInterfaceDriver(v string) {
 	p.InterfaceDriver = v
 }
@@ -1896,6 +2107,31 @@ func (p *UpdateServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdateServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdateServerParam) ToV0() *v0params.UpdateServerParam {
+	return &v0params.UpdateServerParam{
+		InterfaceDriver:   p.InterfaceDriver,
+		Selector:          p.Selector,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DeleteServerParam is input parameters for the sacloud API
@@ -2053,6 +2289,33 @@ func (p *DeleteServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *DeleteServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteServerParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -2176,6 +2439,28 @@ func (p *DeleteServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteServerParam) ToV0() *v0params.DeleteServerParam {
+	return &v0params.DeleteServerParam{
+		Force:             p.Force,
+		WithoutDisk:       p.WithoutDisk,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // PlanChangeServerParam is input parameters for the sacloud API
@@ -2362,6 +2647,33 @@ func (p *PlanChangeServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *PlanChangeServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *PlanChangeServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["plan-change"]
+}
+
+func (p *PlanChangeServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *PlanChangeServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *PlanChangeServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *PlanChangeServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *PlanChangeServerParam) SetCore(v int) {
 	p.Core = v
 }
@@ -2494,6 +2806,29 @@ func (p *PlanChangeServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *PlanChangeServerParam) ToV0() *v0params.PlanChangeServerParam {
+	return &v0params.PlanChangeServerParam{
+		Core:              p.Core,
+		Memory:            p.Memory,
+		Commitment:        p.Commitment,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // BootServerParam is input parameters for the sacloud API
 type BootServerParam struct {
 	Selector          []string
@@ -2599,6 +2934,33 @@ func (p *BootServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BootServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *BootServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["boot"]
+}
+
+func (p *BootServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BootServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BootServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BootServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BootServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2659,6 +3021,19 @@ func (p *BootServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BootServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BootServerParam) ToV0() *v0params.BootServerParam {
+	return &v0params.BootServerParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ShutdownServerParam is input parameters for the sacloud API
@@ -2766,6 +3141,33 @@ func (p *ShutdownServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ShutdownServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *ShutdownServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["shutdown"]
+}
+
+func (p *ShutdownServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ShutdownServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ShutdownServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ShutdownServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ShutdownServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2826,6 +3228,19 @@ func (p *ShutdownServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ShutdownServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ShutdownServerParam) ToV0() *v0params.ShutdownServerParam {
+	return &v0params.ShutdownServerParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ShutdownForceServerParam is input parameters for the sacloud API
@@ -2933,6 +3348,33 @@ func (p *ShutdownForceServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ShutdownForceServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *ShutdownForceServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["shutdown-force"]
+}
+
+func (p *ShutdownForceServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ShutdownForceServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ShutdownForceServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ShutdownForceServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ShutdownForceServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2993,6 +3435,19 @@ func (p *ShutdownForceServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ShutdownForceServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ShutdownForceServerParam) ToV0() *v0params.ShutdownForceServerParam {
+	return &v0params.ShutdownForceServerParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ResetServerParam is input parameters for the sacloud API
@@ -3100,6 +3555,33 @@ func (p *ResetServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ResetServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *ResetServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["reset"]
+}
+
+func (p *ResetServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ResetServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ResetServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ResetServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ResetServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -3160,6 +3642,19 @@ func (p *ResetServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ResetServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ResetServerParam) ToV0() *v0params.ResetServerParam {
+	return &v0params.ResetServerParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // WaitForBootServerParam is input parameters for the sacloud API
@@ -3263,6 +3758,33 @@ func (p *WaitForBootServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *WaitForBootServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *WaitForBootServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["wait-for-boot"]
+}
+
+func (p *WaitForBootServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *WaitForBootServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *WaitForBootServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *WaitForBootServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *WaitForBootServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -3316,6 +3838,18 @@ func (p *WaitForBootServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *WaitForBootServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *WaitForBootServerParam) ToV0() *v0params.WaitForBootServerParam {
+	return &v0params.WaitForBootServerParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // WaitForDownServerParam is input parameters for the sacloud API
@@ -3419,6 +3953,33 @@ func (p *WaitForDownServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *WaitForDownServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *WaitForDownServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["wait-for-down"]
+}
+
+func (p *WaitForDownServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *WaitForDownServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *WaitForDownServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *WaitForDownServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *WaitForDownServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -3472,6 +4033,18 @@ func (p *WaitForDownServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *WaitForDownServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *WaitForDownServerParam) ToV0() *v0params.WaitForDownServerParam {
+	return &v0params.WaitForDownServerParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // SSHServerParam is input parameters for the sacloud API
@@ -3612,6 +4185,33 @@ func (p *SSHServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SSHServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *SSHServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["ssh"]
+}
+
+func (p *SSHServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SSHServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SSHServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SSHServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SSHServerParam) SetKey(v string) {
 	p.Key = v
 }
@@ -3700,6 +4300,23 @@ func (p *SSHServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SSHServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SSHServerParam) ToV0() *v0params.SSHServerParam {
+	return &v0params.SSHServerParam{
+		Key:               p.Key,
+		User:              p.User,
+		Port:              p.Port,
+		Password:          p.Password,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Quiet:             p.Quiet,
+		Id:                p.Id,
+	}
 }
 
 // SSHExecServerParam is input parameters for the sacloud API
@@ -3836,6 +4453,33 @@ func (p *SSHExecServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SSHExecServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *SSHExecServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["ssh-exec"]
+}
+
+func (p *SSHExecServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SSHExecServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SSHExecServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SSHExecServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SSHExecServerParam) SetKey(v string) {
 	p.Key = v
 }
@@ -3917,6 +4561,22 @@ func (p *SSHExecServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SSHExecServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SSHExecServerParam) ToV0() *v0params.SSHExecServerParam {
+	return &v0params.SSHExecServerParam{
+		Key:               p.Key,
+		User:              p.User,
+		Port:              p.Port,
+		Password:          p.Password,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Quiet:             p.Quiet,
+		Id:                p.Id,
+	}
 }
 
 // ScpServerParam is input parameters for the sacloud API
@@ -4049,6 +4709,33 @@ func (p *ScpServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ScpServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *ScpServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["scp"]
+}
+
+func (p *ScpServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ScpServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ScpServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ScpServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ScpServerParam) SetKey(v string) {
 	p.Key = v
 }
@@ -4137,6 +4824,23 @@ func (p *ScpServerParam) GetQuiet() bool {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ScpServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ScpServerParam) ToV0() *v0params.ScpServerParam {
+	return &v0params.ScpServerParam{
+		Key:               p.Key,
+		Recursive:         p.Recursive,
+		User:              p.User,
+		Port:              p.Port,
+		Password:          p.Password,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Quiet:             p.Quiet,
+	}
 }
 
 // VncServerParam is input parameters for the sacloud API
@@ -4244,6 +4948,33 @@ func (p *VncServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *VncServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *VncServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["vnc"]
+}
+
+func (p *VncServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *VncServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *VncServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *VncServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *VncServerParam) SetWaitForBoot(v bool) {
 	p.WaitForBoot = v
 }
@@ -4304,6 +5035,19 @@ func (p *VncServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *VncServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *VncServerParam) ToV0() *v0params.VncServerParam {
+	return &v0params.VncServerParam{
+		WaitForBoot:       p.WaitForBoot,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // VncInfoServerParam is input parameters for the sacloud API
@@ -4453,6 +5197,33 @@ func (p *VncInfoServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *VncInfoServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *VncInfoServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["vnc-info"]
+}
+
+func (p *VncInfoServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *VncInfoServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *VncInfoServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *VncInfoServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *VncInfoServerParam) SetWaitForBoot(v bool) {
 	p.WaitForBoot = v
 }
@@ -4562,6 +5333,26 @@ func (p *VncInfoServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *VncInfoServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *VncInfoServerParam) ToV0() *v0params.VncInfoServerParam {
+	return &v0params.VncInfoServerParam{
+		WaitForBoot:       p.WaitForBoot,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // VncSendServerParam is input parameters for the sacloud API
@@ -4749,6 +5540,33 @@ func (p *VncSendServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *VncSendServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *VncSendServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["vnc-send"]
+}
+
+func (p *VncSendServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *VncSendServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *VncSendServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *VncSendServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *VncSendServerParam) SetCommand(v string) {
 	p.Command = v
 }
@@ -4893,6 +5711,31 @@ func (p *VncSendServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *VncSendServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *VncSendServerParam) ToV0() *v0params.VncSendServerParam {
+	return &v0params.VncSendServerParam{
+		Command:           p.Command,
+		CommandFile:       p.CommandFile,
+		UseUsKeyboard:     p.UseUsKeyboard,
+		Debug:             p.Debug,
+		WaitForBoot:       p.WaitForBoot,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // VncSnapshotServerParam is input parameters for the sacloud API
@@ -5050,6 +5893,33 @@ func (p *VncSnapshotServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *VncSnapshotServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *VncSnapshotServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["vnc-snapshot"]
+}
+
+func (p *VncSnapshotServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *VncSnapshotServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *VncSnapshotServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *VncSnapshotServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *VncSnapshotServerParam) SetWaitForBoot(v bool) {
 	p.WaitForBoot = v
 }
@@ -5173,6 +6043,28 @@ func (p *VncSnapshotServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *VncSnapshotServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *VncSnapshotServerParam) ToV0() *v0params.VncSnapshotServerParam {
+	return &v0params.VncSnapshotServerParam{
+		WaitForBoot:       p.WaitForBoot,
+		OutputPath:        p.OutputPath,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // RemoteDesktopServerParam is input parameters for the sacloud API
@@ -5301,6 +6193,33 @@ func (p *RemoteDesktopServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *RemoteDesktopServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *RemoteDesktopServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["remote-desktop"]
+}
+
+func (p *RemoteDesktopServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *RemoteDesktopServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *RemoteDesktopServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *RemoteDesktopServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *RemoteDesktopServerParam) SetUser(v string) {
 	p.User = v
 }
@@ -5368,6 +6287,20 @@ func (p *RemoteDesktopServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *RemoteDesktopServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *RemoteDesktopServerParam) ToV0() *v0params.RemoteDesktopServerParam {
+	return &v0params.RemoteDesktopServerParam{
+		User:              p.User,
+		Port:              p.Port,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // RemoteDesktopInfoServerParam is input parameters for the sacloud API
@@ -5538,6 +6471,33 @@ func (p *RemoteDesktopInfoServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *RemoteDesktopInfoServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *RemoteDesktopInfoServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["remote-desktop-info"]
+}
+
+func (p *RemoteDesktopInfoServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *RemoteDesktopInfoServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *RemoteDesktopInfoServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *RemoteDesktopInfoServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *RemoteDesktopInfoServerParam) SetUser(v string) {
 	p.User = v
 }
@@ -5654,6 +6614,27 @@ func (p *RemoteDesktopInfoServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *RemoteDesktopInfoServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *RemoteDesktopInfoServerParam) ToV0() *v0params.RemoteDesktopInfoServerParam {
+	return &v0params.RemoteDesktopInfoServerParam{
+		User:              p.User,
+		Port:              p.Port,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DiskInfoServerParam is input parameters for the sacloud API
@@ -5799,6 +6780,33 @@ func (p *DiskInfoServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DiskInfoServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *DiskInfoServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["disk-info"]
+}
+
+func (p *DiskInfoServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DiskInfoServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DiskInfoServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DiskInfoServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DiskInfoServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -5901,6 +6909,25 @@ func (p *DiskInfoServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DiskInfoServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DiskInfoServerParam) ToV0() *v0params.DiskInfoServerParam {
+	return &v0params.DiskInfoServerParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DiskConnectServerParam is input parameters for the sacloud API
@@ -6027,6 +7054,33 @@ func (p *DiskConnectServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DiskConnectServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *DiskConnectServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["disk-connect"]
+}
+
+func (p *DiskConnectServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DiskConnectServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DiskConnectServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DiskConnectServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DiskConnectServerParam) SetDiskId(v sacloud.ID) {
 	p.DiskId = v
 }
@@ -6094,6 +7148,20 @@ func (p *DiskConnectServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DiskConnectServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DiskConnectServerParam) ToV0() *v0params.DiskConnectServerParam {
+	return &v0params.DiskConnectServerParam{
+		DiskId:            p.DiskId,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // DiskDisconnectServerParam is input parameters for the sacloud API
@@ -6220,6 +7288,33 @@ func (p *DiskDisconnectServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DiskDisconnectServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *DiskDisconnectServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["disk-disconnect"]
+}
+
+func (p *DiskDisconnectServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DiskDisconnectServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DiskDisconnectServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DiskDisconnectServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DiskDisconnectServerParam) SetDiskId(v sacloud.ID) {
 	p.DiskId = v
 }
@@ -6287,6 +7382,20 @@ func (p *DiskDisconnectServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DiskDisconnectServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DiskDisconnectServerParam) ToV0() *v0params.DiskDisconnectServerParam {
+	return &v0params.DiskDisconnectServerParam{
+		DiskId:            p.DiskId,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // InterfaceInfoServerParam is input parameters for the sacloud API
@@ -6432,6 +7541,33 @@ func (p *InterfaceInfoServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *InterfaceInfoServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *InterfaceInfoServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["interface-info"]
+}
+
+func (p *InterfaceInfoServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *InterfaceInfoServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *InterfaceInfoServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *InterfaceInfoServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *InterfaceInfoServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -6534,6 +7670,25 @@ func (p *InterfaceInfoServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *InterfaceInfoServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *InterfaceInfoServerParam) ToV0() *v0params.InterfaceInfoServerParam {
+	return &v0params.InterfaceInfoServerParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // InterfaceAddForInternetServerParam is input parameters for the sacloud API
@@ -6645,6 +7800,33 @@ func (p *InterfaceAddForInternetServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *InterfaceAddForInternetServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *InterfaceAddForInternetServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["interface-add-for-internet"]
+}
+
+func (p *InterfaceAddForInternetServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *InterfaceAddForInternetServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *InterfaceAddForInternetServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *InterfaceAddForInternetServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *InterfaceAddForInternetServerParam) SetWithoutDiskEdit(v bool) {
 	p.WithoutDiskEdit = v
 }
@@ -6712,6 +7894,20 @@ func (p *InterfaceAddForInternetServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *InterfaceAddForInternetServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *InterfaceAddForInternetServerParam) ToV0() *v0params.InterfaceAddForInternetServerParam {
+	return &v0params.InterfaceAddForInternetServerParam{
+		WithoutDiskEdit:   p.WithoutDiskEdit,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // InterfaceAddForRouterServerParam is input parameters for the sacloud API
@@ -6879,6 +8075,33 @@ func (p *InterfaceAddForRouterServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *InterfaceAddForRouterServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *InterfaceAddForRouterServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["interface-add-for-router"]
+}
+
+func (p *InterfaceAddForRouterServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *InterfaceAddForRouterServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *InterfaceAddForRouterServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *InterfaceAddForRouterServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *InterfaceAddForRouterServerParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
@@ -6974,6 +8197,24 @@ func (p *InterfaceAddForRouterServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *InterfaceAddForRouterServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *InterfaceAddForRouterServerParam) ToV0() *v0params.InterfaceAddForRouterServerParam {
+	return &v0params.InterfaceAddForRouterServerParam{
+		SwitchId:          p.SwitchId,
+		WithoutDiskEdit:   p.WithoutDiskEdit,
+		Ipaddress:         p.Ipaddress,
+		DefaultRoute:      p.DefaultRoute,
+		NwMasklen:         p.NwMasklen,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // InterfaceAddForSwitchServerParam is input parameters for the sacloud API
@@ -7141,6 +8382,33 @@ func (p *InterfaceAddForSwitchServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *InterfaceAddForSwitchServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *InterfaceAddForSwitchServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["interface-add-for-switch"]
+}
+
+func (p *InterfaceAddForSwitchServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *InterfaceAddForSwitchServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *InterfaceAddForSwitchServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *InterfaceAddForSwitchServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *InterfaceAddForSwitchServerParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
@@ -7236,6 +8504,24 @@ func (p *InterfaceAddForSwitchServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *InterfaceAddForSwitchServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *InterfaceAddForSwitchServerParam) ToV0() *v0params.InterfaceAddForSwitchServerParam {
+	return &v0params.InterfaceAddForSwitchServerParam{
+		SwitchId:          p.SwitchId,
+		WithoutDiskEdit:   p.WithoutDiskEdit,
+		Ipaddress:         p.Ipaddress,
+		DefaultRoute:      p.DefaultRoute,
+		NwMasklen:         p.NwMasklen,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // InterfaceAddDisconnectedServerParam is input parameters for the sacloud API
@@ -7343,6 +8629,33 @@ func (p *InterfaceAddDisconnectedServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *InterfaceAddDisconnectedServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *InterfaceAddDisconnectedServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["interface-add-disconnected"]
+}
+
+func (p *InterfaceAddDisconnectedServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *InterfaceAddDisconnectedServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *InterfaceAddDisconnectedServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *InterfaceAddDisconnectedServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *InterfaceAddDisconnectedServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -7403,6 +8716,19 @@ func (p *InterfaceAddDisconnectedServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *InterfaceAddDisconnectedServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *InterfaceAddDisconnectedServerParam) ToV0() *v0params.InterfaceAddDisconnectedServerParam {
+	return &v0params.InterfaceAddDisconnectedServerParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ISOInfoServerParam is input parameters for the sacloud API
@@ -7548,6 +8874,33 @@ func (p *ISOInfoServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ISOInfoServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *ISOInfoServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["iso-info"]
+}
+
+func (p *ISOInfoServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ISOInfoServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ISOInfoServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ISOInfoServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ISOInfoServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -7650,6 +9003,25 @@ func (p *ISOInfoServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ISOInfoServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ISOInfoServerParam) ToV0() *v0params.ISOInfoServerParam {
+	return &v0params.ISOInfoServerParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ISOInsertServerParam is input parameters for the sacloud API
@@ -7834,6 +9206,33 @@ func (p *ISOInsertServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ISOInsertServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *ISOInsertServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["iso-insert"]
+}
+
+func (p *ISOInsertServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ISOInsertServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ISOInsertServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ISOInsertServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ISOInsertServerParam) SetISOImageId(v sacloud.ID) {
 	p.ISOImageId = v
 }
@@ -7945,6 +9344,26 @@ func (p *ISOInsertServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *ISOInsertServerParam) ToV0() *v0params.ISOInsertServerParam {
+	return &v0params.ISOInsertServerParam{
+		ISOImageId:        p.ISOImageId,
+		Size:              p.Size,
+		ISOFile:           p.ISOFile,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
+}
+
 // ISOEjectServerParam is input parameters for the sacloud API
 type ISOEjectServerParam struct {
 	Selector          []string
@@ -8050,6 +9469,33 @@ func (p *ISOEjectServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ISOEjectServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *ISOEjectServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["iso-eject"]
+}
+
+func (p *ISOEjectServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ISOEjectServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ISOEjectServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ISOEjectServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ISOEjectServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -8110,6 +9556,19 @@ func (p *ISOEjectServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ISOEjectServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ISOEjectServerParam) ToV0() *v0params.ISOEjectServerParam {
+	return &v0params.ISOEjectServerParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // MonitorCPUServerParam is input parameters for the sacloud API
@@ -8292,6 +9751,33 @@ func (p *MonitorCPUServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorCPUServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *MonitorCPUServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor-cpu"]
+}
+
+func (p *MonitorCPUServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorCPUServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorCPUServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorCPUServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorCPUServerParam) SetStart(v string) {
 	p.Start = v
 }
@@ -8417,11 +9903,33 @@ func (p *MonitorCPUServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *MonitorCPUServerParam) ToV0() *v0params.MonitorCPUServerParam {
+	return &v0params.MonitorCPUServerParam{
+		Start:             p.Start,
+		End:               p.End,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // MonitorNicServerParam is input parameters for the sacloud API
 type MonitorNicServerParam struct {
 	Start             string
 	End               string
-	Index             []int
+	Index             []int64
 	KeyFormat         string
 	Selector          []string
 	ParamTemplate     string
@@ -8469,7 +9977,7 @@ func (p *MonitorNicServerParam) fillValueToSkeleton() {
 		p.End = ""
 	}
 	if utils.IsEmpty(p.Index) {
-		p.Index = []int{0}
+		p.Index = []int64{0}
 	}
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
@@ -8601,6 +10109,33 @@ func (p *MonitorNicServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorNicServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *MonitorNicServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor-nic"]
+}
+
+func (p *MonitorNicServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorNicServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorNicServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorNicServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorNicServerParam) SetStart(v string) {
 	p.Start = v
 }
@@ -8615,11 +10150,11 @@ func (p *MonitorNicServerParam) SetEnd(v string) {
 func (p *MonitorNicServerParam) GetEnd() string {
 	return p.End
 }
-func (p *MonitorNicServerParam) SetIndex(v []int) {
+func (p *MonitorNicServerParam) SetIndex(v []int64) {
 	p.Index = v
 }
 
-func (p *MonitorNicServerParam) GetIndex() []int {
+func (p *MonitorNicServerParam) GetIndex() []int64 {
 	return p.Index
 }
 func (p *MonitorNicServerParam) SetKeyFormat(v string) {
@@ -8733,11 +10268,34 @@ func (p *MonitorNicServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *MonitorNicServerParam) ToV0() *v0params.MonitorNicServerParam {
+	return &v0params.MonitorNicServerParam{
+		Start:             p.Start,
+		End:               p.End,
+		Index:             p.Index,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // MonitorDiskServerParam is input parameters for the sacloud API
 type MonitorDiskServerParam struct {
 	Start             string
 	End               string
-	Index             []int
+	Index             []int64
 	KeyFormat         string
 	Selector          []string
 	ParamTemplate     string
@@ -8785,7 +10343,7 @@ func (p *MonitorDiskServerParam) fillValueToSkeleton() {
 		p.End = ""
 	}
 	if utils.IsEmpty(p.Index) {
-		p.Index = []int{0}
+		p.Index = []int64{0}
 	}
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
@@ -8917,6 +10475,33 @@ func (p *MonitorDiskServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorDiskServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *MonitorDiskServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor-disk"]
+}
+
+func (p *MonitorDiskServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorDiskServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorDiskServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorDiskServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorDiskServerParam) SetStart(v string) {
 	p.Start = v
 }
@@ -8931,11 +10516,11 @@ func (p *MonitorDiskServerParam) SetEnd(v string) {
 func (p *MonitorDiskServerParam) GetEnd() string {
 	return p.End
 }
-func (p *MonitorDiskServerParam) SetIndex(v []int) {
+func (p *MonitorDiskServerParam) SetIndex(v []int64) {
 	p.Index = v
 }
 
-func (p *MonitorDiskServerParam) GetIndex() []int {
+func (p *MonitorDiskServerParam) GetIndex() []int64 {
 	return p.Index
 }
 func (p *MonitorDiskServerParam) SetKeyFormat(v string) {
@@ -9047,6 +10632,29 @@ func (p *MonitorDiskServerParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *MonitorDiskServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *MonitorDiskServerParam) ToV0() *v0params.MonitorDiskServerParam {
+	return &v0params.MonitorDiskServerParam{
+		Start:             p.Start,
+		End:               p.End,
+		Index:             p.Index,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // MaintenanceInfoServerParam is input parameters for the sacloud API
@@ -9176,6 +10784,33 @@ func (p *MaintenanceInfoServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MaintenanceInfoServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *MaintenanceInfoServerParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["maintenance-info"]
+}
+
+func (p *MaintenanceInfoServerParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MaintenanceInfoServerParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MaintenanceInfoServerParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MaintenanceInfoServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MaintenanceInfoServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -9264,4 +10899,21 @@ func (p *MaintenanceInfoServerParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *MaintenanceInfoServerParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *MaintenanceInfoServerParam) ToV0() *v0params.MaintenanceInfoServerParam {
+	return &v0params.MaintenanceInfoServerParam{
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }

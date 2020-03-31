@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -213,6 +214,33 @@ func (p *ListInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListInternetParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Internet"]
+}
+
+func (p *ListInternetParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListInternetParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListInternetParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListInternetParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListInternetParam) SetName(v []string) {
 	p.Name = v
 }
@@ -343,6 +371,29 @@ func (p *ListInternetParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListInternetParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListInternetParam) ToV0() *v0params.ListInternetParam {
+	return &v0params.ListInternetParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Tags:              p.Tags,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateInternetParam is input parameters for the sacloud API
@@ -570,6 +621,33 @@ func (p *CreateInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateInternetParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Internet"]
+}
+
+func (p *CreateInternetParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateInternetParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateInternetParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateInternetParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateInternetParam) SetNwMasklen(v int) {
 	p.NwMasklen = v
 }
@@ -707,6 +785,30 @@ func (p *CreateInternetParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CreateInternetParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CreateInternetParam) ToV0() *v0params.CreateInternetParam {
+	return &v0params.CreateInternetParam{
+		NwMasklen:         p.NwMasklen,
+		BandWidth:         p.BandWidth,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // ReadInternetParam is input parameters for the sacloud API
@@ -852,6 +954,33 @@ func (p *ReadInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadInternetParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Internet"]
+}
+
+func (p *ReadInternetParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadInternetParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadInternetParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadInternetParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadInternetParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -954,6 +1083,25 @@ func (p *ReadInternetParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadInternetParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadInternetParam) ToV0() *v0params.ReadInternetParam {
+	return &v0params.ReadInternetParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateInternetParam is input parameters for the sacloud API
@@ -1163,6 +1311,33 @@ func (p *UpdateInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateInternetParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Internet"]
+}
+
+func (p *UpdateInternetParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateInternetParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateInternetParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateInternetParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateInternetParam) SetBandWidth(v int) {
 	p.BandWidth = v
 }
@@ -1307,6 +1482,31 @@ func (p *UpdateInternetParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdateInternetParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdateInternetParam) ToV0() *v0params.UpdateInternetParam {
+	return &v0params.UpdateInternetParam{
+		BandWidth:         p.BandWidth,
+		Selector:          p.Selector,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DeleteInternetParam is input parameters for the sacloud API
@@ -1456,6 +1656,33 @@ func (p *DeleteInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteInternetParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Internet"]
+}
+
+func (p *DeleteInternetParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteInternetParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteInternetParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteInternetParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteInternetParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1565,6 +1792,26 @@ func (p *DeleteInternetParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteInternetParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteInternetParam) ToV0() *v0params.DeleteInternetParam {
+	return &v0params.DeleteInternetParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateBandwidthInternetParam is input parameters for the sacloud API
@@ -1734,6 +1981,33 @@ func (p *UpdateBandwidthInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateBandwidthInternetParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Internet"]
+}
+
+func (p *UpdateBandwidthInternetParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update-bandwidth"]
+}
+
+func (p *UpdateBandwidthInternetParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateBandwidthInternetParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateBandwidthInternetParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateBandwidthInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateBandwidthInternetParam) SetBandWidth(v int) {
 	p.BandWidth = v
 }
@@ -1850,6 +2124,27 @@ func (p *UpdateBandwidthInternetParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdateBandwidthInternetParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdateBandwidthInternetParam) ToV0() *v0params.UpdateBandwidthInternetParam {
+	return &v0params.UpdateBandwidthInternetParam{
+		BandWidth:         p.BandWidth,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // SubnetInfoInternetParam is input parameters for the sacloud API
@@ -1995,6 +2290,33 @@ func (p *SubnetInfoInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SubnetInfoInternetParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Internet"]
+}
+
+func (p *SubnetInfoInternetParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["subnet-info"]
+}
+
+func (p *SubnetInfoInternetParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SubnetInfoInternetParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SubnetInfoInternetParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SubnetInfoInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SubnetInfoInternetParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2097,6 +2419,25 @@ func (p *SubnetInfoInternetParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SubnetInfoInternetParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SubnetInfoInternetParam) ToV0() *v0params.SubnetInfoInternetParam {
+	return &v0params.SubnetInfoInternetParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // SubnetAddInternetParam is input parameters for the sacloud API
@@ -2285,6 +2626,33 @@ func (p *SubnetAddInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SubnetAddInternetParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Internet"]
+}
+
+func (p *SubnetAddInternetParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["subnet-add"]
+}
+
+func (p *SubnetAddInternetParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SubnetAddInternetParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SubnetAddInternetParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SubnetAddInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SubnetAddInternetParam) SetNextHop(v string) {
 	p.NextHop = v
 }
@@ -2410,6 +2778,28 @@ func (p *SubnetAddInternetParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *SubnetAddInternetParam) ToV0() *v0params.SubnetAddInternetParam {
+	return &v0params.SubnetAddInternetParam{
+		NextHop:           p.NextHop,
+		NwMasklen:         p.NwMasklen,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // SubnetDeleteInternetParam is input parameters for the sacloud API
 type SubnetDeleteInternetParam struct {
 	SubnetId          sacloud.ID
@@ -2527,6 +2917,33 @@ func (p *SubnetDeleteInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SubnetDeleteInternetParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Internet"]
+}
+
+func (p *SubnetDeleteInternetParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["subnet-delete"]
+}
+
+func (p *SubnetDeleteInternetParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SubnetDeleteInternetParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SubnetDeleteInternetParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SubnetDeleteInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SubnetDeleteInternetParam) SetSubnetId(v sacloud.ID) {
 	p.SubnetId = v
 }
@@ -2594,6 +3011,20 @@ func (p *SubnetDeleteInternetParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SubnetDeleteInternetParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SubnetDeleteInternetParam) ToV0() *v0params.SubnetDeleteInternetParam {
+	return &v0params.SubnetDeleteInternetParam{
+		SubnetId:          p.SubnetId,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // SubnetUpdateInternetParam is input parameters for the sacloud API
@@ -2774,6 +3205,33 @@ func (p *SubnetUpdateInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SubnetUpdateInternetParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Internet"]
+}
+
+func (p *SubnetUpdateInternetParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["subnet-update"]
+}
+
+func (p *SubnetUpdateInternetParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SubnetUpdateInternetParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SubnetUpdateInternetParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SubnetUpdateInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SubnetUpdateInternetParam) SetNextHop(v string) {
 	p.NextHop = v
 }
@@ -2897,6 +3355,28 @@ func (p *SubnetUpdateInternetParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SubnetUpdateInternetParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SubnetUpdateInternetParam) ToV0() *v0params.SubnetUpdateInternetParam {
+	return &v0params.SubnetUpdateInternetParam{
+		NextHop:           p.NextHop,
+		SubnetId:          p.SubnetId,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // IPv6InfoInternetParam is input parameters for the sacloud API
@@ -3042,6 +3522,33 @@ func (p *IPv6InfoInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *IPv6InfoInternetParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Internet"]
+}
+
+func (p *IPv6InfoInternetParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["ipv6-info"]
+}
+
+func (p *IPv6InfoInternetParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *IPv6InfoInternetParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *IPv6InfoInternetParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *IPv6InfoInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *IPv6InfoInternetParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -3144,6 +3651,25 @@ func (p *IPv6InfoInternetParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *IPv6InfoInternetParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *IPv6InfoInternetParam) ToV0() *v0params.IPv6InfoInternetParam {
+	return &v0params.IPv6InfoInternetParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // IPv6EnableInternetParam is input parameters for the sacloud API
@@ -3293,6 +3819,33 @@ func (p *IPv6EnableInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *IPv6EnableInternetParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Internet"]
+}
+
+func (p *IPv6EnableInternetParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["ipv6-enable"]
+}
+
+func (p *IPv6EnableInternetParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *IPv6EnableInternetParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *IPv6EnableInternetParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *IPv6EnableInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *IPv6EnableInternetParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -3404,6 +3957,26 @@ func (p *IPv6EnableInternetParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *IPv6EnableInternetParam) ToV0() *v0params.IPv6EnableInternetParam {
+	return &v0params.IPv6EnableInternetParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // IPv6DisableInternetParam is input parameters for the sacloud API
 type IPv6DisableInternetParam struct {
 	Selector          []string
@@ -3509,6 +4082,33 @@ func (p *IPv6DisableInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *IPv6DisableInternetParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Internet"]
+}
+
+func (p *IPv6DisableInternetParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["ipv6-disable"]
+}
+
+func (p *IPv6DisableInternetParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *IPv6DisableInternetParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *IPv6DisableInternetParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *IPv6DisableInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *IPv6DisableInternetParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -3569,6 +4169,19 @@ func (p *IPv6DisableInternetParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *IPv6DisableInternetParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *IPv6DisableInternetParam) ToV0() *v0params.IPv6DisableInternetParam {
+	return &v0params.IPv6DisableInternetParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // MonitorInternetParam is input parameters for the sacloud API
@@ -3751,6 +4364,33 @@ func (p *MonitorInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorInternetParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Internet"]
+}
+
+func (p *MonitorInternetParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor"]
+}
+
+func (p *MonitorInternetParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorInternetParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorInternetParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorInternetParam) SetStart(v string) {
 	p.Start = v
 }
@@ -3874,4 +4514,26 @@ func (p *MonitorInternetParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *MonitorInternetParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *MonitorInternetParam) ToV0() *v0params.MonitorInternetParam {
+	return &v0params.MonitorInternetParam{
+		Start:             p.Start,
+		End:               p.End,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

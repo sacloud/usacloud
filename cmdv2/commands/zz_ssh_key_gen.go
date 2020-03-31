@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func sshKeyListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(sshKeyListParam))
-			return nil
+			return funcs.SSHKeyList(ctx, sshKeyListParam.ToV0())
 		},
 	}
 
@@ -95,11 +90,7 @@ func sshKeyCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(sshKeyCreateParam))
-			return nil
+			return funcs.SSHKeyCreate(ctx, sshKeyCreateParam.ToV0())
 		},
 	}
 
@@ -139,11 +130,7 @@ func sshKeyReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(sshKeyReadParam))
-			return nil
+			return funcs.SSHKeyRead(ctx, sshKeyReadParam.ToV0())
 		},
 	}
 
@@ -179,11 +166,7 @@ func sshKeyUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(sshKeyUpdateParam))
-			return nil
+			return funcs.SSHKeyUpdate(ctx, sshKeyUpdateParam.ToV0())
 		},
 	}
 
@@ -222,11 +205,7 @@ func sshKeyDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(sshKeyDeleteParam))
-			return nil
+			return funcs.SSHKeyDelete(ctx, sshKeyDeleteParam.ToV0())
 		},
 	}
 
@@ -263,11 +242,7 @@ func sshKeyGenerateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("generate local parameter: \n%s\n", debugMarshalIndent(sshKeyGenerateParam))
-			return nil
+			return funcs.SSHKeyGenerate(ctx, sshKeyGenerateParam.ToV0())
 		},
 	}
 

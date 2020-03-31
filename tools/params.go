@@ -83,7 +83,7 @@ func (p *Parameter) FlagDefinitionStatement() string {
 	case schema.TypeString:
 		statement = `StringVarP(%s, "%s", "%s", %s, "%s")`
 	case schema.TypeIntList:
-		statement = `IntSliceVarP(%s, "%s", "%s", %s, "%s")`
+		statement = `Int64SliceVarP(%s, "%s", "%s", %s, "%s")`
 	case schema.TypeStringList:
 		statement = `StringSliceVarP(%s, "%s", "%s", %s, "%s")`
 	case schema.TypeId:
@@ -134,13 +134,13 @@ func (p *Parameter) DefaultValueOnSource() string {
 		}
 		return res
 	case schema.TypeIntList:
-		res := `[]int{}`
+		res := `[]int64{}`
 		if v, ok := p.DefaultValue.([]int); ok {
 			strVal := ""
 			for _, v := range v {
 				strVal += fmt.Sprintf("%d,", v)
 			}
-			res = fmt.Sprintf(`[]int{%s}`, strVal)
+			res = fmt.Sprintf(`[]int64{%s}`, strVal)
 		}
 		return res
 	case schema.TypeStringList:
@@ -191,7 +191,7 @@ func (p *Parameter) FieldTypeName() string {
 	case schema.TypeString:
 		return "string"
 	case schema.TypeIntList:
-		return "[]int"
+		return "[]int64"
 	case schema.TypeStringList:
 		return "[]string"
 	case schema.TypeId:
@@ -219,7 +219,7 @@ func (p *Parameter) SetEmptyStatement() string {
 	case schema.TypeString:
 		return `""`
 	case schema.TypeIntList:
-		return "[]int{0}"
+		return "[]int64{0}"
 	case schema.TypeStringList:
 		return `[]string{""}`
 	case schema.TypeId:

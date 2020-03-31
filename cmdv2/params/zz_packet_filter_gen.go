@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -201,6 +202,33 @@ func (p *ListPacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListPacketFilterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PacketFilter"]
+}
+
+func (p *ListPacketFilterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListPacketFilterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListPacketFilterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListPacketFilterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListPacketFilterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListPacketFilterParam) SetName(v []string) {
 	p.Name = v
 }
@@ -324,6 +352,28 @@ func (p *ListPacketFilterParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListPacketFilterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListPacketFilterParam) ToV0() *v0params.ListPacketFilterParam {
+	return &v0params.ListPacketFilterParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreatePacketFilterParam is input parameters for the sacloud API
@@ -488,6 +538,33 @@ func (p *CreatePacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreatePacketFilterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PacketFilter"]
+}
+
+func (p *CreatePacketFilterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreatePacketFilterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreatePacketFilterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreatePacketFilterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreatePacketFilterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreatePacketFilterParam) SetName(v string) {
 	p.Name = v
 }
@@ -597,6 +674,26 @@ func (p *CreatePacketFilterParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CreatePacketFilterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CreatePacketFilterParam) ToV0() *v0params.CreatePacketFilterParam {
+	return &v0params.CreatePacketFilterParam{
+		Name:              p.Name,
+		Description:       p.Description,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // ReadPacketFilterParam is input parameters for the sacloud API
@@ -738,6 +835,33 @@ func (p *ReadPacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadPacketFilterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PacketFilter"]
+}
+
+func (p *ReadPacketFilterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadPacketFilterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadPacketFilterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadPacketFilterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadPacketFilterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadPacketFilterParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -833,6 +957,24 @@ func (p *ReadPacketFilterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadPacketFilterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadPacketFilterParam) ToV0() *v0params.ReadPacketFilterParam {
+	return &v0params.ReadPacketFilterParam{
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdatePacketFilterParam is input parameters for the sacloud API
@@ -1002,6 +1144,33 @@ func (p *UpdatePacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdatePacketFilterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PacketFilter"]
+}
+
+func (p *UpdatePacketFilterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdatePacketFilterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdatePacketFilterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdatePacketFilterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdatePacketFilterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdatePacketFilterParam) SetName(v string) {
 	p.Name = v
 }
@@ -1118,6 +1287,27 @@ func (p *UpdatePacketFilterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdatePacketFilterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdatePacketFilterParam) ToV0() *v0params.UpdatePacketFilterParam {
+	return &v0params.UpdatePacketFilterParam{
+		Name:              p.Name,
+		Description:       p.Description,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DeletePacketFilterParam is input parameters for the sacloud API
@@ -1263,6 +1453,33 @@ func (p *DeletePacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeletePacketFilterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PacketFilter"]
+}
+
+func (p *DeletePacketFilterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeletePacketFilterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeletePacketFilterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeletePacketFilterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeletePacketFilterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeletePacketFilterParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1365,6 +1582,25 @@ func (p *DeletePacketFilterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeletePacketFilterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeletePacketFilterParam) ToV0() *v0params.DeletePacketFilterParam {
+	return &v0params.DeletePacketFilterParam{
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // RuleInfoPacketFilterParam is input parameters for the sacloud API
@@ -1506,6 +1742,33 @@ func (p *RuleInfoPacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *RuleInfoPacketFilterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PacketFilter"]
+}
+
+func (p *RuleInfoPacketFilterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["rule-info"]
+}
+
+func (p *RuleInfoPacketFilterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *RuleInfoPacketFilterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *RuleInfoPacketFilterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *RuleInfoPacketFilterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *RuleInfoPacketFilterParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -1601,6 +1864,24 @@ func (p *RuleInfoPacketFilterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *RuleInfoPacketFilterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *RuleInfoPacketFilterParam) ToV0() *v0params.RuleInfoPacketFilterParam {
+	return &v0params.RuleInfoPacketFilterParam{
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // RuleAddPacketFilterParam is input parameters for the sacloud API
@@ -1823,6 +2104,33 @@ func (p *RuleAddPacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *RuleAddPacketFilterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PacketFilter"]
+}
+
+func (p *RuleAddPacketFilterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["rule-add"]
+}
+
+func (p *RuleAddPacketFilterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *RuleAddPacketFilterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *RuleAddPacketFilterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *RuleAddPacketFilterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *RuleAddPacketFilterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -1974,6 +2282,32 @@ func (p *RuleAddPacketFilterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *RuleAddPacketFilterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *RuleAddPacketFilterParam) ToV0() *v0params.RuleAddPacketFilterParam {
+	return &v0params.RuleAddPacketFilterParam{
+		Index:             p.Index,
+		Protocol:          p.Protocol,
+		SourceNetwork:     p.SourceNetwork,
+		SourcePort:        p.SourcePort,
+		DestinationPort:   p.DestinationPort,
+		Action:            p.Action,
+		Description:       p.Description,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // RuleUpdatePacketFilterParam is input parameters for the sacloud API
@@ -2203,6 +2537,33 @@ func (p *RuleUpdatePacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *RuleUpdatePacketFilterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PacketFilter"]
+}
+
+func (p *RuleUpdatePacketFilterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["rule-update"]
+}
+
+func (p *RuleUpdatePacketFilterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *RuleUpdatePacketFilterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *RuleUpdatePacketFilterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *RuleUpdatePacketFilterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *RuleUpdatePacketFilterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -2354,6 +2715,32 @@ func (p *RuleUpdatePacketFilterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *RuleUpdatePacketFilterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *RuleUpdatePacketFilterParam) ToV0() *v0params.RuleUpdatePacketFilterParam {
+	return &v0params.RuleUpdatePacketFilterParam{
+		Index:             p.Index,
+		Protocol:          p.Protocol,
+		SourceNetwork:     p.SourceNetwork,
+		SourcePort:        p.SourcePort,
+		DestinationPort:   p.DestinationPort,
+		Action:            p.Action,
+		Description:       p.Description,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // RuleDeletePacketFilterParam is input parameters for the sacloud API
@@ -2511,6 +2898,33 @@ func (p *RuleDeletePacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *RuleDeletePacketFilterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PacketFilter"]
+}
+
+func (p *RuleDeletePacketFilterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["rule-delete"]
+}
+
+func (p *RuleDeletePacketFilterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *RuleDeletePacketFilterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *RuleDeletePacketFilterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *RuleDeletePacketFilterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *RuleDeletePacketFilterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -2620,6 +3034,26 @@ func (p *RuleDeletePacketFilterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *RuleDeletePacketFilterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *RuleDeletePacketFilterParam) ToV0() *v0params.RuleDeletePacketFilterParam {
+	return &v0params.RuleDeletePacketFilterParam{
+		Index:             p.Index,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // InterfaceConnectPacketFilterParam is input parameters for the sacloud API
@@ -2742,6 +3176,33 @@ func (p *InterfaceConnectPacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *InterfaceConnectPacketFilterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PacketFilter"]
+}
+
+func (p *InterfaceConnectPacketFilterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["interface-connect"]
+}
+
+func (p *InterfaceConnectPacketFilterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *InterfaceConnectPacketFilterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *InterfaceConnectPacketFilterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *InterfaceConnectPacketFilterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *InterfaceConnectPacketFilterParam) SetInterfaceId(v sacloud.ID) {
 	p.InterfaceId = v
 }
@@ -2802,6 +3263,19 @@ func (p *InterfaceConnectPacketFilterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *InterfaceConnectPacketFilterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *InterfaceConnectPacketFilterParam) ToV0() *v0params.InterfaceConnectPacketFilterParam {
+	return &v0params.InterfaceConnectPacketFilterParam{
+		InterfaceId:       p.InterfaceId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // InterfaceDisconnectPacketFilterParam is input parameters for the sacloud API
@@ -2924,6 +3398,33 @@ func (p *InterfaceDisconnectPacketFilterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *InterfaceDisconnectPacketFilterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["PacketFilter"]
+}
+
+func (p *InterfaceDisconnectPacketFilterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["interface-disconnect"]
+}
+
+func (p *InterfaceDisconnectPacketFilterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *InterfaceDisconnectPacketFilterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *InterfaceDisconnectPacketFilterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *InterfaceDisconnectPacketFilterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *InterfaceDisconnectPacketFilterParam) SetInterfaceId(v sacloud.ID) {
 	p.InterfaceId = v
 }
@@ -2984,4 +3485,17 @@ func (p *InterfaceDisconnectPacketFilterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *InterfaceDisconnectPacketFilterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *InterfaceDisconnectPacketFilterParam) ToV0() *v0params.InterfaceDisconnectPacketFilterParam {
+	return &v0params.InterfaceDisconnectPacketFilterParam{
+		InterfaceId:       p.InterfaceId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }

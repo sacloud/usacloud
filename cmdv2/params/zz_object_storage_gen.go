@@ -19,6 +19,7 @@ package params
 import (
 	"io"
 
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -180,6 +181,33 @@ func (p *ListObjectStorageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListObjectStorageParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ObjectStorage"]
+}
+
+func (p *ListObjectStorageParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListObjectStorageParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListObjectStorageParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListObjectStorageParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListObjectStorageParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListObjectStorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
@@ -289,6 +317,26 @@ func (p *ListObjectStorageParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListObjectStorageParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListObjectStorageParam) ToV0() *v0params.ListObjectStorageParam {
+	return &v0params.ListObjectStorageParam{
+		AccessKey:         p.AccessKey,
+		SecretKey:         p.SecretKey,
+		Bucket:            p.Bucket,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // PutObjectStorageParam is input parameters for the sacloud API
@@ -417,6 +465,33 @@ func (p *PutObjectStorageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *PutObjectStorageParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ObjectStorage"]
+}
+
+func (p *PutObjectStorageParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["put"]
+}
+
+func (p *PutObjectStorageParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *PutObjectStorageParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *PutObjectStorageParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *PutObjectStorageParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *PutObjectStorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
@@ -498,6 +573,22 @@ func (p *PutObjectStorageParam) GetGenerateSkeleton() bool {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *PutObjectStorageParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *PutObjectStorageParam) ToV0() *v0params.PutObjectStorageParam {
+	return &v0params.PutObjectStorageParam{
+		AccessKey:         p.AccessKey,
+		ContentType:       p.ContentType,
+		Recursive:         p.Recursive,
+		SecretKey:         p.SecretKey,
+		Bucket:            p.Bucket,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+	}
 }
 
 // GetObjectStorageParam is input parameters for the sacloud API
@@ -617,6 +708,33 @@ func (p *GetObjectStorageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *GetObjectStorageParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ObjectStorage"]
+}
+
+func (p *GetObjectStorageParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["get"]
+}
+
+func (p *GetObjectStorageParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *GetObjectStorageParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *GetObjectStorageParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *GetObjectStorageParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *GetObjectStorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
@@ -684,6 +802,20 @@ func (p *GetObjectStorageParam) GetGenerateSkeleton() bool {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *GetObjectStorageParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *GetObjectStorageParam) ToV0() *v0params.GetObjectStorageParam {
+	return &v0params.GetObjectStorageParam{
+		AccessKey:         p.AccessKey,
+		Recursive:         p.Recursive,
+		SecretKey:         p.SecretKey,
+		Bucket:            p.Bucket,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+	}
 }
 
 // DeleteObjectStorageParam is input parameters for the sacloud API
@@ -807,6 +939,33 @@ func (p *DeleteObjectStorageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteObjectStorageParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ObjectStorage"]
+}
+
+func (p *DeleteObjectStorageParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteObjectStorageParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteObjectStorageParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteObjectStorageParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteObjectStorageParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteObjectStorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
@@ -881,4 +1040,19 @@ func (p *DeleteObjectStorageParam) GetGenerateSkeleton() bool {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteObjectStorageParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteObjectStorageParam) ToV0() *v0params.DeleteObjectStorageParam {
+	return &v0params.DeleteObjectStorageParam{
+		AccessKey:         p.AccessKey,
+		Recursive:         p.Recursive,
+		SecretKey:         p.SecretKey,
+		Bucket:            p.Bucket,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+	}
 }

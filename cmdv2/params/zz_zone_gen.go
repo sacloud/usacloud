@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -201,6 +202,33 @@ func (p *ListZoneParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListZoneParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Zone"]
+}
+
+func (p *ListZoneParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListZoneParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListZoneParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListZoneParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListZoneParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListZoneParam) SetName(v []string) {
 	p.Name = v
 }
@@ -324,6 +352,28 @@ func (p *ListZoneParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListZoneParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListZoneParam) ToV0() *v0params.ListZoneParam {
+	return &v0params.ListZoneParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // ReadZoneParam is input parameters for the sacloud API
@@ -476,6 +526,33 @@ func (p *ReadZoneParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadZoneParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Zone"]
+}
+
+func (p *ReadZoneParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadZoneParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadZoneParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadZoneParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadZoneParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadZoneParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -578,4 +655,23 @@ func (p *ReadZoneParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadZoneParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadZoneParam) ToV0() *v0params.ReadZoneParam {
+	return &v0params.ReadZoneParam{
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

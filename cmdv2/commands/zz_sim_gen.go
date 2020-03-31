@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func simListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(simListParam))
-			return nil
+			return funcs.SIMList(ctx, simListParam.ToV0())
 		},
 	}
 
@@ -96,11 +91,7 @@ func simCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(simCreateParam))
-			return nil
+			return funcs.SIMCreate(ctx, simCreateParam.ToV0())
 		},
 	}
 
@@ -145,11 +136,7 @@ func simReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(simReadParam))
-			return nil
+			return funcs.SIMRead(ctx, simReadParam.ToV0())
 		},
 	}
 
@@ -186,11 +173,7 @@ func simUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(simUpdateParam))
-			return nil
+			return funcs.SIMUpdate(ctx, simUpdateParam.ToV0())
 		},
 	}
 
@@ -232,11 +215,7 @@ func simDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(simDeleteParam))
-			return nil
+			return funcs.SIMDelete(ctx, simDeleteParam.ToV0())
 		},
 	}
 
@@ -268,11 +247,7 @@ func simCarrierInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("carrier-info local parameter: \n%s\n", debugMarshalIndent(simCarrierInfoParam))
-			return nil
+			return funcs.SIMCarrierInfo(ctx, simCarrierInfoParam.ToV0())
 		},
 	}
 
@@ -309,11 +284,7 @@ func simCarrierUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("carrier-update local parameter: \n%s\n", debugMarshalIndent(simCarrierUpdateParam))
-			return nil
+			return funcs.SIMCarrierUpdate(ctx, simCarrierUpdateParam.ToV0())
 		},
 	}
 
@@ -345,11 +316,7 @@ func simActivateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("activate local parameter: \n%s\n", debugMarshalIndent(simActivateParam))
-			return nil
+			return funcs.SIMActivate(ctx, simActivateParam.ToV0())
 		},
 	}
 
@@ -380,11 +347,7 @@ func simDeactivateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("deactivate local parameter: \n%s\n", debugMarshalIndent(simDeactivateParam))
-			return nil
+			return funcs.SIMDeactivate(ctx, simDeactivateParam.ToV0())
 		},
 	}
 
@@ -415,11 +378,7 @@ func simImeiLockCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("imei-lock local parameter: \n%s\n", debugMarshalIndent(simImeiLockParam))
-			return nil
+			return funcs.SIMImeiLock(ctx, simImeiLockParam.ToV0())
 		},
 	}
 
@@ -451,11 +410,7 @@ func simIpAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ip-add local parameter: \n%s\n", debugMarshalIndent(simIpAddParam))
-			return nil
+			return funcs.SIMIpAdd(ctx, simIpAddParam.ToV0())
 		},
 	}
 
@@ -487,11 +442,7 @@ func simImeiUnlockCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("imei-unlock local parameter: \n%s\n", debugMarshalIndent(simImeiUnlockParam))
-			return nil
+			return funcs.SIMImeiUnlock(ctx, simImeiUnlockParam.ToV0())
 		},
 	}
 
@@ -522,11 +473,7 @@ func simIpDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ip-delete local parameter: \n%s\n", debugMarshalIndent(simIpDeleteParam))
-			return nil
+			return funcs.SIMIpDelete(ctx, simIpDeleteParam.ToV0())
 		},
 	}
 
@@ -557,11 +504,7 @@ func simLogsCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("logs local parameter: \n%s\n", debugMarshalIndent(simLogsParam))
-			return nil
+			return funcs.SIMLogs(ctx, simLogsParam.ToV0())
 		},
 	}
 
@@ -600,11 +543,7 @@ func simMonitorCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(simMonitorParam))
-			return nil
+			return funcs.SIMMonitor(ctx, simMonitorParam.ToV0())
 		},
 	}
 

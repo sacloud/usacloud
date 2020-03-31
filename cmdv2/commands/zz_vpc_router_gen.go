@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func vpcRouterListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(vpcRouterListParam))
-			return nil
+			return funcs.VPCRouterList(ctx, vpcRouterListParam.ToV0())
 		},
 	}
 
@@ -96,11 +91,7 @@ func vpcRouterCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(vpcRouterCreateParam))
-			return nil
+			return funcs.VPCRouterCreate(ctx, vpcRouterCreateParam.ToV0())
 		},
 	}
 
@@ -148,11 +139,7 @@ func vpcRouterReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(vpcRouterReadParam))
-			return nil
+			return funcs.VPCRouterRead(ctx, vpcRouterReadParam.ToV0())
 		},
 	}
 
@@ -189,11 +176,7 @@ func vpcRouterUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(vpcRouterUpdateParam))
-			return nil
+			return funcs.VPCRouterUpdate(ctx, vpcRouterUpdateParam.ToV0())
 		},
 	}
 
@@ -237,11 +220,7 @@ func vpcRouterDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(vpcRouterDeleteParam))
-			return nil
+			return funcs.VPCRouterDelete(ctx, vpcRouterDeleteParam.ToV0())
 		},
 	}
 
@@ -280,11 +259,7 @@ func vpcRouterBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(vpcRouterBootParam))
-			return nil
+			return funcs.VPCRouterBoot(ctx, vpcRouterBootParam.ToV0())
 		},
 	}
 
@@ -315,11 +290,7 @@ func vpcRouterShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(vpcRouterShutdownParam))
-			return nil
+			return funcs.VPCRouterShutdown(ctx, vpcRouterShutdownParam.ToV0())
 		},
 	}
 
@@ -350,11 +321,7 @@ func vpcRouterShutdownForceCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(vpcRouterShutdownForceParam))
-			return nil
+			return funcs.VPCRouterShutdownForce(ctx, vpcRouterShutdownForceParam.ToV0())
 		},
 	}
 
@@ -385,11 +352,7 @@ func vpcRouterResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(vpcRouterResetParam))
-			return nil
+			return funcs.VPCRouterReset(ctx, vpcRouterResetParam.ToV0())
 		},
 	}
 
@@ -420,11 +383,7 @@ func vpcRouterWaitForBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(vpcRouterWaitForBootParam))
-			return nil
+			return funcs.VPCRouterWaitForBoot(ctx, vpcRouterWaitForBootParam.ToV0())
 		},
 	}
 
@@ -454,11 +413,7 @@ func vpcRouterWaitForDownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(vpcRouterWaitForDownParam))
-			return nil
+			return funcs.VPCRouterWaitForDown(ctx, vpcRouterWaitForDownParam.ToV0())
 		},
 	}
 
@@ -488,11 +443,7 @@ func vpcRouterEnableInternetConnectionCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("enable-internet-connection local parameter: \n%s\n", debugMarshalIndent(vpcRouterEnableInternetConnectionParam))
-			return nil
+			return funcs.VPCRouterEnableInternetConnection(ctx, vpcRouterEnableInternetConnectionParam.ToV0())
 		},
 	}
 
@@ -523,11 +474,7 @@ func vpcRouterDisableInternetConnectionCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("disable-internet-connection local parameter: \n%s\n", debugMarshalIndent(vpcRouterDisableInternetConnectionParam))
-			return nil
+			return funcs.VPCRouterDisableInternetConnection(ctx, vpcRouterDisableInternetConnectionParam.ToV0())
 		},
 	}
 
@@ -558,11 +505,7 @@ func vpcRouterInterfaceInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("interface-info local parameter: \n%s\n", debugMarshalIndent(vpcRouterInterfaceInfoParam))
-			return nil
+			return funcs.VPCRouterInterfaceInfo(ctx, vpcRouterInterfaceInfoParam.ToV0())
 		},
 	}
 
@@ -599,11 +542,7 @@ func vpcRouterInterfaceConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("interface-connect local parameter: \n%s\n", debugMarshalIndent(vpcRouterInterfaceConnectParam))
-			return nil
+			return funcs.VPCRouterInterfaceConnect(ctx, vpcRouterInterfaceConnectParam.ToV0())
 		},
 	}
 
@@ -641,11 +580,7 @@ func vpcRouterInterfaceUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("interface-update local parameter: \n%s\n", debugMarshalIndent(vpcRouterInterfaceUpdateParam))
-			return nil
+			return funcs.VPCRouterInterfaceUpdate(ctx, vpcRouterInterfaceUpdateParam.ToV0())
 		},
 	}
 
@@ -684,11 +619,7 @@ func vpcRouterInterfaceDisconnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("interface-disconnect local parameter: \n%s\n", debugMarshalIndent(vpcRouterInterfaceDisconnectParam))
-			return nil
+			return funcs.VPCRouterInterfaceDisconnect(ctx, vpcRouterInterfaceDisconnectParam.ToV0())
 		},
 	}
 
@@ -721,11 +652,7 @@ func vpcRouterStaticNatInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("static-nat-info local parameter: \n%s\n", debugMarshalIndent(vpcRouterStaticNatInfoParam))
-			return nil
+			return funcs.VPCRouterStaticNatInfo(ctx, vpcRouterStaticNatInfoParam.ToV0())
 		},
 	}
 
@@ -762,11 +689,7 @@ func vpcRouterStaticNatAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("static-nat-add local parameter: \n%s\n", debugMarshalIndent(vpcRouterStaticNatAddParam))
-			return nil
+			return funcs.VPCRouterStaticNatAdd(ctx, vpcRouterStaticNatAddParam.ToV0())
 		},
 	}
 
@@ -800,11 +723,7 @@ func vpcRouterStaticNatUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("static-nat-update local parameter: \n%s\n", debugMarshalIndent(vpcRouterStaticNatUpdateParam))
-			return nil
+			return funcs.VPCRouterStaticNatUpdate(ctx, vpcRouterStaticNatUpdateParam.ToV0())
 		},
 	}
 
@@ -839,11 +758,7 @@ func vpcRouterStaticNatDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("static-nat-delete local parameter: \n%s\n", debugMarshalIndent(vpcRouterStaticNatDeleteParam))
-			return nil
+			return funcs.VPCRouterStaticNatDelete(ctx, vpcRouterStaticNatDeleteParam.ToV0())
 		},
 	}
 
@@ -875,11 +790,7 @@ func vpcRouterPortForwardingInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("port-forwarding-info local parameter: \n%s\n", debugMarshalIndent(vpcRouterPortForwardingInfoParam))
-			return nil
+			return funcs.VPCRouterPortForwardingInfo(ctx, vpcRouterPortForwardingInfoParam.ToV0())
 		},
 	}
 
@@ -916,11 +827,7 @@ func vpcRouterPortForwardingAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("port-forwarding-add local parameter: \n%s\n", debugMarshalIndent(vpcRouterPortForwardingAddParam))
-			return nil
+			return funcs.VPCRouterPortForwardingAdd(ctx, vpcRouterPortForwardingAddParam.ToV0())
 		},
 	}
 
@@ -956,11 +863,7 @@ func vpcRouterPortForwardingUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("port-forwarding-update local parameter: \n%s\n", debugMarshalIndent(vpcRouterPortForwardingUpdateParam))
-			return nil
+			return funcs.VPCRouterPortForwardingUpdate(ctx, vpcRouterPortForwardingUpdateParam.ToV0())
 		},
 	}
 
@@ -997,11 +900,7 @@ func vpcRouterPortForwardingDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("port-forwarding-delete local parameter: \n%s\n", debugMarshalIndent(vpcRouterPortForwardingDeleteParam))
-			return nil
+			return funcs.VPCRouterPortForwardingDelete(ctx, vpcRouterPortForwardingDeleteParam.ToV0())
 		},
 	}
 
@@ -1033,11 +932,7 @@ func vpcRouterFirewallInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("firewall-info local parameter: \n%s\n", debugMarshalIndent(vpcRouterFirewallInfoParam))
-			return nil
+			return funcs.VPCRouterFirewallInfo(ctx, vpcRouterFirewallInfoParam.ToV0())
 		},
 	}
 
@@ -1076,11 +971,7 @@ func vpcRouterFirewallAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("firewall-add local parameter: \n%s\n", debugMarshalIndent(vpcRouterFirewallAddParam))
-			return nil
+			return funcs.VPCRouterFirewallAdd(ctx, vpcRouterFirewallAddParam.ToV0())
 		},
 	}
 
@@ -1121,11 +1012,7 @@ func vpcRouterFirewallUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("firewall-update local parameter: \n%s\n", debugMarshalIndent(vpcRouterFirewallUpdateParam))
-			return nil
+			return funcs.VPCRouterFirewallUpdate(ctx, vpcRouterFirewallUpdateParam.ToV0())
 		},
 	}
 
@@ -1167,11 +1054,7 @@ func vpcRouterFirewallDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("firewall-delete local parameter: \n%s\n", debugMarshalIndent(vpcRouterFirewallDeleteParam))
-			return nil
+			return funcs.VPCRouterFirewallDelete(ctx, vpcRouterFirewallDeleteParam.ToV0())
 		},
 	}
 
@@ -1205,11 +1088,7 @@ func vpcRouterDhcpServerInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("dhcp-server-info local parameter: \n%s\n", debugMarshalIndent(vpcRouterDhcpServerInfoParam))
-			return nil
+			return funcs.VPCRouterDhcpServerInfo(ctx, vpcRouterDhcpServerInfoParam.ToV0())
 		},
 	}
 
@@ -1246,11 +1125,7 @@ func vpcRouterDhcpServerAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("dhcp-server-add local parameter: \n%s\n", debugMarshalIndent(vpcRouterDhcpServerAddParam))
-			return nil
+			return funcs.VPCRouterDhcpServerAdd(ctx, vpcRouterDhcpServerAddParam.ToV0())
 		},
 	}
 
@@ -1285,11 +1160,7 @@ func vpcRouterDhcpServerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("dhcp-server-update local parameter: \n%s\n", debugMarshalIndent(vpcRouterDhcpServerUpdateParam))
-			return nil
+			return funcs.VPCRouterDhcpServerUpdate(ctx, vpcRouterDhcpServerUpdateParam.ToV0())
 		},
 	}
 
@@ -1324,11 +1195,7 @@ func vpcRouterDhcpServerDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("dhcp-server-delete local parameter: \n%s\n", debugMarshalIndent(vpcRouterDhcpServerDeleteParam))
-			return nil
+			return funcs.VPCRouterDhcpServerDelete(ctx, vpcRouterDhcpServerDeleteParam.ToV0())
 		},
 	}
 
@@ -1360,11 +1227,7 @@ func vpcRouterDhcpStaticMappingInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("dhcp-static-mapping-info local parameter: \n%s\n", debugMarshalIndent(vpcRouterDhcpStaticMappingInfoParam))
-			return nil
+			return funcs.VPCRouterDhcpStaticMappingInfo(ctx, vpcRouterDhcpStaticMappingInfoParam.ToV0())
 		},
 	}
 
@@ -1401,11 +1264,7 @@ func vpcRouterDhcpStaticMappingAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("dhcp-static-mapping-add local parameter: \n%s\n", debugMarshalIndent(vpcRouterDhcpStaticMappingAddParam))
-			return nil
+			return funcs.VPCRouterDhcpStaticMappingAdd(ctx, vpcRouterDhcpStaticMappingAddParam.ToV0())
 		},
 	}
 
@@ -1438,11 +1297,7 @@ func vpcRouterDhcpStaticMappingUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("dhcp-static-mapping-update local parameter: \n%s\n", debugMarshalIndent(vpcRouterDhcpStaticMappingUpdateParam))
-			return nil
+			return funcs.VPCRouterDhcpStaticMappingUpdate(ctx, vpcRouterDhcpStaticMappingUpdateParam.ToV0())
 		},
 	}
 
@@ -1476,11 +1331,7 @@ func vpcRouterDhcpStaticMappingDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("dhcp-static-mapping-delete local parameter: \n%s\n", debugMarshalIndent(vpcRouterDhcpStaticMappingDeleteParam))
-			return nil
+			return funcs.VPCRouterDhcpStaticMappingDelete(ctx, vpcRouterDhcpStaticMappingDeleteParam.ToV0())
 		},
 	}
 
@@ -1512,11 +1363,7 @@ func vpcRouterPptpServerInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("pptp-server-info local parameter: \n%s\n", debugMarshalIndent(vpcRouterPptpServerInfoParam))
-			return nil
+			return funcs.VPCRouterPptpServerInfo(ctx, vpcRouterPptpServerInfoParam.ToV0())
 		},
 	}
 
@@ -1553,11 +1400,7 @@ func vpcRouterPptpServerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("pptp-server-update local parameter: \n%s\n", debugMarshalIndent(vpcRouterPptpServerUpdateParam))
-			return nil
+			return funcs.VPCRouterPptpServerUpdate(ctx, vpcRouterPptpServerUpdateParam.ToV0())
 		},
 	}
 
@@ -1591,11 +1434,7 @@ func vpcRouterL2TPServerInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("l2tp-server-info local parameter: \n%s\n", debugMarshalIndent(vpcRouterL2TPServerInfoParam))
-			return nil
+			return funcs.VPCRouterL2TPServerInfo(ctx, vpcRouterL2TPServerInfoParam.ToV0())
 		},
 	}
 
@@ -1632,11 +1471,7 @@ func vpcRouterL2TPServerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("l2tp-server-update local parameter: \n%s\n", debugMarshalIndent(vpcRouterL2TPServerUpdateParam))
-			return nil
+			return funcs.VPCRouterL2TPServerUpdate(ctx, vpcRouterL2TPServerUpdateParam.ToV0())
 		},
 	}
 
@@ -1671,11 +1506,7 @@ func vpcRouterUserInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("user-info local parameter: \n%s\n", debugMarshalIndent(vpcRouterUserInfoParam))
-			return nil
+			return funcs.VPCRouterUserInfo(ctx, vpcRouterUserInfoParam.ToV0())
 		},
 	}
 
@@ -1712,11 +1543,7 @@ func vpcRouterUserAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("user-add local parameter: \n%s\n", debugMarshalIndent(vpcRouterUserAddParam))
-			return nil
+			return funcs.VPCRouterUserAdd(ctx, vpcRouterUserAddParam.ToV0())
 		},
 	}
 
@@ -1749,11 +1576,7 @@ func vpcRouterUserUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("user-update local parameter: \n%s\n", debugMarshalIndent(vpcRouterUserUpdateParam))
-			return nil
+			return funcs.VPCRouterUserUpdate(ctx, vpcRouterUserUpdateParam.ToV0())
 		},
 	}
 
@@ -1787,11 +1610,7 @@ func vpcRouterUserDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("user-delete local parameter: \n%s\n", debugMarshalIndent(vpcRouterUserDeleteParam))
-			return nil
+			return funcs.VPCRouterUserDelete(ctx, vpcRouterUserDeleteParam.ToV0())
 		},
 	}
 
@@ -1823,11 +1642,7 @@ func vpcRouterSiteToSiteVPNInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("site-to-site-vpn-info local parameter: \n%s\n", debugMarshalIndent(vpcRouterSiteToSiteVPNInfoParam))
-			return nil
+			return funcs.VPCRouterSiteToSiteVPNInfo(ctx, vpcRouterSiteToSiteVPNInfoParam.ToV0())
 		},
 	}
 
@@ -1864,11 +1679,7 @@ func vpcRouterSiteToSiteVPNAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("site-to-site-vpn-add local parameter: \n%s\n", debugMarshalIndent(vpcRouterSiteToSiteVPNAddParam))
-			return nil
+			return funcs.VPCRouterSiteToSiteVPNAdd(ctx, vpcRouterSiteToSiteVPNAddParam.ToV0())
 		},
 	}
 
@@ -1904,11 +1715,7 @@ func vpcRouterSiteToSiteVPNUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("site-to-site-vpn-update local parameter: \n%s\n", debugMarshalIndent(vpcRouterSiteToSiteVPNUpdateParam))
-			return nil
+			return funcs.VPCRouterSiteToSiteVPNUpdate(ctx, vpcRouterSiteToSiteVPNUpdateParam.ToV0())
 		},
 	}
 
@@ -1945,11 +1752,7 @@ func vpcRouterSiteToSiteVPNDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("site-to-site-vpn-delete local parameter: \n%s\n", debugMarshalIndent(vpcRouterSiteToSiteVPNDeleteParam))
-			return nil
+			return funcs.VPCRouterSiteToSiteVPNDelete(ctx, vpcRouterSiteToSiteVPNDeleteParam.ToV0())
 		},
 	}
 
@@ -1981,11 +1784,7 @@ func vpcRouterSiteToSiteVPNPeersCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("site-to-site-vpn-peers local parameter: \n%s\n", debugMarshalIndent(vpcRouterSiteToSiteVPNPeersParam))
-			return nil
+			return funcs.VPCRouterSiteToSiteVPNPeers(ctx, vpcRouterSiteToSiteVPNPeersParam.ToV0())
 		},
 	}
 
@@ -2022,11 +1821,7 @@ func vpcRouterStaticRouteInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("static-route-info local parameter: \n%s\n", debugMarshalIndent(vpcRouterStaticRouteInfoParam))
-			return nil
+			return funcs.VPCRouterStaticRouteInfo(ctx, vpcRouterStaticRouteInfoParam.ToV0())
 		},
 	}
 
@@ -2063,11 +1858,7 @@ func vpcRouterStaticRouteAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("static-route-add local parameter: \n%s\n", debugMarshalIndent(vpcRouterStaticRouteAddParam))
-			return nil
+			return funcs.VPCRouterStaticRouteAdd(ctx, vpcRouterStaticRouteAddParam.ToV0())
 		},
 	}
 
@@ -2100,11 +1891,7 @@ func vpcRouterStaticRouteUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("static-route-update local parameter: \n%s\n", debugMarshalIndent(vpcRouterStaticRouteUpdateParam))
-			return nil
+			return funcs.VPCRouterStaticRouteUpdate(ctx, vpcRouterStaticRouteUpdateParam.ToV0())
 		},
 	}
 
@@ -2138,11 +1925,7 @@ func vpcRouterStaticRouteDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("static-route-delete local parameter: \n%s\n", debugMarshalIndent(vpcRouterStaticRouteDeleteParam))
-			return nil
+			return funcs.VPCRouterStaticRouteDelete(ctx, vpcRouterStaticRouteDeleteParam.ToV0())
 		},
 	}
 
@@ -2174,11 +1957,7 @@ func vpcRouterMonitorCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(vpcRouterMonitorParam))
-			return nil
+			return funcs.VPCRouterMonitor(ctx, vpcRouterMonitorParam.ToV0())
 		},
 	}
 
@@ -2219,11 +1998,7 @@ func vpcRouterLogsCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("logs local parameter: \n%s\n", debugMarshalIndent(vpcRouterLogsParam))
-			return nil
+			return funcs.VPCRouterLogs(ctx, vpcRouterLogsParam.ToV0())
 		},
 	}
 

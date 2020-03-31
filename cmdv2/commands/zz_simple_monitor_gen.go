@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func simpleMonitorListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(simpleMonitorListParam))
-			return nil
+			return funcs.SimpleMonitorList(ctx, simpleMonitorListParam.ToV0())
 		},
 	}
 
@@ -97,11 +92,7 @@ func simpleMonitorCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(simpleMonitorCreateParam))
-			return nil
+			return funcs.SimpleMonitorCreate(ctx, simpleMonitorCreateParam.ToV0())
 		},
 	}
 
@@ -158,11 +149,7 @@ func simpleMonitorReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(simpleMonitorReadParam))
-			return nil
+			return funcs.SimpleMonitorRead(ctx, simpleMonitorReadParam.ToV0())
 		},
 	}
 
@@ -199,11 +186,7 @@ func simpleMonitorUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(simpleMonitorUpdateParam))
-			return nil
+			return funcs.SimpleMonitorUpdate(ctx, simpleMonitorUpdateParam.ToV0())
 		},
 	}
 
@@ -261,11 +244,7 @@ func simpleMonitorDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(simpleMonitorDeleteParam))
-			return nil
+			return funcs.SimpleMonitorDelete(ctx, simpleMonitorDeleteParam.ToV0())
 		},
 	}
 
@@ -303,11 +282,7 @@ func simpleMonitorHealthCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("health local parameter: \n%s\n", debugMarshalIndent(simpleMonitorHealthParam))
-			return nil
+			return funcs.SimpleMonitorHealth(ctx, simpleMonitorHealthParam.ToV0())
 		},
 	}
 

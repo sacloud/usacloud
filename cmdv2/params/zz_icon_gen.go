@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -225,6 +226,33 @@ func (p *ListIconParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListIconParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Icon"]
+}
+
+func (p *ListIconParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListIconParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListIconParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListIconParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListIconParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListIconParam) SetName(v []string) {
 	p.Name = v
 }
@@ -362,6 +390,30 @@ func (p *ListIconParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListIconParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListIconParam) ToV0() *v0params.ListIconParam {
+	return &v0params.ListIconParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Scope:             p.Scope,
+		Tags:              p.Tags,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateIconParam is input parameters for the sacloud API
@@ -545,6 +597,33 @@ func (p *CreateIconParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateIconParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Icon"]
+}
+
+func (p *CreateIconParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateIconParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateIconParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateIconParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateIconParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateIconParam) SetImage(v string) {
 	p.Image = v
 }
@@ -661,6 +740,27 @@ func (p *CreateIconParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CreateIconParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CreateIconParam) ToV0() *v0params.CreateIconParam {
+	return &v0params.CreateIconParam{
+		Image:             p.Image,
+		Name:              p.Name,
+		Tags:              p.Tags,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // ReadIconParam is input parameters for the sacloud API
@@ -806,6 +906,33 @@ func (p *ReadIconParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadIconParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Icon"]
+}
+
+func (p *ReadIconParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadIconParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadIconParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadIconParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadIconParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadIconParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -908,6 +1035,25 @@ func (p *ReadIconParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadIconParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadIconParam) ToV0() *v0params.ReadIconParam {
+	return &v0params.ReadIconParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateIconParam is input parameters for the sacloud API
@@ -1081,6 +1227,33 @@ func (p *UpdateIconParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateIconParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Icon"]
+}
+
+func (p *UpdateIconParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateIconParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateIconParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateIconParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateIconParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateIconParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1204,6 +1377,28 @@ func (p *UpdateIconParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdateIconParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdateIconParam) ToV0() *v0params.UpdateIconParam {
+	return &v0params.UpdateIconParam{
+		Selector:          p.Selector,
+		Name:              p.Name,
+		Tags:              p.Tags,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DeleteIconParam is input parameters for the sacloud API
@@ -1353,6 +1548,33 @@ func (p *DeleteIconParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteIconParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Icon"]
+}
+
+func (p *DeleteIconParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteIconParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteIconParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteIconParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteIconParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteIconParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1462,4 +1684,24 @@ func (p *DeleteIconParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteIconParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteIconParam) ToV0() *v0params.DeleteIconParam {
+	return &v0params.DeleteIconParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

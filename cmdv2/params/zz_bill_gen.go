@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -131,6 +132,33 @@ func (p *CsvBillParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CsvBillParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Bill"]
+}
+
+func (p *CsvBillParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["csv"]
+}
+
+func (p *CsvBillParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CsvBillParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CsvBillParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CsvBillParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CsvBillParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -191,6 +219,19 @@ func (p *CsvBillParam) GetBillId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CsvBillParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CsvBillParam) ToV0() *v0params.CsvBillParam {
+	return &v0params.CsvBillParam{
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		NoHeader:          p.NoHeader,
+		BillOutput:        p.BillOutput,
+		BillId:            p.BillId,
+	}
 }
 
 // ListBillParam is input parameters for the sacloud API
@@ -344,6 +385,33 @@ func (p *ListBillParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListBillParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Bill"]
+}
+
+func (p *ListBillParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListBillParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListBillParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListBillParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListBillParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListBillParam) SetYear(v int) {
 	p.Year = v
 }
@@ -446,4 +514,23 @@ func (p *ListBillParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListBillParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListBillParam) ToV0() *v0params.ListBillParam {
+	return &v0params.ListBillParam{
+		Year:              p.Year,
+		Month:             p.Month,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }

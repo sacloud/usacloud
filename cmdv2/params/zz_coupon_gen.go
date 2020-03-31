@@ -19,6 +19,7 @@ package params
 import (
 	"io"
 
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -156,6 +157,33 @@ func (p *ListCouponParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListCouponParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Coupon"]
+}
+
+func (p *ListCouponParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListCouponParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListCouponParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListCouponParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListCouponParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListCouponParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -251,4 +279,22 @@ func (p *ListCouponParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListCouponParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListCouponParam) ToV0() *v0params.ListCouponParam {
+	return &v0params.ListCouponParam{
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Usable:            p.Usable,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }

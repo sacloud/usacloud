@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func ipv6ListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(ipv6ListParam))
-			return nil
+			return funcs.IPv6List(ctx, ipv6ListParam.ToV0())
 		},
 	}
 
@@ -97,11 +92,7 @@ func ipv6PtrAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ptr-add local parameter: \n%s\n", debugMarshalIndent(ipv6PtrAddParam))
-			return nil
+			return funcs.IPv6PtrAdd(ctx, ipv6PtrAddParam.ToV0())
 		},
 	}
 
@@ -138,11 +129,7 @@ func ipv6PtrReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ptr-read local parameter: \n%s\n", debugMarshalIndent(ipv6PtrReadParam))
-			return nil
+			return funcs.IPv6PtrRead(ctx, ipv6PtrReadParam.ToV0())
 		},
 	}
 
@@ -177,11 +164,7 @@ func ipv6PtrUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ptr-update local parameter: \n%s\n", debugMarshalIndent(ipv6PtrUpdateParam))
-			return nil
+			return funcs.IPv6PtrUpdate(ctx, ipv6PtrUpdateParam.ToV0())
 		},
 	}
 
@@ -218,11 +201,7 @@ func ipv6PtrDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ptr-delete local parameter: \n%s\n", debugMarshalIndent(ipv6PtrDeleteParam))
-			return nil
+			return funcs.IPv6PtrDelete(ctx, ipv6PtrDeleteParam.ToV0())
 		},
 	}
 

@@ -104,3 +104,7 @@ func (c *Command) InputParameterVariable() string {
 func (c *Command) InputParameterTypeName() string {
 	return fmt.Sprintf("%s%sParam", ToCamelCaseName(c.Name), ToCamelCaseName(c.Resource.Name))
 }
+
+func (c *Command) FunctionName() string {
+	return fmt.Sprintf("%s%s", ToCamelCaseName(c.Resource.Name), ToCamelCaseName(c.Name))
+}

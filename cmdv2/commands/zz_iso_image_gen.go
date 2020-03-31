@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func isoImageListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(isoImageListParam))
-			return nil
+			return funcs.ISOImageList(ctx, isoImageListParam.ToV0())
 		},
 	}
 
@@ -97,11 +92,7 @@ func isoImageCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(isoImageCreateParam))
-			return nil
+			return funcs.ISOImageCreate(ctx, isoImageCreateParam.ToV0())
 		},
 	}
 
@@ -143,11 +134,7 @@ func isoImageReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(isoImageReadParam))
-			return nil
+			return funcs.ISOImageRead(ctx, isoImageReadParam.ToV0())
 		},
 	}
 
@@ -184,11 +171,7 @@ func isoImageUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(isoImageUpdateParam))
-			return nil
+			return funcs.ISOImageUpdate(ctx, isoImageUpdateParam.ToV0())
 		},
 	}
 
@@ -230,11 +213,7 @@ func isoImageDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(isoImageDeleteParam))
-			return nil
+			return funcs.ISOImageDelete(ctx, isoImageDeleteParam.ToV0())
 		},
 	}
 
@@ -272,11 +251,7 @@ func isoImageUploadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("upload local parameter: \n%s\n", debugMarshalIndent(isoImageUploadParam))
-			return nil
+			return funcs.ISOImageUpload(ctx, isoImageUploadParam.ToV0())
 		},
 	}
 
@@ -315,11 +290,7 @@ func isoImageDownloadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("download local parameter: \n%s\n", debugMarshalIndent(isoImageDownloadParam))
-			return nil
+			return funcs.ISOImageDownload(ctx, isoImageDownloadParam.ToV0())
 		},
 	}
 
@@ -351,11 +322,7 @@ func isoImageFTPOpenCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ftp-open local parameter: \n%s\n", debugMarshalIndent(isoImageFTPOpenParam))
-			return nil
+			return funcs.ISOImageFTPOpen(ctx, isoImageFTPOpenParam.ToV0())
 		},
 	}
 
@@ -393,11 +360,7 @@ func isoImageFTPCloseCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ftp-close local parameter: \n%s\n", debugMarshalIndent(isoImageFTPCloseParam))
-			return nil
+			return funcs.ISOImageFTPClose(ctx, isoImageFTPCloseParam.ToV0())
 		},
 	}
 

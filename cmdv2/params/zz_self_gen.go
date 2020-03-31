@@ -19,6 +19,7 @@ package params
 import (
 	"io"
 
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -110,6 +111,33 @@ func (p *InfoSelfParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *InfoSelfParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Self"]
+}
+
+func (p *InfoSelfParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["info"]
+}
+
+func (p *InfoSelfParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *InfoSelfParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *InfoSelfParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *InfoSelfParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *InfoSelfParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -149,4 +177,14 @@ func (p *InfoSelfParam) GetGenerateSkeleton() bool {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *InfoSelfParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *InfoSelfParam) ToV0() *v0params.InfoSelfParam {
+	return &v0params.InfoSelfParam{
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+	}
 }

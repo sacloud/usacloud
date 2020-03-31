@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func archiveListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(archiveListParam))
-			return nil
+			return funcs.ArchiveList(ctx, archiveListParam.ToV0())
 		},
 	}
 
@@ -99,11 +94,7 @@ func archiveCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(archiveCreateParam))
-			return nil
+			return funcs.ArchiveCreate(ctx, archiveCreateParam.ToV0())
 		},
 	}
 
@@ -147,11 +138,7 @@ func archiveReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(archiveReadParam))
-			return nil
+			return funcs.ArchiveRead(ctx, archiveReadParam.ToV0())
 		},
 	}
 
@@ -188,11 +175,7 @@ func archiveUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(archiveUpdateParam))
-			return nil
+			return funcs.ArchiveUpdate(ctx, archiveUpdateParam.ToV0())
 		},
 	}
 
@@ -234,11 +217,7 @@ func archiveDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(archiveDeleteParam))
-			return nil
+			return funcs.ArchiveDelete(ctx, archiveDeleteParam.ToV0())
 		},
 	}
 
@@ -276,11 +255,7 @@ func archiveUploadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("upload local parameter: \n%s\n", debugMarshalIndent(archiveUploadParam))
-			return nil
+			return funcs.ArchiveUpload(ctx, archiveUploadParam.ToV0())
 		},
 	}
 
@@ -319,11 +294,7 @@ func archiveDownloadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("download local parameter: \n%s\n", debugMarshalIndent(archiveDownloadParam))
-			return nil
+			return funcs.ArchiveDownload(ctx, archiveDownloadParam.ToV0())
 		},
 	}
 
@@ -355,11 +326,7 @@ func archiveFTPOpenCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ftp-open local parameter: \n%s\n", debugMarshalIndent(archiveFTPOpenParam))
-			return nil
+			return funcs.ArchiveFTPOpen(ctx, archiveFTPOpenParam.ToV0())
 		},
 	}
 
@@ -397,11 +364,7 @@ func archiveFTPCloseCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ftp-close local parameter: \n%s\n", debugMarshalIndent(archiveFTPCloseParam))
-			return nil
+			return funcs.ArchiveFTPClose(ctx, archiveFTPCloseParam.ToV0())
 		},
 	}
 
@@ -432,11 +395,7 @@ func archiveWaitForCopyCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("wait-for-copy local parameter: \n%s\n", debugMarshalIndent(archiveWaitForCopyParam))
-			return nil
+			return funcs.ArchiveWaitForCopy(ctx, archiveWaitForCopyParam.ToV0())
 		},
 	}
 

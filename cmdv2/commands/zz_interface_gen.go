@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func interfaceListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(interfaceListParam))
-			return nil
+			return funcs.InterfaceList(ctx, interfaceListParam.ToV0())
 		},
 	}
 
@@ -95,11 +90,7 @@ func interfacePacketFilterConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("packet-filter-connect local parameter: \n%s\n", debugMarshalIndent(interfacePacketFilterConnectParam))
-			return nil
+			return funcs.InterfacePacketFilterConnect(ctx, interfacePacketFilterConnectParam.ToV0())
 		},
 	}
 
@@ -130,11 +121,7 @@ func interfaceCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(interfaceCreateParam))
-			return nil
+			return funcs.InterfaceCreate(ctx, interfaceCreateParam.ToV0())
 		},
 	}
 
@@ -171,11 +158,7 @@ func interfacePacketFilterDisconnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("packet-filter-disconnect local parameter: \n%s\n", debugMarshalIndent(interfacePacketFilterDisconnectParam))
-			return nil
+			return funcs.InterfacePacketFilterDisconnect(ctx, interfacePacketFilterDisconnectParam.ToV0())
 		},
 	}
 
@@ -206,11 +189,7 @@ func interfaceReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(interfaceReadParam))
-			return nil
+			return funcs.InterfaceRead(ctx, interfaceReadParam.ToV0())
 		},
 	}
 
@@ -246,11 +225,7 @@ func interfaceUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(interfaceUpdateParam))
-			return nil
+			return funcs.InterfaceUpdate(ctx, interfaceUpdateParam.ToV0())
 		},
 	}
 
@@ -288,11 +263,7 @@ func interfaceDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(interfaceDeleteParam))
-			return nil
+			return funcs.InterfaceDelete(ctx, interfaceDeleteParam.ToV0())
 		},
 	}
 

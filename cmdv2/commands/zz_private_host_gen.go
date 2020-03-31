@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func privateHostListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(privateHostListParam))
-			return nil
+			return funcs.PrivateHostList(ctx, privateHostListParam.ToV0())
 		},
 	}
 
@@ -96,11 +91,7 @@ func privateHostCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(privateHostCreateParam))
-			return nil
+			return funcs.PrivateHostCreate(ctx, privateHostCreateParam.ToV0())
 		},
 	}
 
@@ -140,11 +131,7 @@ func privateHostReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(privateHostReadParam))
-			return nil
+			return funcs.PrivateHostRead(ctx, privateHostReadParam.ToV0())
 		},
 	}
 
@@ -181,11 +168,7 @@ func privateHostUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(privateHostUpdateParam))
-			return nil
+			return funcs.PrivateHostUpdate(ctx, privateHostUpdateParam.ToV0())
 		},
 	}
 
@@ -227,11 +210,7 @@ func privateHostDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(privateHostDeleteParam))
-			return nil
+			return funcs.PrivateHostDelete(ctx, privateHostDeleteParam.ToV0())
 		},
 	}
 
@@ -269,11 +248,7 @@ func privateHostServerInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("server-info local parameter: \n%s\n", debugMarshalIndent(privateHostServerInfoParam))
-			return nil
+			return funcs.PrivateHostServerInfo(ctx, privateHostServerInfoParam.ToV0())
 		},
 	}
 
@@ -310,11 +285,7 @@ func privateHostServerAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("server-add local parameter: \n%s\n", debugMarshalIndent(privateHostServerAddParam))
-			return nil
+			return funcs.PrivateHostServerAdd(ctx, privateHostServerAddParam.ToV0())
 		},
 	}
 
@@ -353,11 +324,7 @@ func privateHostServerDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("server-delete local parameter: \n%s\n", debugMarshalIndent(privateHostServerDeleteParam))
-			return nil
+			return funcs.PrivateHostServerDelete(ctx, privateHostServerDeleteParam.ToV0())
 		},
 	}
 

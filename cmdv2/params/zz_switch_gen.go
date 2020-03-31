@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -213,6 +214,33 @@ func (p *ListSwitchParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListSwitchParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Switch"]
+}
+
+func (p *ListSwitchParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListSwitchParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListSwitchParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListSwitchParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListSwitchParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListSwitchParam) SetName(v []string) {
 	p.Name = v
 }
@@ -343,6 +371,29 @@ func (p *ListSwitchParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListSwitchParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListSwitchParam) ToV0() *v0params.ListSwitchParam {
+	return &v0params.ListSwitchParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Tags:              p.Tags,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateSwitchParam is input parameters for the sacloud API
@@ -531,6 +582,33 @@ func (p *CreateSwitchParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateSwitchParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Switch"]
+}
+
+func (p *CreateSwitchParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateSwitchParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateSwitchParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateSwitchParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateSwitchParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateSwitchParam) SetName(v string) {
 	p.Name = v
 }
@@ -654,6 +732,28 @@ func (p *CreateSwitchParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CreateSwitchParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CreateSwitchParam) ToV0() *v0params.CreateSwitchParam {
+	return &v0params.CreateSwitchParam{
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // ReadSwitchParam is input parameters for the sacloud API
@@ -799,6 +899,33 @@ func (p *ReadSwitchParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadSwitchParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Switch"]
+}
+
+func (p *ReadSwitchParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadSwitchParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadSwitchParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadSwitchParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadSwitchParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadSwitchParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -901,6 +1028,25 @@ func (p *ReadSwitchParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadSwitchParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadSwitchParam) ToV0() *v0params.ReadSwitchParam {
+	return &v0params.ReadSwitchParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateSwitchParam is input parameters for the sacloud API
@@ -1098,6 +1244,33 @@ func (p *UpdateSwitchParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateSwitchParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Switch"]
+}
+
+func (p *UpdateSwitchParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateSwitchParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateSwitchParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateSwitchParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateSwitchParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateSwitchParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1235,6 +1408,30 @@ func (p *UpdateSwitchParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdateSwitchParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdateSwitchParam) ToV0() *v0params.UpdateSwitchParam {
+	return &v0params.UpdateSwitchParam{
+		Selector:          p.Selector,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DeleteSwitchParam is input parameters for the sacloud API
@@ -1384,6 +1581,33 @@ func (p *DeleteSwitchParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteSwitchParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Switch"]
+}
+
+func (p *DeleteSwitchParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteSwitchParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteSwitchParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteSwitchParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteSwitchParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteSwitchParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1493,6 +1717,26 @@ func (p *DeleteSwitchParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteSwitchParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteSwitchParam) ToV0() *v0params.DeleteSwitchParam {
+	return &v0params.DeleteSwitchParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // BridgeConnectSwitchParam is input parameters for the sacloud API
@@ -1619,6 +1863,33 @@ func (p *BridgeConnectSwitchParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BridgeConnectSwitchParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Switch"]
+}
+
+func (p *BridgeConnectSwitchParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["bridge-connect"]
+}
+
+func (p *BridgeConnectSwitchParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BridgeConnectSwitchParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BridgeConnectSwitchParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BridgeConnectSwitchParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BridgeConnectSwitchParam) SetBridgeId(v sacloud.ID) {
 	p.BridgeId = v
 }
@@ -1686,6 +1957,20 @@ func (p *BridgeConnectSwitchParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BridgeConnectSwitchParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BridgeConnectSwitchParam) ToV0() *v0params.BridgeConnectSwitchParam {
+	return &v0params.BridgeConnectSwitchParam{
+		BridgeId:          p.BridgeId,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // BridgeDisconnectSwitchParam is input parameters for the sacloud API
@@ -1793,6 +2078,33 @@ func (p *BridgeDisconnectSwitchParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BridgeDisconnectSwitchParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Switch"]
+}
+
+func (p *BridgeDisconnectSwitchParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["bridge-disconnect"]
+}
+
+func (p *BridgeDisconnectSwitchParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BridgeDisconnectSwitchParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BridgeDisconnectSwitchParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BridgeDisconnectSwitchParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BridgeDisconnectSwitchParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1853,4 +2165,17 @@ func (p *BridgeDisconnectSwitchParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BridgeDisconnectSwitchParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BridgeDisconnectSwitchParam) ToV0() *v0params.BridgeDisconnectSwitchParam {
+	return &v0params.BridgeDisconnectSwitchParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }

@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -213,6 +214,33 @@ func (p *ListVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *ListVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListVPCRouterParam) SetName(v []string) {
 	p.Name = v
 }
@@ -343,6 +371,29 @@ func (p *ListVPCRouterParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListVPCRouterParam) ToV0() *v0params.ListVPCRouterParam {
+	return &v0params.ListVPCRouterParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Tags:              p.Tags,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateVPCRouterParam is input parameters for the sacloud API
@@ -619,6 +670,33 @@ func (p *CreateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *CreateVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateVPCRouterParam) SetPlan(v string) {
 	p.Plan = v
 }
@@ -800,6 +878,36 @@ func (p *CreateVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *CreateVPCRouterParam) ToV0() *v0params.CreateVPCRouterParam {
+	return &v0params.CreateVPCRouterParam{
+		Plan:                      p.Plan,
+		SwitchId:                  p.SwitchId,
+		Vrid:                      p.Vrid,
+		Vip:                       p.Vip,
+		Ipaddress1:                p.Ipaddress1,
+		Ipaddress2:                p.Ipaddress2,
+		DisableInternetConnection: p.DisableInternetConnection,
+		BootAfterCreate:           p.BootAfterCreate,
+		Name:                      p.Name,
+		Description:               p.Description,
+		Tags:                      p.Tags,
+		IconId:                    p.IconId,
+		Assumeyes:                 p.Assumeyes,
+		ParamTemplate:             p.ParamTemplate,
+		Parameters:                p.Parameters,
+		ParamTemplateFile:         p.ParamTemplateFile,
+		ParameterFile:             p.ParameterFile,
+		GenerateSkeleton:          p.GenerateSkeleton,
+		OutputType:                p.OutputType,
+		Column:                    p.Column,
+		Quiet:                     p.Quiet,
+		Format:                    p.Format,
+		FormatFile:                p.FormatFile,
+		Query:                     p.Query,
+		QueryFile:                 p.QueryFile,
+	}
+}
+
 // ReadVPCRouterParam is input parameters for the sacloud API
 type ReadVPCRouterParam struct {
 	Selector          []string
@@ -943,6 +1051,33 @@ func (p *ReadVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *ReadVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1045,6 +1180,25 @@ func (p *ReadVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadVPCRouterParam) ToV0() *v0params.ReadVPCRouterParam {
+	return &v0params.ReadVPCRouterParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateVPCRouterParam is input parameters for the sacloud API
@@ -1258,6 +1412,33 @@ func (p *UpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *UpdateVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateVPCRouterParam) SetSyslogHost(v string) {
 	p.SyslogHost = v
 }
@@ -1411,6 +1592,32 @@ func (p *UpdateVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *UpdateVPCRouterParam) ToV0() *v0params.UpdateVPCRouterParam {
+	return &v0params.UpdateVPCRouterParam{
+		SyslogHost:         p.SyslogHost,
+		InternetConnection: p.InternetConnection,
+		Selector:           p.Selector,
+		Name:               p.Name,
+		Description:        p.Description,
+		Tags:               p.Tags,
+		IconId:             p.IconId,
+		Assumeyes:          p.Assumeyes,
+		ParamTemplate:      p.ParamTemplate,
+		Parameters:         p.Parameters,
+		ParamTemplateFile:  p.ParamTemplateFile,
+		ParameterFile:      p.ParameterFile,
+		GenerateSkeleton:   p.GenerateSkeleton,
+		OutputType:         p.OutputType,
+		Column:             p.Column,
+		Quiet:              p.Quiet,
+		Format:             p.Format,
+		FormatFile:         p.FormatFile,
+		Query:              p.Query,
+		QueryFile:          p.QueryFile,
+		Id:                 p.Id,
+	}
+}
+
 // DeleteVPCRouterParam is input parameters for the sacloud API
 type DeleteVPCRouterParam struct {
 	Force             bool
@@ -1562,6 +1769,33 @@ func (p *DeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *DeleteVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteVPCRouterParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -1680,6 +1914,27 @@ func (p *DeleteVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *DeleteVPCRouterParam) ToV0() *v0params.DeleteVPCRouterParam {
+	return &v0params.DeleteVPCRouterParam{
+		Force:             p.Force,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // BootVPCRouterParam is input parameters for the sacloud API
 type BootVPCRouterParam struct {
 	Selector          []string
@@ -1785,6 +2040,33 @@ func (p *BootVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BootVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *BootVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["boot"]
+}
+
+func (p *BootVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BootVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BootVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BootVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BootVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1845,6 +2127,19 @@ func (p *BootVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BootVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BootVPCRouterParam) ToV0() *v0params.BootVPCRouterParam {
+	return &v0params.BootVPCRouterParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ShutdownVPCRouterParam is input parameters for the sacloud API
@@ -1952,6 +2247,33 @@ func (p *ShutdownVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ShutdownVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *ShutdownVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["shutdown"]
+}
+
+func (p *ShutdownVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ShutdownVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ShutdownVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ShutdownVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ShutdownVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2012,6 +2334,19 @@ func (p *ShutdownVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ShutdownVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ShutdownVPCRouterParam) ToV0() *v0params.ShutdownVPCRouterParam {
+	return &v0params.ShutdownVPCRouterParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ShutdownForceVPCRouterParam is input parameters for the sacloud API
@@ -2119,6 +2454,33 @@ func (p *ShutdownForceVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ShutdownForceVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *ShutdownForceVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["shutdown-force"]
+}
+
+func (p *ShutdownForceVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ShutdownForceVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ShutdownForceVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ShutdownForceVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ShutdownForceVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2179,6 +2541,19 @@ func (p *ShutdownForceVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ShutdownForceVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ShutdownForceVPCRouterParam) ToV0() *v0params.ShutdownForceVPCRouterParam {
+	return &v0params.ShutdownForceVPCRouterParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ResetVPCRouterParam is input parameters for the sacloud API
@@ -2286,6 +2661,33 @@ func (p *ResetVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ResetVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *ResetVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["reset"]
+}
+
+func (p *ResetVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ResetVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ResetVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ResetVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ResetVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2346,6 +2748,19 @@ func (p *ResetVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ResetVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ResetVPCRouterParam) ToV0() *v0params.ResetVPCRouterParam {
+	return &v0params.ResetVPCRouterParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // WaitForBootVPCRouterParam is input parameters for the sacloud API
@@ -2449,6 +2864,33 @@ func (p *WaitForBootVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *WaitForBootVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *WaitForBootVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["wait-for-boot"]
+}
+
+func (p *WaitForBootVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *WaitForBootVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *WaitForBootVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *WaitForBootVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *WaitForBootVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2502,6 +2944,18 @@ func (p *WaitForBootVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *WaitForBootVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *WaitForBootVPCRouterParam) ToV0() *v0params.WaitForBootVPCRouterParam {
+	return &v0params.WaitForBootVPCRouterParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // WaitForDownVPCRouterParam is input parameters for the sacloud API
@@ -2605,6 +3059,33 @@ func (p *WaitForDownVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *WaitForDownVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *WaitForDownVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["wait-for-down"]
+}
+
+func (p *WaitForDownVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *WaitForDownVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *WaitForDownVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *WaitForDownVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *WaitForDownVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2658,6 +3139,18 @@ func (p *WaitForDownVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *WaitForDownVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *WaitForDownVPCRouterParam) ToV0() *v0params.WaitForDownVPCRouterParam {
+	return &v0params.WaitForDownVPCRouterParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // EnableInternetConnectionVPCRouterParam is input parameters for the sacloud API
@@ -2765,6 +3258,33 @@ func (p *EnableInternetConnectionVPCRouterParam) ColumnDefs() []output.ColumnDef
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *EnableInternetConnectionVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["enable-internet-connection"]
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *EnableInternetConnectionVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2825,6 +3345,19 @@ func (p *EnableInternetConnectionVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *EnableInternetConnectionVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) ToV0() *v0params.EnableInternetConnectionVPCRouterParam {
+	return &v0params.EnableInternetConnectionVPCRouterParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // DisableInternetConnectionVPCRouterParam is input parameters for the sacloud API
@@ -2932,6 +3465,33 @@ func (p *DisableInternetConnectionVPCRouterParam) ColumnDefs() []output.ColumnDe
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DisableInternetConnectionVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["disable-internet-connection"]
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DisableInternetConnectionVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2992,6 +3552,19 @@ func (p *DisableInternetConnectionVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DisableInternetConnectionVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) ToV0() *v0params.DisableInternetConnectionVPCRouterParam {
+	return &v0params.DisableInternetConnectionVPCRouterParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // InterfaceInfoVPCRouterParam is input parameters for the sacloud API
@@ -3137,6 +3710,33 @@ func (p *InterfaceInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *InterfaceInfoVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["interface-info"]
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *InterfaceInfoVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -3239,6 +3839,25 @@ func (p *InterfaceInfoVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *InterfaceInfoVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *InterfaceInfoVPCRouterParam) ToV0() *v0params.InterfaceInfoVPCRouterParam {
+	return &v0params.InterfaceInfoVPCRouterParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // InterfaceConnectVPCRouterParam is input parameters for the sacloud API
@@ -3444,6 +4063,33 @@ func (p *InterfaceConnectVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *InterfaceConnectVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["interface-connect"]
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *InterfaceConnectVPCRouterParam) SetInterface(v string) {
 	p.Interface = v
 }
@@ -3553,6 +4199,26 @@ func (p *InterfaceConnectVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *InterfaceConnectVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *InterfaceConnectVPCRouterParam) ToV0() *v0params.InterfaceConnectVPCRouterParam {
+	return &v0params.InterfaceConnectVPCRouterParam{
+		Interface:         p.Interface,
+		Ipaddress:         p.Ipaddress,
+		WithReboot:        p.WithReboot,
+		Ipaddress1:        p.Ipaddress1,
+		SwitchId:          p.SwitchId,
+		Ipaddress2:        p.Ipaddress2,
+		NwMasklen:         p.NwMasklen,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // InterfaceUpdateVPCRouterParam is input parameters for the sacloud API
@@ -3756,6 +4422,33 @@ func (p *InterfaceUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *InterfaceUpdateVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["interface-update"]
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *InterfaceUpdateVPCRouterParam) SetInterface(v string) {
 	p.Interface = v
 }
@@ -3872,6 +4565,27 @@ func (p *InterfaceUpdateVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *InterfaceUpdateVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *InterfaceUpdateVPCRouterParam) ToV0() *v0params.InterfaceUpdateVPCRouterParam {
+	return &v0params.InterfaceUpdateVPCRouterParam{
+		Interface:         p.Interface,
+		Ipaddress:         p.Ipaddress,
+		WithReboot:        p.WithReboot,
+		Ipaddress1:        p.Ipaddress1,
+		SwitchId:          p.SwitchId,
+		Ipaddress2:        p.Ipaddress2,
+		Alias:             p.Alias,
+		NwMasklen:         p.NwMasklen,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // InterfaceDisconnectVPCRouterParam is input parameters for the sacloud API
@@ -4002,6 +4716,33 @@ func (p *InterfaceDisconnectVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *InterfaceDisconnectVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["interface-disconnect"]
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *InterfaceDisconnectVPCRouterParam) SetInterface(v string) {
 	p.Interface = v
 }
@@ -4076,6 +4817,21 @@ func (p *InterfaceDisconnectVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *InterfaceDisconnectVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) ToV0() *v0params.InterfaceDisconnectVPCRouterParam {
+	return &v0params.InterfaceDisconnectVPCRouterParam{
+		Interface:         p.Interface,
+		WithReboot:        p.WithReboot,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // StaticNatInfoVPCRouterParam is input parameters for the sacloud API
@@ -4221,6 +4977,33 @@ func (p *StaticNatInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *StaticNatInfoVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["static-nat-info"]
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *StaticNatInfoVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -4323,6 +5106,25 @@ func (p *StaticNatInfoVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *StaticNatInfoVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *StaticNatInfoVPCRouterParam) ToV0() *v0params.StaticNatInfoVPCRouterParam {
+	return &v0params.StaticNatInfoVPCRouterParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // StaticNatAddVPCRouterParam is input parameters for the sacloud API
@@ -4480,6 +5282,33 @@ func (p *StaticNatAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *StaticNatAddVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *StaticNatAddVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["static-nat-add"]
+}
+
+func (p *StaticNatAddVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *StaticNatAddVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *StaticNatAddVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *StaticNatAddVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *StaticNatAddVPCRouterParam) SetGlobal(v string) {
 	p.Global = v
 }
@@ -4561,6 +5390,22 @@ func (p *StaticNatAddVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *StaticNatAddVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *StaticNatAddVPCRouterParam) ToV0() *v0params.StaticNatAddVPCRouterParam {
+	return &v0params.StaticNatAddVPCRouterParam{
+		Global:            p.Global,
+		Private:           p.Private,
+		Description:       p.Description,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // StaticNatUpdateVPCRouterParam is input parameters for the sacloud API
@@ -4716,6 +5561,33 @@ func (p *StaticNatUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *StaticNatUpdateVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["static-nat-update"]
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *StaticNatUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -4804,6 +5676,23 @@ func (p *StaticNatUpdateVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *StaticNatUpdateVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *StaticNatUpdateVPCRouterParam) ToV0() *v0params.StaticNatUpdateVPCRouterParam {
+	return &v0params.StaticNatUpdateVPCRouterParam{
+		Index:             p.Index,
+		Global:            p.Global,
+		Private:           p.Private,
+		Description:       p.Description,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // StaticNatDeleteVPCRouterParam is input parameters for the sacloud API
@@ -4923,6 +5812,33 @@ func (p *StaticNatDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *StaticNatDeleteVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *StaticNatDeleteVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["static-nat-delete"]
+}
+
+func (p *StaticNatDeleteVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *StaticNatDeleteVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *StaticNatDeleteVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *StaticNatDeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *StaticNatDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -4990,6 +5906,20 @@ func (p *StaticNatDeleteVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *StaticNatDeleteVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *StaticNatDeleteVPCRouterParam) ToV0() *v0params.StaticNatDeleteVPCRouterParam {
+	return &v0params.StaticNatDeleteVPCRouterParam{
+		Index:             p.Index,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // PortForwardingInfoVPCRouterParam is input parameters for the sacloud API
@@ -5135,6 +6065,33 @@ func (p *PortForwardingInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *PortForwardingInfoVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["port-forwarding-info"]
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *PortForwardingInfoVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -5237,6 +6194,25 @@ func (p *PortForwardingInfoVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *PortForwardingInfoVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *PortForwardingInfoVPCRouterParam) ToV0() *v0params.PortForwardingInfoVPCRouterParam {
+	return &v0params.PortForwardingInfoVPCRouterParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // PortForwardingAddVPCRouterParam is input parameters for the sacloud API
@@ -5432,6 +6408,33 @@ func (p *PortForwardingAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *PortForwardingAddVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["port-forwarding-add"]
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *PortForwardingAddVPCRouterParam) SetProtocol(v string) {
 	p.Protocol = v
 }
@@ -5527,6 +6530,24 @@ func (p *PortForwardingAddVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *PortForwardingAddVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *PortForwardingAddVPCRouterParam) ToV0() *v0params.PortForwardingAddVPCRouterParam {
+	return &v0params.PortForwardingAddVPCRouterParam{
+		Protocol:          p.Protocol,
+		GlobalPort:        p.GlobalPort,
+		PrivateIpaddress:  p.PrivateIpaddress,
+		PrivatePort:       p.PrivatePort,
+		Description:       p.Description,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // PortForwardingUpdateVPCRouterParam is input parameters for the sacloud API
@@ -5706,6 +6727,33 @@ func (p *PortForwardingUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *PortForwardingUpdateVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["port-forwarding-update"]
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *PortForwardingUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -5808,6 +6856,25 @@ func (p *PortForwardingUpdateVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *PortForwardingUpdateVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) ToV0() *v0params.PortForwardingUpdateVPCRouterParam {
+	return &v0params.PortForwardingUpdateVPCRouterParam{
+		Index:             p.Index,
+		Protocol:          p.Protocol,
+		GlobalPort:        p.GlobalPort,
+		PrivateIpaddress:  p.PrivateIpaddress,
+		PrivatePort:       p.PrivatePort,
+		Description:       p.Description,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // PortForwardingDeleteVPCRouterParam is input parameters for the sacloud API
@@ -5927,6 +6994,33 @@ func (p *PortForwardingDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *PortForwardingDeleteVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["port-forwarding-delete"]
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *PortForwardingDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -5994,6 +7088,20 @@ func (p *PortForwardingDeleteVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *PortForwardingDeleteVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) ToV0() *v0params.PortForwardingDeleteVPCRouterParam {
+	return &v0params.PortForwardingDeleteVPCRouterParam{
+		Index:             p.Index,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // FirewallInfoVPCRouterParam is input parameters for the sacloud API
@@ -6171,6 +7279,33 @@ func (p *FirewallInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *FirewallInfoVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *FirewallInfoVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["firewall-info"]
+}
+
+func (p *FirewallInfoVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *FirewallInfoVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *FirewallInfoVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *FirewallInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *FirewallInfoVPCRouterParam) SetInterface(v int) {
 	p.Interface = v
 }
@@ -6287,6 +7422,27 @@ func (p *FirewallInfoVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *FirewallInfoVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *FirewallInfoVPCRouterParam) ToV0() *v0params.FirewallInfoVPCRouterParam {
+	return &v0params.FirewallInfoVPCRouterParam{
+		Interface:         p.Interface,
+		Direction:         p.Direction,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // FirewallAddVPCRouterParam is input parameters for the sacloud API
@@ -6528,6 +7684,33 @@ func (p *FirewallAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *FirewallAddVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *FirewallAddVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["firewall-add"]
+}
+
+func (p *FirewallAddVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *FirewallAddVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *FirewallAddVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *FirewallAddVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *FirewallAddVPCRouterParam) SetInterface(v int) {
 	p.Interface = v
 }
@@ -6658,6 +7841,29 @@ func (p *FirewallAddVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *FirewallAddVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *FirewallAddVPCRouterParam) ToV0() *v0params.FirewallAddVPCRouterParam {
+	return &v0params.FirewallAddVPCRouterParam{
+		Interface:          p.Interface,
+		Direction:          p.Direction,
+		Protocol:           p.Protocol,
+		SourceNetwork:      p.SourceNetwork,
+		SourcePort:         p.SourcePort,
+		DestinationNetwork: p.DestinationNetwork,
+		DestinationPort:    p.DestinationPort,
+		Action:             p.Action,
+		EnableLogging:      p.EnableLogging,
+		Description:        p.Description,
+		Selector:           p.Selector,
+		Assumeyes:          p.Assumeyes,
+		ParamTemplate:      p.ParamTemplate,
+		Parameters:         p.Parameters,
+		ParamTemplateFile:  p.ParamTemplateFile,
+		ParameterFile:      p.ParameterFile,
+		GenerateSkeleton:   p.GenerateSkeleton,
+		Id:                 p.Id,
+	}
 }
 
 // FirewallUpdateVPCRouterParam is input parameters for the sacloud API
@@ -6897,6 +8103,33 @@ func (p *FirewallUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *FirewallUpdateVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["firewall-update"]
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *FirewallUpdateVPCRouterParam) SetInterface(v int) {
 	p.Interface = v
 }
@@ -7034,6 +8267,30 @@ func (p *FirewallUpdateVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *FirewallUpdateVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *FirewallUpdateVPCRouterParam) ToV0() *v0params.FirewallUpdateVPCRouterParam {
+	return &v0params.FirewallUpdateVPCRouterParam{
+		Interface:          p.Interface,
+		Direction:          p.Direction,
+		Index:              p.Index,
+		Protocol:           p.Protocol,
+		SourceNetwork:      p.SourceNetwork,
+		SourcePort:         p.SourcePort,
+		DestinationNetwork: p.DestinationNetwork,
+		DestinationPort:    p.DestinationPort,
+		Action:             p.Action,
+		EnableLogging:      p.EnableLogging,
+		Description:        p.Description,
+		Selector:           p.Selector,
+		Assumeyes:          p.Assumeyes,
+		ParamTemplate:      p.ParamTemplate,
+		Parameters:         p.Parameters,
+		ParamTemplateFile:  p.ParamTemplateFile,
+		ParameterFile:      p.ParameterFile,
+		GenerateSkeleton:   p.GenerateSkeleton,
+		Id:                 p.Id,
+	}
 }
 
 // FirewallDeleteVPCRouterParam is input parameters for the sacloud API
@@ -7185,6 +8442,33 @@ func (p *FirewallDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *FirewallDeleteVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["firewall-delete"]
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *FirewallDeleteVPCRouterParam) SetInterface(v int) {
 	p.Interface = v
 }
@@ -7266,6 +8550,22 @@ func (p *FirewallDeleteVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *FirewallDeleteVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *FirewallDeleteVPCRouterParam) ToV0() *v0params.FirewallDeleteVPCRouterParam {
+	return &v0params.FirewallDeleteVPCRouterParam{
+		Interface:         p.Interface,
+		Direction:         p.Direction,
+		Index:             p.Index,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // DhcpServerInfoVPCRouterParam is input parameters for the sacloud API
@@ -7411,6 +8711,33 @@ func (p *DhcpServerInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DhcpServerInfoVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["dhcp-server-info"]
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DhcpServerInfoVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -7513,6 +8840,25 @@ func (p *DhcpServerInfoVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DhcpServerInfoVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DhcpServerInfoVPCRouterParam) ToV0() *v0params.DhcpServerInfoVPCRouterParam {
+	return &v0params.DhcpServerInfoVPCRouterParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DhcpServerAddVPCRouterParam is input parameters for the sacloud API
@@ -7689,6 +9035,33 @@ func (p *DhcpServerAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DhcpServerAddVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["dhcp-server-add"]
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DhcpServerAddVPCRouterParam) SetInterface(v int) {
 	p.Interface = v
 }
@@ -7777,6 +9150,23 @@ func (p *DhcpServerAddVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DhcpServerAddVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DhcpServerAddVPCRouterParam) ToV0() *v0params.DhcpServerAddVPCRouterParam {
+	return &v0params.DhcpServerAddVPCRouterParam{
+		Interface:         p.Interface,
+		RangeStart:        p.RangeStart,
+		RangeStop:         p.RangeStop,
+		DNSServers:        p.DNSServers,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // DhcpServerUpdateVPCRouterParam is input parameters for the sacloud API
@@ -7939,6 +9329,33 @@ func (p *DhcpServerUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DhcpServerUpdateVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["dhcp-server-update"]
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DhcpServerUpdateVPCRouterParam) SetInterface(v int) {
 	p.Interface = v
 }
@@ -8027,6 +9444,23 @@ func (p *DhcpServerUpdateVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DhcpServerUpdateVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) ToV0() *v0params.DhcpServerUpdateVPCRouterParam {
+	return &v0params.DhcpServerUpdateVPCRouterParam{
+		Interface:         p.Interface,
+		RangeStart:        p.RangeStart,
+		RangeStop:         p.RangeStop,
+		DNSServers:        p.DNSServers,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // DhcpServerDeleteVPCRouterParam is input parameters for the sacloud API
@@ -8153,6 +9587,33 @@ func (p *DhcpServerDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DhcpServerDeleteVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["dhcp-server-delete"]
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DhcpServerDeleteVPCRouterParam) SetInterface(v int) {
 	p.Interface = v
 }
@@ -8220,6 +9681,20 @@ func (p *DhcpServerDeleteVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DhcpServerDeleteVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) ToV0() *v0params.DhcpServerDeleteVPCRouterParam {
+	return &v0params.DhcpServerDeleteVPCRouterParam{
+		Interface:         p.Interface,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // DhcpStaticMappingInfoVPCRouterParam is input parameters for the sacloud API
@@ -8365,6 +9840,33 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["dhcp-static-mapping-info"]
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DhcpStaticMappingInfoVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -8467,6 +9969,25 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DhcpStaticMappingInfoVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) ToV0() *v0params.DhcpStaticMappingInfoVPCRouterParam {
+	return &v0params.DhcpStaticMappingInfoVPCRouterParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DhcpStaticMappingAddVPCRouterParam is input parameters for the sacloud API
@@ -8612,6 +10133,33 @@ func (p *DhcpStaticMappingAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DhcpStaticMappingAddVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["dhcp-static-mapping-add"]
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DhcpStaticMappingAddVPCRouterParam) SetMacaddress(v string) {
 	p.Macaddress = v
 }
@@ -8686,6 +10234,21 @@ func (p *DhcpStaticMappingAddVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DhcpStaticMappingAddVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) ToV0() *v0params.DhcpStaticMappingAddVPCRouterParam {
+	return &v0params.DhcpStaticMappingAddVPCRouterParam{
+		Macaddress:        p.Macaddress,
+		Ipaddress:         p.Ipaddress,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // DhcpStaticMappingUpdateVPCRouterParam is input parameters for the sacloud API
@@ -8829,6 +10392,33 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef 
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["dhcp-static-mapping-update"]
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DhcpStaticMappingUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -8910,6 +10500,22 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DhcpStaticMappingUpdateVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) ToV0() *v0params.DhcpStaticMappingUpdateVPCRouterParam {
+	return &v0params.DhcpStaticMappingUpdateVPCRouterParam{
+		Index:             p.Index,
+		Macaddress:        p.Macaddress,
+		Ipaddress:         p.Ipaddress,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // DhcpStaticMappingDeleteVPCRouterParam is input parameters for the sacloud API
@@ -9029,6 +10635,33 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef 
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["dhcp-static-mapping-delete"]
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DhcpStaticMappingDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -9096,6 +10729,20 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DhcpStaticMappingDeleteVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) ToV0() *v0params.DhcpStaticMappingDeleteVPCRouterParam {
+	return &v0params.DhcpStaticMappingDeleteVPCRouterParam{
+		Index:             p.Index,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // PptpServerInfoVPCRouterParam is input parameters for the sacloud API
@@ -9241,6 +10888,33 @@ func (p *PptpServerInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *PptpServerInfoVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["pptp-server-info"]
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *PptpServerInfoVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -9343,6 +11017,25 @@ func (p *PptpServerInfoVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *PptpServerInfoVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *PptpServerInfoVPCRouterParam) ToV0() *v0params.PptpServerInfoVPCRouterParam {
+	return &v0params.PptpServerInfoVPCRouterParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // PptpServerUpdateVPCRouterParam is input parameters for the sacloud API
@@ -9478,6 +11171,33 @@ func (p *PptpServerUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *PptpServerUpdateVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *PptpServerUpdateVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["pptp-server-update"]
+}
+
+func (p *PptpServerUpdateVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *PptpServerUpdateVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *PptpServerUpdateVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *PptpServerUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *PptpServerUpdateVPCRouterParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
@@ -9559,6 +11279,22 @@ func (p *PptpServerUpdateVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *PptpServerUpdateVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *PptpServerUpdateVPCRouterParam) ToV0() *v0params.PptpServerUpdateVPCRouterParam {
+	return &v0params.PptpServerUpdateVPCRouterParam{
+		Disabled:          p.Disabled,
+		RangeStart:        p.RangeStart,
+		RangeStop:         p.RangeStop,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // L2TPServerInfoVPCRouterParam is input parameters for the sacloud API
@@ -9704,6 +11440,33 @@ func (p *L2TPServerInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *L2TPServerInfoVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["l2tp-server-info"]
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *L2TPServerInfoVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -9806,6 +11569,25 @@ func (p *L2TPServerInfoVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *L2TPServerInfoVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *L2TPServerInfoVPCRouterParam) ToV0() *v0params.L2TPServerInfoVPCRouterParam {
+	return &v0params.L2TPServerInfoVPCRouterParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // L2TPServerUpdateVPCRouterParam is input parameters for the sacloud API
@@ -9953,6 +11735,33 @@ func (p *L2TPServerUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *L2TPServerUpdateVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *L2TPServerUpdateVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["l2tp-server-update"]
+}
+
+func (p *L2TPServerUpdateVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *L2TPServerUpdateVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *L2TPServerUpdateVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *L2TPServerUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *L2TPServerUpdateVPCRouterParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
@@ -10041,6 +11850,23 @@ func (p *L2TPServerUpdateVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *L2TPServerUpdateVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *L2TPServerUpdateVPCRouterParam) ToV0() *v0params.L2TPServerUpdateVPCRouterParam {
+	return &v0params.L2TPServerUpdateVPCRouterParam{
+		Disabled:          p.Disabled,
+		RangeStart:        p.RangeStart,
+		RangeStop:         p.RangeStop,
+		PreSharedSecret:   p.PreSharedSecret,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // UserInfoVPCRouterParam is input parameters for the sacloud API
@@ -10186,6 +12012,33 @@ func (p *UserInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UserInfoVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *UserInfoVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["user-info"]
+}
+
+func (p *UserInfoVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UserInfoVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UserInfoVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UserInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UserInfoVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -10288,6 +12141,25 @@ func (p *UserInfoVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UserInfoVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UserInfoVPCRouterParam) ToV0() *v0params.UserInfoVPCRouterParam {
+	return &v0params.UserInfoVPCRouterParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UserAddVPCRouterParam is input parameters for the sacloud API
@@ -10433,6 +12305,33 @@ func (p *UserAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UserAddVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *UserAddVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["user-add"]
+}
+
+func (p *UserAddVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UserAddVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UserAddVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UserAddVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UserAddVPCRouterParam) SetUsername(v string) {
 	p.Username = v
 }
@@ -10507,6 +12406,21 @@ func (p *UserAddVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UserAddVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UserAddVPCRouterParam) ToV0() *v0params.UserAddVPCRouterParam {
+	return &v0params.UserAddVPCRouterParam{
+		Username:          p.Username,
+		Password:          p.Password,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // UserUpdateVPCRouterParam is input parameters for the sacloud API
@@ -10650,6 +12564,33 @@ func (p *UserUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UserUpdateVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *UserUpdateVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["user-update"]
+}
+
+func (p *UserUpdateVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UserUpdateVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UserUpdateVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UserUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UserUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -10731,6 +12672,22 @@ func (p *UserUpdateVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UserUpdateVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UserUpdateVPCRouterParam) ToV0() *v0params.UserUpdateVPCRouterParam {
+	return &v0params.UserUpdateVPCRouterParam{
+		Index:             p.Index,
+		Username:          p.Username,
+		Password:          p.Password,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // UserDeleteVPCRouterParam is input parameters for the sacloud API
@@ -10850,6 +12807,33 @@ func (p *UserDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UserDeleteVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *UserDeleteVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["user-delete"]
+}
+
+func (p *UserDeleteVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UserDeleteVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UserDeleteVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UserDeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UserDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -10917,6 +12901,20 @@ func (p *UserDeleteVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UserDeleteVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UserDeleteVPCRouterParam) ToV0() *v0params.UserDeleteVPCRouterParam {
+	return &v0params.UserDeleteVPCRouterParam{
+		Index:             p.Index,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // SiteToSiteVPNInfoVPCRouterParam is input parameters for the sacloud API
@@ -11062,6 +13060,33 @@ func (p *SiteToSiteVPNInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["site-to-site-vpn-info"]
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SiteToSiteVPNInfoVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -11164,6 +13189,25 @@ func (p *SiteToSiteVPNInfoVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SiteToSiteVPNInfoVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) ToV0() *v0params.SiteToSiteVPNInfoVPCRouterParam {
+	return &v0params.SiteToSiteVPNInfoVPCRouterParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // SiteToSiteVPNAddVPCRouterParam is input parameters for the sacloud API
@@ -11359,6 +13403,33 @@ func (p *SiteToSiteVPNAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SiteToSiteVPNAddVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *SiteToSiteVPNAddVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["site-to-site-vpn-add"]
+}
+
+func (p *SiteToSiteVPNAddVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SiteToSiteVPNAddVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SiteToSiteVPNAddVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SiteToSiteVPNAddVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SiteToSiteVPNAddVPCRouterParam) SetPeer(v string) {
 	p.Peer = v
 }
@@ -11454,6 +13525,24 @@ func (p *SiteToSiteVPNAddVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SiteToSiteVPNAddVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SiteToSiteVPNAddVPCRouterParam) ToV0() *v0params.SiteToSiteVPNAddVPCRouterParam {
+	return &v0params.SiteToSiteVPNAddVPCRouterParam{
+		Peer:              p.Peer,
+		RemoteId:          p.RemoteId,
+		PreSharedSecret:   p.PreSharedSecret,
+		Routes:            p.Routes,
+		LocalPrefix:       p.LocalPrefix,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // SiteToSiteVPNUpdateVPCRouterParam is input parameters for the sacloud API
@@ -11625,6 +13714,33 @@ func (p *SiteToSiteVPNUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["site-to-site-vpn-update"]
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SiteToSiteVPNUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -11727,6 +13843,25 @@ func (p *SiteToSiteVPNUpdateVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SiteToSiteVPNUpdateVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) ToV0() *v0params.SiteToSiteVPNUpdateVPCRouterParam {
+	return &v0params.SiteToSiteVPNUpdateVPCRouterParam{
+		Index:             p.Index,
+		Peer:              p.Peer,
+		RemoteId:          p.RemoteId,
+		PreSharedSecret:   p.PreSharedSecret,
+		Routes:            p.Routes,
+		LocalPrefix:       p.LocalPrefix,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // SiteToSiteVPNDeleteVPCRouterParam is input parameters for the sacloud API
@@ -11846,6 +13981,33 @@ func (p *SiteToSiteVPNDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SiteToSiteVPNDeleteVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *SiteToSiteVPNDeleteVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["site-to-site-vpn-delete"]
+}
+
+func (p *SiteToSiteVPNDeleteVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SiteToSiteVPNDeleteVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SiteToSiteVPNDeleteVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SiteToSiteVPNDeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SiteToSiteVPNDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -11913,6 +14075,20 @@ func (p *SiteToSiteVPNDeleteVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SiteToSiteVPNDeleteVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SiteToSiteVPNDeleteVPCRouterParam) ToV0() *v0params.SiteToSiteVPNDeleteVPCRouterParam {
+	return &v0params.SiteToSiteVPNDeleteVPCRouterParam{
+		Index:             p.Index,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // SiteToSiteVPNPeersVPCRouterParam is input parameters for the sacloud API
@@ -12058,6 +14234,33 @@ func (p *SiteToSiteVPNPeersVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["site-to-site-vpn-peers"]
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SiteToSiteVPNPeersVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -12160,6 +14363,25 @@ func (p *SiteToSiteVPNPeersVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SiteToSiteVPNPeersVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) ToV0() *v0params.SiteToSiteVPNPeersVPCRouterParam {
+	return &v0params.SiteToSiteVPNPeersVPCRouterParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // StaticRouteInfoVPCRouterParam is input parameters for the sacloud API
@@ -12305,6 +14527,33 @@ func (p *StaticRouteInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *StaticRouteInfoVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["static-route-info"]
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *StaticRouteInfoVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -12407,6 +14656,25 @@ func (p *StaticRouteInfoVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *StaticRouteInfoVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *StaticRouteInfoVPCRouterParam) ToV0() *v0params.StaticRouteInfoVPCRouterParam {
+	return &v0params.StaticRouteInfoVPCRouterParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // StaticRouteAddVPCRouterParam is input parameters for the sacloud API
@@ -12552,6 +14820,33 @@ func (p *StaticRouteAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *StaticRouteAddVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *StaticRouteAddVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["static-route-add"]
+}
+
+func (p *StaticRouteAddVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *StaticRouteAddVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *StaticRouteAddVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *StaticRouteAddVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *StaticRouteAddVPCRouterParam) SetPrefix(v string) {
 	p.Prefix = v
 }
@@ -12626,6 +14921,21 @@ func (p *StaticRouteAddVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *StaticRouteAddVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *StaticRouteAddVPCRouterParam) ToV0() *v0params.StaticRouteAddVPCRouterParam {
+	return &v0params.StaticRouteAddVPCRouterParam{
+		Prefix:            p.Prefix,
+		NextHop:           p.NextHop,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // StaticRouteUpdateVPCRouterParam is input parameters for the sacloud API
@@ -12769,6 +15079,33 @@ func (p *StaticRouteUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *StaticRouteUpdateVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["static-route-update"]
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *StaticRouteUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -12850,6 +15187,22 @@ func (p *StaticRouteUpdateVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *StaticRouteUpdateVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) ToV0() *v0params.StaticRouteUpdateVPCRouterParam {
+	return &v0params.StaticRouteUpdateVPCRouterParam{
+		Index:             p.Index,
+		Prefix:            p.Prefix,
+		NextHop:           p.NextHop,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // StaticRouteDeleteVPCRouterParam is input parameters for the sacloud API
@@ -12969,6 +15322,33 @@ func (p *StaticRouteDeleteVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *StaticRouteDeleteVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["static-route-delete"]
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *StaticRouteDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -13036,6 +15416,20 @@ func (p *StaticRouteDeleteVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *StaticRouteDeleteVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) ToV0() *v0params.StaticRouteDeleteVPCRouterParam {
+	return &v0params.StaticRouteDeleteVPCRouterParam{
+		Index:             p.Index,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // MonitorVPCRouterParam is input parameters for the sacloud API
@@ -13237,6 +15631,33 @@ func (p *MonitorVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *MonitorVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor"]
+}
+
+func (p *MonitorVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorVPCRouterParam) SetInterface(v string) {
 	p.Interface = v
 }
@@ -13367,6 +15788,29 @@ func (p *MonitorVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *MonitorVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *MonitorVPCRouterParam) ToV0() *v0params.MonitorVPCRouterParam {
+	return &v0params.MonitorVPCRouterParam{
+		Interface:         p.Interface,
+		Start:             p.Start,
+		End:               p.End,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // LogsVPCRouterParam is input parameters for the sacloud API
@@ -13503,6 +15947,33 @@ func (p *LogsVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *LogsVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *LogsVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["logs"]
+}
+
+func (p *LogsVPCRouterParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *LogsVPCRouterParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *LogsVPCRouterParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *LogsVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *LogsVPCRouterParam) SetLogName(v string) {
 	p.LogName = v
 }
@@ -13584,4 +16055,20 @@ func (p *LogsVPCRouterParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *LogsVPCRouterParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *LogsVPCRouterParam) ToV0() *v0params.LogsVPCRouterParam {
+	return &v0params.LogsVPCRouterParam{
+		LogName:           p.LogName,
+		Follow:            p.Follow,
+		RefreshInterval:   p.RefreshInterval,
+		ListLogNames:      p.ListLogNames,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }

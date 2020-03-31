@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -225,6 +226,33 @@ func (p *ListIPv6Param) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListIPv6Param) GetResourceDef() *schema.Resource {
+	return define.Resources["IPv6"]
+}
+
+func (p *ListIPv6Param) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListIPv6Param) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListIPv6Param) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListIPv6Param) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListIPv6Param) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListIPv6Param) SetName(v []string) {
 	p.Name = v
 }
@@ -362,6 +390,30 @@ func (p *ListIPv6Param) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListIPv6Param) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListIPv6Param) ToV0() *v0params.ListIPv6Param {
+	return &v0params.ListIPv6Param{
+		Name:              p.Name,
+		Id:                p.Id,
+		IPv6netId:         p.IPv6netId,
+		InternetId:        p.InternetId,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // PtrAddIPv6Param is input parameters for the sacloud API
@@ -507,6 +559,33 @@ func (p *PtrAddIPv6Param) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *PtrAddIPv6Param) GetResourceDef() *schema.Resource {
+	return define.Resources["IPv6"]
+}
+
+func (p *PtrAddIPv6Param) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["ptr-add"]
+}
+
+func (p *PtrAddIPv6Param) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *PtrAddIPv6Param) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *PtrAddIPv6Param) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *PtrAddIPv6Param) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *PtrAddIPv6Param) SetHostname(v string) {
 	p.Hostname = v
 }
@@ -609,6 +688,25 @@ func (p *PtrAddIPv6Param) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *PtrAddIPv6Param) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *PtrAddIPv6Param) ToV0() *v0params.PtrAddIPv6Param {
+	return &v0params.PtrAddIPv6Param{
+		Hostname:          p.Hostname,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // PtrReadIPv6Param is input parameters for the sacloud API
@@ -738,6 +836,33 @@ func (p *PtrReadIPv6Param) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *PtrReadIPv6Param) GetResourceDef() *schema.Resource {
+	return define.Resources["IPv6"]
+}
+
+func (p *PtrReadIPv6Param) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["ptr-read"]
+}
+
+func (p *PtrReadIPv6Param) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *PtrReadIPv6Param) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *PtrReadIPv6Param) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *PtrReadIPv6Param) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *PtrReadIPv6Param) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -826,6 +951,23 @@ func (p *PtrReadIPv6Param) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *PtrReadIPv6Param) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *PtrReadIPv6Param) ToV0() *v0params.PtrReadIPv6Param {
+	return &v0params.PtrReadIPv6Param{
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // PtrUpdateIPv6Param is input parameters for the sacloud API
@@ -971,6 +1113,33 @@ func (p *PtrUpdateIPv6Param) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *PtrUpdateIPv6Param) GetResourceDef() *schema.Resource {
+	return define.Resources["IPv6"]
+}
+
+func (p *PtrUpdateIPv6Param) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["ptr-update"]
+}
+
+func (p *PtrUpdateIPv6Param) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *PtrUpdateIPv6Param) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *PtrUpdateIPv6Param) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *PtrUpdateIPv6Param) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *PtrUpdateIPv6Param) SetHostname(v string) {
 	p.Hostname = v
 }
@@ -1073,6 +1242,25 @@ func (p *PtrUpdateIPv6Param) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *PtrUpdateIPv6Param) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *PtrUpdateIPv6Param) ToV0() *v0params.PtrUpdateIPv6Param {
+	return &v0params.PtrUpdateIPv6Param{
+		Hostname:          p.Hostname,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // PtrDeleteIPv6Param is input parameters for the sacloud API
@@ -1206,6 +1394,33 @@ func (p *PtrDeleteIPv6Param) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *PtrDeleteIPv6Param) GetResourceDef() *schema.Resource {
+	return define.Resources["IPv6"]
+}
+
+func (p *PtrDeleteIPv6Param) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["ptr-delete"]
+}
+
+func (p *PtrDeleteIPv6Param) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *PtrDeleteIPv6Param) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *PtrDeleteIPv6Param) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *PtrDeleteIPv6Param) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *PtrDeleteIPv6Param) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1301,4 +1516,22 @@ func (p *PtrDeleteIPv6Param) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *PtrDeleteIPv6Param) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *PtrDeleteIPv6Param) ToV0() *v0params.PtrDeleteIPv6Param {
+	return &v0params.PtrDeleteIPv6Param{
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }

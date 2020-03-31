@@ -17,9 +17,8 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -50,11 +49,7 @@ func objectStorageListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(objectStorageListParam))
-			return nil
+			return funcs.ObjectStorageList(ctx, objectStorageListParam.ToV0())
 		},
 	}
 
@@ -92,11 +87,7 @@ func objectStoragePutCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("put local parameter: \n%s\n", debugMarshalIndent(objectStoragePutParam))
-			return nil
+			return funcs.ObjectStoragePut(ctx, objectStoragePutParam.ToV0())
 		},
 	}
 
@@ -130,11 +121,7 @@ func objectStorageGetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("get local parameter: \n%s\n", debugMarshalIndent(objectStorageGetParam))
-			return nil
+			return funcs.ObjectStorageGet(ctx, objectStorageGetParam.ToV0())
 		},
 	}
 
@@ -166,11 +153,7 @@ func objectStorageDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(objectStorageDeleteParam))
-			return nil
+			return funcs.ObjectStorageDelete(ctx, objectStorageDeleteParam.ToV0())
 		},
 	}
 

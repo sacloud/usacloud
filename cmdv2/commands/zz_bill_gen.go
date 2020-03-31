@@ -17,9 +17,8 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -50,11 +49,7 @@ func billCsvCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("csv local parameter: \n%s\n", debugMarshalIndent(billCsvParam))
-			return nil
+			return funcs.BillCsv(ctx, billCsvParam.ToV0())
 		},
 	}
 
@@ -85,11 +80,7 @@ func billListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(billListParam))
-			return nil
+			return funcs.BillList(ctx, billListParam.ToV0())
 		},
 	}
 

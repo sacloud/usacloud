@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -154,6 +155,33 @@ func (p *ListWebAccelParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListWebAccelParam) GetResourceDef() *schema.Resource {
+	return define.Resources["WebAccel"]
+}
+
+func (p *ListWebAccelParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListWebAccelParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListWebAccelParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListWebAccelParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListWebAccelParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListWebAccelParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -242,6 +270,23 @@ func (p *ListWebAccelParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListWebAccelParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListWebAccelParam) ToV0() *v0params.ListWebAccelParam {
+	return &v0params.ListWebAccelParam{
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // ReadWebAccelParam is input parameters for the sacloud API
@@ -387,6 +432,33 @@ func (p *ReadWebAccelParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadWebAccelParam) GetResourceDef() *schema.Resource {
+	return define.Resources["WebAccel"]
+}
+
+func (p *ReadWebAccelParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadWebAccelParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadWebAccelParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadWebAccelParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadWebAccelParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadWebAccelParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -489,6 +561,25 @@ func (p *ReadWebAccelParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadWebAccelParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadWebAccelParam) ToV0() *v0params.ReadWebAccelParam {
+	return &v0params.ReadWebAccelParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // CertificateInfoWebAccelParam is input parameters for the sacloud API
@@ -634,6 +725,33 @@ func (p *CertificateInfoWebAccelParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CertificateInfoWebAccelParam) GetResourceDef() *schema.Resource {
+	return define.Resources["WebAccel"]
+}
+
+func (p *CertificateInfoWebAccelParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["certificate-info"]
+}
+
+func (p *CertificateInfoWebAccelParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CertificateInfoWebAccelParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CertificateInfoWebAccelParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CertificateInfoWebAccelParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CertificateInfoWebAccelParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -736,6 +854,25 @@ func (p *CertificateInfoWebAccelParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CertificateInfoWebAccelParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CertificateInfoWebAccelParam) ToV0() *v0params.CertificateInfoWebAccelParam {
+	return &v0params.CertificateInfoWebAccelParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // CertificateNewWebAccelParam is input parameters for the sacloud API
@@ -937,6 +1074,33 @@ func (p *CertificateNewWebAccelParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CertificateNewWebAccelParam) GetResourceDef() *schema.Resource {
+	return define.Resources["WebAccel"]
+}
+
+func (p *CertificateNewWebAccelParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["certificate-new"]
+}
+
+func (p *CertificateNewWebAccelParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CertificateNewWebAccelParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CertificateNewWebAccelParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CertificateNewWebAccelParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CertificateNewWebAccelParam) SetCert(v string) {
 	p.Cert = v
 }
@@ -1074,6 +1238,30 @@ func (p *CertificateNewWebAccelParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CertificateNewWebAccelParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CertificateNewWebAccelParam) ToV0() *v0params.CertificateNewWebAccelParam {
+	return &v0params.CertificateNewWebAccelParam{
+		Cert:              p.Cert,
+		Key:               p.Key,
+		CertContent:       p.CertContent,
+		KeyContent:        p.KeyContent,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // CertificateUpdateWebAccelParam is input parameters for the sacloud API
@@ -1275,6 +1463,33 @@ func (p *CertificateUpdateWebAccelParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CertificateUpdateWebAccelParam) GetResourceDef() *schema.Resource {
+	return define.Resources["WebAccel"]
+}
+
+func (p *CertificateUpdateWebAccelParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["certificate-update"]
+}
+
+func (p *CertificateUpdateWebAccelParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CertificateUpdateWebAccelParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CertificateUpdateWebAccelParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CertificateUpdateWebAccelParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CertificateUpdateWebAccelParam) SetCert(v string) {
 	p.Cert = v
 }
@@ -1414,6 +1629,30 @@ func (p *CertificateUpdateWebAccelParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *CertificateUpdateWebAccelParam) ToV0() *v0params.CertificateUpdateWebAccelParam {
+	return &v0params.CertificateUpdateWebAccelParam{
+		Cert:              p.Cert,
+		Key:               p.Key,
+		CertContent:       p.CertContent,
+		KeyContent:        p.KeyContent,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // DeleteCacheWebAccelParam is input parameters for the sacloud API
 type DeleteCacheWebAccelParam struct {
 	Assumeyes         bool
@@ -1545,6 +1784,33 @@ func (p *DeleteCacheWebAccelParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteCacheWebAccelParam) GetResourceDef() *schema.Resource {
+	return define.Resources["WebAccel"]
+}
+
+func (p *DeleteCacheWebAccelParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete-cache"]
+}
+
+func (p *DeleteCacheWebAccelParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteCacheWebAccelParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteCacheWebAccelParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteCacheWebAccelParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteCacheWebAccelParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1640,4 +1906,22 @@ func (p *DeleteCacheWebAccelParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteCacheWebAccelParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteCacheWebAccelParam) ToV0() *v0params.DeleteCacheWebAccelParam {
+	return &v0params.DeleteCacheWebAccelParam{
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }

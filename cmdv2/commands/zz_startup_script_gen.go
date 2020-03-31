@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func startupScriptListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(startupScriptListParam))
-			return nil
+			return funcs.StartupScriptList(ctx, startupScriptListParam.ToV0())
 		},
 	}
 
@@ -98,11 +93,7 @@ func startupScriptCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(startupScriptCreateParam))
-			return nil
+			return funcs.StartupScriptCreate(ctx, startupScriptCreateParam.ToV0())
 		},
 	}
 
@@ -144,11 +135,7 @@ func startupScriptReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(startupScriptReadParam))
-			return nil
+			return funcs.StartupScriptRead(ctx, startupScriptReadParam.ToV0())
 		},
 	}
 
@@ -185,11 +172,7 @@ func startupScriptUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(startupScriptUpdateParam))
-			return nil
+			return funcs.StartupScriptUpdate(ctx, startupScriptUpdateParam.ToV0())
 		},
 	}
 
@@ -233,11 +216,7 @@ func startupScriptDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(startupScriptDeleteParam))
-			return nil
+			return funcs.StartupScriptDelete(ctx, startupScriptDeleteParam.ToV0())
 		},
 	}
 

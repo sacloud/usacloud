@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -213,6 +214,33 @@ func (p *ListDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *ListDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListDatabaseParam) SetName(v []string) {
 	p.Name = v
 }
@@ -343,6 +371,29 @@ func (p *ListDatabaseParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListDatabaseParam) ToV0() *v0params.ListDatabaseParam {
+	return &v0params.ListDatabaseParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Tags:              p.Tags,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateDatabaseParam is input parameters for the sacloud API
@@ -752,6 +803,33 @@ func (p *CreateDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *CreateDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateDatabaseParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
@@ -982,6 +1060,43 @@ func (p *CreateDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *CreateDatabaseParam) ToV0() *v0params.CreateDatabaseParam {
+	return &v0params.CreateDatabaseParam{
+		SwitchId:            p.SwitchId,
+		Plan:                p.Plan,
+		Database:            p.Database,
+		Username:            p.Username,
+		Password:            p.Password,
+		ReplicaUserPassword: p.ReplicaUserPassword,
+		SourceNetworks:      p.SourceNetworks,
+		EnableWebUi:         p.EnableWebUi,
+		EnableBackup:        p.EnableBackup,
+		BackupWeekdays:      p.BackupWeekdays,
+		BackupTime:          p.BackupTime,
+		Port:                p.Port,
+		Ipaddress1:          p.Ipaddress1,
+		NwMaskLen:           p.NwMaskLen,
+		DefaultRoute:        p.DefaultRoute,
+		Name:                p.Name,
+		Description:         p.Description,
+		Tags:                p.Tags,
+		IconId:              p.IconId,
+		Assumeyes:           p.Assumeyes,
+		ParamTemplate:       p.ParamTemplate,
+		Parameters:          p.Parameters,
+		ParamTemplateFile:   p.ParamTemplateFile,
+		ParameterFile:       p.ParameterFile,
+		GenerateSkeleton:    p.GenerateSkeleton,
+		OutputType:          p.OutputType,
+		Column:              p.Column,
+		Quiet:               p.Quiet,
+		Format:              p.Format,
+		FormatFile:          p.FormatFile,
+		Query:               p.Query,
+		QueryFile:           p.QueryFile,
+	}
+}
+
 // ReadDatabaseParam is input parameters for the sacloud API
 type ReadDatabaseParam struct {
 	Selector          []string
@@ -1125,6 +1240,33 @@ func (p *ReadDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *ReadDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadDatabaseParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1227,6 +1369,25 @@ func (p *ReadDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadDatabaseParam) ToV0() *v0params.ReadDatabaseParam {
+	return &v0params.ReadDatabaseParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateDatabaseParam is input parameters for the sacloud API
@@ -1509,6 +1670,33 @@ func (p *UpdateDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *UpdateDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateDatabaseParam) SetPassword(v string) {
 	p.Password = v
 }
@@ -1711,6 +1899,39 @@ func (p *UpdateDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *UpdateDatabaseParam) ToV0() *v0params.UpdateDatabaseParam {
+	return &v0params.UpdateDatabaseParam{
+		Password:            p.Password,
+		ReplicaUserPassword: p.ReplicaUserPassword,
+		EnableReplication:   p.EnableReplication,
+		Port:                p.Port,
+		SourceNetworks:      p.SourceNetworks,
+		EnableWebUi:         p.EnableWebUi,
+		EnableBackup:        p.EnableBackup,
+		BackupWeekdays:      p.BackupWeekdays,
+		BackupTime:          p.BackupTime,
+		Selector:            p.Selector,
+		Name:                p.Name,
+		Description:         p.Description,
+		Tags:                p.Tags,
+		IconId:              p.IconId,
+		Assumeyes:           p.Assumeyes,
+		ParamTemplate:       p.ParamTemplate,
+		Parameters:          p.Parameters,
+		ParamTemplateFile:   p.ParamTemplateFile,
+		ParameterFile:       p.ParameterFile,
+		GenerateSkeleton:    p.GenerateSkeleton,
+		OutputType:          p.OutputType,
+		Column:              p.Column,
+		Quiet:               p.Quiet,
+		Format:              p.Format,
+		FormatFile:          p.FormatFile,
+		Query:               p.Query,
+		QueryFile:           p.QueryFile,
+		Id:                  p.Id,
+	}
+}
+
 // DeleteDatabaseParam is input parameters for the sacloud API
 type DeleteDatabaseParam struct {
 	Selector          []string
@@ -1862,6 +2083,33 @@ func (p *DeleteDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *DeleteDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteDatabaseParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1980,6 +2228,27 @@ func (p *DeleteDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *DeleteDatabaseParam) ToV0() *v0params.DeleteDatabaseParam {
+	return &v0params.DeleteDatabaseParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Force:             p.Force,
+		Id:                p.Id,
+	}
+}
+
 // BootDatabaseParam is input parameters for the sacloud API
 type BootDatabaseParam struct {
 	Selector          []string
@@ -2085,6 +2354,33 @@ func (p *BootDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BootDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *BootDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["boot"]
+}
+
+func (p *BootDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BootDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BootDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BootDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BootDatabaseParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2145,6 +2441,19 @@ func (p *BootDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BootDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BootDatabaseParam) ToV0() *v0params.BootDatabaseParam {
+	return &v0params.BootDatabaseParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ShutdownDatabaseParam is input parameters for the sacloud API
@@ -2252,6 +2561,33 @@ func (p *ShutdownDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ShutdownDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *ShutdownDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["shutdown"]
+}
+
+func (p *ShutdownDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ShutdownDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ShutdownDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ShutdownDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ShutdownDatabaseParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2312,6 +2648,19 @@ func (p *ShutdownDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ShutdownDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ShutdownDatabaseParam) ToV0() *v0params.ShutdownDatabaseParam {
+	return &v0params.ShutdownDatabaseParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ShutdownForceDatabaseParam is input parameters for the sacloud API
@@ -2419,6 +2768,33 @@ func (p *ShutdownForceDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ShutdownForceDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *ShutdownForceDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["shutdown-force"]
+}
+
+func (p *ShutdownForceDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ShutdownForceDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ShutdownForceDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ShutdownForceDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ShutdownForceDatabaseParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2479,6 +2855,19 @@ func (p *ShutdownForceDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ShutdownForceDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ShutdownForceDatabaseParam) ToV0() *v0params.ShutdownForceDatabaseParam {
+	return &v0params.ShutdownForceDatabaseParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ResetDatabaseParam is input parameters for the sacloud API
@@ -2586,6 +2975,33 @@ func (p *ResetDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ResetDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *ResetDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["reset"]
+}
+
+func (p *ResetDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ResetDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ResetDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ResetDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ResetDatabaseParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2646,6 +3062,19 @@ func (p *ResetDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ResetDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ResetDatabaseParam) ToV0() *v0params.ResetDatabaseParam {
+	return &v0params.ResetDatabaseParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // WaitForBootDatabaseParam is input parameters for the sacloud API
@@ -2749,6 +3178,33 @@ func (p *WaitForBootDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *WaitForBootDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *WaitForBootDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["wait-for-boot"]
+}
+
+func (p *WaitForBootDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *WaitForBootDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *WaitForBootDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *WaitForBootDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *WaitForBootDatabaseParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2802,6 +3258,18 @@ func (p *WaitForBootDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *WaitForBootDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *WaitForBootDatabaseParam) ToV0() *v0params.WaitForBootDatabaseParam {
+	return &v0params.WaitForBootDatabaseParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // WaitForDownDatabaseParam is input parameters for the sacloud API
@@ -2905,6 +3373,33 @@ func (p *WaitForDownDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *WaitForDownDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *WaitForDownDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["wait-for-down"]
+}
+
+func (p *WaitForDownDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *WaitForDownDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *WaitForDownDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *WaitForDownDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *WaitForDownDatabaseParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2958,6 +3453,18 @@ func (p *WaitForDownDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *WaitForDownDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *WaitForDownDatabaseParam) ToV0() *v0params.WaitForDownDatabaseParam {
+	return &v0params.WaitForDownDatabaseParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // BackupInfoDatabaseParam is input parameters for the sacloud API
@@ -3103,6 +3610,33 @@ func (p *BackupInfoDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BackupInfoDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *BackupInfoDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["backup-info"]
+}
+
+func (p *BackupInfoDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BackupInfoDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BackupInfoDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BackupInfoDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BackupInfoDatabaseParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -3205,6 +3739,25 @@ func (p *BackupInfoDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BackupInfoDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BackupInfoDatabaseParam) ToV0() *v0params.BackupInfoDatabaseParam {
+	return &v0params.BackupInfoDatabaseParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // BackupCreateDatabaseParam is input parameters for the sacloud API
@@ -3350,6 +3903,33 @@ func (p *BackupCreateDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BackupCreateDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *BackupCreateDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["backup-create"]
+}
+
+func (p *BackupCreateDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BackupCreateDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BackupCreateDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BackupCreateDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BackupCreateDatabaseParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -3452,6 +4032,25 @@ func (p *BackupCreateDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BackupCreateDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BackupCreateDatabaseParam) ToV0() *v0params.BackupCreateDatabaseParam {
+	return &v0params.BackupCreateDatabaseParam{
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // BackupRestoreDatabaseParam is input parameters for the sacloud API
@@ -3616,6 +4215,33 @@ func (p *BackupRestoreDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BackupRestoreDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *BackupRestoreDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["backup-restore"]
+}
+
+func (p *BackupRestoreDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BackupRestoreDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BackupRestoreDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BackupRestoreDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BackupRestoreDatabaseParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -3725,6 +4351,26 @@ func (p *BackupRestoreDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BackupRestoreDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BackupRestoreDatabaseParam) ToV0() *v0params.BackupRestoreDatabaseParam {
+	return &v0params.BackupRestoreDatabaseParam{
+		Index:             p.Index,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // BackupLockDatabaseParam is input parameters for the sacloud API
@@ -3889,6 +4535,33 @@ func (p *BackupLockDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BackupLockDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *BackupLockDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["backup-lock"]
+}
+
+func (p *BackupLockDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BackupLockDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BackupLockDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BackupLockDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BackupLockDatabaseParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -3998,6 +4671,26 @@ func (p *BackupLockDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BackupLockDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BackupLockDatabaseParam) ToV0() *v0params.BackupLockDatabaseParam {
+	return &v0params.BackupLockDatabaseParam{
+		Index:             p.Index,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // BackupUnlockDatabaseParam is input parameters for the sacloud API
@@ -4162,6 +4855,33 @@ func (p *BackupUnlockDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BackupUnlockDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *BackupUnlockDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["backup-unlock"]
+}
+
+func (p *BackupUnlockDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BackupUnlockDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BackupUnlockDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BackupUnlockDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BackupUnlockDatabaseParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -4271,6 +4991,26 @@ func (p *BackupUnlockDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BackupUnlockDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BackupUnlockDatabaseParam) ToV0() *v0params.BackupUnlockDatabaseParam {
+	return &v0params.BackupUnlockDatabaseParam{
+		Index:             p.Index,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // BackupRemoveDatabaseParam is input parameters for the sacloud API
@@ -4435,6 +5175,33 @@ func (p *BackupRemoveDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BackupRemoveDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *BackupRemoveDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["backup-remove"]
+}
+
+func (p *BackupRemoveDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BackupRemoveDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BackupRemoveDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BackupRemoveDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BackupRemoveDatabaseParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -4544,6 +5311,26 @@ func (p *BackupRemoveDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BackupRemoveDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BackupRemoveDatabaseParam) ToV0() *v0params.BackupRemoveDatabaseParam {
+	return &v0params.BackupRemoveDatabaseParam{
+		Index:             p.Index,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // CloneDatabaseParam is input parameters for the sacloud API
@@ -4887,6 +5674,33 @@ func (p *CloneDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CloneDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *CloneDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["clone"]
+}
+
+func (p *CloneDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CloneDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CloneDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CloneDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CloneDatabaseParam) SetPort(v int) {
 	p.Port = v
 }
@@ -5101,6 +5915,41 @@ func (p *CloneDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CloneDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CloneDatabaseParam) ToV0() *v0params.CloneDatabaseParam {
+	return &v0params.CloneDatabaseParam{
+		Port:                p.Port,
+		SwitchId:            p.SwitchId,
+		Ipaddress1:          p.Ipaddress1,
+		Plan:                p.Plan,
+		NwMaskLen:           p.NwMaskLen,
+		DefaultRoute:        p.DefaultRoute,
+		ReplicaUserPassword: p.ReplicaUserPassword,
+		SourceNetworks:      p.SourceNetworks,
+		EnableWebUi:         p.EnableWebUi,
+		EnableBackup:        p.EnableBackup,
+		BackupWeekdays:      p.BackupWeekdays,
+		BackupTime:          p.BackupTime,
+		Name:                p.Name,
+		Description:         p.Description,
+		Tags:                p.Tags,
+		IconId:              p.IconId,
+		Assumeyes:           p.Assumeyes,
+		ParamTemplate:       p.ParamTemplate,
+		Parameters:          p.Parameters,
+		ParamTemplateFile:   p.ParamTemplateFile,
+		ParameterFile:       p.ParameterFile,
+		GenerateSkeleton:    p.GenerateSkeleton,
+		OutputType:          p.OutputType,
+		Column:              p.Column,
+		Quiet:               p.Quiet,
+		Format:              p.Format,
+		FormatFile:          p.FormatFile,
+		Query:               p.Query,
+		QueryFile:           p.QueryFile,
+		Id:                  p.Id,
+	}
 }
 
 // ReplicaCreateDatabaseParam is input parameters for the sacloud API
@@ -5356,6 +6205,33 @@ func (p *ReplicaCreateDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReplicaCreateDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *ReplicaCreateDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["replica-create"]
+}
+
+func (p *ReplicaCreateDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReplicaCreateDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReplicaCreateDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReplicaCreateDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReplicaCreateDatabaseParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
@@ -5514,6 +6390,33 @@ func (p *ReplicaCreateDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReplicaCreateDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReplicaCreateDatabaseParam) ToV0() *v0params.ReplicaCreateDatabaseParam {
+	return &v0params.ReplicaCreateDatabaseParam{
+		SwitchId:          p.SwitchId,
+		Ipaddress1:        p.Ipaddress1,
+		NwMaskLen:         p.NwMaskLen,
+		DefaultRoute:      p.DefaultRoute,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // MonitorCPUDatabaseParam is input parameters for the sacloud API
@@ -5696,6 +6599,33 @@ func (p *MonitorCPUDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorCPUDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *MonitorCPUDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor-cpu"]
+}
+
+func (p *MonitorCPUDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorCPUDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorCPUDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorCPUDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorCPUDatabaseParam) SetStart(v string) {
 	p.Start = v
 }
@@ -5819,6 +6749,28 @@ func (p *MonitorCPUDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *MonitorCPUDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *MonitorCPUDatabaseParam) ToV0() *v0params.MonitorCPUDatabaseParam {
+	return &v0params.MonitorCPUDatabaseParam{
+		Start:             p.Start,
+		End:               p.End,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // MonitorMemoryDatabaseParam is input parameters for the sacloud API
@@ -6001,6 +6953,33 @@ func (p *MonitorMemoryDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorMemoryDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *MonitorMemoryDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor-memory"]
+}
+
+func (p *MonitorMemoryDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorMemoryDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorMemoryDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorMemoryDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorMemoryDatabaseParam) SetStart(v string) {
 	p.Start = v
 }
@@ -6124,6 +7103,28 @@ func (p *MonitorMemoryDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *MonitorMemoryDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *MonitorMemoryDatabaseParam) ToV0() *v0params.MonitorMemoryDatabaseParam {
+	return &v0params.MonitorMemoryDatabaseParam{
+		Start:             p.Start,
+		End:               p.End,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // MonitorNicDatabaseParam is input parameters for the sacloud API
@@ -6306,6 +7307,33 @@ func (p *MonitorNicDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorNicDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *MonitorNicDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor-nic"]
+}
+
+func (p *MonitorNicDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorNicDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorNicDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorNicDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorNicDatabaseParam) SetStart(v string) {
 	p.Start = v
 }
@@ -6429,6 +7457,28 @@ func (p *MonitorNicDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *MonitorNicDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *MonitorNicDatabaseParam) ToV0() *v0params.MonitorNicDatabaseParam {
+	return &v0params.MonitorNicDatabaseParam{
+		Start:             p.Start,
+		End:               p.End,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // MonitorSystemDiskDatabaseParam is input parameters for the sacloud API
@@ -6611,6 +7661,33 @@ func (p *MonitorSystemDiskDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorSystemDiskDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor-system-disk"]
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorSystemDiskDatabaseParam) SetStart(v string) {
 	p.Start = v
 }
@@ -6734,6 +7811,28 @@ func (p *MonitorSystemDiskDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *MonitorSystemDiskDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *MonitorSystemDiskDatabaseParam) ToV0() *v0params.MonitorSystemDiskDatabaseParam {
+	return &v0params.MonitorSystemDiskDatabaseParam{
+		Start:             p.Start,
+		End:               p.End,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // MonitorBackupDiskDatabaseParam is input parameters for the sacloud API
@@ -6916,6 +8015,33 @@ func (p *MonitorBackupDiskDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorBackupDiskDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor-backup-disk"]
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorBackupDiskDatabaseParam) SetStart(v string) {
 	p.Start = v
 }
@@ -7039,6 +8165,28 @@ func (p *MonitorBackupDiskDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *MonitorBackupDiskDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *MonitorBackupDiskDatabaseParam) ToV0() *v0params.MonitorBackupDiskDatabaseParam {
+	return &v0params.MonitorBackupDiskDatabaseParam{
+		Start:             p.Start,
+		End:               p.End,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // MonitorSystemDiskSizeDatabaseParam is input parameters for the sacloud API
@@ -7221,6 +8369,33 @@ func (p *MonitorSystemDiskSizeDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorSystemDiskSizeDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor-system-disk-size"]
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorSystemDiskSizeDatabaseParam) SetStart(v string) {
 	p.Start = v
 }
@@ -7344,6 +8519,28 @@ func (p *MonitorSystemDiskSizeDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *MonitorSystemDiskSizeDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) ToV0() *v0params.MonitorSystemDiskSizeDatabaseParam {
+	return &v0params.MonitorSystemDiskSizeDatabaseParam{
+		Start:             p.Start,
+		End:               p.End,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // MonitorBackupDiskSizeDatabaseParam is input parameters for the sacloud API
@@ -7526,6 +8723,33 @@ func (p *MonitorBackupDiskSizeDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorBackupDiskSizeDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor-backup-disk-size"]
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorBackupDiskSizeDatabaseParam) SetStart(v string) {
 	p.Start = v
 }
@@ -7649,6 +8873,28 @@ func (p *MonitorBackupDiskSizeDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *MonitorBackupDiskSizeDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) ToV0() *v0params.MonitorBackupDiskSizeDatabaseParam {
+	return &v0params.MonitorBackupDiskSizeDatabaseParam{
+		Start:             p.Start,
+		End:               p.End,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // LogsDatabaseParam is input parameters for the sacloud API
@@ -7777,6 +9023,33 @@ func (p *LogsDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *LogsDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *LogsDatabaseParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["logs"]
+}
+
+func (p *LogsDatabaseParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *LogsDatabaseParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *LogsDatabaseParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *LogsDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *LogsDatabaseParam) SetLogName(v string) {
 	p.LogName = v
 }
@@ -7858,4 +9131,20 @@ func (p *LogsDatabaseParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *LogsDatabaseParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *LogsDatabaseParam) ToV0() *v0params.LogsDatabaseParam {
+	return &v0params.LogsDatabaseParam{
+		LogName:           p.LogName,
+		Follow:            p.Follow,
+		RefreshInterval:   p.RefreshInterval,
+		ListLogNames:      p.ListLogNames,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }

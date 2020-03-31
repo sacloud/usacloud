@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func iconListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(iconListParam))
-			return nil
+			return funcs.IconList(ctx, iconListParam.ToV0())
 		},
 	}
 
@@ -97,11 +92,7 @@ func iconCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(iconCreateParam))
-			return nil
+			return funcs.IconCreate(ctx, iconCreateParam.ToV0())
 		},
 	}
 
@@ -140,11 +131,7 @@ func iconReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(iconReadParam))
-			return nil
+			return funcs.IconRead(ctx, iconReadParam.ToV0())
 		},
 	}
 
@@ -181,11 +168,7 @@ func iconUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(iconUpdateParam))
-			return nil
+			return funcs.IconUpdate(ctx, iconUpdateParam.ToV0())
 		},
 	}
 
@@ -225,11 +208,7 @@ func iconDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(iconDeleteParam))
-			return nil
+			return funcs.IconDelete(ctx, iconDeleteParam.ToV0())
 		},
 	}
 

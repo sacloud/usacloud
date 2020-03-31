@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -201,6 +202,33 @@ func (p *ListBridgeParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListBridgeParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Bridge"]
+}
+
+func (p *ListBridgeParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListBridgeParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListBridgeParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListBridgeParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListBridgeParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListBridgeParam) SetName(v []string) {
 	p.Name = v
 }
@@ -324,6 +352,28 @@ func (p *ListBridgeParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListBridgeParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListBridgeParam) ToV0() *v0params.ListBridgeParam {
+	return &v0params.ListBridgeParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateBridgeParam is input parameters for the sacloud API
@@ -488,6 +538,33 @@ func (p *CreateBridgeParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateBridgeParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Bridge"]
+}
+
+func (p *CreateBridgeParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateBridgeParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateBridgeParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateBridgeParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateBridgeParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateBridgeParam) SetName(v string) {
 	p.Name = v
 }
@@ -597,6 +674,26 @@ func (p *CreateBridgeParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CreateBridgeParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CreateBridgeParam) ToV0() *v0params.CreateBridgeParam {
+	return &v0params.CreateBridgeParam{
+		Name:              p.Name,
+		Description:       p.Description,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // ReadBridgeParam is input parameters for the sacloud API
@@ -738,6 +835,33 @@ func (p *ReadBridgeParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadBridgeParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Bridge"]
+}
+
+func (p *ReadBridgeParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadBridgeParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadBridgeParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadBridgeParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadBridgeParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadBridgeParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -833,6 +957,24 @@ func (p *ReadBridgeParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadBridgeParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadBridgeParam) ToV0() *v0params.ReadBridgeParam {
+	return &v0params.ReadBridgeParam{
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateBridgeParam is input parameters for the sacloud API
@@ -1002,6 +1144,33 @@ func (p *UpdateBridgeParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateBridgeParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Bridge"]
+}
+
+func (p *UpdateBridgeParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateBridgeParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateBridgeParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateBridgeParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateBridgeParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateBridgeParam) SetName(v string) {
 	p.Name = v
 }
@@ -1118,6 +1287,27 @@ func (p *UpdateBridgeParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdateBridgeParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdateBridgeParam) ToV0() *v0params.UpdateBridgeParam {
+	return &v0params.UpdateBridgeParam{
+		Name:              p.Name,
+		Description:       p.Description,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DeleteBridgeParam is input parameters for the sacloud API
@@ -1263,6 +1453,33 @@ func (p *DeleteBridgeParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteBridgeParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Bridge"]
+}
+
+func (p *DeleteBridgeParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteBridgeParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteBridgeParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteBridgeParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteBridgeParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteBridgeParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1365,4 +1582,23 @@ func (p *DeleteBridgeParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteBridgeParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteBridgeParam) ToV0() *v0params.DeleteBridgeParam {
+	return &v0params.DeleteBridgeParam{
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

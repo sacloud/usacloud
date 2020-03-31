@@ -27,7 +27,7 @@ require (
 	github.com/sacloud/libsacloud/v2 v2.4.1
 	github.com/skratchdot/open-golang v0.0.0-20190402232053-79abb63cd66e // indirect
 	github.com/spf13/cobra v0.0.6
-	github.com/spf13/pflag v1.0.3
+	github.com/spf13/pflag v1.0.5
 	github.com/stretchr/testify v1.3.0
 	github.com/vaughan0/go-ini v0.0.0-20130923145212-a98ad7ee00ec // indirect
 	golang.org/x/sys v0.0.0-20190416152802-12500544f89f // indirect

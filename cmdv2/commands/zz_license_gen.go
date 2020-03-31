@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func licenseListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(licenseListParam))
-			return nil
+			return funcs.LicenseList(ctx, licenseListParam.ToV0())
 		},
 	}
 
@@ -95,11 +90,7 @@ func licenseCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(licenseCreateParam))
-			return nil
+			return funcs.LicenseCreate(ctx, licenseCreateParam.ToV0())
 		},
 	}
 
@@ -137,11 +128,7 @@ func licenseReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(licenseReadParam))
-			return nil
+			return funcs.LicenseRead(ctx, licenseReadParam.ToV0())
 		},
 	}
 
@@ -177,11 +164,7 @@ func licenseUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(licenseUpdateParam))
-			return nil
+			return funcs.LicenseUpdate(ctx, licenseUpdateParam.ToV0())
 		},
 	}
 
@@ -219,11 +202,7 @@ func licenseDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(licenseDeleteParam))
-			return nil
+			return funcs.LicenseDelete(ctx, licenseDeleteParam.ToV0())
 		},
 	}
 

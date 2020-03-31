@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func proxyLBListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(proxyLBListParam))
-			return nil
+			return funcs.ProxyLBList(ctx, proxyLBListParam.ToV0())
 		},
 	}
 
@@ -96,11 +91,7 @@ func proxyLBCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(proxyLBCreateParam))
-			return nil
+			return funcs.ProxyLBCreate(ctx, proxyLBCreateParam.ToV0())
 		},
 	}
 
@@ -149,11 +140,7 @@ func proxyLBReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(proxyLBReadParam))
-			return nil
+			return funcs.ProxyLBRead(ctx, proxyLBReadParam.ToV0())
 		},
 	}
 
@@ -190,11 +177,7 @@ func proxyLBUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(proxyLBUpdateParam))
-			return nil
+			return funcs.ProxyLBUpdate(ctx, proxyLBUpdateParam.ToV0())
 		},
 	}
 
@@ -244,11 +227,7 @@ func proxyLBDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(proxyLBDeleteParam))
-			return nil
+			return funcs.ProxyLBDelete(ctx, proxyLBDeleteParam.ToV0())
 		},
 	}
 
@@ -286,11 +265,7 @@ func proxyLBPlanChangeCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("plan-change local parameter: \n%s\n", debugMarshalIndent(proxyLBPlanChangeParam))
-			return nil
+			return funcs.ProxyLBPlanChange(ctx, proxyLBPlanChangeParam.ToV0())
 		},
 	}
 
@@ -329,11 +304,7 @@ func proxyLBBindPortInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("bind-port-info local parameter: \n%s\n", debugMarshalIndent(proxyLBBindPortInfoParam))
-			return nil
+			return funcs.ProxyLBBindPortInfo(ctx, proxyLBBindPortInfoParam.ToV0())
 		},
 	}
 
@@ -370,11 +341,7 @@ func proxyLBBindPortAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("bind-port-add local parameter: \n%s\n", debugMarshalIndent(proxyLBBindPortAddParam))
-			return nil
+			return funcs.ProxyLBBindPortAdd(ctx, proxyLBBindPortAddParam.ToV0())
 		},
 	}
 
@@ -416,11 +383,7 @@ func proxyLBBindPortUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("bind-port-update local parameter: \n%s\n", debugMarshalIndent(proxyLBBindPortUpdateParam))
-			return nil
+			return funcs.ProxyLBBindPortUpdate(ctx, proxyLBBindPortUpdateParam.ToV0())
 		},
 	}
 
@@ -463,11 +426,7 @@ func proxyLBBindPortDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("bind-port-delete local parameter: \n%s\n", debugMarshalIndent(proxyLBBindPortDeleteParam))
-			return nil
+			return funcs.ProxyLBBindPortDelete(ctx, proxyLBBindPortDeleteParam.ToV0())
 		},
 	}
 
@@ -506,11 +465,7 @@ func proxyLBResponseHeaderInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("response-header-info local parameter: \n%s\n", debugMarshalIndent(proxyLBResponseHeaderInfoParam))
-			return nil
+			return funcs.ProxyLBResponseHeaderInfo(ctx, proxyLBResponseHeaderInfoParam.ToV0())
 		},
 	}
 
@@ -548,11 +503,7 @@ func proxyLBResponseHeaderAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("response-header-add local parameter: \n%s\n", debugMarshalIndent(proxyLBResponseHeaderAddParam))
-			return nil
+			return funcs.ProxyLBResponseHeaderAdd(ctx, proxyLBResponseHeaderAddParam.ToV0())
 		},
 	}
 
@@ -593,11 +544,7 @@ func proxyLBResponseHeaderUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("response-header-update local parameter: \n%s\n", debugMarshalIndent(proxyLBResponseHeaderUpdateParam))
-			return nil
+			return funcs.ProxyLBResponseHeaderUpdate(ctx, proxyLBResponseHeaderUpdateParam.ToV0())
 		},
 	}
 
@@ -639,11 +586,7 @@ func proxyLBResponseHeaderDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("response-header-delete local parameter: \n%s\n", debugMarshalIndent(proxyLBResponseHeaderDeleteParam))
-			return nil
+			return funcs.ProxyLBResponseHeaderDelete(ctx, proxyLBResponseHeaderDeleteParam.ToV0())
 		},
 	}
 
@@ -683,11 +626,7 @@ func proxyLBACMEInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("acme-info local parameter: \n%s\n", debugMarshalIndent(proxyLBACMEInfoParam))
-			return nil
+			return funcs.ProxyLBACMEInfo(ctx, proxyLBACMEInfoParam.ToV0())
 		},
 	}
 
@@ -724,11 +663,7 @@ func proxyLBACMESettingCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("acme-setting local parameter: \n%s\n", debugMarshalIndent(proxyLBACMESettingParam))
-			return nil
+			return funcs.ProxyLBACMESetting(ctx, proxyLBACMESettingParam.ToV0())
 		},
 	}
 
@@ -769,11 +704,7 @@ func proxyLBACMERenewCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("acme-renew local parameter: \n%s\n", debugMarshalIndent(proxyLBACMERenewParam))
-			return nil
+			return funcs.ProxyLBACMERenew(ctx, proxyLBACMERenewParam.ToV0())
 		},
 	}
 
@@ -804,11 +735,7 @@ func proxyLBServerInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("server-info local parameter: \n%s\n", debugMarshalIndent(proxyLBServerInfoParam))
-			return nil
+			return funcs.ProxyLBServerInfo(ctx, proxyLBServerInfoParam.ToV0())
 		},
 	}
 
@@ -845,11 +772,7 @@ func proxyLBServerAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("server-add local parameter: \n%s\n", debugMarshalIndent(proxyLBServerAddParam))
-			return nil
+			return funcs.ProxyLBServerAdd(ctx, proxyLBServerAddParam.ToV0())
 		},
 	}
 
@@ -890,11 +813,7 @@ func proxyLBServerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("server-update local parameter: \n%s\n", debugMarshalIndent(proxyLBServerUpdateParam))
-			return nil
+			return funcs.ProxyLBServerUpdate(ctx, proxyLBServerUpdateParam.ToV0())
 		},
 	}
 
@@ -936,11 +855,7 @@ func proxyLBServerDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("server-delete local parameter: \n%s\n", debugMarshalIndent(proxyLBServerDeleteParam))
-			return nil
+			return funcs.ProxyLBServerDelete(ctx, proxyLBServerDeleteParam.ToV0())
 		},
 	}
 
@@ -979,11 +894,7 @@ func proxyLBCertificateInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("certificate-info local parameter: \n%s\n", debugMarshalIndent(proxyLBCertificateInfoParam))
-			return nil
+			return funcs.ProxyLBCertificateInfo(ctx, proxyLBCertificateInfoParam.ToV0())
 		},
 	}
 
@@ -1020,11 +931,7 @@ func proxyLBCertificateAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("certificate-add local parameter: \n%s\n", debugMarshalIndent(proxyLBCertificateAddParam))
-			return nil
+			return funcs.ProxyLBCertificateAdd(ctx, proxyLBCertificateAddParam.ToV0())
 		},
 	}
 
@@ -1065,11 +972,7 @@ func proxyLBCertificateUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("certificate-update local parameter: \n%s\n", debugMarshalIndent(proxyLBCertificateUpdateParam))
-			return nil
+			return funcs.ProxyLBCertificateUpdate(ctx, proxyLBCertificateUpdateParam.ToV0())
 		},
 	}
 
@@ -1110,11 +1013,7 @@ func proxyLBCertificateDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("certificate-delete local parameter: \n%s\n", debugMarshalIndent(proxyLBCertificateDeleteParam))
-			return nil
+			return funcs.ProxyLBCertificateDelete(ctx, proxyLBCertificateDeleteParam.ToV0())
 		},
 	}
 
@@ -1152,11 +1051,7 @@ func proxyLBMonitorCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor local parameter: \n%s\n", debugMarshalIndent(proxyLBMonitorParam))
-			return nil
+			return funcs.ProxyLBMonitor(ctx, proxyLBMonitorParam.ToV0())
 		},
 	}
 

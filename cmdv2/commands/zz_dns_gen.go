@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func dnsListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(dnsListParam))
-			return nil
+			return funcs.DNSList(ctx, dnsListParam.ToV0())
 		},
 	}
 
@@ -96,11 +91,7 @@ func dnsRecordInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("record-info local parameter: \n%s\n", debugMarshalIndent(dnsRecordInfoParam))
-			return nil
+			return funcs.DNSRecordInfo(ctx, dnsRecordInfoParam.ToV0())
 		},
 	}
 
@@ -139,11 +130,7 @@ func dnsRecordBulkUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("record-bulk-update local parameter: \n%s\n", debugMarshalIndent(dnsRecordBulkUpdateParam))
-			return nil
+			return funcs.DNSRecordBulkUpdate(ctx, dnsRecordBulkUpdateParam.ToV0())
 		},
 	}
 
@@ -183,11 +170,7 @@ func dnsCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(dnsCreateParam))
-			return nil
+			return funcs.DNSCreate(ctx, dnsCreateParam.ToV0())
 		},
 	}
 
@@ -227,11 +210,7 @@ func dnsRecordAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("record-add local parameter: \n%s\n", debugMarshalIndent(dnsRecordAddParam))
-			return nil
+			return funcs.DNSRecordAdd(ctx, dnsRecordAddParam.ToV0())
 		},
 	}
 
@@ -278,11 +257,7 @@ func dnsReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(dnsReadParam))
-			return nil
+			return funcs.DNSRead(ctx, dnsReadParam.ToV0())
 		},
 	}
 
@@ -319,11 +294,7 @@ func dnsRecordUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("record-update local parameter: \n%s\n", debugMarshalIndent(dnsRecordUpdateParam))
-			return nil
+			return funcs.DNSRecordUpdate(ctx, dnsRecordUpdateParam.ToV0())
 		},
 	}
 
@@ -371,11 +342,7 @@ func dnsRecordDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("record-delete local parameter: \n%s\n", debugMarshalIndent(dnsRecordDeleteParam))
-			return nil
+			return funcs.DNSRecordDelete(ctx, dnsRecordDeleteParam.ToV0())
 		},
 	}
 
@@ -414,11 +381,7 @@ func dnsUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(dnsUpdateParam))
-			return nil
+			return funcs.DNSUpdate(ctx, dnsUpdateParam.ToV0())
 		},
 	}
 
@@ -459,11 +422,7 @@ func dnsDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(dnsDeleteParam))
-			return nil
+			return funcs.DNSDelete(ctx, dnsDeleteParam.ToV0())
 		},
 	}
 

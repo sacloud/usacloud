@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func gslbListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(gslbListParam))
-			return nil
+			return funcs.GSLBList(ctx, gslbListParam.ToV0())
 		},
 	}
 
@@ -96,11 +91,7 @@ func gslbServerInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("server-info local parameter: \n%s\n", debugMarshalIndent(gslbServerInfoParam))
-			return nil
+			return funcs.GSLBServerInfo(ctx, gslbServerInfoParam.ToV0())
 		},
 	}
 
@@ -137,11 +128,7 @@ func gslbCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(gslbCreateParam))
-			return nil
+			return funcs.GSLBCreate(ctx, gslbCreateParam.ToV0())
 		},
 	}
 
@@ -189,11 +176,7 @@ func gslbServerAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("server-add local parameter: \n%s\n", debugMarshalIndent(gslbServerAddParam))
-			return nil
+			return funcs.GSLBServerAdd(ctx, gslbServerAddParam.ToV0())
 		},
 	}
 
@@ -234,11 +217,7 @@ func gslbReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(gslbReadParam))
-			return nil
+			return funcs.GSLBRead(ctx, gslbReadParam.ToV0())
 		},
 	}
 
@@ -275,11 +254,7 @@ func gslbServerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("server-update local parameter: \n%s\n", debugMarshalIndent(gslbServerUpdateParam))
-			return nil
+			return funcs.GSLBServerUpdate(ctx, gslbServerUpdateParam.ToV0())
 		},
 	}
 
@@ -321,11 +296,7 @@ func gslbServerDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("server-delete local parameter: \n%s\n", debugMarshalIndent(gslbServerDeleteParam))
-			return nil
+			return funcs.GSLBServerDelete(ctx, gslbServerDeleteParam.ToV0())
 		},
 	}
 
@@ -364,11 +335,7 @@ func gslbUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(gslbUpdateParam))
-			return nil
+			return funcs.GSLBUpdate(ctx, gslbUpdateParam.ToV0())
 		},
 	}
 
@@ -418,11 +385,7 @@ func gslbDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(gslbDeleteParam))
-			return nil
+			return funcs.GSLBDelete(ctx, gslbDeleteParam.ToV0())
 		},
 	}
 

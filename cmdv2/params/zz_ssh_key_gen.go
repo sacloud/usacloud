@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -201,6 +202,33 @@ func (p *ListSSHKeyParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListSSHKeyParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SSHKey"]
+}
+
+func (p *ListSSHKeyParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListSSHKeyParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListSSHKeyParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListSSHKeyParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListSSHKeyParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListSSHKeyParam) SetName(v []string) {
 	p.Name = v
 }
@@ -324,6 +352,28 @@ func (p *ListSSHKeyParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListSSHKeyParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListSSHKeyParam) ToV0() *v0params.ListSSHKeyParam {
+	return &v0params.ListSSHKeyParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateSSHKeyParam is input parameters for the sacloud API
@@ -514,6 +564,33 @@ func (p *CreateSSHKeyParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateSSHKeyParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SSHKey"]
+}
+
+func (p *CreateSSHKeyParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateSSHKeyParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateSSHKeyParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateSSHKeyParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateSSHKeyParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateSSHKeyParam) SetPublicKey(v string) {
 	p.PublicKey = v
 }
@@ -637,6 +714,28 @@ func (p *CreateSSHKeyParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CreateSSHKeyParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CreateSSHKeyParam) ToV0() *v0params.CreateSSHKeyParam {
+	return &v0params.CreateSSHKeyParam{
+		PublicKey:         p.PublicKey,
+		Name:              p.Name,
+		Description:       p.Description,
+		Assumeyes:         p.Assumeyes,
+		PublicKeyContent:  p.PublicKeyContent,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // ReadSSHKeyParam is input parameters for the sacloud API
@@ -778,6 +877,33 @@ func (p *ReadSSHKeyParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadSSHKeyParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SSHKey"]
+}
+
+func (p *ReadSSHKeyParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadSSHKeyParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadSSHKeyParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadSSHKeyParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadSSHKeyParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadSSHKeyParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -873,6 +999,24 @@ func (p *ReadSSHKeyParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadSSHKeyParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadSSHKeyParam) ToV0() *v0params.ReadSSHKeyParam {
+	return &v0params.ReadSSHKeyParam{
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateSSHKeyParam is input parameters for the sacloud API
@@ -1042,6 +1186,33 @@ func (p *UpdateSSHKeyParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateSSHKeyParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SSHKey"]
+}
+
+func (p *UpdateSSHKeyParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateSSHKeyParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateSSHKeyParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateSSHKeyParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateSSHKeyParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateSSHKeyParam) SetName(v string) {
 	p.Name = v
 }
@@ -1158,6 +1329,27 @@ func (p *UpdateSSHKeyParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdateSSHKeyParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdateSSHKeyParam) ToV0() *v0params.UpdateSSHKeyParam {
+	return &v0params.UpdateSSHKeyParam{
+		Name:              p.Name,
+		Description:       p.Description,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DeleteSSHKeyParam is input parameters for the sacloud API
@@ -1303,6 +1495,33 @@ func (p *DeleteSSHKeyParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteSSHKeyParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SSHKey"]
+}
+
+func (p *DeleteSSHKeyParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteSSHKeyParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteSSHKeyParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteSSHKeyParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteSSHKeyParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteSSHKeyParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1405,6 +1624,25 @@ func (p *DeleteSSHKeyParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteSSHKeyParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteSSHKeyParam) ToV0() *v0params.DeleteSSHKeyParam {
+	return &v0params.DeleteSSHKeyParam{
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // GenerateSSHKeyParam is input parameters for the sacloud API
@@ -1585,6 +1823,33 @@ func (p *GenerateSSHKeyParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *GenerateSSHKeyParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SSHKey"]
+}
+
+func (p *GenerateSSHKeyParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["generate"]
+}
+
+func (p *GenerateSSHKeyParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *GenerateSSHKeyParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *GenerateSSHKeyParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *GenerateSSHKeyParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *GenerateSSHKeyParam) SetPassPhrase(v string) {
 	p.PassPhrase = v
 }
@@ -1708,4 +1973,26 @@ func (p *GenerateSSHKeyParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *GenerateSSHKeyParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *GenerateSSHKeyParam) ToV0() *v0params.GenerateSSHKeyParam {
+	return &v0params.GenerateSSHKeyParam{
+		PassPhrase:        p.PassPhrase,
+		Name:              p.Name,
+		Description:       p.Description,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		PrivateKeyOutput:  p.PrivateKeyOutput,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }

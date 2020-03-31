@@ -17,9 +17,8 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -50,11 +49,7 @@ func couponListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(couponListParam))
-			return nil
+			return funcs.CouponList(ctx, couponListParam.ToV0())
 		},
 	}
 

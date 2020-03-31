@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -213,6 +214,33 @@ func (p *ListGSLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListGSLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["GSLB"]
+}
+
+func (p *ListGSLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListGSLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListGSLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListGSLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListGSLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListGSLBParam) SetName(v []string) {
 	p.Name = v
 }
@@ -343,6 +371,29 @@ func (p *ListGSLBParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListGSLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListGSLBParam) ToV0() *v0params.ListGSLBParam {
+	return &v0params.ListGSLBParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Tags:              p.Tags,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // ServerInfoGSLBParam is input parameters for the sacloud API
@@ -488,6 +539,33 @@ func (p *ServerInfoGSLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerInfoGSLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["GSLB"]
+}
+
+func (p *ServerInfoGSLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-info"]
+}
+
+func (p *ServerInfoGSLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerInfoGSLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerInfoGSLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerInfoGSLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerInfoGSLBParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -590,6 +668,25 @@ func (p *ServerInfoGSLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerInfoGSLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerInfoGSLBParam) ToV0() *v0params.ServerInfoGSLBParam {
+	return &v0params.ServerInfoGSLBParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // CreateGSLBParam is input parameters for the sacloud API
@@ -849,6 +946,33 @@ func (p *CreateGSLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateGSLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["GSLB"]
+}
+
+func (p *CreateGSLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateGSLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateGSLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateGSLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateGSLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateGSLBParam) SetProtocol(v string) {
 	p.Protocol = v
 }
@@ -1030,6 +1154,36 @@ func (p *CreateGSLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *CreateGSLBParam) ToV0() *v0params.CreateGSLBParam {
+	return &v0params.CreateGSLBParam{
+		Protocol:          p.Protocol,
+		HostHeader:        p.HostHeader,
+		Path:              p.Path,
+		ResponseCode:      p.ResponseCode,
+		Port:              p.Port,
+		DelayLoop:         p.DelayLoop,
+		Weighted:          p.Weighted,
+		SorryServer:       p.SorryServer,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
+}
+
 // ServerAddGSLBParam is input parameters for the sacloud API
 type ServerAddGSLBParam struct {
 	Ipaddress         string
@@ -1205,6 +1359,33 @@ func (p *ServerAddGSLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerAddGSLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["GSLB"]
+}
+
+func (p *ServerAddGSLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-add"]
+}
+
+func (p *ServerAddGSLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerAddGSLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerAddGSLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerAddGSLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerAddGSLBParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
@@ -1335,6 +1516,29 @@ func (p *ServerAddGSLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerAddGSLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerAddGSLBParam) ToV0() *v0params.ServerAddGSLBParam {
+	return &v0params.ServerAddGSLBParam{
+		Ipaddress:         p.Ipaddress,
+		Disabled:          p.Disabled,
+		Weight:            p.Weight,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ReadGSLBParam is input parameters for the sacloud API
@@ -1480,6 +1684,33 @@ func (p *ReadGSLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadGSLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["GSLB"]
+}
+
+func (p *ReadGSLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadGSLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadGSLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadGSLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadGSLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadGSLBParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1582,6 +1813,25 @@ func (p *ReadGSLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadGSLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadGSLBParam) ToV0() *v0params.ReadGSLBParam {
+	return &v0params.ReadGSLBParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ServerUpdateGSLBParam is input parameters for the sacloud API
@@ -1771,6 +2021,33 @@ func (p *ServerUpdateGSLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerUpdateGSLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["GSLB"]
+}
+
+func (p *ServerUpdateGSLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-update"]
+}
+
+func (p *ServerUpdateGSLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerUpdateGSLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerUpdateGSLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerUpdateGSLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerUpdateGSLBParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -1908,6 +2185,30 @@ func (p *ServerUpdateGSLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerUpdateGSLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerUpdateGSLBParam) ToV0() *v0params.ServerUpdateGSLBParam {
+	return &v0params.ServerUpdateGSLBParam{
+		Index:             p.Index,
+		Ipaddress:         p.Ipaddress,
+		Disabled:          p.Disabled,
+		Weight:            p.Weight,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ServerDeleteGSLBParam is input parameters for the sacloud API
@@ -2069,6 +2370,33 @@ func (p *ServerDeleteGSLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerDeleteGSLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["GSLB"]
+}
+
+func (p *ServerDeleteGSLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-delete"]
+}
+
+func (p *ServerDeleteGSLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerDeleteGSLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerDeleteGSLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerDeleteGSLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerDeleteGSLBParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -2185,6 +2513,27 @@ func (p *ServerDeleteGSLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerDeleteGSLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerDeleteGSLBParam) ToV0() *v0params.ServerDeleteGSLBParam {
+	return &v0params.ServerDeleteGSLBParam{
+		Index:             p.Index,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateGSLBParam is input parameters for the sacloud API
@@ -2438,6 +2787,33 @@ func (p *UpdateGSLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateGSLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["GSLB"]
+}
+
+func (p *UpdateGSLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateGSLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateGSLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateGSLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateGSLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateGSLBParam) SetProtocol(v string) {
 	p.Protocol = v
 }
@@ -2633,6 +3009,38 @@ func (p *UpdateGSLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *UpdateGSLBParam) ToV0() *v0params.UpdateGSLBParam {
+	return &v0params.UpdateGSLBParam{
+		Protocol:          p.Protocol,
+		HostHeader:        p.HostHeader,
+		Path:              p.Path,
+		ResponseCode:      p.ResponseCode,
+		Port:              p.Port,
+		DelayLoop:         p.DelayLoop,
+		Weighted:          p.Weighted,
+		SorryServer:       p.SorryServer,
+		Selector:          p.Selector,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // DeleteGSLBParam is input parameters for the sacloud API
 type DeleteGSLBParam struct {
 	Selector          []string
@@ -2780,6 +3188,33 @@ func (p *DeleteGSLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteGSLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["GSLB"]
+}
+
+func (p *DeleteGSLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteGSLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteGSLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteGSLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteGSLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteGSLBParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2889,4 +3324,24 @@ func (p *DeleteGSLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteGSLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteGSLBParam) ToV0() *v0params.DeleteGSLBParam {
+	return &v0params.DeleteGSLBParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -253,6 +254,33 @@ func (p *ListDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListDiskParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *ListDiskParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListDiskParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListDiskParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListDiskParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListDiskParam) SetName(v []string) {
 	p.Name = v
 }
@@ -411,6 +439,33 @@ func (p *ListDiskParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListDiskParam) ToV0() *v0params.ListDiskParam {
+	return &v0params.ListDiskParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Scope:             p.Scope,
+		Tags:              p.Tags,
+		SourceArchiveId:   p.SourceArchiveId,
+		SourceDiskId:      p.SourceDiskId,
+		Storage:           p.Storage,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateDiskParam is input parameters for the sacloud API
@@ -711,6 +766,33 @@ func (p *CreateDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateDiskParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *CreateDiskParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateDiskParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateDiskParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateDiskParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateDiskParam) SetPlan(v string) {
 	p.Plan = v
 }
@@ -878,6 +960,34 @@ func (p *CreateDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *CreateDiskParam) ToV0() *v0params.CreateDiskParam {
+	return &v0params.CreateDiskParam{
+		Plan:              p.Plan,
+		Connection:        p.Connection,
+		SourceArchiveId:   p.SourceArchiveId,
+		SourceDiskId:      p.SourceDiskId,
+		Size:              p.Size,
+		DistantFrom:       p.DistantFrom,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
+}
+
 // ReadDiskParam is input parameters for the sacloud API
 type ReadDiskParam struct {
 	Selector          []string
@@ -1021,6 +1131,33 @@ func (p *ReadDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadDiskParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *ReadDiskParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadDiskParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadDiskParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadDiskParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadDiskParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1123,6 +1260,25 @@ func (p *ReadDiskParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadDiskParam) ToV0() *v0params.ReadDiskParam {
+	return &v0params.ReadDiskParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateDiskParam is input parameters for the sacloud API
@@ -1332,6 +1488,33 @@ func (p *UpdateDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateDiskParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *UpdateDiskParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateDiskParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateDiskParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateDiskParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateDiskParam) SetConnection(v string) {
 	p.Connection = v
 }
@@ -1476,6 +1659,31 @@ func (p *UpdateDiskParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdateDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdateDiskParam) ToV0() *v0params.UpdateDiskParam {
+	return &v0params.UpdateDiskParam{
+		Connection:        p.Connection,
+		Selector:          p.Selector,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DeleteDiskParam is input parameters for the sacloud API
@@ -1625,6 +1833,33 @@ func (p *DeleteDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteDiskParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *DeleteDiskParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteDiskParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteDiskParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteDiskParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteDiskParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1734,6 +1969,26 @@ func (p *DeleteDiskParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteDiskParam) ToV0() *v0params.DeleteDiskParam {
+	return &v0params.DeleteDiskParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // EditDiskParam is input parameters for the sacloud API
@@ -1940,6 +2195,33 @@ func (p *EditDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *EditDiskParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *EditDiskParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["edit"]
+}
+
+func (p *EditDiskParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *EditDiskParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *EditDiskParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *EditDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *EditDiskParam) SetHostname(v string) {
 	p.Hostname = v
 }
@@ -2107,6 +2389,34 @@ func (p *EditDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *EditDiskParam) ToV0() *v0params.EditDiskParam {
+	return &v0params.EditDiskParam{
+		Hostname:            p.Hostname,
+		Password:            p.Password,
+		SSHKeyIds:           p.SSHKeyIds,
+		DisablePasswordAuth: p.DisablePasswordAuth,
+		Ipaddress:           p.Ipaddress,
+		DefaultRoute:        p.DefaultRoute,
+		NwMasklen:           p.NwMasklen,
+		StartupScriptIds:    p.StartupScriptIds,
+		Selector:            p.Selector,
+		Assumeyes:           p.Assumeyes,
+		ParamTemplate:       p.ParamTemplate,
+		Parameters:          p.Parameters,
+		ParamTemplateFile:   p.ParamTemplateFile,
+		ParameterFile:       p.ParameterFile,
+		GenerateSkeleton:    p.GenerateSkeleton,
+		OutputType:          p.OutputType,
+		Column:              p.Column,
+		Quiet:               p.Quiet,
+		Format:              p.Format,
+		FormatFile:          p.FormatFile,
+		Query:               p.Query,
+		QueryFile:           p.QueryFile,
+		Id:                  p.Id,
+	}
+}
+
 // ResizePartitionDiskParam is input parameters for the sacloud API
 type ResizePartitionDiskParam struct {
 	Selector          []string
@@ -2254,6 +2564,33 @@ func (p *ResizePartitionDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ResizePartitionDiskParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *ResizePartitionDiskParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["resize-partition"]
+}
+
+func (p *ResizePartitionDiskParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ResizePartitionDiskParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ResizePartitionDiskParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ResizePartitionDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ResizePartitionDiskParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2363,6 +2700,26 @@ func (p *ResizePartitionDiskParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ResizePartitionDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ResizePartitionDiskParam) ToV0() *v0params.ResizePartitionDiskParam {
+	return &v0params.ResizePartitionDiskParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ReinstallFromArchiveDiskParam is input parameters for the sacloud API
@@ -2501,6 +2858,33 @@ func (p *ReinstallFromArchiveDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReinstallFromArchiveDiskParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["reinstall-from-archive"]
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReinstallFromArchiveDiskParam) SetSourceArchiveId(v sacloud.ID) {
 	p.SourceArchiveId = v
 }
@@ -2575,6 +2959,21 @@ func (p *ReinstallFromArchiveDiskParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReinstallFromArchiveDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReinstallFromArchiveDiskParam) ToV0() *v0params.ReinstallFromArchiveDiskParam {
+	return &v0params.ReinstallFromArchiveDiskParam{
+		SourceArchiveId:   p.SourceArchiveId,
+		DistantFrom:       p.DistantFrom,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ReinstallFromDiskDiskParam is input parameters for the sacloud API
@@ -2713,6 +3112,33 @@ func (p *ReinstallFromDiskDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReinstallFromDiskDiskParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *ReinstallFromDiskDiskParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["reinstall-from-disk"]
+}
+
+func (p *ReinstallFromDiskDiskParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReinstallFromDiskDiskParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReinstallFromDiskDiskParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReinstallFromDiskDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReinstallFromDiskDiskParam) SetSourceDiskId(v sacloud.ID) {
 	p.SourceDiskId = v
 }
@@ -2787,6 +3213,21 @@ func (p *ReinstallFromDiskDiskParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReinstallFromDiskDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReinstallFromDiskDiskParam) ToV0() *v0params.ReinstallFromDiskDiskParam {
+	return &v0params.ReinstallFromDiskDiskParam{
+		SourceDiskId:      p.SourceDiskId,
+		DistantFrom:       p.DistantFrom,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ReinstallToBlankDiskParam is input parameters for the sacloud API
@@ -2906,6 +3347,33 @@ func (p *ReinstallToBlankDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReinstallToBlankDiskParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *ReinstallToBlankDiskParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["reinstall-to-blank"]
+}
+
+func (p *ReinstallToBlankDiskParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReinstallToBlankDiskParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReinstallToBlankDiskParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReinstallToBlankDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReinstallToBlankDiskParam) SetDistantFrom(v []sacloud.ID) {
 	p.DistantFrom = v
 }
@@ -2973,6 +3441,20 @@ func (p *ReinstallToBlankDiskParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReinstallToBlankDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReinstallToBlankDiskParam) ToV0() *v0params.ReinstallToBlankDiskParam {
+	return &v0params.ReinstallToBlankDiskParam{
+		DistantFrom:       p.DistantFrom,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ServerConnectDiskParam is input parameters for the sacloud API
@@ -3099,6 +3581,33 @@ func (p *ServerConnectDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerConnectDiskParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *ServerConnectDiskParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-connect"]
+}
+
+func (p *ServerConnectDiskParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerConnectDiskParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerConnectDiskParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerConnectDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerConnectDiskParam) SetServerId(v sacloud.ID) {
 	p.ServerId = v
 }
@@ -3166,6 +3675,20 @@ func (p *ServerConnectDiskParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerConnectDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerConnectDiskParam) ToV0() *v0params.ServerConnectDiskParam {
+	return &v0params.ServerConnectDiskParam{
+		ServerId:          p.ServerId,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ServerDisconnectDiskParam is input parameters for the sacloud API
@@ -3273,6 +3796,33 @@ func (p *ServerDisconnectDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerDisconnectDiskParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *ServerDisconnectDiskParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-disconnect"]
+}
+
+func (p *ServerDisconnectDiskParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerDisconnectDiskParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerDisconnectDiskParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerDisconnectDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerDisconnectDiskParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -3333,6 +3883,19 @@ func (p *ServerDisconnectDiskParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerDisconnectDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerDisconnectDiskParam) ToV0() *v0params.ServerDisconnectDiskParam {
+	return &v0params.ServerDisconnectDiskParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // MonitorDiskParam is input parameters for the sacloud API
@@ -3515,6 +4078,33 @@ func (p *MonitorDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorDiskParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *MonitorDiskParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor"]
+}
+
+func (p *MonitorDiskParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorDiskParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorDiskParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorDiskParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -3640,6 +4230,28 @@ func (p *MonitorDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *MonitorDiskParam) ToV0() *v0params.MonitorDiskParam {
+	return &v0params.MonitorDiskParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		End:               p.End,
+		Id:                p.Id,
+		KeyFormat:         p.KeyFormat,
+		Start:             p.Start,
+	}
+}
+
 // WaitForCopyDiskParam is input parameters for the sacloud API
 type WaitForCopyDiskParam struct {
 	Selector          []string
@@ -3741,6 +4353,33 @@ func (p *WaitForCopyDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *WaitForCopyDiskParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *WaitForCopyDiskParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["wait-for-copy"]
+}
+
+func (p *WaitForCopyDiskParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *WaitForCopyDiskParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *WaitForCopyDiskParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *WaitForCopyDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *WaitForCopyDiskParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -3794,4 +4433,16 @@ func (p *WaitForCopyDiskParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *WaitForCopyDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *WaitForCopyDiskParam) ToV0() *v0params.WaitForCopyDiskParam {
+	return &v0params.WaitForCopyDiskParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }

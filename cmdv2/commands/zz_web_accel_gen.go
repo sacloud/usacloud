@@ -17,9 +17,8 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -50,11 +49,7 @@ func webAccelListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(webAccelListParam))
-			return nil
+			return funcs.WebAccelList(ctx, webAccelListParam.ToV0())
 		},
 	}
 
@@ -89,11 +84,7 @@ func webAccelReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(webAccelReadParam))
-			return nil
+			return funcs.WebAccelRead(ctx, webAccelReadParam.ToV0())
 		},
 	}
 
@@ -130,11 +121,7 @@ func webAccelCertificateInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("certificate-info local parameter: \n%s\n", debugMarshalIndent(webAccelCertificateInfoParam))
-			return nil
+			return funcs.WebAccelCertificateInfo(ctx, webAccelCertificateInfoParam.ToV0())
 		},
 	}
 
@@ -171,11 +158,7 @@ func webAccelCertificateNewCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("certificate-new local parameter: \n%s\n", debugMarshalIndent(webAccelCertificateNewParam))
-			return nil
+			return funcs.WebAccelCertificateNew(ctx, webAccelCertificateNewParam.ToV0())
 		},
 	}
 
@@ -217,11 +200,7 @@ func webAccelCertificateUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("certificate-update local parameter: \n%s\n", debugMarshalIndent(webAccelCertificateUpdateParam))
-			return nil
+			return funcs.WebAccelCertificateUpdate(ctx, webAccelCertificateUpdateParam.ToV0())
 		},
 	}
 
@@ -263,11 +242,7 @@ func webAccelDeleteCacheCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete-cache local parameter: \n%s\n", debugMarshalIndent(webAccelDeleteCacheParam))
-			return nil
+			return funcs.WebAccelDeleteCache(ctx, webAccelDeleteCacheParam.ToV0())
 		},
 	}
 

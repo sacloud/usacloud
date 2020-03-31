@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func databaseListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(databaseListParam))
-			return nil
+			return funcs.DatabaseList(ctx, databaseListParam.ToV0())
 		},
 	}
 
@@ -96,11 +91,7 @@ func databaseCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(databaseCreateParam))
-			return nil
+			return funcs.DatabaseCreate(ctx, databaseCreateParam.ToV0())
 		},
 	}
 
@@ -155,11 +146,7 @@ func databaseReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(databaseReadParam))
-			return nil
+			return funcs.DatabaseRead(ctx, databaseReadParam.ToV0())
 		},
 	}
 
@@ -196,11 +183,7 @@ func databaseUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(databaseUpdateParam))
-			return nil
+			return funcs.DatabaseUpdate(ctx, databaseUpdateParam.ToV0())
 		},
 	}
 
@@ -251,11 +234,7 @@ func databaseDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(databaseDeleteParam))
-			return nil
+			return funcs.DatabaseDelete(ctx, databaseDeleteParam.ToV0())
 		},
 	}
 
@@ -294,11 +273,7 @@ func databaseBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(databaseBootParam))
-			return nil
+			return funcs.DatabaseBoot(ctx, databaseBootParam.ToV0())
 		},
 	}
 
@@ -329,11 +304,7 @@ func databaseShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(databaseShutdownParam))
-			return nil
+			return funcs.DatabaseShutdown(ctx, databaseShutdownParam.ToV0())
 		},
 	}
 
@@ -364,11 +335,7 @@ func databaseShutdownForceCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(databaseShutdownForceParam))
-			return nil
+			return funcs.DatabaseShutdownForce(ctx, databaseShutdownForceParam.ToV0())
 		},
 	}
 
@@ -399,11 +366,7 @@ func databaseResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(databaseResetParam))
-			return nil
+			return funcs.DatabaseReset(ctx, databaseResetParam.ToV0())
 		},
 	}
 
@@ -434,11 +397,7 @@ func databaseWaitForBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(databaseWaitForBootParam))
-			return nil
+			return funcs.DatabaseWaitForBoot(ctx, databaseWaitForBootParam.ToV0())
 		},
 	}
 
@@ -468,11 +427,7 @@ func databaseWaitForDownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(databaseWaitForDownParam))
-			return nil
+			return funcs.DatabaseWaitForDown(ctx, databaseWaitForDownParam.ToV0())
 		},
 	}
 
@@ -502,11 +457,7 @@ func databaseBackupInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("backup-info local parameter: \n%s\n", debugMarshalIndent(databaseBackupInfoParam))
-			return nil
+			return funcs.DatabaseBackupInfo(ctx, databaseBackupInfoParam.ToV0())
 		},
 	}
 
@@ -543,11 +494,7 @@ func databaseBackupCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("backup-create local parameter: \n%s\n", debugMarshalIndent(databaseBackupCreateParam))
-			return nil
+			return funcs.DatabaseBackupCreate(ctx, databaseBackupCreateParam.ToV0())
 		},
 	}
 
@@ -584,11 +531,7 @@ func databaseBackupRestoreCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("backup-restore local parameter: \n%s\n", debugMarshalIndent(databaseBackupRestoreParam))
-			return nil
+			return funcs.DatabaseBackupRestore(ctx, databaseBackupRestoreParam.ToV0())
 		},
 	}
 
@@ -626,11 +569,7 @@ func databaseBackupLockCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("backup-lock local parameter: \n%s\n", debugMarshalIndent(databaseBackupLockParam))
-			return nil
+			return funcs.DatabaseBackupLock(ctx, databaseBackupLockParam.ToV0())
 		},
 	}
 
@@ -668,11 +607,7 @@ func databaseBackupUnlockCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("backup-unlock local parameter: \n%s\n", debugMarshalIndent(databaseBackupUnlockParam))
-			return nil
+			return funcs.DatabaseBackupUnlock(ctx, databaseBackupUnlockParam.ToV0())
 		},
 	}
 
@@ -710,11 +645,7 @@ func databaseBackupRemoveCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("backup-remove local parameter: \n%s\n", debugMarshalIndent(databaseBackupRemoveParam))
-			return nil
+			return funcs.DatabaseBackupRemove(ctx, databaseBackupRemoveParam.ToV0())
 		},
 	}
 
@@ -752,11 +683,7 @@ func databaseCloneCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("clone local parameter: \n%s\n", debugMarshalIndent(databaseCloneParam))
-			return nil
+			return funcs.DatabaseClone(ctx, databaseCloneParam.ToV0())
 		},
 	}
 
@@ -809,11 +736,7 @@ func databaseReplicaCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("replica-create local parameter: \n%s\n", debugMarshalIndent(databaseReplicaCreateParam))
-			return nil
+			return funcs.DatabaseReplicaCreate(ctx, databaseReplicaCreateParam.ToV0())
 		},
 	}
 
@@ -858,11 +781,7 @@ func databaseMonitorCPUCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor-cpu local parameter: \n%s\n", debugMarshalIndent(databaseMonitorCPUParam))
-			return nil
+			return funcs.DatabaseMonitorCPU(ctx, databaseMonitorCPUParam.ToV0())
 		},
 	}
 
@@ -902,11 +821,7 @@ func databaseMonitorMemoryCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor-memory local parameter: \n%s\n", debugMarshalIndent(databaseMonitorMemoryParam))
-			return nil
+			return funcs.DatabaseMonitorMemory(ctx, databaseMonitorMemoryParam.ToV0())
 		},
 	}
 
@@ -946,11 +861,7 @@ func databaseMonitorNicCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor-nic local parameter: \n%s\n", debugMarshalIndent(databaseMonitorNicParam))
-			return nil
+			return funcs.DatabaseMonitorNic(ctx, databaseMonitorNicParam.ToV0())
 		},
 	}
 
@@ -990,11 +901,7 @@ func databaseMonitorSystemDiskCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor-system-disk local parameter: \n%s\n", debugMarshalIndent(databaseMonitorSystemDiskParam))
-			return nil
+			return funcs.DatabaseMonitorSystemDisk(ctx, databaseMonitorSystemDiskParam.ToV0())
 		},
 	}
 
@@ -1034,11 +941,7 @@ func databaseMonitorBackupDiskCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor-backup-disk local parameter: \n%s\n", debugMarshalIndent(databaseMonitorBackupDiskParam))
-			return nil
+			return funcs.DatabaseMonitorBackupDisk(ctx, databaseMonitorBackupDiskParam.ToV0())
 		},
 	}
 
@@ -1078,11 +981,7 @@ func databaseMonitorSystemDiskSizeCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor-system-disk-size local parameter: \n%s\n", debugMarshalIndent(databaseMonitorSystemDiskSizeParam))
-			return nil
+			return funcs.DatabaseMonitorSystemDiskSize(ctx, databaseMonitorSystemDiskSizeParam.ToV0())
 		},
 	}
 
@@ -1122,11 +1021,7 @@ func databaseMonitorBackupDiskSizeCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor-backup-disk-size local parameter: \n%s\n", debugMarshalIndent(databaseMonitorBackupDiskSizeParam))
-			return nil
+			return funcs.DatabaseMonitorBackupDiskSize(ctx, databaseMonitorBackupDiskSizeParam.ToV0())
 		},
 	}
 
@@ -1166,11 +1061,7 @@ func databaseLogsCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("logs local parameter: \n%s\n", debugMarshalIndent(databaseLogsParam))
-			return nil
+			return funcs.DatabaseLogs(ctx, databaseLogsParam.ToV0())
 		},
 	}
 

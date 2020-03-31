@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func autoBackupListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(autoBackupListParam))
-			return nil
+			return funcs.AutoBackupList(ctx, autoBackupListParam.ToV0())
 		},
 	}
 
@@ -96,11 +91,7 @@ func autoBackupCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(autoBackupCreateParam))
-			return nil
+			return funcs.AutoBackupCreate(ctx, autoBackupCreateParam.ToV0())
 		},
 	}
 
@@ -143,11 +134,7 @@ func autoBackupReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(autoBackupReadParam))
-			return nil
+			return funcs.AutoBackupRead(ctx, autoBackupReadParam.ToV0())
 		},
 	}
 
@@ -184,11 +171,7 @@ func autoBackupUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(autoBackupUpdateParam))
-			return nil
+			return funcs.AutoBackupUpdate(ctx, autoBackupUpdateParam.ToV0())
 		},
 	}
 
@@ -232,11 +215,7 @@ func autoBackupDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(autoBackupDeleteParam))
-			return nil
+			return funcs.AutoBackupDelete(ctx, autoBackupDeleteParam.ToV0())
 		},
 	}
 

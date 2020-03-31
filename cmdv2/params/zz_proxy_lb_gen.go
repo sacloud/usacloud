@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -213,6 +214,33 @@ func (p *ListProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ListProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListProxyLBParam) SetName(v []string) {
 	p.Name = v
 }
@@ -343,6 +371,29 @@ func (p *ListProxyLBParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListProxyLBParam) ToV0() *v0params.ListProxyLBParam {
+	return &v0params.ListProxyLBParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Tags:              p.Tags,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateProxyLBParam is input parameters for the sacloud API
@@ -622,6 +673,33 @@ func (p *CreateProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *CreateProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateProxyLBParam) SetPlan(v int) {
 	p.Plan = v
 }
@@ -810,6 +888,37 @@ func (p *CreateProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *CreateProxyLBParam) ToV0() *v0params.CreateProxyLBParam {
+	return &v0params.CreateProxyLBParam{
+		Plan:                 p.Plan,
+		Protocol:             p.Protocol,
+		HostHeader:           p.HostHeader,
+		Path:                 p.Path,
+		DelayLoop:            p.DelayLoop,
+		StickySession:        p.StickySession,
+		SorryServerIpaddress: p.SorryServerIpaddress,
+		SorryServerPort:      p.SorryServerPort,
+		Timeout:              p.Timeout,
+		Name:                 p.Name,
+		Description:          p.Description,
+		Tags:                 p.Tags,
+		IconId:               p.IconId,
+		Assumeyes:            p.Assumeyes,
+		ParamTemplate:        p.ParamTemplate,
+		Parameters:           p.Parameters,
+		ParamTemplateFile:    p.ParamTemplateFile,
+		ParameterFile:        p.ParameterFile,
+		GenerateSkeleton:     p.GenerateSkeleton,
+		OutputType:           p.OutputType,
+		Column:               p.Column,
+		Quiet:                p.Quiet,
+		Format:               p.Format,
+		FormatFile:           p.FormatFile,
+		Query:                p.Query,
+		QueryFile:            p.QueryFile,
+	}
+}
+
 // ReadProxyLBParam is input parameters for the sacloud API
 type ReadProxyLBParam struct {
 	Selector          []string
@@ -953,6 +1062,33 @@ func (p *ReadProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ReadProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadProxyLBParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1055,6 +1191,25 @@ func (p *ReadProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadProxyLBParam) ToV0() *v0params.ReadProxyLBParam {
+	return &v0params.ReadProxyLBParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateProxyLBParam is input parameters for the sacloud API
@@ -1317,6 +1472,33 @@ func (p *UpdateProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *UpdateProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateProxyLBParam) SetProtocol(v string) {
 	p.Protocol = v
 }
@@ -1512,6 +1694,38 @@ func (p *UpdateProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *UpdateProxyLBParam) ToV0() *v0params.UpdateProxyLBParam {
+	return &v0params.UpdateProxyLBParam{
+		Protocol:             p.Protocol,
+		HostHeader:           p.HostHeader,
+		Path:                 p.Path,
+		DelayLoop:            p.DelayLoop,
+		StickySession:        p.StickySession,
+		SorryServerIpaddress: p.SorryServerIpaddress,
+		SorryServerPort:      p.SorryServerPort,
+		Timeout:              p.Timeout,
+		Selector:             p.Selector,
+		Name:                 p.Name,
+		Description:          p.Description,
+		Tags:                 p.Tags,
+		IconId:               p.IconId,
+		Assumeyes:            p.Assumeyes,
+		ParamTemplate:        p.ParamTemplate,
+		Parameters:           p.Parameters,
+		ParamTemplateFile:    p.ParamTemplateFile,
+		ParameterFile:        p.ParameterFile,
+		GenerateSkeleton:     p.GenerateSkeleton,
+		OutputType:           p.OutputType,
+		Column:               p.Column,
+		Quiet:                p.Quiet,
+		Format:               p.Format,
+		FormatFile:           p.FormatFile,
+		Query:                p.Query,
+		QueryFile:            p.QueryFile,
+		Id:                   p.Id,
+	}
+}
+
 // DeleteProxyLBParam is input parameters for the sacloud API
 type DeleteProxyLBParam struct {
 	Selector          []string
@@ -1659,6 +1873,33 @@ func (p *DeleteProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *DeleteProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteProxyLBParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1768,6 +2009,26 @@ func (p *DeleteProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteProxyLBParam) ToV0() *v0params.DeleteProxyLBParam {
+	return &v0params.DeleteProxyLBParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // PlanChangeProxyLBParam is input parameters for the sacloud API
@@ -1936,6 +2197,33 @@ func (p *PlanChangeProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *PlanChangeProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *PlanChangeProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["plan-change"]
+}
+
+func (p *PlanChangeProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *PlanChangeProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *PlanChangeProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *PlanChangeProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *PlanChangeProxyLBParam) SetPlan(v int) {
 	p.Plan = v
 }
@@ -2052,6 +2340,27 @@ func (p *PlanChangeProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *PlanChangeProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *PlanChangeProxyLBParam) ToV0() *v0params.PlanChangeProxyLBParam {
+	return &v0params.PlanChangeProxyLBParam{
+		Plan:              p.Plan,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // BindPortInfoProxyLBParam is input parameters for the sacloud API
@@ -2197,6 +2506,33 @@ func (p *BindPortInfoProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BindPortInfoProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *BindPortInfoProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["bind-port-info"]
+}
+
+func (p *BindPortInfoProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BindPortInfoProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BindPortInfoProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BindPortInfoProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BindPortInfoProxyLBParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2299,6 +2635,25 @@ func (p *BindPortInfoProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BindPortInfoProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BindPortInfoProxyLBParam) ToV0() *v0params.BindPortInfoProxyLBParam {
+	return &v0params.BindPortInfoProxyLBParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // BindPortAddProxyLBParam is input parameters for the sacloud API
@@ -2494,6 +2849,33 @@ func (p *BindPortAddProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BindPortAddProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *BindPortAddProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["bind-port-add"]
+}
+
+func (p *BindPortAddProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BindPortAddProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BindPortAddProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BindPortAddProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BindPortAddProxyLBParam) SetMode(v string) {
 	p.Mode = v
 }
@@ -2631,6 +3013,30 @@ func (p *BindPortAddProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BindPortAddProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BindPortAddProxyLBParam) ToV0() *v0params.BindPortAddProxyLBParam {
+	return &v0params.BindPortAddProxyLBParam{
+		Mode:              p.Mode,
+		Port:              p.Port,
+		RedirectToHttps:   p.RedirectToHttps,
+		SupportHttp2:      p.SupportHttp2,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // BindPortUpdateProxyLBParam is input parameters for the sacloud API
@@ -2824,6 +3230,33 @@ func (p *BindPortUpdateProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BindPortUpdateProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *BindPortUpdateProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["bind-port-update"]
+}
+
+func (p *BindPortUpdateProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BindPortUpdateProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BindPortUpdateProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BindPortUpdateProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BindPortUpdateProxyLBParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -2968,6 +3401,31 @@ func (p *BindPortUpdateProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BindPortUpdateProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BindPortUpdateProxyLBParam) ToV0() *v0params.BindPortUpdateProxyLBParam {
+	return &v0params.BindPortUpdateProxyLBParam{
+		Index:             p.Index,
+		Mode:              p.Mode,
+		Port:              p.Port,
+		RedirectToHttps:   p.RedirectToHttps,
+		SupportHttp2:      p.SupportHttp2,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // BindPortDeleteProxyLBParam is input parameters for the sacloud API
@@ -3129,6 +3587,33 @@ func (p *BindPortDeleteProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BindPortDeleteProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *BindPortDeleteProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["bind-port-delete"]
+}
+
+func (p *BindPortDeleteProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BindPortDeleteProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BindPortDeleteProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BindPortDeleteProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BindPortDeleteProxyLBParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -3245,6 +3730,27 @@ func (p *BindPortDeleteProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BindPortDeleteProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BindPortDeleteProxyLBParam) ToV0() *v0params.BindPortDeleteProxyLBParam {
+	return &v0params.BindPortDeleteProxyLBParam{
+		Index:             p.Index,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ResponseHeaderInfoProxyLBParam is input parameters for the sacloud API
@@ -3402,6 +3908,33 @@ func (p *ResponseHeaderInfoProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ResponseHeaderInfoProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["response-header-info"]
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ResponseHeaderInfoProxyLBParam) SetPortIndex(v int) {
 	p.PortIndex = v
 }
@@ -3511,6 +4044,26 @@ func (p *ResponseHeaderInfoProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ResponseHeaderInfoProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) ToV0() *v0params.ResponseHeaderInfoProxyLBParam {
+	return &v0params.ResponseHeaderInfoProxyLBParam{
+		PortIndex:         p.PortIndex,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ResponseHeaderAddProxyLBParam is input parameters for the sacloud API
@@ -3696,6 +4249,33 @@ func (p *ResponseHeaderAddProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ResponseHeaderAddProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["response-header-add"]
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ResponseHeaderAddProxyLBParam) SetPortIndex(v int) {
 	p.PortIndex = v
 }
@@ -3826,6 +4406,29 @@ func (p *ResponseHeaderAddProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ResponseHeaderAddProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ResponseHeaderAddProxyLBParam) ToV0() *v0params.ResponseHeaderAddProxyLBParam {
+	return &v0params.ResponseHeaderAddProxyLBParam{
+		PortIndex:         p.PortIndex,
+		Header:            p.Header,
+		Value:             p.Value,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ResponseHeaderUpdateProxyLBParam is input parameters for the sacloud API
@@ -4007,6 +4610,33 @@ func (p *ResponseHeaderUpdateProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ResponseHeaderUpdateProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["response-header-update"]
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ResponseHeaderUpdateProxyLBParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -4144,6 +4774,30 @@ func (p *ResponseHeaderUpdateProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ResponseHeaderUpdateProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) ToV0() *v0params.ResponseHeaderUpdateProxyLBParam {
+	return &v0params.ResponseHeaderUpdateProxyLBParam{
+		Index:             p.Index,
+		PortIndex:         p.PortIndex,
+		Header:            p.Header,
+		Value:             p.Value,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ResponseHeaderDeleteProxyLBParam is input parameters for the sacloud API
@@ -4317,6 +4971,33 @@ func (p *ResponseHeaderDeleteProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ResponseHeaderDeleteProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["response-header-delete"]
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ResponseHeaderDeleteProxyLBParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -4440,6 +5121,28 @@ func (p *ResponseHeaderDeleteProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ResponseHeaderDeleteProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) ToV0() *v0params.ResponseHeaderDeleteProxyLBParam {
+	return &v0params.ResponseHeaderDeleteProxyLBParam{
+		Index:             p.Index,
+		PortIndex:         p.PortIndex,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ACMEInfoProxyLBParam is input parameters for the sacloud API
@@ -4585,6 +5288,33 @@ func (p *ACMEInfoProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ACMEInfoProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ACMEInfoProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["acme-info"]
+}
+
+func (p *ACMEInfoProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ACMEInfoProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ACMEInfoProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ACMEInfoProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ACMEInfoProxyLBParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -4687,6 +5417,25 @@ func (p *ACMEInfoProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ACMEInfoProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ACMEInfoProxyLBParam) ToV0() *v0params.ACMEInfoProxyLBParam {
+	return &v0params.ACMEInfoProxyLBParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ACMESettingProxyLBParam is input parameters for the sacloud API
@@ -4848,6 +5597,33 @@ func (p *ACMESettingProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ACMESettingProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ACMESettingProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["acme-setting"]
+}
+
+func (p *ACMESettingProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ACMESettingProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ACMESettingProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ACMESettingProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ACMESettingProxyLBParam) SetAcceptTos(v bool) {
 	p.AcceptTos = v
 }
@@ -4980,6 +5756,29 @@ func (p *ACMESettingProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *ACMESettingProxyLBParam) ToV0() *v0params.ACMESettingProxyLBParam {
+	return &v0params.ACMESettingProxyLBParam{
+		AcceptTos:         p.AcceptTos,
+		CommonName:        p.CommonName,
+		Disable:           p.Disable,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // ACMERenewProxyLBParam is input parameters for the sacloud API
 type ACMERenewProxyLBParam struct {
 	Selector          []string
@@ -5085,6 +5884,33 @@ func (p *ACMERenewProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ACMERenewProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ACMERenewProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["acme-renew"]
+}
+
+func (p *ACMERenewProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ACMERenewProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ACMERenewProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ACMERenewProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ACMERenewProxyLBParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -5145,6 +5971,19 @@ func (p *ACMERenewProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ACMERenewProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ACMERenewProxyLBParam) ToV0() *v0params.ACMERenewProxyLBParam {
+	return &v0params.ACMERenewProxyLBParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ServerInfoProxyLBParam is input parameters for the sacloud API
@@ -5290,6 +6129,33 @@ func (p *ServerInfoProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerInfoProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ServerInfoProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-info"]
+}
+
+func (p *ServerInfoProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerInfoProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerInfoProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerInfoProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerInfoProxyLBParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -5392,6 +6258,25 @@ func (p *ServerInfoProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerInfoProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerInfoProxyLBParam) ToV0() *v0params.ServerInfoProxyLBParam {
+	return &v0params.ServerInfoProxyLBParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ServerAddProxyLBParam is input parameters for the sacloud API
@@ -5583,6 +6468,33 @@ func (p *ServerAddProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerAddProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ServerAddProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-add"]
+}
+
+func (p *ServerAddProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerAddProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerAddProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerAddProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerAddProxyLBParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
@@ -5713,6 +6625,29 @@ func (p *ServerAddProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerAddProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerAddProxyLBParam) ToV0() *v0params.ServerAddProxyLBParam {
+	return &v0params.ServerAddProxyLBParam{
+		Ipaddress:         p.Ipaddress,
+		Disabled:          p.Disabled,
+		Port:              p.Port,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ServerUpdateProxyLBParam is input parameters for the sacloud API
@@ -5902,6 +6837,33 @@ func (p *ServerUpdateProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerUpdateProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ServerUpdateProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-update"]
+}
+
+func (p *ServerUpdateProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerUpdateProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerUpdateProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerUpdateProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerUpdateProxyLBParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -6039,6 +7001,30 @@ func (p *ServerUpdateProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerUpdateProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerUpdateProxyLBParam) ToV0() *v0params.ServerUpdateProxyLBParam {
+	return &v0params.ServerUpdateProxyLBParam{
+		Index:             p.Index,
+		Ipaddress:         p.Ipaddress,
+		Disabled:          p.Disabled,
+		Port:              p.Port,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // ServerDeleteProxyLBParam is input parameters for the sacloud API
@@ -6200,6 +7186,33 @@ func (p *ServerDeleteProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ServerDeleteProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ServerDeleteProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["server-delete"]
+}
+
+func (p *ServerDeleteProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ServerDeleteProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ServerDeleteProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ServerDeleteProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ServerDeleteProxyLBParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -6316,6 +7329,27 @@ func (p *ServerDeleteProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ServerDeleteProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ServerDeleteProxyLBParam) ToV0() *v0params.ServerDeleteProxyLBParam {
+	return &v0params.ServerDeleteProxyLBParam{
+		Index:             p.Index,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // CertificateInfoProxyLBParam is input parameters for the sacloud API
@@ -6461,6 +7495,33 @@ func (p *CertificateInfoProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CertificateInfoProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *CertificateInfoProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["certificate-info"]
+}
+
+func (p *CertificateInfoProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CertificateInfoProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CertificateInfoProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CertificateInfoProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CertificateInfoProxyLBParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -6563,6 +7624,25 @@ func (p *CertificateInfoProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CertificateInfoProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CertificateInfoProxyLBParam) ToV0() *v0params.CertificateInfoProxyLBParam {
+	return &v0params.CertificateInfoProxyLBParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // CertificateAddProxyLBParam is input parameters for the sacloud API
@@ -6740,6 +7820,33 @@ func (p *CertificateAddProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CertificateAddProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *CertificateAddProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["certificate-add"]
+}
+
+func (p *CertificateAddProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CertificateAddProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CertificateAddProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CertificateAddProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CertificateAddProxyLBParam) SetServerCertificate(v string) {
 	p.ServerCertificate = v
 }
@@ -6870,6 +7977,29 @@ func (p *CertificateAddProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CertificateAddProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CertificateAddProxyLBParam) ToV0() *v0params.CertificateAddProxyLBParam {
+	return &v0params.CertificateAddProxyLBParam{
+		ServerCertificate:       p.ServerCertificate,
+		IntermediateCertificate: p.IntermediateCertificate,
+		PrivateKey:              p.PrivateKey,
+		Selector:                p.Selector,
+		Assumeyes:               p.Assumeyes,
+		ParamTemplate:           p.ParamTemplate,
+		Parameters:              p.Parameters,
+		ParamTemplateFile:       p.ParamTemplateFile,
+		ParameterFile:           p.ParameterFile,
+		GenerateSkeleton:        p.GenerateSkeleton,
+		OutputType:              p.OutputType,
+		Column:                  p.Column,
+		Quiet:                   p.Quiet,
+		Format:                  p.Format,
+		FormatFile:              p.FormatFile,
+		Query:                   p.Query,
+		QueryFile:               p.QueryFile,
+		Id:                      p.Id,
+	}
 }
 
 // CertificateUpdateProxyLBParam is input parameters for the sacloud API
@@ -7031,6 +8161,33 @@ func (p *CertificateUpdateProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CertificateUpdateProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *CertificateUpdateProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["certificate-update"]
+}
+
+func (p *CertificateUpdateProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CertificateUpdateProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CertificateUpdateProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CertificateUpdateProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CertificateUpdateProxyLBParam) SetServerCertificate(v string) {
 	p.ServerCertificate = v
 }
@@ -7161,6 +8318,29 @@ func (p *CertificateUpdateProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CertificateUpdateProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CertificateUpdateProxyLBParam) ToV0() *v0params.CertificateUpdateProxyLBParam {
+	return &v0params.CertificateUpdateProxyLBParam{
+		ServerCertificate:       p.ServerCertificate,
+		IntermediateCertificate: p.IntermediateCertificate,
+		PrivateKey:              p.PrivateKey,
+		Selector:                p.Selector,
+		Assumeyes:               p.Assumeyes,
+		ParamTemplate:           p.ParamTemplate,
+		Parameters:              p.Parameters,
+		ParamTemplateFile:       p.ParamTemplateFile,
+		ParameterFile:           p.ParameterFile,
+		GenerateSkeleton:        p.GenerateSkeleton,
+		OutputType:              p.OutputType,
+		Column:                  p.Column,
+		Quiet:                   p.Quiet,
+		Format:                  p.Format,
+		FormatFile:              p.FormatFile,
+		Query:                   p.Query,
+		QueryFile:               p.QueryFile,
+		Id:                      p.Id,
+	}
 }
 
 // CertificateDeleteProxyLBParam is input parameters for the sacloud API
@@ -7310,6 +8490,33 @@ func (p *CertificateDeleteProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CertificateDeleteProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *CertificateDeleteProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["certificate-delete"]
+}
+
+func (p *CertificateDeleteProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CertificateDeleteProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CertificateDeleteProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CertificateDeleteProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CertificateDeleteProxyLBParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -7419,6 +8626,26 @@ func (p *CertificateDeleteProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CertificateDeleteProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CertificateDeleteProxyLBParam) ToV0() *v0params.CertificateDeleteProxyLBParam {
+	return &v0params.CertificateDeleteProxyLBParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // MonitorProxyLBParam is input parameters for the sacloud API
@@ -7601,6 +8828,33 @@ func (p *MonitorProxyLBParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *MonitorProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *MonitorProxyLBParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["monitor"]
+}
+
+func (p *MonitorProxyLBParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *MonitorProxyLBParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *MonitorProxyLBParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *MonitorProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *MonitorProxyLBParam) SetStart(v string) {
 	p.Start = v
 }
@@ -7724,4 +8978,26 @@ func (p *MonitorProxyLBParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *MonitorProxyLBParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *MonitorProxyLBParam) ToV0() *v0params.MonitorProxyLBParam {
+	return &v0params.MonitorProxyLBParam{
+		Start:             p.Start,
+		End:               p.End,
+		KeyFormat:         p.KeyFormat,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

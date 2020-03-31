@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func switchListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(switchListParam))
-			return nil
+			return funcs.SwitchList(ctx, switchListParam.ToV0())
 		},
 	}
 
@@ -96,11 +91,7 @@ func switchCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(switchCreateParam))
-			return nil
+			return funcs.SwitchCreate(ctx, switchCreateParam.ToV0())
 		},
 	}
 
@@ -140,11 +131,7 @@ func switchReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(switchReadParam))
-			return nil
+			return funcs.SwitchRead(ctx, switchReadParam.ToV0())
 		},
 	}
 
@@ -181,11 +168,7 @@ func switchUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(switchUpdateParam))
-			return nil
+			return funcs.SwitchUpdate(ctx, switchUpdateParam.ToV0())
 		},
 	}
 
@@ -227,11 +210,7 @@ func switchDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(switchDeleteParam))
-			return nil
+			return funcs.SwitchDelete(ctx, switchDeleteParam.ToV0())
 		},
 	}
 
@@ -269,11 +248,7 @@ func switchBridgeConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("bridge-connect local parameter: \n%s\n", debugMarshalIndent(switchBridgeConnectParam))
-			return nil
+			return funcs.SwitchBridgeConnect(ctx, switchBridgeConnectParam.ToV0())
 		},
 	}
 
@@ -305,11 +280,7 @@ func switchBridgeDisconnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("bridge-disconnect local parameter: \n%s\n", debugMarshalIndent(switchBridgeDisconnectParam))
-			return nil
+			return funcs.SwitchBridgeDisconnect(ctx, switchBridgeDisconnectParam.ToV0())
 		},
 	}
 

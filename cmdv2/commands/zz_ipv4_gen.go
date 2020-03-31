@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func ipv4ListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(ipv4ListParam))
-			return nil
+			return funcs.IPv4List(ctx, ipv4ListParam.ToV0())
 		},
 	}
 
@@ -95,11 +90,7 @@ func ipv4PtrAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ptr-add local parameter: \n%s\n", debugMarshalIndent(ipv4PtrAddParam))
-			return nil
+			return funcs.IPv4PtrAdd(ctx, ipv4PtrAddParam.ToV0())
 		},
 	}
 
@@ -136,11 +127,7 @@ func ipv4PtrReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ptr-read local parameter: \n%s\n", debugMarshalIndent(ipv4PtrReadParam))
-			return nil
+			return funcs.IPv4PtrRead(ctx, ipv4PtrReadParam.ToV0())
 		},
 	}
 
@@ -175,11 +162,7 @@ func ipv4PtrUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ptr-update local parameter: \n%s\n", debugMarshalIndent(ipv4PtrUpdateParam))
-			return nil
+			return funcs.IPv4PtrUpdate(ctx, ipv4PtrUpdateParam.ToV0())
 		},
 	}
 
@@ -216,11 +199,7 @@ func ipv4PtrDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("ptr-delete local parameter: \n%s\n", debugMarshalIndent(ipv4PtrDeleteParam))
-			return nil
+			return funcs.IPv4PtrDelete(ctx, ipv4PtrDeleteParam.ToV0())
 		},
 	}
 

@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -225,6 +226,33 @@ func (p *ListISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListISOImageParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ISOImage"]
+}
+
+func (p *ListISOImageParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListISOImageParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListISOImageParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListISOImageParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListISOImageParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListISOImageParam) SetName(v []string) {
 	p.Name = v
 }
@@ -362,6 +390,30 @@ func (p *ListISOImageParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListISOImageParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListISOImageParam) ToV0() *v0params.ListISOImageParam {
+	return &v0params.ListISOImageParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Scope:             p.Scope,
+		Tags:              p.Tags,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateISOImageParam is input parameters for the sacloud API
@@ -582,6 +634,33 @@ func (p *CreateISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateISOImageParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ISOImage"]
+}
+
+func (p *CreateISOImageParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateISOImageParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateISOImageParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateISOImageParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateISOImageParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateISOImageParam) SetSize(v int) {
 	p.Size = v
 }
@@ -719,6 +798,30 @@ func (p *CreateISOImageParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CreateISOImageParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CreateISOImageParam) ToV0() *v0params.CreateISOImageParam {
+	return &v0params.CreateISOImageParam{
+		Size:              p.Size,
+		ISOFile:           p.ISOFile,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // ReadISOImageParam is input parameters for the sacloud API
@@ -864,6 +967,33 @@ func (p *ReadISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadISOImageParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ISOImage"]
+}
+
+func (p *ReadISOImageParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadISOImageParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadISOImageParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadISOImageParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadISOImageParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadISOImageParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -966,6 +1096,25 @@ func (p *ReadISOImageParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadISOImageParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadISOImageParam) ToV0() *v0params.ReadISOImageParam {
+	return &v0params.ReadISOImageParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateISOImageParam is input parameters for the sacloud API
@@ -1163,6 +1312,33 @@ func (p *UpdateISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateISOImageParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ISOImage"]
+}
+
+func (p *UpdateISOImageParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateISOImageParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateISOImageParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateISOImageParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateISOImageParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateISOImageParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1300,6 +1476,30 @@ func (p *UpdateISOImageParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdateISOImageParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdateISOImageParam) ToV0() *v0params.UpdateISOImageParam {
+	return &v0params.UpdateISOImageParam{
+		Selector:          p.Selector,
+		Name:              p.Name,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DeleteISOImageParam is input parameters for the sacloud API
@@ -1449,6 +1649,33 @@ func (p *DeleteISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteISOImageParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ISOImage"]
+}
+
+func (p *DeleteISOImageParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteISOImageParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteISOImageParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteISOImageParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteISOImageParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteISOImageParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1558,6 +1785,26 @@ func (p *DeleteISOImageParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteISOImageParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteISOImageParam) ToV0() *v0params.DeleteISOImageParam {
+	return &v0params.DeleteISOImageParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UploadISOImageParam is input parameters for the sacloud API
@@ -1719,6 +1966,33 @@ func (p *UploadISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UploadISOImageParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ISOImage"]
+}
+
+func (p *UploadISOImageParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["upload"]
+}
+
+func (p *UploadISOImageParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UploadISOImageParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UploadISOImageParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UploadISOImageParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UploadISOImageParam) SetISOFile(v string) {
 	p.ISOFile = v
 }
@@ -1837,6 +2111,27 @@ func (p *UploadISOImageParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *UploadISOImageParam) ToV0() *v0params.UploadISOImageParam {
+	return &v0params.UploadISOImageParam{
+		ISOFile:           p.ISOFile,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // DownloadISOImageParam is input parameters for the sacloud API
 type DownloadISOImageParam struct {
 	FileDestination   string
@@ -1946,6 +2241,33 @@ func (p *DownloadISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DownloadISOImageParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ISOImage"]
+}
+
+func (p *DownloadISOImageParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["download"]
+}
+
+func (p *DownloadISOImageParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DownloadISOImageParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DownloadISOImageParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DownloadISOImageParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DownloadISOImageParam) SetFileDestination(v string) {
 	p.FileDestination = v
 }
@@ -2013,6 +2335,20 @@ func (p *DownloadISOImageParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DownloadISOImageParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DownloadISOImageParam) ToV0() *v0params.DownloadISOImageParam {
+	return &v0params.DownloadISOImageParam{
+		FileDestination:   p.FileDestination,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // FTPOpenISOImageParam is input parameters for the sacloud API
@@ -2162,6 +2498,33 @@ func (p *FTPOpenISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *FTPOpenISOImageParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ISOImage"]
+}
+
+func (p *FTPOpenISOImageParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["ftp-open"]
+}
+
+func (p *FTPOpenISOImageParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *FTPOpenISOImageParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *FTPOpenISOImageParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *FTPOpenISOImageParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *FTPOpenISOImageParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2273,6 +2636,26 @@ func (p *FTPOpenISOImageParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *FTPOpenISOImageParam) ToV0() *v0params.FTPOpenISOImageParam {
+	return &v0params.FTPOpenISOImageParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // FTPCloseISOImageParam is input parameters for the sacloud API
 type FTPCloseISOImageParam struct {
 	Selector          []string
@@ -2378,6 +2761,33 @@ func (p *FTPCloseISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *FTPCloseISOImageParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ISOImage"]
+}
+
+func (p *FTPCloseISOImageParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["ftp-close"]
+}
+
+func (p *FTPCloseISOImageParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *FTPCloseISOImageParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *FTPCloseISOImageParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *FTPCloseISOImageParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *FTPCloseISOImageParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2438,4 +2848,17 @@ func (p *FTPCloseISOImageParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *FTPCloseISOImageParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *FTPCloseISOImageParam) ToV0() *v0params.FTPCloseISOImageParam {
+	return &v0params.FTPCloseISOImageParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }

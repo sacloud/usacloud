@@ -17,9 +17,8 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -50,11 +49,7 @@ func configCurrentCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("current local parameter: \n%s\n", debugMarshalIndent(configCurrentParam))
-			return nil
+			return funcs.ConfigCurrent(ctx, configCurrentParam.ToV0())
 		},
 	}
 
@@ -82,11 +77,7 @@ func configDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(configDeleteParam))
-			return nil
+			return funcs.ConfigDelete(ctx, configDeleteParam.ToV0())
 		},
 	}
 
@@ -115,11 +106,7 @@ func configEditCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("edit local parameter: \n%s\n", debugMarshalIndent(configEditParam))
-			return nil
+			return funcs.ConfigEdit(ctx, configEditParam.ToV0())
 		},
 	}
 
@@ -151,11 +138,7 @@ func configListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(configListParam))
-			return nil
+			return funcs.ConfigList(ctx, configListParam.ToV0())
 		},
 	}
 
@@ -183,11 +166,7 @@ func configMigrateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("migrate local parameter: \n%s\n", debugMarshalIndent(configMigrateParam))
-			return nil
+			return funcs.ConfigMigrate(ctx, configMigrateParam.ToV0())
 		},
 	}
 
@@ -215,11 +194,7 @@ func configShowCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("show local parameter: \n%s\n", debugMarshalIndent(configShowParam))
-			return nil
+			return funcs.ConfigShow(ctx, configShowParam.ToV0())
 		},
 	}
 
@@ -247,11 +222,7 @@ func configUseCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("use local parameter: \n%s\n", debugMarshalIndent(configUseParam))
-			return nil
+			return funcs.ConfigUse(ctx, configUseParam.ToV0())
 		},
 	}
 

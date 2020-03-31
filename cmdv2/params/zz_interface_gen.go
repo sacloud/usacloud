@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -201,6 +202,33 @@ func (p *ListInterfaceParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListInterfaceParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Interface"]
+}
+
+func (p *ListInterfaceParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListInterfaceParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListInterfaceParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListInterfaceParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListInterfaceParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListInterfaceParam) SetName(v []string) {
 	p.Name = v
 }
@@ -326,6 +354,28 @@ func (p *ListInterfaceParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *ListInterfaceParam) ToV0() *v0params.ListInterfaceParam {
+	return &v0params.ListInterfaceParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
+}
+
 // PacketFilterConnectInterfaceParam is input parameters for the sacloud API
 type PacketFilterConnectInterfaceParam struct {
 	PacketFilterId    sacloud.ID
@@ -446,6 +496,33 @@ func (p *PacketFilterConnectInterfaceParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *PacketFilterConnectInterfaceParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Interface"]
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["packet-filter-connect"]
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *PacketFilterConnectInterfaceParam) SetPacketFilterId(v sacloud.ID) {
 	p.PacketFilterId = v
 }
@@ -506,6 +583,19 @@ func (p *PacketFilterConnectInterfaceParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *PacketFilterConnectInterfaceParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *PacketFilterConnectInterfaceParam) ToV0() *v0params.PacketFilterConnectInterfaceParam {
+	return &v0params.PacketFilterConnectInterfaceParam{
+		PacketFilterId:    p.PacketFilterId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // CreateInterfaceParam is input parameters for the sacloud API
@@ -658,6 +748,33 @@ func (p *CreateInterfaceParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateInterfaceParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Interface"]
+}
+
+func (p *CreateInterfaceParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateInterfaceParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateInterfaceParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateInterfaceParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateInterfaceParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateInterfaceParam) SetServerId(v sacloud.ID) {
 	p.ServerId = v
 }
@@ -760,6 +877,25 @@ func (p *CreateInterfaceParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CreateInterfaceParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CreateInterfaceParam) ToV0() *v0params.CreateInterfaceParam {
+	return &v0params.CreateInterfaceParam{
+		ServerId:          p.ServerId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // PacketFilterDisconnectInterfaceParam is input parameters for the sacloud API
@@ -882,6 +1018,33 @@ func (p *PacketFilterDisconnectInterfaceParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *PacketFilterDisconnectInterfaceParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Interface"]
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["packet-filter-disconnect"]
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *PacketFilterDisconnectInterfaceParam) SetPacketFilterId(v sacloud.ID) {
 	p.PacketFilterId = v
 }
@@ -942,6 +1105,19 @@ func (p *PacketFilterDisconnectInterfaceParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *PacketFilterDisconnectInterfaceParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) ToV0() *v0params.PacketFilterDisconnectInterfaceParam {
+	return &v0params.PacketFilterDisconnectInterfaceParam{
+		PacketFilterId:    p.PacketFilterId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ReadInterfaceParam is input parameters for the sacloud API
@@ -1083,6 +1259,33 @@ func (p *ReadInterfaceParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadInterfaceParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Interface"]
+}
+
+func (p *ReadInterfaceParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadInterfaceParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadInterfaceParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadInterfaceParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadInterfaceParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadInterfaceParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -1178,6 +1381,24 @@ func (p *ReadInterfaceParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadInterfaceParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadInterfaceParam) ToV0() *v0params.ReadInterfaceParam {
+	return &v0params.ReadInterfaceParam{
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateInterfaceParam is input parameters for the sacloud API
@@ -1335,6 +1556,33 @@ func (p *UpdateInterfaceParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateInterfaceParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Interface"]
+}
+
+func (p *UpdateInterfaceParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateInterfaceParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateInterfaceParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateInterfaceParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateInterfaceParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateInterfaceParam) SetUserIpaddress(v string) {
 	p.UserIpaddress = v
 }
@@ -1444,6 +1692,26 @@ func (p *UpdateInterfaceParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdateInterfaceParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdateInterfaceParam) ToV0() *v0params.UpdateInterfaceParam {
+	return &v0params.UpdateInterfaceParam{
+		UserIpaddress:     p.UserIpaddress,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // DeleteInterfaceParam is input parameters for the sacloud API
@@ -1589,6 +1857,33 @@ func (p *DeleteInterfaceParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteInterfaceParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Interface"]
+}
+
+func (p *DeleteInterfaceParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteInterfaceParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteInterfaceParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteInterfaceParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteInterfaceParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteInterfaceParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1691,4 +1986,23 @@ func (p *DeleteInterfaceParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteInterfaceParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteInterfaceParam) ToV0() *v0params.DeleteInterfaceParam {
+	return &v0params.DeleteInterfaceParam{
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

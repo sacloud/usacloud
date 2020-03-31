@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -201,6 +202,33 @@ func (p *ListProductDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListProductDiskParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProductDisk"]
+}
+
+func (p *ListProductDiskParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListProductDiskParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListProductDiskParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListProductDiskParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListProductDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListProductDiskParam) SetName(v []string) {
 	p.Name = v
 }
@@ -324,6 +352,28 @@ func (p *ListProductDiskParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListProductDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListProductDiskParam) ToV0() *v0params.ListProductDiskParam {
+	return &v0params.ListProductDiskParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // ReadProductDiskParam is input parameters for the sacloud API
@@ -476,6 +526,33 @@ func (p *ReadProductDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadProductDiskParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProductDisk"]
+}
+
+func (p *ReadProductDiskParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadProductDiskParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadProductDiskParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadProductDiskParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadProductDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadProductDiskParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -578,4 +655,23 @@ func (p *ReadProductDiskParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadProductDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadProductDiskParam) ToV0() *v0params.ReadProductDiskParam {
+	return &v0params.ReadProductDiskParam{
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

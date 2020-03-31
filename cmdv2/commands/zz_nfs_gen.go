@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func nfsListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(nfsListParam))
-			return nil
+			return funcs.NFSList(ctx, nfsListParam.ToV0())
 		},
 	}
 
@@ -96,11 +91,7 @@ func nfsCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(nfsCreateParam))
-			return nil
+			return funcs.NFSCreate(ctx, nfsCreateParam.ToV0())
 		},
 	}
 
@@ -146,11 +137,7 @@ func nfsReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(nfsReadParam))
-			return nil
+			return funcs.NFSRead(ctx, nfsReadParam.ToV0())
 		},
 	}
 
@@ -187,11 +174,7 @@ func nfsUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(nfsUpdateParam))
-			return nil
+			return funcs.NFSUpdate(ctx, nfsUpdateParam.ToV0())
 		},
 	}
 
@@ -233,11 +216,7 @@ func nfsDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(nfsDeleteParam))
-			return nil
+			return funcs.NFSDelete(ctx, nfsDeleteParam.ToV0())
 		},
 	}
 
@@ -276,11 +255,7 @@ func nfsBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("boot local parameter: \n%s\n", debugMarshalIndent(nfsBootParam))
-			return nil
+			return funcs.NFSBoot(ctx, nfsBootParam.ToV0())
 		},
 	}
 
@@ -311,11 +286,7 @@ func nfsShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("shutdown local parameter: \n%s\n", debugMarshalIndent(nfsShutdownParam))
-			return nil
+			return funcs.NFSShutdown(ctx, nfsShutdownParam.ToV0())
 		},
 	}
 
@@ -346,11 +317,7 @@ func nfsShutdownForceCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("shutdown-force local parameter: \n%s\n", debugMarshalIndent(nfsShutdownForceParam))
-			return nil
+			return funcs.NFSShutdownForce(ctx, nfsShutdownForceParam.ToV0())
 		},
 	}
 
@@ -381,11 +348,7 @@ func nfsResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("reset local parameter: \n%s\n", debugMarshalIndent(nfsResetParam))
-			return nil
+			return funcs.NFSReset(ctx, nfsResetParam.ToV0())
 		},
 	}
 
@@ -416,11 +379,7 @@ func nfsWaitForBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("wait-for-boot local parameter: \n%s\n", debugMarshalIndent(nfsWaitForBootParam))
-			return nil
+			return funcs.NFSWaitForBoot(ctx, nfsWaitForBootParam.ToV0())
 		},
 	}
 
@@ -450,11 +409,7 @@ func nfsWaitForDownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("wait-for-down local parameter: \n%s\n", debugMarshalIndent(nfsWaitForDownParam))
-			return nil
+			return funcs.NFSWaitForDown(ctx, nfsWaitForDownParam.ToV0())
 		},
 	}
 
@@ -484,11 +439,7 @@ func nfsMonitorNicCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor-nic local parameter: \n%s\n", debugMarshalIndent(nfsMonitorNicParam))
-			return nil
+			return funcs.NFSMonitorNic(ctx, nfsMonitorNicParam.ToV0())
 		},
 	}
 
@@ -528,11 +479,7 @@ func nfsMonitorFreeDiskSizeCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("monitor-free-disk-size local parameter: \n%s\n", debugMarshalIndent(nfsMonitorFreeDiskSizeParam))
-			return nil
+			return funcs.NFSMonitorFreeDiskSize(ctx, nfsMonitorFreeDiskSizeParam.ToV0())
 		},
 	}
 

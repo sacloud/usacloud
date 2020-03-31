@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -201,6 +202,33 @@ func (p *ListProductInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListProductInternetParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProductInternet"]
+}
+
+func (p *ListProductInternetParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListProductInternetParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListProductInternetParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListProductInternetParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListProductInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListProductInternetParam) SetName(v []string) {
 	p.Name = v
 }
@@ -324,6 +352,28 @@ func (p *ListProductInternetParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListProductInternetParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListProductInternetParam) ToV0() *v0params.ListProductInternetParam {
+	return &v0params.ListProductInternetParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // ReadProductInternetParam is input parameters for the sacloud API
@@ -476,6 +526,33 @@ func (p *ReadProductInternetParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadProductInternetParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProductInternet"]
+}
+
+func (p *ReadProductInternetParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadProductInternetParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadProductInternetParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadProductInternetParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadProductInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadProductInternetParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -578,4 +655,23 @@ func (p *ReadProductInternetParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadProductInternetParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadProductInternetParam) ToV0() *v0params.ReadProductInternetParam {
+	return &v0params.ReadProductInternetParam{
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -229,6 +230,33 @@ func (p *ListStartupScriptParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListStartupScriptParam) GetResourceDef() *schema.Resource {
+	return define.Resources["StartupScript"]
+}
+
+func (p *ListStartupScriptParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListStartupScriptParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListStartupScriptParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListStartupScriptParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListStartupScriptParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListStartupScriptParam) SetName(v []string) {
 	p.Name = v
 }
@@ -373,6 +401,31 @@ func (p *ListStartupScriptParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListStartupScriptParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListStartupScriptParam) ToV0() *v0params.ListStartupScriptParam {
+	return &v0params.ListStartupScriptParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Scope:             p.Scope,
+		Tags:              p.Tags,
+		Class:             p.Class,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateStartupScriptParam is input parameters for the sacloud API
@@ -595,6 +648,33 @@ func (p *CreateStartupScriptParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateStartupScriptParam) GetResourceDef() *schema.Resource {
+	return define.Resources["StartupScript"]
+}
+
+func (p *CreateStartupScriptParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateStartupScriptParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateStartupScriptParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateStartupScriptParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateStartupScriptParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateStartupScriptParam) SetScript(v string) {
 	p.Script = v
 }
@@ -732,6 +812,30 @@ func (p *CreateStartupScriptParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CreateStartupScriptParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CreateStartupScriptParam) ToV0() *v0params.CreateStartupScriptParam {
+	return &v0params.CreateStartupScriptParam{
+		Script:            p.Script,
+		ScriptContent:     p.ScriptContent,
+		Class:             p.Class,
+		Name:              p.Name,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // ReadStartupScriptParam is input parameters for the sacloud API
@@ -877,6 +981,33 @@ func (p *ReadStartupScriptParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadStartupScriptParam) GetResourceDef() *schema.Resource {
+	return define.Resources["StartupScript"]
+}
+
+func (p *ReadStartupScriptParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadStartupScriptParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadStartupScriptParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadStartupScriptParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadStartupScriptParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadStartupScriptParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -979,6 +1110,25 @@ func (p *ReadStartupScriptParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadStartupScriptParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadStartupScriptParam) ToV0() *v0params.ReadStartupScriptParam {
+	return &v0params.ReadStartupScriptParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateStartupScriptParam is input parameters for the sacloud API
@@ -1202,6 +1352,33 @@ func (p *UpdateStartupScriptParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateStartupScriptParam) GetResourceDef() *schema.Resource {
+	return define.Resources["StartupScript"]
+}
+
+func (p *UpdateStartupScriptParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateStartupScriptParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateStartupScriptParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateStartupScriptParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateStartupScriptParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateStartupScriptParam) SetScript(v string) {
 	p.Script = v
 }
@@ -1355,6 +1532,32 @@ func (p *UpdateStartupScriptParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *UpdateStartupScriptParam) ToV0() *v0params.UpdateStartupScriptParam {
+	return &v0params.UpdateStartupScriptParam{
+		Script:            p.Script,
+		ScriptContent:     p.ScriptContent,
+		Class:             p.Class,
+		Selector:          p.Selector,
+		Name:              p.Name,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // DeleteStartupScriptParam is input parameters for the sacloud API
 type DeleteStartupScriptParam struct {
 	Selector          []string
@@ -1502,6 +1705,33 @@ func (p *DeleteStartupScriptParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteStartupScriptParam) GetResourceDef() *schema.Resource {
+	return define.Resources["StartupScript"]
+}
+
+func (p *DeleteStartupScriptParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteStartupScriptParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteStartupScriptParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteStartupScriptParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteStartupScriptParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteStartupScriptParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1611,4 +1841,24 @@ func (p *DeleteStartupScriptParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteStartupScriptParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteStartupScriptParam) ToV0() *v0params.DeleteStartupScriptParam {
+	return &v0params.DeleteStartupScriptParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

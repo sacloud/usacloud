@@ -19,6 +19,7 @@ package params
 import (
 	"io"
 
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -156,6 +157,33 @@ func (p *ShowSummaryParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ShowSummaryParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Summary"]
+}
+
+func (p *ShowSummaryParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["show"]
+}
+
+func (p *ShowSummaryParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ShowSummaryParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ShowSummaryParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ShowSummaryParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ShowSummaryParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -251,4 +279,22 @@ func (p *ShowSummaryParam) GetPaidResourcesOnly() bool {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ShowSummaryParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ShowSummaryParam) ToV0() *v0params.ShowSummaryParam {
+	return &v0params.ShowSummaryParam{
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		PaidResourcesOnly: p.PaidResourcesOnly,
+	}
 }

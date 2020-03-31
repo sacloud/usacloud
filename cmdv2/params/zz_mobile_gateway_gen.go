@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -213,6 +214,33 @@ func (p *ListMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *ListMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListMobileGatewayParam) SetName(v []string) {
 	p.Name = v
 }
@@ -343,6 +371,29 @@ func (p *ListMobileGatewayParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListMobileGatewayParam) ToV0() *v0params.ListMobileGatewayParam {
+	return &v0params.ListMobileGatewayParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Tags:              p.Tags,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateMobileGatewayParam is input parameters for the sacloud API
@@ -535,6 +586,33 @@ func (p *CreateMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *CreateMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateMobileGatewayParam) SetInternetConnection(v bool) {
 	p.InternetConnection = v
 }
@@ -665,6 +743,29 @@ func (p *CreateMobileGatewayParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *CreateMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *CreateMobileGatewayParam) ToV0() *v0params.CreateMobileGatewayParam {
+	return &v0params.CreateMobileGatewayParam{
+		InternetConnection: p.InternetConnection,
+		Name:               p.Name,
+		Description:        p.Description,
+		Tags:               p.Tags,
+		IconId:             p.IconId,
+		Assumeyes:          p.Assumeyes,
+		ParamTemplate:      p.ParamTemplate,
+		Parameters:         p.Parameters,
+		ParamTemplateFile:  p.ParamTemplateFile,
+		ParameterFile:      p.ParameterFile,
+		GenerateSkeleton:   p.GenerateSkeleton,
+		OutputType:         p.OutputType,
+		Column:             p.Column,
+		Quiet:              p.Quiet,
+		Format:             p.Format,
+		FormatFile:         p.FormatFile,
+		Query:              p.Query,
+		QueryFile:          p.QueryFile,
+	}
 }
 
 // ReadMobileGatewayParam is input parameters for the sacloud API
@@ -810,6 +911,33 @@ func (p *ReadMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *ReadMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadMobileGatewayParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -912,6 +1040,25 @@ func (p *ReadMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadMobileGatewayParam) ToV0() *v0params.ReadMobileGatewayParam {
+	return &v0params.ReadMobileGatewayParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateMobileGatewayParam is input parameters for the sacloud API
@@ -1113,6 +1260,33 @@ func (p *UpdateMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *UpdateMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateMobileGatewayParam) SetInternetConnection(v bool) {
 	p.InternetConnection = v
 }
@@ -1257,6 +1431,31 @@ func (p *UpdateMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *UpdateMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *UpdateMobileGatewayParam) ToV0() *v0params.UpdateMobileGatewayParam {
+	return &v0params.UpdateMobileGatewayParam{
+		InternetConnection: p.InternetConnection,
+		Selector:           p.Selector,
+		Name:               p.Name,
+		Description:        p.Description,
+		Tags:               p.Tags,
+		IconId:             p.IconId,
+		Assumeyes:          p.Assumeyes,
+		ParamTemplate:      p.ParamTemplate,
+		Parameters:         p.Parameters,
+		ParamTemplateFile:  p.ParamTemplateFile,
+		ParameterFile:      p.ParameterFile,
+		GenerateSkeleton:   p.GenerateSkeleton,
+		OutputType:         p.OutputType,
+		Column:             p.Column,
+		Quiet:              p.Quiet,
+		Format:             p.Format,
+		FormatFile:         p.FormatFile,
+		Query:              p.Query,
+		QueryFile:          p.QueryFile,
+		Id:                 p.Id,
+	}
 }
 
 // DeleteMobileGatewayParam is input parameters for the sacloud API
@@ -1410,6 +1609,33 @@ func (p *DeleteMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *DeleteMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteMobileGatewayParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -1528,6 +1754,27 @@ func (p *DeleteMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *DeleteMobileGatewayParam) ToV0() *v0params.DeleteMobileGatewayParam {
+	return &v0params.DeleteMobileGatewayParam{
+		Force:             p.Force,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // BootMobileGatewayParam is input parameters for the sacloud API
 type BootMobileGatewayParam struct {
 	Selector          []string
@@ -1633,6 +1880,33 @@ func (p *BootMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *BootMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *BootMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["boot"]
+}
+
+func (p *BootMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *BootMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *BootMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *BootMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *BootMobileGatewayParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1693,6 +1967,19 @@ func (p *BootMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *BootMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *BootMobileGatewayParam) ToV0() *v0params.BootMobileGatewayParam {
+	return &v0params.BootMobileGatewayParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ShutdownMobileGatewayParam is input parameters for the sacloud API
@@ -1800,6 +2087,33 @@ func (p *ShutdownMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ShutdownMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *ShutdownMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["shutdown"]
+}
+
+func (p *ShutdownMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ShutdownMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ShutdownMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ShutdownMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ShutdownMobileGatewayParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1860,6 +2174,19 @@ func (p *ShutdownMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ShutdownMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ShutdownMobileGatewayParam) ToV0() *v0params.ShutdownMobileGatewayParam {
+	return &v0params.ShutdownMobileGatewayParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ShutdownForceMobileGatewayParam is input parameters for the sacloud API
@@ -1967,6 +2294,33 @@ func (p *ShutdownForceMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ShutdownForceMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *ShutdownForceMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["shutdown-force"]
+}
+
+func (p *ShutdownForceMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ShutdownForceMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ShutdownForceMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ShutdownForceMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ShutdownForceMobileGatewayParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2027,6 +2381,19 @@ func (p *ShutdownForceMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ShutdownForceMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ShutdownForceMobileGatewayParam) ToV0() *v0params.ShutdownForceMobileGatewayParam {
+	return &v0params.ShutdownForceMobileGatewayParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // ResetMobileGatewayParam is input parameters for the sacloud API
@@ -2134,6 +2501,33 @@ func (p *ResetMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ResetMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *ResetMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["reset"]
+}
+
+func (p *ResetMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ResetMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ResetMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ResetMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ResetMobileGatewayParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2194,6 +2588,19 @@ func (p *ResetMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ResetMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ResetMobileGatewayParam) ToV0() *v0params.ResetMobileGatewayParam {
+	return &v0params.ResetMobileGatewayParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // WaitForBootMobileGatewayParam is input parameters for the sacloud API
@@ -2297,6 +2704,33 @@ func (p *WaitForBootMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *WaitForBootMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *WaitForBootMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["wait-for-boot"]
+}
+
+func (p *WaitForBootMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *WaitForBootMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *WaitForBootMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *WaitForBootMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *WaitForBootMobileGatewayParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2350,6 +2784,18 @@ func (p *WaitForBootMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *WaitForBootMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *WaitForBootMobileGatewayParam) ToV0() *v0params.WaitForBootMobileGatewayParam {
+	return &v0params.WaitForBootMobileGatewayParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // WaitForDownMobileGatewayParam is input parameters for the sacloud API
@@ -2453,6 +2899,33 @@ func (p *WaitForDownMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *WaitForDownMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *WaitForDownMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["wait-for-down"]
+}
+
+func (p *WaitForDownMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *WaitForDownMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *WaitForDownMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *WaitForDownMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *WaitForDownMobileGatewayParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2506,6 +2979,18 @@ func (p *WaitForDownMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *WaitForDownMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *WaitForDownMobileGatewayParam) ToV0() *v0params.WaitForDownMobileGatewayParam {
+	return &v0params.WaitForDownMobileGatewayParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // InterfaceInfoMobileGatewayParam is input parameters for the sacloud API
@@ -2651,6 +3136,33 @@ func (p *InterfaceInfoMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *InterfaceInfoMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *InterfaceInfoMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["interface-info"]
+}
+
+func (p *InterfaceInfoMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *InterfaceInfoMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *InterfaceInfoMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *InterfaceInfoMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *InterfaceInfoMobileGatewayParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2753,6 +3265,25 @@ func (p *InterfaceInfoMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *InterfaceInfoMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *InterfaceInfoMobileGatewayParam) ToV0() *v0params.InterfaceInfoMobileGatewayParam {
+	return &v0params.InterfaceInfoMobileGatewayParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // InterfaceConnectMobileGatewayParam is input parameters for the sacloud API
@@ -2911,6 +3442,33 @@ func (p *InterfaceConnectMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *InterfaceConnectMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *InterfaceConnectMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["interface-connect"]
+}
+
+func (p *InterfaceConnectMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *InterfaceConnectMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *InterfaceConnectMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *InterfaceConnectMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *InterfaceConnectMobileGatewayParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
@@ -2992,6 +3550,22 @@ func (p *InterfaceConnectMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *InterfaceConnectMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *InterfaceConnectMobileGatewayParam) ToV0() *v0params.InterfaceConnectMobileGatewayParam {
+	return &v0params.InterfaceConnectMobileGatewayParam{
+		Ipaddress:         p.Ipaddress,
+		SwitchId:          p.SwitchId,
+		NwMasklen:         p.NwMasklen,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // InterfaceUpdateMobileGatewayParam is input parameters for the sacloud API
@@ -3124,6 +3698,33 @@ func (p *InterfaceUpdateMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *InterfaceUpdateMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *InterfaceUpdateMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["interface-update"]
+}
+
+func (p *InterfaceUpdateMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *InterfaceUpdateMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *InterfaceUpdateMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *InterfaceUpdateMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *InterfaceUpdateMobileGatewayParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
@@ -3198,6 +3799,21 @@ func (p *InterfaceUpdateMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *InterfaceUpdateMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *InterfaceUpdateMobileGatewayParam) ToV0() *v0params.InterfaceUpdateMobileGatewayParam {
+	return &v0params.InterfaceUpdateMobileGatewayParam{
+		Ipaddress:         p.Ipaddress,
+		NwMasklen:         p.NwMasklen,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // InterfaceDisconnectMobileGatewayParam is input parameters for the sacloud API
@@ -3305,6 +3921,33 @@ func (p *InterfaceDisconnectMobileGatewayParam) ColumnDefs() []output.ColumnDef 
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *InterfaceDisconnectMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *InterfaceDisconnectMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["interface-disconnect"]
+}
+
+func (p *InterfaceDisconnectMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *InterfaceDisconnectMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *InterfaceDisconnectMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *InterfaceDisconnectMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *InterfaceDisconnectMobileGatewayParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -3365,6 +4008,19 @@ func (p *InterfaceDisconnectMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *InterfaceDisconnectMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *InterfaceDisconnectMobileGatewayParam) ToV0() *v0params.InterfaceDisconnectMobileGatewayParam {
+	return &v0params.InterfaceDisconnectMobileGatewayParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // TrafficControlInfoMobileGatewayParam is input parameters for the sacloud API
@@ -3510,6 +4166,33 @@ func (p *TrafficControlInfoMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *TrafficControlInfoMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["traffic-control-info"]
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *TrafficControlInfoMobileGatewayParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -3612,6 +4295,25 @@ func (p *TrafficControlInfoMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *TrafficControlInfoMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) ToV0() *v0params.TrafficControlInfoMobileGatewayParam {
+	return &v0params.TrafficControlInfoMobileGatewayParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // TrafficControlEnableMobileGatewayParam is input parameters for the sacloud API
@@ -3771,6 +4473,33 @@ func (p *TrafficControlEnableMobileGatewayParam) ColumnDefs() []output.ColumnDef
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *TrafficControlEnableMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["traffic-control-enable"]
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *TrafficControlEnableMobileGatewayParam) SetQuota(v int) {
 	p.Quota = v
 }
@@ -3866,6 +4595,24 @@ func (p *TrafficControlEnableMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *TrafficControlEnableMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) ToV0() *v0params.TrafficControlEnableMobileGatewayParam {
+	return &v0params.TrafficControlEnableMobileGatewayParam{
+		Quota:              p.Quota,
+		BandWidthLimit:     p.BandWidthLimit,
+		EnableEmail:        p.EnableEmail,
+		SlackWebhookUrl:    p.SlackWebhookUrl,
+		AutoTrafficShaping: p.AutoTrafficShaping,
+		Selector:           p.Selector,
+		Assumeyes:          p.Assumeyes,
+		ParamTemplate:      p.ParamTemplate,
+		Parameters:         p.Parameters,
+		ParamTemplateFile:  p.ParamTemplateFile,
+		ParameterFile:      p.ParameterFile,
+		GenerateSkeleton:   p.GenerateSkeleton,
+		Id:                 p.Id,
+	}
 }
 
 // TrafficControlUpdateMobileGatewayParam is input parameters for the sacloud API
@@ -4017,6 +4764,33 @@ func (p *TrafficControlUpdateMobileGatewayParam) ColumnDefs() []output.ColumnDef
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *TrafficControlUpdateMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["traffic-control-update"]
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *TrafficControlUpdateMobileGatewayParam) SetQuota(v int) {
 	p.Quota = v
 }
@@ -4112,6 +4886,24 @@ func (p *TrafficControlUpdateMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *TrafficControlUpdateMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) ToV0() *v0params.TrafficControlUpdateMobileGatewayParam {
+	return &v0params.TrafficControlUpdateMobileGatewayParam{
+		Quota:              p.Quota,
+		BandWidthLimit:     p.BandWidthLimit,
+		EnableEmail:        p.EnableEmail,
+		SlackWebhookUrl:    p.SlackWebhookUrl,
+		AutoTrafficShaping: p.AutoTrafficShaping,
+		Selector:           p.Selector,
+		Assumeyes:          p.Assumeyes,
+		ParamTemplate:      p.ParamTemplate,
+		Parameters:         p.Parameters,
+		ParamTemplateFile:  p.ParamTemplateFile,
+		ParameterFile:      p.ParameterFile,
+		GenerateSkeleton:   p.GenerateSkeleton,
+		Id:                 p.Id,
+	}
 }
 
 // TrafficControlDisableMobileGatewayParam is input parameters for the sacloud API
@@ -4219,6 +5011,33 @@ func (p *TrafficControlDisableMobileGatewayParam) ColumnDefs() []output.ColumnDe
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *TrafficControlDisableMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["traffic-control-disable"]
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *TrafficControlDisableMobileGatewayParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -4279,6 +5098,19 @@ func (p *TrafficControlDisableMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *TrafficControlDisableMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) ToV0() *v0params.TrafficControlDisableMobileGatewayParam {
+	return &v0params.TrafficControlDisableMobileGatewayParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // StaticRouteInfoMobileGatewayParam is input parameters for the sacloud API
@@ -4424,6 +5256,33 @@ func (p *StaticRouteInfoMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *StaticRouteInfoMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *StaticRouteInfoMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["static-route-info"]
+}
+
+func (p *StaticRouteInfoMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *StaticRouteInfoMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *StaticRouteInfoMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *StaticRouteInfoMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *StaticRouteInfoMobileGatewayParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -4526,6 +5385,25 @@ func (p *StaticRouteInfoMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *StaticRouteInfoMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *StaticRouteInfoMobileGatewayParam) ToV0() *v0params.StaticRouteInfoMobileGatewayParam {
+	return &v0params.StaticRouteInfoMobileGatewayParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // StaticRouteAddMobileGatewayParam is input parameters for the sacloud API
@@ -4671,6 +5549,33 @@ func (p *StaticRouteAddMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *StaticRouteAddMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *StaticRouteAddMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["static-route-add"]
+}
+
+func (p *StaticRouteAddMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *StaticRouteAddMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *StaticRouteAddMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *StaticRouteAddMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *StaticRouteAddMobileGatewayParam) SetPrefix(v string) {
 	p.Prefix = v
 }
@@ -4745,6 +5650,21 @@ func (p *StaticRouteAddMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *StaticRouteAddMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *StaticRouteAddMobileGatewayParam) ToV0() *v0params.StaticRouteAddMobileGatewayParam {
+	return &v0params.StaticRouteAddMobileGatewayParam{
+		Prefix:            p.Prefix,
+		NextHop:           p.NextHop,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // StaticRouteUpdateMobileGatewayParam is input parameters for the sacloud API
@@ -4888,6 +5808,33 @@ func (p *StaticRouteUpdateMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *StaticRouteUpdateMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *StaticRouteUpdateMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["static-route-update"]
+}
+
+func (p *StaticRouteUpdateMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *StaticRouteUpdateMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *StaticRouteUpdateMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *StaticRouteUpdateMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *StaticRouteUpdateMobileGatewayParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -4969,6 +5916,22 @@ func (p *StaticRouteUpdateMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *StaticRouteUpdateMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *StaticRouteUpdateMobileGatewayParam) ToV0() *v0params.StaticRouteUpdateMobileGatewayParam {
+	return &v0params.StaticRouteUpdateMobileGatewayParam{
+		Index:             p.Index,
+		Prefix:            p.Prefix,
+		NextHop:           p.NextHop,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // StaticRouteDeleteMobileGatewayParam is input parameters for the sacloud API
@@ -5088,6 +6051,33 @@ func (p *StaticRouteDeleteMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *StaticRouteDeleteMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *StaticRouteDeleteMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["static-route-delete"]
+}
+
+func (p *StaticRouteDeleteMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *StaticRouteDeleteMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *StaticRouteDeleteMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *StaticRouteDeleteMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *StaticRouteDeleteMobileGatewayParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -5155,6 +6145,20 @@ func (p *StaticRouteDeleteMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *StaticRouteDeleteMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *StaticRouteDeleteMobileGatewayParam) ToV0() *v0params.StaticRouteDeleteMobileGatewayParam {
+	return &v0params.StaticRouteDeleteMobileGatewayParam{
+		Index:             p.Index,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // SIMInfoMobileGatewayParam is input parameters for the sacloud API
@@ -5300,6 +6304,33 @@ func (p *SIMInfoMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SIMInfoMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *SIMInfoMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["sim-info"]
+}
+
+func (p *SIMInfoMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SIMInfoMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SIMInfoMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SIMInfoMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SIMInfoMobileGatewayParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -5402,6 +6433,25 @@ func (p *SIMInfoMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SIMInfoMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SIMInfoMobileGatewayParam) ToV0() *v0params.SIMInfoMobileGatewayParam {
+	return &v0params.SIMInfoMobileGatewayParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // SIMAddMobileGatewayParam is input parameters for the sacloud API
@@ -5547,6 +6597,33 @@ func (p *SIMAddMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SIMAddMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *SIMAddMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["sim-add"]
+}
+
+func (p *SIMAddMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SIMAddMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SIMAddMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SIMAddMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SIMAddMobileGatewayParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
@@ -5621,6 +6698,21 @@ func (p *SIMAddMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SIMAddMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SIMAddMobileGatewayParam) ToV0() *v0params.SIMAddMobileGatewayParam {
+	return &v0params.SIMAddMobileGatewayParam{
+		Ipaddress:         p.Ipaddress,
+		SIMId:             p.SIMId,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // SIMUpdateMobileGatewayParam is input parameters for the sacloud API
@@ -5759,6 +6851,33 @@ func (p *SIMUpdateMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SIMUpdateMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *SIMUpdateMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["sim-update"]
+}
+
+func (p *SIMUpdateMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SIMUpdateMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SIMUpdateMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SIMUpdateMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SIMUpdateMobileGatewayParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
@@ -5833,6 +6952,21 @@ func (p *SIMUpdateMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SIMUpdateMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SIMUpdateMobileGatewayParam) ToV0() *v0params.SIMUpdateMobileGatewayParam {
+	return &v0params.SIMUpdateMobileGatewayParam{
+		Ipaddress:         p.Ipaddress,
+		SIMId:             p.SIMId,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // SIMDeleteMobileGatewayParam is input parameters for the sacloud API
@@ -5959,6 +7093,33 @@ func (p *SIMDeleteMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SIMDeleteMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *SIMDeleteMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["sim-delete"]
+}
+
+func (p *SIMDeleteMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SIMDeleteMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SIMDeleteMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SIMDeleteMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SIMDeleteMobileGatewayParam) SetSIMId(v sacloud.ID) {
 	p.SIMId = v
 }
@@ -6026,6 +7187,20 @@ func (p *SIMDeleteMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SIMDeleteMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SIMDeleteMobileGatewayParam) ToV0() *v0params.SIMDeleteMobileGatewayParam {
+	return &v0params.SIMDeleteMobileGatewayParam{
+		SIMId:             p.SIMId,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // SIMRouteInfoMobileGatewayParam is input parameters for the sacloud API
@@ -6171,6 +7346,33 @@ func (p *SIMRouteInfoMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SIMRouteInfoMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *SIMRouteInfoMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["sim-route-info"]
+}
+
+func (p *SIMRouteInfoMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SIMRouteInfoMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SIMRouteInfoMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SIMRouteInfoMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SIMRouteInfoMobileGatewayParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -6273,6 +7475,25 @@ func (p *SIMRouteInfoMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SIMRouteInfoMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SIMRouteInfoMobileGatewayParam) ToV0() *v0params.SIMRouteInfoMobileGatewayParam {
+	return &v0params.SIMRouteInfoMobileGatewayParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // SIMRouteAddMobileGatewayParam is input parameters for the sacloud API
@@ -6418,6 +7639,33 @@ func (p *SIMRouteAddMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SIMRouteAddMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *SIMRouteAddMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["sim-route-add"]
+}
+
+func (p *SIMRouteAddMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SIMRouteAddMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SIMRouteAddMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SIMRouteAddMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SIMRouteAddMobileGatewayParam) SetPrefix(v string) {
 	p.Prefix = v
 }
@@ -6492,6 +7740,21 @@ func (p *SIMRouteAddMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SIMRouteAddMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SIMRouteAddMobileGatewayParam) ToV0() *v0params.SIMRouteAddMobileGatewayParam {
+	return &v0params.SIMRouteAddMobileGatewayParam{
+		Prefix:            p.Prefix,
+		SIM:               p.SIM,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // SIMRouteUpdateMobileGatewayParam is input parameters for the sacloud API
@@ -6635,6 +7898,33 @@ func (p *SIMRouteUpdateMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SIMRouteUpdateMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *SIMRouteUpdateMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["sim-route-update"]
+}
+
+func (p *SIMRouteUpdateMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SIMRouteUpdateMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SIMRouteUpdateMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SIMRouteUpdateMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SIMRouteUpdateMobileGatewayParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -6716,6 +8006,22 @@ func (p *SIMRouteUpdateMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SIMRouteUpdateMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SIMRouteUpdateMobileGatewayParam) ToV0() *v0params.SIMRouteUpdateMobileGatewayParam {
+	return &v0params.SIMRouteUpdateMobileGatewayParam{
+		Index:             p.Index,
+		Prefix:            p.Prefix,
+		SIM:               p.SIM,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // SIMRouteDeleteMobileGatewayParam is input parameters for the sacloud API
@@ -6835,6 +8141,33 @@ func (p *SIMRouteDeleteMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *SIMRouteDeleteMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *SIMRouteDeleteMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["sim-route-delete"]
+}
+
+func (p *SIMRouteDeleteMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *SIMRouteDeleteMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *SIMRouteDeleteMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *SIMRouteDeleteMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *SIMRouteDeleteMobileGatewayParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -6902,6 +8235,20 @@ func (p *SIMRouteDeleteMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *SIMRouteDeleteMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *SIMRouteDeleteMobileGatewayParam) ToV0() *v0params.SIMRouteDeleteMobileGatewayParam {
+	return &v0params.SIMRouteDeleteMobileGatewayParam{
+		Index:             p.Index,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // DNSUpdateMobileGatewayParam is input parameters for the sacloud API
@@ -7047,6 +8394,33 @@ func (p *DNSUpdateMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DNSUpdateMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *DNSUpdateMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["dns-update"]
+}
+
+func (p *DNSUpdateMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DNSUpdateMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DNSUpdateMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DNSUpdateMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DNSUpdateMobileGatewayParam) SetDNS1(v string) {
 	p.DNS1 = v
 }
@@ -7121,6 +8495,21 @@ func (p *DNSUpdateMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DNSUpdateMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DNSUpdateMobileGatewayParam) ToV0() *v0params.DNSUpdateMobileGatewayParam {
+	return &v0params.DNSUpdateMobileGatewayParam{
+		DNS1:              p.DNS1,
+		DNS2:              p.DNS2,
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }
 
 // LogsMobileGatewayParam is input parameters for the sacloud API
@@ -7241,6 +8630,33 @@ func (p *LogsMobileGatewayParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *LogsMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *LogsMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["logs"]
+}
+
+func (p *LogsMobileGatewayParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *LogsMobileGatewayParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *LogsMobileGatewayParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *LogsMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *LogsMobileGatewayParam) SetFollow(v bool) {
 	p.Follow = v
 }
@@ -7308,4 +8724,18 @@ func (p *LogsMobileGatewayParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *LogsMobileGatewayParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *LogsMobileGatewayParam) ToV0() *v0params.LogsMobileGatewayParam {
+	return &v0params.LogsMobileGatewayParam{
+		Follow:            p.Follow,
+		RefreshInterval:   p.RefreshInterval,
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		Id:                p.Id,
+	}
 }

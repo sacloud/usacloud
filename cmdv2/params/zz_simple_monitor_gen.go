@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -225,6 +226,33 @@ func (p *ListSimpleMonitorParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ListSimpleMonitorParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SimpleMonitor"]
+}
+
+func (p *ListSimpleMonitorParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["list"]
+}
+
+func (p *ListSimpleMonitorParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ListSimpleMonitorParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ListSimpleMonitorParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ListSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ListSimpleMonitorParam) SetName(v []string) {
 	p.Name = v
 }
@@ -362,6 +390,30 @@ func (p *ListSimpleMonitorParam) GetQueryFile() string {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ListSimpleMonitorParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ListSimpleMonitorParam) ToV0() *v0params.ListSimpleMonitorParam {
+	return &v0params.ListSimpleMonitorParam{
+		Name:              p.Name,
+		Id:                p.Id,
+		Tags:              p.Tags,
+		Health:            p.Health,
+		From:              p.From,
+		Max:               p.Max,
+		Sort:              p.Sort,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
 }
 
 // CreateSimpleMonitorParam is input parameters for the sacloud API
@@ -674,6 +726,33 @@ func (p *CreateSimpleMonitorParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *CreateSimpleMonitorParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SimpleMonitor"]
+}
+
+func (p *CreateSimpleMonitorParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["create"]
+}
+
+func (p *CreateSimpleMonitorParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *CreateSimpleMonitorParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *CreateSimpleMonitorParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *CreateSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *CreateSimpleMonitorParam) SetTarget(v string) {
 	p.Target = v
 }
@@ -918,6 +997,45 @@ func (p *CreateSimpleMonitorParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *CreateSimpleMonitorParam) ToV0() *v0params.CreateSimpleMonitorParam {
+	return &v0params.CreateSimpleMonitorParam{
+		Target:            p.Target,
+		Protocol:          p.Protocol,
+		Port:              p.Port,
+		DelayLoop:         p.DelayLoop,
+		Disabled:          p.Disabled,
+		HostHeader:        p.HostHeader,
+		Path:              p.Path,
+		ResponseCode:      p.ResponseCode,
+		Sni:               p.Sni,
+		Username:          p.Username,
+		Password:          p.Password,
+		DNSQname:          p.DNSQname,
+		DNSExcepted:       p.DNSExcepted,
+		RemainingDays:     p.RemainingDays,
+		NotifyEmail:       p.NotifyEmail,
+		EmailType:         p.EmailType,
+		SlackWebhook:      p.SlackWebhook,
+		NotifyInterval:    p.NotifyInterval,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+	}
+}
+
 // ReadSimpleMonitorParam is input parameters for the sacloud API
 type ReadSimpleMonitorParam struct {
 	Selector          []string
@@ -1061,6 +1179,33 @@ func (p *ReadSimpleMonitorParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *ReadSimpleMonitorParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SimpleMonitor"]
+}
+
+func (p *ReadSimpleMonitorParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["read"]
+}
+
+func (p *ReadSimpleMonitorParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *ReadSimpleMonitorParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *ReadSimpleMonitorParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *ReadSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *ReadSimpleMonitorParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1163,6 +1308,25 @@ func (p *ReadSimpleMonitorParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *ReadSimpleMonitorParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *ReadSimpleMonitorParam) ToV0() *v0params.ReadSimpleMonitorParam {
+	return &v0params.ReadSimpleMonitorParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // UpdateSimpleMonitorParam is input parameters for the sacloud API
@@ -1465,6 +1629,33 @@ func (p *UpdateSimpleMonitorParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *UpdateSimpleMonitorParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SimpleMonitor"]
+}
+
+func (p *UpdateSimpleMonitorParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["update"]
+}
+
+func (p *UpdateSimpleMonitorParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *UpdateSimpleMonitorParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *UpdateSimpleMonitorParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *UpdateSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *UpdateSimpleMonitorParam) SetProtocol(v string) {
 	p.Protocol = v
 }
@@ -1716,6 +1907,46 @@ func (p *UpdateSimpleMonitorParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
+func (p *UpdateSimpleMonitorParam) ToV0() *v0params.UpdateSimpleMonitorParam {
+	return &v0params.UpdateSimpleMonitorParam{
+		Protocol:          p.Protocol,
+		Port:              p.Port,
+		DelayLoop:         p.DelayLoop,
+		Disabled:          p.Disabled,
+		HostHeader:        p.HostHeader,
+		Path:              p.Path,
+		ResponseCode:      p.ResponseCode,
+		Sni:               p.Sni,
+		Username:          p.Username,
+		Password:          p.Password,
+		DNSQname:          p.DNSQname,
+		DNSExcepted:       p.DNSExcepted,
+		RemainingDays:     p.RemainingDays,
+		NotifyEmail:       p.NotifyEmail,
+		EmailType:         p.EmailType,
+		SlackWebhook:      p.SlackWebhook,
+		NotifyInterval:    p.NotifyInterval,
+		Selector:          p.Selector,
+		Description:       p.Description,
+		Tags:              p.Tags,
+		IconId:            p.IconId,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
+}
+
 // DeleteSimpleMonitorParam is input parameters for the sacloud API
 type DeleteSimpleMonitorParam struct {
 	Selector          []string
@@ -1863,6 +2094,33 @@ func (p *DeleteSimpleMonitorParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *DeleteSimpleMonitorParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SimpleMonitor"]
+}
+
+func (p *DeleteSimpleMonitorParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["delete"]
+}
+
+func (p *DeleteSimpleMonitorParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *DeleteSimpleMonitorParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *DeleteSimpleMonitorParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *DeleteSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *DeleteSimpleMonitorParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1972,6 +2230,26 @@ func (p *DeleteSimpleMonitorParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *DeleteSimpleMonitorParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *DeleteSimpleMonitorParam) ToV0() *v0params.DeleteSimpleMonitorParam {
+	return &v0params.DeleteSimpleMonitorParam{
+		Selector:          p.Selector,
+		Assumeyes:         p.Assumeyes,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }
 
 // HealthSimpleMonitorParam is input parameters for the sacloud API
@@ -2117,6 +2395,33 @@ func (p *HealthSimpleMonitorParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+/*
+ * v0系との互換性維持のための実装
+ */
+func (p *HealthSimpleMonitorParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SimpleMonitor"]
+}
+
+func (p *HealthSimpleMonitorParam) GetCommandDef() *schema.Command {
+	return p.ResourceDef().Commands["health"]
+}
+
+func (p *HealthSimpleMonitorParam) GetIncludeFields() []string {
+	return p.CommandDef().IncludeFields
+}
+
+func (p *HealthSimpleMonitorParam) GetExcludeFields() []string {
+	return p.CommandDef().ExcludeFields
+}
+
+func (p *HealthSimpleMonitorParam) GetTableType() output.TableType {
+	return p.CommandDef().TableType
+}
+
+func (p *HealthSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
+	return p.CommandDef().TableColumnDefines
+}
+
 func (p *HealthSimpleMonitorParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2219,4 +2524,23 @@ func (p *HealthSimpleMonitorParam) GetId() sacloud.ID {
 // Changed usacloud v0系との互換性維持のための実装
 func (p *HealthSimpleMonitorParam) Changed(name string) bool {
 	return p.input.Changed(name)
+}
+
+func (p *HealthSimpleMonitorParam) ToV0() *v0params.HealthSimpleMonitorParam {
+	return &v0params.HealthSimpleMonitorParam{
+		Selector:          p.Selector,
+		ParamTemplate:     p.ParamTemplate,
+		Parameters:        p.Parameters,
+		ParamTemplateFile: p.ParamTemplateFile,
+		ParameterFile:     p.ParameterFile,
+		GenerateSkeleton:  p.GenerateSkeleton,
+		OutputType:        p.OutputType,
+		Column:            p.Column,
+		Quiet:             p.Quiet,
+		Format:            p.Format,
+		FormatFile:        p.FormatFile,
+		Query:             p.Query,
+		QueryFile:         p.QueryFile,
+		Id:                p.Id,
+	}
 }

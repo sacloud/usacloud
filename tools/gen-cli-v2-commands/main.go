@@ -107,11 +107,7 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 			if err != nil {
 				return err
 			}
-	
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("{{.Name}} local parameter: \n%s\n", debugMarshalIndent({{ .InputParameterVariable }}))
-			return nil
+			return funcs.{{ .FunctionName }}(ctx, {{ .InputParameterVariable }}.ToV0())
 		},
 	}
 

@@ -17,10 +17,9 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +50,7 @@ func packetFilterListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("list local parameter: \n%s\n", debugMarshalIndent(packetFilterListParam))
-			return nil
+			return funcs.PacketFilterList(ctx, packetFilterListParam.ToV0())
 		},
 	}
 
@@ -95,11 +90,7 @@ func packetFilterCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("create local parameter: \n%s\n", debugMarshalIndent(packetFilterCreateParam))
-			return nil
+			return funcs.PacketFilterCreate(ctx, packetFilterCreateParam.ToV0())
 		},
 	}
 
@@ -137,11 +128,7 @@ func packetFilterReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("read local parameter: \n%s\n", debugMarshalIndent(packetFilterReadParam))
-			return nil
+			return funcs.PacketFilterRead(ctx, packetFilterReadParam.ToV0())
 		},
 	}
 
@@ -177,11 +164,7 @@ func packetFilterUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("update local parameter: \n%s\n", debugMarshalIndent(packetFilterUpdateParam))
-			return nil
+			return funcs.PacketFilterUpdate(ctx, packetFilterUpdateParam.ToV0())
 		},
 	}
 
@@ -220,11 +203,7 @@ func packetFilterDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("delete local parameter: \n%s\n", debugMarshalIndent(packetFilterDeleteParam))
-			return nil
+			return funcs.PacketFilterDelete(ctx, packetFilterDeleteParam.ToV0())
 		},
 	}
 
@@ -261,11 +240,7 @@ func packetFilterRuleInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("rule-info local parameter: \n%s\n", debugMarshalIndent(packetFilterRuleInfoParam))
-			return nil
+			return funcs.PacketFilterRuleInfo(ctx, packetFilterRuleInfoParam.ToV0())
 		},
 	}
 
@@ -301,11 +276,7 @@ func packetFilterRuleAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("rule-add local parameter: \n%s\n", debugMarshalIndent(packetFilterRuleAddParam))
-			return nil
+			return funcs.PacketFilterRuleAdd(ctx, packetFilterRuleAddParam.ToV0())
 		},
 	}
 
@@ -349,11 +320,7 @@ func packetFilterRuleUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("rule-update local parameter: \n%s\n", debugMarshalIndent(packetFilterRuleUpdateParam))
-			return nil
+			return funcs.PacketFilterRuleUpdate(ctx, packetFilterRuleUpdateParam.ToV0())
 		},
 	}
 
@@ -397,11 +364,7 @@ func packetFilterRuleDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("rule-delete local parameter: \n%s\n", debugMarshalIndent(packetFilterRuleDeleteParam))
-			return nil
+			return funcs.PacketFilterRuleDelete(ctx, packetFilterRuleDeleteParam.ToV0())
 		},
 	}
 
@@ -439,11 +402,7 @@ func packetFilterInterfaceConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("interface-connect local parameter: \n%s\n", debugMarshalIndent(packetFilterInterfaceConnectParam))
-			return nil
+			return funcs.PacketFilterInterfaceConnect(ctx, packetFilterInterfaceConnectParam.ToV0())
 		},
 	}
 
@@ -474,11 +433,7 @@ func packetFilterInterfaceDisconnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
-			// TODO DEBUG
-			fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(ctx.Option()))
-			fmt.Printf("interface-disconnect local parameter: \n%s\n", debugMarshalIndent(packetFilterInterfaceDisconnectParam))
-			return nil
+			return funcs.PacketFilterInterfaceDisconnect(ctx, packetFilterInterfaceDisconnectParam.ToV0())
 		},
 	}
 
