@@ -47,7 +47,7 @@ func archiveListCmd() *cobra.Command {
 			return archiveListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), archiveListParam)
+			ctx, err := newCLIContext(globalFlags(), args, archiveListParam)
 			if err != nil {
 				return err
 			}
@@ -95,7 +95,7 @@ func archiveCreateCmd() *cobra.Command {
 			return archiveCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), archiveCreateParam)
+			ctx, err := newCLIContext(globalFlags(), args, archiveCreateParam)
 			if err != nil {
 				return err
 			}
@@ -143,7 +143,7 @@ func archiveReadCmd() *cobra.Command {
 			return archiveReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), archiveReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, archiveReadParam)
 			if err != nil {
 				return err
 			}
@@ -184,7 +184,7 @@ func archiveUpdateCmd() *cobra.Command {
 			return archiveUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), archiveUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, archiveUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -230,7 +230,7 @@ func archiveDeleteCmd() *cobra.Command {
 			return archiveDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), archiveDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, archiveDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -272,7 +272,7 @@ func archiveUploadCmd() *cobra.Command {
 			return archiveUploadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), archiveUploadParam)
+			ctx, err := newCLIContext(globalFlags(), args, archiveUploadParam)
 			if err != nil {
 				return err
 			}
@@ -315,7 +315,7 @@ func archiveDownloadCmd() *cobra.Command {
 			return archiveDownloadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), archiveDownloadParam)
+			ctx, err := newCLIContext(globalFlags(), args, archiveDownloadParam)
 			if err != nil {
 				return err
 			}
@@ -351,7 +351,7 @@ func archiveFTPOpenCmd() *cobra.Command {
 			return archiveFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), archiveFTPOpenParam)
+			ctx, err := newCLIContext(globalFlags(), args, archiveFTPOpenParam)
 			if err != nil {
 				return err
 			}
@@ -393,7 +393,7 @@ func archiveFTPCloseCmd() *cobra.Command {
 			return archiveFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), archiveFTPCloseParam)
+			ctx, err := newCLIContext(globalFlags(), args, archiveFTPCloseParam)
 			if err != nil {
 				return err
 			}
@@ -428,7 +428,7 @@ func archiveWaitForCopyCmd() *cobra.Command {
 			return archiveWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), archiveWaitForCopyParam)
+			ctx, err := newCLIContext(globalFlags(), args, archiveWaitForCopyParam)
 			if err != nil {
 				return err
 			}

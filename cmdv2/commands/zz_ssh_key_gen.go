@@ -47,7 +47,7 @@ func sshKeyListCmd() *cobra.Command {
 			return sshKeyListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), sshKeyListParam)
+			ctx, err := newCLIContext(globalFlags(), args, sshKeyListParam)
 			if err != nil {
 				return err
 			}
@@ -91,7 +91,7 @@ func sshKeyCreateCmd() *cobra.Command {
 			return sshKeyCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), sshKeyCreateParam)
+			ctx, err := newCLIContext(globalFlags(), args, sshKeyCreateParam)
 			if err != nil {
 				return err
 			}
@@ -135,7 +135,7 @@ func sshKeyReadCmd() *cobra.Command {
 			return sshKeyReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), sshKeyReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, sshKeyReadParam)
 			if err != nil {
 				return err
 			}
@@ -175,7 +175,7 @@ func sshKeyUpdateCmd() *cobra.Command {
 			return sshKeyUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), sshKeyUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, sshKeyUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -218,7 +218,7 @@ func sshKeyDeleteCmd() *cobra.Command {
 			return sshKeyDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), sshKeyDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, sshKeyDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -259,7 +259,7 @@ func sshKeyGenerateCmd() *cobra.Command {
 			return sshKeyGenerateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), sshKeyGenerateParam)
+			ctx, err := newCLIContext(globalFlags(), args, sshKeyGenerateParam)
 			if err != nil {
 				return err
 			}

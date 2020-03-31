@@ -340,6 +340,11 @@ func (p *ListAutoBackupParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListAutoBackupParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateAutoBackupParam is input parameters for the sacloud API
 type CreateAutoBackupParam struct {
 	DiskId            sacloud.ID
@@ -725,6 +730,11 @@ func (p *CreateAutoBackupParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateAutoBackupParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadAutoBackupParam is input parameters for the sacloud API
 type ReadAutoBackupParam struct {
 	Selector          []string
@@ -965,6 +975,11 @@ func (p *ReadAutoBackupParam) SetId(v sacloud.ID) {
 
 func (p *ReadAutoBackupParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadAutoBackupParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateAutoBackupParam is input parameters for the sacloud API
@@ -1334,6 +1349,11 @@ func (p *UpdateAutoBackupParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateAutoBackupParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteAutoBackupParam is input parameters for the sacloud API
 type DeleteAutoBackupParam struct {
 	Selector          []string
@@ -1585,4 +1605,9 @@ func (p *DeleteAutoBackupParam) SetId(v sacloud.ID) {
 
 func (p *DeleteAutoBackupParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteAutoBackupParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

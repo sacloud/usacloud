@@ -188,6 +188,11 @@ func (p *CsvBillParam) GetBillId() sacloud.ID {
 	return p.BillId
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CsvBillParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ListBillParam is input parameters for the sacloud API
 type ListBillParam struct {
 	Year              int
@@ -436,4 +441,9 @@ func (p *ListBillParam) SetQueryFile(v string) {
 
 func (p *ListBillParam) GetQueryFile() string {
 	return p.QueryFile
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListBillParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

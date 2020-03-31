@@ -47,7 +47,7 @@ func zoneListCmd() *cobra.Command {
 			return zoneListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), zoneListParam)
+			ctx, err := newCLIContext(globalFlags(), args, zoneListParam)
 			if err != nil {
 				return err
 			}
@@ -91,7 +91,7 @@ func zoneReadCmd() *cobra.Command {
 			return zoneReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), zoneReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, zoneReadParam)
 			if err != nil {
 				return err
 			}

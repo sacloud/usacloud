@@ -145,3 +145,8 @@ func (p *InfoSelfParam) SetGenerateSkeleton(v bool) {
 func (p *InfoSelfParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *InfoSelfParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}

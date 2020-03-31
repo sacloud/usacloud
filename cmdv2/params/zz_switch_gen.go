@@ -340,6 +340,11 @@ func (p *ListSwitchParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListSwitchParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateSwitchParam is input parameters for the sacloud API
 type CreateSwitchParam struct {
 	Name              string
@@ -646,6 +651,11 @@ func (p *CreateSwitchParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateSwitchParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadSwitchParam is input parameters for the sacloud API
 type ReadSwitchParam struct {
 	Selector          []string
@@ -886,6 +896,11 @@ func (p *ReadSwitchParam) SetId(v sacloud.ID) {
 
 func (p *ReadSwitchParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadSwitchParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateSwitchParam is input parameters for the sacloud API
@@ -1217,6 +1232,11 @@ func (p *UpdateSwitchParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateSwitchParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteSwitchParam is input parameters for the sacloud API
 type DeleteSwitchParam struct {
 	Selector          []string
@@ -1470,6 +1490,11 @@ func (p *DeleteSwitchParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteSwitchParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // BridgeConnectSwitchParam is input parameters for the sacloud API
 type BridgeConnectSwitchParam struct {
 	BridgeId          sacloud.ID
@@ -1658,6 +1683,11 @@ func (p *BridgeConnectSwitchParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BridgeConnectSwitchParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // BridgeDisconnectSwitchParam is input parameters for the sacloud API
 type BridgeDisconnectSwitchParam struct {
 	Selector          []string
@@ -1818,4 +1848,9 @@ func (p *BridgeDisconnectSwitchParam) SetId(v sacloud.ID) {
 
 func (p *BridgeDisconnectSwitchParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BridgeDisconnectSwitchParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

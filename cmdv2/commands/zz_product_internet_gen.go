@@ -47,7 +47,7 @@ func productInternetListCmd() *cobra.Command {
 			return productInternetListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), productInternetListParam)
+			ctx, err := newCLIContext(globalFlags(), args, productInternetListParam)
 			if err != nil {
 				return err
 			}
@@ -91,7 +91,7 @@ func productInternetReadCmd() *cobra.Command {
 			return productInternetReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), productInternetReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, productInternetReadParam)
 			if err != nil {
 				return err
 			}

@@ -370,6 +370,11 @@ func (p *ListStartupScriptParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListStartupScriptParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateStartupScriptParam is input parameters for the sacloud API
 type CreateStartupScriptParam struct {
 	Script            string
@@ -724,6 +729,11 @@ func (p *CreateStartupScriptParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateStartupScriptParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadStartupScriptParam is input parameters for the sacloud API
 type ReadStartupScriptParam struct {
 	Selector          []string
@@ -964,6 +974,11 @@ func (p *ReadStartupScriptParam) SetId(v sacloud.ID) {
 
 func (p *ReadStartupScriptParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadStartupScriptParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateStartupScriptParam is input parameters for the sacloud API
@@ -1335,6 +1350,11 @@ func (p *UpdateStartupScriptParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateStartupScriptParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteStartupScriptParam is input parameters for the sacloud API
 type DeleteStartupScriptParam struct {
 	Selector          []string
@@ -1586,4 +1606,9 @@ func (p *DeleteStartupScriptParam) SetId(v sacloud.ID) {
 
 func (p *DeleteStartupScriptParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteStartupScriptParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

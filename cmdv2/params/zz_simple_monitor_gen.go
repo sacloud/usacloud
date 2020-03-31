@@ -359,6 +359,11 @@ func (p *ListSimpleMonitorParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListSimpleMonitorParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateSimpleMonitorParam is input parameters for the sacloud API
 type CreateSimpleMonitorParam struct {
 	Target            string
@@ -908,6 +913,11 @@ func (p *CreateSimpleMonitorParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateSimpleMonitorParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadSimpleMonitorParam is input parameters for the sacloud API
 type ReadSimpleMonitorParam struct {
 	Selector          []string
@@ -1148,6 +1158,11 @@ func (p *ReadSimpleMonitorParam) SetId(v sacloud.ID) {
 
 func (p *ReadSimpleMonitorParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadSimpleMonitorParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateSimpleMonitorParam is input parameters for the sacloud API
@@ -1696,6 +1711,11 @@ func (p *UpdateSimpleMonitorParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateSimpleMonitorParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteSimpleMonitorParam is input parameters for the sacloud API
 type DeleteSimpleMonitorParam struct {
 	Selector          []string
@@ -1949,6 +1969,11 @@ func (p *DeleteSimpleMonitorParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteSimpleMonitorParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // HealthSimpleMonitorParam is input parameters for the sacloud API
 type HealthSimpleMonitorParam struct {
 	Selector          []string
@@ -2189,4 +2214,9 @@ func (p *HealthSimpleMonitorParam) SetId(v sacloud.ID) {
 
 func (p *HealthSimpleMonitorParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *HealthSimpleMonitorParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

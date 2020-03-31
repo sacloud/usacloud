@@ -340,6 +340,11 @@ func (p *ListVPCRouterParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateVPCRouterParam is input parameters for the sacloud API
 type CreateVPCRouterParam struct {
 	Plan                      string
@@ -790,6 +795,11 @@ func (p *CreateVPCRouterParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadVPCRouterParam is input parameters for the sacloud API
 type ReadVPCRouterParam struct {
 	Selector          []string
@@ -1030,6 +1040,11 @@ func (p *ReadVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *ReadVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateVPCRouterParam is input parameters for the sacloud API
@@ -1391,6 +1406,11 @@ func (p *UpdateVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteVPCRouterParam is input parameters for the sacloud API
 type DeleteVPCRouterParam struct {
 	Force             bool
@@ -1655,6 +1675,11 @@ func (p *DeleteVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // BootVPCRouterParam is input parameters for the sacloud API
 type BootVPCRouterParam struct {
 	Selector          []string
@@ -1815,6 +1840,11 @@ func (p *BootVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *BootVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BootVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ShutdownVPCRouterParam is input parameters for the sacloud API
@@ -1979,6 +2009,11 @@ func (p *ShutdownVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ShutdownVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ShutdownForceVPCRouterParam is input parameters for the sacloud API
 type ShutdownForceVPCRouterParam struct {
 	Selector          []string
@@ -2139,6 +2174,11 @@ func (p *ShutdownForceVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *ShutdownForceVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ShutdownForceVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ResetVPCRouterParam is input parameters for the sacloud API
@@ -2303,6 +2343,11 @@ func (p *ResetVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ResetVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // WaitForBootVPCRouterParam is input parameters for the sacloud API
 type WaitForBootVPCRouterParam struct {
 	Selector          []string
@@ -2454,6 +2499,11 @@ func (p *WaitForBootVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *WaitForBootVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // WaitForDownVPCRouterParam is input parameters for the sacloud API
 type WaitForDownVPCRouterParam struct {
 	Selector          []string
@@ -2603,6 +2653,11 @@ func (p *WaitForDownVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *WaitForDownVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *WaitForDownVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // EnableInternetConnectionVPCRouterParam is input parameters for the sacloud API
@@ -2767,6 +2822,11 @@ func (p *EnableInternetConnectionVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *EnableInternetConnectionVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DisableInternetConnectionVPCRouterParam is input parameters for the sacloud API
 type DisableInternetConnectionVPCRouterParam struct {
 	Selector          []string
@@ -2927,6 +2987,11 @@ func (p *DisableInternetConnectionVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *DisableInternetConnectionVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DisableInternetConnectionVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // InterfaceInfoVPCRouterParam is input parameters for the sacloud API
@@ -3169,6 +3234,11 @@ func (p *InterfaceInfoVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *InterfaceInfoVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *InterfaceInfoVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // InterfaceConnectVPCRouterParam is input parameters for the sacloud API
@@ -3478,6 +3548,11 @@ func (p *InterfaceConnectVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *InterfaceConnectVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *InterfaceConnectVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // InterfaceUpdateVPCRouterParam is input parameters for the sacloud API
@@ -3794,6 +3869,11 @@ func (p *InterfaceUpdateVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *InterfaceUpdateVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // InterfaceDisconnectVPCRouterParam is input parameters for the sacloud API
 type InterfaceDisconnectVPCRouterParam struct {
 	Interface         string
@@ -3991,6 +4071,11 @@ func (p *InterfaceDisconnectVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *InterfaceDisconnectVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *InterfaceDisconnectVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // StaticNatInfoVPCRouterParam is input parameters for the sacloud API
@@ -4235,6 +4320,11 @@ func (p *StaticNatInfoVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *StaticNatInfoVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // StaticNatAddVPCRouterParam is input parameters for the sacloud API
 type StaticNatAddVPCRouterParam struct {
 	Global            string
@@ -4466,6 +4556,11 @@ func (p *StaticNatAddVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *StaticNatAddVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *StaticNatAddVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // StaticNatUpdateVPCRouterParam is input parameters for the sacloud API
@@ -4706,6 +4801,11 @@ func (p *StaticNatUpdateVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *StaticNatUpdateVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // StaticNatDeleteVPCRouterParam is input parameters for the sacloud API
 type StaticNatDeleteVPCRouterParam struct {
 	Index             int
@@ -4885,6 +4985,11 @@ func (p *StaticNatDeleteVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *StaticNatDeleteVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *StaticNatDeleteVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // PortForwardingInfoVPCRouterParam is input parameters for the sacloud API
@@ -5127,6 +5232,11 @@ func (p *PortForwardingInfoVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *PortForwardingInfoVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PortForwardingInfoVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // PortForwardingAddVPCRouterParam is input parameters for the sacloud API
@@ -5414,6 +5524,11 @@ func (p *PortForwardingAddVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PortForwardingAddVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // PortForwardingUpdateVPCRouterParam is input parameters for the sacloud API
 type PortForwardingUpdateVPCRouterParam struct {
 	Index             int
@@ -5690,6 +5805,11 @@ func (p *PortForwardingUpdateVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PortForwardingUpdateVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // PortForwardingDeleteVPCRouterParam is input parameters for the sacloud API
 type PortForwardingDeleteVPCRouterParam struct {
 	Index             int
@@ -5869,6 +5989,11 @@ func (p *PortForwardingDeleteVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *PortForwardingDeleteVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PortForwardingDeleteVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // FirewallInfoVPCRouterParam is input parameters for the sacloud API
@@ -6157,6 +6282,11 @@ func (p *FirewallInfoVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *FirewallInfoVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *FirewallInfoVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // FirewallAddVPCRouterParam is input parameters for the sacloud API
@@ -6523,6 +6653,11 @@ func (p *FirewallAddVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *FirewallAddVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *FirewallAddVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // FirewallUpdateVPCRouterParam is input parameters for the sacloud API
@@ -6896,6 +7031,11 @@ func (p *FirewallUpdateVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *FirewallUpdateVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // FirewallDeleteVPCRouterParam is input parameters for the sacloud API
 type FirewallDeleteVPCRouterParam struct {
 	Interface         int
@@ -7121,6 +7261,11 @@ func (p *FirewallDeleteVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *FirewallDeleteVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *FirewallDeleteVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // DhcpServerInfoVPCRouterParam is input parameters for the sacloud API
@@ -7363,6 +7508,11 @@ func (p *DhcpServerInfoVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *DhcpServerInfoVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DhcpServerInfoVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // DhcpServerAddVPCRouterParam is input parameters for the sacloud API
@@ -7624,6 +7774,11 @@ func (p *DhcpServerAddVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DhcpServerAddVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DhcpServerUpdateVPCRouterParam is input parameters for the sacloud API
 type DhcpServerUpdateVPCRouterParam struct {
 	Interface         int
@@ -7869,6 +8024,11 @@ func (p *DhcpServerUpdateVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DhcpServerUpdateVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DhcpServerDeleteVPCRouterParam is input parameters for the sacloud API
 type DhcpServerDeleteVPCRouterParam struct {
 	Interface         int
@@ -8055,6 +8215,11 @@ func (p *DhcpServerDeleteVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *DhcpServerDeleteVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DhcpServerDeleteVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // DhcpStaticMappingInfoVPCRouterParam is input parameters for the sacloud API
@@ -8299,6 +8464,11 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DhcpStaticMappingInfoVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DhcpStaticMappingAddVPCRouterParam is input parameters for the sacloud API
 type DhcpStaticMappingAddVPCRouterParam struct {
 	Macaddress        string
@@ -8511,6 +8681,11 @@ func (p *DhcpStaticMappingAddVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *DhcpStaticMappingAddVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DhcpStaticMappingAddVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // DhcpStaticMappingUpdateVPCRouterParam is input parameters for the sacloud API
@@ -8732,6 +8907,11 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DhcpStaticMappingUpdateVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DhcpStaticMappingDeleteVPCRouterParam is input parameters for the sacloud API
 type DhcpStaticMappingDeleteVPCRouterParam struct {
 	Index             int
@@ -8911,6 +9091,11 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *DhcpStaticMappingDeleteVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DhcpStaticMappingDeleteVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // PptpServerInfoVPCRouterParam is input parameters for the sacloud API
@@ -9155,6 +9340,11 @@ func (p *PptpServerInfoVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PptpServerInfoVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // PptpServerUpdateVPCRouterParam is input parameters for the sacloud API
 type PptpServerUpdateVPCRouterParam struct {
 	Disabled          bool
@@ -9364,6 +9554,11 @@ func (p *PptpServerUpdateVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *PptpServerUpdateVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PptpServerUpdateVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // L2TPServerInfoVPCRouterParam is input parameters for the sacloud API
@@ -9608,6 +9803,11 @@ func (p *L2TPServerInfoVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *L2TPServerInfoVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // L2TPServerUpdateVPCRouterParam is input parameters for the sacloud API
 type L2TPServerUpdateVPCRouterParam struct {
 	Disabled          bool
@@ -9836,6 +10036,11 @@ func (p *L2TPServerUpdateVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *L2TPServerUpdateVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *L2TPServerUpdateVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UserInfoVPCRouterParam is input parameters for the sacloud API
@@ -10080,6 +10285,11 @@ func (p *UserInfoVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UserInfoVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // UserAddVPCRouterParam is input parameters for the sacloud API
 type UserAddVPCRouterParam struct {
 	Username          string
@@ -10292,6 +10502,11 @@ func (p *UserAddVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *UserAddVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UserAddVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UserUpdateVPCRouterParam is input parameters for the sacloud API
@@ -10513,6 +10728,11 @@ func (p *UserUpdateVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UserUpdateVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // UserDeleteVPCRouterParam is input parameters for the sacloud API
 type UserDeleteVPCRouterParam struct {
 	Index             int
@@ -10692,6 +10912,11 @@ func (p *UserDeleteVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *UserDeleteVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UserDeleteVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // SiteToSiteVPNInfoVPCRouterParam is input parameters for the sacloud API
@@ -10934,6 +11159,11 @@ func (p *SiteToSiteVPNInfoVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *SiteToSiteVPNInfoVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SiteToSiteVPNInfoVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // SiteToSiteVPNAddVPCRouterParam is input parameters for the sacloud API
@@ -11221,6 +11451,11 @@ func (p *SiteToSiteVPNAddVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SiteToSiteVPNAddVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // SiteToSiteVPNUpdateVPCRouterParam is input parameters for the sacloud API
 type SiteToSiteVPNUpdateVPCRouterParam struct {
 	Index             int
@@ -11489,6 +11724,11 @@ func (p *SiteToSiteVPNUpdateVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SiteToSiteVPNUpdateVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // SiteToSiteVPNDeleteVPCRouterParam is input parameters for the sacloud API
 type SiteToSiteVPNDeleteVPCRouterParam struct {
 	Index             int
@@ -11668,6 +11908,11 @@ func (p *SiteToSiteVPNDeleteVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *SiteToSiteVPNDeleteVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SiteToSiteVPNDeleteVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // SiteToSiteVPNPeersVPCRouterParam is input parameters for the sacloud API
@@ -11912,6 +12157,11 @@ func (p *SiteToSiteVPNPeersVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SiteToSiteVPNPeersVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // StaticRouteInfoVPCRouterParam is input parameters for the sacloud API
 type StaticRouteInfoVPCRouterParam struct {
 	Selector          []string
@@ -12154,6 +12404,11 @@ func (p *StaticRouteInfoVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *StaticRouteInfoVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // StaticRouteAddVPCRouterParam is input parameters for the sacloud API
 type StaticRouteAddVPCRouterParam struct {
 	Prefix            string
@@ -12366,6 +12621,11 @@ func (p *StaticRouteAddVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *StaticRouteAddVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *StaticRouteAddVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // StaticRouteUpdateVPCRouterParam is input parameters for the sacloud API
@@ -12587,6 +12847,11 @@ func (p *StaticRouteUpdateVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *StaticRouteUpdateVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // StaticRouteDeleteVPCRouterParam is input parameters for the sacloud API
 type StaticRouteDeleteVPCRouterParam struct {
 	Index             int
@@ -12766,6 +13031,11 @@ func (p *StaticRouteDeleteVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *StaticRouteDeleteVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *StaticRouteDeleteVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // MonitorVPCRouterParam is input parameters for the sacloud API
@@ -13094,6 +13364,11 @@ func (p *MonitorVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // LogsVPCRouterParam is input parameters for the sacloud API
 type LogsVPCRouterParam struct {
 	LogName           string
@@ -13304,4 +13579,9 @@ func (p *LogsVPCRouterParam) SetId(v sacloud.ID) {
 
 func (p *LogsVPCRouterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *LogsVPCRouterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

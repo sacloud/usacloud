@@ -408,6 +408,11 @@ func (p *ListDiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListDiskParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateDiskParam is input parameters for the sacloud API
 type CreateDiskParam struct {
 	Plan              string
@@ -868,6 +873,11 @@ func (p *CreateDiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateDiskParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadDiskParam is input parameters for the sacloud API
 type ReadDiskParam struct {
 	Selector          []string
@@ -1108,6 +1118,11 @@ func (p *ReadDiskParam) SetId(v sacloud.ID) {
 
 func (p *ReadDiskParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadDiskParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateDiskParam is input parameters for the sacloud API
@@ -1458,6 +1473,11 @@ func (p *UpdateDiskParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateDiskParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteDiskParam is input parameters for the sacloud API
 type DeleteDiskParam struct {
 	Selector          []string
@@ -1709,6 +1729,11 @@ func (p *DeleteDiskParam) SetId(v sacloud.ID) {
 
 func (p *DeleteDiskParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteDiskParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // EditDiskParam is input parameters for the sacloud API
@@ -2077,6 +2102,11 @@ func (p *EditDiskParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *EditDiskParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ResizePartitionDiskParam is input parameters for the sacloud API
 type ResizePartitionDiskParam struct {
 	Selector          []string
@@ -2330,6 +2360,11 @@ func (p *ResizePartitionDiskParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ResizePartitionDiskParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReinstallFromArchiveDiskParam is input parameters for the sacloud API
 type ReinstallFromArchiveDiskParam struct {
 	SourceArchiveId   sacloud.ID
@@ -2535,6 +2570,11 @@ func (p *ReinstallFromArchiveDiskParam) SetId(v sacloud.ID) {
 
 func (p *ReinstallFromArchiveDiskParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReinstallFromArchiveDiskParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ReinstallFromDiskDiskParam is input parameters for the sacloud API
@@ -2744,6 +2784,11 @@ func (p *ReinstallFromDiskDiskParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReinstallFromDiskDiskParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReinstallToBlankDiskParam is input parameters for the sacloud API
 type ReinstallToBlankDiskParam struct {
 	DistantFrom       []sacloud.ID
@@ -2923,6 +2968,11 @@ func (p *ReinstallToBlankDiskParam) SetId(v sacloud.ID) {
 
 func (p *ReinstallToBlankDiskParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReinstallToBlankDiskParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ServerConnectDiskParam is input parameters for the sacloud API
@@ -3113,6 +3163,11 @@ func (p *ServerConnectDiskParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerConnectDiskParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ServerDisconnectDiskParam is input parameters for the sacloud API
 type ServerDisconnectDiskParam struct {
 	Selector          []string
@@ -3273,6 +3328,11 @@ func (p *ServerDisconnectDiskParam) SetId(v sacloud.ID) {
 
 func (p *ServerDisconnectDiskParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerDisconnectDiskParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // MonitorDiskParam is input parameters for the sacloud API
@@ -3575,6 +3635,11 @@ func (p *MonitorDiskParam) GetStart() string {
 	return p.Start
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorDiskParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // WaitForCopyDiskParam is input parameters for the sacloud API
 type WaitForCopyDiskParam struct {
 	Selector          []string
@@ -3724,4 +3789,9 @@ func (p *WaitForCopyDiskParam) SetId(v sacloud.ID) {
 
 func (p *WaitForCopyDiskParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *WaitForCopyDiskParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

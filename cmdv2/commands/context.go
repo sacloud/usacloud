@@ -19,14 +19,16 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 	"strings"
 	"sync"
 	"time"
 
+	"github.com/sacloud/libsacloud/api"
+
 	"github.com/spf13/pflag"
 
-	libsacloud "github.com/sacloud/libsacloud/v2"
+	libsacloudv1 "github.com/sacloud/libsacloud"
+	libsacloudv2 "github.com/sacloud/libsacloud/v2"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/fake"
 	"github.com/sacloud/libsacloud/v2/sacloud/trace"
@@ -46,26 +48,30 @@ type Context interface {
 }
 
 type cliContext struct {
-	parentCtx context.Context
-	option    *CLIOptions
-	output    output.Output
-	cliIO     *cliIO
+	parentCtx     context.Context
+	option        *CLIOptions
+	output        output.Output
+	cliIO         IO
+	args          []string
+	changeHandler changeHandler
 
 	client     sacloud.APICaller
 	clientOnce sync.Once
+
+	v1Client     *api.Client
+	v1ClientOnce sync.Once
 }
 
-func newCLIContext(globalFlags *pflag.FlagSet, formatter interface{}) (Context, error) {
-	// TODO あとで変更する
+// changeHandler usacloud v0の互換性維持のための実装
+type changeHandler interface {
+	Changed(string) bool
+}
+
+func newCLIContext(globalFlags *pflag.FlagSet, args []string, parameter interface{}) (Context, error) {
+	// TODO あとでグローバルなタイムアウトなどを実装する
 	ctx := context.TODO()
 
-	// TODO あとで切り替え処理を実装
-	io := &cliIO{
-		in:       os.Stdin,
-		out:      os.Stdout,
-		progress: os.Stderr,
-		err:      os.Stderr,
-	}
+	io := newIO()
 
 	option, err := initCLIOptions(globalFlags, io)
 	if err != nil {
@@ -73,10 +79,12 @@ func newCLIContext(globalFlags *pflag.FlagSet, formatter interface{}) (Context, 
 	}
 
 	return &cliContext{
-		parentCtx: ctx,
-		option:    option,
-		output:    getOutputWriter(io, formatter),
-		cliIO:     io,
+		parentCtx:     ctx,
+		option:        option,
+		output:        getOutputWriter(io, parameter),
+		cliIO:         io,
+		args:          args,
+		changeHandler: getChangeHandler(parameter),
 	}, nil
 }
 
@@ -109,7 +117,7 @@ func (c *cliContext) Client() sacloud.APICaller {
 			retryWaitMin = time.Duration(o.RetryWaitMin) * time.Second
 		}
 
-		ua := fmt.Sprintf("Usacloud/ (+https://github.com/sacloud/usacloud) cli/v%s libsacloud/%s", version.Version, libsacloud.Version)
+		ua := fmt.Sprintf("Usacloud/ (+https://github.com/sacloud/usacloud) cli/v%s libsacloud/%s", version.Version, libsacloudv2.Version)
 
 		caller := &sacloud.Client{
 			AccessToken:       o.AccessToken,
@@ -236,4 +244,43 @@ func getOutputWriter(io IO, rawFormatter interface{}) output.Output {
 	default:
 		return output.NewTableOutput(out, err, formatter)
 	}
+}
+
+/*
+ * 以下はusacloud v0との互換性維持のための実装
+ */
+
+func getChangeHandler(parameter interface{}) changeHandler {
+	if v, ok := parameter.(changeHandler); ok {
+		return v
+	}
+	return nil
+}
+
+func (c *cliContext) GetOutput() output.Output {
+	return c.output
+}
+
+func (c *cliContext) GetAPIClient() *api.Client {
+	c.v1ClientOnce.Do(func() {
+		o := c.Option()
+		client := api.NewClient(o.AccessToken, o.AccessTokenSecret, o.Zone)
+		ua := fmt.Sprintf("Usacloud/ (+https://github.com/sacloud/usacloud) cli/v%s libsacloud/%s", version.Version, libsacloudv1.Version)
+		client.UserAgent = ua
+		client.TraceMode = o.TraceMode != ""
+		c.v1Client = client
+	})
+	return c.v1Client
+}
+
+func (c *cliContext) IsSet(name string) bool {
+	return c.changeHandler.Changed(name)
+}
+
+func (c *cliContext) NArgs() int {
+	return len(c.args)
+}
+
+func (c *cliContext) Args() []string {
+	return c.args
 }

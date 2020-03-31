@@ -47,7 +47,7 @@ func serverListCmd() *cobra.Command {
 			return serverListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverListParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverListParam)
 			if err != nil {
 				return err
 			}
@@ -92,7 +92,7 @@ func serverBuildCmd() *cobra.Command {
 			return serverBuildParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverBuildParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverBuildParam)
 			if err != nil {
 				return err
 			}
@@ -174,7 +174,7 @@ func serverReadCmd() *cobra.Command {
 			return serverReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverReadParam)
 			if err != nil {
 				return err
 			}
@@ -215,7 +215,7 @@ func serverUpdateCmd() *cobra.Command {
 			return serverUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -262,7 +262,7 @@ func serverDeleteCmd() *cobra.Command {
 			return serverDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -306,7 +306,7 @@ func serverPlanChangeCmd() *cobra.Command {
 			return serverPlanChangeParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverPlanChangeParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverPlanChangeParam)
 			if err != nil {
 				return err
 			}
@@ -351,7 +351,7 @@ func serverBootCmd() *cobra.Command {
 			return serverBootParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverBootParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverBootParam)
 			if err != nil {
 				return err
 			}
@@ -386,7 +386,7 @@ func serverShutdownCmd() *cobra.Command {
 			return serverShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverShutdownParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverShutdownParam)
 			if err != nil {
 				return err
 			}
@@ -421,7 +421,7 @@ func serverShutdownForceCmd() *cobra.Command {
 			return serverShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverShutdownForceParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverShutdownForceParam)
 			if err != nil {
 				return err
 			}
@@ -456,7 +456,7 @@ func serverResetCmd() *cobra.Command {
 			return serverResetParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverResetParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverResetParam)
 			if err != nil {
 				return err
 			}
@@ -491,7 +491,7 @@ func serverWaitForBootCmd() *cobra.Command {
 			return serverWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverWaitForBootParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverWaitForBootParam)
 			if err != nil {
 				return err
 			}
@@ -525,7 +525,7 @@ func serverWaitForDownCmd() *cobra.Command {
 			return serverWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverWaitForDownParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverWaitForDownParam)
 			if err != nil {
 				return err
 			}
@@ -559,7 +559,7 @@ func serverSSHCmd() *cobra.Command {
 			return serverSSHParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverSSHParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverSSHParam)
 			if err != nil {
 				return err
 			}
@@ -598,7 +598,7 @@ func serverSSHExecCmd() *cobra.Command {
 			return serverSSHExecParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverSSHExecParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverSSHExecParam)
 			if err != nil {
 				return err
 			}
@@ -636,7 +636,7 @@ func serverScpCmd() *cobra.Command {
 			return serverScpParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverScpParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverScpParam)
 			if err != nil {
 				return err
 			}
@@ -675,7 +675,7 @@ func serverVncCmd() *cobra.Command {
 			return serverVncParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverVncParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverVncParam)
 			if err != nil {
 				return err
 			}
@@ -710,7 +710,7 @@ func serverVncInfoCmd() *cobra.Command {
 			return serverVncInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverVncInfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverVncInfoParam)
 			if err != nil {
 				return err
 			}
@@ -752,7 +752,7 @@ func serverVncSendCmd() *cobra.Command {
 			return serverVncSendParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverVncSendParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverVncSendParam)
 			if err != nil {
 				return err
 			}
@@ -799,7 +799,7 @@ func serverVncSnapshotCmd() *cobra.Command {
 			return serverVncSnapshotParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverVncSnapshotParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverVncSnapshotParam)
 			if err != nil {
 				return err
 			}
@@ -843,7 +843,7 @@ func serverRemoteDesktopCmd() *cobra.Command {
 			return serverRemoteDesktopParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverRemoteDesktopParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverRemoteDesktopParam)
 			if err != nil {
 				return err
 			}
@@ -879,7 +879,7 @@ func serverRemoteDesktopInfoCmd() *cobra.Command {
 			return serverRemoteDesktopInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverRemoteDesktopInfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverRemoteDesktopInfoParam)
 			if err != nil {
 				return err
 			}
@@ -922,7 +922,7 @@ func serverDiskInfoCmd() *cobra.Command {
 			return serverDiskInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverDiskInfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverDiskInfoParam)
 			if err != nil {
 				return err
 			}
@@ -963,7 +963,7 @@ func serverDiskConnectCmd() *cobra.Command {
 			return serverDiskConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverDiskConnectParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverDiskConnectParam)
 			if err != nil {
 				return err
 			}
@@ -999,7 +999,7 @@ func serverDiskDisconnectCmd() *cobra.Command {
 			return serverDiskDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverDiskDisconnectParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverDiskDisconnectParam)
 			if err != nil {
 				return err
 			}
@@ -1035,7 +1035,7 @@ func serverInterfaceInfoCmd() *cobra.Command {
 			return serverInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverInterfaceInfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverInterfaceInfoParam)
 			if err != nil {
 				return err
 			}
@@ -1076,7 +1076,7 @@ func serverInterfaceAddForInternetCmd() *cobra.Command {
 			return serverInterfaceAddForInternetParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverInterfaceAddForInternetParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverInterfaceAddForInternetParam)
 			if err != nil {
 				return err
 			}
@@ -1112,7 +1112,7 @@ func serverInterfaceAddForRouterCmd() *cobra.Command {
 			return serverInterfaceAddForRouterParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverInterfaceAddForRouterParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverInterfaceAddForRouterParam)
 			if err != nil {
 				return err
 			}
@@ -1152,7 +1152,7 @@ func serverInterfaceAddForSwitchCmd() *cobra.Command {
 			return serverInterfaceAddForSwitchParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverInterfaceAddForSwitchParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverInterfaceAddForSwitchParam)
 			if err != nil {
 				return err
 			}
@@ -1192,7 +1192,7 @@ func serverInterfaceAddDisconnectedCmd() *cobra.Command {
 			return serverInterfaceAddDisconnectedParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverInterfaceAddDisconnectedParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverInterfaceAddDisconnectedParam)
 			if err != nil {
 				return err
 			}
@@ -1227,7 +1227,7 @@ func serverISOInfoCmd() *cobra.Command {
 			return serverISOInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverISOInfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverISOInfoParam)
 			if err != nil {
 				return err
 			}
@@ -1268,7 +1268,7 @@ func serverISOInsertCmd() *cobra.Command {
 			return serverISOInsertParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverISOInsertParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverISOInsertParam)
 			if err != nil {
 				return err
 			}
@@ -1310,7 +1310,7 @@ func serverISOEjectCmd() *cobra.Command {
 			return serverISOEjectParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverISOEjectParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverISOEjectParam)
 			if err != nil {
 				return err
 			}
@@ -1345,7 +1345,7 @@ func serverMonitorCPUCmd() *cobra.Command {
 			return serverMonitorCPUParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverMonitorCPUParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverMonitorCPUParam)
 			if err != nil {
 				return err
 			}
@@ -1389,7 +1389,7 @@ func serverMonitorNicCmd() *cobra.Command {
 			return serverMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverMonitorNicParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverMonitorNicParam)
 			if err != nil {
 				return err
 			}
@@ -1434,7 +1434,7 @@ func serverMonitorDiskCmd() *cobra.Command {
 			return serverMonitorDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverMonitorDiskParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverMonitorDiskParam)
 			if err != nil {
 				return err
 			}
@@ -1479,7 +1479,7 @@ func serverMaintenanceInfoCmd() *cobra.Command {
 			return serverMaintenanceInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), serverMaintenanceInfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, serverMaintenanceInfoParam)
 			if err != nil {
 				return err
 			}

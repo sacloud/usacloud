@@ -340,6 +340,11 @@ func (p *ListSIMParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListSIMParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateSIMParam is input parameters for the sacloud API
 type CreateSIMParam struct {
 	Iccid             string
@@ -738,6 +743,11 @@ func (p *CreateSIMParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateSIMParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadSIMParam is input parameters for the sacloud API
 type ReadSIMParam struct {
 	Selector          []string
@@ -978,6 +988,11 @@ func (p *ReadSIMParam) SetId(v sacloud.ID) {
 
 func (p *ReadSIMParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadSIMParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateSIMParam is input parameters for the sacloud API
@@ -1309,6 +1324,11 @@ func (p *UpdateSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateSIMParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteSIMParam is input parameters for the sacloud API
 type DeleteSIMParam struct {
 	Force             bool
@@ -1480,6 +1500,11 @@ func (p *DeleteSIMParam) SetId(v sacloud.ID) {
 
 func (p *DeleteSIMParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteSIMParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // CarrierInfoSIMParam is input parameters for the sacloud API
@@ -1724,6 +1749,11 @@ func (p *CarrierInfoSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CarrierInfoSIMParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CarrierUpdateSIMParam is input parameters for the sacloud API
 type CarrierUpdateSIMParam struct {
 	Selector          []string
@@ -1918,6 +1948,11 @@ func (p *CarrierUpdateSIMParam) GetCarrier() []string {
 	return p.Carrier
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CarrierUpdateSIMParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ActivateSIMParam is input parameters for the sacloud API
 type ActivateSIMParam struct {
 	Selector          []string
@@ -2080,6 +2115,11 @@ func (p *ActivateSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ActivateSIMParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeactivateSIMParam is input parameters for the sacloud API
 type DeactivateSIMParam struct {
 	Selector          []string
@@ -2240,6 +2280,11 @@ func (p *DeactivateSIMParam) SetId(v sacloud.ID) {
 
 func (p *DeactivateSIMParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeactivateSIMParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ImeiLockSIMParam is input parameters for the sacloud API
@@ -2421,6 +2466,11 @@ func (p *ImeiLockSIMParam) SetImei(v string) {
 
 func (p *ImeiLockSIMParam) GetImei() string {
 	return p.Imei
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ImeiLockSIMParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // IpAddSIMParam is input parameters for the sacloud API
@@ -2611,6 +2661,11 @@ func (p *IpAddSIMParam) GetIp() string {
 	return p.Ip
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *IpAddSIMParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ImeiUnlockSIMParam is input parameters for the sacloud API
 type ImeiUnlockSIMParam struct {
 	Selector          []string
@@ -2773,6 +2828,11 @@ func (p *ImeiUnlockSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ImeiUnlockSIMParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // IpDeleteSIMParam is input parameters for the sacloud API
 type IpDeleteSIMParam struct {
 	Selector          []string
@@ -2933,6 +2993,11 @@ func (p *IpDeleteSIMParam) SetId(v sacloud.ID) {
 
 func (p *IpDeleteSIMParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *IpDeleteSIMParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // LogsSIMParam is input parameters for the sacloud API
@@ -3206,6 +3271,11 @@ func (p *LogsSIMParam) SetId(v sacloud.ID) {
 
 func (p *LogsSIMParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *LogsSIMParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // MonitorSIMParam is input parameters for the sacloud API
@@ -3506,4 +3576,9 @@ func (p *MonitorSIMParam) SetId(v sacloud.ID) {
 
 func (p *MonitorSIMParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorSIMParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

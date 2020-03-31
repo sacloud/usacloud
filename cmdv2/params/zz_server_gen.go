@@ -340,6 +340,11 @@ func (p *ListServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // BuildServerParam is input parameters for the sacloud API
 type BuildServerParam struct {
 	Core                    int
@@ -1287,6 +1292,11 @@ func (p *BuildServerParam) GetDisableBootAfterCreate() bool {
 	return p.DisableBootAfterCreate
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BuildServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadServerParam is input parameters for the sacloud API
 type ReadServerParam struct {
 	Selector          []string
@@ -1527,6 +1537,11 @@ func (p *ReadServerParam) SetId(v sacloud.ID) {
 
 func (p *ReadServerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateServerParam is input parameters for the sacloud API
@@ -1878,6 +1893,11 @@ func (p *UpdateServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteServerParam is input parameters for the sacloud API
 type DeleteServerParam struct {
 	Force             bool
@@ -2151,6 +2171,11 @@ func (p *DeleteServerParam) SetId(v sacloud.ID) {
 
 func (p *DeleteServerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // PlanChangeServerParam is input parameters for the sacloud API
@@ -2464,6 +2489,11 @@ func (p *PlanChangeServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PlanChangeServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // BootServerParam is input parameters for the sacloud API
 type BootServerParam struct {
 	Selector          []string
@@ -2624,6 +2654,11 @@ func (p *BootServerParam) SetId(v sacloud.ID) {
 
 func (p *BootServerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BootServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ShutdownServerParam is input parameters for the sacloud API
@@ -2788,6 +2823,11 @@ func (p *ShutdownServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ShutdownServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ShutdownForceServerParam is input parameters for the sacloud API
 type ShutdownForceServerParam struct {
 	Selector          []string
@@ -2948,6 +2988,11 @@ func (p *ShutdownForceServerParam) SetId(v sacloud.ID) {
 
 func (p *ShutdownForceServerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ShutdownForceServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ResetServerParam is input parameters for the sacloud API
@@ -3112,6 +3157,11 @@ func (p *ResetServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ResetServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // WaitForBootServerParam is input parameters for the sacloud API
 type WaitForBootServerParam struct {
 	Selector          []string
@@ -3263,6 +3313,11 @@ func (p *WaitForBootServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *WaitForBootServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // WaitForDownServerParam is input parameters for the sacloud API
 type WaitForDownServerParam struct {
 	Selector          []string
@@ -3412,6 +3467,11 @@ func (p *WaitForDownServerParam) SetId(v sacloud.ID) {
 
 func (p *WaitForDownServerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *WaitForDownServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // SSHServerParam is input parameters for the sacloud API
@@ -3637,6 +3697,11 @@ func (p *SSHServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SSHServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // SSHExecServerParam is input parameters for the sacloud API
 type SSHExecServerParam struct {
 	Key               string
@@ -3847,6 +3912,11 @@ func (p *SSHExecServerParam) SetId(v sacloud.ID) {
 
 func (p *SSHExecServerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SSHExecServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ScpServerParam is input parameters for the sacloud API
@@ -4064,6 +4134,11 @@ func (p *ScpServerParam) GetQuiet() bool {
 	return p.Quiet
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ScpServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // VncServerParam is input parameters for the sacloud API
 type VncServerParam struct {
 	WaitForBoot       bool
@@ -4224,6 +4299,11 @@ func (p *VncServerParam) SetId(v sacloud.ID) {
 
 func (p *VncServerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *VncServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // VncInfoServerParam is input parameters for the sacloud API
@@ -4477,6 +4557,11 @@ func (p *VncInfoServerParam) SetId(v sacloud.ID) {
 
 func (p *VncInfoServerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *VncInfoServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // VncSendServerParam is input parameters for the sacloud API
@@ -4805,6 +4890,11 @@ func (p *VncSendServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *VncSendServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // VncSnapshotServerParam is input parameters for the sacloud API
 type VncSnapshotServerParam struct {
 	WaitForBoot       bool
@@ -5080,6 +5170,11 @@ func (p *VncSnapshotServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *VncSnapshotServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // RemoteDesktopServerParam is input parameters for the sacloud API
 type RemoteDesktopServerParam struct {
 	User              string
@@ -5268,6 +5363,11 @@ func (p *RemoteDesktopServerParam) SetId(v sacloud.ID) {
 
 func (p *RemoteDesktopServerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *RemoteDesktopServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // RemoteDesktopInfoServerParam is input parameters for the sacloud API
@@ -5551,6 +5651,11 @@ func (p *RemoteDesktopInfoServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *RemoteDesktopInfoServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DiskInfoServerParam is input parameters for the sacloud API
 type DiskInfoServerParam struct {
 	Selector          []string
@@ -5793,6 +5898,11 @@ func (p *DiskInfoServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DiskInfoServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DiskConnectServerParam is input parameters for the sacloud API
 type DiskConnectServerParam struct {
 	DiskId            sacloud.ID
@@ -5981,6 +6091,11 @@ func (p *DiskConnectServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DiskConnectServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DiskDisconnectServerParam is input parameters for the sacloud API
 type DiskDisconnectServerParam struct {
 	DiskId            sacloud.ID
@@ -6167,6 +6282,11 @@ func (p *DiskDisconnectServerParam) SetId(v sacloud.ID) {
 
 func (p *DiskDisconnectServerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DiskDisconnectServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // InterfaceInfoServerParam is input parameters for the sacloud API
@@ -6411,6 +6531,11 @@ func (p *InterfaceInfoServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *InterfaceInfoServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // InterfaceAddForInternetServerParam is input parameters for the sacloud API
 type InterfaceAddForInternetServerParam struct {
 	WithoutDiskEdit   bool
@@ -6582,6 +6707,11 @@ func (p *InterfaceAddForInternetServerParam) SetId(v sacloud.ID) {
 
 func (p *InterfaceAddForInternetServerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *InterfaceAddForInternetServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // InterfaceAddForRouterServerParam is input parameters for the sacloud API
@@ -6841,6 +6971,11 @@ func (p *InterfaceAddForRouterServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *InterfaceAddForRouterServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // InterfaceAddForSwitchServerParam is input parameters for the sacloud API
 type InterfaceAddForSwitchServerParam struct {
 	SwitchId          sacloud.ID
@@ -7098,6 +7233,11 @@ func (p *InterfaceAddForSwitchServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *InterfaceAddForSwitchServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // InterfaceAddDisconnectedServerParam is input parameters for the sacloud API
 type InterfaceAddDisconnectedServerParam struct {
 	Selector          []string
@@ -7258,6 +7398,11 @@ func (p *InterfaceAddDisconnectedServerParam) SetId(v sacloud.ID) {
 
 func (p *InterfaceAddDisconnectedServerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *InterfaceAddDisconnectedServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ISOInfoServerParam is input parameters for the sacloud API
@@ -7500,6 +7645,11 @@ func (p *ISOInfoServerParam) SetId(v sacloud.ID) {
 
 func (p *ISOInfoServerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ISOInfoServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ISOInsertServerParam is input parameters for the sacloud API
@@ -7790,6 +7940,11 @@ func (p *ISOInsertServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ISOInsertServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ISOEjectServerParam is input parameters for the sacloud API
 type ISOEjectServerParam struct {
 	Selector          []string
@@ -7950,6 +8105,11 @@ func (p *ISOEjectServerParam) SetId(v sacloud.ID) {
 
 func (p *ISOEjectServerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ISOEjectServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // MonitorCPUServerParam is input parameters for the sacloud API
@@ -8250,6 +8410,11 @@ func (p *MonitorCPUServerParam) SetId(v sacloud.ID) {
 
 func (p *MonitorCPUServerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorCPUServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // MonitorNicServerParam is input parameters for the sacloud API
@@ -8563,6 +8728,11 @@ func (p *MonitorNicServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorNicServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // MonitorDiskServerParam is input parameters for the sacloud API
 type MonitorDiskServerParam struct {
 	Start             string
@@ -8874,6 +9044,11 @@ func (p *MonitorDiskServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorDiskServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // MaintenanceInfoServerParam is input parameters for the sacloud API
 type MaintenanceInfoServerParam struct {
 	ParamTemplate     string
@@ -9084,4 +9259,9 @@ func (p *MaintenanceInfoServerParam) SetQueryFile(v string) {
 
 func (p *MaintenanceInfoServerParam) GetQueryFile() string {
 	return p.QueryFile
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MaintenanceInfoServerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

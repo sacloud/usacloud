@@ -47,7 +47,7 @@ func regionListCmd() *cobra.Command {
 			return regionListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), regionListParam)
+			ctx, err := newCLIContext(globalFlags(), args, regionListParam)
 			if err != nil {
 				return err
 			}
@@ -91,7 +91,7 @@ func regionReadCmd() *cobra.Command {
 			return regionReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), regionReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, regionReadParam)
 			if err != nil {
 				return err
 			}

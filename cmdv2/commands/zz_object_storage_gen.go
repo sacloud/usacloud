@@ -46,7 +46,7 @@ func objectStorageListCmd() *cobra.Command {
 			return objectStorageListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), objectStorageListParam)
+			ctx, err := newCLIContext(globalFlags(), args, objectStorageListParam)
 			if err != nil {
 				return err
 			}
@@ -88,7 +88,7 @@ func objectStoragePutCmd() *cobra.Command {
 			return objectStoragePutParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), objectStoragePutParam)
+			ctx, err := newCLIContext(globalFlags(), args, objectStoragePutParam)
 			if err != nil {
 				return err
 			}
@@ -126,7 +126,7 @@ func objectStorageGetCmd() *cobra.Command {
 			return objectStorageGetParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), objectStorageGetParam)
+			ctx, err := newCLIContext(globalFlags(), args, objectStorageGetParam)
 			if err != nil {
 				return err
 			}
@@ -162,7 +162,7 @@ func objectStorageDeleteCmd() *cobra.Command {
 			return objectStorageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), objectStorageDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, objectStorageDeleteParam)
 			if err != nil {
 				return err
 			}

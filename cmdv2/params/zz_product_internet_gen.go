@@ -321,6 +321,11 @@ func (p *ListProductInternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListProductInternetParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadProductInternetParam is input parameters for the sacloud API
 type ReadProductInternetParam struct {
 	Assumeyes         bool
@@ -568,4 +573,9 @@ func (p *ReadProductInternetParam) SetId(v sacloud.ID) {
 
 func (p *ReadProductInternetParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadProductInternetParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

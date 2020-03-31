@@ -47,7 +47,7 @@ func switchListCmd() *cobra.Command {
 			return switchListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), switchListParam)
+			ctx, err := newCLIContext(globalFlags(), args, switchListParam)
 			if err != nil {
 				return err
 			}
@@ -92,7 +92,7 @@ func switchCreateCmd() *cobra.Command {
 			return switchCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), switchCreateParam)
+			ctx, err := newCLIContext(globalFlags(), args, switchCreateParam)
 			if err != nil {
 				return err
 			}
@@ -136,7 +136,7 @@ func switchReadCmd() *cobra.Command {
 			return switchReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), switchReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, switchReadParam)
 			if err != nil {
 				return err
 			}
@@ -177,7 +177,7 @@ func switchUpdateCmd() *cobra.Command {
 			return switchUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), switchUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, switchUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -223,7 +223,7 @@ func switchDeleteCmd() *cobra.Command {
 			return switchDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), switchDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, switchDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -265,7 +265,7 @@ func switchBridgeConnectCmd() *cobra.Command {
 			return switchBridgeConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), switchBridgeConnectParam)
+			ctx, err := newCLIContext(globalFlags(), args, switchBridgeConnectParam)
 			if err != nil {
 				return err
 			}
@@ -301,7 +301,7 @@ func switchBridgeDisconnectCmd() *cobra.Command {
 			return switchBridgeDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), switchBridgeDisconnectParam)
+			ctx, err := newCLIContext(globalFlags(), args, switchBridgeDisconnectParam)
 			if err != nil {
 				return err
 			}

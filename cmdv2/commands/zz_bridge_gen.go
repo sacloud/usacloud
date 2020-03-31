@@ -47,7 +47,7 @@ func bridgeListCmd() *cobra.Command {
 			return bridgeListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), bridgeListParam)
+			ctx, err := newCLIContext(globalFlags(), args, bridgeListParam)
 			if err != nil {
 				return err
 			}
@@ -91,7 +91,7 @@ func bridgeCreateCmd() *cobra.Command {
 			return bridgeCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), bridgeCreateParam)
+			ctx, err := newCLIContext(globalFlags(), args, bridgeCreateParam)
 			if err != nil {
 				return err
 			}
@@ -133,7 +133,7 @@ func bridgeReadCmd() *cobra.Command {
 			return bridgeReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), bridgeReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, bridgeReadParam)
 			if err != nil {
 				return err
 			}
@@ -173,7 +173,7 @@ func bridgeUpdateCmd() *cobra.Command {
 			return bridgeUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), bridgeUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, bridgeUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -216,7 +216,7 @@ func bridgeDeleteCmd() *cobra.Command {
 			return bridgeDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), bridgeDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, bridgeDeleteParam)
 			if err != nil {
 				return err
 			}

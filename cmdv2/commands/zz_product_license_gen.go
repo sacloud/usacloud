@@ -47,7 +47,7 @@ func productLicenseListCmd() *cobra.Command {
 			return productLicenseListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), productLicenseListParam)
+			ctx, err := newCLIContext(globalFlags(), args, productLicenseListParam)
 			if err != nil {
 				return err
 			}
@@ -91,7 +91,7 @@ func productLicenseReadCmd() *cobra.Command {
 			return productLicenseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), productLicenseReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, productLicenseReadParam)
 			if err != nil {
 				return err
 			}

@@ -340,6 +340,11 @@ func (p *ListLoadBalancerParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateLoadBalancerParam is input parameters for the sacloud API
 type CreateLoadBalancerParam struct {
 	SwitchId          sacloud.ID
@@ -812,6 +817,11 @@ func (p *CreateLoadBalancerParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadLoadBalancerParam is input parameters for the sacloud API
 type ReadLoadBalancerParam struct {
 	Selector          []string
@@ -1052,6 +1062,11 @@ func (p *ReadLoadBalancerParam) SetId(v sacloud.ID) {
 
 func (p *ReadLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateLoadBalancerParam is input parameters for the sacloud API
@@ -1383,6 +1398,11 @@ func (p *UpdateLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteLoadBalancerParam is input parameters for the sacloud API
 type DeleteLoadBalancerParam struct {
 	Force             bool
@@ -1647,6 +1667,11 @@ func (p *DeleteLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // BootLoadBalancerParam is input parameters for the sacloud API
 type BootLoadBalancerParam struct {
 	Selector          []string
@@ -1807,6 +1832,11 @@ func (p *BootLoadBalancerParam) SetId(v sacloud.ID) {
 
 func (p *BootLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BootLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ShutdownLoadBalancerParam is input parameters for the sacloud API
@@ -1971,6 +2001,11 @@ func (p *ShutdownLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ShutdownLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ShutdownForceLoadBalancerParam is input parameters for the sacloud API
 type ShutdownForceLoadBalancerParam struct {
 	Selector          []string
@@ -2131,6 +2166,11 @@ func (p *ShutdownForceLoadBalancerParam) SetId(v sacloud.ID) {
 
 func (p *ShutdownForceLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ShutdownForceLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ResetLoadBalancerParam is input parameters for the sacloud API
@@ -2295,6 +2335,11 @@ func (p *ResetLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ResetLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // WaitForBootLoadBalancerParam is input parameters for the sacloud API
 type WaitForBootLoadBalancerParam struct {
 	Selector          []string
@@ -2446,6 +2491,11 @@ func (p *WaitForBootLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *WaitForBootLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // WaitForDownLoadBalancerParam is input parameters for the sacloud API
 type WaitForDownLoadBalancerParam struct {
 	Selector          []string
@@ -2595,6 +2645,11 @@ func (p *WaitForDownLoadBalancerParam) SetId(v sacloud.ID) {
 
 func (p *WaitForDownLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *WaitForDownLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // VipInfoLoadBalancerParam is input parameters for the sacloud API
@@ -2837,6 +2892,11 @@ func (p *VipInfoLoadBalancerParam) SetId(v sacloud.ID) {
 
 func (p *VipInfoLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *VipInfoLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // VipAddLoadBalancerParam is input parameters for the sacloud API
@@ -3101,6 +3161,11 @@ func (p *VipAddLoadBalancerParam) SetId(v sacloud.ID) {
 
 func (p *VipAddLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *VipAddLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // VipUpdateLoadBalancerParam is input parameters for the sacloud API
@@ -3372,6 +3437,11 @@ func (p *VipUpdateLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *VipUpdateLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // VipDeleteLoadBalancerParam is input parameters for the sacloud API
 type VipDeleteLoadBalancerParam struct {
 	Index             int
@@ -3551,6 +3621,11 @@ func (p *VipDeleteLoadBalancerParam) SetId(v sacloud.ID) {
 
 func (p *VipDeleteLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *VipDeleteLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ServerInfoLoadBalancerParam is input parameters for the sacloud API
@@ -3871,6 +3946,11 @@ func (p *ServerInfoLoadBalancerParam) SetId(v sacloud.ID) {
 
 func (p *ServerInfoLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerInfoLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ServerAddLoadBalancerParam is input parameters for the sacloud API
@@ -4199,6 +4279,11 @@ func (p *ServerAddLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerAddLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ServerUpdateLoadBalancerParam is input parameters for the sacloud API
 type ServerUpdateLoadBalancerParam struct {
 	VipIndex          int
@@ -4517,6 +4602,11 @@ func (p *ServerUpdateLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerUpdateLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ServerDeleteLoadBalancerParam is input parameters for the sacloud API
 type ServerDeleteLoadBalancerParam struct {
 	VipIndex          int
@@ -4781,6 +4871,11 @@ func (p *ServerDeleteLoadBalancerParam) SetId(v sacloud.ID) {
 
 func (p *ServerDeleteLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerDeleteLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // MonitorLoadBalancerParam is input parameters for the sacloud API
@@ -5081,4 +5176,9 @@ func (p *MonitorLoadBalancerParam) SetId(v sacloud.ID) {
 
 func (p *MonitorLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorLoadBalancerParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

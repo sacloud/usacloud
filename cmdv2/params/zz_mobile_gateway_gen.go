@@ -340,6 +340,11 @@ func (p *ListMobileGatewayParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateMobileGatewayParam is input parameters for the sacloud API
 type CreateMobileGatewayParam struct {
 	InternetConnection bool
@@ -657,6 +662,11 @@ func (p *CreateMobileGatewayParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadMobileGatewayParam is input parameters for the sacloud API
 type ReadMobileGatewayParam struct {
 	Selector          []string
@@ -897,6 +907,11 @@ func (p *ReadMobileGatewayParam) SetId(v sacloud.ID) {
 
 func (p *ReadMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateMobileGatewayParam is input parameters for the sacloud API
@@ -1239,6 +1254,11 @@ func (p *UpdateMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteMobileGatewayParam is input parameters for the sacloud API
 type DeleteMobileGatewayParam struct {
 	Force             bool
@@ -1503,6 +1523,11 @@ func (p *DeleteMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // BootMobileGatewayParam is input parameters for the sacloud API
 type BootMobileGatewayParam struct {
 	Selector          []string
@@ -1663,6 +1688,11 @@ func (p *BootMobileGatewayParam) SetId(v sacloud.ID) {
 
 func (p *BootMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BootMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ShutdownMobileGatewayParam is input parameters for the sacloud API
@@ -1827,6 +1857,11 @@ func (p *ShutdownMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ShutdownMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ShutdownForceMobileGatewayParam is input parameters for the sacloud API
 type ShutdownForceMobileGatewayParam struct {
 	Selector          []string
@@ -1987,6 +2022,11 @@ func (p *ShutdownForceMobileGatewayParam) SetId(v sacloud.ID) {
 
 func (p *ShutdownForceMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ShutdownForceMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ResetMobileGatewayParam is input parameters for the sacloud API
@@ -2151,6 +2191,11 @@ func (p *ResetMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ResetMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // WaitForBootMobileGatewayParam is input parameters for the sacloud API
 type WaitForBootMobileGatewayParam struct {
 	Selector          []string
@@ -2302,6 +2347,11 @@ func (p *WaitForBootMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *WaitForBootMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // WaitForDownMobileGatewayParam is input parameters for the sacloud API
 type WaitForDownMobileGatewayParam struct {
 	Selector          []string
@@ -2451,6 +2501,11 @@ func (p *WaitForDownMobileGatewayParam) SetId(v sacloud.ID) {
 
 func (p *WaitForDownMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *WaitForDownMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // InterfaceInfoMobileGatewayParam is input parameters for the sacloud API
@@ -2695,6 +2750,11 @@ func (p *InterfaceInfoMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *InterfaceInfoMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // InterfaceConnectMobileGatewayParam is input parameters for the sacloud API
 type InterfaceConnectMobileGatewayParam struct {
 	Ipaddress         string
@@ -2929,6 +2989,11 @@ func (p *InterfaceConnectMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *InterfaceConnectMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // InterfaceUpdateMobileGatewayParam is input parameters for the sacloud API
 type InterfaceUpdateMobileGatewayParam struct {
 	Ipaddress         string
@@ -3130,6 +3195,11 @@ func (p *InterfaceUpdateMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *InterfaceUpdateMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // InterfaceDisconnectMobileGatewayParam is input parameters for the sacloud API
 type InterfaceDisconnectMobileGatewayParam struct {
 	Selector          []string
@@ -3290,6 +3360,11 @@ func (p *InterfaceDisconnectMobileGatewayParam) SetId(v sacloud.ID) {
 
 func (p *InterfaceDisconnectMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *InterfaceDisconnectMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // TrafficControlInfoMobileGatewayParam is input parameters for the sacloud API
@@ -3532,6 +3607,11 @@ func (p *TrafficControlInfoMobileGatewayParam) SetId(v sacloud.ID) {
 
 func (p *TrafficControlInfoMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *TrafficControlInfoMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // TrafficControlEnableMobileGatewayParam is input parameters for the sacloud API
@@ -3783,6 +3863,11 @@ func (p *TrafficControlEnableMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *TrafficControlEnableMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // TrafficControlUpdateMobileGatewayParam is input parameters for the sacloud API
 type TrafficControlUpdateMobileGatewayParam struct {
 	Quota              int
@@ -4024,6 +4109,11 @@ func (p *TrafficControlUpdateMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *TrafficControlUpdateMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // TrafficControlDisableMobileGatewayParam is input parameters for the sacloud API
 type TrafficControlDisableMobileGatewayParam struct {
 	Selector          []string
@@ -4184,6 +4274,11 @@ func (p *TrafficControlDisableMobileGatewayParam) SetId(v sacloud.ID) {
 
 func (p *TrafficControlDisableMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *TrafficControlDisableMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // StaticRouteInfoMobileGatewayParam is input parameters for the sacloud API
@@ -4428,6 +4523,11 @@ func (p *StaticRouteInfoMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *StaticRouteInfoMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // StaticRouteAddMobileGatewayParam is input parameters for the sacloud API
 type StaticRouteAddMobileGatewayParam struct {
 	Prefix            string
@@ -4640,6 +4740,11 @@ func (p *StaticRouteAddMobileGatewayParam) SetId(v sacloud.ID) {
 
 func (p *StaticRouteAddMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *StaticRouteAddMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // StaticRouteUpdateMobileGatewayParam is input parameters for the sacloud API
@@ -4861,6 +4966,11 @@ func (p *StaticRouteUpdateMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *StaticRouteUpdateMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // StaticRouteDeleteMobileGatewayParam is input parameters for the sacloud API
 type StaticRouteDeleteMobileGatewayParam struct {
 	Index             int
@@ -5040,6 +5150,11 @@ func (p *StaticRouteDeleteMobileGatewayParam) SetId(v sacloud.ID) {
 
 func (p *StaticRouteDeleteMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *StaticRouteDeleteMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // SIMInfoMobileGatewayParam is input parameters for the sacloud API
@@ -5284,6 +5399,11 @@ func (p *SIMInfoMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SIMInfoMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // SIMAddMobileGatewayParam is input parameters for the sacloud API
 type SIMAddMobileGatewayParam struct {
 	Ipaddress         string
@@ -5498,6 +5618,11 @@ func (p *SIMAddMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SIMAddMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // SIMUpdateMobileGatewayParam is input parameters for the sacloud API
 type SIMUpdateMobileGatewayParam struct {
 	Ipaddress         string
@@ -5705,6 +5830,11 @@ func (p *SIMUpdateMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SIMUpdateMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // SIMDeleteMobileGatewayParam is input parameters for the sacloud API
 type SIMDeleteMobileGatewayParam struct {
 	SIMId             sacloud.ID
@@ -5891,6 +6021,11 @@ func (p *SIMDeleteMobileGatewayParam) SetId(v sacloud.ID) {
 
 func (p *SIMDeleteMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SIMDeleteMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // SIMRouteInfoMobileGatewayParam is input parameters for the sacloud API
@@ -6135,6 +6270,11 @@ func (p *SIMRouteInfoMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SIMRouteInfoMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // SIMRouteAddMobileGatewayParam is input parameters for the sacloud API
 type SIMRouteAddMobileGatewayParam struct {
 	Prefix            string
@@ -6347,6 +6487,11 @@ func (p *SIMRouteAddMobileGatewayParam) SetId(v sacloud.ID) {
 
 func (p *SIMRouteAddMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SIMRouteAddMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // SIMRouteUpdateMobileGatewayParam is input parameters for the sacloud API
@@ -6568,6 +6713,11 @@ func (p *SIMRouteUpdateMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SIMRouteUpdateMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // SIMRouteDeleteMobileGatewayParam is input parameters for the sacloud API
 type SIMRouteDeleteMobileGatewayParam struct {
 	Index             int
@@ -6747,6 +6897,11 @@ func (p *SIMRouteDeleteMobileGatewayParam) SetId(v sacloud.ID) {
 
 func (p *SIMRouteDeleteMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SIMRouteDeleteMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // DNSUpdateMobileGatewayParam is input parameters for the sacloud API
@@ -6963,6 +7118,11 @@ func (p *DNSUpdateMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DNSUpdateMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // LogsMobileGatewayParam is input parameters for the sacloud API
 type LogsMobileGatewayParam struct {
 	Follow            bool
@@ -7143,4 +7303,9 @@ func (p *LogsMobileGatewayParam) SetId(v sacloud.ID) {
 
 func (p *LogsMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *LogsMobileGatewayParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

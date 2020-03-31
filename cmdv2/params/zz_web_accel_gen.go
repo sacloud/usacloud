@@ -239,6 +239,11 @@ func (p *ListWebAccelParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListWebAccelParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadWebAccelParam is input parameters for the sacloud API
 type ReadWebAccelParam struct {
 	Selector          []string
@@ -481,6 +486,11 @@ func (p *ReadWebAccelParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadWebAccelParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CertificateInfoWebAccelParam is input parameters for the sacloud API
 type CertificateInfoWebAccelParam struct {
 	Selector          []string
@@ -721,6 +731,11 @@ func (p *CertificateInfoWebAccelParam) SetId(v sacloud.ID) {
 
 func (p *CertificateInfoWebAccelParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CertificateInfoWebAccelParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // CertificateNewWebAccelParam is input parameters for the sacloud API
@@ -1056,6 +1071,11 @@ func (p *CertificateNewWebAccelParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CertificateNewWebAccelParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CertificateUpdateWebAccelParam is input parameters for the sacloud API
 type CertificateUpdateWebAccelParam struct {
 	Cert              string
@@ -1389,6 +1409,11 @@ func (p *CertificateUpdateWebAccelParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CertificateUpdateWebAccelParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteCacheWebAccelParam is input parameters for the sacloud API
 type DeleteCacheWebAccelParam struct {
 	Assumeyes         bool
@@ -1610,4 +1635,9 @@ func (p *DeleteCacheWebAccelParam) SetQueryFile(v string) {
 
 func (p *DeleteCacheWebAccelParam) GetQueryFile() string {
 	return p.QueryFile
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteCacheWebAccelParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

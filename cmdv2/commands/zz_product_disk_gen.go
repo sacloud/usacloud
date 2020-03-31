@@ -47,7 +47,7 @@ func productDiskListCmd() *cobra.Command {
 			return productDiskListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), productDiskListParam)
+			ctx, err := newCLIContext(globalFlags(), args, productDiskListParam)
 			if err != nil {
 				return err
 			}
@@ -91,7 +91,7 @@ func productDiskReadCmd() *cobra.Command {
 			return productDiskReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), productDiskReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, productDiskReadParam)
 			if err != nil {
 				return err
 			}

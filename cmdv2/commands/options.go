@@ -74,14 +74,14 @@ func initDebugFlags(flags *pflag.FlagSet) {
 	flags.AddFlagSet(fs)
 }
 
-func initCLIOptions(flags *pflag.FlagSet, io *cliIO) (*CLIOptions, error) {
+func initCLIOptions(flags *pflag.FlagSet, io IO) (*CLIOptions, error) {
 	o := &CLIOptions{}
 	o.loadGlobalFlags(flags, io)
 
 	return o, utils.FlattenErrors(o.Validate(true))
 }
 
-func (o *CLIOptions) loadGlobalFlags(flags *pflag.FlagSet, io *cliIO) {
+func (o *CLIOptions) loadGlobalFlags(flags *pflag.FlagSet, io IO) {
 	o.loadFromEnv()
 	o.loadFromProfile(io)
 	o.loadFromFlags(flags, io)

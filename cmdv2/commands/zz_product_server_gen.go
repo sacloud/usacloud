@@ -47,7 +47,7 @@ func productServerListCmd() *cobra.Command {
 			return productServerListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), productServerListParam)
+			ctx, err := newCLIContext(globalFlags(), args, productServerListParam)
 			if err != nil {
 				return err
 			}
@@ -91,7 +91,7 @@ func productServerReadCmd() *cobra.Command {
 			return productServerReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), productServerReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, productServerReadParam)
 			if err != nil {
 				return err
 			}

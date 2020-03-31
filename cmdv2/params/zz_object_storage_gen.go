@@ -286,6 +286,11 @@ func (p *ListObjectStorageParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListObjectStorageParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // PutObjectStorageParam is input parameters for the sacloud API
 type PutObjectStorageParam struct {
 	AccessKey         string
@@ -490,6 +495,11 @@ func (p *PutObjectStorageParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PutObjectStorageParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // GetObjectStorageParam is input parameters for the sacloud API
 type GetObjectStorageParam struct {
 	AccessKey         string
@@ -669,6 +679,11 @@ func (p *GetObjectStorageParam) SetGenerateSkeleton(v bool) {
 
 func (p *GetObjectStorageParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *GetObjectStorageParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // DeleteObjectStorageParam is input parameters for the sacloud API
@@ -861,4 +876,9 @@ func (p *DeleteObjectStorageParam) SetGenerateSkeleton(v bool) {
 
 func (p *DeleteObjectStorageParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteObjectStorageParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

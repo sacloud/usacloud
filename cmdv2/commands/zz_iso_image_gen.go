@@ -47,7 +47,7 @@ func isoImageListCmd() *cobra.Command {
 			return isoImageListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), isoImageListParam)
+			ctx, err := newCLIContext(globalFlags(), args, isoImageListParam)
 			if err != nil {
 				return err
 			}
@@ -93,7 +93,7 @@ func isoImageCreateCmd() *cobra.Command {
 			return isoImageCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), isoImageCreateParam)
+			ctx, err := newCLIContext(globalFlags(), args, isoImageCreateParam)
 			if err != nil {
 				return err
 			}
@@ -139,7 +139,7 @@ func isoImageReadCmd() *cobra.Command {
 			return isoImageReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), isoImageReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, isoImageReadParam)
 			if err != nil {
 				return err
 			}
@@ -180,7 +180,7 @@ func isoImageUpdateCmd() *cobra.Command {
 			return isoImageUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), isoImageUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, isoImageUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -226,7 +226,7 @@ func isoImageDeleteCmd() *cobra.Command {
 			return isoImageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), isoImageDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, isoImageDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -268,7 +268,7 @@ func isoImageUploadCmd() *cobra.Command {
 			return isoImageUploadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), isoImageUploadParam)
+			ctx, err := newCLIContext(globalFlags(), args, isoImageUploadParam)
 			if err != nil {
 				return err
 			}
@@ -311,7 +311,7 @@ func isoImageDownloadCmd() *cobra.Command {
 			return isoImageDownloadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), isoImageDownloadParam)
+			ctx, err := newCLIContext(globalFlags(), args, isoImageDownloadParam)
 			if err != nil {
 				return err
 			}
@@ -347,7 +347,7 @@ func isoImageFTPOpenCmd() *cobra.Command {
 			return isoImageFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), isoImageFTPOpenParam)
+			ctx, err := newCLIContext(globalFlags(), args, isoImageFTPOpenParam)
 			if err != nil {
 				return err
 			}
@@ -389,7 +389,7 @@ func isoImageFTPCloseCmd() *cobra.Command {
 			return isoImageFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), isoImageFTPCloseParam)
+			ctx, err := newCLIContext(globalFlags(), args, isoImageFTPCloseParam)
 			if err != nil {
 				return err
 			}

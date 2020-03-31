@@ -359,6 +359,11 @@ func (p *ListIPv6Param) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListIPv6Param) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // PtrAddIPv6Param is input parameters for the sacloud API
 type PtrAddIPv6Param struct {
 	Hostname          string
@@ -601,6 +606,11 @@ func (p *PtrAddIPv6Param) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PtrAddIPv6Param) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // PtrReadIPv6Param is input parameters for the sacloud API
 type PtrReadIPv6Param struct {
 	ParamTemplate     string
@@ -811,6 +821,11 @@ func (p *PtrReadIPv6Param) SetQueryFile(v string) {
 
 func (p *PtrReadIPv6Param) GetQueryFile() string {
 	return p.QueryFile
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PtrReadIPv6Param) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // PtrUpdateIPv6Param is input parameters for the sacloud API
@@ -1055,6 +1070,11 @@ func (p *PtrUpdateIPv6Param) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PtrUpdateIPv6Param) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // PtrDeleteIPv6Param is input parameters for the sacloud API
 type PtrDeleteIPv6Param struct {
 	Assumeyes         bool
@@ -1276,4 +1296,9 @@ func (p *PtrDeleteIPv6Param) SetQueryFile(v string) {
 
 func (p *PtrDeleteIPv6Param) GetQueryFile() string {
 	return p.QueryFile
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PtrDeleteIPv6Param) Changed(name string) bool {
+	return p.input.Changed(name)
 }

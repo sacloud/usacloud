@@ -47,7 +47,7 @@ func privateHostListCmd() *cobra.Command {
 			return privateHostListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), privateHostListParam)
+			ctx, err := newCLIContext(globalFlags(), args, privateHostListParam)
 			if err != nil {
 				return err
 			}
@@ -92,7 +92,7 @@ func privateHostCreateCmd() *cobra.Command {
 			return privateHostCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), privateHostCreateParam)
+			ctx, err := newCLIContext(globalFlags(), args, privateHostCreateParam)
 			if err != nil {
 				return err
 			}
@@ -136,7 +136,7 @@ func privateHostReadCmd() *cobra.Command {
 			return privateHostReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), privateHostReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, privateHostReadParam)
 			if err != nil {
 				return err
 			}
@@ -177,7 +177,7 @@ func privateHostUpdateCmd() *cobra.Command {
 			return privateHostUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), privateHostUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, privateHostUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -223,7 +223,7 @@ func privateHostDeleteCmd() *cobra.Command {
 			return privateHostDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), privateHostDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, privateHostDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -265,7 +265,7 @@ func privateHostServerInfoCmd() *cobra.Command {
 			return privateHostServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), privateHostServerInfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, privateHostServerInfoParam)
 			if err != nil {
 				return err
 			}
@@ -306,7 +306,7 @@ func privateHostServerAddCmd() *cobra.Command {
 			return privateHostServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), privateHostServerAddParam)
+			ctx, err := newCLIContext(globalFlags(), args, privateHostServerAddParam)
 			if err != nil {
 				return err
 			}
@@ -349,7 +349,7 @@ func privateHostServerDeleteCmd() *cobra.Command {
 			return privateHostServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), privateHostServerDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, privateHostServerDeleteParam)
 			if err != nil {
 				return err
 			}

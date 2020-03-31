@@ -46,7 +46,7 @@ func webAccelListCmd() *cobra.Command {
 			return webAccelListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), webAccelListParam)
+			ctx, err := newCLIContext(globalFlags(), args, webAccelListParam)
 			if err != nil {
 				return err
 			}
@@ -85,7 +85,7 @@ func webAccelReadCmd() *cobra.Command {
 			return webAccelReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), webAccelReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, webAccelReadParam)
 			if err != nil {
 				return err
 			}
@@ -126,7 +126,7 @@ func webAccelCertificateInfoCmd() *cobra.Command {
 			return webAccelCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), webAccelCertificateInfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, webAccelCertificateInfoParam)
 			if err != nil {
 				return err
 			}
@@ -167,7 +167,7 @@ func webAccelCertificateNewCmd() *cobra.Command {
 			return webAccelCertificateNewParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), webAccelCertificateNewParam)
+			ctx, err := newCLIContext(globalFlags(), args, webAccelCertificateNewParam)
 			if err != nil {
 				return err
 			}
@@ -213,7 +213,7 @@ func webAccelCertificateUpdateCmd() *cobra.Command {
 			return webAccelCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), webAccelCertificateUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, webAccelCertificateUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -259,7 +259,7 @@ func webAccelDeleteCacheCmd() *cobra.Command {
 			return webAccelDeleteCacheParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), webAccelDeleteCacheParam)
+			ctx, err := newCLIContext(globalFlags(), args, webAccelDeleteCacheParam)
 			if err != nil {
 				return err
 			}

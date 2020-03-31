@@ -359,6 +359,11 @@ func (p *ListISOImageParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListISOImageParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateISOImageParam is input parameters for the sacloud API
 type CreateISOImageParam struct {
 	Size              int
@@ -711,6 +716,11 @@ func (p *CreateISOImageParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateISOImageParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadISOImageParam is input parameters for the sacloud API
 type ReadISOImageParam struct {
 	Selector          []string
@@ -951,6 +961,11 @@ func (p *ReadISOImageParam) SetId(v sacloud.ID) {
 
 func (p *ReadISOImageParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadISOImageParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateISOImageParam is input parameters for the sacloud API
@@ -1282,6 +1297,11 @@ func (p *UpdateISOImageParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateISOImageParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteISOImageParam is input parameters for the sacloud API
 type DeleteISOImageParam struct {
 	Selector          []string
@@ -1533,6 +1553,11 @@ func (p *DeleteISOImageParam) SetId(v sacloud.ID) {
 
 func (p *DeleteISOImageParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteISOImageParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UploadISOImageParam is input parameters for the sacloud API
@@ -1807,6 +1832,11 @@ func (p *UploadISOImageParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UploadISOImageParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DownloadISOImageParam is input parameters for the sacloud API
 type DownloadISOImageParam struct {
 	FileDestination   string
@@ -1978,6 +2008,11 @@ func (p *DownloadISOImageParam) SetId(v sacloud.ID) {
 
 func (p *DownloadISOImageParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DownloadISOImageParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // FTPOpenISOImageParam is input parameters for the sacloud API
@@ -2233,6 +2268,11 @@ func (p *FTPOpenISOImageParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *FTPOpenISOImageParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // FTPCloseISOImageParam is input parameters for the sacloud API
 type FTPCloseISOImageParam struct {
 	Selector          []string
@@ -2393,4 +2433,9 @@ func (p *FTPCloseISOImageParam) SetId(v sacloud.ID) {
 
 func (p *FTPCloseISOImageParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *FTPCloseISOImageParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

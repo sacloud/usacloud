@@ -247,3 +247,8 @@ func (p *ListCouponParam) SetQueryFile(v string) {
 func (p *ListCouponParam) GetQueryFile() string {
 	return p.QueryFile
 }
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListCouponParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}

@@ -340,6 +340,11 @@ func (p *ListDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListDNSParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // RecordInfoDNSParam is input parameters for the sacloud API
 type RecordInfoDNSParam struct {
 	Name              string
@@ -618,6 +623,11 @@ func (p *RecordInfoDNSParam) SetId(v sacloud.ID) {
 
 func (p *RecordInfoDNSParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *RecordInfoDNSParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // RecordBulkUpdateDNSParam is input parameters for the sacloud API
@@ -926,6 +936,11 @@ func (p *RecordBulkUpdateDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *RecordBulkUpdateDNSParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateDNSParam is input parameters for the sacloud API
 type CreateDNSParam struct {
 	Name              string
@@ -1230,6 +1245,11 @@ func (p *CreateDNSParam) SetQueryFile(v string) {
 
 func (p *CreateDNSParam) GetQueryFile() string {
 	return p.QueryFile
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateDNSParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // RecordAddDNSParam is input parameters for the sacloud API
@@ -1663,6 +1683,11 @@ func (p *RecordAddDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *RecordAddDNSParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadDNSParam is input parameters for the sacloud API
 type ReadDNSParam struct {
 	Selector          []string
@@ -1903,6 +1928,11 @@ func (p *ReadDNSParam) SetId(v sacloud.ID) {
 
 func (p *ReadDNSParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadDNSParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // RecordUpdateDNSParam is input parameters for the sacloud API
@@ -2340,6 +2370,11 @@ func (p *RecordUpdateDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *RecordUpdateDNSParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // RecordDeleteDNSParam is input parameters for the sacloud API
 type RecordDeleteDNSParam struct {
 	Index             int
@@ -2610,6 +2645,11 @@ func (p *RecordDeleteDNSParam) SetId(v sacloud.ID) {
 
 func (p *RecordDeleteDNSParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *RecordDeleteDNSParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateDNSParam is input parameters for the sacloud API
@@ -2922,6 +2962,11 @@ func (p *UpdateDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateDNSParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteDNSParam is input parameters for the sacloud API
 type DeleteDNSParam struct {
 	Selector          []string
@@ -3173,4 +3218,9 @@ func (p *DeleteDNSParam) SetId(v sacloud.ID) {
 
 func (p *DeleteDNSParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteDNSParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

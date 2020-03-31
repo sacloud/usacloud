@@ -47,7 +47,7 @@ func diskListCmd() *cobra.Command {
 			return diskListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), diskListParam)
+			ctx, err := newCLIContext(globalFlags(), args, diskListParam)
 			if err != nil {
 				return err
 			}
@@ -96,7 +96,7 @@ func diskCreateCmd() *cobra.Command {
 			return diskCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), diskCreateParam)
+			ctx, err := newCLIContext(globalFlags(), args, diskCreateParam)
 			if err != nil {
 				return err
 			}
@@ -146,7 +146,7 @@ func diskReadCmd() *cobra.Command {
 			return diskReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), diskReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, diskReadParam)
 			if err != nil {
 				return err
 			}
@@ -187,7 +187,7 @@ func diskUpdateCmd() *cobra.Command {
 			return diskUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), diskUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, diskUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -234,7 +234,7 @@ func diskDeleteCmd() *cobra.Command {
 			return diskDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), diskDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, diskDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -276,7 +276,7 @@ func diskEditCmd() *cobra.Command {
 			return diskEditParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), diskEditParam)
+			ctx, err := newCLIContext(globalFlags(), args, diskEditParam)
 			if err != nil {
 				return err
 			}
@@ -326,7 +326,7 @@ func diskResizePartitionCmd() *cobra.Command {
 			return diskResizePartitionParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), diskResizePartitionParam)
+			ctx, err := newCLIContext(globalFlags(), args, diskResizePartitionParam)
 			if err != nil {
 				return err
 			}
@@ -368,7 +368,7 @@ func diskReinstallFromArchiveCmd() *cobra.Command {
 			return diskReinstallFromArchiveParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), diskReinstallFromArchiveParam)
+			ctx, err := newCLIContext(globalFlags(), args, diskReinstallFromArchiveParam)
 			if err != nil {
 				return err
 			}
@@ -405,7 +405,7 @@ func diskReinstallFromDiskCmd() *cobra.Command {
 			return diskReinstallFromDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), diskReinstallFromDiskParam)
+			ctx, err := newCLIContext(globalFlags(), args, diskReinstallFromDiskParam)
 			if err != nil {
 				return err
 			}
@@ -442,7 +442,7 @@ func diskReinstallToBlankCmd() *cobra.Command {
 			return diskReinstallToBlankParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), diskReinstallToBlankParam)
+			ctx, err := newCLIContext(globalFlags(), args, diskReinstallToBlankParam)
 			if err != nil {
 				return err
 			}
@@ -478,7 +478,7 @@ func diskServerConnectCmd() *cobra.Command {
 			return diskServerConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), diskServerConnectParam)
+			ctx, err := newCLIContext(globalFlags(), args, diskServerConnectParam)
 			if err != nil {
 				return err
 			}
@@ -514,7 +514,7 @@ func diskServerDisconnectCmd() *cobra.Command {
 			return diskServerDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), diskServerDisconnectParam)
+			ctx, err := newCLIContext(globalFlags(), args, diskServerDisconnectParam)
 			if err != nil {
 				return err
 			}
@@ -549,7 +549,7 @@ func diskMonitorCmd() *cobra.Command {
 			return diskMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), diskMonitorParam)
+			ctx, err := newCLIContext(globalFlags(), args, diskMonitorParam)
 			if err != nil {
 				return err
 			}
@@ -593,7 +593,7 @@ func diskWaitForCopyCmd() *cobra.Command {
 			return diskWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), diskWaitForCopyParam)
+			ctx, err := newCLIContext(globalFlags(), args, diskWaitForCopyParam)
 			if err != nil {
 				return err
 			}

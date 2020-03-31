@@ -321,6 +321,11 @@ func (p *ListPacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListPacketFilterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreatePacketFilterParam is input parameters for the sacloud API
 type CreatePacketFilterParam struct {
 	Name              string
@@ -589,6 +594,11 @@ func (p *CreatePacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreatePacketFilterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadPacketFilterParam is input parameters for the sacloud API
 type ReadPacketFilterParam struct {
 	ParamTemplate     string
@@ -818,6 +828,11 @@ func (p *ReadPacketFilterParam) SetId(v sacloud.ID) {
 
 func (p *ReadPacketFilterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadPacketFilterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdatePacketFilterParam is input parameters for the sacloud API
@@ -1100,6 +1115,11 @@ func (p *UpdatePacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdatePacketFilterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeletePacketFilterParam is input parameters for the sacloud API
 type DeletePacketFilterParam struct {
 	Assumeyes         bool
@@ -1342,6 +1362,11 @@ func (p *DeletePacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeletePacketFilterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // RuleInfoPacketFilterParam is input parameters for the sacloud API
 type RuleInfoPacketFilterParam struct {
 	ParamTemplate     string
@@ -1571,6 +1596,11 @@ func (p *RuleInfoPacketFilterParam) SetId(v sacloud.ID) {
 
 func (p *RuleInfoPacketFilterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *RuleInfoPacketFilterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // RuleAddPacketFilterParam is input parameters for the sacloud API
@@ -1939,6 +1969,11 @@ func (p *RuleAddPacketFilterParam) SetId(v sacloud.ID) {
 
 func (p *RuleAddPacketFilterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *RuleAddPacketFilterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // RuleUpdatePacketFilterParam is input parameters for the sacloud API
@@ -2316,6 +2351,11 @@ func (p *RuleUpdatePacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *RuleUpdatePacketFilterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // RuleDeletePacketFilterParam is input parameters for the sacloud API
 type RuleDeletePacketFilterParam struct {
 	Index             int
@@ -2577,6 +2617,11 @@ func (p *RuleDeletePacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *RuleDeletePacketFilterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // InterfaceConnectPacketFilterParam is input parameters for the sacloud API
 type InterfaceConnectPacketFilterParam struct {
 	InterfaceId       sacloud.ID
@@ -2754,6 +2799,11 @@ func (p *InterfaceConnectPacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *InterfaceConnectPacketFilterParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // InterfaceDisconnectPacketFilterParam is input parameters for the sacloud API
 type InterfaceDisconnectPacketFilterParam struct {
 	InterfaceId       sacloud.ID
@@ -2929,4 +2979,9 @@ func (p *InterfaceDisconnectPacketFilterParam) SetId(v sacloud.ID) {
 
 func (p *InterfaceDisconnectPacketFilterParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *InterfaceDisconnectPacketFilterParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

@@ -247,3 +247,8 @@ func (p *ShowSummaryParam) SetPaidResourcesOnly(v bool) {
 func (p *ShowSummaryParam) GetPaidResourcesOnly() bool {
 	return p.PaidResourcesOnly
 }
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ShowSummaryParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}

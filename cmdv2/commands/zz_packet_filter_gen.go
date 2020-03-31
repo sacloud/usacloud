@@ -47,7 +47,7 @@ func packetFilterListCmd() *cobra.Command {
 			return packetFilterListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), packetFilterListParam)
+			ctx, err := newCLIContext(globalFlags(), args, packetFilterListParam)
 			if err != nil {
 				return err
 			}
@@ -91,7 +91,7 @@ func packetFilterCreateCmd() *cobra.Command {
 			return packetFilterCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), packetFilterCreateParam)
+			ctx, err := newCLIContext(globalFlags(), args, packetFilterCreateParam)
 			if err != nil {
 				return err
 			}
@@ -133,7 +133,7 @@ func packetFilterReadCmd() *cobra.Command {
 			return packetFilterReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), packetFilterReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, packetFilterReadParam)
 			if err != nil {
 				return err
 			}
@@ -173,7 +173,7 @@ func packetFilterUpdateCmd() *cobra.Command {
 			return packetFilterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), packetFilterUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, packetFilterUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -216,7 +216,7 @@ func packetFilterDeleteCmd() *cobra.Command {
 			return packetFilterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), packetFilterDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, packetFilterDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -257,7 +257,7 @@ func packetFilterRuleInfoCmd() *cobra.Command {
 			return packetFilterRuleInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), packetFilterRuleInfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, packetFilterRuleInfoParam)
 			if err != nil {
 				return err
 			}
@@ -297,7 +297,7 @@ func packetFilterRuleAddCmd() *cobra.Command {
 			return packetFilterRuleAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), packetFilterRuleAddParam)
+			ctx, err := newCLIContext(globalFlags(), args, packetFilterRuleAddParam)
 			if err != nil {
 				return err
 			}
@@ -345,7 +345,7 @@ func packetFilterRuleUpdateCmd() *cobra.Command {
 			return packetFilterRuleUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), packetFilterRuleUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, packetFilterRuleUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -393,7 +393,7 @@ func packetFilterRuleDeleteCmd() *cobra.Command {
 			return packetFilterRuleDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), packetFilterRuleDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, packetFilterRuleDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -435,7 +435,7 @@ func packetFilterInterfaceConnectCmd() *cobra.Command {
 			return packetFilterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), packetFilterInterfaceConnectParam)
+			ctx, err := newCLIContext(globalFlags(), args, packetFilterInterfaceConnectParam)
 			if err != nil {
 				return err
 			}
@@ -470,7 +470,7 @@ func packetFilterInterfaceDisconnectCmd() *cobra.Command {
 			return packetFilterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), packetFilterInterfaceDisconnectParam)
+			ctx, err := newCLIContext(globalFlags(), args, packetFilterInterfaceDisconnectParam)
 			if err != nil {
 				return err
 			}

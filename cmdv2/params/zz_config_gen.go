@@ -146,6 +146,11 @@ func (p *CurrentConfigParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CurrentConfigParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteConfigParam is input parameters for the sacloud API
 type DeleteConfigParam struct {
 	Assumeyes         bool
@@ -276,6 +281,11 @@ func (p *DeleteConfigParam) SetGenerateSkeleton(v bool) {
 
 func (p *DeleteConfigParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteConfigParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // EditConfigParam is input parameters for the sacloud API
@@ -459,6 +469,11 @@ func (p *EditConfigParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *EditConfigParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ListConfigParam is input parameters for the sacloud API
 type ListConfigParam struct {
 	ParamTemplate     string
@@ -578,6 +593,11 @@ func (p *ListConfigParam) SetGenerateSkeleton(v bool) {
 
 func (p *ListConfigParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListConfigParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // MigrateConfigParam is input parameters for the sacloud API
@@ -701,6 +721,11 @@ func (p *MigrateConfigParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MigrateConfigParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ShowConfigParam is input parameters for the sacloud API
 type ShowConfigParam struct {
 	ParamTemplate     string
@@ -822,6 +847,11 @@ func (p *ShowConfigParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ShowConfigParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // UseConfigParam is input parameters for the sacloud API
 type UseConfigParam struct {
 	ParamTemplate     string
@@ -941,4 +971,9 @@ func (p *UseConfigParam) SetGenerateSkeleton(v bool) {
 
 func (p *UseConfigParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UseConfigParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

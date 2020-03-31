@@ -340,6 +340,11 @@ func (p *ListGSLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListGSLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ServerInfoGSLBParam is input parameters for the sacloud API
 type ServerInfoGSLBParam struct {
 	Selector          []string
@@ -580,6 +585,11 @@ func (p *ServerInfoGSLBParam) SetId(v sacloud.ID) {
 
 func (p *ServerInfoGSLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerInfoGSLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // CreateGSLBParam is input parameters for the sacloud API
@@ -1015,6 +1025,11 @@ func (p *CreateGSLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateGSLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ServerAddGSLBParam is input parameters for the sacloud API
 type ServerAddGSLBParam struct {
 	Ipaddress         string
@@ -1317,6 +1332,11 @@ func (p *ServerAddGSLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerAddGSLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadGSLBParam is input parameters for the sacloud API
 type ReadGSLBParam struct {
 	Selector          []string
@@ -1557,6 +1577,11 @@ func (p *ReadGSLBParam) SetId(v sacloud.ID) {
 
 func (p *ReadGSLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadGSLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ServerUpdateGSLBParam is input parameters for the sacloud API
@@ -1880,6 +1905,11 @@ func (p *ServerUpdateGSLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerUpdateGSLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ServerDeleteGSLBParam is input parameters for the sacloud API
 type ServerDeleteGSLBParam struct {
 	Index             int
@@ -2150,6 +2180,11 @@ func (p *ServerDeleteGSLBParam) SetId(v sacloud.ID) {
 
 func (p *ServerDeleteGSLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerDeleteGSLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateGSLBParam is input parameters for the sacloud API
@@ -2593,6 +2628,11 @@ func (p *UpdateGSLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateGSLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteGSLBParam is input parameters for the sacloud API
 type DeleteGSLBParam struct {
 	Selector          []string
@@ -2844,4 +2884,9 @@ func (p *DeleteGSLBParam) SetId(v sacloud.ID) {
 
 func (p *DeleteGSLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteGSLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

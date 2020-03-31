@@ -321,6 +321,11 @@ func (p *ListSSHKeyParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListSSHKeyParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateSSHKeyParam is input parameters for the sacloud API
 type CreateSSHKeyParam struct {
 	PublicKey         string
@@ -629,6 +634,11 @@ func (p *CreateSSHKeyParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateSSHKeyParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadSSHKeyParam is input parameters for the sacloud API
 type ReadSSHKeyParam struct {
 	ParamTemplate     string
@@ -858,6 +868,11 @@ func (p *ReadSSHKeyParam) SetId(v sacloud.ID) {
 
 func (p *ReadSSHKeyParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadSSHKeyParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateSSHKeyParam is input parameters for the sacloud API
@@ -1140,6 +1155,11 @@ func (p *UpdateSSHKeyParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateSSHKeyParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteSSHKeyParam is input parameters for the sacloud API
 type DeleteSSHKeyParam struct {
 	Assumeyes         bool
@@ -1380,6 +1400,11 @@ func (p *DeleteSSHKeyParam) SetId(v sacloud.ID) {
 
 func (p *DeleteSSHKeyParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteSSHKeyParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // GenerateSSHKeyParam is input parameters for the sacloud API
@@ -1678,4 +1703,9 @@ func (p *GenerateSSHKeyParam) SetQueryFile(v string) {
 
 func (p *GenerateSSHKeyParam) GetQueryFile() string {
 	return p.QueryFile
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *GenerateSSHKeyParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

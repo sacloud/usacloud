@@ -46,7 +46,7 @@ func billCsvCmd() *cobra.Command {
 			return billCsvParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), billCsvParam)
+			ctx, err := newCLIContext(globalFlags(), args, billCsvParam)
 			if err != nil {
 				return err
 			}
@@ -81,7 +81,7 @@ func billListCmd() *cobra.Command {
 			return billListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), billListParam)
+			ctx, err := newCLIContext(globalFlags(), args, billListParam)
 			if err != nil {
 				return err
 			}

@@ -204,5 +204,11 @@ func (p *{{.Command.InputParameterTypeName}}) Get{{.FieldName}}() {{.FieldTypeNa
 	return p.{{.FieldName}}
 }
 {{ end }}
-{{- end }}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *{{.InputParameterTypeName}}) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
+{{ end }}
 `

@@ -46,7 +46,7 @@ func configCurrentCmd() *cobra.Command {
 			return configCurrentParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), configCurrentParam)
+			ctx, err := newCLIContext(globalFlags(), args, configCurrentParam)
 			if err != nil {
 				return err
 			}
@@ -78,7 +78,7 @@ func configDeleteCmd() *cobra.Command {
 			return configDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), configDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, configDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -111,7 +111,7 @@ func configEditCmd() *cobra.Command {
 			return configEditParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), configEditParam)
+			ctx, err := newCLIContext(globalFlags(), args, configEditParam)
 			if err != nil {
 				return err
 			}
@@ -147,7 +147,7 @@ func configListCmd() *cobra.Command {
 			return configListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), configListParam)
+			ctx, err := newCLIContext(globalFlags(), args, configListParam)
 			if err != nil {
 				return err
 			}
@@ -179,7 +179,7 @@ func configMigrateCmd() *cobra.Command {
 			return configMigrateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), configMigrateParam)
+			ctx, err := newCLIContext(globalFlags(), args, configMigrateParam)
 			if err != nil {
 				return err
 			}
@@ -211,7 +211,7 @@ func configShowCmd() *cobra.Command {
 			return configShowParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), configShowParam)
+			ctx, err := newCLIContext(globalFlags(), args, configShowParam)
 			if err != nil {
 				return err
 			}
@@ -243,7 +243,7 @@ func configUseCmd() *cobra.Command {
 			return configUseParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), configUseParam)
+			ctx, err := newCLIContext(globalFlags(), args, configUseParam)
 			if err != nil {
 				return err
 			}

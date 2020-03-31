@@ -47,7 +47,7 @@ func startupScriptListCmd() *cobra.Command {
 			return startupScriptListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), startupScriptListParam)
+			ctx, err := newCLIContext(globalFlags(), args, startupScriptListParam)
 			if err != nil {
 				return err
 			}
@@ -94,7 +94,7 @@ func startupScriptCreateCmd() *cobra.Command {
 			return startupScriptCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), startupScriptCreateParam)
+			ctx, err := newCLIContext(globalFlags(), args, startupScriptCreateParam)
 			if err != nil {
 				return err
 			}
@@ -140,7 +140,7 @@ func startupScriptReadCmd() *cobra.Command {
 			return startupScriptReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), startupScriptReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, startupScriptReadParam)
 			if err != nil {
 				return err
 			}
@@ -181,7 +181,7 @@ func startupScriptUpdateCmd() *cobra.Command {
 			return startupScriptUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), startupScriptUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, startupScriptUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -229,7 +229,7 @@ func startupScriptDeleteCmd() *cobra.Command {
 			return startupScriptDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), startupScriptDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, startupScriptDeleteParam)
 			if err != nil {
 				return err
 			}

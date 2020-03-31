@@ -46,7 +46,7 @@ func selfInfoCmd() *cobra.Command {
 			return selfInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), selfInfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, selfInfoParam)
 			if err != nil {
 				return err
 			}

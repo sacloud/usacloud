@@ -359,6 +359,11 @@ func (p *ListIconParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListIconParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateIconParam is input parameters for the sacloud API
 type CreateIconParam struct {
 	Image             string
@@ -653,6 +658,11 @@ func (p *CreateIconParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateIconParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadIconParam is input parameters for the sacloud API
 type ReadIconParam struct {
 	Selector          []string
@@ -893,6 +903,11 @@ func (p *ReadIconParam) SetId(v sacloud.ID) {
 
 func (p *ReadIconParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadIconParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateIconParam is input parameters for the sacloud API
@@ -1186,6 +1201,11 @@ func (p *UpdateIconParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateIconParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteIconParam is input parameters for the sacloud API
 type DeleteIconParam struct {
 	Selector          []string
@@ -1437,4 +1457,9 @@ func (p *DeleteIconParam) SetId(v sacloud.ID) {
 
 func (p *DeleteIconParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteIconParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

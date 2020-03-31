@@ -321,6 +321,11 @@ func (p *ListProductDiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListProductDiskParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadProductDiskParam is input parameters for the sacloud API
 type ReadProductDiskParam struct {
 	Assumeyes         bool
@@ -568,4 +573,9 @@ func (p *ReadProductDiskParam) SetId(v sacloud.ID) {
 
 func (p *ReadProductDiskParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadProductDiskParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

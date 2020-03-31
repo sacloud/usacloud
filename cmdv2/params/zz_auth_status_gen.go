@@ -236,3 +236,8 @@ func (p *ShowAuthStatusParam) SetQueryFile(v string) {
 func (p *ShowAuthStatusParam) GetQueryFile() string {
 	return p.QueryFile
 }
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ShowAuthStatusParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}

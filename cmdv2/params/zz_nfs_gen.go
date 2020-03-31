@@ -340,6 +340,11 @@ func (p *ListNFSParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListNFSParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateNFSParam is input parameters for the sacloud API
 type CreateNFSParam struct {
 	SwitchId          sacloud.ID
@@ -796,6 +801,11 @@ func (p *CreateNFSParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateNFSParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadNFSParam is input parameters for the sacloud API
 type ReadNFSParam struct {
 	Selector          []string
@@ -1036,6 +1046,11 @@ func (p *ReadNFSParam) SetId(v sacloud.ID) {
 
 func (p *ReadNFSParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadNFSParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateNFSParam is input parameters for the sacloud API
@@ -1367,6 +1382,11 @@ func (p *UpdateNFSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateNFSParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteNFSParam is input parameters for the sacloud API
 type DeleteNFSParam struct {
 	Force             bool
@@ -1631,6 +1651,11 @@ func (p *DeleteNFSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteNFSParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // BootNFSParam is input parameters for the sacloud API
 type BootNFSParam struct {
 	Selector          []string
@@ -1791,6 +1816,11 @@ func (p *BootNFSParam) SetId(v sacloud.ID) {
 
 func (p *BootNFSParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BootNFSParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ShutdownNFSParam is input parameters for the sacloud API
@@ -1955,6 +1985,11 @@ func (p *ShutdownNFSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ShutdownNFSParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ShutdownForceNFSParam is input parameters for the sacloud API
 type ShutdownForceNFSParam struct {
 	Selector          []string
@@ -2115,6 +2150,11 @@ func (p *ShutdownForceNFSParam) SetId(v sacloud.ID) {
 
 func (p *ShutdownForceNFSParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ShutdownForceNFSParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ResetNFSParam is input parameters for the sacloud API
@@ -2279,6 +2319,11 @@ func (p *ResetNFSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ResetNFSParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // WaitForBootNFSParam is input parameters for the sacloud API
 type WaitForBootNFSParam struct {
 	Selector          []string
@@ -2430,6 +2475,11 @@ func (p *WaitForBootNFSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *WaitForBootNFSParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // WaitForDownNFSParam is input parameters for the sacloud API
 type WaitForDownNFSParam struct {
 	Selector          []string
@@ -2579,6 +2629,11 @@ func (p *WaitForDownNFSParam) SetId(v sacloud.ID) {
 
 func (p *WaitForDownNFSParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *WaitForDownNFSParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // MonitorNicNFSParam is input parameters for the sacloud API
@@ -2881,6 +2936,11 @@ func (p *MonitorNicNFSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorNicNFSParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // MonitorFreeDiskSizeNFSParam is input parameters for the sacloud API
 type MonitorFreeDiskSizeNFSParam struct {
 	Start             string
@@ -3179,4 +3239,9 @@ func (p *MonitorFreeDiskSizeNFSParam) SetId(v sacloud.ID) {
 
 func (p *MonitorFreeDiskSizeNFSParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorFreeDiskSizeNFSParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

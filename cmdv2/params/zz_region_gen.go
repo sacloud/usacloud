@@ -321,6 +321,11 @@ func (p *ListRegionParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListRegionParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadRegionParam is input parameters for the sacloud API
 type ReadRegionParam struct {
 	Assumeyes         bool
@@ -568,4 +573,9 @@ func (p *ReadRegionParam) SetId(v sacloud.ID) {
 
 func (p *ReadRegionParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadRegionParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

@@ -321,6 +321,11 @@ func (p *ListProductLicenseParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListProductLicenseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadProductLicenseParam is input parameters for the sacloud API
 type ReadProductLicenseParam struct {
 	Assumeyes         bool
@@ -568,4 +573,9 @@ func (p *ReadProductLicenseParam) SetId(v sacloud.ID) {
 
 func (p *ReadProductLicenseParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadProductLicenseParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

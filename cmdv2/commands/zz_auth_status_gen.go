@@ -46,7 +46,7 @@ func authStatusShowCmd() *cobra.Command {
 			return authStatusShowParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), authStatusShowParam)
+			ctx, err := newCLIContext(globalFlags(), args, authStatusShowParam)
 			if err != nil {
 				return err
 			}

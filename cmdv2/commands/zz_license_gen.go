@@ -47,7 +47,7 @@ func licenseListCmd() *cobra.Command {
 			return licenseListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), licenseListParam)
+			ctx, err := newCLIContext(globalFlags(), args, licenseListParam)
 			if err != nil {
 				return err
 			}
@@ -91,7 +91,7 @@ func licenseCreateCmd() *cobra.Command {
 			return licenseCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), licenseCreateParam)
+			ctx, err := newCLIContext(globalFlags(), args, licenseCreateParam)
 			if err != nil {
 				return err
 			}
@@ -133,7 +133,7 @@ func licenseReadCmd() *cobra.Command {
 			return licenseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), licenseReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, licenseReadParam)
 			if err != nil {
 				return err
 			}
@@ -173,7 +173,7 @@ func licenseUpdateCmd() *cobra.Command {
 			return licenseUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), licenseUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, licenseUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -215,7 +215,7 @@ func licenseDeleteCmd() *cobra.Command {
 			return licenseDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), licenseDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, licenseDeleteParam)
 			if err != nil {
 				return err
 			}

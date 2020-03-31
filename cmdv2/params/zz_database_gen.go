@@ -340,6 +340,11 @@ func (p *ListDatabaseParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateDatabaseParam is input parameters for the sacloud API
 type CreateDatabaseParam struct {
 	SwitchId            sacloud.ID
@@ -972,6 +977,11 @@ func (p *CreateDatabaseParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadDatabaseParam is input parameters for the sacloud API
 type ReadDatabaseParam struct {
 	Selector          []string
@@ -1212,6 +1222,11 @@ func (p *ReadDatabaseParam) SetId(v sacloud.ID) {
 
 func (p *ReadDatabaseParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateDatabaseParam is input parameters for the sacloud API
@@ -1691,6 +1706,11 @@ func (p *UpdateDatabaseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteDatabaseParam is input parameters for the sacloud API
 type DeleteDatabaseParam struct {
 	Selector          []string
@@ -1955,6 +1975,11 @@ func (p *DeleteDatabaseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // BootDatabaseParam is input parameters for the sacloud API
 type BootDatabaseParam struct {
 	Selector          []string
@@ -2115,6 +2140,11 @@ func (p *BootDatabaseParam) SetId(v sacloud.ID) {
 
 func (p *BootDatabaseParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BootDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ShutdownDatabaseParam is input parameters for the sacloud API
@@ -2279,6 +2309,11 @@ func (p *ShutdownDatabaseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ShutdownDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ShutdownForceDatabaseParam is input parameters for the sacloud API
 type ShutdownForceDatabaseParam struct {
 	Selector          []string
@@ -2439,6 +2474,11 @@ func (p *ShutdownForceDatabaseParam) SetId(v sacloud.ID) {
 
 func (p *ShutdownForceDatabaseParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ShutdownForceDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ResetDatabaseParam is input parameters for the sacloud API
@@ -2603,6 +2643,11 @@ func (p *ResetDatabaseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ResetDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // WaitForBootDatabaseParam is input parameters for the sacloud API
 type WaitForBootDatabaseParam struct {
 	Selector          []string
@@ -2754,6 +2799,11 @@ func (p *WaitForBootDatabaseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *WaitForBootDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // WaitForDownDatabaseParam is input parameters for the sacloud API
 type WaitForDownDatabaseParam struct {
 	Selector          []string
@@ -2903,6 +2953,11 @@ func (p *WaitForDownDatabaseParam) SetId(v sacloud.ID) {
 
 func (p *WaitForDownDatabaseParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *WaitForDownDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // BackupInfoDatabaseParam is input parameters for the sacloud API
@@ -3147,6 +3202,11 @@ func (p *BackupInfoDatabaseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BackupInfoDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // BackupCreateDatabaseParam is input parameters for the sacloud API
 type BackupCreateDatabaseParam struct {
 	Assumeyes         bool
@@ -3387,6 +3447,11 @@ func (p *BackupCreateDatabaseParam) SetId(v sacloud.ID) {
 
 func (p *BackupCreateDatabaseParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BackupCreateDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // BackupRestoreDatabaseParam is input parameters for the sacloud API
@@ -3657,6 +3722,11 @@ func (p *BackupRestoreDatabaseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BackupRestoreDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // BackupLockDatabaseParam is input parameters for the sacloud API
 type BackupLockDatabaseParam struct {
 	Index             int
@@ -3923,6 +3993,11 @@ func (p *BackupLockDatabaseParam) SetId(v sacloud.ID) {
 
 func (p *BackupLockDatabaseParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BackupLockDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // BackupUnlockDatabaseParam is input parameters for the sacloud API
@@ -4193,6 +4268,11 @@ func (p *BackupUnlockDatabaseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BackupUnlockDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // BackupRemoveDatabaseParam is input parameters for the sacloud API
 type BackupRemoveDatabaseParam struct {
 	Index             int
@@ -4459,6 +4539,11 @@ func (p *BackupRemoveDatabaseParam) SetId(v sacloud.ID) {
 
 func (p *BackupRemoveDatabaseParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BackupRemoveDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // CloneDatabaseParam is input parameters for the sacloud API
@@ -5013,6 +5098,11 @@ func (p *CloneDatabaseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CloneDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReplicaCreateDatabaseParam is input parameters for the sacloud API
 type ReplicaCreateDatabaseParam struct {
 	SwitchId          sacloud.ID
@@ -5421,6 +5511,11 @@ func (p *ReplicaCreateDatabaseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReplicaCreateDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // MonitorCPUDatabaseParam is input parameters for the sacloud API
 type MonitorCPUDatabaseParam struct {
 	Start             string
@@ -5719,6 +5814,11 @@ func (p *MonitorCPUDatabaseParam) SetId(v sacloud.ID) {
 
 func (p *MonitorCPUDatabaseParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorCPUDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // MonitorMemoryDatabaseParam is input parameters for the sacloud API
@@ -6021,6 +6121,11 @@ func (p *MonitorMemoryDatabaseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorMemoryDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // MonitorNicDatabaseParam is input parameters for the sacloud API
 type MonitorNicDatabaseParam struct {
 	Start             string
@@ -6319,6 +6424,11 @@ func (p *MonitorNicDatabaseParam) SetId(v sacloud.ID) {
 
 func (p *MonitorNicDatabaseParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorNicDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // MonitorSystemDiskDatabaseParam is input parameters for the sacloud API
@@ -6621,6 +6731,11 @@ func (p *MonitorSystemDiskDatabaseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorSystemDiskDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // MonitorBackupDiskDatabaseParam is input parameters for the sacloud API
 type MonitorBackupDiskDatabaseParam struct {
 	Start             string
@@ -6919,6 +7034,11 @@ func (p *MonitorBackupDiskDatabaseParam) SetId(v sacloud.ID) {
 
 func (p *MonitorBackupDiskDatabaseParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorBackupDiskDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // MonitorSystemDiskSizeDatabaseParam is input parameters for the sacloud API
@@ -7221,6 +7341,11 @@ func (p *MonitorSystemDiskSizeDatabaseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorSystemDiskSizeDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // MonitorBackupDiskSizeDatabaseParam is input parameters for the sacloud API
 type MonitorBackupDiskSizeDatabaseParam struct {
 	Start             string
@@ -7521,6 +7646,11 @@ func (p *MonitorBackupDiskSizeDatabaseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorBackupDiskSizeDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // LogsDatabaseParam is input parameters for the sacloud API
 type LogsDatabaseParam struct {
 	LogName           string
@@ -7723,4 +7853,9 @@ func (p *LogsDatabaseParam) SetId(v sacloud.ID) {
 
 func (p *LogsDatabaseParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *LogsDatabaseParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

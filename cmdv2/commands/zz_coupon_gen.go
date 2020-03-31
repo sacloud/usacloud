@@ -46,7 +46,7 @@ func couponListCmd() *cobra.Command {
 			return couponListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), couponListParam)
+			ctx, err := newCLIContext(globalFlags(), args, couponListParam)
 			if err != nil {
 				return err
 			}

@@ -321,6 +321,11 @@ func (p *ListLicenseParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListLicenseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateLicenseParam is input parameters for the sacloud API
 type CreateLicenseParam struct {
 	LicenseInfoId     sacloud.ID
@@ -581,6 +586,11 @@ func (p *CreateLicenseParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateLicenseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadLicenseParam is input parameters for the sacloud API
 type ReadLicenseParam struct {
 	ParamTemplate     string
@@ -810,6 +820,11 @@ func (p *ReadLicenseParam) SetId(v sacloud.ID) {
 
 func (p *ReadLicenseParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadLicenseParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateLicenseParam is input parameters for the sacloud API
@@ -1073,6 +1088,11 @@ func (p *UpdateLicenseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateLicenseParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteLicenseParam is input parameters for the sacloud API
 type DeleteLicenseParam struct {
 	Assumeyes         bool
@@ -1313,4 +1333,9 @@ func (p *DeleteLicenseParam) SetId(v sacloud.ID) {
 
 func (p *DeleteLicenseParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteLicenseParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

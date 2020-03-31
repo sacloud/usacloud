@@ -321,6 +321,11 @@ func (p *ListInterfaceParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListInterfaceParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // PacketFilterConnectInterfaceParam is input parameters for the sacloud API
 type PacketFilterConnectInterfaceParam struct {
 	PacketFilterId    sacloud.ID
@@ -496,6 +501,11 @@ func (p *PacketFilterConnectInterfaceParam) SetId(v sacloud.ID) {
 
 func (p *PacketFilterConnectInterfaceParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PacketFilterConnectInterfaceParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // CreateInterfaceParam is input parameters for the sacloud API
@@ -747,6 +757,11 @@ func (p *CreateInterfaceParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateInterfaceParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // PacketFilterDisconnectInterfaceParam is input parameters for the sacloud API
 type PacketFilterDisconnectInterfaceParam struct {
 	PacketFilterId    sacloud.ID
@@ -922,6 +937,11 @@ func (p *PacketFilterDisconnectInterfaceParam) SetId(v sacloud.ID) {
 
 func (p *PacketFilterDisconnectInterfaceParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PacketFilterDisconnectInterfaceParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ReadInterfaceParam is input parameters for the sacloud API
@@ -1153,6 +1173,11 @@ func (p *ReadInterfaceParam) SetId(v sacloud.ID) {
 
 func (p *ReadInterfaceParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadInterfaceParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateInterfaceParam is input parameters for the sacloud API
@@ -1416,6 +1441,11 @@ func (p *UpdateInterfaceParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateInterfaceParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteInterfaceParam is input parameters for the sacloud API
 type DeleteInterfaceParam struct {
 	Assumeyes         bool
@@ -1656,4 +1686,9 @@ func (p *DeleteInterfaceParam) SetId(v sacloud.ID) {
 
 func (p *DeleteInterfaceParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteInterfaceParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

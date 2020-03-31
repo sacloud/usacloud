@@ -47,7 +47,7 @@ func priceListCmd() *cobra.Command {
 			return priceListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), priceListParam)
+			ctx, err := newCLIContext(globalFlags(), args, priceListParam)
 			if err != nil {
 				return err
 			}

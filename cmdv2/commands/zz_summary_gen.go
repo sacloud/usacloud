@@ -46,7 +46,7 @@ func summaryShowCmd() *cobra.Command {
 			return summaryShowParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), summaryShowParam)
+			ctx, err := newCLIContext(globalFlags(), args, summaryShowParam)
 			if err != nil {
 				return err
 			}

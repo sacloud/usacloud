@@ -47,7 +47,7 @@ func proxyLBListCmd() *cobra.Command {
 			return proxyLBListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBListParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBListParam)
 			if err != nil {
 				return err
 			}
@@ -92,7 +92,7 @@ func proxyLBCreateCmd() *cobra.Command {
 			return proxyLBCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBCreateParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBCreateParam)
 			if err != nil {
 				return err
 			}
@@ -145,7 +145,7 @@ func proxyLBReadCmd() *cobra.Command {
 			return proxyLBReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBReadParam)
 			if err != nil {
 				return err
 			}
@@ -186,7 +186,7 @@ func proxyLBUpdateCmd() *cobra.Command {
 			return proxyLBUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -240,7 +240,7 @@ func proxyLBDeleteCmd() *cobra.Command {
 			return proxyLBDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -282,7 +282,7 @@ func proxyLBPlanChangeCmd() *cobra.Command {
 			return proxyLBPlanChangeParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBPlanChangeParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBPlanChangeParam)
 			if err != nil {
 				return err
 			}
@@ -325,7 +325,7 @@ func proxyLBBindPortInfoCmd() *cobra.Command {
 			return proxyLBBindPortInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBBindPortInfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBBindPortInfoParam)
 			if err != nil {
 				return err
 			}
@@ -366,7 +366,7 @@ func proxyLBBindPortAddCmd() *cobra.Command {
 			return proxyLBBindPortAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBBindPortAddParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBBindPortAddParam)
 			if err != nil {
 				return err
 			}
@@ -412,7 +412,7 @@ func proxyLBBindPortUpdateCmd() *cobra.Command {
 			return proxyLBBindPortUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBBindPortUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBBindPortUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -459,7 +459,7 @@ func proxyLBBindPortDeleteCmd() *cobra.Command {
 			return proxyLBBindPortDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBBindPortDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBBindPortDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -502,7 +502,7 @@ func proxyLBResponseHeaderInfoCmd() *cobra.Command {
 			return proxyLBResponseHeaderInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBResponseHeaderInfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBResponseHeaderInfoParam)
 			if err != nil {
 				return err
 			}
@@ -544,7 +544,7 @@ func proxyLBResponseHeaderAddCmd() *cobra.Command {
 			return proxyLBResponseHeaderAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBResponseHeaderAddParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBResponseHeaderAddParam)
 			if err != nil {
 				return err
 			}
@@ -589,7 +589,7 @@ func proxyLBResponseHeaderUpdateCmd() *cobra.Command {
 			return proxyLBResponseHeaderUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBResponseHeaderUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBResponseHeaderUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -635,7 +635,7 @@ func proxyLBResponseHeaderDeleteCmd() *cobra.Command {
 			return proxyLBResponseHeaderDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBResponseHeaderDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBResponseHeaderDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -679,7 +679,7 @@ func proxyLBACMEInfoCmd() *cobra.Command {
 			return proxyLBACMEInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBACMEInfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBACMEInfoParam)
 			if err != nil {
 				return err
 			}
@@ -720,7 +720,7 @@ func proxyLBACMESettingCmd() *cobra.Command {
 			return proxyLBACMESettingParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBACMESettingParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBACMESettingParam)
 			if err != nil {
 				return err
 			}
@@ -765,7 +765,7 @@ func proxyLBACMERenewCmd() *cobra.Command {
 			return proxyLBACMERenewParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBACMERenewParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBACMERenewParam)
 			if err != nil {
 				return err
 			}
@@ -800,7 +800,7 @@ func proxyLBServerInfoCmd() *cobra.Command {
 			return proxyLBServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBServerInfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBServerInfoParam)
 			if err != nil {
 				return err
 			}
@@ -841,7 +841,7 @@ func proxyLBServerAddCmd() *cobra.Command {
 			return proxyLBServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBServerAddParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBServerAddParam)
 			if err != nil {
 				return err
 			}
@@ -886,7 +886,7 @@ func proxyLBServerUpdateCmd() *cobra.Command {
 			return proxyLBServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBServerUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBServerUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -932,7 +932,7 @@ func proxyLBServerDeleteCmd() *cobra.Command {
 			return proxyLBServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBServerDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBServerDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -975,7 +975,7 @@ func proxyLBCertificateInfoCmd() *cobra.Command {
 			return proxyLBCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBCertificateInfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBCertificateInfoParam)
 			if err != nil {
 				return err
 			}
@@ -1016,7 +1016,7 @@ func proxyLBCertificateAddCmd() *cobra.Command {
 			return proxyLBCertificateAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBCertificateAddParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBCertificateAddParam)
 			if err != nil {
 				return err
 			}
@@ -1061,7 +1061,7 @@ func proxyLBCertificateUpdateCmd() *cobra.Command {
 			return proxyLBCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBCertificateUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBCertificateUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -1106,7 +1106,7 @@ func proxyLBCertificateDeleteCmd() *cobra.Command {
 			return proxyLBCertificateDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBCertificateDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBCertificateDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -1148,7 +1148,7 @@ func proxyLBMonitorCmd() *cobra.Command {
 			return proxyLBMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), proxyLBMonitorParam)
+			ctx, err := newCLIContext(globalFlags(), args, proxyLBMonitorParam)
 			if err != nil {
 				return err
 			}

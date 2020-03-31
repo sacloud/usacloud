@@ -321,6 +321,11 @@ func (p *ListIPv4Param) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListIPv4Param) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // PtrAddIPv4Param is input parameters for the sacloud API
 type PtrAddIPv4Param struct {
 	Hostname          string
@@ -563,6 +568,11 @@ func (p *PtrAddIPv4Param) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PtrAddIPv4Param) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // PtrReadIPv4Param is input parameters for the sacloud API
 type PtrReadIPv4Param struct {
 	ParamTemplate     string
@@ -773,6 +783,11 @@ func (p *PtrReadIPv4Param) SetQueryFile(v string) {
 
 func (p *PtrReadIPv4Param) GetQueryFile() string {
 	return p.QueryFile
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PtrReadIPv4Param) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // PtrUpdateIPv4Param is input parameters for the sacloud API
@@ -1017,6 +1032,11 @@ func (p *PtrUpdateIPv4Param) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PtrUpdateIPv4Param) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // PtrDeleteIPv4Param is input parameters for the sacloud API
 type PtrDeleteIPv4Param struct {
 	Assumeyes         bool
@@ -1238,4 +1258,9 @@ func (p *PtrDeleteIPv4Param) SetQueryFile(v string) {
 
 func (p *PtrDeleteIPv4Param) GetQueryFile() string {
 	return p.QueryFile
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PtrDeleteIPv4Param) Changed(name string) bool {
+	return p.input.Changed(name)
 }

@@ -397,6 +397,11 @@ func (p *ListArchiveParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListArchiveParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateArchiveParam is input parameters for the sacloud API
 type CreateArchiveParam struct {
 	SourceDiskId      sacloud.ID
@@ -821,6 +826,11 @@ func (p *CreateArchiveParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateArchiveParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadArchiveParam is input parameters for the sacloud API
 type ReadArchiveParam struct {
 	Selector          []string
@@ -1061,6 +1071,11 @@ func (p *ReadArchiveParam) SetId(v sacloud.ID) {
 
 func (p *ReadArchiveParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadArchiveParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateArchiveParam is input parameters for the sacloud API
@@ -1392,6 +1407,11 @@ func (p *UpdateArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateArchiveParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteArchiveParam is input parameters for the sacloud API
 type DeleteArchiveParam struct {
 	Selector          []string
@@ -1643,6 +1663,11 @@ func (p *DeleteArchiveParam) SetId(v sacloud.ID) {
 
 func (p *DeleteArchiveParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteArchiveParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UploadArchiveParam is input parameters for the sacloud API
@@ -1917,6 +1942,11 @@ func (p *UploadArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UploadArchiveParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DownloadArchiveParam is input parameters for the sacloud API
 type DownloadArchiveParam struct {
 	FileDestination   string
@@ -2088,6 +2118,11 @@ func (p *DownloadArchiveParam) SetId(v sacloud.ID) {
 
 func (p *DownloadArchiveParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DownloadArchiveParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // FTPOpenArchiveParam is input parameters for the sacloud API
@@ -2343,6 +2378,11 @@ func (p *FTPOpenArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *FTPOpenArchiveParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // FTPCloseArchiveParam is input parameters for the sacloud API
 type FTPCloseArchiveParam struct {
 	Selector          []string
@@ -2505,6 +2545,11 @@ func (p *FTPCloseArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *FTPCloseArchiveParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // WaitForCopyArchiveParam is input parameters for the sacloud API
 type WaitForCopyArchiveParam struct {
 	Selector          []string
@@ -2654,4 +2699,9 @@ func (p *WaitForCopyArchiveParam) SetId(v sacloud.ID) {
 
 func (p *WaitForCopyArchiveParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *WaitForCopyArchiveParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

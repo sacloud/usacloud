@@ -340,6 +340,11 @@ func (p *ListInternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListInternetParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateInternetParam is input parameters for the sacloud API
 type CreateInternetParam struct {
 	NwMasklen         int
@@ -699,6 +704,11 @@ func (p *CreateInternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateInternetParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadInternetParam is input parameters for the sacloud API
 type ReadInternetParam struct {
 	Selector          []string
@@ -939,6 +949,11 @@ func (p *ReadInternetParam) SetId(v sacloud.ID) {
 
 func (p *ReadInternetParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadInternetParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateInternetParam is input parameters for the sacloud API
@@ -1289,6 +1304,11 @@ func (p *UpdateInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateInternetParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteInternetParam is input parameters for the sacloud API
 type DeleteInternetParam struct {
 	Selector          []string
@@ -1540,6 +1560,11 @@ func (p *DeleteInternetParam) SetId(v sacloud.ID) {
 
 func (p *DeleteInternetParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteInternetParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateBandwidthInternetParam is input parameters for the sacloud API
@@ -1822,6 +1847,11 @@ func (p *UpdateBandwidthInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateBandwidthInternetParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // SubnetInfoInternetParam is input parameters for the sacloud API
 type SubnetInfoInternetParam struct {
 	Selector          []string
@@ -2062,6 +2092,11 @@ func (p *SubnetInfoInternetParam) SetId(v sacloud.ID) {
 
 func (p *SubnetInfoInternetParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SubnetInfoInternetParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // SubnetAddInternetParam is input parameters for the sacloud API
@@ -2370,6 +2405,11 @@ func (p *SubnetAddInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SubnetAddInternetParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // SubnetDeleteInternetParam is input parameters for the sacloud API
 type SubnetDeleteInternetParam struct {
 	SubnetId          sacloud.ID
@@ -2549,6 +2589,11 @@ func (p *SubnetDeleteInternetParam) SetId(v sacloud.ID) {
 
 func (p *SubnetDeleteInternetParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SubnetDeleteInternetParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // SubnetUpdateInternetParam is input parameters for the sacloud API
@@ -2849,6 +2894,11 @@ func (p *SubnetUpdateInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *SubnetUpdateInternetParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // IPv6InfoInternetParam is input parameters for the sacloud API
 type IPv6InfoInternetParam struct {
 	Selector          []string
@@ -3089,6 +3139,11 @@ func (p *IPv6InfoInternetParam) SetId(v sacloud.ID) {
 
 func (p *IPv6InfoInternetParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *IPv6InfoInternetParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // IPv6EnableInternetParam is input parameters for the sacloud API
@@ -3344,6 +3399,11 @@ func (p *IPv6EnableInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *IPv6EnableInternetParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // IPv6DisableInternetParam is input parameters for the sacloud API
 type IPv6DisableInternetParam struct {
 	Selector          []string
@@ -3504,6 +3564,11 @@ func (p *IPv6DisableInternetParam) SetId(v sacloud.ID) {
 
 func (p *IPv6DisableInternetParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *IPv6DisableInternetParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // MonitorInternetParam is input parameters for the sacloud API
@@ -3804,4 +3869,9 @@ func (p *MonitorInternetParam) SetId(v sacloud.ID) {
 
 func (p *MonitorInternetParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorInternetParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

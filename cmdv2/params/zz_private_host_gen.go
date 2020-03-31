@@ -340,6 +340,11 @@ func (p *ListPrivateHostParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListPrivateHostParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreatePrivateHostParam is input parameters for the sacloud API
 type CreatePrivateHostParam struct {
 	Name              string
@@ -646,6 +651,11 @@ func (p *CreatePrivateHostParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreatePrivateHostParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadPrivateHostParam is input parameters for the sacloud API
 type ReadPrivateHostParam struct {
 	Selector          []string
@@ -886,6 +896,11 @@ func (p *ReadPrivateHostParam) SetId(v sacloud.ID) {
 
 func (p *ReadPrivateHostParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadPrivateHostParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdatePrivateHostParam is input parameters for the sacloud API
@@ -1217,6 +1232,11 @@ func (p *UpdatePrivateHostParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdatePrivateHostParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeletePrivateHostParam is input parameters for the sacloud API
 type DeletePrivateHostParam struct {
 	Selector          []string
@@ -1470,6 +1490,11 @@ func (p *DeletePrivateHostParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeletePrivateHostParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ServerInfoPrivateHostParam is input parameters for the sacloud API
 type ServerInfoPrivateHostParam struct {
 	Selector          []string
@@ -1710,6 +1735,11 @@ func (p *ServerInfoPrivateHostParam) SetId(v sacloud.ID) {
 
 func (p *ServerInfoPrivateHostParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerInfoPrivateHostParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ServerAddPrivateHostParam is input parameters for the sacloud API
@@ -1991,6 +2021,11 @@ func (p *ServerAddPrivateHostParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerAddPrivateHostParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ServerDeletePrivateHostParam is input parameters for the sacloud API
 type ServerDeletePrivateHostParam struct {
 	ServerId          sacloud.ID
@@ -2268,4 +2303,9 @@ func (p *ServerDeletePrivateHostParam) SetId(v sacloud.ID) {
 
 func (p *ServerDeletePrivateHostParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerDeletePrivateHostParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

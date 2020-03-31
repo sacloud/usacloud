@@ -103,7 +103,7 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 			return {{ .InputParameterVariable }}.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), {{ .InputParameterVariable }})
+			ctx, err := newCLIContext(globalFlags(), args, {{ .InputParameterVariable }})
 			if err != nil {
 				return err
 			}

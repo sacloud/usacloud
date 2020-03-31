@@ -47,7 +47,7 @@ func internetListCmd() *cobra.Command {
 			return internetListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), internetListParam)
+			ctx, err := newCLIContext(globalFlags(), args, internetListParam)
 			if err != nil {
 				return err
 			}
@@ -92,7 +92,7 @@ func internetCreateCmd() *cobra.Command {
 			return internetCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), internetCreateParam)
+			ctx, err := newCLIContext(globalFlags(), args, internetCreateParam)
 			if err != nil {
 				return err
 			}
@@ -138,7 +138,7 @@ func internetReadCmd() *cobra.Command {
 			return internetReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), internetReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, internetReadParam)
 			if err != nil {
 				return err
 			}
@@ -179,7 +179,7 @@ func internetUpdateCmd() *cobra.Command {
 			return internetUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), internetUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, internetUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -226,7 +226,7 @@ func internetDeleteCmd() *cobra.Command {
 			return internetDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), internetDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, internetDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -268,7 +268,7 @@ func internetUpdateBandwidthCmd() *cobra.Command {
 			return internetUpdateBandwidthParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), internetUpdateBandwidthParam)
+			ctx, err := newCLIContext(globalFlags(), args, internetUpdateBandwidthParam)
 			if err != nil {
 				return err
 			}
@@ -311,7 +311,7 @@ func internetSubnetInfoCmd() *cobra.Command {
 			return internetSubnetInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), internetSubnetInfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, internetSubnetInfoParam)
 			if err != nil {
 				return err
 			}
@@ -352,7 +352,7 @@ func internetSubnetAddCmd() *cobra.Command {
 			return internetSubnetAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), internetSubnetAddParam)
+			ctx, err := newCLIContext(globalFlags(), args, internetSubnetAddParam)
 			if err != nil {
 				return err
 			}
@@ -396,7 +396,7 @@ func internetSubnetDeleteCmd() *cobra.Command {
 			return internetSubnetDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), internetSubnetDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, internetSubnetDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -432,7 +432,7 @@ func internetSubnetUpdateCmd() *cobra.Command {
 			return internetSubnetUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), internetSubnetUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, internetSubnetUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -476,7 +476,7 @@ func internetIPv6InfoCmd() *cobra.Command {
 			return internetIPv6InfoParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), internetIPv6InfoParam)
+			ctx, err := newCLIContext(globalFlags(), args, internetIPv6InfoParam)
 			if err != nil {
 				return err
 			}
@@ -517,7 +517,7 @@ func internetIPv6EnableCmd() *cobra.Command {
 			return internetIPv6EnableParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), internetIPv6EnableParam)
+			ctx, err := newCLIContext(globalFlags(), args, internetIPv6EnableParam)
 			if err != nil {
 				return err
 			}
@@ -559,7 +559,7 @@ func internetIPv6DisableCmd() *cobra.Command {
 			return internetIPv6DisableParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), internetIPv6DisableParam)
+			ctx, err := newCLIContext(globalFlags(), args, internetIPv6DisableParam)
 			if err != nil {
 				return err
 			}
@@ -594,7 +594,7 @@ func internetMonitorCmd() *cobra.Command {
 			return internetMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), internetMonitorParam)
+			ctx, err := newCLIContext(globalFlags(), args, internetMonitorParam)
 			if err != nil {
 				return err
 			}

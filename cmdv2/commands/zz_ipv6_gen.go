@@ -47,7 +47,7 @@ func ipv6ListCmd() *cobra.Command {
 			return ipv6ListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), ipv6ListParam)
+			ctx, err := newCLIContext(globalFlags(), args, ipv6ListParam)
 			if err != nil {
 				return err
 			}
@@ -93,7 +93,7 @@ func ipv6PtrAddCmd() *cobra.Command {
 			return ipv6PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), ipv6PtrAddParam)
+			ctx, err := newCLIContext(globalFlags(), args, ipv6PtrAddParam)
 			if err != nil {
 				return err
 			}
@@ -134,7 +134,7 @@ func ipv6PtrReadCmd() *cobra.Command {
 			return ipv6PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), ipv6PtrReadParam)
+			ctx, err := newCLIContext(globalFlags(), args, ipv6PtrReadParam)
 			if err != nil {
 				return err
 			}
@@ -173,7 +173,7 @@ func ipv6PtrUpdateCmd() *cobra.Command {
 			return ipv6PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), ipv6PtrUpdateParam)
+			ctx, err := newCLIContext(globalFlags(), args, ipv6PtrUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -214,7 +214,7 @@ func ipv6PtrDeleteCmd() *cobra.Command {
 			return ipv6PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), ipv6PtrDeleteParam)
+			ctx, err := newCLIContext(globalFlags(), args, ipv6PtrDeleteParam)
 			if err != nil {
 				return err
 			}

@@ -321,6 +321,11 @@ func (p *ListBridgeParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListBridgeParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateBridgeParam is input parameters for the sacloud API
 type CreateBridgeParam struct {
 	Name              string
@@ -589,6 +594,11 @@ func (p *CreateBridgeParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateBridgeParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadBridgeParam is input parameters for the sacloud API
 type ReadBridgeParam struct {
 	ParamTemplate     string
@@ -818,6 +828,11 @@ func (p *ReadBridgeParam) SetId(v sacloud.ID) {
 
 func (p *ReadBridgeParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadBridgeParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateBridgeParam is input parameters for the sacloud API
@@ -1100,6 +1115,11 @@ func (p *UpdateBridgeParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateBridgeParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteBridgeParam is input parameters for the sacloud API
 type DeleteBridgeParam struct {
 	Assumeyes         bool
@@ -1340,4 +1360,9 @@ func (p *DeleteBridgeParam) SetId(v sacloud.ID) {
 
 func (p *DeleteBridgeParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteBridgeParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }

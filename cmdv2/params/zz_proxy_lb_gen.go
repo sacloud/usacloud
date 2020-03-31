@@ -340,6 +340,11 @@ func (p *ListProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ListProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CreateProxyLBParam is input parameters for the sacloud API
 type CreateProxyLBParam struct {
 	Plan                 int
@@ -800,6 +805,11 @@ func (p *CreateProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CreateProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ReadProxyLBParam is input parameters for the sacloud API
 type ReadProxyLBParam struct {
 	Selector          []string
@@ -1040,6 +1050,11 @@ func (p *ReadProxyLBParam) SetId(v sacloud.ID) {
 
 func (p *ReadProxyLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ReadProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // UpdateProxyLBParam is input parameters for the sacloud API
@@ -1492,6 +1507,11 @@ func (p *UpdateProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *UpdateProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // DeleteProxyLBParam is input parameters for the sacloud API
 type DeleteProxyLBParam struct {
 	Selector          []string
@@ -1743,6 +1763,11 @@ func (p *DeleteProxyLBParam) SetId(v sacloud.ID) {
 
 func (p *DeleteProxyLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *DeleteProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // PlanChangeProxyLBParam is input parameters for the sacloud API
@@ -2024,6 +2049,11 @@ func (p *PlanChangeProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *PlanChangeProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // BindPortInfoProxyLBParam is input parameters for the sacloud API
 type BindPortInfoProxyLBParam struct {
 	Selector          []string
@@ -2264,6 +2294,11 @@ func (p *BindPortInfoProxyLBParam) SetId(v sacloud.ID) {
 
 func (p *BindPortInfoProxyLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BindPortInfoProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // BindPortAddProxyLBParam is input parameters for the sacloud API
@@ -2591,6 +2626,11 @@ func (p *BindPortAddProxyLBParam) SetId(v sacloud.ID) {
 
 func (p *BindPortAddProxyLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BindPortAddProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // BindPortUpdateProxyLBParam is input parameters for the sacloud API
@@ -2925,6 +2965,11 @@ func (p *BindPortUpdateProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BindPortUpdateProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // BindPortDeleteProxyLBParam is input parameters for the sacloud API
 type BindPortDeleteProxyLBParam struct {
 	Index             int
@@ -3197,6 +3242,11 @@ func (p *BindPortDeleteProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *BindPortDeleteProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ResponseHeaderInfoProxyLBParam is input parameters for the sacloud API
 type ResponseHeaderInfoProxyLBParam struct {
 	PortIndex         int
@@ -3456,6 +3506,11 @@ func (p *ResponseHeaderInfoProxyLBParam) SetId(v sacloud.ID) {
 
 func (p *ResponseHeaderInfoProxyLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ResponseHeaderInfoProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ResponseHeaderAddProxyLBParam is input parameters for the sacloud API
@@ -3766,6 +3821,11 @@ func (p *ResponseHeaderAddProxyLBParam) SetId(v sacloud.ID) {
 
 func (p *ResponseHeaderAddProxyLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ResponseHeaderAddProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ResponseHeaderUpdateProxyLBParam is input parameters for the sacloud API
@@ -4081,6 +4141,11 @@ func (p *ResponseHeaderUpdateProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ResponseHeaderUpdateProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ResponseHeaderDeleteProxyLBParam is input parameters for the sacloud API
 type ResponseHeaderDeleteProxyLBParam struct {
 	Index             int
@@ -4372,6 +4437,11 @@ func (p *ResponseHeaderDeleteProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ResponseHeaderDeleteProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ACMEInfoProxyLBParam is input parameters for the sacloud API
 type ACMEInfoProxyLBParam struct {
 	Selector          []string
@@ -4612,6 +4682,11 @@ func (p *ACMEInfoProxyLBParam) SetId(v sacloud.ID) {
 
 func (p *ACMEInfoProxyLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ACMEInfoProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ACMESettingProxyLBParam is input parameters for the sacloud API
@@ -4900,6 +4975,11 @@ func (p *ACMESettingProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ACMESettingProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ACMERenewProxyLBParam is input parameters for the sacloud API
 type ACMERenewProxyLBParam struct {
 	Selector          []string
@@ -5060,6 +5140,11 @@ func (p *ACMERenewProxyLBParam) SetId(v sacloud.ID) {
 
 func (p *ACMERenewProxyLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ACMERenewProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ServerInfoProxyLBParam is input parameters for the sacloud API
@@ -5302,6 +5387,11 @@ func (p *ServerInfoProxyLBParam) SetId(v sacloud.ID) {
 
 func (p *ServerInfoProxyLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerInfoProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ServerAddProxyLBParam is input parameters for the sacloud API
@@ -5618,6 +5708,11 @@ func (p *ServerAddProxyLBParam) SetId(v sacloud.ID) {
 
 func (p *ServerAddProxyLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerAddProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // ServerUpdateProxyLBParam is input parameters for the sacloud API
@@ -5941,6 +6036,11 @@ func (p *ServerUpdateProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerUpdateProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // ServerDeleteProxyLBParam is input parameters for the sacloud API
 type ServerDeleteProxyLBParam struct {
 	Index             int
@@ -6213,6 +6313,11 @@ func (p *ServerDeleteProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *ServerDeleteProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CertificateInfoProxyLBParam is input parameters for the sacloud API
 type CertificateInfoProxyLBParam struct {
 	Selector          []string
@@ -6453,6 +6558,11 @@ func (p *CertificateInfoProxyLBParam) SetId(v sacloud.ID) {
 
 func (p *CertificateInfoProxyLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CertificateInfoProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // CertificateAddProxyLBParam is input parameters for the sacloud API
@@ -6757,6 +6867,11 @@ func (p *CertificateAddProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CertificateAddProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CertificateUpdateProxyLBParam is input parameters for the sacloud API
 type CertificateUpdateProxyLBParam struct {
 	ServerCertificate       string
@@ -7043,6 +7158,11 @@ func (p *CertificateUpdateProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CertificateUpdateProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
+}
+
 // CertificateDeleteProxyLBParam is input parameters for the sacloud API
 type CertificateDeleteProxyLBParam struct {
 	Selector          []string
@@ -7294,6 +7414,11 @@ func (p *CertificateDeleteProxyLBParam) SetId(v sacloud.ID) {
 
 func (p *CertificateDeleteProxyLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *CertificateDeleteProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
 
 // MonitorProxyLBParam is input parameters for the sacloud API
@@ -7594,4 +7719,9 @@ func (p *MonitorProxyLBParam) SetId(v sacloud.ID) {
 
 func (p *MonitorProxyLBParam) GetId() sacloud.ID {
 	return p.Id
+}
+
+// Changed usacloud v0系との互換性維持のための実装
+func (p *MonitorProxyLBParam) Changed(name string) bool {
+	return p.input.Changed(name)
 }
