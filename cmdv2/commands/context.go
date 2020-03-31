@@ -15,7 +15,7 @@
 package commands
 
 import (
-	goContext "context"
+	"context"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -38,11 +38,11 @@ type Context interface {
 	Output() output.Output
 	Client() sacloud.APICaller
 	Zone() string
-	goContext.Context
+	context.Context
 }
 
-type context struct {
-	parentCtx goContext.Context
+type cliContext struct {
+	parentCtx context.Context
 	option    *CLIOptions
 	output    output.Output
 
@@ -50,23 +50,23 @@ type context struct {
 	clientOnce sync.Once
 }
 
-func NewContext(ctx goContext.Context, option *CLIOptions, formatter interface{}) Context {
-	return &context{
+func newCLIContext(ctx context.Context, option *CLIOptions, formatter interface{}) Context {
+	return &cliContext{
 		parentCtx: ctx,
 		option:    option,
 		output:    getOutputWriter(formatter),
 	}
 }
 
-func (c *context) Option() *CLIOptions {
+func (c *cliContext) Option() *CLIOptions {
 	return c.option
 }
 
-func (c *context) Output() output.Output {
+func (c *cliContext) Output() output.Output {
 	return c.output
 }
 
-func (c *context) Client() sacloud.APICaller {
+func (c *cliContext) Client() sacloud.APICaller {
 	c.clientOnce.Do(func() {
 		o := c.Option()
 
@@ -155,23 +155,23 @@ func (c *context) Client() sacloud.APICaller {
 	return c.client
 }
 
-func (c *context) Zone() string {
+func (c *cliContext) Zone() string {
 	return c.Option().Zone
 }
 
-func (c *context) Deadline() (deadline time.Time, ok bool) {
+func (c *cliContext) Deadline() (deadline time.Time, ok bool) {
 	return c.parentCtx.Deadline()
 }
 
-func (c *context) Done() <-chan struct{} {
+func (c *cliContext) Done() <-chan struct{} {
 	return c.parentCtx.Done()
 }
 
-func (c *context) Err() error {
+func (c *cliContext) Err() error {
 	return c.parentCtx.Err()
 }
 
-func (c *context) Value(key interface{}) interface{} {
+func (c *cliContext) Value(key interface{}) interface{} {
 	return c.parentCtx.Value(key)
 }
 
