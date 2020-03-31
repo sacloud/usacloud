@@ -64,9 +64,9 @@ func (r *Resource) CLIVariableName() string {
 }
 
 func (r *Resource) CLISourceFileName() string {
-	return fmt.Sprintf("%s_gen.go", ToSnakeCaseName(r.Name))
+	return fmt.Sprintf("zz_%s_gen.go", ToSnakeCaseName(r.Name))
 }
 
 func (r *Resource) ParameterSourceFileName() string {
-	return fmt.Sprintf("%s_gen.go", ToSnakeCaseName(r.Name))
+	return fmt.Sprintf("zz_%s_gen.go", ToSnakeCaseName(r.Name))
 }
