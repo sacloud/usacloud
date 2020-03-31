@@ -61,12 +61,24 @@ var gslbListCmd = &cobra.Command{
 
 func gslbListCmdInit() {
 	fs := gslbListCmd.Flags()
+	fs.StringSliceVarP(&gslbListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &gslbListParam.Id), "id", "", "set filter by id(s)")
+	fs.StringSliceVarP(&gslbListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.IntVarP(&gslbListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&gslbListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&gslbListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&gslbListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
-	fs.StringSliceVarP(&gslbListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.StringVarP(&gslbListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&gslbListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&gslbListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&gslbListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&gslbListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&gslbListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&gslbListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&gslbListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&gslbListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&gslbListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&gslbListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&gslbListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var gslbServerInfoCmd = &cobra.Command{
@@ -83,6 +95,21 @@ var gslbServerInfoCmd = &cobra.Command{
 }
 
 func gslbServerInfoCmdInit() {
+	fs := gslbServerInfoCmd.Flags()
+	fs.StringSliceVarP(&gslbServerInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&gslbServerInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&gslbServerInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&gslbServerInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&gslbServerInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&gslbServerInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&gslbServerInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&gslbServerInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&gslbServerInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&gslbServerInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&gslbServerInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&gslbServerInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&gslbServerInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &gslbServerInfoParam.Id), "id", "", "Set target ID")
 }
 
 var gslbCreateCmd = &cobra.Command{
@@ -100,18 +127,31 @@ var gslbCreateCmd = &cobra.Command{
 
 func gslbCreateCmdInit() {
 	fs := gslbCreateCmd.Flags()
-	fs.StringSliceVarP(&gslbCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.StringVarP(&gslbCreateParam.Protocol, "protocol", "", "ping", "set healthcheck protocol[http/https/ping/tcp]")
-	fs.IntVarP(&gslbCreateParam.DelayLoop, "delay-loop", "", 10, "set delay-loop of healthcheck")
-	fs.BoolVarP(&gslbCreateParam.Weighted, "weighted", "", true, "enable weighted")
-	fs.StringVarP(&gslbCreateParam.SorryServer, "sorry-server", "", "", "set sorry-server hostname/ipaddress")
-	fs.StringVarP(&gslbCreateParam.Description, "description", "", "", "set resource description")
-	fs.VarP(newIDValue(0, &gslbCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.StringVarP(&gslbCreateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
 	fs.StringVarP(&gslbCreateParam.Path, "path", "", "/", "set path of http/https healthcheck request")
 	fs.IntVarP(&gslbCreateParam.ResponseCode, "response-code", "", 200, "set response-code of http/https healthcheck request")
 	fs.IntVarP(&gslbCreateParam.Port, "port", "", 0, "set port of tcp healthcheck")
+	fs.IntVarP(&gslbCreateParam.DelayLoop, "delay-loop", "", 10, "set delay-loop of healthcheck")
+	fs.BoolVarP(&gslbCreateParam.Weighted, "weighted", "", true, "enable weighted")
+	fs.StringVarP(&gslbCreateParam.SorryServer, "sorry-server", "", "", "set sorry-server hostname/ipaddress")
 	fs.StringVarP(&gslbCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&gslbCreateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&gslbCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &gslbCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&gslbCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&gslbCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&gslbCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&gslbCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&gslbCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&gslbCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&gslbCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&gslbCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&gslbCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&gslbCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&gslbCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&gslbCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&gslbCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var gslbServerAddCmd = &cobra.Command{
@@ -132,6 +172,21 @@ func gslbServerAddCmdInit() {
 	fs.StringVarP(&gslbServerAddParam.Ipaddress, "ipaddress", "", "", "set target ipaddress")
 	fs.BoolVarP(&gslbServerAddParam.Disabled, "disabled", "", false, "set disabled")
 	fs.IntVarP(&gslbServerAddParam.Weight, "weight", "", 0, "set weight")
+	fs.StringSliceVarP(&gslbServerAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&gslbServerAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&gslbServerAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&gslbServerAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&gslbServerAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&gslbServerAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&gslbServerAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&gslbServerAddParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&gslbServerAddParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&gslbServerAddParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&gslbServerAddParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&gslbServerAddParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&gslbServerAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&gslbServerAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &gslbServerAddParam.Id), "id", "", "Set target ID")
 }
 
 var gslbReadCmd = &cobra.Command{
@@ -148,6 +203,21 @@ var gslbReadCmd = &cobra.Command{
 }
 
 func gslbReadCmdInit() {
+	fs := gslbReadCmd.Flags()
+	fs.StringSliceVarP(&gslbReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&gslbReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&gslbReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&gslbReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&gslbReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&gslbReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&gslbReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&gslbReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&gslbReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&gslbReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&gslbReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&gslbReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&gslbReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &gslbReadParam.Id), "id", "", "Set target ID")
 }
 
 var gslbServerUpdateCmd = &cobra.Command{
@@ -169,6 +239,21 @@ func gslbServerUpdateCmdInit() {
 	fs.StringVarP(&gslbServerUpdateParam.Ipaddress, "ipaddress", "", "", "set target ipaddress")
 	fs.BoolVarP(&gslbServerUpdateParam.Disabled, "disabled", "", false, "set disabled")
 	fs.IntVarP(&gslbServerUpdateParam.Weight, "weight", "", 0, "set weight")
+	fs.StringSliceVarP(&gslbServerUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&gslbServerUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&gslbServerUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&gslbServerUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&gslbServerUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&gslbServerUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&gslbServerUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&gslbServerUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&gslbServerUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&gslbServerUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&gslbServerUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&gslbServerUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&gslbServerUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&gslbServerUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &gslbServerUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var gslbServerDeleteCmd = &cobra.Command{
@@ -187,6 +272,21 @@ var gslbServerDeleteCmd = &cobra.Command{
 func gslbServerDeleteCmdInit() {
 	fs := gslbServerDeleteCmd.Flags()
 	fs.IntVarP(&gslbServerDeleteParam.Index, "index", "", 0, "index of target server")
+	fs.StringSliceVarP(&gslbServerDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&gslbServerDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&gslbServerDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&gslbServerDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&gslbServerDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&gslbServerDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&gslbServerDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&gslbServerDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&gslbServerDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&gslbServerDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&gslbServerDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&gslbServerDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&gslbServerDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&gslbServerDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &gslbServerDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var gslbUpdateCmd = &cobra.Command{
@@ -204,18 +304,33 @@ var gslbUpdateCmd = &cobra.Command{
 
 func gslbUpdateCmdInit() {
 	fs := gslbUpdateCmd.Flags()
-	fs.IntVarP(&gslbUpdateParam.ResponseCode, "response-code", "", 0, "set response-code of http/https healthcheck request")
-	fs.IntVarP(&gslbUpdateParam.Port, "port", "", 0, "set port of tcp healthcheck")
-	fs.IntVarP(&gslbUpdateParam.DelayLoop, "delay-loop", "", 0, "set delay-loop of healthcheck")
-	fs.StringVarP(&gslbUpdateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&gslbUpdateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&gslbUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.StringVarP(&gslbUpdateParam.Protocol, "protocol", "", "", "set healthcheck protocol[http/https/ping/tcp]")
 	fs.StringVarP(&gslbUpdateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
 	fs.StringVarP(&gslbUpdateParam.Path, "path", "", "", "set path of http/https healthcheck request")
+	fs.IntVarP(&gslbUpdateParam.ResponseCode, "response-code", "", 0, "set response-code of http/https healthcheck request")
+	fs.IntVarP(&gslbUpdateParam.Port, "port", "", 0, "set port of tcp healthcheck")
+	fs.IntVarP(&gslbUpdateParam.DelayLoop, "delay-loop", "", 0, "set delay-loop of healthcheck")
 	fs.BoolVarP(&gslbUpdateParam.Weighted, "weighted", "", false, "enable weighted")
 	fs.StringVarP(&gslbUpdateParam.SorryServer, "sorry-server", "", "", "set sorry-server hostname/ipaddress")
+	fs.StringSliceVarP(&gslbUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&gslbUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&gslbUpdateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&gslbUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &gslbUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&gslbUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&gslbUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&gslbUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&gslbUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&gslbUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&gslbUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&gslbUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&gslbUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&gslbUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&gslbUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&gslbUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&gslbUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&gslbUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &gslbUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var gslbDeleteCmd = &cobra.Command{
@@ -232,6 +347,22 @@ var gslbDeleteCmd = &cobra.Command{
 }
 
 func gslbDeleteCmdInit() {
+	fs := gslbDeleteCmd.Flags()
+	fs.StringSliceVarP(&gslbDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&gslbDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&gslbDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&gslbDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&gslbDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&gslbDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&gslbDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&gslbDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&gslbDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&gslbDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&gslbDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&gslbDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&gslbDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&gslbDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &gslbDeleteParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

@@ -59,6 +59,18 @@ func productInternetListCmdInit() {
 	fs.IntVarP(&productInternetListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&productInternetListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&productInternetListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&productInternetListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&productInternetListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&productInternetListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&productInternetListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&productInternetListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&productInternetListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&productInternetListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&productInternetListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&productInternetListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&productInternetListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&productInternetListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&productInternetListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var productInternetReadCmd = &cobra.Command{
@@ -76,6 +88,19 @@ var productInternetReadCmd = &cobra.Command{
 
 func productInternetReadCmdInit() {
 	fs := productInternetReadCmd.Flags()
+	fs.BoolVarP(&productInternetReadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&productInternetReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&productInternetReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&productInternetReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&productInternetReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&productInternetReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&productInternetReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&productInternetReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&productInternetReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&productInternetReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&productInternetReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&productInternetReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&productInternetReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &productInternetReadParam.Id), "id", "", "set resource ID")
 }
 

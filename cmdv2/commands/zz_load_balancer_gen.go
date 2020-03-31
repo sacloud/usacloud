@@ -74,10 +74,22 @@ func loadBalancerListCmdInit() {
 	fs := loadBalancerListCmd.Flags()
 	fs.StringSliceVarP(&loadBalancerListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &loadBalancerListParam.Id), "id", "", "set filter by id(s)")
+	fs.StringSliceVarP(&loadBalancerListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.IntVarP(&loadBalancerListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&loadBalancerListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&loadBalancerListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&loadBalancerListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.StringVarP(&loadBalancerListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&loadBalancerListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&loadBalancerListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&loadBalancerListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&loadBalancerListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&loadBalancerListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&loadBalancerListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&loadBalancerListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var loadBalancerCreateCmd = &cobra.Command{
@@ -97,16 +109,29 @@ func loadBalancerCreateCmdInit() {
 	fs := loadBalancerCreateCmd.Flags()
 	fs.VarP(newIDValue(0, &loadBalancerCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.IntVarP(&loadBalancerCreateParam.Vrid, "vrid", "", 1, "set VRID")
+	fs.BoolVarP(&loadBalancerCreateParam.HighAvailability, "high-availability", "", false, "use HA(High-Availability) mode")
 	fs.StringVarP(&loadBalancerCreateParam.Plan, "plan", "", "standard", "set plan[standard/highspec]")
+	fs.StringVarP(&loadBalancerCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
 	fs.StringVarP(&loadBalancerCreateParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
 	fs.IntVarP(&loadBalancerCreateParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
-	fs.StringVarP(&loadBalancerCreateParam.Description, "description", "", "", "set resource description")
-	fs.VarP(newIDValue(0, &loadBalancerCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.BoolVarP(&loadBalancerCreateParam.HighAvailability, "high-availability", "", false, "use HA(High-Availability) mode")
-	fs.StringVarP(&loadBalancerCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
 	fs.StringVarP(&loadBalancerCreateParam.DefaultRoute, "default-route", "", "", "set default route")
 	fs.StringVarP(&loadBalancerCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&loadBalancerCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&loadBalancerCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &loadBalancerCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&loadBalancerCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&loadBalancerCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&loadBalancerCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&loadBalancerCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&loadBalancerCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&loadBalancerCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&loadBalancerCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&loadBalancerCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&loadBalancerCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var loadBalancerReadCmd = &cobra.Command{
@@ -123,6 +148,21 @@ var loadBalancerReadCmd = &cobra.Command{
 }
 
 func loadBalancerReadCmdInit() {
+	fs := loadBalancerReadCmd.Flags()
+	fs.StringSliceVarP(&loadBalancerReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&loadBalancerReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&loadBalancerReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&loadBalancerReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&loadBalancerReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&loadBalancerReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&loadBalancerReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&loadBalancerReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&loadBalancerReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &loadBalancerReadParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerUpdateCmd = &cobra.Command{
@@ -140,10 +180,25 @@ var loadBalancerUpdateCmd = &cobra.Command{
 
 func loadBalancerUpdateCmdInit() {
 	fs := loadBalancerUpdateCmd.Flags()
-	fs.VarP(newIDValue(0, &loadBalancerUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringSliceVarP(&loadBalancerUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&loadBalancerUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&loadBalancerUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&loadBalancerUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &loadBalancerUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&loadBalancerUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&loadBalancerUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&loadBalancerUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&loadBalancerUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&loadBalancerUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&loadBalancerUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&loadBalancerUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&loadBalancerUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&loadBalancerUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &loadBalancerUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerDeleteCmd = &cobra.Command{
@@ -162,6 +217,21 @@ var loadBalancerDeleteCmd = &cobra.Command{
 func loadBalancerDeleteCmdInit() {
 	fs := loadBalancerDeleteCmd.Flags()
 	fs.BoolVarP(&loadBalancerDeleteParam.Force, "force", "f", false, "forced-shutdown flag if load-balancer is running")
+	fs.StringSliceVarP(&loadBalancerDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&loadBalancerDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&loadBalancerDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&loadBalancerDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&loadBalancerDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&loadBalancerDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&loadBalancerDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&loadBalancerDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&loadBalancerDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&loadBalancerDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &loadBalancerDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerBootCmd = &cobra.Command{
@@ -178,6 +248,15 @@ var loadBalancerBootCmd = &cobra.Command{
 }
 
 func loadBalancerBootCmdInit() {
+	fs := loadBalancerBootCmd.Flags()
+	fs.StringSliceVarP(&loadBalancerBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&loadBalancerBootParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&loadBalancerBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerBootParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &loadBalancerBootParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerShutdownCmd = &cobra.Command{
@@ -194,6 +273,15 @@ var loadBalancerShutdownCmd = &cobra.Command{
 }
 
 func loadBalancerShutdownCmdInit() {
+	fs := loadBalancerShutdownCmd.Flags()
+	fs.StringSliceVarP(&loadBalancerShutdownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&loadBalancerShutdownParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&loadBalancerShutdownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerShutdownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerShutdownParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &loadBalancerShutdownParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerShutdownForceCmd = &cobra.Command{
@@ -210,6 +298,15 @@ var loadBalancerShutdownForceCmd = &cobra.Command{
 }
 
 func loadBalancerShutdownForceCmdInit() {
+	fs := loadBalancerShutdownForceCmd.Flags()
+	fs.StringSliceVarP(&loadBalancerShutdownForceParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&loadBalancerShutdownForceParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&loadBalancerShutdownForceParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerShutdownForceParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerShutdownForceParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &loadBalancerShutdownForceParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerResetCmd = &cobra.Command{
@@ -226,6 +323,15 @@ var loadBalancerResetCmd = &cobra.Command{
 }
 
 func loadBalancerResetCmdInit() {
+	fs := loadBalancerResetCmd.Flags()
+	fs.StringSliceVarP(&loadBalancerResetParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&loadBalancerResetParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&loadBalancerResetParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerResetParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerResetParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &loadBalancerResetParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerWaitForBootCmd = &cobra.Command{
@@ -242,6 +348,14 @@ var loadBalancerWaitForBootCmd = &cobra.Command{
 }
 
 func loadBalancerWaitForBootCmdInit() {
+	fs := loadBalancerWaitForBootCmd.Flags()
+	fs.StringSliceVarP(&loadBalancerWaitForBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&loadBalancerWaitForBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerWaitForBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerWaitForBootParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &loadBalancerWaitForBootParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerWaitForDownCmd = &cobra.Command{
@@ -258,6 +372,14 @@ var loadBalancerWaitForDownCmd = &cobra.Command{
 }
 
 func loadBalancerWaitForDownCmdInit() {
+	fs := loadBalancerWaitForDownCmd.Flags()
+	fs.StringSliceVarP(&loadBalancerWaitForDownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&loadBalancerWaitForDownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerWaitForDownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerWaitForDownParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &loadBalancerWaitForDownParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerVipInfoCmd = &cobra.Command{
@@ -274,6 +396,21 @@ var loadBalancerVipInfoCmd = &cobra.Command{
 }
 
 func loadBalancerVipInfoCmdInit() {
+	fs := loadBalancerVipInfoCmd.Flags()
+	fs.StringSliceVarP(&loadBalancerVipInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&loadBalancerVipInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerVipInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerVipInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerVipInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerVipInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&loadBalancerVipInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&loadBalancerVipInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&loadBalancerVipInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&loadBalancerVipInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&loadBalancerVipInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&loadBalancerVipInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&loadBalancerVipInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &loadBalancerVipInfoParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerVipAddCmd = &cobra.Command{
@@ -291,11 +428,19 @@ var loadBalancerVipAddCmd = &cobra.Command{
 
 func loadBalancerVipAddCmdInit() {
 	fs := loadBalancerVipAddCmd.Flags()
+	fs.StringVarP(&loadBalancerVipAddParam.Vip, "vip", "", "", "set VirtualIPAddress")
+	fs.IntVarP(&loadBalancerVipAddParam.Port, "port", "", 0, "set port")
 	fs.IntVarP(&loadBalancerVipAddParam.DelayLoop, "delay-loop", "", 10, "set delay-loop")
 	fs.StringVarP(&loadBalancerVipAddParam.SorryServer, "sorry-server", "", "", "set IPAddress of sorry-server")
 	fs.StringVarP(&loadBalancerVipAddParam.Description, "description", "", "", "set Description of VIP")
-	fs.StringVarP(&loadBalancerVipAddParam.Vip, "vip", "", "", "set VirtualIPAddress")
-	fs.IntVarP(&loadBalancerVipAddParam.Port, "port", "", 0, "set port")
+	fs.StringSliceVarP(&loadBalancerVipAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&loadBalancerVipAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&loadBalancerVipAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerVipAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerVipAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerVipAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerVipAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &loadBalancerVipAddParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerVipUpdateCmd = &cobra.Command{
@@ -319,6 +464,14 @@ func loadBalancerVipUpdateCmdInit() {
 	fs.IntVarP(&loadBalancerVipUpdateParam.DelayLoop, "delay-loop", "", 10, "set delay-loop")
 	fs.StringVarP(&loadBalancerVipUpdateParam.SorryServer, "sorry-server", "", "", "set IPAddress of sorry-server")
 	fs.StringVarP(&loadBalancerVipUpdateParam.Description, "description", "", "", "set Description of VIP")
+	fs.StringSliceVarP(&loadBalancerVipUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&loadBalancerVipUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&loadBalancerVipUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerVipUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerVipUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerVipUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerVipUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &loadBalancerVipUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerVipDeleteCmd = &cobra.Command{
@@ -337,6 +490,14 @@ var loadBalancerVipDeleteCmd = &cobra.Command{
 func loadBalancerVipDeleteCmdInit() {
 	fs := loadBalancerVipDeleteCmd.Flags()
 	fs.IntVarP(&loadBalancerVipDeleteParam.Index, "index", "", 0, "index of target VIP")
+	fs.StringSliceVarP(&loadBalancerVipDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&loadBalancerVipDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&loadBalancerVipDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerVipDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerVipDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerVipDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerVipDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &loadBalancerVipDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerServerInfoCmd = &cobra.Command{
@@ -357,6 +518,20 @@ func loadBalancerServerInfoCmdInit() {
 	fs.IntVarP(&loadBalancerServerInfoParam.VipIndex, "vip-index", "", 0, "index of target VIP")
 	fs.StringVarP(&loadBalancerServerInfoParam.Vip, "vip", "", "", "set VirtualIPAddress")
 	fs.IntVarP(&loadBalancerServerInfoParam.Port, "port", "", 0, "set port")
+	fs.StringSliceVarP(&loadBalancerServerInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&loadBalancerServerInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerServerInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerServerInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerServerInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerServerInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&loadBalancerServerInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&loadBalancerServerInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&loadBalancerServerInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&loadBalancerServerInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&loadBalancerServerInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&loadBalancerServerInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&loadBalancerServerInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &loadBalancerServerInfoParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerServerAddCmd = &cobra.Command{
@@ -374,14 +549,22 @@ var loadBalancerServerAddCmd = &cobra.Command{
 
 func loadBalancerServerAddCmdInit() {
 	fs := loadBalancerServerAddCmd.Flags()
-	fs.IntVarP(&loadBalancerServerAddParam.ResponseCode, "response-code", "", 0, "set expect response-code of http/https health check request")
-	fs.BoolVarP(&loadBalancerServerAddParam.Disabled, "disabled", "", false, "set disable")
 	fs.IntVarP(&loadBalancerServerAddParam.VipIndex, "vip-index", "", 0, "index of target VIP")
 	fs.StringVarP(&loadBalancerServerAddParam.Vip, "vip", "", "", "set VirtualIPAddress")
 	fs.IntVarP(&loadBalancerServerAddParam.Port, "port", "", 0, "set port")
 	fs.StringVarP(&loadBalancerServerAddParam.Ipaddress, "ipaddress", "", "", "set real server IPAddress")
 	fs.StringVarP(&loadBalancerServerAddParam.Protocol, "protocol", "", "ping", "set health check protocol[http/https/ping/tcp]")
 	fs.StringVarP(&loadBalancerServerAddParam.Path, "path", "", "", "set path of http/https health check request")
+	fs.IntVarP(&loadBalancerServerAddParam.ResponseCode, "response-code", "", 0, "set expect response-code of http/https health check request")
+	fs.BoolVarP(&loadBalancerServerAddParam.Disabled, "disabled", "", false, "set disable")
+	fs.StringSliceVarP(&loadBalancerServerAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&loadBalancerServerAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&loadBalancerServerAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerServerAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerServerAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerServerAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerServerAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &loadBalancerServerAddParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerServerUpdateCmd = &cobra.Command{
@@ -399,14 +582,22 @@ var loadBalancerServerUpdateCmd = &cobra.Command{
 
 func loadBalancerServerUpdateCmdInit() {
 	fs := loadBalancerServerUpdateCmd.Flags()
-	fs.StringVarP(&loadBalancerServerUpdateParam.Path, "path", "", "", "set path of http/https health check request")
-	fs.IntVarP(&loadBalancerServerUpdateParam.ResponseCode, "response-code", "", 0, "set expect response-code of http/https health check request")
-	fs.BoolVarP(&loadBalancerServerUpdateParam.Disabled, "disabled", "", false, "set enable/disable")
 	fs.IntVarP(&loadBalancerServerUpdateParam.VipIndex, "vip-index", "", 0, "index of target VIP")
 	fs.StringVarP(&loadBalancerServerUpdateParam.Vip, "vip", "", "", "set VirtualIPAddress")
 	fs.IntVarP(&loadBalancerServerUpdateParam.Port, "port", "", 0, "set port")
 	fs.StringVarP(&loadBalancerServerUpdateParam.Ipaddress, "ipaddress", "", "", "set real server IPAddress")
 	fs.StringVarP(&loadBalancerServerUpdateParam.Protocol, "protocol", "", "", "set health check protocol[http/https/ping/tcp]")
+	fs.StringVarP(&loadBalancerServerUpdateParam.Path, "path", "", "", "set path of http/https health check request")
+	fs.IntVarP(&loadBalancerServerUpdateParam.ResponseCode, "response-code", "", 0, "set expect response-code of http/https health check request")
+	fs.BoolVarP(&loadBalancerServerUpdateParam.Disabled, "disabled", "", false, "set enable/disable")
+	fs.StringSliceVarP(&loadBalancerServerUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&loadBalancerServerUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&loadBalancerServerUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerServerUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerServerUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerServerUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerServerUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &loadBalancerServerUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerServerDeleteCmd = &cobra.Command{
@@ -428,6 +619,14 @@ func loadBalancerServerDeleteCmdInit() {
 	fs.StringVarP(&loadBalancerServerDeleteParam.Vip, "vip", "", "", "set VirtualIPAddress")
 	fs.IntVarP(&loadBalancerServerDeleteParam.Port, "port", "", 0, "set port")
 	fs.StringVarP(&loadBalancerServerDeleteParam.Ipaddress, "ipaddress", "", "", "set real server IPAddress")
+	fs.StringSliceVarP(&loadBalancerServerDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&loadBalancerServerDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&loadBalancerServerDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerServerDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerServerDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerServerDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerServerDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &loadBalancerServerDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var loadBalancerMonitorCmd = &cobra.Command{
@@ -448,6 +647,20 @@ func loadBalancerMonitorCmdInit() {
 	fs.StringVarP(&loadBalancerMonitorParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&loadBalancerMonitorParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&loadBalancerMonitorParam.KeyFormat, "key-format", "", "sakuracloud.loadbalancer.{{.ID}}.nic", "set monitoring value key-format")
+	fs.StringSliceVarP(&loadBalancerMonitorParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&loadBalancerMonitorParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&loadBalancerMonitorParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&loadBalancerMonitorParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&loadBalancerMonitorParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&loadBalancerMonitorParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&loadBalancerMonitorParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&loadBalancerMonitorParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&loadBalancerMonitorParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&loadBalancerMonitorParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&loadBalancerMonitorParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&loadBalancerMonitorParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&loadBalancerMonitorParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &loadBalancerMonitorParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

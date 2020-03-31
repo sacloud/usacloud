@@ -29,12 +29,24 @@ import (
 
 // ListNFSParam is input parameters for the sacloud API
 type ListNFSParam struct {
-	Tags []string
-	Name []string
-	Id   []sacloud.ID
-	From int
-	Max  int
-	Sort []string
+	Name              []string
+	Id                []sacloud.ID
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -59,14 +71,14 @@ func (p *ListNFSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListNFSParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
@@ -77,19 +89,47 @@ func (p *ListNFSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
 func (p *ListNFSParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["NFS"].Commands["list"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
@@ -118,6 +158,33 @@ func (p *ListNFSParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["NFS"].Commands["list"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -145,13 +212,6 @@ func (p *ListNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListNFSParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *ListNFSParam) GetTags() []string {
-	return p.Tags
-}
 func (p *ListNFSParam) SetName(v []string) {
 	p.Name = v
 }
@@ -165,6 +225,13 @@ func (p *ListNFSParam) SetId(v []sacloud.ID) {
 
 func (p *ListNFSParam) GetId() []sacloud.ID {
 	return p.Id
+}
+func (p *ListNFSParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *ListNFSParam) GetTags() []string {
+	return p.Tags
 }
 func (p *ListNFSParam) SetFrom(v int) {
 	p.From = v
@@ -187,19 +254,116 @@ func (p *ListNFSParam) SetSort(v []string) {
 func (p *ListNFSParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListNFSParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListNFSParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListNFSParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListNFSParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListNFSParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListNFSParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListNFSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListNFSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListNFSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListNFSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListNFSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListNFSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListNFSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListNFSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListNFSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListNFSParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListNFSParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListNFSParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListNFSParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListNFSParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListNFSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListNFSParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateNFSParam is input parameters for the sacloud API
 type CreateNFSParam struct {
-	Plan         string
-	DefaultRoute string
-	Name         string
-	NwMaskLen    int
-	Description  string
-	Tags         []string
-	IconId       sacloud.ID
-	SwitchId     sacloud.ID
-	Size         int
-	Ipaddress    string
+	SwitchId          sacloud.ID
+	Plan              string
+	Size              int
+	Ipaddress         string
+	NwMaskLen         int
+	DefaultRoute      string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -225,17 +389,26 @@ func (p *CreateNFSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateNFSParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.SwitchId) {
+		p.SwitchId = sacloud.ID(0)
+	}
 	if utils.IsEmpty(p.Plan) {
 		p.Plan = ""
+	}
+	if utils.IsEmpty(p.Size) {
+		p.Size = 0
+	}
+	if utils.IsEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
+	if utils.IsEmpty(p.NwMaskLen) {
+		p.NwMaskLen = 0
 	}
 	if utils.IsEmpty(p.DefaultRoute) {
 		p.DefaultRoute = ""
 	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
-	}
-	if utils.IsEmpty(p.NwMaskLen) {
-		p.NwMaskLen = 0
 	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
@@ -246,97 +419,50 @@ func (p *CreateNFSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.SwitchId) {
-		p.SwitchId = sacloud.ID(0)
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.Size) {
-		p.Size = 0
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Ipaddress) {
-		p.Ipaddress = ""
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
 
 func (p *CreateNFSParam) validate() error {
 	var errors []error
-
-	{
-		validator := validateRequired
-		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["NFS"].Commands["create"].Params["plan"].ValidateFunc
-		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["NFS"].Commands["create"].Params["default-route"].ValidateFunc
-		errs := validator("--default-route", p.DefaultRoute)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["NFS"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--nw-mask-len", p.NwMaskLen)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["NFS"].Commands["create"].Params["nw-mask-len"].ValidateFunc
-		errs := validator("--nw-mask-len", p.NwMaskLen)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["NFS"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["NFS"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["NFS"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -348,6 +474,21 @@ func (p *CreateNFSParam) validate() error {
 	{
 		validator := define.Resources["NFS"].Commands["create"].Params["switch-id"].ValidateFunc
 		errs := validator("--switch-id", p.SwitchId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--plan", p.Plan)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["NFS"].Commands["create"].Params["plan"].ValidateFunc
+		errs := validator("--plan", p.Plan)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -383,6 +524,87 @@ func (p *CreateNFSParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateRequired
+		errs := validator("--nw-mask-len", p.NwMaskLen)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["NFS"].Commands["create"].Params["nw-mask-len"].ValidateFunc
+		errs := validator("--nw-mask-len", p.NwMaskLen)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["NFS"].Commands["create"].Params["default-route"].ValidateFunc
+		errs := validator("--default-route", p.DefaultRoute)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["NFS"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["NFS"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["NFS"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["NFS"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -410,12 +632,40 @@ func (p *CreateNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *CreateNFSParam) SetSwitchId(v sacloud.ID) {
+	p.SwitchId = v
+}
+
+func (p *CreateNFSParam) GetSwitchId() sacloud.ID {
+	return p.SwitchId
+}
 func (p *CreateNFSParam) SetPlan(v string) {
 	p.Plan = v
 }
 
 func (p *CreateNFSParam) GetPlan() string {
 	return p.Plan
+}
+func (p *CreateNFSParam) SetSize(v int) {
+	p.Size = v
+}
+
+func (p *CreateNFSParam) GetSize() int {
+	return p.Size
+}
+func (p *CreateNFSParam) SetIpaddress(v string) {
+	p.Ipaddress = v
+}
+
+func (p *CreateNFSParam) GetIpaddress() string {
+	return p.Ipaddress
+}
+func (p *CreateNFSParam) SetNwMaskLen(v int) {
+	p.NwMaskLen = v
+}
+
+func (p *CreateNFSParam) GetNwMaskLen() int {
+	return p.NwMaskLen
 }
 func (p *CreateNFSParam) SetDefaultRoute(v string) {
 	p.DefaultRoute = v
@@ -430,13 +680,6 @@ func (p *CreateNFSParam) SetName(v string) {
 
 func (p *CreateNFSParam) GetName() string {
 	return p.Name
-}
-func (p *CreateNFSParam) SetNwMaskLen(v int) {
-	p.NwMaskLen = v
-}
-
-func (p *CreateNFSParam) GetNwMaskLen() int {
-	return p.NwMaskLen
 }
 func (p *CreateNFSParam) SetDescription(v string) {
 	p.Description = v
@@ -459,30 +702,115 @@ func (p *CreateNFSParam) SetIconId(v sacloud.ID) {
 func (p *CreateNFSParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *CreateNFSParam) SetSwitchId(v sacloud.ID) {
-	p.SwitchId = v
+func (p *CreateNFSParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
 }
 
-func (p *CreateNFSParam) GetSwitchId() sacloud.ID {
-	return p.SwitchId
+func (p *CreateNFSParam) GetAssumeyes() bool {
+	return p.Assumeyes
 }
-func (p *CreateNFSParam) SetSize(v int) {
-	p.Size = v
-}
-
-func (p *CreateNFSParam) GetSize() int {
-	return p.Size
-}
-func (p *CreateNFSParam) SetIpaddress(v string) {
-	p.Ipaddress = v
+func (p *CreateNFSParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
 }
 
-func (p *CreateNFSParam) GetIpaddress() string {
-	return p.Ipaddress
+func (p *CreateNFSParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateNFSParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateNFSParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateNFSParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CreateNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateNFSParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateNFSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateNFSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CreateNFSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateNFSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateNFSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateNFSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateNFSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateNFSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateNFSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateNFSParam) GetFormat() string {
+	return p.Format
+}
+func (p *CreateNFSParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CreateNFSParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CreateNFSParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateNFSParam) GetQuery() string {
+	return p.Query
+}
+func (p *CreateNFSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateNFSParam) GetQueryFile() string {
+	return p.QueryFile
 }
 
 // ReadNFSParam is input parameters for the sacloud API
 type ReadNFSParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -506,12 +834,81 @@ func (p *ReadNFSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadNFSParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ReadNFSParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -539,12 +936,126 @@ func (p *ReadNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadNFSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadNFSParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ReadNFSParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadNFSParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadNFSParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadNFSParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadNFSParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadNFSParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadNFSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadNFSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadNFSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadNFSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadNFSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadNFSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadNFSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadNFSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadNFSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadNFSParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadNFSParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadNFSParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadNFSParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadNFSParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadNFSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadNFSParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ReadNFSParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReadNFSParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UpdateNFSParam is input parameters for the sacloud API
 type UpdateNFSParam struct {
-	IconId      sacloud.ID
-	Name        string
-	Description string
-	Tags        []string
+	Selector          []string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -569,8 +1080,8 @@ func (p *UpdateNFSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateNFSParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
@@ -581,19 +1092,56 @@ func (p *UpdateNFSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *UpdateNFSParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["NFS"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["NFS"].Commands["update"].Params["name"].ValidateFunc
@@ -619,6 +1167,41 @@ func (p *UpdateNFSParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["NFS"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -646,12 +1229,12 @@ func (p *UpdateNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateNFSParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
+func (p *UpdateNFSParam) SetSelector(v []string) {
+	p.Selector = v
 }
 
-func (p *UpdateNFSParam) GetIconId() sacloud.ID {
-	return p.IconId
+func (p *UpdateNFSParam) GetSelector() []string {
+	return p.Selector
 }
 func (p *UpdateNFSParam) SetName(v string) {
 	p.Name = v
@@ -674,10 +1257,130 @@ func (p *UpdateNFSParam) SetTags(v []string) {
 func (p *UpdateNFSParam) GetTags() []string {
 	return p.Tags
 }
+func (p *UpdateNFSParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *UpdateNFSParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+func (p *UpdateNFSParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *UpdateNFSParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UpdateNFSParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateNFSParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateNFSParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateNFSParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateNFSParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UpdateNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateNFSParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateNFSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateNFSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UpdateNFSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateNFSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateNFSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateNFSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateNFSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateNFSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateNFSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateNFSParam) GetFormat() string {
+	return p.Format
+}
+func (p *UpdateNFSParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UpdateNFSParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UpdateNFSParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateNFSParam) GetQuery() string {
+	return p.Query
+}
+func (p *UpdateNFSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateNFSParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UpdateNFSParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UpdateNFSParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DeleteNFSParam is input parameters for the sacloud API
 type DeleteNFSParam struct {
-	Force bool
+	Force             bool
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -705,12 +1408,84 @@ func (p *DeleteNFSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Force) {
 		p.Force = false
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DeleteNFSParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -745,9 +1520,123 @@ func (p *DeleteNFSParam) SetForce(v bool) {
 func (p *DeleteNFSParam) GetForce() bool {
 	return p.Force
 }
+func (p *DeleteNFSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteNFSParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DeleteNFSParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DeleteNFSParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DeleteNFSParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteNFSParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteNFSParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteNFSParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteNFSParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DeleteNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteNFSParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteNFSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteNFSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DeleteNFSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteNFSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteNFSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteNFSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteNFSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteNFSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteNFSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteNFSParam) GetFormat() string {
+	return p.Format
+}
+func (p *DeleteNFSParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DeleteNFSParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DeleteNFSParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteNFSParam) GetQuery() string {
+	return p.Query
+}
+func (p *DeleteNFSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteNFSParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *DeleteNFSParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DeleteNFSParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // BootNFSParam is input parameters for the sacloud API
 type BootNFSParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -771,11 +1660,43 @@ func (p *BootNFSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *BootNFSParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *BootNFSParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -804,8 +1725,74 @@ func (p *BootNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *BootNFSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *BootNFSParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *BootNFSParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *BootNFSParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *BootNFSParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BootNFSParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BootNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BootNFSParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BootNFSParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BootNFSParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BootNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BootNFSParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BootNFSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BootNFSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BootNFSParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *BootNFSParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // ShutdownNFSParam is input parameters for the sacloud API
 type ShutdownNFSParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -829,11 +1816,43 @@ func (p *ShutdownNFSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ShutdownNFSParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ShutdownNFSParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -862,8 +1881,74 @@ func (p *ShutdownNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ShutdownNFSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ShutdownNFSParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ShutdownNFSParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ShutdownNFSParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ShutdownNFSParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShutdownNFSParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShutdownNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownNFSParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ShutdownNFSParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShutdownNFSParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ShutdownNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownNFSParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ShutdownNFSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShutdownNFSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ShutdownNFSParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ShutdownNFSParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // ShutdownForceNFSParam is input parameters for the sacloud API
 type ShutdownForceNFSParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -887,11 +1972,43 @@ func (p *ShutdownForceNFSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ShutdownForceNFSParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ShutdownForceNFSParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -920,8 +2037,74 @@ func (p *ShutdownForceNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ShutdownForceNFSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ShutdownForceNFSParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ShutdownForceNFSParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ShutdownForceNFSParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ShutdownForceNFSParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShutdownForceNFSParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShutdownForceNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownForceNFSParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ShutdownForceNFSParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShutdownForceNFSParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ShutdownForceNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownForceNFSParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ShutdownForceNFSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShutdownForceNFSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ShutdownForceNFSParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ShutdownForceNFSParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // ResetNFSParam is input parameters for the sacloud API
 type ResetNFSParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -945,11 +2128,43 @@ func (p *ResetNFSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ResetNFSParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ResetNFSParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -978,8 +2193,73 @@ func (p *ResetNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ResetNFSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ResetNFSParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ResetNFSParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ResetNFSParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ResetNFSParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ResetNFSParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ResetNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ResetNFSParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ResetNFSParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ResetNFSParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ResetNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ResetNFSParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ResetNFSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ResetNFSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ResetNFSParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ResetNFSParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // WaitForBootNFSParam is input parameters for the sacloud API
 type WaitForBootNFSParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1003,11 +2283,40 @@ func (p *WaitForBootNFSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *WaitForBootNFSParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *WaitForBootNFSParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1036,8 +2345,66 @@ func (p *WaitForBootNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *WaitForBootNFSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *WaitForBootNFSParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *WaitForBootNFSParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForBootNFSParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForBootNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForBootNFSParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *WaitForBootNFSParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForBootNFSParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *WaitForBootNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForBootNFSParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *WaitForBootNFSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForBootNFSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *WaitForBootNFSParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *WaitForBootNFSParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // WaitForDownNFSParam is input parameters for the sacloud API
 type WaitForDownNFSParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1061,11 +2428,40 @@ func (p *WaitForDownNFSParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *WaitForDownNFSParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *WaitForDownNFSParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1094,11 +2490,75 @@ func (p *WaitForDownNFSParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *WaitForDownNFSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *WaitForDownNFSParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *WaitForDownNFSParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForDownNFSParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForDownNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForDownNFSParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *WaitForDownNFSParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForDownNFSParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *WaitForDownNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForDownNFSParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *WaitForDownNFSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForDownNFSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *WaitForDownNFSParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *WaitForDownNFSParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // MonitorNicNFSParam is input parameters for the sacloud API
 type MonitorNicNFSParam struct {
-	Start     string
-	End       string
-	KeyFormat string
+	Start             string
+	End               string
+	KeyFormat         string
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1133,6 +2593,48 @@ func (p *MonitorNicNFSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -1163,6 +2665,33 @@ func (p *MonitorNicNFSParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1211,12 +2740,124 @@ func (p *MonitorNicNFSParam) SetKeyFormat(v string) {
 func (p *MonitorNicNFSParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
+func (p *MonitorNicNFSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorNicNFSParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorNicNFSParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorNicNFSParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorNicNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorNicNFSParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorNicNFSParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorNicNFSParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorNicNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorNicNFSParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorNicNFSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorNicNFSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorNicNFSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorNicNFSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorNicNFSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorNicNFSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorNicNFSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorNicNFSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorNicNFSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorNicNFSParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorNicNFSParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorNicNFSParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorNicNFSParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorNicNFSParam) GetQuery() string {
+	return p.Query
+}
+func (p *MonitorNicNFSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorNicNFSParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *MonitorNicNFSParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *MonitorNicNFSParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // MonitorFreeDiskSizeNFSParam is input parameters for the sacloud API
 type MonitorFreeDiskSizeNFSParam struct {
-	Start     string
-	End       string
-	KeyFormat string
+	Start             string
+	End               string
+	KeyFormat         string
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1251,6 +2892,48 @@ func (p *MonitorFreeDiskSizeNFSParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -1281,6 +2964,33 @@ func (p *MonitorFreeDiskSizeNFSParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1328,4 +3038,102 @@ func (p *MonitorFreeDiskSizeNFSParam) SetKeyFormat(v string) {
 
 func (p *MonitorFreeDiskSizeNFSParam) GetKeyFormat() string {
 	return p.KeyFormat
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetQuery() string {
+	return p.Query
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetId() sacloud.ID {
+	return p.Id
 }

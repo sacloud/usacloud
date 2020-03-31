@@ -88,12 +88,24 @@ var serverListCmd = &cobra.Command{
 
 func serverListCmdInit() {
 	fs := serverListCmd.Flags()
-	fs.IntVarP(&serverListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&serverListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&serverListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &serverListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&serverListParam.From, "from", "", 0, "set offset")
 	fs.StringSliceVarP(&serverListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.IntVarP(&serverListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&serverListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&serverListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&serverListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var serverBuildCmd = &cobra.Command{
@@ -111,48 +123,61 @@ var serverBuildCmd = &cobra.Command{
 
 func serverBuildCmdInit() {
 	fs := serverBuildCmd.Flags()
-	fs.StringVarP(&serverBuildParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &serverBuildParam.StartupScriptIds), "startup-script-ids", "", "set startup script ID(s)")
-	fs.StringVarP(&serverBuildParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&serverBuildParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &serverBuildParam.SourceDiskId), "source-disk-id", "", "set source disk ID")
-	fs.VarP(newIDValue(0, &serverBuildParam.DiskId), "disk-id", "", "set connect disk ID")
-	fs.StringVarP(&serverBuildParam.Password, "password", "", "", "set password")
-	fs.VarP(newIDValue(0, &serverBuildParam.ISOImageId), "iso-image-id", "", "set iso-image ID")
-	fs.StringVarP(&serverBuildParam.SSHKeyMode, "ssh-key-mode", "", "", "ssh-key mode[none/id/generate/upload]")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &serverBuildParam.SSHKeyIds), "ssh-key-ids", "", "set ssh-key ID(s)")
-	fs.StringVarP(&serverBuildParam.Name, "name", "", "", "set resource display name")
 	fs.IntVarP(&serverBuildParam.Core, "core", "", 1, "set CPU core count")
-	fs.StringVarP(&serverBuildParam.OsType, "os-type", "", "", "set source OS type")
-	fs.StringVarP(&serverBuildParam.DiskPlan, "disk-plan", "", "ssd", "set disk plan('hdd' or 'ssd')")
-	fs.StringVarP(&serverBuildParam.SSHKeyDescription, "ssh-key-description", "", "", "set ssh-key description")
-	fs.StringVarP(&serverBuildParam.SSHKeyPrivateKeyOutput, "ssh-key-private-key-output", "", "", "set ssh-key privatekey output path")
-	fs.BoolVarP(&serverBuildParam.DisableBootAfterCreate, "disable-boot-after-create", "", false, "boot after create")
-	fs.VarP(newIDValue(0, &serverBuildParam.SourceArchiveId), "source-archive-id", "", "set source disk ID")
-	fs.StringVarP(&serverBuildParam.Hostname, "hostname", "", "", "set hostname")
-	fs.StringVarP(&serverBuildParam.SSHKeyName, "ssh-key-name", "", "", "set ssh-key name")
-	fs.StringSliceVarP(&serverBuildParam.StartupScripts, "startup-scripts", "", []string{}, "set startup script(s)")
+	fs.IntVarP(&serverBuildParam.Memory, "memory", "", 1, "set memory size(GB)")
 	fs.StringVarP(&serverBuildParam.Commitment, "commitment", "", "standard", "set plan of core assignment")
 	fs.VarP(newIDValue(0, &serverBuildParam.PrivateHostId), "private-host-id", "", "set private-host-id")
-	fs.StringVarP(&serverBuildParam.InterfaceDriver, "interface-driver", "", "virtio", "set interface driver[virtio/e1000]")
 	fs.StringVarP(&serverBuildParam.DiskMode, "disk-mode", "", "create", "disk create mode[create/connect/diskless]")
-	fs.IntVarP(&serverBuildParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress  prefix")
-	fs.BoolVarP(&serverBuildParam.UsKeyboard, "us-keyboard", "", false, "use us-keyboard")
-	fs.StringVarP(&serverBuildParam.SSHKeyPassPhrase, "ssh-key-pass-phrase", "", "", "set ssh-key pass phrase")
-	fs.StringSliceVarP(&serverBuildParam.SSHKeyPublicKeyFiles, "ssh-key-public-key-files", "", []string{}, "set ssh-key public key file")
+	fs.StringVarP(&serverBuildParam.OsType, "os-type", "", "", "set source OS type")
+	fs.StringVarP(&serverBuildParam.DiskPlan, "disk-plan", "", "ssd", "set disk plan('hdd' or 'ssd')")
 	fs.StringVarP(&serverBuildParam.DiskConnection, "disk-connection", "", "virtio", "set disk connection('virtio' or 'ide')")
+	fs.IntVarP(&serverBuildParam.DiskSize, "disk-size", "", 20, "set disk size(GB)")
+	fs.VarP(newIDValue(0, &serverBuildParam.SourceArchiveId), "source-archive-id", "", "set source disk ID")
+	fs.VarP(newIDValue(0, &serverBuildParam.SourceDiskId), "source-disk-id", "", "set source disk ID")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &serverBuildParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
+	fs.VarP(newIDValue(0, &serverBuildParam.DiskId), "disk-id", "", "set connect disk ID")
+	fs.VarP(newIDValue(0, &serverBuildParam.ISOImageId), "iso-image-id", "", "set iso-image ID")
 	fs.StringVarP(&serverBuildParam.NetworkMode, "network-mode", "", "shared", "network connection mode[shared/switch/disconnect/none]")
-	fs.BoolVarP(&serverBuildParam.StartupScriptsEphemeral, "startup-scripts-ephemeral", "", true, "set startup script persist mode")
+	fs.StringVarP(&serverBuildParam.InterfaceDriver, "interface-driver", "", "virtio", "set interface driver[virtio/e1000]")
 	fs.VarP(newIDValue(0, &serverBuildParam.PacketFilterId), "packet-filter-id", "", "set packet filter ID")
 	fs.VarP(newIDValue(0, &serverBuildParam.SwitchId), "switch-id", "", "set connect switch ID")
+	fs.StringVarP(&serverBuildParam.Hostname, "hostname", "", "", "set hostname")
+	fs.StringVarP(&serverBuildParam.Password, "password", "", "", "set password")
 	fs.BoolVarP(&serverBuildParam.DisablePasswordAuth, "disable-password-auth", "", false, "disable password auth on SSH")
-	fs.BoolVarP(&serverBuildParam.SSHKeyEphemeral, "ssh-key-ephemeral", "", true, "set ssh-key persist mode")
-	fs.VarP(newIDValue(0, &serverBuildParam.IconId), "icon-id", "", "set Icon ID")
-	fs.IntVarP(&serverBuildParam.Memory, "memory", "", 1, "set memory size(GB)")
-	fs.IntVarP(&serverBuildParam.DiskSize, "disk-size", "", 20, "set disk size(GB)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &serverBuildParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
+	fs.StringVarP(&serverBuildParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
+	fs.IntVarP(&serverBuildParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress  prefix")
 	fs.StringVarP(&serverBuildParam.DefaultRoute, "default-route", "", "", "set default gateway")
+	fs.StringSliceVarP(&serverBuildParam.StartupScripts, "startup-scripts", "", []string{}, "set startup script(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &serverBuildParam.StartupScriptIds), "startup-script-ids", "", "set startup script ID(s)")
+	fs.BoolVarP(&serverBuildParam.StartupScriptsEphemeral, "startup-scripts-ephemeral", "", true, "set startup script persist mode")
+	fs.StringVarP(&serverBuildParam.SSHKeyMode, "ssh-key-mode", "", "", "ssh-key mode[none/id/generate/upload]")
+	fs.StringVarP(&serverBuildParam.SSHKeyName, "ssh-key-name", "", "", "set ssh-key name")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &serverBuildParam.SSHKeyIds), "ssh-key-ids", "", "set ssh-key ID(s)")
+	fs.StringVarP(&serverBuildParam.SSHKeyPassPhrase, "ssh-key-pass-phrase", "", "", "set ssh-key pass phrase")
+	fs.StringVarP(&serverBuildParam.SSHKeyDescription, "ssh-key-description", "", "", "set ssh-key description")
+	fs.StringVarP(&serverBuildParam.SSHKeyPrivateKeyOutput, "ssh-key-private-key-output", "", "", "set ssh-key privatekey output path")
 	fs.StringSliceVarP(&serverBuildParam.SSHKeyPublicKeys, "ssh-key-public-keys", "", []string{}, "set ssh-key public key ")
+	fs.StringSliceVarP(&serverBuildParam.SSHKeyPublicKeyFiles, "ssh-key-public-key-files", "", []string{}, "set ssh-key public key file")
+	fs.BoolVarP(&serverBuildParam.SSHKeyEphemeral, "ssh-key-ephemeral", "", true, "set ssh-key persist mode")
+	fs.StringVarP(&serverBuildParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&serverBuildParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&serverBuildParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &serverBuildParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&serverBuildParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverBuildParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverBuildParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverBuildParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverBuildParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverBuildParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverBuildParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverBuildParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverBuildParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverBuildParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverBuildParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverBuildParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverBuildParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.BoolVarP(&serverBuildParam.UsKeyboard, "us-keyboard", "", false, "use us-keyboard")
+	fs.BoolVarP(&serverBuildParam.DisableBootAfterCreate, "disable-boot-after-create", "", false, "boot after create")
 }
 
 var serverReadCmd = &cobra.Command{
@@ -169,6 +194,21 @@ var serverReadCmd = &cobra.Command{
 }
 
 func serverReadCmdInit() {
+	fs := serverReadCmd.Flags()
+	fs.StringSliceVarP(&serverReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&serverReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &serverReadParam.Id), "id", "", "Set target ID")
 }
 
 var serverUpdateCmd = &cobra.Command{
@@ -186,11 +226,26 @@ var serverUpdateCmd = &cobra.Command{
 
 func serverUpdateCmdInit() {
 	fs := serverUpdateCmd.Flags()
+	fs.StringVarP(&serverUpdateParam.InterfaceDriver, "interface-driver", "", "virtio", "set interface driver[virtio/e1000]")
+	fs.StringSliceVarP(&serverUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&serverUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&serverUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&serverUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &serverUpdateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringVarP(&serverUpdateParam.InterfaceDriver, "interface-driver", "", "virtio", "set interface driver[virtio/e1000]")
+	fs.BoolVarP(&serverUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &serverUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var serverDeleteCmd = &cobra.Command{
@@ -210,6 +265,21 @@ func serverDeleteCmdInit() {
 	fs := serverDeleteCmd.Flags()
 	fs.BoolVarP(&serverDeleteParam.Force, "force", "f", false, "forced-shutdown flag if server is running")
 	fs.BoolVarP(&serverDeleteParam.WithoutDisk, "without-disk", "", false, "don't delete connected disks with server")
+	fs.StringSliceVarP(&serverDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&serverDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &serverDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var serverPlanChangeCmd = &cobra.Command{
@@ -230,6 +300,21 @@ func serverPlanChangeCmdInit() {
 	fs.IntVarP(&serverPlanChangeParam.Core, "core", "", 0, "set CPU core count")
 	fs.IntVarP(&serverPlanChangeParam.Memory, "memory", "", 0, "set memory size(GB)")
 	fs.StringVarP(&serverPlanChangeParam.Commitment, "commitment", "", "standard", "set plan of core assignment")
+	fs.StringSliceVarP(&serverPlanChangeParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&serverPlanChangeParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverPlanChangeParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverPlanChangeParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverPlanChangeParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverPlanChangeParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverPlanChangeParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverPlanChangeParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverPlanChangeParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverPlanChangeParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverPlanChangeParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverPlanChangeParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverPlanChangeParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverPlanChangeParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &serverPlanChangeParam.Id), "id", "", "Set target ID")
 }
 
 var serverBootCmd = &cobra.Command{
@@ -246,6 +331,15 @@ var serverBootCmd = &cobra.Command{
 }
 
 func serverBootCmdInit() {
+	fs := serverBootCmd.Flags()
+	fs.StringSliceVarP(&serverBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&serverBootParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverBootParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &serverBootParam.Id), "id", "", "Set target ID")
 }
 
 var serverShutdownCmd = &cobra.Command{
@@ -262,6 +356,15 @@ var serverShutdownCmd = &cobra.Command{
 }
 
 func serverShutdownCmdInit() {
+	fs := serverShutdownCmd.Flags()
+	fs.StringSliceVarP(&serverShutdownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&serverShutdownParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverShutdownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverShutdownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverShutdownParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &serverShutdownParam.Id), "id", "", "Set target ID")
 }
 
 var serverShutdownForceCmd = &cobra.Command{
@@ -278,6 +381,15 @@ var serverShutdownForceCmd = &cobra.Command{
 }
 
 func serverShutdownForceCmdInit() {
+	fs := serverShutdownForceCmd.Flags()
+	fs.StringSliceVarP(&serverShutdownForceParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&serverShutdownForceParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverShutdownForceParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverShutdownForceParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverShutdownForceParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &serverShutdownForceParam.Id), "id", "", "Set target ID")
 }
 
 var serverResetCmd = &cobra.Command{
@@ -294,6 +406,15 @@ var serverResetCmd = &cobra.Command{
 }
 
 func serverResetCmdInit() {
+	fs := serverResetCmd.Flags()
+	fs.StringSliceVarP(&serverResetParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&serverResetParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverResetParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverResetParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverResetParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &serverResetParam.Id), "id", "", "Set target ID")
 }
 
 var serverWaitForBootCmd = &cobra.Command{
@@ -310,6 +431,14 @@ var serverWaitForBootCmd = &cobra.Command{
 }
 
 func serverWaitForBootCmdInit() {
+	fs := serverWaitForBootCmd.Flags()
+	fs.StringSliceVarP(&serverWaitForBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&serverWaitForBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverWaitForBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverWaitForBootParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &serverWaitForBootParam.Id), "id", "", "Set target ID")
 }
 
 var serverWaitForDownCmd = &cobra.Command{
@@ -326,6 +455,14 @@ var serverWaitForDownCmd = &cobra.Command{
 }
 
 func serverWaitForDownCmdInit() {
+	fs := serverWaitForDownCmd.Flags()
+	fs.StringSliceVarP(&serverWaitForDownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&serverWaitForDownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverWaitForDownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverWaitForDownParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &serverWaitForDownParam.Id), "id", "", "Set target ID")
 }
 
 var serverSSHCmd = &cobra.Command{
@@ -347,7 +484,14 @@ func serverSSHCmdInit() {
 	fs.StringVarP(&serverSSHParam.User, "user", "l", "", "user name")
 	fs.IntVarP(&serverSSHParam.Port, "port", "p", 22, "port")
 	fs.StringVarP(&serverSSHParam.Password, "password", "", "", "password(or private-key pass phrase)")
+	fs.StringSliceVarP(&serverSSHParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&serverSSHParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverSSHParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverSSHParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverSSHParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverSSHParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.BoolVarP(&serverSSHParam.Quiet, "quiet", "q", false, "disable information messages")
+	fs.VarP(newIDValue(0, &serverSSHParam.Id), "id", "", "Set target ID")
 }
 
 var serverSSHExecCmd = &cobra.Command{
@@ -365,11 +509,17 @@ var serverSSHExecCmd = &cobra.Command{
 
 func serverSSHExecCmdInit() {
 	fs := serverSSHExecCmd.Flags()
+	fs.StringVarP(&serverSSHExecParam.Key, "key", "i", "", "private-key file path")
 	fs.StringVarP(&serverSSHExecParam.User, "user", "l", "", "user name")
 	fs.IntVarP(&serverSSHExecParam.Port, "port", "p", 22, "port")
 	fs.StringVarP(&serverSSHExecParam.Password, "password", "", "", "password(or private-key pass phrase)")
+	fs.StringVarP(&serverSSHExecParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverSSHExecParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverSSHExecParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverSSHExecParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverSSHExecParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.BoolVarP(&serverSSHExecParam.Quiet, "quiet", "q", false, "disable information messages")
-	fs.StringVarP(&serverSSHExecParam.Key, "key", "i", "", "private-key file path")
+	fs.VarP(newIDValue(0, &serverSSHExecParam.Id), "id", "", "Set target ID")
 }
 
 var serverScpCmd = &cobra.Command{
@@ -387,12 +537,18 @@ var serverScpCmd = &cobra.Command{
 
 func serverScpCmdInit() {
 	fs := serverScpCmd.Flags()
-	fs.BoolVarP(&serverScpParam.Recursive, "recursive", "r", false, "set recursive copy flag")
-	fs.BoolVarP(&serverScpParam.Quiet, "quiet", "q", false, "disable information messages")
 	fs.StringVarP(&serverScpParam.Key, "key", "i", "", "private-key file path")
+	fs.BoolVarP(&serverScpParam.Recursive, "recursive", "r", false, "set recursive copy flag")
 	fs.StringVarP(&serverScpParam.User, "user", "l", "", "user name")
 	fs.IntVarP(&serverScpParam.Port, "port", "p", 22, "port")
 	fs.StringVarP(&serverScpParam.Password, "password", "", "", "password(or private-key pass phrase)")
+	fs.BoolVarP(&serverScpParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverScpParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverScpParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverScpParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverScpParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverScpParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.BoolVarP(&serverScpParam.Quiet, "quiet", "q", false, "disable information messages")
 }
 
 var serverVncCmd = &cobra.Command{
@@ -411,6 +567,13 @@ var serverVncCmd = &cobra.Command{
 func serverVncCmdInit() {
 	fs := serverVncCmd.Flags()
 	fs.BoolVarP(&serverVncParam.WaitForBoot, "wait-for-boot", "", false, "wait until the server starts up")
+	fs.StringSliceVarP(&serverVncParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&serverVncParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverVncParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverVncParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverVncParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverVncParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &serverVncParam.Id), "id", "", "Set target ID")
 }
 
 var serverVncInfoCmd = &cobra.Command{
@@ -429,6 +592,20 @@ var serverVncInfoCmd = &cobra.Command{
 func serverVncInfoCmdInit() {
 	fs := serverVncInfoCmd.Flags()
 	fs.BoolVarP(&serverVncInfoParam.WaitForBoot, "wait-for-boot", "", false, "wait until the server starts up")
+	fs.StringSliceVarP(&serverVncInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&serverVncInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverVncInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverVncInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverVncInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverVncInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverVncInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverVncInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverVncInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverVncInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverVncInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverVncInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverVncInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &serverVncInfoParam.Id), "id", "", "Set target ID")
 }
 
 var serverVncSendCmd = &cobra.Command{
@@ -446,11 +623,26 @@ var serverVncSendCmd = &cobra.Command{
 
 func serverVncSendCmdInit() {
 	fs := serverVncSendCmd.Flags()
+	fs.StringVarP(&serverVncSendParam.Command, "command", "c", "", "command(compatible with HashiCorp Packer's boot_command)")
+	fs.StringVarP(&serverVncSendParam.CommandFile, "command-file", "f", "", "command file(compatible with HashiCorp Packer's boot_command)")
 	fs.BoolVarP(&serverVncSendParam.UseUsKeyboard, "use-us-keyboard", "", false, "use US Keyboard")
 	fs.BoolVarP(&serverVncSendParam.Debug, "debug", "d", false, "write debug info")
 	fs.BoolVarP(&serverVncSendParam.WaitForBoot, "wait-for-boot", "", false, "wait until the server starts up")
-	fs.StringVarP(&serverVncSendParam.Command, "command", "c", "", "command(compatible with HashiCorp Packer's boot_command)")
-	fs.StringVarP(&serverVncSendParam.CommandFile, "command-file", "f", "", "command file(compatible with HashiCorp Packer's boot_command)")
+	fs.StringSliceVarP(&serverVncSendParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&serverVncSendParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverVncSendParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverVncSendParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverVncSendParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverVncSendParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverVncSendParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverVncSendParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverVncSendParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverVncSendParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverVncSendParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverVncSendParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverVncSendParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverVncSendParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &serverVncSendParam.Id), "id", "", "Set target ID")
 }
 
 var serverVncSnapshotCmd = &cobra.Command{
@@ -470,6 +662,21 @@ func serverVncSnapshotCmdInit() {
 	fs := serverVncSnapshotCmd.Flags()
 	fs.BoolVarP(&serverVncSnapshotParam.WaitForBoot, "wait-for-boot", "", false, "wait until the server starts up")
 	fs.StringVarP(&serverVncSnapshotParam.OutputPath, "output-path", "", "", "snapshot output filepath")
+	fs.StringSliceVarP(&serverVncSnapshotParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&serverVncSnapshotParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverVncSnapshotParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverVncSnapshotParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverVncSnapshotParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverVncSnapshotParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverVncSnapshotParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverVncSnapshotParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverVncSnapshotParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverVncSnapshotParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverVncSnapshotParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverVncSnapshotParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverVncSnapshotParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverVncSnapshotParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &serverVncSnapshotParam.Id), "id", "", "Set target ID")
 }
 
 var serverRemoteDesktopCmd = &cobra.Command{
@@ -489,6 +696,13 @@ func serverRemoteDesktopCmdInit() {
 	fs := serverRemoteDesktopCmd.Flags()
 	fs.StringVarP(&serverRemoteDesktopParam.User, "user", "l", "Administrator", "user name")
 	fs.IntVarP(&serverRemoteDesktopParam.Port, "port", "p", 3389, "port")
+	fs.StringSliceVarP(&serverRemoteDesktopParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&serverRemoteDesktopParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverRemoteDesktopParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverRemoteDesktopParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverRemoteDesktopParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverRemoteDesktopParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &serverRemoteDesktopParam.Id), "id", "", "Set target ID")
 }
 
 var serverRemoteDesktopInfoCmd = &cobra.Command{
@@ -508,6 +722,20 @@ func serverRemoteDesktopInfoCmdInit() {
 	fs := serverRemoteDesktopInfoCmd.Flags()
 	fs.StringVarP(&serverRemoteDesktopInfoParam.User, "user", "l", "Administrator", "user name")
 	fs.IntVarP(&serverRemoteDesktopInfoParam.Port, "port", "p", 3389, "port")
+	fs.StringSliceVarP(&serverRemoteDesktopInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&serverRemoteDesktopInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverRemoteDesktopInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverRemoteDesktopInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverRemoteDesktopInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverRemoteDesktopInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverRemoteDesktopInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverRemoteDesktopInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverRemoteDesktopInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverRemoteDesktopInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverRemoteDesktopInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverRemoteDesktopInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverRemoteDesktopInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &serverRemoteDesktopInfoParam.Id), "id", "", "Set target ID")
 }
 
 var serverDiskInfoCmd = &cobra.Command{
@@ -524,6 +752,21 @@ var serverDiskInfoCmd = &cobra.Command{
 }
 
 func serverDiskInfoCmdInit() {
+	fs := serverDiskInfoCmd.Flags()
+	fs.StringSliceVarP(&serverDiskInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&serverDiskInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverDiskInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverDiskInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverDiskInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverDiskInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverDiskInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverDiskInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverDiskInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverDiskInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverDiskInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverDiskInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverDiskInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &serverDiskInfoParam.Id), "id", "", "Set target ID")
 }
 
 var serverDiskConnectCmd = &cobra.Command{
@@ -542,6 +785,14 @@ var serverDiskConnectCmd = &cobra.Command{
 func serverDiskConnectCmdInit() {
 	fs := serverDiskConnectCmd.Flags()
 	fs.VarP(newIDValue(0, &serverDiskConnectParam.DiskId), "disk-id", "", "set target disk ID")
+	fs.StringSliceVarP(&serverDiskConnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&serverDiskConnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverDiskConnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverDiskConnectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverDiskConnectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverDiskConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverDiskConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &serverDiskConnectParam.Id), "id", "", "Set target ID")
 }
 
 var serverDiskDisconnectCmd = &cobra.Command{
@@ -560,6 +811,14 @@ var serverDiskDisconnectCmd = &cobra.Command{
 func serverDiskDisconnectCmdInit() {
 	fs := serverDiskDisconnectCmd.Flags()
 	fs.VarP(newIDValue(0, &serverDiskDisconnectParam.DiskId), "disk-id", "", "set target disk ID")
+	fs.StringSliceVarP(&serverDiskDisconnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&serverDiskDisconnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverDiskDisconnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverDiskDisconnectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverDiskDisconnectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverDiskDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverDiskDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &serverDiskDisconnectParam.Id), "id", "", "Set target ID")
 }
 
 var serverInterfaceInfoCmd = &cobra.Command{
@@ -576,6 +835,21 @@ var serverInterfaceInfoCmd = &cobra.Command{
 }
 
 func serverInterfaceInfoCmdInit() {
+	fs := serverInterfaceInfoCmd.Flags()
+	fs.StringSliceVarP(&serverInterfaceInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&serverInterfaceInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverInterfaceInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverInterfaceInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverInterfaceInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverInterfaceInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverInterfaceInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverInterfaceInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverInterfaceInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverInterfaceInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverInterfaceInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverInterfaceInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverInterfaceInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &serverInterfaceInfoParam.Id), "id", "", "Set target ID")
 }
 
 var serverInterfaceAddForInternetCmd = &cobra.Command{
@@ -594,6 +868,14 @@ var serverInterfaceAddForInternetCmd = &cobra.Command{
 func serverInterfaceAddForInternetCmdInit() {
 	fs := serverInterfaceAddForInternetCmd.Flags()
 	fs.BoolVarP(&serverInterfaceAddForInternetParam.WithoutDiskEdit, "without-disk-edit", "", false, "set skip edit-disk flag. if true, don't call DiskEdit API after interface added")
+	fs.StringSliceVarP(&serverInterfaceAddForInternetParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&serverInterfaceAddForInternetParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverInterfaceAddForInternetParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverInterfaceAddForInternetParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverInterfaceAddForInternetParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverInterfaceAddForInternetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverInterfaceAddForInternetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &serverInterfaceAddForInternetParam.Id), "id", "", "Set target ID")
 }
 
 var serverInterfaceAddForRouterCmd = &cobra.Command{
@@ -611,11 +893,19 @@ var serverInterfaceAddForRouterCmd = &cobra.Command{
 
 func serverInterfaceAddForRouterCmdInit() {
 	fs := serverInterfaceAddForRouterCmd.Flags()
-	fs.StringVarP(&serverInterfaceAddForRouterParam.DefaultRoute, "default-route", "", "", "set default gateway")
-	fs.IntVarP(&serverInterfaceAddForRouterParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress  prefix")
 	fs.VarP(newIDValue(0, &serverInterfaceAddForRouterParam.SwitchId), "switch-id", "", "set connect switch(connected to router) ID")
 	fs.BoolVarP(&serverInterfaceAddForRouterParam.WithoutDiskEdit, "without-disk-edit", "", false, "set skip edit-disk flag. if true, don't call DiskEdit API after interface added")
 	fs.StringVarP(&serverInterfaceAddForRouterParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
+	fs.StringVarP(&serverInterfaceAddForRouterParam.DefaultRoute, "default-route", "", "", "set default gateway")
+	fs.IntVarP(&serverInterfaceAddForRouterParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress  prefix")
+	fs.StringSliceVarP(&serverInterfaceAddForRouterParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&serverInterfaceAddForRouterParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverInterfaceAddForRouterParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverInterfaceAddForRouterParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverInterfaceAddForRouterParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverInterfaceAddForRouterParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverInterfaceAddForRouterParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &serverInterfaceAddForRouterParam.Id), "id", "", "Set target ID")
 }
 
 var serverInterfaceAddForSwitchCmd = &cobra.Command{
@@ -633,11 +923,19 @@ var serverInterfaceAddForSwitchCmd = &cobra.Command{
 
 func serverInterfaceAddForSwitchCmdInit() {
 	fs := serverInterfaceAddForSwitchCmd.Flags()
+	fs.VarP(newIDValue(0, &serverInterfaceAddForSwitchParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.BoolVarP(&serverInterfaceAddForSwitchParam.WithoutDiskEdit, "without-disk-edit", "", false, "set skip edit-disk flag. if true, don't call DiskEdit API after interface added")
 	fs.StringVarP(&serverInterfaceAddForSwitchParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
 	fs.StringVarP(&serverInterfaceAddForSwitchParam.DefaultRoute, "default-route", "", "", "set default gateway")
 	fs.IntVarP(&serverInterfaceAddForSwitchParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress  prefix")
-	fs.VarP(newIDValue(0, &serverInterfaceAddForSwitchParam.SwitchId), "switch-id", "", "set connect switch ID")
+	fs.StringSliceVarP(&serverInterfaceAddForSwitchParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&serverInterfaceAddForSwitchParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverInterfaceAddForSwitchParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverInterfaceAddForSwitchParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverInterfaceAddForSwitchParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverInterfaceAddForSwitchParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverInterfaceAddForSwitchParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &serverInterfaceAddForSwitchParam.Id), "id", "", "Set target ID")
 }
 
 var serverInterfaceAddDisconnectedCmd = &cobra.Command{
@@ -654,6 +952,15 @@ var serverInterfaceAddDisconnectedCmd = &cobra.Command{
 }
 
 func serverInterfaceAddDisconnectedCmdInit() {
+	fs := serverInterfaceAddDisconnectedCmd.Flags()
+	fs.StringSliceVarP(&serverInterfaceAddDisconnectedParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&serverInterfaceAddDisconnectedParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverInterfaceAddDisconnectedParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverInterfaceAddDisconnectedParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverInterfaceAddDisconnectedParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverInterfaceAddDisconnectedParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverInterfaceAddDisconnectedParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &serverInterfaceAddDisconnectedParam.Id), "id", "", "Set target ID")
 }
 
 var serverISOInfoCmd = &cobra.Command{
@@ -670,6 +977,21 @@ var serverISOInfoCmd = &cobra.Command{
 }
 
 func serverISOInfoCmdInit() {
+	fs := serverISOInfoCmd.Flags()
+	fs.StringSliceVarP(&serverISOInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&serverISOInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverISOInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverISOInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverISOInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverISOInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverISOInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverISOInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverISOInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverISOInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverISOInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverISOInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverISOInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &serverISOInfoParam.Id), "id", "", "Set target ID")
 }
 
 var serverISOInsertCmd = &cobra.Command{
@@ -687,13 +1009,21 @@ var serverISOInsertCmd = &cobra.Command{
 
 func serverISOInsertCmdInit() {
 	fs := serverISOInsertCmd.Flags()
+	fs.VarP(newIDValue(0, &serverISOInsertParam.ISOImageId), "iso-image-id", "", "set iso-image ID")
+	fs.IntVarP(&serverISOInsertParam.Size, "size", "", 5, "set iso size(GB)")
 	fs.StringVarP(&serverISOInsertParam.ISOFile, "iso-file", "", "", "set iso image file")
 	fs.StringVarP(&serverISOInsertParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&serverISOInsertParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&serverISOInsertParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &serverISOInsertParam.IconId), "icon-id", "", "set Icon ID")
-	fs.VarP(newIDValue(0, &serverISOInsertParam.ISOImageId), "iso-image-id", "", "set iso-image ID")
-	fs.IntVarP(&serverISOInsertParam.Size, "size", "", 5, "set iso size(GB)")
+	fs.StringSliceVarP(&serverISOInsertParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&serverISOInsertParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverISOInsertParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverISOInsertParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverISOInsertParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverISOInsertParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverISOInsertParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &serverISOInsertParam.Id), "id", "", "Set target ID")
 }
 
 var serverISOEjectCmd = &cobra.Command{
@@ -710,6 +1040,15 @@ var serverISOEjectCmd = &cobra.Command{
 }
 
 func serverISOEjectCmdInit() {
+	fs := serverISOEjectCmd.Flags()
+	fs.StringSliceVarP(&serverISOEjectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&serverISOEjectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&serverISOEjectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverISOEjectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverISOEjectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverISOEjectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverISOEjectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &serverISOEjectParam.Id), "id", "", "Set target ID")
 }
 
 var serverMonitorCPUCmd = &cobra.Command{
@@ -730,6 +1069,20 @@ func serverMonitorCPUCmdInit() {
 	fs.StringVarP(&serverMonitorCPUParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&serverMonitorCPUParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&serverMonitorCPUParam.KeyFormat, "key-format", "", "sakuracloud.server.{{.ID}}.cpu", "set monitoring value key-format")
+	fs.StringSliceVarP(&serverMonitorCPUParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&serverMonitorCPUParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverMonitorCPUParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverMonitorCPUParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverMonitorCPUParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverMonitorCPUParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverMonitorCPUParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverMonitorCPUParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverMonitorCPUParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverMonitorCPUParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverMonitorCPUParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverMonitorCPUParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverMonitorCPUParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &serverMonitorCPUParam.Id), "id", "", "Set target ID")
 }
 
 var serverMonitorNicCmd = &cobra.Command{
@@ -747,10 +1100,24 @@ var serverMonitorNicCmd = &cobra.Command{
 
 func serverMonitorNicCmdInit() {
 	fs := serverMonitorNicCmd.Flags()
+	fs.StringVarP(&serverMonitorNicParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&serverMonitorNicParam.End, "end", "", "", "set end-time")
 	fs.IntSliceVarP(&serverMonitorNicParam.Index, "index", "", []int{}, "target index(es)")
 	fs.StringVarP(&serverMonitorNicParam.KeyFormat, "key-format", "", "sakuracloud.server.{{.ID}}.nic.{{.Index}}", "set monitoring value key-format")
-	fs.StringVarP(&serverMonitorNicParam.Start, "start", "", "", "set start-time")
+	fs.StringSliceVarP(&serverMonitorNicParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&serverMonitorNicParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverMonitorNicParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverMonitorNicParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverMonitorNicParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverMonitorNicParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverMonitorNicParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverMonitorNicParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverMonitorNicParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverMonitorNicParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverMonitorNicParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverMonitorNicParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverMonitorNicParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &serverMonitorNicParam.Id), "id", "", "Set target ID")
 }
 
 var serverMonitorDiskCmd = &cobra.Command{
@@ -772,6 +1139,20 @@ func serverMonitorDiskCmdInit() {
 	fs.StringVarP(&serverMonitorDiskParam.End, "end", "", "", "set end-time")
 	fs.IntSliceVarP(&serverMonitorDiskParam.Index, "index", "", []int{}, "target index(es)")
 	fs.StringVarP(&serverMonitorDiskParam.KeyFormat, "key-format", "", "sakuracloud.server.{{.ID}}.disk.{{.Index}}", "set monitoring value key-format")
+	fs.StringSliceVarP(&serverMonitorDiskParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&serverMonitorDiskParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverMonitorDiskParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverMonitorDiskParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverMonitorDiskParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverMonitorDiskParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverMonitorDiskParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverMonitorDiskParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverMonitorDiskParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverMonitorDiskParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverMonitorDiskParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverMonitorDiskParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverMonitorDiskParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &serverMonitorDiskParam.Id), "id", "", "Set target ID")
 }
 
 var serverMaintenanceInfoCmd = &cobra.Command{
@@ -788,6 +1169,19 @@ var serverMaintenanceInfoCmd = &cobra.Command{
 }
 
 func serverMaintenanceInfoCmdInit() {
+	fs := serverMaintenanceInfoCmd.Flags()
+	fs.StringVarP(&serverMaintenanceInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&serverMaintenanceInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&serverMaintenanceInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&serverMaintenanceInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&serverMaintenanceInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&serverMaintenanceInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&serverMaintenanceInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&serverMaintenanceInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&serverMaintenanceInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&serverMaintenanceInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&serverMaintenanceInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&serverMaintenanceInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 func init() {

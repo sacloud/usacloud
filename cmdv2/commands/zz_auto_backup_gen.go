@@ -57,12 +57,24 @@ var autoBackupListCmd = &cobra.Command{
 
 func autoBackupListCmdInit() {
 	fs := autoBackupListCmd.Flags()
-	fs.IntVarP(&autoBackupListParam.From, "from", "", 0, "set offset")
-	fs.IntVarP(&autoBackupListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&autoBackupListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&autoBackupListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &autoBackupListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&autoBackupListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.IntVarP(&autoBackupListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&autoBackupListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&autoBackupListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&autoBackupListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&autoBackupListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&autoBackupListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&autoBackupListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&autoBackupListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&autoBackupListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&autoBackupListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&autoBackupListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&autoBackupListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&autoBackupListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&autoBackupListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&autoBackupListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var autoBackupCreateCmd = &cobra.Command{
@@ -80,13 +92,26 @@ var autoBackupCreateCmd = &cobra.Command{
 
 func autoBackupCreateCmdInit() {
 	fs := autoBackupCreateCmd.Flags()
+	fs.VarP(newIDValue(0, &autoBackupCreateParam.DiskId), "disk-id", "", "set target diskID ")
+	fs.StringSliceVarP(&autoBackupCreateParam.Weekdays, "weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
+	fs.IntVarP(&autoBackupCreateParam.Generation, "generation", "", 1, "set backup generation[1-10]")
 	fs.StringVarP(&autoBackupCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&autoBackupCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&autoBackupCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &autoBackupCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.VarP(newIDValue(0, &autoBackupCreateParam.DiskId), "disk-id", "", "set target diskID ")
-	fs.StringSliceVarP(&autoBackupCreateParam.Weekdays, "weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
-	fs.IntVarP(&autoBackupCreateParam.Generation, "generation", "", 1, "set backup generation[1-10]")
+	fs.BoolVarP(&autoBackupCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&autoBackupCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&autoBackupCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&autoBackupCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&autoBackupCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&autoBackupCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&autoBackupCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&autoBackupCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&autoBackupCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&autoBackupCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&autoBackupCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&autoBackupCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&autoBackupCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var autoBackupReadCmd = &cobra.Command{
@@ -103,6 +128,21 @@ var autoBackupReadCmd = &cobra.Command{
 }
 
 func autoBackupReadCmdInit() {
+	fs := autoBackupReadCmd.Flags()
+	fs.StringSliceVarP(&autoBackupReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&autoBackupReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&autoBackupReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&autoBackupReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&autoBackupReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&autoBackupReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&autoBackupReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&autoBackupReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&autoBackupReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&autoBackupReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&autoBackupReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&autoBackupReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&autoBackupReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &autoBackupReadParam.Id), "id", "", "Set target ID")
 }
 
 var autoBackupUpdateCmd = &cobra.Command{
@@ -120,12 +160,27 @@ var autoBackupUpdateCmd = &cobra.Command{
 
 func autoBackupUpdateCmdInit() {
 	fs := autoBackupUpdateCmd.Flags()
+	fs.StringSliceVarP(&autoBackupUpdateParam.Weekdays, "weekdays", "", []string{}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
 	fs.IntVarP(&autoBackupUpdateParam.Generation, "generation", "", 0, "set backup generation[1-10]")
+	fs.StringSliceVarP(&autoBackupUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&autoBackupUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&autoBackupUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&autoBackupUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &autoBackupUpdateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringSliceVarP(&autoBackupUpdateParam.Weekdays, "weekdays", "", []string{}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
+	fs.BoolVarP(&autoBackupUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&autoBackupUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&autoBackupUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&autoBackupUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&autoBackupUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&autoBackupUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&autoBackupUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&autoBackupUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&autoBackupUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&autoBackupUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&autoBackupUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&autoBackupUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&autoBackupUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &autoBackupUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var autoBackupDeleteCmd = &cobra.Command{
@@ -142,6 +197,22 @@ var autoBackupDeleteCmd = &cobra.Command{
 }
 
 func autoBackupDeleteCmdInit() {
+	fs := autoBackupDeleteCmd.Flags()
+	fs.StringSliceVarP(&autoBackupDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&autoBackupDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&autoBackupDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&autoBackupDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&autoBackupDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&autoBackupDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&autoBackupDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&autoBackupDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&autoBackupDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&autoBackupDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&autoBackupDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&autoBackupDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&autoBackupDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&autoBackupDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &autoBackupDeleteParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

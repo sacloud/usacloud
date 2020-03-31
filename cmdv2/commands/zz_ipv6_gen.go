@@ -57,13 +57,25 @@ var ipv6ListCmd = &cobra.Command{
 
 func ipv6ListCmdInit() {
 	fs := ipv6ListCmd.Flags()
-	fs.VarP(newIDValue(0, &ipv6ListParam.InternetId), "internet-id", "", "set filter by internet-id")
 	fs.StringSliceVarP(&ipv6ListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &ipv6ListParam.Id), "id", "", "set filter by id(s)")
+	fs.VarP(newIDValue(0, &ipv6ListParam.IPv6netId), "ipv6net-id", "", "set filter by ipv6net-id")
+	fs.VarP(newIDValue(0, &ipv6ListParam.InternetId), "internet-id", "", "set filter by internet-id")
 	fs.IntVarP(&ipv6ListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&ipv6ListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&ipv6ListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.VarP(newIDValue(0, &ipv6ListParam.IPv6netId), "ipv6net-id", "", "set filter by ipv6net-id")
+	fs.StringVarP(&ipv6ListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&ipv6ListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&ipv6ListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&ipv6ListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&ipv6ListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&ipv6ListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&ipv6ListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&ipv6ListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&ipv6ListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&ipv6ListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&ipv6ListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&ipv6ListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var ipv6PtrAddCmd = &cobra.Command{
@@ -82,6 +94,19 @@ var ipv6PtrAddCmd = &cobra.Command{
 func ipv6PtrAddCmdInit() {
 	fs := ipv6PtrAddCmd.Flags()
 	fs.StringVarP(&ipv6PtrAddParam.Hostname, "hostname", "", "", "set server hostname")
+	fs.BoolVarP(&ipv6PtrAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&ipv6PtrAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&ipv6PtrAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&ipv6PtrAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&ipv6PtrAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&ipv6PtrAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&ipv6PtrAddParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&ipv6PtrAddParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&ipv6PtrAddParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&ipv6PtrAddParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&ipv6PtrAddParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&ipv6PtrAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&ipv6PtrAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var ipv6PtrReadCmd = &cobra.Command{
@@ -98,6 +123,19 @@ var ipv6PtrReadCmd = &cobra.Command{
 }
 
 func ipv6PtrReadCmdInit() {
+	fs := ipv6PtrReadCmd.Flags()
+	fs.StringVarP(&ipv6PtrReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&ipv6PtrReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&ipv6PtrReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&ipv6PtrReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&ipv6PtrReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&ipv6PtrReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&ipv6PtrReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&ipv6PtrReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&ipv6PtrReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&ipv6PtrReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&ipv6PtrReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&ipv6PtrReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var ipv6PtrUpdateCmd = &cobra.Command{
@@ -116,6 +154,19 @@ var ipv6PtrUpdateCmd = &cobra.Command{
 func ipv6PtrUpdateCmdInit() {
 	fs := ipv6PtrUpdateCmd.Flags()
 	fs.StringVarP(&ipv6PtrUpdateParam.Hostname, "hostname", "", "", "set server hostname")
+	fs.BoolVarP(&ipv6PtrUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&ipv6PtrUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&ipv6PtrUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&ipv6PtrUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&ipv6PtrUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&ipv6PtrUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&ipv6PtrUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&ipv6PtrUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&ipv6PtrUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&ipv6PtrUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&ipv6PtrUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&ipv6PtrUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&ipv6PtrUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var ipv6PtrDeleteCmd = &cobra.Command{
@@ -132,6 +183,20 @@ var ipv6PtrDeleteCmd = &cobra.Command{
 }
 
 func ipv6PtrDeleteCmdInit() {
+	fs := ipv6PtrDeleteCmd.Flags()
+	fs.BoolVarP(&ipv6PtrDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&ipv6PtrDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&ipv6PtrDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&ipv6PtrDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&ipv6PtrDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&ipv6PtrDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&ipv6PtrDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&ipv6PtrDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&ipv6PtrDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&ipv6PtrDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&ipv6PtrDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&ipv6PtrDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&ipv6PtrDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 func init() {

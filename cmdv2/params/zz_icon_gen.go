@@ -29,13 +29,25 @@ import (
 
 // ListIconParam is input parameters for the sacloud API
 type ListIconParam struct {
-	Name  []string
-	Id    []sacloud.ID
-	From  int
-	Max   int
-	Scope string
-	Tags  []string
-	Sort  []string
+	Name              []string
+	Id                []sacloud.ID
+	Scope             string
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -66,20 +78,56 @@ func (p *ListIconParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.From) {
-		p.From = 0
-	}
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
-	}
 	if utils.IsEmpty(p.Scope) {
 		p.Scope = ""
 	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
+	if utils.IsEmpty(p.From) {
+		p.From = 0
+	}
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
+	}
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -130,6 +178,25 @@ func (p *ListIconParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -171,20 +238,6 @@ func (p *ListIconParam) SetId(v []sacloud.ID) {
 func (p *ListIconParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListIconParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListIconParam) GetFrom() int {
-	return p.From
-}
-func (p *ListIconParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListIconParam) GetMax() int {
-	return p.Max
-}
 func (p *ListIconParam) SetScope(v string) {
 	p.Scope = v
 }
@@ -199,6 +252,20 @@ func (p *ListIconParam) SetTags(v []string) {
 func (p *ListIconParam) GetTags() []string {
 	return p.Tags
 }
+func (p *ListIconParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListIconParam) GetFrom() int {
+	return p.From
+}
+func (p *ListIconParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListIconParam) GetMax() int {
+	return p.Max
+}
 func (p *ListIconParam) SetSort(v []string) {
 	p.Sort = v
 }
@@ -206,12 +273,109 @@ func (p *ListIconParam) SetSort(v []string) {
 func (p *ListIconParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListIconParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListIconParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListIconParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListIconParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListIconParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListIconParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListIconParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListIconParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListIconParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListIconParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListIconParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListIconParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListIconParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListIconParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListIconParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListIconParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListIconParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListIconParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListIconParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListIconParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListIconParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListIconParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListIconParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListIconParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateIconParam is input parameters for the sacloud API
 type CreateIconParam struct {
-	Name  string
-	Tags  []string
-	Image string
+	Image             string
+	Name              string
+	Tags              []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -236,20 +400,74 @@ func (p *CreateIconParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateIconParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Image) {
+		p.Image = ""
+	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.Image) {
-		p.Image = ""
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
 
 func (p *CreateIconParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--image", p.Image)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Icon"].Commands["create"].Params["image"].ValidateFunc
+		errs := validator("--image", p.Image)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -275,20 +493,24 @@ func (p *CreateIconParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
-		errs := validator("--image", p.Image)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["Icon"].Commands["create"].Params["image"].ValidateFunc
-		errs := validator("--image", p.Image)
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -316,6 +538,13 @@ func (p *CreateIconParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *CreateIconParam) SetImage(v string) {
+	p.Image = v
+}
+
+func (p *CreateIconParam) GetImage() string {
+	return p.Image
+}
 func (p *CreateIconParam) SetName(v string) {
 	p.Name = v
 }
@@ -330,16 +559,115 @@ func (p *CreateIconParam) SetTags(v []string) {
 func (p *CreateIconParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateIconParam) SetImage(v string) {
-	p.Image = v
+func (p *CreateIconParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
 }
 
-func (p *CreateIconParam) GetImage() string {
-	return p.Image
+func (p *CreateIconParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *CreateIconParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateIconParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateIconParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateIconParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateIconParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateIconParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CreateIconParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateIconParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateIconParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateIconParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CreateIconParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateIconParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateIconParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateIconParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateIconParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateIconParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateIconParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateIconParam) GetFormat() string {
+	return p.Format
+}
+func (p *CreateIconParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CreateIconParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CreateIconParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateIconParam) GetQuery() string {
+	return p.Query
+}
+func (p *CreateIconParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateIconParam) GetQueryFile() string {
+	return p.QueryFile
 }
 
 // ReadIconParam is input parameters for the sacloud API
 type ReadIconParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -363,12 +691,81 @@ func (p *ReadIconParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadIconParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ReadIconParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -396,10 +793,124 @@ func (p *ReadIconParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadIconParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadIconParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ReadIconParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadIconParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadIconParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadIconParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadIconParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadIconParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadIconParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadIconParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadIconParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadIconParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadIconParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadIconParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadIconParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadIconParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadIconParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadIconParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadIconParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadIconParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadIconParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadIconParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadIconParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadIconParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadIconParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadIconParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ReadIconParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReadIconParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UpdateIconParam is input parameters for the sacloud API
 type UpdateIconParam struct {
-	Name string
-	Tags []string
+	Selector          []string
+	Name              string
+	Tags              []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -424,11 +935,56 @@ func (p *UpdateIconParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateIconParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -452,6 +1008,33 @@ func (p *UpdateIconParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -479,6 +1062,13 @@ func (p *UpdateIconParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *UpdateIconParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateIconParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateIconParam) SetName(v string) {
 	p.Name = v
 }
@@ -493,9 +1083,123 @@ func (p *UpdateIconParam) SetTags(v []string) {
 func (p *UpdateIconParam) GetTags() []string {
 	return p.Tags
 }
+func (p *UpdateIconParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *UpdateIconParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UpdateIconParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateIconParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateIconParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateIconParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateIconParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateIconParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UpdateIconParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateIconParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateIconParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateIconParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UpdateIconParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateIconParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateIconParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateIconParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateIconParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateIconParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateIconParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateIconParam) GetFormat() string {
+	return p.Format
+}
+func (p *UpdateIconParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UpdateIconParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UpdateIconParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateIconParam) GetQuery() string {
+	return p.Query
+}
+func (p *UpdateIconParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateIconParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UpdateIconParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UpdateIconParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DeleteIconParam is input parameters for the sacloud API
 type DeleteIconParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -519,12 +1223,84 @@ func (p *DeleteIconParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *DeleteIconParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DeleteIconParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -550,4 +1326,110 @@ func (p *DeleteIconParam) TableType() output.TableType {
 
 func (p *DeleteIconParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
+}
+
+func (p *DeleteIconParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteIconParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DeleteIconParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DeleteIconParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DeleteIconParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteIconParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteIconParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteIconParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteIconParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteIconParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DeleteIconParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteIconParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteIconParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteIconParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DeleteIconParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteIconParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteIconParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteIconParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteIconParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteIconParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteIconParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteIconParam) GetFormat() string {
+	return p.Format
+}
+func (p *DeleteIconParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DeleteIconParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DeleteIconParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteIconParam) GetQuery() string {
+	return p.Query
+}
+func (p *DeleteIconParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteIconParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *DeleteIconParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DeleteIconParam) GetId() sacloud.ID {
+	return p.Id
 }

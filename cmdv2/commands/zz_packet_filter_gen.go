@@ -68,6 +68,18 @@ func packetFilterListCmdInit() {
 	fs.IntVarP(&packetFilterListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&packetFilterListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&packetFilterListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&packetFilterListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&packetFilterListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&packetFilterListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&packetFilterListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&packetFilterListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&packetFilterListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&packetFilterListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&packetFilterListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&packetFilterListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&packetFilterListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var packetFilterCreateCmd = &cobra.Command{
@@ -87,6 +99,19 @@ func packetFilterCreateCmdInit() {
 	fs := packetFilterCreateCmd.Flags()
 	fs.StringVarP(&packetFilterCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&packetFilterCreateParam.Description, "description", "", "", "set resource description")
+	fs.BoolVarP(&packetFilterCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&packetFilterCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&packetFilterCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&packetFilterCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&packetFilterCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&packetFilterCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&packetFilterCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&packetFilterCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&packetFilterCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&packetFilterCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&packetFilterCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var packetFilterReadCmd = &cobra.Command{
@@ -103,6 +128,20 @@ var packetFilterReadCmd = &cobra.Command{
 }
 
 func packetFilterReadCmdInit() {
+	fs := packetFilterReadCmd.Flags()
+	fs.StringVarP(&packetFilterReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&packetFilterReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&packetFilterReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&packetFilterReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&packetFilterReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&packetFilterReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&packetFilterReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&packetFilterReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&packetFilterReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&packetFilterReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &packetFilterReadParam.Id), "id", "", "Set target ID")
 }
 
 var packetFilterUpdateCmd = &cobra.Command{
@@ -122,6 +161,20 @@ func packetFilterUpdateCmdInit() {
 	fs := packetFilterUpdateCmd.Flags()
 	fs.StringVarP(&packetFilterUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&packetFilterUpdateParam.Description, "description", "", "", "set resource description")
+	fs.BoolVarP(&packetFilterUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&packetFilterUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&packetFilterUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&packetFilterUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&packetFilterUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&packetFilterUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&packetFilterUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&packetFilterUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&packetFilterUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&packetFilterUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&packetFilterUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &packetFilterUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var packetFilterDeleteCmd = &cobra.Command{
@@ -138,6 +191,21 @@ var packetFilterDeleteCmd = &cobra.Command{
 }
 
 func packetFilterDeleteCmdInit() {
+	fs := packetFilterDeleteCmd.Flags()
+	fs.BoolVarP(&packetFilterDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&packetFilterDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&packetFilterDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&packetFilterDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&packetFilterDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&packetFilterDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&packetFilterDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&packetFilterDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&packetFilterDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&packetFilterDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&packetFilterDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &packetFilterDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var packetFilterRuleInfoCmd = &cobra.Command{
@@ -154,6 +222,20 @@ var packetFilterRuleInfoCmd = &cobra.Command{
 }
 
 func packetFilterRuleInfoCmdInit() {
+	fs := packetFilterRuleInfoCmd.Flags()
+	fs.StringVarP(&packetFilterRuleInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&packetFilterRuleInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&packetFilterRuleInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&packetFilterRuleInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&packetFilterRuleInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&packetFilterRuleInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&packetFilterRuleInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&packetFilterRuleInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&packetFilterRuleInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterRuleInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterRuleInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&packetFilterRuleInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &packetFilterRuleInfoParam.Id), "id", "", "Set target ID")
 }
 
 var packetFilterRuleAddCmd = &cobra.Command{
@@ -178,6 +260,20 @@ func packetFilterRuleAddCmdInit() {
 	fs.StringVarP(&packetFilterRuleAddParam.DestinationPort, "destination-port", "", "", "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]")
 	fs.StringVarP(&packetFilterRuleAddParam.Action, "action", "", "", "set action[allow/deny]")
 	fs.StringVarP(&packetFilterRuleAddParam.Description, "description", "", "", "set resource description")
+	fs.BoolVarP(&packetFilterRuleAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&packetFilterRuleAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&packetFilterRuleAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&packetFilterRuleAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&packetFilterRuleAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&packetFilterRuleAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&packetFilterRuleAddParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&packetFilterRuleAddParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&packetFilterRuleAddParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&packetFilterRuleAddParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterRuleAddParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterRuleAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&packetFilterRuleAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &packetFilterRuleAddParam.Id), "id", "", "Set target ID")
 }
 
 var packetFilterRuleUpdateCmd = &cobra.Command{
@@ -195,13 +291,27 @@ var packetFilterRuleUpdateCmd = &cobra.Command{
 
 func packetFilterRuleUpdateCmdInit() {
 	fs := packetFilterRuleUpdateCmd.Flags()
-	fs.StringVarP(&packetFilterRuleUpdateParam.Action, "action", "", "", "set action[allow/deny]")
-	fs.StringVarP(&packetFilterRuleUpdateParam.Description, "description", "", "", "set resource description")
 	fs.IntVarP(&packetFilterRuleUpdateParam.Index, "index", "", 0, "index of target rule")
 	fs.StringVarP(&packetFilterRuleUpdateParam.Protocol, "protocol", "", "", "set target protocol[tcp/udp/icmp/fragment/ip]")
 	fs.StringVarP(&packetFilterRuleUpdateParam.SourceNetwork, "source-network", "", "", "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]")
 	fs.StringVarP(&packetFilterRuleUpdateParam.SourcePort, "source-port", "", "", "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]")
 	fs.StringVarP(&packetFilterRuleUpdateParam.DestinationPort, "destination-port", "", "", "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]")
+	fs.StringVarP(&packetFilterRuleUpdateParam.Action, "action", "", "", "set action[allow/deny]")
+	fs.StringVarP(&packetFilterRuleUpdateParam.Description, "description", "", "", "set resource description")
+	fs.BoolVarP(&packetFilterRuleUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&packetFilterRuleUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&packetFilterRuleUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&packetFilterRuleUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&packetFilterRuleUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&packetFilterRuleUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&packetFilterRuleUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&packetFilterRuleUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&packetFilterRuleUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&packetFilterRuleUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterRuleUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterRuleUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&packetFilterRuleUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &packetFilterRuleUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var packetFilterRuleDeleteCmd = &cobra.Command{
@@ -220,6 +330,20 @@ var packetFilterRuleDeleteCmd = &cobra.Command{
 func packetFilterRuleDeleteCmdInit() {
 	fs := packetFilterRuleDeleteCmd.Flags()
 	fs.IntVarP(&packetFilterRuleDeleteParam.Index, "index", "", 0, "index of target rule")
+	fs.BoolVarP(&packetFilterRuleDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&packetFilterRuleDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&packetFilterRuleDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&packetFilterRuleDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&packetFilterRuleDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&packetFilterRuleDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&packetFilterRuleDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&packetFilterRuleDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&packetFilterRuleDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&packetFilterRuleDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterRuleDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&packetFilterRuleDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&packetFilterRuleDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &packetFilterRuleDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var packetFilterInterfaceConnectCmd = &cobra.Command{
@@ -238,6 +362,13 @@ var packetFilterInterfaceConnectCmd = &cobra.Command{
 func packetFilterInterfaceConnectCmdInit() {
 	fs := packetFilterInterfaceConnectCmd.Flags()
 	fs.VarP(newIDValue(0, &packetFilterInterfaceConnectParam.InterfaceId), "interface-id", "", "set interface ID")
+	fs.BoolVarP(&packetFilterInterfaceConnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&packetFilterInterfaceConnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&packetFilterInterfaceConnectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&packetFilterInterfaceConnectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&packetFilterInterfaceConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&packetFilterInterfaceConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &packetFilterInterfaceConnectParam.Id), "id", "", "Set target ID")
 }
 
 var packetFilterInterfaceDisconnectCmd = &cobra.Command{
@@ -256,6 +387,13 @@ var packetFilterInterfaceDisconnectCmd = &cobra.Command{
 func packetFilterInterfaceDisconnectCmdInit() {
 	fs := packetFilterInterfaceDisconnectCmd.Flags()
 	fs.VarP(newIDValue(0, &packetFilterInterfaceDisconnectParam.InterfaceId), "interface-id", "", "set interface ID")
+	fs.BoolVarP(&packetFilterInterfaceDisconnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&packetFilterInterfaceDisconnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&packetFilterInterfaceDisconnectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&packetFilterInterfaceDisconnectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&packetFilterInterfaceDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&packetFilterInterfaceDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &packetFilterInterfaceDisconnectParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

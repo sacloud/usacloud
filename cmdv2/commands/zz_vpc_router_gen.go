@@ -108,12 +108,24 @@ var vpcRouterListCmd = &cobra.Command{
 
 func vpcRouterListCmdInit() {
 	fs := vpcRouterListCmd.Flags()
-	fs.StringSliceVarP(&vpcRouterListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&vpcRouterListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.StringSliceVarP(&vpcRouterListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &vpcRouterListParam.Id), "id", "", "set filter by id(s)")
+	fs.StringSliceVarP(&vpcRouterListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.IntVarP(&vpcRouterListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&vpcRouterListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&vpcRouterListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&vpcRouterListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var vpcRouterCreateCmd = &cobra.Command{
@@ -131,18 +143,31 @@ var vpcRouterCreateCmd = &cobra.Command{
 
 func vpcRouterCreateCmdInit() {
 	fs := vpcRouterCreateCmd.Flags()
-	fs.StringSliceVarP(&vpcRouterCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &vpcRouterCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringVarP(&vpcRouterCreateParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
-	fs.BoolVarP(&vpcRouterCreateParam.BootAfterCreate, "boot-after-create", "", false, "boot after create")
+	fs.StringVarP(&vpcRouterCreateParam.Plan, "plan", "", "standard", "set plan[standard/premium/highspec/highspec1600/highspec4000]")
+	fs.VarP(newIDValue(0, &vpcRouterCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.IntVarP(&vpcRouterCreateParam.Vrid, "vrid", "", 1, "set VRID")
 	fs.StringVarP(&vpcRouterCreateParam.Vip, "vip", "", "", "set virtual ipddress()")
 	fs.StringVarP(&vpcRouterCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
+	fs.StringVarP(&vpcRouterCreateParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
 	fs.BoolVarP(&vpcRouterCreateParam.DisableInternetConnection, "disable-internet-connection", "", false, "disable internet connection from VPCRouter")
+	fs.BoolVarP(&vpcRouterCreateParam.BootAfterCreate, "boot-after-create", "", false, "boot after create")
 	fs.StringVarP(&vpcRouterCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&vpcRouterCreateParam.Description, "description", "", "", "set resource description")
-	fs.StringVarP(&vpcRouterCreateParam.Plan, "plan", "", "standard", "set plan[standard/premium/highspec/highspec1600/highspec4000]")
-	fs.VarP(newIDValue(0, &vpcRouterCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
+	fs.StringSliceVarP(&vpcRouterCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &vpcRouterCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&vpcRouterCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var vpcRouterReadCmd = &cobra.Command{
@@ -159,6 +184,21 @@ var vpcRouterReadCmd = &cobra.Command{
 }
 
 func vpcRouterReadCmdInit() {
+	fs := vpcRouterReadCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &vpcRouterReadParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterUpdateCmd = &cobra.Command{
@@ -178,10 +218,25 @@ func vpcRouterUpdateCmdInit() {
 	fs := vpcRouterUpdateCmd.Flags()
 	fs.StringVarP(&vpcRouterUpdateParam.SyslogHost, "syslog-host", "", "", "set syslog host IPAddress")
 	fs.BoolVarP(&vpcRouterUpdateParam.InternetConnection, "internet-connection", "", false, "set internet connection from VPCRouter")
+	fs.StringSliceVarP(&vpcRouterUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&vpcRouterUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&vpcRouterUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&vpcRouterUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &vpcRouterUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&vpcRouterUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &vpcRouterUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterDeleteCmd = &cobra.Command{
@@ -200,6 +255,21 @@ var vpcRouterDeleteCmd = &cobra.Command{
 func vpcRouterDeleteCmdInit() {
 	fs := vpcRouterDeleteCmd.Flags()
 	fs.BoolVarP(&vpcRouterDeleteParam.Force, "force", "f", false, "forced-shutdown flag if server is running")
+	fs.StringSliceVarP(&vpcRouterDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &vpcRouterDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterBootCmd = &cobra.Command{
@@ -216,6 +286,15 @@ var vpcRouterBootCmd = &cobra.Command{
 }
 
 func vpcRouterBootCmdInit() {
+	fs := vpcRouterBootCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterBootParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterBootParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterBootParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterShutdownCmd = &cobra.Command{
@@ -232,6 +311,15 @@ var vpcRouterShutdownCmd = &cobra.Command{
 }
 
 func vpcRouterShutdownCmdInit() {
+	fs := vpcRouterShutdownCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterShutdownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterShutdownParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterShutdownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterShutdownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterShutdownParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterShutdownParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterShutdownForceCmd = &cobra.Command{
@@ -248,6 +336,15 @@ var vpcRouterShutdownForceCmd = &cobra.Command{
 }
 
 func vpcRouterShutdownForceCmdInit() {
+	fs := vpcRouterShutdownForceCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterShutdownForceParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterShutdownForceParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterShutdownForceParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterShutdownForceParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterShutdownForceParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterShutdownForceParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterResetCmd = &cobra.Command{
@@ -264,6 +361,15 @@ var vpcRouterResetCmd = &cobra.Command{
 }
 
 func vpcRouterResetCmdInit() {
+	fs := vpcRouterResetCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterResetParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterResetParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterResetParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterResetParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterResetParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterResetParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterWaitForBootCmd = &cobra.Command{
@@ -280,6 +386,14 @@ var vpcRouterWaitForBootCmd = &cobra.Command{
 }
 
 func vpcRouterWaitForBootCmdInit() {
+	fs := vpcRouterWaitForBootCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterWaitForBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterWaitForBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterWaitForBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterWaitForBootParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterWaitForBootParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterWaitForDownCmd = &cobra.Command{
@@ -296,6 +410,14 @@ var vpcRouterWaitForDownCmd = &cobra.Command{
 }
 
 func vpcRouterWaitForDownCmdInit() {
+	fs := vpcRouterWaitForDownCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterWaitForDownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterWaitForDownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterWaitForDownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterWaitForDownParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterWaitForDownParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterEnableInternetConnectionCmd = &cobra.Command{
@@ -312,6 +434,15 @@ var vpcRouterEnableInternetConnectionCmd = &cobra.Command{
 }
 
 func vpcRouterEnableInternetConnectionCmdInit() {
+	fs := vpcRouterEnableInternetConnectionCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterEnableInternetConnectionParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterEnableInternetConnectionParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterEnableInternetConnectionParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterEnableInternetConnectionParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterEnableInternetConnectionParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterEnableInternetConnectionParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterEnableInternetConnectionParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterEnableInternetConnectionParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterDisableInternetConnectionCmd = &cobra.Command{
@@ -328,6 +459,15 @@ var vpcRouterDisableInternetConnectionCmd = &cobra.Command{
 }
 
 func vpcRouterDisableInternetConnectionCmdInit() {
+	fs := vpcRouterDisableInternetConnectionCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterDisableInternetConnectionParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterDisableInternetConnectionParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterDisableInternetConnectionParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterDisableInternetConnectionParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterDisableInternetConnectionParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterDisableInternetConnectionParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterDisableInternetConnectionParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterDisableInternetConnectionParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterInterfaceInfoCmd = &cobra.Command{
@@ -344,6 +484,21 @@ var vpcRouterInterfaceInfoCmd = &cobra.Command{
 }
 
 func vpcRouterInterfaceInfoCmdInit() {
+	fs := vpcRouterInterfaceInfoCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterInterfaceInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterInterfaceInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterInterfaceInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterInterfaceInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterInterfaceInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterInterfaceInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterInterfaceInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterInterfaceInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterInterfaceInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterInterfaceInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterInterfaceInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterInterfaceInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterInterfaceInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &vpcRouterInterfaceInfoParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterInterfaceConnectCmd = &cobra.Command{
@@ -361,13 +516,21 @@ var vpcRouterInterfaceConnectCmd = &cobra.Command{
 
 func vpcRouterInterfaceConnectCmdInit() {
 	fs := vpcRouterInterfaceConnectCmd.Flags()
-	fs.VarP(newIDValue(0, &vpcRouterInterfaceConnectParam.SwitchId), "switch-id", "", "set connect switch ID")
+	fs.StringVarP(&vpcRouterInterfaceConnectParam.Interface, "interface", "", "", "index of target private-interface")
 	fs.StringVarP(&vpcRouterInterfaceConnectParam.Ipaddress, "ipaddress", "", "", "set (virtual)ipaddress")
+	fs.BoolVarP(&vpcRouterInterfaceConnectParam.WithReboot, "with-reboot", "", false, "reboot after connect")
 	fs.StringVarP(&vpcRouterInterfaceConnectParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
+	fs.VarP(newIDValue(0, &vpcRouterInterfaceConnectParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.StringVarP(&vpcRouterInterfaceConnectParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
 	fs.IntVarP(&vpcRouterInterfaceConnectParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress prefix")
-	fs.BoolVarP(&vpcRouterInterfaceConnectParam.WithReboot, "with-reboot", "", false, "reboot after connect")
-	fs.StringVarP(&vpcRouterInterfaceConnectParam.Interface, "interface", "", "", "index of target private-interface")
+	fs.StringSliceVarP(&vpcRouterInterfaceConnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterInterfaceConnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterInterfaceConnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterInterfaceConnectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterInterfaceConnectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterInterfaceConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterInterfaceConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterInterfaceConnectParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterInterfaceUpdateCmd = &cobra.Command{
@@ -385,14 +548,22 @@ var vpcRouterInterfaceUpdateCmd = &cobra.Command{
 
 func vpcRouterInterfaceUpdateCmdInit() {
 	fs := vpcRouterInterfaceUpdateCmd.Flags()
-	fs.IntVarP(&vpcRouterInterfaceUpdateParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress prefix")
-	fs.BoolVarP(&vpcRouterInterfaceUpdateParam.WithReboot, "with-reboot", "", false, "reboot after connect")
 	fs.StringVarP(&vpcRouterInterfaceUpdateParam.Interface, "interface", "", "", "index of target interface")
-	fs.VarP(newIDValue(0, &vpcRouterInterfaceUpdateParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.StringVarP(&vpcRouterInterfaceUpdateParam.Ipaddress, "ipaddress", "", "", "set (virtual)ipaddress")
+	fs.BoolVarP(&vpcRouterInterfaceUpdateParam.WithReboot, "with-reboot", "", false, "reboot after connect")
 	fs.StringVarP(&vpcRouterInterfaceUpdateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
+	fs.VarP(newIDValue(0, &vpcRouterInterfaceUpdateParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.StringVarP(&vpcRouterInterfaceUpdateParam.Ipaddress2, "ipaddress-2", "", "", "set ipaddress(#2)")
 	fs.StringSliceVarP(&vpcRouterInterfaceUpdateParam.Alias, "alias", "", []string{}, "set ip aliases")
+	fs.IntVarP(&vpcRouterInterfaceUpdateParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress prefix")
+	fs.StringSliceVarP(&vpcRouterInterfaceUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterInterfaceUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterInterfaceUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterInterfaceUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterInterfaceUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterInterfaceUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterInterfaceUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterInterfaceUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterInterfaceDisconnectCmd = &cobra.Command{
@@ -412,6 +583,14 @@ func vpcRouterInterfaceDisconnectCmdInit() {
 	fs := vpcRouterInterfaceDisconnectCmd.Flags()
 	fs.StringVarP(&vpcRouterInterfaceDisconnectParam.Interface, "interface", "", "", "index of target private-interface")
 	fs.BoolVarP(&vpcRouterInterfaceDisconnectParam.WithReboot, "with-reboot", "", false, "reboot after connect")
+	fs.StringSliceVarP(&vpcRouterInterfaceDisconnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterInterfaceDisconnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterInterfaceDisconnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterInterfaceDisconnectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterInterfaceDisconnectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterInterfaceDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterInterfaceDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterInterfaceDisconnectParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterStaticNatInfoCmd = &cobra.Command{
@@ -428,6 +607,21 @@ var vpcRouterStaticNatInfoCmd = &cobra.Command{
 }
 
 func vpcRouterStaticNatInfoCmdInit() {
+	fs := vpcRouterStaticNatInfoCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterStaticNatInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterStaticNatInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterStaticNatInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterStaticNatInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterStaticNatInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterStaticNatInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterStaticNatInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterStaticNatInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterStaticNatInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterStaticNatInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterStaticNatInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterStaticNatInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterStaticNatInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &vpcRouterStaticNatInfoParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterStaticNatAddCmd = &cobra.Command{
@@ -445,9 +639,17 @@ var vpcRouterStaticNatAddCmd = &cobra.Command{
 
 func vpcRouterStaticNatAddCmdInit() {
 	fs := vpcRouterStaticNatAddCmd.Flags()
+	fs.StringVarP(&vpcRouterStaticNatAddParam.Global, "global", "", "", "set global ipaddress")
 	fs.StringVarP(&vpcRouterStaticNatAddParam.Private, "private", "", "", "set private ipaddress")
 	fs.StringVarP(&vpcRouterStaticNatAddParam.Description, "description", "", "", "set description")
-	fs.StringVarP(&vpcRouterStaticNatAddParam.Global, "global", "", "", "set global ipaddress")
+	fs.StringSliceVarP(&vpcRouterStaticNatAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterStaticNatAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterStaticNatAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterStaticNatAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterStaticNatAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterStaticNatAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterStaticNatAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterStaticNatAddParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterStaticNatUpdateCmd = &cobra.Command{
@@ -465,10 +667,18 @@ var vpcRouterStaticNatUpdateCmd = &cobra.Command{
 
 func vpcRouterStaticNatUpdateCmdInit() {
 	fs := vpcRouterStaticNatUpdateCmd.Flags()
+	fs.IntVarP(&vpcRouterStaticNatUpdateParam.Index, "index", "", 0, "index of target static NAT")
 	fs.StringVarP(&vpcRouterStaticNatUpdateParam.Global, "global", "", "", "set global ipaddress")
 	fs.StringVarP(&vpcRouterStaticNatUpdateParam.Private, "private", "", "", "set private ipaddress")
 	fs.StringVarP(&vpcRouterStaticNatUpdateParam.Description, "description", "", "", "set description")
-	fs.IntVarP(&vpcRouterStaticNatUpdateParam.Index, "index", "", 0, "index of target static NAT")
+	fs.StringSliceVarP(&vpcRouterStaticNatUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterStaticNatUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterStaticNatUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterStaticNatUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterStaticNatUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterStaticNatUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterStaticNatUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterStaticNatUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterStaticNatDeleteCmd = &cobra.Command{
@@ -487,6 +697,14 @@ var vpcRouterStaticNatDeleteCmd = &cobra.Command{
 func vpcRouterStaticNatDeleteCmdInit() {
 	fs := vpcRouterStaticNatDeleteCmd.Flags()
 	fs.IntVarP(&vpcRouterStaticNatDeleteParam.Index, "index", "", 0, "index of target static NAT")
+	fs.StringSliceVarP(&vpcRouterStaticNatDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterStaticNatDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterStaticNatDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterStaticNatDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterStaticNatDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterStaticNatDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterStaticNatDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterStaticNatDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterPortForwardingInfoCmd = &cobra.Command{
@@ -503,6 +721,21 @@ var vpcRouterPortForwardingInfoCmd = &cobra.Command{
 }
 
 func vpcRouterPortForwardingInfoCmdInit() {
+	fs := vpcRouterPortForwardingInfoCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterPortForwardingInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterPortForwardingInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterPortForwardingInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterPortForwardingInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterPortForwardingInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterPortForwardingInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterPortForwardingInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterPortForwardingInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterPortForwardingInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterPortForwardingInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterPortForwardingInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterPortForwardingInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterPortForwardingInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &vpcRouterPortForwardingInfoParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterPortForwardingAddCmd = &cobra.Command{
@@ -520,11 +753,19 @@ var vpcRouterPortForwardingAddCmd = &cobra.Command{
 
 func vpcRouterPortForwardingAddCmdInit() {
 	fs := vpcRouterPortForwardingAddCmd.Flags()
-	fs.IntVarP(&vpcRouterPortForwardingAddParam.PrivatePort, "private-port", "", 0, "set private ipaddress")
-	fs.StringVarP(&vpcRouterPortForwardingAddParam.Description, "description", "", "", "set description")
 	fs.StringVarP(&vpcRouterPortForwardingAddParam.Protocol, "protocol", "", "", "set target protocol")
 	fs.IntVarP(&vpcRouterPortForwardingAddParam.GlobalPort, "global-port", "", 0, "set global ipaddress")
 	fs.StringVarP(&vpcRouterPortForwardingAddParam.PrivateIpaddress, "private-ipaddress", "", "", "set private ipaddress")
+	fs.IntVarP(&vpcRouterPortForwardingAddParam.PrivatePort, "private-port", "", 0, "set private ipaddress")
+	fs.StringVarP(&vpcRouterPortForwardingAddParam.Description, "description", "", "", "set description")
+	fs.StringSliceVarP(&vpcRouterPortForwardingAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterPortForwardingAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterPortForwardingAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterPortForwardingAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterPortForwardingAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterPortForwardingAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterPortForwardingAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterPortForwardingAddParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterPortForwardingUpdateCmd = &cobra.Command{
@@ -542,12 +783,20 @@ var vpcRouterPortForwardingUpdateCmd = &cobra.Command{
 
 func vpcRouterPortForwardingUpdateCmdInit() {
 	fs := vpcRouterPortForwardingUpdateCmd.Flags()
-	fs.IntVarP(&vpcRouterPortForwardingUpdateParam.PrivatePort, "private-port", "", 0, "set private ipaddress")
-	fs.StringVarP(&vpcRouterPortForwardingUpdateParam.Description, "description", "", "", "set description")
 	fs.IntVarP(&vpcRouterPortForwardingUpdateParam.Index, "index", "", 0, "index of target PortForward")
 	fs.StringVarP(&vpcRouterPortForwardingUpdateParam.Protocol, "protocol", "", "", "set target protocol")
 	fs.IntVarP(&vpcRouterPortForwardingUpdateParam.GlobalPort, "global-port", "", 0, "set global ipaddress")
 	fs.StringVarP(&vpcRouterPortForwardingUpdateParam.PrivateIpaddress, "private-ipaddress", "", "", "set private ipaddress")
+	fs.IntVarP(&vpcRouterPortForwardingUpdateParam.PrivatePort, "private-port", "", 0, "set private ipaddress")
+	fs.StringVarP(&vpcRouterPortForwardingUpdateParam.Description, "description", "", "", "set description")
+	fs.StringSliceVarP(&vpcRouterPortForwardingUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterPortForwardingUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterPortForwardingUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterPortForwardingUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterPortForwardingUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterPortForwardingUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterPortForwardingUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterPortForwardingUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterPortForwardingDeleteCmd = &cobra.Command{
@@ -566,6 +815,14 @@ var vpcRouterPortForwardingDeleteCmd = &cobra.Command{
 func vpcRouterPortForwardingDeleteCmdInit() {
 	fs := vpcRouterPortForwardingDeleteCmd.Flags()
 	fs.IntVarP(&vpcRouterPortForwardingDeleteParam.Index, "index", "", 0, "index of target PortForward")
+	fs.StringSliceVarP(&vpcRouterPortForwardingDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterPortForwardingDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterPortForwardingDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterPortForwardingDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterPortForwardingDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterPortForwardingDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterPortForwardingDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterPortForwardingDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterFirewallInfoCmd = &cobra.Command{
@@ -585,6 +842,20 @@ func vpcRouterFirewallInfoCmdInit() {
 	fs := vpcRouterFirewallInfoCmd.Flags()
 	fs.IntVarP(&vpcRouterFirewallInfoParam.Interface, "interface", "", 0, "set target NIC index")
 	fs.StringVarP(&vpcRouterFirewallInfoParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
+	fs.StringSliceVarP(&vpcRouterFirewallInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterFirewallInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterFirewallInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterFirewallInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterFirewallInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterFirewallInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterFirewallInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterFirewallInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterFirewallInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterFirewallInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterFirewallInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterFirewallInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterFirewallInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &vpcRouterFirewallInfoParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterFirewallAddCmd = &cobra.Command{
@@ -602,16 +873,24 @@ var vpcRouterFirewallAddCmd = &cobra.Command{
 
 func vpcRouterFirewallAddCmdInit() {
 	fs := vpcRouterFirewallAddCmd.Flags()
+	fs.IntVarP(&vpcRouterFirewallAddParam.Interface, "interface", "", 0, "set target NIC index")
+	fs.StringVarP(&vpcRouterFirewallAddParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
 	fs.StringVarP(&vpcRouterFirewallAddParam.Protocol, "protocol", "", "", "set target protocol")
+	fs.StringVarP(&vpcRouterFirewallAddParam.SourceNetwork, "source-network", "", "", "set source ipaddress or network address")
+	fs.IntVarP(&vpcRouterFirewallAddParam.SourcePort, "source-port", "", 0, "set source port")
 	fs.StringVarP(&vpcRouterFirewallAddParam.DestinationNetwork, "destination-network", "", "", "set destination ipaddress or network address")
 	fs.IntVarP(&vpcRouterFirewallAddParam.DestinationPort, "destination-port", "", 0, "set destination port")
 	fs.StringVarP(&vpcRouterFirewallAddParam.Action, "action", "", "deny", "set action[allow/deny]")
-	fs.IntVarP(&vpcRouterFirewallAddParam.Interface, "interface", "", 0, "set target NIC index")
-	fs.StringVarP(&vpcRouterFirewallAddParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
 	fs.BoolVarP(&vpcRouterFirewallAddParam.EnableLogging, "enable-logging", "", false, "enable logging")
 	fs.StringVarP(&vpcRouterFirewallAddParam.Description, "description", "", "", "set description")
-	fs.StringVarP(&vpcRouterFirewallAddParam.SourceNetwork, "source-network", "", "", "set source ipaddress or network address")
-	fs.IntVarP(&vpcRouterFirewallAddParam.SourcePort, "source-port", "", 0, "set source port")
+	fs.StringSliceVarP(&vpcRouterFirewallAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterFirewallAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterFirewallAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterFirewallAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterFirewallAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterFirewallAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterFirewallAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterFirewallAddParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterFirewallUpdateCmd = &cobra.Command{
@@ -630,16 +909,24 @@ var vpcRouterFirewallUpdateCmd = &cobra.Command{
 func vpcRouterFirewallUpdateCmdInit() {
 	fs := vpcRouterFirewallUpdateCmd.Flags()
 	fs.IntVarP(&vpcRouterFirewallUpdateParam.Interface, "interface", "", 0, "set target NIC index")
+	fs.StringVarP(&vpcRouterFirewallUpdateParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
 	fs.IntVarP(&vpcRouterFirewallUpdateParam.Index, "index", "", 0, "index of target Firewall rule")
+	fs.StringVarP(&vpcRouterFirewallUpdateParam.Protocol, "protocol", "", "", "set target protocol")
+	fs.StringVarP(&vpcRouterFirewallUpdateParam.SourceNetwork, "source-network", "", "", "set source ipaddress or network address")
 	fs.IntVarP(&vpcRouterFirewallUpdateParam.SourcePort, "source-port", "", 0, "set source port")
 	fs.StringVarP(&vpcRouterFirewallUpdateParam.DestinationNetwork, "destination-network", "", "", "set destination ipaddress or network address")
 	fs.IntVarP(&vpcRouterFirewallUpdateParam.DestinationPort, "destination-port", "", 0, "set destination port")
 	fs.StringVarP(&vpcRouterFirewallUpdateParam.Action, "action", "", "deny", "set action[allow/deny]")
 	fs.BoolVarP(&vpcRouterFirewallUpdateParam.EnableLogging, "enable-logging", "", false, "enable logging")
 	fs.StringVarP(&vpcRouterFirewallUpdateParam.Description, "description", "", "", "set description")
-	fs.StringVarP(&vpcRouterFirewallUpdateParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
-	fs.StringVarP(&vpcRouterFirewallUpdateParam.Protocol, "protocol", "", "", "set target protocol")
-	fs.StringVarP(&vpcRouterFirewallUpdateParam.SourceNetwork, "source-network", "", "", "set source ipaddress or network address")
+	fs.StringSliceVarP(&vpcRouterFirewallUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterFirewallUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterFirewallUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterFirewallUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterFirewallUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterFirewallUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterFirewallUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterFirewallUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterFirewallDeleteCmd = &cobra.Command{
@@ -660,6 +947,14 @@ func vpcRouterFirewallDeleteCmdInit() {
 	fs.IntVarP(&vpcRouterFirewallDeleteParam.Interface, "interface", "", 0, "set target NIC index")
 	fs.StringVarP(&vpcRouterFirewallDeleteParam.Direction, "direction", "", "receive", "set target direction[send/receive]")
 	fs.IntVarP(&vpcRouterFirewallDeleteParam.Index, "index", "", 0, "index of target Firewall rule")
+	fs.StringSliceVarP(&vpcRouterFirewallDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterFirewallDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterFirewallDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterFirewallDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterFirewallDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterFirewallDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterFirewallDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterFirewallDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterDhcpServerInfoCmd = &cobra.Command{
@@ -676,6 +971,21 @@ var vpcRouterDhcpServerInfoCmd = &cobra.Command{
 }
 
 func vpcRouterDhcpServerInfoCmdInit() {
+	fs := vpcRouterDhcpServerInfoCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterDhcpServerInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterDhcpServerInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterDhcpServerInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterDhcpServerInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterDhcpServerInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterDhcpServerInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterDhcpServerInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterDhcpServerInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterDhcpServerInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterDhcpServerInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterDhcpServerInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterDhcpServerInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterDhcpServerInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &vpcRouterDhcpServerInfoParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterDhcpServerAddCmd = &cobra.Command{
@@ -697,6 +1007,14 @@ func vpcRouterDhcpServerAddCmdInit() {
 	fs.StringVarP(&vpcRouterDhcpServerAddParam.RangeStart, "range-start", "", "", "set DHCP IPAddress Range(start)")
 	fs.StringVarP(&vpcRouterDhcpServerAddParam.RangeStop, "range-stop", "", "", "set DHCP IPAddress Range(stop)")
 	fs.StringSliceVarP(&vpcRouterDhcpServerAddParam.DNSServers, "dns-servers", "", []string{}, "set DNS Server IPAddress")
+	fs.StringSliceVarP(&vpcRouterDhcpServerAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterDhcpServerAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterDhcpServerAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterDhcpServerAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterDhcpServerAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterDhcpServerAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterDhcpServerAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterDhcpServerAddParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterDhcpServerUpdateCmd = &cobra.Command{
@@ -714,10 +1032,18 @@ var vpcRouterDhcpServerUpdateCmd = &cobra.Command{
 
 func vpcRouterDhcpServerUpdateCmdInit() {
 	fs := vpcRouterDhcpServerUpdateCmd.Flags()
-	fs.StringSliceVarP(&vpcRouterDhcpServerUpdateParam.DNSServers, "dns-servers", "", []string{}, "set DNS Server IPAddress")
 	fs.IntVarP(&vpcRouterDhcpServerUpdateParam.Interface, "interface", "", 0, "set target NIC(private NIC index)")
 	fs.StringVarP(&vpcRouterDhcpServerUpdateParam.RangeStart, "range-start", "", "", "set DHCP IPAddress Range(start)")
 	fs.StringVarP(&vpcRouterDhcpServerUpdateParam.RangeStop, "range-stop", "", "", "set DHCP IPAddress Range(stop)")
+	fs.StringSliceVarP(&vpcRouterDhcpServerUpdateParam.DNSServers, "dns-servers", "", []string{}, "set DNS Server IPAddress")
+	fs.StringSliceVarP(&vpcRouterDhcpServerUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterDhcpServerUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterDhcpServerUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterDhcpServerUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterDhcpServerUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterDhcpServerUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterDhcpServerUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterDhcpServerUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterDhcpServerDeleteCmd = &cobra.Command{
@@ -736,6 +1062,14 @@ var vpcRouterDhcpServerDeleteCmd = &cobra.Command{
 func vpcRouterDhcpServerDeleteCmdInit() {
 	fs := vpcRouterDhcpServerDeleteCmd.Flags()
 	fs.IntVarP(&vpcRouterDhcpServerDeleteParam.Interface, "interface", "", 0, "set target NIC(private NIC index)")
+	fs.StringSliceVarP(&vpcRouterDhcpServerDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterDhcpServerDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterDhcpServerDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterDhcpServerDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterDhcpServerDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterDhcpServerDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterDhcpServerDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterDhcpServerDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterDhcpStaticMappingInfoCmd = &cobra.Command{
@@ -752,6 +1086,21 @@ var vpcRouterDhcpStaticMappingInfoCmd = &cobra.Command{
 }
 
 func vpcRouterDhcpStaticMappingInfoCmdInit() {
+	fs := vpcRouterDhcpStaticMappingInfoCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterDhcpStaticMappingInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterDhcpStaticMappingInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterDhcpStaticMappingInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterDhcpStaticMappingInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &vpcRouterDhcpStaticMappingInfoParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterDhcpStaticMappingAddCmd = &cobra.Command{
@@ -769,8 +1118,16 @@ var vpcRouterDhcpStaticMappingAddCmd = &cobra.Command{
 
 func vpcRouterDhcpStaticMappingAddCmdInit() {
 	fs := vpcRouterDhcpStaticMappingAddCmd.Flags()
-	fs.StringVarP(&vpcRouterDhcpStaticMappingAddParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
 	fs.StringVarP(&vpcRouterDhcpStaticMappingAddParam.Macaddress, "macaddress", "", "", "set mac address")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingAddParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
+	fs.StringSliceVarP(&vpcRouterDhcpStaticMappingAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterDhcpStaticMappingAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterDhcpStaticMappingAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterDhcpStaticMappingAddParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterDhcpStaticMappingUpdateCmd = &cobra.Command{
@@ -791,6 +1148,14 @@ func vpcRouterDhcpStaticMappingUpdateCmdInit() {
 	fs.IntVarP(&vpcRouterDhcpStaticMappingUpdateParam.Index, "index", "", 0, "index of target DHCP static mapping")
 	fs.StringVarP(&vpcRouterDhcpStaticMappingUpdateParam.Macaddress, "macaddress", "", "", "set mac address")
 	fs.StringVarP(&vpcRouterDhcpStaticMappingUpdateParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
+	fs.StringSliceVarP(&vpcRouterDhcpStaticMappingUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterDhcpStaticMappingUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterDhcpStaticMappingUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterDhcpStaticMappingUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterDhcpStaticMappingDeleteCmd = &cobra.Command{
@@ -809,6 +1174,14 @@ var vpcRouterDhcpStaticMappingDeleteCmd = &cobra.Command{
 func vpcRouterDhcpStaticMappingDeleteCmdInit() {
 	fs := vpcRouterDhcpStaticMappingDeleteCmd.Flags()
 	fs.IntVarP(&vpcRouterDhcpStaticMappingDeleteParam.Index, "index", "", 0, "index of target DHCP static mapping")
+	fs.StringSliceVarP(&vpcRouterDhcpStaticMappingDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterDhcpStaticMappingDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterDhcpStaticMappingDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterDhcpStaticMappingDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterDhcpStaticMappingDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterPptpServerInfoCmd = &cobra.Command{
@@ -825,6 +1198,21 @@ var vpcRouterPptpServerInfoCmd = &cobra.Command{
 }
 
 func vpcRouterPptpServerInfoCmdInit() {
+	fs := vpcRouterPptpServerInfoCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterPptpServerInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterPptpServerInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterPptpServerInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterPptpServerInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterPptpServerInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterPptpServerInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterPptpServerInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterPptpServerInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterPptpServerInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterPptpServerInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterPptpServerInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterPptpServerInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterPptpServerInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &vpcRouterPptpServerInfoParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterPptpServerUpdateCmd = &cobra.Command{
@@ -845,6 +1233,14 @@ func vpcRouterPptpServerUpdateCmdInit() {
 	fs.BoolVarP(&vpcRouterPptpServerUpdateParam.Disabled, "disabled", "", false, "enable/disable PPTP server")
 	fs.StringVarP(&vpcRouterPptpServerUpdateParam.RangeStart, "range-start", "", "", "set IPAddress Range(start)")
 	fs.StringVarP(&vpcRouterPptpServerUpdateParam.RangeStop, "range-stop", "", "", "set IPAddress Range(stop)")
+	fs.StringSliceVarP(&vpcRouterPptpServerUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterPptpServerUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterPptpServerUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterPptpServerUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterPptpServerUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterPptpServerUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterPptpServerUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterPptpServerUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterL2TPServerInfoCmd = &cobra.Command{
@@ -861,6 +1257,21 @@ var vpcRouterL2TPServerInfoCmd = &cobra.Command{
 }
 
 func vpcRouterL2TPServerInfoCmdInit() {
+	fs := vpcRouterL2TPServerInfoCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterL2TPServerInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterL2TPServerInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterL2TPServerInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterL2TPServerInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterL2TPServerInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterL2TPServerInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterL2TPServerInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterL2TPServerInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterL2TPServerInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterL2TPServerInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterL2TPServerInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterL2TPServerInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterL2TPServerInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &vpcRouterL2TPServerInfoParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterL2TPServerUpdateCmd = &cobra.Command{
@@ -882,6 +1293,14 @@ func vpcRouterL2TPServerUpdateCmdInit() {
 	fs.StringVarP(&vpcRouterL2TPServerUpdateParam.RangeStart, "range-start", "", "", "set IPAddress Range(start)")
 	fs.StringVarP(&vpcRouterL2TPServerUpdateParam.RangeStop, "range-stop", "", "", "set IPAddress Range(stop)")
 	fs.StringVarP(&vpcRouterL2TPServerUpdateParam.PreSharedSecret, "pre-shared-secret", "", "", "set PreSharedSecret")
+	fs.StringSliceVarP(&vpcRouterL2TPServerUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterL2TPServerUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterL2TPServerUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterL2TPServerUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterL2TPServerUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterL2TPServerUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterL2TPServerUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterL2TPServerUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterUserInfoCmd = &cobra.Command{
@@ -898,6 +1317,21 @@ var vpcRouterUserInfoCmd = &cobra.Command{
 }
 
 func vpcRouterUserInfoCmdInit() {
+	fs := vpcRouterUserInfoCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterUserInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterUserInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterUserInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterUserInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterUserInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterUserInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterUserInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterUserInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterUserInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterUserInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterUserInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterUserInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterUserInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &vpcRouterUserInfoParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterUserAddCmd = &cobra.Command{
@@ -917,6 +1351,14 @@ func vpcRouterUserAddCmdInit() {
 	fs := vpcRouterUserAddCmd.Flags()
 	fs.StringVarP(&vpcRouterUserAddParam.Username, "username", "", "", "set remote-access username")
 	fs.StringVarP(&vpcRouterUserAddParam.Password, "password", "", "", "set remote-access password")
+	fs.StringSliceVarP(&vpcRouterUserAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterUserAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterUserAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterUserAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterUserAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterUserAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterUserAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterUserAddParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterUserUpdateCmd = &cobra.Command{
@@ -937,6 +1379,14 @@ func vpcRouterUserUpdateCmdInit() {
 	fs.IntVarP(&vpcRouterUserUpdateParam.Index, "index", "", 0, "index of target remote-access user")
 	fs.StringVarP(&vpcRouterUserUpdateParam.Username, "username", "", "", "set remote-access username")
 	fs.StringVarP(&vpcRouterUserUpdateParam.Password, "password", "", "", "set remote-access password")
+	fs.StringSliceVarP(&vpcRouterUserUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterUserUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterUserUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterUserUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterUserUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterUserUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterUserUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterUserUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterUserDeleteCmd = &cobra.Command{
@@ -955,6 +1405,14 @@ var vpcRouterUserDeleteCmd = &cobra.Command{
 func vpcRouterUserDeleteCmdInit() {
 	fs := vpcRouterUserDeleteCmd.Flags()
 	fs.IntVarP(&vpcRouterUserDeleteParam.Index, "index", "", 0, "index of target remote-access user")
+	fs.StringSliceVarP(&vpcRouterUserDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterUserDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterUserDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterUserDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterUserDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterUserDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterUserDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterUserDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterSiteToSiteVPNInfoCmd = &cobra.Command{
@@ -971,6 +1429,21 @@ var vpcRouterSiteToSiteVPNInfoCmd = &cobra.Command{
 }
 
 func vpcRouterSiteToSiteVPNInfoCmdInit() {
+	fs := vpcRouterSiteToSiteVPNInfoCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterSiteToSiteVPNInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterSiteToSiteVPNInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &vpcRouterSiteToSiteVPNInfoParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterSiteToSiteVPNAddCmd = &cobra.Command{
@@ -993,6 +1466,14 @@ func vpcRouterSiteToSiteVPNAddCmdInit() {
 	fs.StringVarP(&vpcRouterSiteToSiteVPNAddParam.PreSharedSecret, "pre-shared-secret", "", "", "set pre-shared-secret")
 	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNAddParam.Routes, "routes", "", []string{}, "set route list")
 	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNAddParam.LocalPrefix, "local-prefix", "", []string{}, "set local prefix list")
+	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterSiteToSiteVPNAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterSiteToSiteVPNAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterSiteToSiteVPNAddParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterSiteToSiteVPNUpdateCmd = &cobra.Command{
@@ -1010,12 +1491,20 @@ var vpcRouterSiteToSiteVPNUpdateCmd = &cobra.Command{
 
 func vpcRouterSiteToSiteVPNUpdateCmdInit() {
 	fs := vpcRouterSiteToSiteVPNUpdateCmd.Flags()
-	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNUpdateParam.Routes, "routes", "", []string{}, "set route list")
-	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNUpdateParam.LocalPrefix, "local-prefix", "", []string{}, "set local prefix list")
 	fs.IntVarP(&vpcRouterSiteToSiteVPNUpdateParam.Index, "index", "", 0, "index of target remote-access user")
 	fs.StringVarP(&vpcRouterSiteToSiteVPNUpdateParam.Peer, "peer", "", "", "set peer address")
 	fs.StringVarP(&vpcRouterSiteToSiteVPNUpdateParam.RemoteId, "remote-id", "", "", "set remote-id")
 	fs.StringVarP(&vpcRouterSiteToSiteVPNUpdateParam.PreSharedSecret, "pre-shared-secret", "", "", "set pre-shared-secret")
+	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNUpdateParam.Routes, "routes", "", []string{}, "set route list")
+	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNUpdateParam.LocalPrefix, "local-prefix", "", []string{}, "set local prefix list")
+	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterSiteToSiteVPNUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterSiteToSiteVPNUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterSiteToSiteVPNUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterSiteToSiteVPNDeleteCmd = &cobra.Command{
@@ -1034,6 +1523,14 @@ var vpcRouterSiteToSiteVPNDeleteCmd = &cobra.Command{
 func vpcRouterSiteToSiteVPNDeleteCmdInit() {
 	fs := vpcRouterSiteToSiteVPNDeleteCmd.Flags()
 	fs.IntVarP(&vpcRouterSiteToSiteVPNDeleteParam.Index, "index", "", 0, "index of target remote-access user")
+	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterSiteToSiteVPNDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterSiteToSiteVPNDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterSiteToSiteVPNDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterSiteToSiteVPNPeersCmd = &cobra.Command{
@@ -1050,6 +1547,21 @@ var vpcRouterSiteToSiteVPNPeersCmd = &cobra.Command{
 }
 
 func vpcRouterSiteToSiteVPNPeersCmdInit() {
+	fs := vpcRouterSiteToSiteVPNPeersCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNPeersParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNPeersParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNPeersParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNPeersParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNPeersParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterSiteToSiteVPNPeersParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNPeersParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterSiteToSiteVPNPeersParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterSiteToSiteVPNPeersParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNPeersParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNPeersParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNPeersParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterSiteToSiteVPNPeersParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &vpcRouterSiteToSiteVPNPeersParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterStaticRouteInfoCmd = &cobra.Command{
@@ -1066,6 +1578,21 @@ var vpcRouterStaticRouteInfoCmd = &cobra.Command{
 }
 
 func vpcRouterStaticRouteInfoCmdInit() {
+	fs := vpcRouterStaticRouteInfoCmd.Flags()
+	fs.StringSliceVarP(&vpcRouterStaticRouteInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterStaticRouteInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterStaticRouteInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterStaticRouteInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterStaticRouteInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterStaticRouteInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterStaticRouteInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterStaticRouteInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterStaticRouteInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterStaticRouteInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterStaticRouteInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterStaticRouteInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterStaticRouteInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &vpcRouterStaticRouteInfoParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterStaticRouteAddCmd = &cobra.Command{
@@ -1085,6 +1612,14 @@ func vpcRouterStaticRouteAddCmdInit() {
 	fs := vpcRouterStaticRouteAddCmd.Flags()
 	fs.StringVarP(&vpcRouterStaticRouteAddParam.Prefix, "prefix", "", "", "set prefix")
 	fs.StringVarP(&vpcRouterStaticRouteAddParam.NextHop, "next-hop", "", "", "set next-hop")
+	fs.StringSliceVarP(&vpcRouterStaticRouteAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterStaticRouteAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterStaticRouteAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterStaticRouteAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterStaticRouteAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterStaticRouteAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterStaticRouteAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterStaticRouteAddParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterStaticRouteUpdateCmd = &cobra.Command{
@@ -1105,6 +1640,14 @@ func vpcRouterStaticRouteUpdateCmdInit() {
 	fs.IntVarP(&vpcRouterStaticRouteUpdateParam.Index, "index", "", 0, "index of target static-route")
 	fs.StringVarP(&vpcRouterStaticRouteUpdateParam.Prefix, "prefix", "", "", "set prefix")
 	fs.StringVarP(&vpcRouterStaticRouteUpdateParam.NextHop, "next-hop", "", "", "set next-hop")
+	fs.StringSliceVarP(&vpcRouterStaticRouteUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterStaticRouteUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterStaticRouteUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterStaticRouteUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterStaticRouteUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterStaticRouteUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterStaticRouteUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterStaticRouteUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterStaticRouteDeleteCmd = &cobra.Command{
@@ -1123,6 +1666,14 @@ var vpcRouterStaticRouteDeleteCmd = &cobra.Command{
 func vpcRouterStaticRouteDeleteCmdInit() {
 	fs := vpcRouterStaticRouteDeleteCmd.Flags()
 	fs.IntVarP(&vpcRouterStaticRouteDeleteParam.Index, "index", "", 0, "index of target static-route")
+	fs.StringSliceVarP(&vpcRouterStaticRouteDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&vpcRouterStaticRouteDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&vpcRouterStaticRouteDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterStaticRouteDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterStaticRouteDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterStaticRouteDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterStaticRouteDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterStaticRouteDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterMonitorCmd = &cobra.Command{
@@ -1144,6 +1695,20 @@ func vpcRouterMonitorCmdInit() {
 	fs.StringVarP(&vpcRouterMonitorParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&vpcRouterMonitorParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&vpcRouterMonitorParam.KeyFormat, "key-format", "", "sakuracloud.vpcrouter.{{.ID}}.nic.{{.Index}}", "set monitoring value key-format")
+	fs.StringSliceVarP(&vpcRouterMonitorParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterMonitorParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterMonitorParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterMonitorParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterMonitorParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterMonitorParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&vpcRouterMonitorParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&vpcRouterMonitorParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&vpcRouterMonitorParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&vpcRouterMonitorParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterMonitorParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&vpcRouterMonitorParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&vpcRouterMonitorParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &vpcRouterMonitorParam.Id), "id", "", "Set target ID")
 }
 
 var vpcRouterLogsCmd = &cobra.Command{
@@ -1165,6 +1730,13 @@ func vpcRouterLogsCmdInit() {
 	fs.BoolVarP(&vpcRouterLogsParam.Follow, "follow", "f", false, "follow log output")
 	fs.Int64VarP(&vpcRouterLogsParam.RefreshInterval, "refresh-interval", "", 3, "log refresh interval second")
 	fs.BoolVarP(&vpcRouterLogsParam.ListLogNames, "list-log-names", "", false, "show log-name list")
+	fs.StringSliceVarP(&vpcRouterLogsParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&vpcRouterLogsParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&vpcRouterLogsParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&vpcRouterLogsParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&vpcRouterLogsParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&vpcRouterLogsParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &vpcRouterLogsParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

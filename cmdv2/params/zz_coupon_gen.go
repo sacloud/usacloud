@@ -27,7 +27,19 @@ import (
 
 // ListCouponParam is input parameters for the sacloud API
 type ListCouponParam struct {
-	Usable bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Usable            bool
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -52,8 +64,44 @@ func (p *ListCouponParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListCouponParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
 	if utils.IsEmpty(p.Usable) {
 		p.Usable = false
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -61,6 +109,25 @@ func (p *ListCouponParam) fillValueToSkeleton() {
 func (p *ListCouponParam) validate() error {
 	var errors []error
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -88,10 +155,94 @@ func (p *ListCouponParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListCouponParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListCouponParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListCouponParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListCouponParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListCouponParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListCouponParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListCouponParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListCouponParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListCouponParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListCouponParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListCouponParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListCouponParam) GetOutputType() string {
+	return p.OutputType
+}
 func (p *ListCouponParam) SetUsable(v bool) {
 	p.Usable = v
 }
 
 func (p *ListCouponParam) GetUsable() bool {
 	return p.Usable
+}
+func (p *ListCouponParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListCouponParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListCouponParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListCouponParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListCouponParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListCouponParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListCouponParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListCouponParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListCouponParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListCouponParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListCouponParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListCouponParam) GetQueryFile() string {
+	return p.QueryFile
 }

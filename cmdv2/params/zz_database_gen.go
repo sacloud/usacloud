@@ -29,12 +29,24 @@ import (
 
 // ListDatabaseParam is input parameters for the sacloud API
 type ListDatabaseParam struct {
-	Sort []string
-	Name []string
-	Id   []sacloud.ID
-	From int
-	Max  int
-	Tags []string
+	Name              []string
+	Id                []sacloud.ID
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -59,14 +71,14 @@ func (p *ListDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListDatabaseParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
@@ -74,8 +86,44 @@ func (p *ListDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
 	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -118,6 +166,25 @@ func (p *ListDatabaseParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -145,13 +212,6 @@ func (p *ListDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListDatabaseParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListDatabaseParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListDatabaseParam) SetName(v []string) {
 	p.Name = v
 }
@@ -165,6 +225,13 @@ func (p *ListDatabaseParam) SetId(v []sacloud.ID) {
 
 func (p *ListDatabaseParam) GetId() []sacloud.ID {
 	return p.Id
+}
+func (p *ListDatabaseParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *ListDatabaseParam) GetTags() []string {
+	return p.Tags
 }
 func (p *ListDatabaseParam) SetFrom(v int) {
 	p.From = v
@@ -180,35 +247,132 @@ func (p *ListDatabaseParam) SetMax(v int) {
 func (p *ListDatabaseParam) GetMax() int {
 	return p.Max
 }
-func (p *ListDatabaseParam) SetTags(v []string) {
-	p.Tags = v
+func (p *ListDatabaseParam) SetSort(v []string) {
+	p.Sort = v
 }
 
-func (p *ListDatabaseParam) GetTags() []string {
-	return p.Tags
+func (p *ListDatabaseParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
 }
 
 // CreateDatabaseParam is input parameters for the sacloud API
 type CreateDatabaseParam struct {
+	SwitchId            sacloud.ID
+	Plan                int
+	Database            string
+	Username            string
+	Password            string
+	ReplicaUserPassword string
+	SourceNetworks      []string
+	EnableWebUi         bool
 	EnableBackup        bool
+	BackupWeekdays      []string
+	BackupTime          string
+	Port                int
+	Ipaddress1          string
+	NwMaskLen           int
 	DefaultRoute        string
 	Name                string
 	Description         string
-	SwitchId            sacloud.ID
-	Username            string
-	BackupWeekdays      []string
-	NwMaskLen           int
-	Plan                int
-	Password            string
-	EnableWebUi         bool
-	IconId              sacloud.ID
-	Port                int
-	Ipaddress1          string
 	Tags                []string
-	Database            string
-	ReplicaUserPassword string
-	SourceNetworks      []string
-	BackupTime          string
+	IconId              sacloud.ID
+	Assumeyes           bool
+	ParamTemplate       string
+	Parameters          string
+	ParamTemplateFile   string
+	ParameterFile       string
+	GenerateSkeleton    bool
+	OutputType          string
+	Column              []string
+	Quiet               bool
+	Format              string
+	FormatFile          string
+	Query               string
+	QueryFile           string
 
 	input Input
 }
@@ -216,7 +380,7 @@ type CreateDatabaseParam struct {
 // NewCreateDatabaseParam return new CreateDatabaseParam
 func NewCreateDatabaseParam() *CreateDatabaseParam {
 	return &CreateDatabaseParam{
-		BackupWeekdays: []string{"all"}, Plan: 10}
+		Plan: 10, BackupWeekdays: []string{"all"}}
 }
 
 // Initialize init CreateDatabaseParam
@@ -234,8 +398,47 @@ func (p *CreateDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateDatabaseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.SwitchId) {
+		p.SwitchId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Plan) {
+		p.Plan = 0
+	}
+	if utils.IsEmpty(p.Database) {
+		p.Database = ""
+	}
+	if utils.IsEmpty(p.Username) {
+		p.Username = ""
+	}
+	if utils.IsEmpty(p.Password) {
+		p.Password = ""
+	}
+	if utils.IsEmpty(p.ReplicaUserPassword) {
+		p.ReplicaUserPassword = ""
+	}
+	if utils.IsEmpty(p.SourceNetworks) {
+		p.SourceNetworks = []string{""}
+	}
+	if utils.IsEmpty(p.EnableWebUi) {
+		p.EnableWebUi = false
+	}
 	if utils.IsEmpty(p.EnableBackup) {
 		p.EnableBackup = false
+	}
+	if utils.IsEmpty(p.BackupWeekdays) {
+		p.BackupWeekdays = []string{""}
+	}
+	if utils.IsEmpty(p.BackupTime) {
+		p.BackupTime = ""
+	}
+	if utils.IsEmpty(p.Port) {
+		p.Port = 0
+	}
+	if utils.IsEmpty(p.Ipaddress1) {
+		p.Ipaddress1 = ""
+	}
+	if utils.IsEmpty(p.NwMaskLen) {
+		p.NwMaskLen = 0
 	}
 	if utils.IsEmpty(p.DefaultRoute) {
 		p.DefaultRoute = ""
@@ -246,56 +449,201 @@ func (p *CreateDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.SwitchId) {
-		p.SwitchId = sacloud.ID(0)
-	}
-	if utils.IsEmpty(p.Username) {
-		p.Username = ""
-	}
-	if utils.IsEmpty(p.BackupWeekdays) {
-		p.BackupWeekdays = []string{""}
-	}
-	if utils.IsEmpty(p.NwMaskLen) {
-		p.NwMaskLen = 0
-	}
-	if utils.IsEmpty(p.Plan) {
-		p.Plan = 0
-	}
-	if utils.IsEmpty(p.Password) {
-		p.Password = ""
-	}
-	if utils.IsEmpty(p.EnableWebUi) {
-		p.EnableWebUi = false
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Port) {
-		p.Port = 0
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.Ipaddress1) {
-		p.Ipaddress1 = ""
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.Database) {
-		p.Database = ""
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ReplicaUserPassword) {
-		p.ReplicaUserPassword = ""
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.SourceNetworks) {
-		p.SourceNetworks = []string{""}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.BackupTime) {
-		p.BackupTime = ""
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
 
 func (p *CreateDatabaseParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--switch-id", p.SwitchId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["switch-id"].ValidateFunc
+		errs := validator("--switch-id", p.SwitchId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--plan", p.Plan)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["plan"].ValidateFunc
+		errs := validator("--plan", p.Plan)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--database", p.Database)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["database"].ValidateFunc
+		errs := validator("--database", p.Database)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--username", p.Username)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["username"].ValidateFunc
+		errs := validator("--username", p.Username)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--password", p.Password)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["password"].ValidateFunc
+		errs := validator("--password", p.Password)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["replica-user-password"].ValidateFunc
+		errs := validator("--replica-user-password", p.ReplicaUserPassword)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["source-networks"].ValidateFunc
+		errs := validator("--source-networks", p.SourceNetworks)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["backup-weekdays"].ValidateFunc
+		errs := validator("--backup-weekdays", p.BackupWeekdays)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["backup-time"].ValidateFunc
+		errs := validator("--backup-time", p.BackupTime)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["port"].ValidateFunc
+		errs := validator("--port", p.Port)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--ipaddress-1", p.Ipaddress1)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["ipaddress1"].ValidateFunc
+		errs := validator("--ipaddress-1", p.Ipaddress1)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--nw-mask-len", p.NwMaskLen)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["create"].Params["nw-mask-len"].ValidateFunc
+		errs := validator("--nw-mask-len", p.NwMaskLen)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -336,83 +684,8 @@ func (p *CreateDatabaseParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
-		errs := validator("--switch-id", p.SwitchId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["switch-id"].ValidateFunc
-		errs := validator("--switch-id", p.SwitchId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--username", p.Username)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["username"].ValidateFunc
-		errs := validator("--username", p.Username)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["backup-weekdays"].ValidateFunc
-		errs := validator("--backup-weekdays", p.BackupWeekdays)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--nw-mask-len", p.NwMaskLen)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["nw-mask-len"].ValidateFunc
-		errs := validator("--nw-mask-len", p.NwMaskLen)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["plan"].ValidateFunc
-		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--password", p.Password)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["password"].ValidateFunc
-		errs := validator("--password", p.Password)
+		validator := define.Resources["Database"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -427,75 +700,24 @@ func (p *CreateDatabaseParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["Database"].Commands["create"].Params["port"].ValidateFunc
-		errs := validator("--port", p.Port)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--ipaddress-1", p.Ipaddress1)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["Database"].Commands["create"].Params["ipaddress1"].ValidateFunc
-		errs := validator("--ipaddress-1", p.Ipaddress1)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--database", p.Database)
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["Database"].Commands["create"].Params["database"].ValidateFunc
-		errs := validator("--database", p.Database)
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["replica-user-password"].ValidateFunc
-		errs := validator("--replica-user-password", p.ReplicaUserPassword)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["source-networks"].ValidateFunc
-		errs := validator("--source-networks", p.SourceNetworks)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["create"].Params["backup-time"].ValidateFunc
-		errs := validator("--backup-time", p.BackupTime)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
 	return utils.FlattenErrors(errors)
 }
 
@@ -523,12 +745,103 @@ func (p *CreateDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *CreateDatabaseParam) SetSwitchId(v sacloud.ID) {
+	p.SwitchId = v
+}
+
+func (p *CreateDatabaseParam) GetSwitchId() sacloud.ID {
+	return p.SwitchId
+}
+func (p *CreateDatabaseParam) SetPlan(v int) {
+	p.Plan = v
+}
+
+func (p *CreateDatabaseParam) GetPlan() int {
+	return p.Plan
+}
+func (p *CreateDatabaseParam) SetDatabase(v string) {
+	p.Database = v
+}
+
+func (p *CreateDatabaseParam) GetDatabase() string {
+	return p.Database
+}
+func (p *CreateDatabaseParam) SetUsername(v string) {
+	p.Username = v
+}
+
+func (p *CreateDatabaseParam) GetUsername() string {
+	return p.Username
+}
+func (p *CreateDatabaseParam) SetPassword(v string) {
+	p.Password = v
+}
+
+func (p *CreateDatabaseParam) GetPassword() string {
+	return p.Password
+}
+func (p *CreateDatabaseParam) SetReplicaUserPassword(v string) {
+	p.ReplicaUserPassword = v
+}
+
+func (p *CreateDatabaseParam) GetReplicaUserPassword() string {
+	return p.ReplicaUserPassword
+}
+func (p *CreateDatabaseParam) SetSourceNetworks(v []string) {
+	p.SourceNetworks = v
+}
+
+func (p *CreateDatabaseParam) GetSourceNetworks() []string {
+	return p.SourceNetworks
+}
+func (p *CreateDatabaseParam) SetEnableWebUi(v bool) {
+	p.EnableWebUi = v
+}
+
+func (p *CreateDatabaseParam) GetEnableWebUi() bool {
+	return p.EnableWebUi
+}
 func (p *CreateDatabaseParam) SetEnableBackup(v bool) {
 	p.EnableBackup = v
 }
 
 func (p *CreateDatabaseParam) GetEnableBackup() bool {
 	return p.EnableBackup
+}
+func (p *CreateDatabaseParam) SetBackupWeekdays(v []string) {
+	p.BackupWeekdays = v
+}
+
+func (p *CreateDatabaseParam) GetBackupWeekdays() []string {
+	return p.BackupWeekdays
+}
+func (p *CreateDatabaseParam) SetBackupTime(v string) {
+	p.BackupTime = v
+}
+
+func (p *CreateDatabaseParam) GetBackupTime() string {
+	return p.BackupTime
+}
+func (p *CreateDatabaseParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *CreateDatabaseParam) GetPort() int {
+	return p.Port
+}
+func (p *CreateDatabaseParam) SetIpaddress1(v string) {
+	p.Ipaddress1 = v
+}
+
+func (p *CreateDatabaseParam) GetIpaddress1() string {
+	return p.Ipaddress1
+}
+func (p *CreateDatabaseParam) SetNwMaskLen(v int) {
+	p.NwMaskLen = v
+}
+
+func (p *CreateDatabaseParam) GetNwMaskLen() int {
+	return p.NwMaskLen
 }
 func (p *CreateDatabaseParam) SetDefaultRoute(v string) {
 	p.DefaultRoute = v
@@ -551,54 +864,12 @@ func (p *CreateDatabaseParam) SetDescription(v string) {
 func (p *CreateDatabaseParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateDatabaseParam) SetSwitchId(v sacloud.ID) {
-	p.SwitchId = v
+func (p *CreateDatabaseParam) SetTags(v []string) {
+	p.Tags = v
 }
 
-func (p *CreateDatabaseParam) GetSwitchId() sacloud.ID {
-	return p.SwitchId
-}
-func (p *CreateDatabaseParam) SetUsername(v string) {
-	p.Username = v
-}
-
-func (p *CreateDatabaseParam) GetUsername() string {
-	return p.Username
-}
-func (p *CreateDatabaseParam) SetBackupWeekdays(v []string) {
-	p.BackupWeekdays = v
-}
-
-func (p *CreateDatabaseParam) GetBackupWeekdays() []string {
-	return p.BackupWeekdays
-}
-func (p *CreateDatabaseParam) SetNwMaskLen(v int) {
-	p.NwMaskLen = v
-}
-
-func (p *CreateDatabaseParam) GetNwMaskLen() int {
-	return p.NwMaskLen
-}
-func (p *CreateDatabaseParam) SetPlan(v int) {
-	p.Plan = v
-}
-
-func (p *CreateDatabaseParam) GetPlan() int {
-	return p.Plan
-}
-func (p *CreateDatabaseParam) SetPassword(v string) {
-	p.Password = v
-}
-
-func (p *CreateDatabaseParam) GetPassword() string {
-	return p.Password
-}
-func (p *CreateDatabaseParam) SetEnableWebUi(v bool) {
-	p.EnableWebUi = v
-}
-
-func (p *CreateDatabaseParam) GetEnableWebUi() bool {
-	return p.EnableWebUi
+func (p *CreateDatabaseParam) GetTags() []string {
+	return p.Tags
 }
 func (p *CreateDatabaseParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
@@ -607,58 +878,115 @@ func (p *CreateDatabaseParam) SetIconId(v sacloud.ID) {
 func (p *CreateDatabaseParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *CreateDatabaseParam) SetPort(v int) {
-	p.Port = v
+func (p *CreateDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
 }
 
-func (p *CreateDatabaseParam) GetPort() int {
-	return p.Port
+func (p *CreateDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
 }
-func (p *CreateDatabaseParam) SetIpaddress1(v string) {
-	p.Ipaddress1 = v
-}
-
-func (p *CreateDatabaseParam) GetIpaddress1() string {
-	return p.Ipaddress1
-}
-func (p *CreateDatabaseParam) SetTags(v []string) {
-	p.Tags = v
+func (p *CreateDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
 }
 
-func (p *CreateDatabaseParam) GetTags() []string {
-	return p.Tags
+func (p *CreateDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
 }
-func (p *CreateDatabaseParam) SetDatabase(v string) {
-	p.Database = v
-}
-
-func (p *CreateDatabaseParam) GetDatabase() string {
-	return p.Database
-}
-func (p *CreateDatabaseParam) SetReplicaUserPassword(v string) {
-	p.ReplicaUserPassword = v
+func (p *CreateDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
 }
 
-func (p *CreateDatabaseParam) GetReplicaUserPassword() string {
-	return p.ReplicaUserPassword
+func (p *CreateDatabaseParam) GetParameters() string {
+	return p.Parameters
 }
-func (p *CreateDatabaseParam) SetSourceNetworks(v []string) {
-	p.SourceNetworks = v
-}
-
-func (p *CreateDatabaseParam) GetSourceNetworks() []string {
-	return p.SourceNetworks
-}
-func (p *CreateDatabaseParam) SetBackupTime(v string) {
-	p.BackupTime = v
+func (p *CreateDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
 }
 
-func (p *CreateDatabaseParam) GetBackupTime() string {
-	return p.BackupTime
+func (p *CreateDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CreateDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CreateDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *CreateDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CreateDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CreateDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *CreateDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
 }
 
 // ReadDatabaseParam is input parameters for the sacloud API
 type ReadDatabaseParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -682,12 +1010,81 @@ func (p *ReadDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadDatabaseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ReadDatabaseParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -715,21 +1112,135 @@ func (p *ReadDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ReadDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ReadDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReadDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UpdateDatabaseParam is input parameters for the sacloud API
 type UpdateDatabaseParam struct {
+	Password            string
+	ReplicaUserPassword string
 	EnableReplication   bool
 	Port                int
+	SourceNetworks      []string
 	EnableWebUi         bool
 	EnableBackup        bool
 	BackupWeekdays      []string
 	BackupTime          string
-	Password            string
-	ReplicaUserPassword string
-	IconId              sacloud.ID
+	Selector            []string
+	Name                string
 	Description         string
 	Tags                []string
-	SourceNetworks      []string
-	Name                string
+	IconId              sacloud.ID
+	Assumeyes           bool
+	ParamTemplate       string
+	Parameters          string
+	ParamTemplateFile   string
+	ParameterFile       string
+	GenerateSkeleton    bool
+	OutputType          string
+	Column              []string
+	Quiet               bool
+	Format              string
+	FormatFile          string
+	Query               string
+	QueryFile           string
+	Id                  sacloud.ID
 
 	input Input
 }
@@ -755,11 +1266,20 @@ func (p *UpdateDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateDatabaseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Password) {
+		p.Password = ""
+	}
+	if utils.IsEmpty(p.ReplicaUserPassword) {
+		p.ReplicaUserPassword = ""
+	}
 	if utils.IsEmpty(p.EnableReplication) {
 		p.EnableReplication = false
 	}
 	if utils.IsEmpty(p.Port) {
 		p.Port = 0
+	}
+	if utils.IsEmpty(p.SourceNetworks) {
+		p.SourceNetworks = []string{""}
 	}
 	if utils.IsEmpty(p.EnableWebUi) {
 		p.EnableWebUi = false
@@ -773,14 +1293,11 @@ func (p *UpdateDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.BackupTime) {
 		p.BackupTime = ""
 	}
-	if utils.IsEmpty(p.Password) {
-		p.Password = ""
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ReplicaUserPassword) {
-		p.ReplicaUserPassword = ""
-	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
 	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
@@ -788,11 +1305,50 @@ func (p *UpdateDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.SourceNetworks) {
-		p.SourceNetworks = []string{""}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -801,8 +1357,32 @@ func (p *UpdateDatabaseParam) validate() error {
 	var errors []error
 
 	{
+		validator := define.Resources["Database"].Commands["update"].Params["password"].ValidateFunc
+		errs := validator("--password", p.Password)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["update"].Params["replica-user-password"].ValidateFunc
+		errs := validator("--replica-user-password", p.ReplicaUserPassword)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
 		validator := define.Resources["Database"].Commands["update"].Params["port"].ValidateFunc
 		errs := validator("--port", p.Port)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["update"].Params["source-networks"].ValidateFunc
+		errs := validator("--source-networks", p.SourceNetworks)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -825,24 +1405,8 @@ func (p *UpdateDatabaseParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["Database"].Commands["update"].Params["password"].ValidateFunc
-		errs := validator("--password", p.Password)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["update"].Params["replica-user-password"].ValidateFunc
-		errs := validator("--replica-user-password", p.ReplicaUserPassword)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
+		validator := define.Resources["Database"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -865,21 +1429,40 @@ func (p *UpdateDatabaseParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["Database"].Commands["update"].Params["source-networks"].ValidateFunc
-		errs := validator("--source-networks", p.SourceNetworks)
+		validator := define.Resources["Database"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
 	{
-		validator := define.Resources["Database"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -907,6 +1490,20 @@ func (p *UpdateDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *UpdateDatabaseParam) SetPassword(v string) {
+	p.Password = v
+}
+
+func (p *UpdateDatabaseParam) GetPassword() string {
+	return p.Password
+}
+func (p *UpdateDatabaseParam) SetReplicaUserPassword(v string) {
+	p.ReplicaUserPassword = v
+}
+
+func (p *UpdateDatabaseParam) GetReplicaUserPassword() string {
+	return p.ReplicaUserPassword
+}
 func (p *UpdateDatabaseParam) SetEnableReplication(v bool) {
 	p.EnableReplication = v
 }
@@ -920,6 +1517,13 @@ func (p *UpdateDatabaseParam) SetPort(v int) {
 
 func (p *UpdateDatabaseParam) GetPort() int {
 	return p.Port
+}
+func (p *UpdateDatabaseParam) SetSourceNetworks(v []string) {
+	p.SourceNetworks = v
+}
+
+func (p *UpdateDatabaseParam) GetSourceNetworks() []string {
+	return p.SourceNetworks
 }
 func (p *UpdateDatabaseParam) SetEnableWebUi(v bool) {
 	p.EnableWebUi = v
@@ -949,26 +1553,19 @@ func (p *UpdateDatabaseParam) SetBackupTime(v string) {
 func (p *UpdateDatabaseParam) GetBackupTime() string {
 	return p.BackupTime
 }
-func (p *UpdateDatabaseParam) SetPassword(v string) {
-	p.Password = v
+func (p *UpdateDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
 }
 
-func (p *UpdateDatabaseParam) GetPassword() string {
-	return p.Password
+func (p *UpdateDatabaseParam) GetSelector() []string {
+	return p.Selector
 }
-func (p *UpdateDatabaseParam) SetReplicaUserPassword(v string) {
-	p.ReplicaUserPassword = v
-}
-
-func (p *UpdateDatabaseParam) GetReplicaUserPassword() string {
-	return p.ReplicaUserPassword
-}
-func (p *UpdateDatabaseParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
+func (p *UpdateDatabaseParam) SetName(v string) {
+	p.Name = v
 }
 
-func (p *UpdateDatabaseParam) GetIconId() sacloud.ID {
-	return p.IconId
+func (p *UpdateDatabaseParam) GetName() string {
+	return p.Name
 }
 func (p *UpdateDatabaseParam) SetDescription(v string) {
 	p.Description = v
@@ -984,24 +1581,130 @@ func (p *UpdateDatabaseParam) SetTags(v []string) {
 func (p *UpdateDatabaseParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateDatabaseParam) SetSourceNetworks(v []string) {
-	p.SourceNetworks = v
+func (p *UpdateDatabaseParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
 }
 
-func (p *UpdateDatabaseParam) GetSourceNetworks() []string {
-	return p.SourceNetworks
+func (p *UpdateDatabaseParam) GetIconId() sacloud.ID {
+	return p.IconId
 }
-func (p *UpdateDatabaseParam) SetName(v string) {
-	p.Name = v
+func (p *UpdateDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
 }
 
-func (p *UpdateDatabaseParam) GetName() string {
-	return p.Name
+func (p *UpdateDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UpdateDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UpdateDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UpdateDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *UpdateDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UpdateDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UpdateDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *UpdateDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UpdateDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UpdateDatabaseParam) GetId() sacloud.ID {
+	return p.Id
 }
 
 // DeleteDatabaseParam is input parameters for the sacloud API
 type DeleteDatabaseParam struct {
-	Force bool
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Force             bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1026,8 +1729,53 @@ func (p *DeleteDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *DeleteDatabaseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 	if utils.IsEmpty(p.Force) {
 		p.Force = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1035,6 +1783,33 @@ func (p *DeleteDatabaseParam) fillValueToSkeleton() {
 func (p *DeleteDatabaseParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1062,6 +1837,104 @@ func (p *DeleteDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *DeleteDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DeleteDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DeleteDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DeleteDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DeleteDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DeleteDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *DeleteDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DeleteDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DeleteDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *DeleteDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *DeleteDatabaseParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -1069,9 +1942,25 @@ func (p *DeleteDatabaseParam) SetForce(v bool) {
 func (p *DeleteDatabaseParam) GetForce() bool {
 	return p.Force
 }
+func (p *DeleteDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DeleteDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // BootDatabaseParam is input parameters for the sacloud API
 type BootDatabaseParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1095,11 +1984,43 @@ func (p *BootDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *BootDatabaseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *BootDatabaseParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1128,8 +2049,74 @@ func (p *BootDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *BootDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *BootDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *BootDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *BootDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *BootDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BootDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BootDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BootDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BootDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BootDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BootDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BootDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BootDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BootDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BootDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *BootDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // ShutdownDatabaseParam is input parameters for the sacloud API
 type ShutdownDatabaseParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1153,11 +2140,43 @@ func (p *ShutdownDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ShutdownDatabaseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ShutdownDatabaseParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1186,8 +2205,74 @@ func (p *ShutdownDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ShutdownDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ShutdownDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ShutdownDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ShutdownDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ShutdownDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShutdownDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShutdownDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ShutdownDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShutdownDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ShutdownDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ShutdownDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShutdownDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ShutdownDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ShutdownDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // ShutdownForceDatabaseParam is input parameters for the sacloud API
 type ShutdownForceDatabaseParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1211,11 +2296,43 @@ func (p *ShutdownForceDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ShutdownForceDatabaseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ShutdownForceDatabaseParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1244,8 +2361,74 @@ func (p *ShutdownForceDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ShutdownForceDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ShutdownForceDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ShutdownForceDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ShutdownForceDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ShutdownForceDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShutdownForceDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShutdownForceDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownForceDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ShutdownForceDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShutdownForceDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ShutdownForceDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownForceDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ShutdownForceDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShutdownForceDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ShutdownForceDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ShutdownForceDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // ResetDatabaseParam is input parameters for the sacloud API
 type ResetDatabaseParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1269,11 +2452,43 @@ func (p *ResetDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ResetDatabaseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ResetDatabaseParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1302,8 +2517,73 @@ func (p *ResetDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ResetDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ResetDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ResetDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ResetDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ResetDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ResetDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ResetDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ResetDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ResetDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ResetDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ResetDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ResetDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ResetDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ResetDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ResetDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ResetDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // WaitForBootDatabaseParam is input parameters for the sacloud API
 type WaitForBootDatabaseParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1327,11 +2607,40 @@ func (p *WaitForBootDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *WaitForBootDatabaseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *WaitForBootDatabaseParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1360,8 +2669,66 @@ func (p *WaitForBootDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *WaitForBootDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *WaitForBootDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *WaitForBootDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForBootDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForBootDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForBootDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *WaitForBootDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForBootDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *WaitForBootDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForBootDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *WaitForBootDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForBootDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *WaitForBootDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *WaitForBootDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // WaitForDownDatabaseParam is input parameters for the sacloud API
 type WaitForDownDatabaseParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1385,11 +2752,40 @@ func (p *WaitForDownDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *WaitForDownDatabaseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *WaitForDownDatabaseParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1418,8 +2814,73 @@ func (p *WaitForDownDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *WaitForDownDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *WaitForDownDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *WaitForDownDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForDownDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForDownDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForDownDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *WaitForDownDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForDownDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *WaitForDownDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForDownDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *WaitForDownDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForDownDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *WaitForDownDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *WaitForDownDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // BackupInfoDatabaseParam is input parameters for the sacloud API
 type BackupInfoDatabaseParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1443,12 +2904,81 @@ func (p *BackupInfoDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *BackupInfoDatabaseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *BackupInfoDatabaseParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1476,8 +3006,122 @@ func (p *BackupInfoDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *BackupInfoDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *BackupInfoDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *BackupInfoDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BackupInfoDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BackupInfoDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BackupInfoDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BackupInfoDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BackupInfoDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BackupInfoDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BackupInfoDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BackupInfoDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BackupInfoDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BackupInfoDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *BackupInfoDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *BackupInfoDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *BackupInfoDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *BackupInfoDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *BackupInfoDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *BackupInfoDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *BackupInfoDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *BackupInfoDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *BackupInfoDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *BackupInfoDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *BackupInfoDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *BackupInfoDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *BackupInfoDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *BackupInfoDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *BackupInfoDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // BackupCreateDatabaseParam is input parameters for the sacloud API
 type BackupCreateDatabaseParam struct {
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1501,12 +3145,81 @@ func (p *BackupCreateDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *BackupCreateDatabaseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *BackupCreateDatabaseParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1534,9 +3247,122 @@ func (p *BackupCreateDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *BackupCreateDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *BackupCreateDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *BackupCreateDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BackupCreateDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BackupCreateDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BackupCreateDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BackupCreateDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BackupCreateDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BackupCreateDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BackupCreateDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BackupCreateDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BackupCreateDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BackupCreateDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *BackupCreateDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *BackupCreateDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *BackupCreateDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *BackupCreateDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *BackupCreateDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *BackupCreateDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *BackupCreateDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *BackupCreateDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *BackupCreateDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *BackupCreateDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *BackupCreateDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *BackupCreateDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *BackupCreateDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *BackupCreateDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *BackupCreateDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // BackupRestoreDatabaseParam is input parameters for the sacloud API
 type BackupRestoreDatabaseParam struct {
-	Index int
+	Index             int
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1564,6 +3390,48 @@ func (p *BackupRestoreDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -1585,6 +3453,33 @@ func (p *BackupRestoreDatabaseParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1619,10 +3514,122 @@ func (p *BackupRestoreDatabaseParam) SetIndex(v int) {
 func (p *BackupRestoreDatabaseParam) GetIndex() int {
 	return p.Index
 }
+func (p *BackupRestoreDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *BackupRestoreDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BackupRestoreDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BackupRestoreDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BackupRestoreDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BackupRestoreDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BackupRestoreDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *BackupRestoreDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *BackupRestoreDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *BackupRestoreDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *BackupRestoreDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *BackupRestoreDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *BackupRestoreDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *BackupRestoreDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // BackupLockDatabaseParam is input parameters for the sacloud API
 type BackupLockDatabaseParam struct {
-	Index int
+	Index             int
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1650,6 +3657,48 @@ func (p *BackupLockDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -1671,6 +3720,33 @@ func (p *BackupLockDatabaseParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1705,10 +3781,122 @@ func (p *BackupLockDatabaseParam) SetIndex(v int) {
 func (p *BackupLockDatabaseParam) GetIndex() int {
 	return p.Index
 }
+func (p *BackupLockDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *BackupLockDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *BackupLockDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BackupLockDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BackupLockDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BackupLockDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BackupLockDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BackupLockDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BackupLockDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BackupLockDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BackupLockDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BackupLockDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BackupLockDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *BackupLockDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *BackupLockDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *BackupLockDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *BackupLockDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *BackupLockDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *BackupLockDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *BackupLockDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *BackupLockDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *BackupLockDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *BackupLockDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *BackupLockDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *BackupLockDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *BackupLockDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *BackupLockDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *BackupLockDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // BackupUnlockDatabaseParam is input parameters for the sacloud API
 type BackupUnlockDatabaseParam struct {
-	Index int
+	Index             int
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1736,6 +3924,48 @@ func (p *BackupUnlockDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -1757,6 +3987,33 @@ func (p *BackupUnlockDatabaseParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1791,10 +4048,122 @@ func (p *BackupUnlockDatabaseParam) SetIndex(v int) {
 func (p *BackupUnlockDatabaseParam) GetIndex() int {
 	return p.Index
 }
+func (p *BackupUnlockDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *BackupUnlockDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BackupUnlockDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BackupUnlockDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BackupUnlockDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BackupUnlockDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BackupUnlockDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *BackupUnlockDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *BackupUnlockDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *BackupUnlockDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *BackupUnlockDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *BackupUnlockDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *BackupUnlockDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *BackupUnlockDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // BackupRemoveDatabaseParam is input parameters for the sacloud API
 type BackupRemoveDatabaseParam struct {
-	Index int
+	Index             int
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1822,6 +4191,48 @@ func (p *BackupRemoveDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -1843,6 +4254,33 @@ func (p *BackupRemoveDatabaseParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1877,25 +4315,137 @@ func (p *BackupRemoveDatabaseParam) SetIndex(v int) {
 func (p *BackupRemoveDatabaseParam) GetIndex() int {
 	return p.Index
 }
+func (p *BackupRemoveDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *BackupRemoveDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BackupRemoveDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BackupRemoveDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BackupRemoveDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BackupRemoveDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BackupRemoveDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *BackupRemoveDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *BackupRemoveDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *BackupRemoveDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *BackupRemoveDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *BackupRemoveDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *BackupRemoveDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *BackupRemoveDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // CloneDatabaseParam is input parameters for the sacloud API
 type CloneDatabaseParam struct {
-	Plan                int
-	ReplicaUserPassword string
 	Port                int
-	Description         string
-	Tags                []string
-	EnableBackup        bool
-	BackupWeekdays      []string
+	SwitchId            sacloud.ID
 	Ipaddress1          string
+	Plan                int
 	NwMaskLen           int
 	DefaultRoute        string
-	Name                string
-	SwitchId            sacloud.ID
+	ReplicaUserPassword string
 	SourceNetworks      []string
 	EnableWebUi         bool
+	EnableBackup        bool
+	BackupWeekdays      []string
 	BackupTime          string
+	Name                string
+	Description         string
+	Tags                []string
 	IconId              sacloud.ID
+	Assumeyes           bool
+	ParamTemplate       string
+	Parameters          string
+	ParamTemplateFile   string
+	ParameterFile       string
+	GenerateSkeleton    bool
+	OutputType          string
+	Column              []string
+	Quiet               bool
+	Format              string
+	FormatFile          string
+	Query               string
+	QueryFile           string
+	Id                  sacloud.ID
 
 	input Input
 }
@@ -1921,29 +4471,17 @@ func (p *CloneDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CloneDatabaseParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Plan) {
-		p.Plan = 0
-	}
-	if utils.IsEmpty(p.ReplicaUserPassword) {
-		p.ReplicaUserPassword = ""
-	}
 	if utils.IsEmpty(p.Port) {
 		p.Port = 0
 	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.EnableBackup) {
-		p.EnableBackup = false
-	}
-	if utils.IsEmpty(p.BackupWeekdays) {
-		p.BackupWeekdays = []string{""}
+	if utils.IsEmpty(p.SwitchId) {
+		p.SwitchId = sacloud.ID(0)
 	}
 	if utils.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
+	}
+	if utils.IsEmpty(p.Plan) {
+		p.Plan = 0
 	}
 	if utils.IsEmpty(p.NwMaskLen) {
 		p.NwMaskLen = 0
@@ -1951,11 +4489,8 @@ func (p *CloneDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.DefaultRoute) {
 		p.DefaultRoute = ""
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
-	if utils.IsEmpty(p.SwitchId) {
-		p.SwitchId = sacloud.ID(0)
+	if utils.IsEmpty(p.ReplicaUserPassword) {
+		p.ReplicaUserPassword = ""
 	}
 	if utils.IsEmpty(p.SourceNetworks) {
 		p.SourceNetworks = []string{""}
@@ -1963,40 +4498,74 @@ func (p *CloneDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.EnableWebUi) {
 		p.EnableWebUi = false
 	}
+	if utils.IsEmpty(p.EnableBackup) {
+		p.EnableBackup = false
+	}
+	if utils.IsEmpty(p.BackupWeekdays) {
+		p.BackupWeekdays = []string{""}
+	}
 	if utils.IsEmpty(p.BackupTime) {
 		p.BackupTime = ""
 	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
 
 func (p *CloneDatabaseParam) validate() error {
 	var errors []error
-
-	{
-		validator := validateRequired
-		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Database"].Commands["clone"].Params["plan"].ValidateFunc
-		errs := validator("--plan", p.Plan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["clone"].Params["replica-user-password"].ValidateFunc
-		errs := validator("--replica-user-password", p.ReplicaUserPassword)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Database"].Commands["clone"].Params["port"].ValidateFunc
@@ -2007,24 +4576,8 @@ func (p *CloneDatabaseParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["Database"].Commands["clone"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["clone"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["clone"].Params["backup-weekdays"].ValidateFunc
-		errs := validator("--backup-weekdays", p.BackupWeekdays)
+		validator := define.Resources["Database"].Commands["clone"].Params["switch-id"].ValidateFunc
+		errs := validator("--switch-id", p.SwitchId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2040,6 +4593,21 @@ func (p *CloneDatabaseParam) validate() error {
 	{
 		validator := define.Resources["Database"].Commands["clone"].Params["ipaddress1"].ValidateFunc
 		errs := validator("--ipaddress-1", p.Ipaddress1)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--plan", p.Plan)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["clone"].Params["plan"].ValidateFunc
+		errs := validator("--plan", p.Plan)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2062,6 +4630,38 @@ func (p *CloneDatabaseParam) validate() error {
 	}
 
 	{
+		validator := define.Resources["Database"].Commands["clone"].Params["replica-user-password"].ValidateFunc
+		errs := validator("--replica-user-password", p.ReplicaUserPassword)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["clone"].Params["source-networks"].ValidateFunc
+		errs := validator("--source-networks", p.SourceNetworks)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["clone"].Params["backup-weekdays"].ValidateFunc
+		errs := validator("--backup-weekdays", p.BackupWeekdays)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["clone"].Params["backup-time"].ValidateFunc
+		errs := validator("--backup-time", p.BackupTime)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
 		validator := validateRequired
 		errs := validator("--name", p.Name)
 		if errs != nil {
@@ -2077,24 +4677,16 @@ func (p *CloneDatabaseParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["Database"].Commands["clone"].Params["switch-id"].ValidateFunc
-		errs := validator("--switch-id", p.SwitchId)
+		validator := define.Resources["Database"].Commands["clone"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
 	{
-		validator := define.Resources["Database"].Commands["clone"].Params["source-networks"].ValidateFunc
-		errs := validator("--source-networks", p.SourceNetworks)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["clone"].Params["backup-time"].ValidateFunc
-		errs := validator("--backup-time", p.BackupTime)
+		validator := define.Resources["Database"].Commands["clone"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2108,6 +4700,33 @@ func (p *CloneDatabaseParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -2135,20 +4754,6 @@ func (p *CloneDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CloneDatabaseParam) SetPlan(v int) {
-	p.Plan = v
-}
-
-func (p *CloneDatabaseParam) GetPlan() int {
-	return p.Plan
-}
-func (p *CloneDatabaseParam) SetReplicaUserPassword(v string) {
-	p.ReplicaUserPassword = v
-}
-
-func (p *CloneDatabaseParam) GetReplicaUserPassword() string {
-	return p.ReplicaUserPassword
-}
 func (p *CloneDatabaseParam) SetPort(v int) {
 	p.Port = v
 }
@@ -2156,33 +4761,12 @@ func (p *CloneDatabaseParam) SetPort(v int) {
 func (p *CloneDatabaseParam) GetPort() int {
 	return p.Port
 }
-func (p *CloneDatabaseParam) SetDescription(v string) {
-	p.Description = v
+func (p *CloneDatabaseParam) SetSwitchId(v sacloud.ID) {
+	p.SwitchId = v
 }
 
-func (p *CloneDatabaseParam) GetDescription() string {
-	return p.Description
-}
-func (p *CloneDatabaseParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CloneDatabaseParam) GetTags() []string {
-	return p.Tags
-}
-func (p *CloneDatabaseParam) SetEnableBackup(v bool) {
-	p.EnableBackup = v
-}
-
-func (p *CloneDatabaseParam) GetEnableBackup() bool {
-	return p.EnableBackup
-}
-func (p *CloneDatabaseParam) SetBackupWeekdays(v []string) {
-	p.BackupWeekdays = v
-}
-
-func (p *CloneDatabaseParam) GetBackupWeekdays() []string {
-	return p.BackupWeekdays
+func (p *CloneDatabaseParam) GetSwitchId() sacloud.ID {
+	return p.SwitchId
 }
 func (p *CloneDatabaseParam) SetIpaddress1(v string) {
 	p.Ipaddress1 = v
@@ -2190,6 +4774,13 @@ func (p *CloneDatabaseParam) SetIpaddress1(v string) {
 
 func (p *CloneDatabaseParam) GetIpaddress1() string {
 	return p.Ipaddress1
+}
+func (p *CloneDatabaseParam) SetPlan(v int) {
+	p.Plan = v
+}
+
+func (p *CloneDatabaseParam) GetPlan() int {
+	return p.Plan
 }
 func (p *CloneDatabaseParam) SetNwMaskLen(v int) {
 	p.NwMaskLen = v
@@ -2205,19 +4796,12 @@ func (p *CloneDatabaseParam) SetDefaultRoute(v string) {
 func (p *CloneDatabaseParam) GetDefaultRoute() string {
 	return p.DefaultRoute
 }
-func (p *CloneDatabaseParam) SetName(v string) {
-	p.Name = v
+func (p *CloneDatabaseParam) SetReplicaUserPassword(v string) {
+	p.ReplicaUserPassword = v
 }
 
-func (p *CloneDatabaseParam) GetName() string {
-	return p.Name
-}
-func (p *CloneDatabaseParam) SetSwitchId(v sacloud.ID) {
-	p.SwitchId = v
-}
-
-func (p *CloneDatabaseParam) GetSwitchId() sacloud.ID {
-	return p.SwitchId
+func (p *CloneDatabaseParam) GetReplicaUserPassword() string {
+	return p.ReplicaUserPassword
 }
 func (p *CloneDatabaseParam) SetSourceNetworks(v []string) {
 	p.SourceNetworks = v
@@ -2233,12 +4817,47 @@ func (p *CloneDatabaseParam) SetEnableWebUi(v bool) {
 func (p *CloneDatabaseParam) GetEnableWebUi() bool {
 	return p.EnableWebUi
 }
+func (p *CloneDatabaseParam) SetEnableBackup(v bool) {
+	p.EnableBackup = v
+}
+
+func (p *CloneDatabaseParam) GetEnableBackup() bool {
+	return p.EnableBackup
+}
+func (p *CloneDatabaseParam) SetBackupWeekdays(v []string) {
+	p.BackupWeekdays = v
+}
+
+func (p *CloneDatabaseParam) GetBackupWeekdays() []string {
+	return p.BackupWeekdays
+}
 func (p *CloneDatabaseParam) SetBackupTime(v string) {
 	p.BackupTime = v
 }
 
 func (p *CloneDatabaseParam) GetBackupTime() string {
 	return p.BackupTime
+}
+func (p *CloneDatabaseParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CloneDatabaseParam) GetName() string {
+	return p.Name
+}
+func (p *CloneDatabaseParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *CloneDatabaseParam) GetDescription() string {
+	return p.Description
+}
+func (p *CloneDatabaseParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CloneDatabaseParam) GetTags() []string {
+	return p.Tags
 }
 func (p *CloneDatabaseParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
@@ -2247,17 +4866,129 @@ func (p *CloneDatabaseParam) SetIconId(v sacloud.ID) {
 func (p *CloneDatabaseParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
+func (p *CloneDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *CloneDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *CloneDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CloneDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CloneDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CloneDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CloneDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CloneDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CloneDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CloneDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CloneDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CloneDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CloneDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CloneDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CloneDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CloneDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CloneDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CloneDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CloneDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CloneDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *CloneDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CloneDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CloneDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CloneDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *CloneDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CloneDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *CloneDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *CloneDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // ReplicaCreateDatabaseParam is input parameters for the sacloud API
 type ReplicaCreateDatabaseParam struct {
-	Description  string
-	Tags         []string
-	IconId       sacloud.ID
-	SwitchId     sacloud.ID
-	Ipaddress1   string
-	NwMaskLen    int
-	DefaultRoute string
-	Name         string
+	SwitchId          sacloud.ID
+	Ipaddress1        string
+	NwMaskLen         int
+	DefaultRoute      string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -2282,15 +5013,6 @@ func (p *ReplicaCreateDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReplicaCreateDatabaseParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
 	if utils.IsEmpty(p.SwitchId) {
 		p.SwitchId = sacloud.ID(0)
 	}
@@ -2306,35 +5028,62 @@ func (p *ReplicaCreateDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ReplicaCreateDatabaseParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Database"].Commands["replica-create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["replica-create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Database"].Commands["replica-create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Database"].Commands["replica-create"].Params["switch-id"].ValidateFunc
@@ -2390,6 +5139,57 @@ func (p *ReplicaCreateDatabaseParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["Database"].Commands["replica-create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["replica-create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Database"].Commands["replica-create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -2417,27 +5217,6 @@ func (p *ReplicaCreateDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ReplicaCreateDatabaseParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *ReplicaCreateDatabaseParam) GetDescription() string {
-	return p.Description
-}
-func (p *ReplicaCreateDatabaseParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *ReplicaCreateDatabaseParam) GetTags() []string {
-	return p.Tags
-}
-func (p *ReplicaCreateDatabaseParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *ReplicaCreateDatabaseParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
 func (p *ReplicaCreateDatabaseParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
@@ -2473,12 +5252,145 @@ func (p *ReplicaCreateDatabaseParam) SetName(v string) {
 func (p *ReplicaCreateDatabaseParam) GetName() string {
 	return p.Name
 }
+func (p *ReplicaCreateDatabaseParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetDescription() string {
+	return p.Description
+}
+func (p *ReplicaCreateDatabaseParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetTags() []string {
+	return p.Tags
+}
+func (p *ReplicaCreateDatabaseParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+func (p *ReplicaCreateDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ReplicaCreateDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReplicaCreateDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReplicaCreateDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReplicaCreateDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReplicaCreateDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReplicaCreateDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReplicaCreateDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReplicaCreateDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReplicaCreateDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReplicaCreateDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReplicaCreateDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReplicaCreateDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ReplicaCreateDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // MonitorCPUDatabaseParam is input parameters for the sacloud API
 type MonitorCPUDatabaseParam struct {
-	Start     string
-	End       string
-	KeyFormat string
+	Start             string
+	End               string
+	KeyFormat         string
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -2513,6 +5425,48 @@ func (p *MonitorCPUDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -2543,6 +5497,33 @@ func (p *MonitorCPUDatabaseParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -2591,12 +5572,124 @@ func (p *MonitorCPUDatabaseParam) SetKeyFormat(v string) {
 func (p *MonitorCPUDatabaseParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
+func (p *MonitorCPUDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorCPUDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorCPUDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorCPUDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorCPUDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorCPUDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorCPUDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorCPUDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorCPUDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorCPUDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorCPUDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorCPUDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorCPUDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorCPUDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorCPUDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorCPUDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorCPUDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorCPUDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorCPUDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorCPUDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorCPUDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorCPUDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorCPUDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorCPUDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *MonitorCPUDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorCPUDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *MonitorCPUDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *MonitorCPUDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // MonitorMemoryDatabaseParam is input parameters for the sacloud API
 type MonitorMemoryDatabaseParam struct {
-	Start     string
-	End       string
-	KeyFormat string
+	Start             string
+	End               string
+	KeyFormat         string
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -2631,6 +5724,48 @@ func (p *MonitorMemoryDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -2661,6 +5796,33 @@ func (p *MonitorMemoryDatabaseParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -2709,12 +5871,124 @@ func (p *MonitorMemoryDatabaseParam) SetKeyFormat(v string) {
 func (p *MonitorMemoryDatabaseParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
+func (p *MonitorMemoryDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorMemoryDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorMemoryDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorMemoryDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorMemoryDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorMemoryDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorMemoryDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorMemoryDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorMemoryDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorMemoryDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorMemoryDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorMemoryDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *MonitorMemoryDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *MonitorMemoryDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // MonitorNicDatabaseParam is input parameters for the sacloud API
 type MonitorNicDatabaseParam struct {
-	KeyFormat string
-	Start     string
-	End       string
+	Start             string
+	End               string
+	KeyFormat         string
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -2740,28 +6014,62 @@ func (p *MonitorNicDatabaseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *MonitorNicDatabaseParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.KeyFormat) {
-		p.KeyFormat = ""
-	}
 	if utils.IsEmpty(p.Start) {
 		p.Start = ""
 	}
 	if utils.IsEmpty(p.End) {
 		p.End = ""
 	}
+	if utils.IsEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *MonitorNicDatabaseParam) validate() error {
 	var errors []error
-
-	{
-		validator := validateRequired
-		errs := validator("--key-format", p.KeyFormat)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Database"].Commands["monitor-nic"].Params["start"].ValidateFunc
@@ -2779,6 +6087,41 @@ func (p *MonitorNicDatabaseParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -2806,13 +6149,6 @@ func (p *MonitorNicDatabaseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *MonitorNicDatabaseParam) SetKeyFormat(v string) {
-	p.KeyFormat = v
-}
-
-func (p *MonitorNicDatabaseParam) GetKeyFormat() string {
-	return p.KeyFormat
-}
 func (p *MonitorNicDatabaseParam) SetStart(v string) {
 	p.Start = v
 }
@@ -2827,12 +6163,131 @@ func (p *MonitorNicDatabaseParam) SetEnd(v string) {
 func (p *MonitorNicDatabaseParam) GetEnd() string {
 	return p.End
 }
+func (p *MonitorNicDatabaseParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorNicDatabaseParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
+func (p *MonitorNicDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorNicDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorNicDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorNicDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorNicDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorNicDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorNicDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorNicDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorNicDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorNicDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorNicDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorNicDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorNicDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorNicDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorNicDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorNicDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorNicDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorNicDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorNicDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorNicDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorNicDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorNicDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorNicDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorNicDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *MonitorNicDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorNicDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *MonitorNicDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *MonitorNicDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // MonitorSystemDiskDatabaseParam is input parameters for the sacloud API
 type MonitorSystemDiskDatabaseParam struct {
-	Start     string
-	End       string
-	KeyFormat string
+	Start             string
+	End               string
+	KeyFormat         string
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -2867,6 +6322,48 @@ func (p *MonitorSystemDiskDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -2897,6 +6394,33 @@ func (p *MonitorSystemDiskDatabaseParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -2945,12 +6469,124 @@ func (p *MonitorSystemDiskDatabaseParam) SetKeyFormat(v string) {
 func (p *MonitorSystemDiskDatabaseParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
+func (p *MonitorSystemDiskDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorSystemDiskDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorSystemDiskDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorSystemDiskDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorSystemDiskDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorSystemDiskDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorSystemDiskDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorSystemDiskDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorSystemDiskDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorSystemDiskDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorSystemDiskDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorSystemDiskDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *MonitorSystemDiskDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *MonitorSystemDiskDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // MonitorBackupDiskDatabaseParam is input parameters for the sacloud API
 type MonitorBackupDiskDatabaseParam struct {
-	Start     string
-	End       string
-	KeyFormat string
+	Start             string
+	End               string
+	KeyFormat         string
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -2985,6 +6621,48 @@ func (p *MonitorBackupDiskDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -3015,6 +6693,33 @@ func (p *MonitorBackupDiskDatabaseParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -3063,12 +6768,124 @@ func (p *MonitorBackupDiskDatabaseParam) SetKeyFormat(v string) {
 func (p *MonitorBackupDiskDatabaseParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
+func (p *MonitorBackupDiskDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorBackupDiskDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorBackupDiskDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorBackupDiskDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorBackupDiskDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorBackupDiskDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorBackupDiskDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorBackupDiskDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorBackupDiskDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorBackupDiskDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorBackupDiskDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorBackupDiskDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *MonitorBackupDiskDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *MonitorBackupDiskDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // MonitorSystemDiskSizeDatabaseParam is input parameters for the sacloud API
 type MonitorSystemDiskSizeDatabaseParam struct {
-	Start     string
-	End       string
-	KeyFormat string
+	Start             string
+	End               string
+	KeyFormat         string
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -3103,6 +6920,48 @@ func (p *MonitorSystemDiskSizeDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -3133,6 +6992,33 @@ func (p *MonitorSystemDiskSizeDatabaseParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -3181,12 +7067,124 @@ func (p *MonitorSystemDiskSizeDatabaseParam) SetKeyFormat(v string) {
 func (p *MonitorSystemDiskSizeDatabaseParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
+func (p *MonitorSystemDiskSizeDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // MonitorBackupDiskSizeDatabaseParam is input parameters for the sacloud API
 type MonitorBackupDiskSizeDatabaseParam struct {
-	Start     string
-	End       string
-	KeyFormat string
+	Start             string
+	End               string
+	KeyFormat         string
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -3221,6 +7219,48 @@ func (p *MonitorBackupDiskSizeDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -3251,6 +7291,33 @@ func (p *MonitorBackupDiskSizeDatabaseParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -3299,13 +7366,118 @@ func (p *MonitorBackupDiskSizeDatabaseParam) SetKeyFormat(v string) {
 func (p *MonitorBackupDiskSizeDatabaseParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
+func (p *MonitorBackupDiskSizeDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetQuery() string {
+	return p.Query
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // LogsDatabaseParam is input parameters for the sacloud API
 type LogsDatabaseParam struct {
-	LogName         string
-	Follow          bool
-	RefreshInterval sacloud.ID
-	ListLogNames    bool
+	LogName           string
+	Follow            bool
+	RefreshInterval   sacloud.ID
+	ListLogNames      bool
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -3343,6 +7515,27 @@ func (p *LogsDatabaseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.ListLogNames) {
 		p.ListLogNames = false
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -3352,6 +7545,14 @@ func (p *LogsDatabaseParam) validate() error {
 	{
 		validator := define.Resources["Database"].Commands["logs"].Params["refresh-interval"].ValidateFunc
 		errs := validator("--refresh-interval", p.RefreshInterval)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3411,4 +7612,53 @@ func (p *LogsDatabaseParam) SetListLogNames(v bool) {
 
 func (p *LogsDatabaseParam) GetListLogNames() bool {
 	return p.ListLogNames
+}
+func (p *LogsDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *LogsDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *LogsDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *LogsDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *LogsDatabaseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *LogsDatabaseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *LogsDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *LogsDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *LogsDatabaseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *LogsDatabaseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *LogsDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *LogsDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *LogsDatabaseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *LogsDatabaseParam) GetId() sacloud.ID {
+	return p.Id
 }

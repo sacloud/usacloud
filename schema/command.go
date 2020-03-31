@@ -159,7 +159,7 @@ func (c *Command) BuildedParams() SortableParams {
 			HandlerType: HandlerNoop,
 			Description: "Set input parameters from JSON string",
 			Category:    "input",
-			Order:       20,
+			Order:       21,
 		}
 	}
 	if _, ok := c.Params["parameter-file"]; !ok {
@@ -168,7 +168,7 @@ func (c *Command) BuildedParams() SortableParams {
 			HandlerType: HandlerNoop,
 			Description: "Set input parameters from file",
 			Category:    "input",
-			Order:       30,
+			Order:       31,
 		}
 	}
 	if _, ok := c.Params["generate-skeleton"]; !ok {
@@ -265,7 +265,7 @@ func (c *Command) BuildedParams() SortableParams {
 }
 
 func (c *Command) Validate() []error {
-	errors := []error{}
+	var errors []error
 
 	if c.Type == CommandInvalid {
 		errors = append(errors, fmt.Errorf("command#Type: command type is invalid: (%#v)", c))
@@ -318,20 +318,20 @@ func (c *Command) Validate() []error {
 			errors = append(errors, err)
 		}
 
-		if v.Category != "" && v.Category != "output" && len(c.ParamCategories) > 0 {
-			exists := false
-			// category is defined on command?
-			for _, category := range c.ParamCategories {
-				if category.Key == v.Category {
-					exists = true
-					break
-				}
-			}
-			if !exists {
-				err := fmt.Errorf("command#%s.%q: category(%s) isn't defined, but is used by %q", k, "Category", v.Category, k)
-				errors = append(errors, err)
-			}
-		}
+		//if v.Category != "" && v.Category != "output" && v.Category != "input" && len(c.ParamCategories) > 0 {
+		//	exists := false
+		//	// category is defined on command?
+		//	for _, category := range c.ParamCategories {
+		//		if category.Key == v.Category {
+		//			exists = true
+		//			break
+		//		}
+		//	}
+		//	if !exists {
+		//		err := fmt.Errorf("command#%s.%q: category(%s) isn't defined, but is used by %q", k, "Category", v.Category, k)
+		//		errors = append(errors, err)
+		//	}
+		//}
 	}
 
 	return errors

@@ -56,6 +56,19 @@ var webAccelListCmd = &cobra.Command{
 }
 
 func webAccelListCmdInit() {
+	fs := webAccelListCmd.Flags()
+	fs.StringVarP(&webAccelListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&webAccelListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&webAccelListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&webAccelListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&webAccelListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&webAccelListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&webAccelListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&webAccelListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&webAccelListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&webAccelListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&webAccelListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&webAccelListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var webAccelReadCmd = &cobra.Command{
@@ -72,6 +85,21 @@ var webAccelReadCmd = &cobra.Command{
 }
 
 func webAccelReadCmdInit() {
+	fs := webAccelReadCmd.Flags()
+	fs.StringSliceVarP(&webAccelReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&webAccelReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&webAccelReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&webAccelReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&webAccelReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&webAccelReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&webAccelReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&webAccelReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&webAccelReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&webAccelReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&webAccelReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&webAccelReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&webAccelReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &webAccelReadParam.Id), "id", "", "Set target ID")
 }
 
 var webAccelCertificateInfoCmd = &cobra.Command{
@@ -88,6 +116,21 @@ var webAccelCertificateInfoCmd = &cobra.Command{
 }
 
 func webAccelCertificateInfoCmdInit() {
+	fs := webAccelCertificateInfoCmd.Flags()
+	fs.StringSliceVarP(&webAccelCertificateInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&webAccelCertificateInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&webAccelCertificateInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&webAccelCertificateInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&webAccelCertificateInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&webAccelCertificateInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&webAccelCertificateInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&webAccelCertificateInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&webAccelCertificateInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&webAccelCertificateInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&webAccelCertificateInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&webAccelCertificateInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&webAccelCertificateInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &webAccelCertificateInfoParam.Id), "id", "", "Set target ID")
 }
 
 var webAccelCertificateNewCmd = &cobra.Command{
@@ -105,10 +148,25 @@ var webAccelCertificateNewCmd = &cobra.Command{
 
 func webAccelCertificateNewCmdInit() {
 	fs := webAccelCertificateNewCmd.Flags()
-	fs.StringVarP(&webAccelCertificateNewParam.CertContent, "cert-content", "", "", "set certificate(from text)")
-	fs.StringVarP(&webAccelCertificateNewParam.KeyContent, "key-content", "", "", "set private key(from text)")
 	fs.StringVarP(&webAccelCertificateNewParam.Cert, "cert", "", "", "set certificate(from file)")
 	fs.StringVarP(&webAccelCertificateNewParam.Key, "key", "", "", "set private key(from file)")
+	fs.StringVarP(&webAccelCertificateNewParam.CertContent, "cert-content", "", "", "set certificate(from text)")
+	fs.StringVarP(&webAccelCertificateNewParam.KeyContent, "key-content", "", "", "set private key(from text)")
+	fs.StringSliceVarP(&webAccelCertificateNewParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&webAccelCertificateNewParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&webAccelCertificateNewParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&webAccelCertificateNewParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&webAccelCertificateNewParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&webAccelCertificateNewParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&webAccelCertificateNewParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&webAccelCertificateNewParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&webAccelCertificateNewParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&webAccelCertificateNewParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&webAccelCertificateNewParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&webAccelCertificateNewParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&webAccelCertificateNewParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&webAccelCertificateNewParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &webAccelCertificateNewParam.Id), "id", "", "Set target ID")
 }
 
 var webAccelCertificateUpdateCmd = &cobra.Command{
@@ -130,6 +188,21 @@ func webAccelCertificateUpdateCmdInit() {
 	fs.StringVarP(&webAccelCertificateUpdateParam.Key, "key", "", "", "set private key(from file)")
 	fs.StringVarP(&webAccelCertificateUpdateParam.CertContent, "cert-content", "", "", "set certificate(from text)")
 	fs.StringVarP(&webAccelCertificateUpdateParam.KeyContent, "key-content", "", "", "set private key(from text)")
+	fs.StringSliceVarP(&webAccelCertificateUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&webAccelCertificateUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&webAccelCertificateUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&webAccelCertificateUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&webAccelCertificateUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&webAccelCertificateUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&webAccelCertificateUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&webAccelCertificateUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&webAccelCertificateUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&webAccelCertificateUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&webAccelCertificateUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&webAccelCertificateUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&webAccelCertificateUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&webAccelCertificateUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &webAccelCertificateUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var webAccelDeleteCacheCmd = &cobra.Command{
@@ -146,6 +219,20 @@ var webAccelDeleteCacheCmd = &cobra.Command{
 }
 
 func webAccelDeleteCacheCmdInit() {
+	fs := webAccelDeleteCacheCmd.Flags()
+	fs.BoolVarP(&webAccelDeleteCacheParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&webAccelDeleteCacheParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&webAccelDeleteCacheParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&webAccelDeleteCacheParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&webAccelDeleteCacheParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&webAccelDeleteCacheParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&webAccelDeleteCacheParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&webAccelDeleteCacheParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&webAccelDeleteCacheParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&webAccelDeleteCacheParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&webAccelDeleteCacheParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&webAccelDeleteCacheParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&webAccelDeleteCacheParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 func init() {

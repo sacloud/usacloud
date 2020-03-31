@@ -52,6 +52,18 @@ var summaryShowCmd = &cobra.Command{
 
 func summaryShowCmdInit() {
 	fs := summaryShowCmd.Flags()
+	fs.StringVarP(&summaryShowParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&summaryShowParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&summaryShowParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&summaryShowParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&summaryShowParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&summaryShowParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&summaryShowParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&summaryShowParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&summaryShowParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&summaryShowParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&summaryShowParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&summaryShowParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.BoolVarP(&summaryShowParam.PaidResourcesOnly, "paid-resources-only", "", false, "Show paid-resource only")
 }
 

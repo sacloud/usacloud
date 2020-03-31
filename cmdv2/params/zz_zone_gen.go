@@ -29,11 +29,23 @@ import (
 
 // ListZoneParam is input parameters for the sacloud API
 type ListZoneParam struct {
-	Max  int
-	Sort []string
-	Name []string
-	Id   []sacloud.ID
-	From int
+	Name              []string
+	Id                []sacloud.ID
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -58,12 +70,6 @@ func (p *ListZoneParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListZoneParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
-	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -72,6 +78,48 @@ func (p *ListZoneParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
+	}
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
+	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -106,6 +154,25 @@ func (p *ListZoneParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -133,20 +200,6 @@ func (p *ListZoneParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListZoneParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListZoneParam) GetMax() int {
-	return p.Max
-}
-func (p *ListZoneParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListZoneParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListZoneParam) SetName(v []string) {
 	p.Name = v
 }
@@ -168,10 +221,121 @@ func (p *ListZoneParam) SetFrom(v int) {
 func (p *ListZoneParam) GetFrom() int {
 	return p.From
 }
+func (p *ListZoneParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListZoneParam) GetMax() int {
+	return p.Max
+}
+func (p *ListZoneParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListZoneParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListZoneParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListZoneParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListZoneParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListZoneParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListZoneParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListZoneParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListZoneParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListZoneParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListZoneParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListZoneParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListZoneParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListZoneParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListZoneParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListZoneParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListZoneParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListZoneParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListZoneParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListZoneParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListZoneParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListZoneParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListZoneParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListZoneParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListZoneParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListZoneParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadZoneParam is input parameters for the sacloud API
 type ReadZoneParam struct {
-	Id sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -196,6 +360,45 @@ func (p *ReadZoneParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadZoneParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
@@ -220,6 +423,25 @@ func (p *ReadZoneParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -247,6 +469,97 @@ func (p *ReadZoneParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadZoneParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ReadZoneParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ReadZoneParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadZoneParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadZoneParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadZoneParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadZoneParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadZoneParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadZoneParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadZoneParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadZoneParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadZoneParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadZoneParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadZoneParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadZoneParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadZoneParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadZoneParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadZoneParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadZoneParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadZoneParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadZoneParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadZoneParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadZoneParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadZoneParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadZoneParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadZoneParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadZoneParam) SetId(v sacloud.ID) {
 	p.Id = v
 }

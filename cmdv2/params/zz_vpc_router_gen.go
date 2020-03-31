@@ -29,12 +29,24 @@ import (
 
 // ListVPCRouterParam is input parameters for the sacloud API
 type ListVPCRouterParam struct {
-	Name []string
-	Id   []sacloud.ID
-	From int
-	Max  int
-	Tags []string
-	Sort []string
+	Name              []string
+	Id                []sacloud.ID
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -65,17 +77,53 @@ func (p *ListVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
 	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -118,6 +166,25 @@ func (p *ListVPCRouterParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -159,6 +226,13 @@ func (p *ListVPCRouterParam) SetId(v []sacloud.ID) {
 func (p *ListVPCRouterParam) GetId() []sacloud.ID {
 	return p.Id
 }
+func (p *ListVPCRouterParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *ListVPCRouterParam) GetTags() []string {
+	return p.Tags
+}
 func (p *ListVPCRouterParam) SetFrom(v int) {
 	p.From = v
 }
@@ -173,13 +247,6 @@ func (p *ListVPCRouterParam) SetMax(v int) {
 func (p *ListVPCRouterParam) GetMax() int {
 	return p.Max
 }
-func (p *ListVPCRouterParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *ListVPCRouterParam) GetTags() []string {
-	return p.Tags
-}
 func (p *ListVPCRouterParam) SetSort(v []string) {
 	p.Sort = v
 }
@@ -187,21 +254,118 @@ func (p *ListVPCRouterParam) SetSort(v []string) {
 func (p *ListVPCRouterParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateVPCRouterParam is input parameters for the sacloud API
 type CreateVPCRouterParam struct {
-	IconId                    sacloud.ID
 	Plan                      string
 	SwitchId                  sacloud.ID
 	Vrid                      int
-	Ipaddress1                string
-	BootAfterCreate           bool
-	Description               string
-	Tags                      []string
 	Vip                       string
+	Ipaddress1                string
 	Ipaddress2                string
 	DisableInternetConnection bool
+	BootAfterCreate           bool
 	Name                      string
+	Description               string
+	Tags                      []string
+	IconId                    sacloud.ID
+	Assumeyes                 bool
+	ParamTemplate             string
+	Parameters                string
+	ParamTemplateFile         string
+	ParameterFile             string
+	GenerateSkeleton          bool
+	OutputType                string
+	Column                    []string
+	Quiet                     bool
+	Format                    string
+	FormatFile                string
+	Query                     string
+	QueryFile                 string
 
 	input Input
 }
@@ -227,9 +391,6 @@ func (p *CreateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateVPCRouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
 	if utils.IsEmpty(p.Plan) {
 		p.Plan = ""
 	}
@@ -239,20 +400,11 @@ func (p *CreateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Vrid) {
 		p.Vrid = 0
 	}
-	if utils.IsEmpty(p.Ipaddress1) {
-		p.Ipaddress1 = ""
-	}
-	if utils.IsEmpty(p.BootAfterCreate) {
-		p.BootAfterCreate = false
-	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
 	if utils.IsEmpty(p.Vip) {
 		p.Vip = ""
+	}
+	if utils.IsEmpty(p.Ipaddress1) {
+		p.Ipaddress1 = ""
 	}
 	if utils.IsEmpty(p.Ipaddress2) {
 		p.Ipaddress2 = ""
@@ -260,22 +412,65 @@ func (p *CreateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.DisableInternetConnection) {
 		p.DisableInternetConnection = false
 	}
+	if utils.IsEmpty(p.BootAfterCreate) {
+		p.BootAfterCreate = false
+	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
 
 func (p *CreateVPCRouterParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -309,32 +504,16 @@ func (p *CreateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["VPCRouter"].Commands["create"].Params["ipaddress1"].ValidateFunc
-		errs := validator("--ipaddress-1", p.Ipaddress1)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
 		validator := define.Resources["VPCRouter"].Commands["create"].Params["vip"].ValidateFunc
 		errs := validator("--vip", p.Vip)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["create"].Params["ipaddress1"].ValidateFunc
+		errs := validator("--ipaddress-1", p.Ipaddress1)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -363,6 +542,49 @@ func (p *CreateVPCRouterParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["VPCRouter"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -390,13 +612,6 @@ func (p *CreateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateVPCRouterParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *CreateVPCRouterParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
 func (p *CreateVPCRouterParam) SetPlan(v string) {
 	p.Plan = v
 }
@@ -418,40 +633,19 @@ func (p *CreateVPCRouterParam) SetVrid(v int) {
 func (p *CreateVPCRouterParam) GetVrid() int {
 	return p.Vrid
 }
-func (p *CreateVPCRouterParam) SetIpaddress1(v string) {
-	p.Ipaddress1 = v
-}
-
-func (p *CreateVPCRouterParam) GetIpaddress1() string {
-	return p.Ipaddress1
-}
-func (p *CreateVPCRouterParam) SetBootAfterCreate(v bool) {
-	p.BootAfterCreate = v
-}
-
-func (p *CreateVPCRouterParam) GetBootAfterCreate() bool {
-	return p.BootAfterCreate
-}
-func (p *CreateVPCRouterParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *CreateVPCRouterParam) GetDescription() string {
-	return p.Description
-}
-func (p *CreateVPCRouterParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CreateVPCRouterParam) GetTags() []string {
-	return p.Tags
-}
 func (p *CreateVPCRouterParam) SetVip(v string) {
 	p.Vip = v
 }
 
 func (p *CreateVPCRouterParam) GetVip() string {
 	return p.Vip
+}
+func (p *CreateVPCRouterParam) SetIpaddress1(v string) {
+	p.Ipaddress1 = v
+}
+
+func (p *CreateVPCRouterParam) GetIpaddress1() string {
+	return p.Ipaddress1
 }
 func (p *CreateVPCRouterParam) SetIpaddress2(v string) {
 	p.Ipaddress2 = v
@@ -467,6 +661,13 @@ func (p *CreateVPCRouterParam) SetDisableInternetConnection(v bool) {
 func (p *CreateVPCRouterParam) GetDisableInternetConnection() bool {
 	return p.DisableInternetConnection
 }
+func (p *CreateVPCRouterParam) SetBootAfterCreate(v bool) {
+	p.BootAfterCreate = v
+}
+
+func (p *CreateVPCRouterParam) GetBootAfterCreate() bool {
+	return p.BootAfterCreate
+}
 func (p *CreateVPCRouterParam) SetName(v string) {
 	p.Name = v
 }
@@ -474,9 +675,136 @@ func (p *CreateVPCRouterParam) SetName(v string) {
 func (p *CreateVPCRouterParam) GetName() string {
 	return p.Name
 }
+func (p *CreateVPCRouterParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *CreateVPCRouterParam) GetDescription() string {
+	return p.Description
+}
+func (p *CreateVPCRouterParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CreateVPCRouterParam) GetTags() []string {
+	return p.Tags
+}
+func (p *CreateVPCRouterParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *CreateVPCRouterParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+func (p *CreateVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *CreateVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *CreateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CreateVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CreateVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *CreateVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CreateVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CreateVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *CreateVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadVPCRouterParam is input parameters for the sacloud API
 type ReadVPCRouterParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -500,12 +828,81 @@ func (p *ReadVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ReadVPCRouterParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -533,14 +930,128 @@ func (p *ReadVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ReadVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ReadVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReadVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UpdateVPCRouterParam is input parameters for the sacloud API
 type UpdateVPCRouterParam struct {
+	SyslogHost         string
+	InternetConnection bool
+	Selector           []string
+	Name               string
 	Description        string
 	Tags               []string
 	IconId             sacloud.ID
-	SyslogHost         string
-	InternetConnection bool
-	Name               string
+	Assumeyes          bool
+	ParamTemplate      string
+	Parameters         string
+	ParamTemplateFile  string
+	ParameterFile      string
+	GenerateSkeleton   bool
+	OutputType         string
+	Column             []string
+	Quiet              bool
+	Format             string
+	FormatFile         string
+	Query              string
+	QueryFile          string
+	Id                 sacloud.ID
 
 	input Input
 }
@@ -565,6 +1076,18 @@ func (p *UpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.SyslogHost) {
+		p.SyslogHost = ""
+	}
+	if utils.IsEmpty(p.InternetConnection) {
+		p.InternetConnection = false
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
@@ -574,20 +1097,69 @@ func (p *UpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.SyslogHost) {
-		p.SyslogHost = ""
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.InternetConnection) {
-		p.InternetConnection = false
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
 
 func (p *UpdateVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["update"].Params["syslog-host"].ValidateFunc
+		errs := validator("--syslog-host", p.SyslogHost)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["VPCRouter"].Commands["update"].Params["description"].ValidateFunc
@@ -614,21 +1186,32 @@ func (p *UpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["VPCRouter"].Commands["update"].Params["syslog-host"].ValidateFunc
-		errs := validator("--syslog-host", p.SyslogHost)
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
 	{
-		validator := define.Resources["VPCRouter"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -656,6 +1239,34 @@ func (p *UpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *UpdateVPCRouterParam) SetSyslogHost(v string) {
+	p.SyslogHost = v
+}
+
+func (p *UpdateVPCRouterParam) GetSyslogHost() string {
+	return p.SyslogHost
+}
+func (p *UpdateVPCRouterParam) SetInternetConnection(v bool) {
+	p.InternetConnection = v
+}
+
+func (p *UpdateVPCRouterParam) GetInternetConnection() bool {
+	return p.InternetConnection
+}
+func (p *UpdateVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *UpdateVPCRouterParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateVPCRouterParam) GetName() string {
+	return p.Name
+}
 func (p *UpdateVPCRouterParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -677,31 +1288,123 @@ func (p *UpdateVPCRouterParam) SetIconId(v sacloud.ID) {
 func (p *UpdateVPCRouterParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *UpdateVPCRouterParam) SetSyslogHost(v string) {
-	p.SyslogHost = v
+func (p *UpdateVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
 }
 
-func (p *UpdateVPCRouterParam) GetSyslogHost() string {
-	return p.SyslogHost
+func (p *UpdateVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
 }
-func (p *UpdateVPCRouterParam) SetInternetConnection(v bool) {
-	p.InternetConnection = v
-}
-
-func (p *UpdateVPCRouterParam) GetInternetConnection() bool {
-	return p.InternetConnection
-}
-func (p *UpdateVPCRouterParam) SetName(v string) {
-	p.Name = v
+func (p *UpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
 }
 
-func (p *UpdateVPCRouterParam) GetName() string {
-	return p.Name
+func (p *UpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UpdateVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UpdateVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *UpdateVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UpdateVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UpdateVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *UpdateVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UpdateVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UpdateVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
 }
 
 // DeleteVPCRouterParam is input parameters for the sacloud API
 type DeleteVPCRouterParam struct {
-	Force bool
+	Force             bool
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -729,12 +1432,84 @@ func (p *DeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Force) {
 		p.Force = false
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DeleteVPCRouterParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -769,9 +1544,123 @@ func (p *DeleteVPCRouterParam) SetForce(v bool) {
 func (p *DeleteVPCRouterParam) GetForce() bool {
 	return p.Force
 }
+func (p *DeleteVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DeleteVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DeleteVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DeleteVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DeleteVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *DeleteVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DeleteVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DeleteVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *DeleteVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *DeleteVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DeleteVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // BootVPCRouterParam is input parameters for the sacloud API
 type BootVPCRouterParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -795,11 +1684,43 @@ func (p *BootVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *BootVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *BootVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -828,8 +1749,74 @@ func (p *BootVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *BootVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *BootVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *BootVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *BootVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *BootVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BootVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BootVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BootVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BootVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BootVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BootVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BootVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BootVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BootVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BootVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *BootVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // ShutdownVPCRouterParam is input parameters for the sacloud API
 type ShutdownVPCRouterParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -853,11 +1840,43 @@ func (p *ShutdownVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ShutdownVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ShutdownVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -886,8 +1905,74 @@ func (p *ShutdownVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ShutdownVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ShutdownVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ShutdownVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ShutdownVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ShutdownVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShutdownVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShutdownVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ShutdownVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShutdownVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ShutdownVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ShutdownVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShutdownVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ShutdownVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ShutdownVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // ShutdownForceVPCRouterParam is input parameters for the sacloud API
 type ShutdownForceVPCRouterParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -911,11 +1996,43 @@ func (p *ShutdownForceVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ShutdownForceVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ShutdownForceVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -944,8 +2061,74 @@ func (p *ShutdownForceVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ShutdownForceVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ShutdownForceVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ShutdownForceVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ShutdownForceVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ShutdownForceVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShutdownForceVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShutdownForceVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownForceVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ShutdownForceVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShutdownForceVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ShutdownForceVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownForceVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ShutdownForceVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShutdownForceVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ShutdownForceVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ShutdownForceVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // ResetVPCRouterParam is input parameters for the sacloud API
 type ResetVPCRouterParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -969,11 +2152,43 @@ func (p *ResetVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ResetVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ResetVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1002,8 +2217,73 @@ func (p *ResetVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ResetVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ResetVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ResetVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ResetVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ResetVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ResetVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ResetVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ResetVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ResetVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ResetVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ResetVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ResetVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ResetVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ResetVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ResetVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ResetVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // WaitForBootVPCRouterParam is input parameters for the sacloud API
 type WaitForBootVPCRouterParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1027,11 +2307,40 @@ func (p *WaitForBootVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *WaitForBootVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *WaitForBootVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1060,8 +2369,66 @@ func (p *WaitForBootVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *WaitForBootVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *WaitForBootVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *WaitForBootVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForBootVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForBootVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForBootVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *WaitForBootVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForBootVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *WaitForBootVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForBootVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *WaitForBootVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForBootVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *WaitForBootVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *WaitForBootVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // WaitForDownVPCRouterParam is input parameters for the sacloud API
 type WaitForDownVPCRouterParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1085,11 +2452,40 @@ func (p *WaitForDownVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *WaitForDownVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *WaitForDownVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1118,8 +2514,67 @@ func (p *WaitForDownVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *WaitForDownVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *WaitForDownVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *WaitForDownVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForDownVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForDownVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForDownVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *WaitForDownVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForDownVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *WaitForDownVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForDownVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *WaitForDownVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForDownVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *WaitForDownVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *WaitForDownVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // EnableInternetConnectionVPCRouterParam is input parameters for the sacloud API
 type EnableInternetConnectionVPCRouterParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1143,11 +2598,43 @@ func (p *EnableInternetConnectionVPCRouterParam) WriteSkeleton(writer io.Writer)
 }
 
 func (p *EnableInternetConnectionVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *EnableInternetConnectionVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1176,8 +2663,74 @@ func (p *EnableInternetConnectionVPCRouterParam) ColumnDefs() []output.ColumnDef
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *EnableInternetConnectionVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // DisableInternetConnectionVPCRouterParam is input parameters for the sacloud API
 type DisableInternetConnectionVPCRouterParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1201,11 +2754,43 @@ func (p *DisableInternetConnectionVPCRouterParam) WriteSkeleton(writer io.Writer
 }
 
 func (p *DisableInternetConnectionVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DisableInternetConnectionVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1234,8 +2819,80 @@ func (p *DisableInternetConnectionVPCRouterParam) ColumnDefs() []output.ColumnDe
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *DisableInternetConnectionVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // InterfaceInfoVPCRouterParam is input parameters for the sacloud API
 type InterfaceInfoVPCRouterParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1259,12 +2916,81 @@ func (p *InterfaceInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *InterfaceInfoVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *InterfaceInfoVPCRouterParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1292,15 +3018,122 @@ func (p *InterfaceInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *InterfaceInfoVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *InterfaceInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *InterfaceInfoVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *InterfaceInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *InterfaceInfoVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *InterfaceInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *InterfaceInfoVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *InterfaceInfoVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *InterfaceInfoVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *InterfaceInfoVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *InterfaceInfoVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *InterfaceInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *InterfaceInfoVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *InterfaceInfoVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // InterfaceConnectVPCRouterParam is input parameters for the sacloud API
 type InterfaceConnectVPCRouterParam struct {
-	Ipaddress1 string
-	Ipaddress2 string
-	NwMasklen  int
-	WithReboot bool
-	Interface  string
-	SwitchId   sacloud.ID
-	Ipaddress  string
+	Interface         string
+	Ipaddress         string
+	WithReboot        bool
+	Ipaddress1        string
+	SwitchId          sacloud.ID
+	Ipaddress2        string
+	NwMasklen         int
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1326,8 +3159,20 @@ func (p *InterfaceConnectVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *InterfaceConnectVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Interface) {
+		p.Interface = ""
+	}
+	if utils.IsEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
+	if utils.IsEmpty(p.WithReboot) {
+		p.WithReboot = false
+	}
 	if utils.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
+	}
+	if utils.IsEmpty(p.SwitchId) {
+		p.SwitchId = sacloud.ID(0)
 	}
 	if utils.IsEmpty(p.Ipaddress2) {
 		p.Ipaddress2 = ""
@@ -1335,17 +3180,29 @@ func (p *InterfaceConnectVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.NwMasklen) {
 		p.NwMasklen = 0
 	}
-	if utils.IsEmpty(p.WithReboot) {
-		p.WithReboot = false
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Interface) {
-		p.Interface = ""
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.SwitchId) {
-		p.SwitchId = sacloud.ID(0)
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Ipaddress) {
-		p.Ipaddress = ""
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1354,8 +3211,53 @@ func (p *InterfaceConnectVPCRouterParam) validate() error {
 	var errors []error
 
 	{
+		validator := validateRequired
+		errs := validator("--interface", p.Interface)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--ipaddress", p.Ipaddress)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["ipaddress"].ValidateFunc
+		errs := validator("--ipaddress", p.Ipaddress)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
 		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["ipaddress1"].ValidateFunc
 		errs := validator("--ipaddress-1", p.Ipaddress1)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--switch-id", p.SwitchId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["switch-id"].ValidateFunc
+		errs := validator("--switch-id", p.SwitchId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1378,45 +3280,8 @@ func (p *InterfaceConnectVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
-		errs := validator("--interface", p.Interface)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["interface"].ValidateFunc
-		errs := validator("--interface", p.Interface)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--switch-id", p.SwitchId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["switch-id"].ValidateFunc
-		errs := validator("--switch-id", p.SwitchId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--ipaddress", p.Ipaddress)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["ipaddress"].ValidateFunc
-		errs := validator("--ipaddress", p.Ipaddress)
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1449,12 +3314,40 @@ func (p *InterfaceConnectVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *InterfaceConnectVPCRouterParam) SetInterface(v string) {
+	p.Interface = v
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetInterface() string {
+	return p.Interface
+}
+func (p *InterfaceConnectVPCRouterParam) SetIpaddress(v string) {
+	p.Ipaddress = v
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetIpaddress() string {
+	return p.Ipaddress
+}
+func (p *InterfaceConnectVPCRouterParam) SetWithReboot(v bool) {
+	p.WithReboot = v
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetWithReboot() bool {
+	return p.WithReboot
+}
 func (p *InterfaceConnectVPCRouterParam) SetIpaddress1(v string) {
 	p.Ipaddress1 = v
 }
 
 func (p *InterfaceConnectVPCRouterParam) GetIpaddress1() string {
 	return p.Ipaddress1
+}
+func (p *InterfaceConnectVPCRouterParam) SetSwitchId(v sacloud.ID) {
+	p.SwitchId = v
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetSwitchId() sacloud.ID {
+	return p.SwitchId
 }
 func (p *InterfaceConnectVPCRouterParam) SetIpaddress2(v string) {
 	p.Ipaddress2 = v
@@ -1470,45 +3363,81 @@ func (p *InterfaceConnectVPCRouterParam) SetNwMasklen(v int) {
 func (p *InterfaceConnectVPCRouterParam) GetNwMasklen() int {
 	return p.NwMasklen
 }
-func (p *InterfaceConnectVPCRouterParam) SetWithReboot(v bool) {
-	p.WithReboot = v
+func (p *InterfaceConnectVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
 }
 
-func (p *InterfaceConnectVPCRouterParam) GetWithReboot() bool {
-	return p.WithReboot
+func (p *InterfaceConnectVPCRouterParam) GetSelector() []string {
+	return p.Selector
 }
-func (p *InterfaceConnectVPCRouterParam) SetInterface(v string) {
-	p.Interface = v
-}
-
-func (p *InterfaceConnectVPCRouterParam) GetInterface() string {
-	return p.Interface
-}
-func (p *InterfaceConnectVPCRouterParam) SetSwitchId(v sacloud.ID) {
-	p.SwitchId = v
+func (p *InterfaceConnectVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
 }
 
-func (p *InterfaceConnectVPCRouterParam) GetSwitchId() sacloud.ID {
-	return p.SwitchId
+func (p *InterfaceConnectVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
 }
-func (p *InterfaceConnectVPCRouterParam) SetIpaddress(v string) {
-	p.Ipaddress = v
+func (p *InterfaceConnectVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
 }
 
-func (p *InterfaceConnectVPCRouterParam) GetIpaddress() string {
-	return p.Ipaddress
+func (p *InterfaceConnectVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *InterfaceConnectVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *InterfaceConnectVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *InterfaceConnectVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *InterfaceConnectVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *InterfaceConnectVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
 }
 
 // InterfaceUpdateVPCRouterParam is input parameters for the sacloud API
 type InterfaceUpdateVPCRouterParam struct {
-	Interface  string
-	SwitchId   sacloud.ID
-	Ipaddress  string
-	Ipaddress1 string
-	Ipaddress2 string
-	Alias      []string
-	NwMasklen  int
-	WithReboot bool
+	Interface         string
+	Ipaddress         string
+	WithReboot        bool
+	Ipaddress1        string
+	SwitchId          sacloud.ID
+	Ipaddress2        string
+	Alias             []string
+	NwMasklen         int
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1537,14 +3466,17 @@ func (p *InterfaceUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = ""
 	}
-	if utils.IsEmpty(p.SwitchId) {
-		p.SwitchId = sacloud.ID(0)
-	}
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
+	if utils.IsEmpty(p.WithReboot) {
+		p.WithReboot = false
+	}
 	if utils.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
+	}
+	if utils.IsEmpty(p.SwitchId) {
+		p.SwitchId = sacloud.ID(0)
 	}
 	if utils.IsEmpty(p.Ipaddress2) {
 		p.Ipaddress2 = ""
@@ -1555,8 +3487,29 @@ func (p *InterfaceUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.NwMasklen) {
 		p.NwMasklen = 0
 	}
-	if utils.IsEmpty(p.WithReboot) {
-		p.WithReboot = false
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1580,14 +3533,6 @@ func (p *InterfaceUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["VPCRouter"].Commands["interface-update"].Params["switch-id"].ValidateFunc
-		errs := validator("--switch-id", p.SwitchId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
 		validator := define.Resources["VPCRouter"].Commands["interface-update"].Params["ipaddress"].ValidateFunc
 		errs := validator("--ipaddress", p.Ipaddress)
 		if errs != nil {
@@ -1598,6 +3543,14 @@ func (p *InterfaceUpdateVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["interface-update"].Params["ipaddress1"].ValidateFunc
 		errs := validator("--ipaddress-1", p.Ipaddress1)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["interface-update"].Params["switch-id"].ValidateFunc
+		errs := validator("--switch-id", p.SwitchId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1622,6 +3575,14 @@ func (p *InterfaceUpdateVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["interface-update"].Params["nw-masklen"].ValidateFunc
 		errs := validator("--nw-masklen", p.NwMasklen)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1661,13 +3622,6 @@ func (p *InterfaceUpdateVPCRouterParam) SetInterface(v string) {
 func (p *InterfaceUpdateVPCRouterParam) GetInterface() string {
 	return p.Interface
 }
-func (p *InterfaceUpdateVPCRouterParam) SetSwitchId(v sacloud.ID) {
-	p.SwitchId = v
-}
-
-func (p *InterfaceUpdateVPCRouterParam) GetSwitchId() sacloud.ID {
-	return p.SwitchId
-}
 func (p *InterfaceUpdateVPCRouterParam) SetIpaddress(v string) {
 	p.Ipaddress = v
 }
@@ -1675,12 +3629,26 @@ func (p *InterfaceUpdateVPCRouterParam) SetIpaddress(v string) {
 func (p *InterfaceUpdateVPCRouterParam) GetIpaddress() string {
 	return p.Ipaddress
 }
+func (p *InterfaceUpdateVPCRouterParam) SetWithReboot(v bool) {
+	p.WithReboot = v
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetWithReboot() bool {
+	return p.WithReboot
+}
 func (p *InterfaceUpdateVPCRouterParam) SetIpaddress1(v string) {
 	p.Ipaddress1 = v
 }
 
 func (p *InterfaceUpdateVPCRouterParam) GetIpaddress1() string {
 	return p.Ipaddress1
+}
+func (p *InterfaceUpdateVPCRouterParam) SetSwitchId(v sacloud.ID) {
+	p.SwitchId = v
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetSwitchId() sacloud.ID {
+	return p.SwitchId
 }
 func (p *InterfaceUpdateVPCRouterParam) SetIpaddress2(v string) {
 	p.Ipaddress2 = v
@@ -1703,18 +3671,75 @@ func (p *InterfaceUpdateVPCRouterParam) SetNwMasklen(v int) {
 func (p *InterfaceUpdateVPCRouterParam) GetNwMasklen() int {
 	return p.NwMasklen
 }
-func (p *InterfaceUpdateVPCRouterParam) SetWithReboot(v bool) {
-	p.WithReboot = v
+func (p *InterfaceUpdateVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
 }
 
-func (p *InterfaceUpdateVPCRouterParam) GetWithReboot() bool {
-	return p.WithReboot
+func (p *InterfaceUpdateVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *InterfaceUpdateVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *InterfaceUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *InterfaceUpdateVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *InterfaceUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *InterfaceUpdateVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *InterfaceUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *InterfaceUpdateVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
 }
 
 // InterfaceDisconnectVPCRouterParam is input parameters for the sacloud API
 type InterfaceDisconnectVPCRouterParam struct {
-	Interface  string
-	WithReboot bool
+	Interface         string
+	WithReboot        bool
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1745,6 +3770,30 @@ func (p *InterfaceDisconnectVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.WithReboot) {
 		p.WithReboot = false
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -1761,6 +3810,14 @@ func (p *InterfaceDisconnectVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["interface-disconnect"].Params["interface"].ValidateFunc
 		errs := validator("--interface", p.Interface)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1807,9 +3864,80 @@ func (p *InterfaceDisconnectVPCRouterParam) SetWithReboot(v bool) {
 func (p *InterfaceDisconnectVPCRouterParam) GetWithReboot() bool {
 	return p.WithReboot
 }
+func (p *InterfaceDisconnectVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *InterfaceDisconnectVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *InterfaceDisconnectVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *InterfaceDisconnectVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *InterfaceDisconnectVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *InterfaceDisconnectVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *InterfaceDisconnectVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *InterfaceDisconnectVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // StaticNatInfoVPCRouterParam is input parameters for the sacloud API
 type StaticNatInfoVPCRouterParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1833,12 +3961,81 @@ func (p *StaticNatInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *StaticNatInfoVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *StaticNatInfoVPCRouterParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1866,11 +4063,118 @@ func (p *StaticNatInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *StaticNatInfoVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *StaticNatInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *StaticNatInfoVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *StaticNatInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *StaticNatInfoVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *StaticNatInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *StaticNatInfoVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *StaticNatInfoVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *StaticNatInfoVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *StaticNatInfoVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *StaticNatInfoVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *StaticNatInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *StaticNatInfoVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *StaticNatInfoVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // StaticNatAddVPCRouterParam is input parameters for the sacloud API
 type StaticNatAddVPCRouterParam struct {
-	Global      string
-	Private     string
-	Description string
+	Global            string
+	Private           string
+	Description       string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1903,6 +4207,30 @@ func (p *StaticNatAddVPCRouterParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1943,6 +4271,14 @@ func (p *StaticNatAddVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["static-nat-add"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1996,13 +4332,77 @@ func (p *StaticNatAddVPCRouterParam) SetDescription(v string) {
 func (p *StaticNatAddVPCRouterParam) GetDescription() string {
 	return p.Description
 }
+func (p *StaticNatAddVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *StaticNatAddVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *StaticNatAddVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *StaticNatAddVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *StaticNatAddVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *StaticNatAddVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *StaticNatAddVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *StaticNatAddVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *StaticNatAddVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *StaticNatAddVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *StaticNatAddVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *StaticNatAddVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *StaticNatAddVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *StaticNatAddVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *StaticNatAddVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *StaticNatAddVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // StaticNatUpdateVPCRouterParam is input parameters for the sacloud API
 type StaticNatUpdateVPCRouterParam struct {
-	Global      string
-	Private     string
-	Description string
-	Index       int
+	Index             int
+	Global            string
+	Private           string
+	Description       string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -2027,6 +4427,9 @@ func (p *StaticNatUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *StaticNatUpdateVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Index) {
+		p.Index = 0
+	}
 	if utils.IsEmpty(p.Global) {
 		p.Global = ""
 	}
@@ -2036,14 +4439,43 @@ func (p *StaticNatUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Index) {
-		p.Index = 0
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
 
 func (p *StaticNatUpdateVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["VPCRouter"].Commands["static-nat-update"].Params["global"].ValidateFunc
@@ -2070,8 +4502,8 @@ func (p *StaticNatUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
-		errs := validator("--index", p.Index)
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2104,6 +4536,13 @@ func (p *StaticNatUpdateVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *StaticNatUpdateVPCRouterParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetIndex() int {
+	return p.Index
+}
 func (p *StaticNatUpdateVPCRouterParam) SetGlobal(v string) {
 	p.Global = v
 }
@@ -2125,17 +4564,74 @@ func (p *StaticNatUpdateVPCRouterParam) SetDescription(v string) {
 func (p *StaticNatUpdateVPCRouterParam) GetDescription() string {
 	return p.Description
 }
-func (p *StaticNatUpdateVPCRouterParam) SetIndex(v int) {
-	p.Index = v
+func (p *StaticNatUpdateVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
 }
 
-func (p *StaticNatUpdateVPCRouterParam) GetIndex() int {
-	return p.Index
+func (p *StaticNatUpdateVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *StaticNatUpdateVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *StaticNatUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *StaticNatUpdateVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *StaticNatUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *StaticNatUpdateVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *StaticNatUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *StaticNatUpdateVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
 }
 
 // StaticNatDeleteVPCRouterParam is input parameters for the sacloud API
 type StaticNatDeleteVPCRouterParam struct {
-	Index int
+	Index             int
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -2163,6 +4659,30 @@ func (p *StaticNatDeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -2172,6 +4692,14 @@ func (p *StaticNatDeleteVPCRouterParam) validate() error {
 	{
 		validator := validateRequired
 		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2211,9 +4739,80 @@ func (p *StaticNatDeleteVPCRouterParam) SetIndex(v int) {
 func (p *StaticNatDeleteVPCRouterParam) GetIndex() int {
 	return p.Index
 }
+func (p *StaticNatDeleteVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *StaticNatDeleteVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *StaticNatDeleteVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *StaticNatDeleteVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *StaticNatDeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *StaticNatDeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *StaticNatDeleteVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *StaticNatDeleteVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *StaticNatDeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *StaticNatDeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *StaticNatDeleteVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *StaticNatDeleteVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *StaticNatDeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *StaticNatDeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *StaticNatDeleteVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *StaticNatDeleteVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // PortForwardingInfoVPCRouterParam is input parameters for the sacloud API
 type PortForwardingInfoVPCRouterParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -2237,12 +4836,81 @@ func (p *PortForwardingInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error
 }
 
 func (p *PortForwardingInfoVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *PortForwardingInfoVPCRouterParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -2270,13 +4938,120 @@ func (p *PortForwardingInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *PortForwardingInfoVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *PortForwardingInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PortForwardingInfoVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *PortForwardingInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *PortForwardingInfoVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PortForwardingInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *PortForwardingInfoVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *PortForwardingInfoVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *PortForwardingInfoVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *PortForwardingInfoVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *PortForwardingInfoVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *PortForwardingInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *PortForwardingInfoVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *PortForwardingInfoVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // PortForwardingAddVPCRouterParam is input parameters for the sacloud API
 type PortForwardingAddVPCRouterParam struct {
-	GlobalPort       int
-	PrivateIpaddress string
-	PrivatePort      int
-	Description      string
-	Protocol         string
+	Protocol          string
+	GlobalPort        int
+	PrivateIpaddress  string
+	PrivatePort       int
+	Description       string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -2301,6 +5076,9 @@ func (p *PortForwardingAddVPCRouterParam) WriteSkeleton(writer io.Writer) error 
 }
 
 func (p *PortForwardingAddVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
 	if utils.IsEmpty(p.GlobalPort) {
 		p.GlobalPort = 0
 	}
@@ -2313,14 +5091,50 @@ func (p *PortForwardingAddVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Protocol) {
-		p.Protocol = ""
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
 
 func (p *PortForwardingAddVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--protocol", p.Protocol)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["VPCRouter"].Commands["port-forwarding-add"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -2376,15 +5190,8 @@ func (p *PortForwardingAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
-		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["VPCRouter"].Commands["port-forwarding-add"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2417,6 +5224,13 @@ func (p *PortForwardingAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *PortForwardingAddVPCRouterParam) SetProtocol(v string) {
+	p.Protocol = v
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetProtocol() string {
+	return p.Protocol
+}
 func (p *PortForwardingAddVPCRouterParam) SetGlobalPort(v int) {
 	p.GlobalPort = v
 }
@@ -2445,22 +5259,79 @@ func (p *PortForwardingAddVPCRouterParam) SetDescription(v string) {
 func (p *PortForwardingAddVPCRouterParam) GetDescription() string {
 	return p.Description
 }
-func (p *PortForwardingAddVPCRouterParam) SetProtocol(v string) {
-	p.Protocol = v
+func (p *PortForwardingAddVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
 }
 
-func (p *PortForwardingAddVPCRouterParam) GetProtocol() string {
-	return p.Protocol
+func (p *PortForwardingAddVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *PortForwardingAddVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *PortForwardingAddVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PortForwardingAddVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *PortForwardingAddVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *PortForwardingAddVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PortForwardingAddVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *PortForwardingAddVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
 }
 
 // PortForwardingUpdateVPCRouterParam is input parameters for the sacloud API
 type PortForwardingUpdateVPCRouterParam struct {
-	Index            int
-	Protocol         string
-	GlobalPort       int
-	PrivateIpaddress string
-	PrivatePort      int
-	Description      string
+	Index             int
+	Protocol          string
+	GlobalPort        int
+	PrivateIpaddress  string
+	PrivatePort       int
+	Description       string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -2502,6 +5373,30 @@ func (p *PortForwardingUpdateVPCRouterParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2552,6 +5447,14 @@ func (p *PortForwardingUpdateVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["port-forwarding-update"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2626,10 +5529,74 @@ func (p *PortForwardingUpdateVPCRouterParam) SetDescription(v string) {
 func (p *PortForwardingUpdateVPCRouterParam) GetDescription() string {
 	return p.Description
 }
+func (p *PortForwardingUpdateVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *PortForwardingUpdateVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *PortForwardingUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PortForwardingUpdateVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *PortForwardingUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *PortForwardingUpdateVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PortForwardingUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *PortForwardingUpdateVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // PortForwardingDeleteVPCRouterParam is input parameters for the sacloud API
 type PortForwardingDeleteVPCRouterParam struct {
-	Index int
+	Index             int
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -2657,6 +5624,30 @@ func (p *PortForwardingDeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -2666,6 +5657,14 @@ func (p *PortForwardingDeleteVPCRouterParam) validate() error {
 	{
 		validator := validateRequired
 		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2705,11 +5704,81 @@ func (p *PortForwardingDeleteVPCRouterParam) SetIndex(v int) {
 func (p *PortForwardingDeleteVPCRouterParam) GetIndex() int {
 	return p.Index
 }
+func (p *PortForwardingDeleteVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *PortForwardingDeleteVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *PortForwardingDeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PortForwardingDeleteVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *PortForwardingDeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *PortForwardingDeleteVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PortForwardingDeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *PortForwardingDeleteVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // FirewallInfoVPCRouterParam is input parameters for the sacloud API
 type FirewallInfoVPCRouterParam struct {
-	Interface int
-	Direction string
+	Interface         int
+	Direction         string
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -2741,6 +5810,48 @@ func (p *FirewallInfoVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Direction) {
 		p.Direction = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -2770,6 +5881,33 @@ func (p *FirewallInfoVPCRouterParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -2811,19 +5949,125 @@ func (p *FirewallInfoVPCRouterParam) SetDirection(v string) {
 func (p *FirewallInfoVPCRouterParam) GetDirection() string {
 	return p.Direction
 }
+func (p *FirewallInfoVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *FirewallInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *FirewallInfoVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *FirewallInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *FirewallInfoVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *FirewallInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *FirewallInfoVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *FirewallInfoVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *FirewallInfoVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *FirewallInfoVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *FirewallInfoVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *FirewallInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *FirewallInfoVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *FirewallInfoVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // FirewallAddVPCRouterParam is input parameters for the sacloud API
 type FirewallAddVPCRouterParam struct {
+	Interface          int
 	Direction          string
 	Protocol           string
-	Action             string
-	EnableLogging      bool
-	Description        string
-	Interface          int
 	SourceNetwork      string
 	SourcePort         int
 	DestinationNetwork string
 	DestinationPort    int
+	Action             string
+	EnableLogging      bool
+	Description        string
+	Selector           []string
+	Assumeyes          bool
+	ParamTemplate      string
+	Parameters         string
+	ParamTemplateFile  string
+	ParameterFile      string
+	GenerateSkeleton   bool
+	Id                 sacloud.ID
 
 	input Input
 }
@@ -2849,23 +6093,14 @@ func (p *FirewallAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *FirewallAddVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Interface) {
+		p.Interface = 0
+	}
 	if utils.IsEmpty(p.Direction) {
 		p.Direction = ""
 	}
 	if utils.IsEmpty(p.Protocol) {
 		p.Protocol = ""
-	}
-	if utils.IsEmpty(p.Action) {
-		p.Action = ""
-	}
-	if utils.IsEmpty(p.EnableLogging) {
-		p.EnableLogging = false
-	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
-	if utils.IsEmpty(p.Interface) {
-		p.Interface = 0
 	}
 	if utils.IsEmpty(p.SourceNetwork) {
 		p.SourceNetwork = ""
@@ -2879,11 +6114,52 @@ func (p *FirewallAddVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.DestinationPort) {
 		p.DestinationPort = 0
 	}
+	if utils.IsEmpty(p.Action) {
+		p.Action = ""
+	}
+	if utils.IsEmpty(p.EnableLogging) {
+		p.EnableLogging = false
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *FirewallAddVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := validateRequired
@@ -2910,37 +6186,6 @@ func (p *FirewallAddVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["protocol"].ValidateFunc
 		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--action", p.Action)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["action"].ValidateFunc
-		errs := validator("--action", p.Action)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["interface"].ValidateFunc
-		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2978,6 +6223,37 @@ func (p *FirewallAddVPCRouterParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateRequired
+		errs := validator("--action", p.Action)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["action"].ValidateFunc
+		errs := validator("--action", p.Action)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
@@ -3005,6 +6281,13 @@ func (p *FirewallAddVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *FirewallAddVPCRouterParam) SetInterface(v int) {
+	p.Interface = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetInterface() int {
+	return p.Interface
+}
 func (p *FirewallAddVPCRouterParam) SetDirection(v string) {
 	p.Direction = v
 }
@@ -3018,34 +6301,6 @@ func (p *FirewallAddVPCRouterParam) SetProtocol(v string) {
 
 func (p *FirewallAddVPCRouterParam) GetProtocol() string {
 	return p.Protocol
-}
-func (p *FirewallAddVPCRouterParam) SetAction(v string) {
-	p.Action = v
-}
-
-func (p *FirewallAddVPCRouterParam) GetAction() string {
-	return p.Action
-}
-func (p *FirewallAddVPCRouterParam) SetEnableLogging(v bool) {
-	p.EnableLogging = v
-}
-
-func (p *FirewallAddVPCRouterParam) GetEnableLogging() bool {
-	return p.EnableLogging
-}
-func (p *FirewallAddVPCRouterParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *FirewallAddVPCRouterParam) GetDescription() string {
-	return p.Description
-}
-func (p *FirewallAddVPCRouterParam) SetInterface(v int) {
-	p.Interface = v
-}
-
-func (p *FirewallAddVPCRouterParam) GetInterface() int {
-	return p.Interface
 }
 func (p *FirewallAddVPCRouterParam) SetSourceNetwork(v string) {
 	p.SourceNetwork = v
@@ -3075,20 +6330,105 @@ func (p *FirewallAddVPCRouterParam) SetDestinationPort(v int) {
 func (p *FirewallAddVPCRouterParam) GetDestinationPort() int {
 	return p.DestinationPort
 }
+func (p *FirewallAddVPCRouterParam) SetAction(v string) {
+	p.Action = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetAction() string {
+	return p.Action
+}
+func (p *FirewallAddVPCRouterParam) SetEnableLogging(v bool) {
+	p.EnableLogging = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetEnableLogging() bool {
+	return p.EnableLogging
+}
+func (p *FirewallAddVPCRouterParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetDescription() string {
+	return p.Description
+}
+func (p *FirewallAddVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *FirewallAddVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *FirewallAddVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *FirewallAddVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *FirewallAddVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *FirewallAddVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *FirewallAddVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *FirewallAddVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // FirewallUpdateVPCRouterParam is input parameters for the sacloud API
 type FirewallUpdateVPCRouterParam struct {
 	Interface          int
 	Direction          string
-	Protocol           string
-	Action             string
-	DestinationPort    int
-	EnableLogging      bool
-	Description        string
 	Index              int
+	Protocol           string
 	SourceNetwork      string
 	SourcePort         int
 	DestinationNetwork string
+	DestinationPort    int
+	Action             string
+	EnableLogging      bool
+	Description        string
+	Selector           []string
+	Assumeyes          bool
+	ParamTemplate      string
+	Parameters         string
+	ParamTemplateFile  string
+	ParameterFile      string
+	GenerateSkeleton   bool
+	Id                 sacloud.ID
 
 	input Input
 }
@@ -3120,23 +6460,11 @@ func (p *FirewallUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Direction) {
 		p.Direction = ""
 	}
-	if utils.IsEmpty(p.Protocol) {
-		p.Protocol = ""
-	}
-	if utils.IsEmpty(p.Action) {
-		p.Action = ""
-	}
-	if utils.IsEmpty(p.DestinationPort) {
-		p.DestinationPort = 0
-	}
-	if utils.IsEmpty(p.EnableLogging) {
-		p.EnableLogging = false
-	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
+	}
+	if utils.IsEmpty(p.Protocol) {
+		p.Protocol = ""
 	}
 	if utils.IsEmpty(p.SourceNetwork) {
 		p.SourceNetwork = ""
@@ -3146,6 +6474,42 @@ func (p *FirewallUpdateVPCRouterParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.DestinationNetwork) {
 		p.DestinationNetwork = ""
+	}
+	if utils.IsEmpty(p.DestinationPort) {
+		p.DestinationPort = 0
+	}
+	if utils.IsEmpty(p.Action) {
+		p.Action = ""
+	}
+	if utils.IsEmpty(p.EnableLogging) {
+		p.EnableLogging = false
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3177,40 +6541,16 @@ func (p *FirewallUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["action"].ValidateFunc
-		errs := validator("--action", p.Action)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["destination-port"].ValidateFunc
-		errs := validator("--destination-port", p.DestinationPort)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
 		validator := validateRequired
 		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3235,6 +6575,38 @@ func (p *FirewallUpdateVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["destination-network"].ValidateFunc
 		errs := validator("--destination-network", p.DestinationNetwork)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["destination-port"].ValidateFunc
+		errs := validator("--destination-port", p.DestinationPort)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["action"].ValidateFunc
+		errs := validator("--action", p.Action)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3281,47 +6653,19 @@ func (p *FirewallUpdateVPCRouterParam) SetDirection(v string) {
 func (p *FirewallUpdateVPCRouterParam) GetDirection() string {
 	return p.Direction
 }
-func (p *FirewallUpdateVPCRouterParam) SetProtocol(v string) {
-	p.Protocol = v
-}
-
-func (p *FirewallUpdateVPCRouterParam) GetProtocol() string {
-	return p.Protocol
-}
-func (p *FirewallUpdateVPCRouterParam) SetAction(v string) {
-	p.Action = v
-}
-
-func (p *FirewallUpdateVPCRouterParam) GetAction() string {
-	return p.Action
-}
-func (p *FirewallUpdateVPCRouterParam) SetDestinationPort(v int) {
-	p.DestinationPort = v
-}
-
-func (p *FirewallUpdateVPCRouterParam) GetDestinationPort() int {
-	return p.DestinationPort
-}
-func (p *FirewallUpdateVPCRouterParam) SetEnableLogging(v bool) {
-	p.EnableLogging = v
-}
-
-func (p *FirewallUpdateVPCRouterParam) GetEnableLogging() bool {
-	return p.EnableLogging
-}
-func (p *FirewallUpdateVPCRouterParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *FirewallUpdateVPCRouterParam) GetDescription() string {
-	return p.Description
-}
 func (p *FirewallUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
 
 func (p *FirewallUpdateVPCRouterParam) GetIndex() int {
 	return p.Index
+}
+func (p *FirewallUpdateVPCRouterParam) SetProtocol(v string) {
+	p.Protocol = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetProtocol() string {
+	return p.Protocol
 }
 func (p *FirewallUpdateVPCRouterParam) SetSourceNetwork(v string) {
 	p.SourceNetwork = v
@@ -3344,12 +6688,104 @@ func (p *FirewallUpdateVPCRouterParam) SetDestinationNetwork(v string) {
 func (p *FirewallUpdateVPCRouterParam) GetDestinationNetwork() string {
 	return p.DestinationNetwork
 }
+func (p *FirewallUpdateVPCRouterParam) SetDestinationPort(v int) {
+	p.DestinationPort = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetDestinationPort() int {
+	return p.DestinationPort
+}
+func (p *FirewallUpdateVPCRouterParam) SetAction(v string) {
+	p.Action = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetAction() string {
+	return p.Action
+}
+func (p *FirewallUpdateVPCRouterParam) SetEnableLogging(v bool) {
+	p.EnableLogging = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetEnableLogging() bool {
+	return p.EnableLogging
+}
+func (p *FirewallUpdateVPCRouterParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetDescription() string {
+	return p.Description
+}
+func (p *FirewallUpdateVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *FirewallUpdateVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *FirewallUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *FirewallUpdateVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *FirewallUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *FirewallUpdateVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *FirewallUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *FirewallUpdateVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // FirewallDeleteVPCRouterParam is input parameters for the sacloud API
 type FirewallDeleteVPCRouterParam struct {
-	Interface int
-	Direction string
-	Index     int
+	Interface         int
+	Direction         string
+	Index             int
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -3384,6 +6820,30 @@ func (p *FirewallDeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -3416,6 +6876,14 @@ func (p *FirewallDeleteVPCRouterParam) validate() error {
 	{
 		validator := validateRequired
 		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3469,9 +6937,80 @@ func (p *FirewallDeleteVPCRouterParam) SetIndex(v int) {
 func (p *FirewallDeleteVPCRouterParam) GetIndex() int {
 	return p.Index
 }
+func (p *FirewallDeleteVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *FirewallDeleteVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *FirewallDeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *FirewallDeleteVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *FirewallDeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *FirewallDeleteVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *FirewallDeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *FirewallDeleteVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DhcpServerInfoVPCRouterParam is input parameters for the sacloud API
 type DhcpServerInfoVPCRouterParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -3495,12 +7034,81 @@ func (p *DhcpServerInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *DhcpServerInfoVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DhcpServerInfoVPCRouterParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -3528,12 +7136,119 @@ func (p *DhcpServerInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *DhcpServerInfoVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DhcpServerInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DhcpServerInfoVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DhcpServerInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DhcpServerInfoVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DhcpServerInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DhcpServerInfoVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DhcpServerInfoVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DhcpServerInfoVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DhcpServerInfoVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *DhcpServerInfoVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DhcpServerInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *DhcpServerInfoVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *DhcpServerInfoVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // DhcpServerAddVPCRouterParam is input parameters for the sacloud API
 type DhcpServerAddVPCRouterParam struct {
-	Interface  int
-	RangeStart string
-	RangeStop  string
-	DNSServers []string
+	Interface         int
+	RangeStart        string
+	RangeStop         string
+	DNSServers        []string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -3569,6 +7284,30 @@ func (p *DhcpServerAddVPCRouterParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.DNSServers) {
 		p.DNSServers = []string{""}
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3629,6 +7368,14 @@ func (p *DhcpServerAddVPCRouterParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
@@ -3684,13 +7431,77 @@ func (p *DhcpServerAddVPCRouterParam) SetDNSServers(v []string) {
 func (p *DhcpServerAddVPCRouterParam) GetDNSServers() []string {
 	return p.DNSServers
 }
+func (p *DhcpServerAddVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DhcpServerAddVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DhcpServerAddVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DhcpServerAddVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DhcpServerAddVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DhcpServerAddVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DhcpServerAddVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DhcpServerAddVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DhcpServerUpdateVPCRouterParam is input parameters for the sacloud API
 type DhcpServerUpdateVPCRouterParam struct {
-	Interface  int
-	RangeStart string
-	RangeStop  string
-	DNSServers []string
+	Interface         int
+	RangeStart        string
+	RangeStop         string
+	DNSServers        []string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -3726,6 +7537,30 @@ func (p *DhcpServerUpdateVPCRouterParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.DNSServers) {
 		p.DNSServers = []string{""}
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3767,6 +7602,14 @@ func (p *DhcpServerUpdateVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["dns-servers"].ValidateFunc
 		errs := validator("--dns-servers", p.DNSServers)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3827,10 +7670,74 @@ func (p *DhcpServerUpdateVPCRouterParam) SetDNSServers(v []string) {
 func (p *DhcpServerUpdateVPCRouterParam) GetDNSServers() []string {
 	return p.DNSServers
 }
+func (p *DhcpServerUpdateVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DhcpServerUpdateVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DhcpServerUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DhcpServerUpdateVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DhcpServerUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DhcpServerUpdateVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DhcpServerUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DhcpServerUpdateVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DhcpServerDeleteVPCRouterParam is input parameters for the sacloud API
 type DhcpServerDeleteVPCRouterParam struct {
-	Interface int
+	Interface         int
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -3858,6 +7765,30 @@ func (p *DhcpServerDeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -3874,6 +7805,14 @@ func (p *DhcpServerDeleteVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["dhcp-server-delete"].Params["interface"].ValidateFunc
 		errs := validator("--interface", p.Interface)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3913,9 +7852,80 @@ func (p *DhcpServerDeleteVPCRouterParam) SetInterface(v int) {
 func (p *DhcpServerDeleteVPCRouterParam) GetInterface() int {
 	return p.Interface
 }
+func (p *DhcpServerDeleteVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DhcpServerDeleteVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DhcpServerDeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DhcpServerDeleteVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DhcpServerDeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DhcpServerDeleteVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DhcpServerDeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DhcpServerDeleteVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DhcpStaticMappingInfoVPCRouterParam is input parameters for the sacloud API
 type DhcpStaticMappingInfoVPCRouterParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -3939,12 +7949,81 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) WriteSkeleton(writer io.Writer) er
 }
 
 func (p *DhcpStaticMappingInfoVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DhcpStaticMappingInfoVPCRouterParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -3972,10 +8051,117 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // DhcpStaticMappingAddVPCRouterParam is input parameters for the sacloud API
 type DhcpStaticMappingAddVPCRouterParam struct {
-	Macaddress string
-	Ipaddress  string
+	Macaddress        string
+	Ipaddress         string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -4005,6 +8191,30 @@ func (p *DhcpStaticMappingAddVPCRouterParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4037,6 +8247,14 @@ func (p *DhcpStaticMappingAddVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-add"].Params["ipaddress"].ValidateFunc
 		errs := validator("--ipaddress", p.Ipaddress)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4083,12 +8301,76 @@ func (p *DhcpStaticMappingAddVPCRouterParam) SetIpaddress(v string) {
 func (p *DhcpStaticMappingAddVPCRouterParam) GetIpaddress() string {
 	return p.Ipaddress
 }
+func (p *DhcpStaticMappingAddVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DhcpStaticMappingAddVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DhcpStaticMappingAddVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DhcpStaticMappingAddVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DhcpStaticMappingAddVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DhcpStaticMappingAddVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DhcpStaticMappingAddVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DhcpStaticMappingAddVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DhcpStaticMappingUpdateVPCRouterParam is input parameters for the sacloud API
 type DhcpStaticMappingUpdateVPCRouterParam struct {
-	Index      int
-	Macaddress string
-	Ipaddress  string
+	Index             int
+	Macaddress        string
+	Ipaddress         string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -4122,6 +8404,30 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -4147,6 +8453,14 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-update"].Params["ipaddress"].ValidateFunc
 		errs := validator("--ipaddress", p.Ipaddress)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4200,10 +8514,74 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) SetIpaddress(v string) {
 func (p *DhcpStaticMappingUpdateVPCRouterParam) GetIpaddress() string {
 	return p.Ipaddress
 }
+func (p *DhcpStaticMappingUpdateVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DhcpStaticMappingUpdateVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DhcpStaticMappingUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DhcpStaticMappingUpdateVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DhcpStaticMappingUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DhcpStaticMappingUpdateVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DhcpStaticMappingUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DhcpStaticMappingUpdateVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DhcpStaticMappingDeleteVPCRouterParam is input parameters for the sacloud API
 type DhcpStaticMappingDeleteVPCRouterParam struct {
-	Index int
+	Index             int
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -4231,6 +8609,30 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -4240,6 +8642,14 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) validate() error {
 	{
 		validator := validateRequired
 		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4279,9 +8689,80 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) SetIndex(v int) {
 func (p *DhcpStaticMappingDeleteVPCRouterParam) GetIndex() int {
 	return p.Index
 }
+func (p *DhcpStaticMappingDeleteVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DhcpStaticMappingDeleteVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DhcpStaticMappingDeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DhcpStaticMappingDeleteVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DhcpStaticMappingDeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DhcpStaticMappingDeleteVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DhcpStaticMappingDeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DhcpStaticMappingDeleteVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // PptpServerInfoVPCRouterParam is input parameters for the sacloud API
 type PptpServerInfoVPCRouterParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -4305,12 +8786,81 @@ func (p *PptpServerInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *PptpServerInfoVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *PptpServerInfoVPCRouterParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -4338,11 +8888,118 @@ func (p *PptpServerInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *PptpServerInfoVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *PptpServerInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PptpServerInfoVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *PptpServerInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *PptpServerInfoVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PptpServerInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *PptpServerInfoVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *PptpServerInfoVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *PptpServerInfoVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *PptpServerInfoVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *PptpServerInfoVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *PptpServerInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *PptpServerInfoVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *PptpServerInfoVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // PptpServerUpdateVPCRouterParam is input parameters for the sacloud API
 type PptpServerUpdateVPCRouterParam struct {
-	Disabled   bool
-	RangeStart string
-	RangeStop  string
+	Disabled          bool
+	RangeStart        string
+	RangeStop         string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -4376,6 +9033,30 @@ func (p *PptpServerUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.RangeStop) {
 		p.RangeStop = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -4393,6 +9074,14 @@ func (p *PptpServerUpdateVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["pptp-server-update"].Params["range-stop"].ValidateFunc
 		errs := validator("--range-stop", p.RangeStop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4446,9 +9135,80 @@ func (p *PptpServerUpdateVPCRouterParam) SetRangeStop(v string) {
 func (p *PptpServerUpdateVPCRouterParam) GetRangeStop() string {
 	return p.RangeStop
 }
+func (p *PptpServerUpdateVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *PptpServerUpdateVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *PptpServerUpdateVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *PptpServerUpdateVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *PptpServerUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PptpServerUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PptpServerUpdateVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PptpServerUpdateVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *PptpServerUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PptpServerUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *PptpServerUpdateVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PptpServerUpdateVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PptpServerUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PptpServerUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *PptpServerUpdateVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *PptpServerUpdateVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // L2TPServerInfoVPCRouterParam is input parameters for the sacloud API
 type L2TPServerInfoVPCRouterParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -4472,12 +9232,81 @@ func (p *L2TPServerInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *L2TPServerInfoVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *L2TPServerInfoVPCRouterParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -4505,12 +9334,119 @@ func (p *L2TPServerInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *L2TPServerInfoVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *L2TPServerInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *L2TPServerInfoVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *L2TPServerInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *L2TPServerInfoVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *L2TPServerInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *L2TPServerInfoVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *L2TPServerInfoVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *L2TPServerInfoVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *L2TPServerInfoVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *L2TPServerInfoVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *L2TPServerInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *L2TPServerInfoVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *L2TPServerInfoVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *L2TPServerInfoVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // L2TPServerUpdateVPCRouterParam is input parameters for the sacloud API
 type L2TPServerUpdateVPCRouterParam struct {
-	Disabled        bool
-	RangeStart      string
-	RangeStop       string
-	PreSharedSecret string
+	Disabled          bool
+	RangeStart        string
+	RangeStop         string
+	PreSharedSecret   string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -4547,6 +9483,30 @@ func (p *L2TPServerUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.PreSharedSecret) {
 		p.PreSharedSecret = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -4572,6 +9532,14 @@ func (p *L2TPServerUpdateVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["l2tp-server-update"].Params["pre-shared-secret"].ValidateFunc
 		errs := validator("--pre-shared-secret", p.PreSharedSecret)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4632,9 +9600,80 @@ func (p *L2TPServerUpdateVPCRouterParam) SetPreSharedSecret(v string) {
 func (p *L2TPServerUpdateVPCRouterParam) GetPreSharedSecret() string {
 	return p.PreSharedSecret
 }
+func (p *L2TPServerUpdateVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *L2TPServerUpdateVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *L2TPServerUpdateVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *L2TPServerUpdateVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *L2TPServerUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *L2TPServerUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *L2TPServerUpdateVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *L2TPServerUpdateVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *L2TPServerUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *L2TPServerUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *L2TPServerUpdateVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *L2TPServerUpdateVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *L2TPServerUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *L2TPServerUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *L2TPServerUpdateVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *L2TPServerUpdateVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // UserInfoVPCRouterParam is input parameters for the sacloud API
 type UserInfoVPCRouterParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -4658,12 +9697,81 @@ func (p *UserInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UserInfoVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *UserInfoVPCRouterParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -4691,10 +9799,117 @@ func (p *UserInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *UserInfoVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UserInfoVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *UserInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UserInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UserInfoVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UserInfoVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UserInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UserInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UserInfoVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UserInfoVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UserInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UserInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UserInfoVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UserInfoVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UserInfoVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UserInfoVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UserInfoVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UserInfoVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UserInfoVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UserInfoVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *UserInfoVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UserInfoVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UserInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UserInfoVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *UserInfoVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UserInfoVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UserInfoVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UserInfoVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UserAddVPCRouterParam is input parameters for the sacloud API
 type UserAddVPCRouterParam struct {
-	Username string
-	Password string
+	Username          string
+	Password          string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -4724,6 +9939,30 @@ func (p *UserAddVPCRouterParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Password) {
 		p.Password = ""
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4756,6 +9995,14 @@ func (p *UserAddVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["user-add"].Params["password"].ValidateFunc
 		errs := validator("--password", p.Password)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4802,12 +10049,76 @@ func (p *UserAddVPCRouterParam) SetPassword(v string) {
 func (p *UserAddVPCRouterParam) GetPassword() string {
 	return p.Password
 }
+func (p *UserAddVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UserAddVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *UserAddVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *UserAddVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UserAddVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UserAddVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UserAddVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UserAddVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UserAddVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UserAddVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UserAddVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UserAddVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UserAddVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UserAddVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UserAddVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UserAddVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // UserUpdateVPCRouterParam is input parameters for the sacloud API
 type UserUpdateVPCRouterParam struct {
-	Index    int
-	Username string
-	Password string
+	Index             int
+	Username          string
+	Password          string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -4841,6 +10152,30 @@ func (p *UserUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Password) {
 		p.Password = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -4866,6 +10201,14 @@ func (p *UserUpdateVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["user-update"].Params["password"].ValidateFunc
 		errs := validator("--password", p.Password)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4919,10 +10262,74 @@ func (p *UserUpdateVPCRouterParam) SetPassword(v string) {
 func (p *UserUpdateVPCRouterParam) GetPassword() string {
 	return p.Password
 }
+func (p *UserUpdateVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UserUpdateVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *UserUpdateVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *UserUpdateVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UserUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UserUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UserUpdateVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UserUpdateVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UserUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UserUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UserUpdateVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UserUpdateVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UserUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UserUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UserUpdateVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UserUpdateVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // UserDeleteVPCRouterParam is input parameters for the sacloud API
 type UserDeleteVPCRouterParam struct {
-	Index int
+	Index             int
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -4950,6 +10357,30 @@ func (p *UserDeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -4959,6 +10390,14 @@ func (p *UserDeleteVPCRouterParam) validate() error {
 	{
 		validator := validateRequired
 		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4998,9 +10437,80 @@ func (p *UserDeleteVPCRouterParam) SetIndex(v int) {
 func (p *UserDeleteVPCRouterParam) GetIndex() int {
 	return p.Index
 }
+func (p *UserDeleteVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UserDeleteVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *UserDeleteVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *UserDeleteVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UserDeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UserDeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UserDeleteVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UserDeleteVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UserDeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UserDeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UserDeleteVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UserDeleteVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UserDeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UserDeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UserDeleteVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UserDeleteVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // SiteToSiteVPNInfoVPCRouterParam is input parameters for the sacloud API
 type SiteToSiteVPNInfoVPCRouterParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -5024,12 +10534,81 @@ func (p *SiteToSiteVPNInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error 
 }
 
 func (p *SiteToSiteVPNInfoVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *SiteToSiteVPNInfoVPCRouterParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -5057,13 +10636,120 @@ func (p *SiteToSiteVPNInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *SiteToSiteVPNInfoVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *SiteToSiteVPNInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *SiteToSiteVPNInfoVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *SiteToSiteVPNInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *SiteToSiteVPNInfoVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *SiteToSiteVPNInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *SiteToSiteVPNInfoVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *SiteToSiteVPNInfoVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *SiteToSiteVPNInfoVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *SiteToSiteVPNInfoVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *SiteToSiteVPNInfoVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *SiteToSiteVPNInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *SiteToSiteVPNInfoVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *SiteToSiteVPNInfoVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *SiteToSiteVPNInfoVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // SiteToSiteVPNAddVPCRouterParam is input parameters for the sacloud API
 type SiteToSiteVPNAddVPCRouterParam struct {
-	Peer            string
-	RemoteId        string
-	PreSharedSecret string
-	Routes          []string
-	LocalPrefix     []string
+	Peer              string
+	RemoteId          string
+	PreSharedSecret   string
+	Routes            []string
+	LocalPrefix       []string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -5102,6 +10788,30 @@ func (p *SiteToSiteVPNAddVPCRouterParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.LocalPrefix) {
 		p.LocalPrefix = []string{""}
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -5177,6 +10887,14 @@ func (p *SiteToSiteVPNAddVPCRouterParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
@@ -5239,15 +10957,79 @@ func (p *SiteToSiteVPNAddVPCRouterParam) SetLocalPrefix(v []string) {
 func (p *SiteToSiteVPNAddVPCRouterParam) GetLocalPrefix() []string {
 	return p.LocalPrefix
 }
+func (p *SiteToSiteVPNAddVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *SiteToSiteVPNAddVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *SiteToSiteVPNAddVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *SiteToSiteVPNAddVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *SiteToSiteVPNAddVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *SiteToSiteVPNAddVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *SiteToSiteVPNAddVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *SiteToSiteVPNAddVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *SiteToSiteVPNAddVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *SiteToSiteVPNAddVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *SiteToSiteVPNAddVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *SiteToSiteVPNAddVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *SiteToSiteVPNAddVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *SiteToSiteVPNAddVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *SiteToSiteVPNAddVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *SiteToSiteVPNAddVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // SiteToSiteVPNUpdateVPCRouterParam is input parameters for the sacloud API
 type SiteToSiteVPNUpdateVPCRouterParam struct {
-	Index           int
-	Peer            string
-	RemoteId        string
-	PreSharedSecret string
-	Routes          []string
-	LocalPrefix     []string
+	Index             int
+	Peer              string
+	RemoteId          string
+	PreSharedSecret   string
+	Routes            []string
+	LocalPrefix       []string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -5290,6 +11072,30 @@ func (p *SiteToSiteVPNUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.LocalPrefix) {
 		p.LocalPrefix = []string{""}
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -5331,6 +11137,14 @@ func (p *SiteToSiteVPNUpdateVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["local-prefix"].ValidateFunc
 		errs := validator("--local-prefix", p.LocalPrefix)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5405,10 +11219,74 @@ func (p *SiteToSiteVPNUpdateVPCRouterParam) SetLocalPrefix(v []string) {
 func (p *SiteToSiteVPNUpdateVPCRouterParam) GetLocalPrefix() []string {
 	return p.LocalPrefix
 }
+func (p *SiteToSiteVPNUpdateVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *SiteToSiteVPNUpdateVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *SiteToSiteVPNUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *SiteToSiteVPNUpdateVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *SiteToSiteVPNUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *SiteToSiteVPNUpdateVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *SiteToSiteVPNUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *SiteToSiteVPNUpdateVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *SiteToSiteVPNUpdateVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // SiteToSiteVPNDeleteVPCRouterParam is input parameters for the sacloud API
 type SiteToSiteVPNDeleteVPCRouterParam struct {
-	Index int
+	Index             int
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -5436,6 +11314,30 @@ func (p *SiteToSiteVPNDeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -5445,6 +11347,14 @@ func (p *SiteToSiteVPNDeleteVPCRouterParam) validate() error {
 	{
 		validator := validateRequired
 		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5484,9 +11394,80 @@ func (p *SiteToSiteVPNDeleteVPCRouterParam) SetIndex(v int) {
 func (p *SiteToSiteVPNDeleteVPCRouterParam) GetIndex() int {
 	return p.Index
 }
+func (p *SiteToSiteVPNDeleteVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *SiteToSiteVPNDeleteVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *SiteToSiteVPNDeleteVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *SiteToSiteVPNDeleteVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *SiteToSiteVPNDeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *SiteToSiteVPNDeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *SiteToSiteVPNDeleteVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *SiteToSiteVPNDeleteVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *SiteToSiteVPNDeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *SiteToSiteVPNDeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *SiteToSiteVPNDeleteVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *SiteToSiteVPNDeleteVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *SiteToSiteVPNDeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *SiteToSiteVPNDeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *SiteToSiteVPNDeleteVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *SiteToSiteVPNDeleteVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // SiteToSiteVPNPeersVPCRouterParam is input parameters for the sacloud API
 type SiteToSiteVPNPeersVPCRouterParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -5510,12 +11491,81 @@ func (p *SiteToSiteVPNPeersVPCRouterParam) WriteSkeleton(writer io.Writer) error
 }
 
 func (p *SiteToSiteVPNPeersVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *SiteToSiteVPNPeersVPCRouterParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -5543,8 +11593,122 @@ func (p *SiteToSiteVPNPeersVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *SiteToSiteVPNPeersVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *SiteToSiteVPNPeersVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *SiteToSiteVPNPeersVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *SiteToSiteVPNPeersVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *SiteToSiteVPNPeersVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *SiteToSiteVPNPeersVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *SiteToSiteVPNPeersVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *SiteToSiteVPNPeersVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *SiteToSiteVPNPeersVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *SiteToSiteVPNPeersVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *SiteToSiteVPNPeersVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *SiteToSiteVPNPeersVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *SiteToSiteVPNPeersVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *SiteToSiteVPNPeersVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *SiteToSiteVPNPeersVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // StaticRouteInfoVPCRouterParam is input parameters for the sacloud API
 type StaticRouteInfoVPCRouterParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -5568,12 +11732,81 @@ func (p *StaticRouteInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *StaticRouteInfoVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *StaticRouteInfoVPCRouterParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -5601,10 +11834,117 @@ func (p *StaticRouteInfoVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *StaticRouteInfoVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *StaticRouteInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *StaticRouteInfoVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *StaticRouteInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *StaticRouteInfoVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *StaticRouteInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *StaticRouteInfoVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *StaticRouteInfoVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *StaticRouteInfoVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *StaticRouteInfoVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *StaticRouteInfoVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *StaticRouteInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *StaticRouteInfoVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *StaticRouteInfoVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // StaticRouteAddVPCRouterParam is input parameters for the sacloud API
 type StaticRouteAddVPCRouterParam struct {
-	Prefix  string
-	NextHop string
+	Prefix            string
+	NextHop           string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -5634,6 +11974,30 @@ func (p *StaticRouteAddVPCRouterParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.NextHop) {
 		p.NextHop = ""
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -5666,6 +12030,14 @@ func (p *StaticRouteAddVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["static-route-add"].Params["next-hop"].ValidateFunc
 		errs := validator("--next-hop", p.NextHop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5712,12 +12084,76 @@ func (p *StaticRouteAddVPCRouterParam) SetNextHop(v string) {
 func (p *StaticRouteAddVPCRouterParam) GetNextHop() string {
 	return p.NextHop
 }
+func (p *StaticRouteAddVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *StaticRouteAddVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *StaticRouteAddVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *StaticRouteAddVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *StaticRouteAddVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *StaticRouteAddVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *StaticRouteAddVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *StaticRouteAddVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *StaticRouteAddVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *StaticRouteAddVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *StaticRouteAddVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *StaticRouteAddVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *StaticRouteAddVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *StaticRouteAddVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *StaticRouteAddVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *StaticRouteAddVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // StaticRouteUpdateVPCRouterParam is input parameters for the sacloud API
 type StaticRouteUpdateVPCRouterParam struct {
-	Index   int
-	Prefix  string
-	NextHop string
+	Index             int
+	Prefix            string
+	NextHop           string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -5751,6 +12187,30 @@ func (p *StaticRouteUpdateVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.NextHop) {
 		p.NextHop = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -5776,6 +12236,14 @@ func (p *StaticRouteUpdateVPCRouterParam) validate() error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["static-route-update"].Params["next-hop"].ValidateFunc
 		errs := validator("--next-hop", p.NextHop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5829,10 +12297,74 @@ func (p *StaticRouteUpdateVPCRouterParam) SetNextHop(v string) {
 func (p *StaticRouteUpdateVPCRouterParam) GetNextHop() string {
 	return p.NextHop
 }
+func (p *StaticRouteUpdateVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *StaticRouteUpdateVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *StaticRouteUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *StaticRouteUpdateVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *StaticRouteUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *StaticRouteUpdateVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *StaticRouteUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *StaticRouteUpdateVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // StaticRouteDeleteVPCRouterParam is input parameters for the sacloud API
 type StaticRouteDeleteVPCRouterParam struct {
-	Index int
+	Index             int
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -5860,6 +12392,30 @@ func (p *StaticRouteDeleteVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -5869,6 +12425,14 @@ func (p *StaticRouteDeleteVPCRouterParam) validate() error {
 	{
 		validator := validateRequired
 		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5908,13 +12472,83 @@ func (p *StaticRouteDeleteVPCRouterParam) SetIndex(v int) {
 func (p *StaticRouteDeleteVPCRouterParam) GetIndex() int {
 	return p.Index
 }
+func (p *StaticRouteDeleteVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *StaticRouteDeleteVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *StaticRouteDeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *StaticRouteDeleteVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *StaticRouteDeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *StaticRouteDeleteVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *StaticRouteDeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *StaticRouteDeleteVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // MonitorVPCRouterParam is input parameters for the sacloud API
 type MonitorVPCRouterParam struct {
-	End       string
-	KeyFormat string
-	Interface string
-	Start     string
+	Interface         string
+	Start             string
+	End               string
+	KeyFormat         string
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -5922,7 +12556,7 @@ type MonitorVPCRouterParam struct {
 // NewMonitorVPCRouterParam return new MonitorVPCRouterParam
 func NewMonitorVPCRouterParam() *MonitorVPCRouterParam {
 	return &MonitorVPCRouterParam{
-		KeyFormat: "sakuracloud.vpcrouter.{{.ID}}.nic.{{.Index}}", Interface: "0"}
+		Interface: "0", KeyFormat: "sakuracloud.vpcrouter.{{.ID}}.nic.{{.Index}}"}
 }
 
 // Initialize init MonitorVPCRouterParam
@@ -5940,39 +12574,65 @@ func (p *MonitorVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *MonitorVPCRouterParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.End) {
-		p.End = ""
-	}
-	if utils.IsEmpty(p.KeyFormat) {
-		p.KeyFormat = ""
-	}
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = ""
 	}
 	if utils.IsEmpty(p.Start) {
 		p.Start = ""
 	}
+	if utils.IsEmpty(p.End) {
+		p.End = ""
+	}
+	if utils.IsEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *MonitorVPCRouterParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["VPCRouter"].Commands["monitor"].Params["end"].ValidateFunc
-		errs := validator("--end", p.End)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--key-format", p.KeyFormat)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -5997,6 +12657,49 @@ func (p *MonitorVPCRouterParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["VPCRouter"].Commands["monitor"].Params["end"].ValidateFunc
+		errs := validator("--end", p.End)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -6024,20 +12727,6 @@ func (p *MonitorVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *MonitorVPCRouterParam) SetEnd(v string) {
-	p.End = v
-}
-
-func (p *MonitorVPCRouterParam) GetEnd() string {
-	return p.End
-}
-func (p *MonitorVPCRouterParam) SetKeyFormat(v string) {
-	p.KeyFormat = v
-}
-
-func (p *MonitorVPCRouterParam) GetKeyFormat() string {
-	return p.KeyFormat
-}
 func (p *MonitorVPCRouterParam) SetInterface(v string) {
 	p.Interface = v
 }
@@ -6052,13 +12741,132 @@ func (p *MonitorVPCRouterParam) SetStart(v string) {
 func (p *MonitorVPCRouterParam) GetStart() string {
 	return p.Start
 }
+func (p *MonitorVPCRouterParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorVPCRouterParam) GetEnd() string {
+	return p.End
+}
+func (p *MonitorVPCRouterParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorVPCRouterParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
+func (p *MonitorVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorVPCRouterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorVPCRouterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorVPCRouterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorVPCRouterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorVPCRouterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorVPCRouterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorVPCRouterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorVPCRouterParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorVPCRouterParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorVPCRouterParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorVPCRouterParam) GetQuery() string {
+	return p.Query
+}
+func (p *MonitorVPCRouterParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorVPCRouterParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *MonitorVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *MonitorVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // LogsVPCRouterParam is input parameters for the sacloud API
 type LogsVPCRouterParam struct {
-	Follow          bool
-	RefreshInterval int64
-	ListLogNames    bool
-	LogName         string
+	LogName           string
+	Follow            bool
+	RefreshInterval   int64
+	ListLogNames      bool
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -6066,7 +12874,7 @@ type LogsVPCRouterParam struct {
 // NewLogsVPCRouterParam return new LogsVPCRouterParam
 func NewLogsVPCRouterParam() *LogsVPCRouterParam {
 	return &LogsVPCRouterParam{
-		RefreshInterval: 3, LogName: "all"}
+		LogName: "all", RefreshInterval: 3}
 }
 
 // Initialize init LogsVPCRouterParam
@@ -6084,6 +12892,9 @@ func (p *LogsVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *LogsVPCRouterParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.LogName) {
+		p.LogName = ""
+	}
 	if utils.IsEmpty(p.Follow) {
 		p.Follow = false
 	}
@@ -6093,14 +12904,40 @@ func (p *LogsVPCRouterParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.ListLogNames) {
 		p.ListLogNames = false
 	}
-	if utils.IsEmpty(p.LogName) {
-		p.LogName = ""
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
 
 func (p *LogsVPCRouterParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["VPCRouter"].Commands["logs"].Params["log-name"].ValidateFunc
+		errs := validator("--log-name", p.LogName)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["VPCRouter"].Commands["logs"].Params["refresh-interval"].ValidateFunc
@@ -6111,8 +12948,8 @@ func (p *LogsVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["VPCRouter"].Commands["logs"].Params["log-name"].ValidateFunc
-		errs := validator("--log-name", p.LogName)
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -6145,6 +12982,13 @@ func (p *LogsVPCRouterParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *LogsVPCRouterParam) SetLogName(v string) {
+	p.LogName = v
+}
+
+func (p *LogsVPCRouterParam) GetLogName() string {
+	return p.LogName
+}
 func (p *LogsVPCRouterParam) SetFollow(v bool) {
 	p.Follow = v
 }
@@ -6166,10 +13010,52 @@ func (p *LogsVPCRouterParam) SetListLogNames(v bool) {
 func (p *LogsVPCRouterParam) GetListLogNames() bool {
 	return p.ListLogNames
 }
-func (p *LogsVPCRouterParam) SetLogName(v string) {
-	p.LogName = v
+func (p *LogsVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
 }
 
-func (p *LogsVPCRouterParam) GetLogName() string {
-	return p.LogName
+func (p *LogsVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *LogsVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *LogsVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *LogsVPCRouterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *LogsVPCRouterParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *LogsVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *LogsVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *LogsVPCRouterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *LogsVPCRouterParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *LogsVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *LogsVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *LogsVPCRouterParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *LogsVPCRouterParam) GetId() sacloud.ID {
+	return p.Id
 }

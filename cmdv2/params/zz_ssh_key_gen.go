@@ -29,11 +29,23 @@ import (
 
 // ListSSHKeyParam is input parameters for the sacloud API
 type ListSSHKeyParam struct {
-	Id   []sacloud.ID
-	From int
-	Max  int
-	Sort []string
-	Name []string
+	Name              []string
+	Id                []sacloud.ID
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -58,6 +70,9 @@ func (p *ListSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListSSHKeyParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
@@ -70,14 +85,57 @@ func (p *ListSSHKeyParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
 
 func (p *ListSSHKeyParam) validate() error {
 	var errors []error
+
+	{
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["SSHKey"].Commands["list"].Params["id"].ValidateFunc
@@ -97,15 +155,24 @@ func (p *ListSSHKeyParam) validate() error {
 	}
 
 	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -133,6 +200,13 @@ func (p *ListSSHKeyParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListSSHKeyParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListSSHKeyParam) GetName() []string {
+	return p.Name
+}
 func (p *ListSSHKeyParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
@@ -161,20 +235,110 @@ func (p *ListSSHKeyParam) SetSort(v []string) {
 func (p *ListSSHKeyParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListSSHKeyParam) SetName(v []string) {
-	p.Name = v
+func (p *ListSSHKeyParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
 }
 
-func (p *ListSSHKeyParam) GetName() []string {
-	return p.Name
+func (p *ListSSHKeyParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListSSHKeyParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListSSHKeyParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListSSHKeyParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListSSHKeyParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListSSHKeyParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListSSHKeyParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListSSHKeyParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListSSHKeyParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListSSHKeyParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListSSHKeyParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListSSHKeyParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListSSHKeyParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListSSHKeyParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListSSHKeyParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListSSHKeyParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListSSHKeyParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListSSHKeyParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListSSHKeyParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListSSHKeyParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListSSHKeyParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListSSHKeyParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListSSHKeyParam) GetQueryFile() string {
+	return p.QueryFile
 }
 
 // CreateSSHKeyParam is input parameters for the sacloud API
 type CreateSSHKeyParam struct {
-	PublicKeyContent string
-	PublicKey        string
-	Name             string
-	Description      string
+	PublicKey         string
+	Name              string
+	Description       string
+	Assumeyes         bool
+	PublicKeyContent  string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -199,9 +363,6 @@ func (p *CreateSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateSSHKeyParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.PublicKeyContent) {
-		p.PublicKeyContent = ""
-	}
 	if utils.IsEmpty(p.PublicKey) {
 		p.PublicKey = ""
 	}
@@ -211,21 +372,53 @@ func (p *CreateSSHKeyParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.PublicKeyContent) {
+		p.PublicKeyContent = ""
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
 func (p *CreateSSHKeyParam) validate() error {
 	var errors []error
-
-	{
-		errs := validation.ConflictsWith("--public-key-content", p.PublicKeyContent, map[string]interface{}{
-
-			"--public-key": p.PublicKey,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["SSHKey"].Commands["create"].Params["public-key"].ValidateFunc
@@ -258,6 +451,35 @@ func (p *CreateSSHKeyParam) validate() error {
 		}
 	}
 
+	{
+		errs := validation.ConflictsWith("--public-key-content", p.PublicKeyContent, map[string]interface{}{
+
+			"--public-key": p.PublicKey,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -285,13 +507,6 @@ func (p *CreateSSHKeyParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateSSHKeyParam) SetPublicKeyContent(v string) {
-	p.PublicKeyContent = v
-}
-
-func (p *CreateSSHKeyParam) GetPublicKeyContent() string {
-	return p.PublicKeyContent
-}
 func (p *CreateSSHKeyParam) SetPublicKey(v string) {
 	p.PublicKey = v
 }
@@ -313,9 +528,121 @@ func (p *CreateSSHKeyParam) SetDescription(v string) {
 func (p *CreateSSHKeyParam) GetDescription() string {
 	return p.Description
 }
+func (p *CreateSSHKeyParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *CreateSSHKeyParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *CreateSSHKeyParam) SetPublicKeyContent(v string) {
+	p.PublicKeyContent = v
+}
+
+func (p *CreateSSHKeyParam) GetPublicKeyContent() string {
+	return p.PublicKeyContent
+}
+func (p *CreateSSHKeyParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateSSHKeyParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateSSHKeyParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateSSHKeyParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateSSHKeyParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateSSHKeyParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CreateSSHKeyParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateSSHKeyParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateSSHKeyParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateSSHKeyParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CreateSSHKeyParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateSSHKeyParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateSSHKeyParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateSSHKeyParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateSSHKeyParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateSSHKeyParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateSSHKeyParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateSSHKeyParam) GetFormat() string {
+	return p.Format
+}
+func (p *CreateSSHKeyParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CreateSSHKeyParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CreateSSHKeyParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateSSHKeyParam) GetQuery() string {
+	return p.Query
+}
+func (p *CreateSSHKeyParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateSSHKeyParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadSSHKeyParam is input parameters for the sacloud API
 type ReadSSHKeyParam struct {
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -339,12 +666,78 @@ func (p *ReadSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadSSHKeyParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ReadSSHKeyParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -372,10 +765,116 @@ func (p *ReadSSHKeyParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadSSHKeyParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadSSHKeyParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadSSHKeyParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadSSHKeyParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadSSHKeyParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadSSHKeyParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadSSHKeyParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadSSHKeyParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadSSHKeyParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadSSHKeyParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadSSHKeyParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadSSHKeyParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadSSHKeyParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadSSHKeyParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadSSHKeyParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadSSHKeyParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadSSHKeyParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadSSHKeyParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadSSHKeyParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadSSHKeyParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadSSHKeyParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadSSHKeyParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadSSHKeyParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadSSHKeyParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ReadSSHKeyParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReadSSHKeyParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UpdateSSHKeyParam is input parameters for the sacloud API
 type UpdateSSHKeyParam struct {
-	Name        string
-	Description string
+	Name              string
+	Description       string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -406,6 +905,48 @@ func (p *UpdateSSHKeyParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -428,6 +969,33 @@ func (p *UpdateSSHKeyParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -469,9 +1037,122 @@ func (p *UpdateSSHKeyParam) SetDescription(v string) {
 func (p *UpdateSSHKeyParam) GetDescription() string {
 	return p.Description
 }
+func (p *UpdateSSHKeyParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *UpdateSSHKeyParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UpdateSSHKeyParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateSSHKeyParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateSSHKeyParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateSSHKeyParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateSSHKeyParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateSSHKeyParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UpdateSSHKeyParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateSSHKeyParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateSSHKeyParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateSSHKeyParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UpdateSSHKeyParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateSSHKeyParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateSSHKeyParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateSSHKeyParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateSSHKeyParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateSSHKeyParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateSSHKeyParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateSSHKeyParam) GetFormat() string {
+	return p.Format
+}
+func (p *UpdateSSHKeyParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UpdateSSHKeyParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UpdateSSHKeyParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateSSHKeyParam) GetQuery() string {
+	return p.Query
+}
+func (p *UpdateSSHKeyParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateSSHKeyParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UpdateSSHKeyParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UpdateSSHKeyParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DeleteSSHKeyParam is input parameters for the sacloud API
 type DeleteSSHKeyParam struct {
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -495,12 +1176,81 @@ func (p *DeleteSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *DeleteSSHKeyParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DeleteSSHKeyParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -528,12 +1278,124 @@ func (p *DeleteSSHKeyParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *DeleteSSHKeyParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DeleteSSHKeyParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DeleteSSHKeyParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteSSHKeyParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteSSHKeyParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteSSHKeyParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteSSHKeyParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteSSHKeyParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DeleteSSHKeyParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteSSHKeyParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteSSHKeyParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteSSHKeyParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DeleteSSHKeyParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteSSHKeyParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteSSHKeyParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteSSHKeyParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteSSHKeyParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteSSHKeyParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteSSHKeyParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteSSHKeyParam) GetFormat() string {
+	return p.Format
+}
+func (p *DeleteSSHKeyParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DeleteSSHKeyParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DeleteSSHKeyParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteSSHKeyParam) GetQuery() string {
+	return p.Query
+}
+func (p *DeleteSSHKeyParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteSSHKeyParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *DeleteSSHKeyParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DeleteSSHKeyParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // GenerateSSHKeyParam is input parameters for the sacloud API
 type GenerateSSHKeyParam struct {
-	Description      string
-	PassPhrase       string
-	PrivateKeyOutput string
-	Name             string
+	PassPhrase        string
+	Name              string
+	Description       string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	PrivateKeyOutput  string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -558,31 +1420,62 @@ func (p *GenerateSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *GenerateSSHKeyParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.PassPhrase) {
+		p.PassPhrase = ""
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.PassPhrase) {
-		p.PassPhrase = ""
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
 	}
 	if utils.IsEmpty(p.PrivateKeyOutput) {
 		p.PrivateKeyOutput = ""
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
 
 func (p *GenerateSSHKeyParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["SSHKey"].Commands["generate"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["SSHKey"].Commands["generate"].Params["pass-phrase"].ValidateFunc
@@ -607,6 +1500,33 @@ func (p *GenerateSSHKeyParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["SSHKey"].Commands["generate"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -634,6 +1554,20 @@ func (p *GenerateSSHKeyParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *GenerateSSHKeyParam) SetPassPhrase(v string) {
+	p.PassPhrase = v
+}
+
+func (p *GenerateSSHKeyParam) GetPassPhrase() string {
+	return p.PassPhrase
+}
+func (p *GenerateSSHKeyParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *GenerateSSHKeyParam) GetName() string {
+	return p.Name
+}
 func (p *GenerateSSHKeyParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -641,12 +1575,54 @@ func (p *GenerateSSHKeyParam) SetDescription(v string) {
 func (p *GenerateSSHKeyParam) GetDescription() string {
 	return p.Description
 }
-func (p *GenerateSSHKeyParam) SetPassPhrase(v string) {
-	p.PassPhrase = v
+func (p *GenerateSSHKeyParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
 }
 
-func (p *GenerateSSHKeyParam) GetPassPhrase() string {
-	return p.PassPhrase
+func (p *GenerateSSHKeyParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *GenerateSSHKeyParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *GenerateSSHKeyParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *GenerateSSHKeyParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *GenerateSSHKeyParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *GenerateSSHKeyParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *GenerateSSHKeyParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *GenerateSSHKeyParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *GenerateSSHKeyParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *GenerateSSHKeyParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *GenerateSSHKeyParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *GenerateSSHKeyParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *GenerateSSHKeyParam) GetOutputType() string {
+	return p.OutputType
 }
 func (p *GenerateSSHKeyParam) SetPrivateKeyOutput(v string) {
 	p.PrivateKeyOutput = v
@@ -655,10 +1631,45 @@ func (p *GenerateSSHKeyParam) SetPrivateKeyOutput(v string) {
 func (p *GenerateSSHKeyParam) GetPrivateKeyOutput() string {
 	return p.PrivateKeyOutput
 }
-func (p *GenerateSSHKeyParam) SetName(v string) {
-	p.Name = v
+func (p *GenerateSSHKeyParam) SetColumn(v []string) {
+	p.Column = v
 }
 
-func (p *GenerateSSHKeyParam) GetName() string {
-	return p.Name
+func (p *GenerateSSHKeyParam) GetColumn() []string {
+	return p.Column
+}
+func (p *GenerateSSHKeyParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *GenerateSSHKeyParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *GenerateSSHKeyParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *GenerateSSHKeyParam) GetFormat() string {
+	return p.Format
+}
+func (p *GenerateSSHKeyParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *GenerateSSHKeyParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *GenerateSSHKeyParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *GenerateSSHKeyParam) GetQuery() string {
+	return p.Query
+}
+func (p *GenerateSSHKeyParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *GenerateSSHKeyParam) GetQueryFile() string {
+	return p.QueryFile
 }

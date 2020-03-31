@@ -38,8 +38,8 @@ func NewCommand(name string, command *schema.Command, category *schema.Category,
 		Category: category,
 	}
 	var params []*Parameter
-	for pn, p := range c.Command.Params {
-		params = append(params, NewParameter(pn, p, c))
+	for _, p := range c.Command.BuildedParams() {
+		params = append(params, NewParameter(p.ParamKey, p.Param, p.Category, c))
 	}
 
 	c.Params = params
@@ -83,6 +83,10 @@ func (c *Command) ArgsUsage() string {
 
 func (c *Command) AliasesLiteral() string {
 	return FlattenStringList(c.Command.Aliases)
+}
+
+func (c *Command) HasOutputOption() bool {
+	return !c.NoOutput
 }
 
 func (c *Command) CLIVariableName() string {

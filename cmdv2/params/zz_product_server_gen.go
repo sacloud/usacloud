@@ -29,11 +29,23 @@ import (
 
 // ListProductServerParam is input parameters for the sacloud API
 type ListProductServerParam struct {
-	Sort []string
-	Name []string
-	Id   []sacloud.ID
-	From int
-	Max  int
+	Name              []string
+	Id                []sacloud.ID
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -58,9 +70,6 @@ func (p *ListProductServerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListProductServerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -72,6 +81,45 @@ func (p *ListProductServerParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
+	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -106,6 +154,25 @@ func (p *ListProductServerParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -133,13 +200,6 @@ func (p *ListProductServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListProductServerParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListProductServerParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListProductServerParam) SetName(v []string) {
 	p.Name = v
 }
@@ -168,10 +228,114 @@ func (p *ListProductServerParam) SetMax(v int) {
 func (p *ListProductServerParam) GetMax() int {
 	return p.Max
 }
+func (p *ListProductServerParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListProductServerParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListProductServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListProductServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListProductServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListProductServerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListProductServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListProductServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListProductServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListProductServerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListProductServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListProductServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListProductServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListProductServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListProductServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListProductServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListProductServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListProductServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListProductServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListProductServerParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListProductServerParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListProductServerParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListProductServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListProductServerParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListProductServerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListProductServerParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadProductServerParam is input parameters for the sacloud API
 type ReadProductServerParam struct {
-	Id sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -196,6 +360,45 @@ func (p *ReadProductServerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadProductServerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
@@ -220,6 +423,25 @@ func (p *ReadProductServerParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -247,6 +469,97 @@ func (p *ReadProductServerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadProductServerParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ReadProductServerParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ReadProductServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadProductServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadProductServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadProductServerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadProductServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadProductServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadProductServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadProductServerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadProductServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadProductServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadProductServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadProductServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadProductServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadProductServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadProductServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadProductServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadProductServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadProductServerParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadProductServerParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadProductServerParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadProductServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadProductServerParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadProductServerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadProductServerParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadProductServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }

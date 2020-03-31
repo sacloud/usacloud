@@ -51,6 +51,19 @@ var authStatusShowCmd = &cobra.Command{
 }
 
 func authStatusShowCmdInit() {
+	fs := authStatusShowCmd.Flags()
+	fs.StringVarP(&authStatusShowParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&authStatusShowParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&authStatusShowParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&authStatusShowParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&authStatusShowParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&authStatusShowParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&authStatusShowParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&authStatusShowParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&authStatusShowParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&authStatusShowParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&authStatusShowParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&authStatusShowParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 func init() {

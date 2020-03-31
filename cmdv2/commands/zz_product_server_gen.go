@@ -54,11 +54,23 @@ var productServerListCmd = &cobra.Command{
 
 func productServerListCmdInit() {
 	fs := productServerListCmd.Flags()
-	fs.IntVarP(&productServerListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&productServerListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&productServerListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &productServerListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&productServerListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&productServerListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&productServerListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&productServerListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&productServerListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&productServerListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&productServerListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&productServerListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&productServerListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&productServerListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&productServerListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&productServerListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&productServerListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&productServerListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&productServerListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var productServerReadCmd = &cobra.Command{
@@ -76,6 +88,19 @@ var productServerReadCmd = &cobra.Command{
 
 func productServerReadCmdInit() {
 	fs := productServerReadCmd.Flags()
+	fs.BoolVarP(&productServerReadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&productServerReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&productServerReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&productServerReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&productServerReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&productServerReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&productServerReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&productServerReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&productServerReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&productServerReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&productServerReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&productServerReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&productServerReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &productServerReadParam.Id), "id", "", "set resource ID")
 }
 

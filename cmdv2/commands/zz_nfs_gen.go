@@ -65,12 +65,24 @@ var nfsListCmd = &cobra.Command{
 
 func nfsListCmdInit() {
 	fs := nfsListCmd.Flags()
-	fs.IntVarP(&nfsListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&nfsListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
-	fs.StringSliceVarP(&nfsListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&nfsListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &nfsListParam.Id), "id", "", "set filter by id(s)")
+	fs.StringSliceVarP(&nfsListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.IntVarP(&nfsListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&nfsListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&nfsListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&nfsListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&nfsListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&nfsListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&nfsListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&nfsListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&nfsListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&nfsListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&nfsListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&nfsListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&nfsListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&nfsListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&nfsListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var nfsCreateCmd = &cobra.Command{
@@ -88,16 +100,29 @@ var nfsCreateCmd = &cobra.Command{
 
 func nfsCreateCmdInit() {
 	fs := nfsCreateCmd.Flags()
-	fs.StringVarP(&nfsCreateParam.Plan, "plan", "", "hdd", "set plan[ssd/hdd]")
-	fs.StringVarP(&nfsCreateParam.Ipaddress, "ipaddress", "", "", "set ipaddress(#)")
-	fs.StringVarP(&nfsCreateParam.Name, "name", "", "", "set resource display name")
-	fs.StringVarP(&nfsCreateParam.Description, "description", "", "", "set resource description")
-	fs.VarP(newIDValue(0, &nfsCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.VarP(newIDValue(0, &nfsCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
+	fs.StringVarP(&nfsCreateParam.Plan, "plan", "", "hdd", "set plan[ssd/hdd]")
 	fs.IntVarP(&nfsCreateParam.Size, "size", "", 100, "set plan[100/500/1024/2048/4096/8192/12288]")
+	fs.StringVarP(&nfsCreateParam.Ipaddress, "ipaddress", "", "", "set ipaddress(#)")
 	fs.IntVarP(&nfsCreateParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
 	fs.StringVarP(&nfsCreateParam.DefaultRoute, "default-route", "", "", "set default route")
+	fs.StringVarP(&nfsCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&nfsCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&nfsCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &nfsCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&nfsCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&nfsCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&nfsCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&nfsCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&nfsCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&nfsCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&nfsCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&nfsCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&nfsCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&nfsCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&nfsCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&nfsCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&nfsCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var nfsReadCmd = &cobra.Command{
@@ -114,6 +139,21 @@ var nfsReadCmd = &cobra.Command{
 }
 
 func nfsReadCmdInit() {
+	fs := nfsReadCmd.Flags()
+	fs.StringSliceVarP(&nfsReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&nfsReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&nfsReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&nfsReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&nfsReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&nfsReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&nfsReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&nfsReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&nfsReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&nfsReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&nfsReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&nfsReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&nfsReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &nfsReadParam.Id), "id", "", "Set target ID")
 }
 
 var nfsUpdateCmd = &cobra.Command{
@@ -131,10 +171,25 @@ var nfsUpdateCmd = &cobra.Command{
 
 func nfsUpdateCmdInit() {
 	fs := nfsUpdateCmd.Flags()
-	fs.VarP(newIDValue(0, &nfsUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.StringSliceVarP(&nfsUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&nfsUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&nfsUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&nfsUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &nfsUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&nfsUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&nfsUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&nfsUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&nfsUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&nfsUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&nfsUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&nfsUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&nfsUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&nfsUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&nfsUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&nfsUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&nfsUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&nfsUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &nfsUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var nfsDeleteCmd = &cobra.Command{
@@ -153,6 +208,21 @@ var nfsDeleteCmd = &cobra.Command{
 func nfsDeleteCmdInit() {
 	fs := nfsDeleteCmd.Flags()
 	fs.BoolVarP(&nfsDeleteParam.Force, "force", "f", false, "forced-shutdown flag if server is running")
+	fs.StringSliceVarP(&nfsDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&nfsDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&nfsDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&nfsDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&nfsDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&nfsDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&nfsDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&nfsDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&nfsDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&nfsDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&nfsDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&nfsDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&nfsDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&nfsDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &nfsDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var nfsBootCmd = &cobra.Command{
@@ -169,6 +239,15 @@ var nfsBootCmd = &cobra.Command{
 }
 
 func nfsBootCmdInit() {
+	fs := nfsBootCmd.Flags()
+	fs.StringSliceVarP(&nfsBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&nfsBootParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&nfsBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&nfsBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&nfsBootParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&nfsBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&nfsBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &nfsBootParam.Id), "id", "", "Set target ID")
 }
 
 var nfsShutdownCmd = &cobra.Command{
@@ -185,6 +264,15 @@ var nfsShutdownCmd = &cobra.Command{
 }
 
 func nfsShutdownCmdInit() {
+	fs := nfsShutdownCmd.Flags()
+	fs.StringSliceVarP(&nfsShutdownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&nfsShutdownParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&nfsShutdownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&nfsShutdownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&nfsShutdownParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&nfsShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&nfsShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &nfsShutdownParam.Id), "id", "", "Set target ID")
 }
 
 var nfsShutdownForceCmd = &cobra.Command{
@@ -201,6 +289,15 @@ var nfsShutdownForceCmd = &cobra.Command{
 }
 
 func nfsShutdownForceCmdInit() {
+	fs := nfsShutdownForceCmd.Flags()
+	fs.StringSliceVarP(&nfsShutdownForceParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&nfsShutdownForceParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&nfsShutdownForceParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&nfsShutdownForceParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&nfsShutdownForceParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&nfsShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&nfsShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &nfsShutdownForceParam.Id), "id", "", "Set target ID")
 }
 
 var nfsResetCmd = &cobra.Command{
@@ -217,6 +314,15 @@ var nfsResetCmd = &cobra.Command{
 }
 
 func nfsResetCmdInit() {
+	fs := nfsResetCmd.Flags()
+	fs.StringSliceVarP(&nfsResetParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&nfsResetParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&nfsResetParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&nfsResetParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&nfsResetParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&nfsResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&nfsResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &nfsResetParam.Id), "id", "", "Set target ID")
 }
 
 var nfsWaitForBootCmd = &cobra.Command{
@@ -233,6 +339,14 @@ var nfsWaitForBootCmd = &cobra.Command{
 }
 
 func nfsWaitForBootCmdInit() {
+	fs := nfsWaitForBootCmd.Flags()
+	fs.StringSliceVarP(&nfsWaitForBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&nfsWaitForBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&nfsWaitForBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&nfsWaitForBootParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&nfsWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&nfsWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &nfsWaitForBootParam.Id), "id", "", "Set target ID")
 }
 
 var nfsWaitForDownCmd = &cobra.Command{
@@ -249,6 +363,14 @@ var nfsWaitForDownCmd = &cobra.Command{
 }
 
 func nfsWaitForDownCmdInit() {
+	fs := nfsWaitForDownCmd.Flags()
+	fs.StringSliceVarP(&nfsWaitForDownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&nfsWaitForDownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&nfsWaitForDownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&nfsWaitForDownParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&nfsWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&nfsWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &nfsWaitForDownParam.Id), "id", "", "Set target ID")
 }
 
 var nfsMonitorNicCmd = &cobra.Command{
@@ -269,6 +391,20 @@ func nfsMonitorNicCmdInit() {
 	fs.StringVarP(&nfsMonitorNicParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&nfsMonitorNicParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&nfsMonitorNicParam.KeyFormat, "key-format", "", "sakuracloud.disk.{{.ID}}.nic", "set monitoring value key-format")
+	fs.StringSliceVarP(&nfsMonitorNicParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&nfsMonitorNicParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&nfsMonitorNicParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&nfsMonitorNicParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&nfsMonitorNicParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&nfsMonitorNicParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&nfsMonitorNicParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&nfsMonitorNicParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&nfsMonitorNicParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&nfsMonitorNicParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&nfsMonitorNicParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&nfsMonitorNicParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&nfsMonitorNicParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &nfsMonitorNicParam.Id), "id", "", "Set target ID")
 }
 
 var nfsMonitorFreeDiskSizeCmd = &cobra.Command{
@@ -289,6 +425,20 @@ func nfsMonitorFreeDiskSizeCmdInit() {
 	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.KeyFormat, "key-format", "", "sakuracloud.disk.{{.ID}}.free-disk-size", "set monitoring value key-format")
+	fs.StringSliceVarP(&nfsMonitorFreeDiskSizeParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&nfsMonitorFreeDiskSizeParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&nfsMonitorFreeDiskSizeParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&nfsMonitorFreeDiskSizeParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &nfsMonitorFreeDiskSizeParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

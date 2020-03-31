@@ -66,16 +66,28 @@ var diskListCmd = &cobra.Command{
 
 func diskListCmdInit() {
 	fs := diskListCmd.Flags()
-	fs.IntVarP(&diskListParam.From, "from", "", 0, "set offset")
+	fs.StringSliceVarP(&diskListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringVarP(&diskListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
 	fs.StringSliceVarP(&diskListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.VarP(newIDValue(0, &diskListParam.SourceArchiveId), "source-archive-id", "", "set filter by source-archive-id")
-	fs.IntVarP(&diskListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&diskListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&diskListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskListParam.Id), "id", "", "set filter by id(s)")
 	fs.VarP(newIDValue(0, &diskListParam.SourceDiskId), "source-disk-id", "", "set filter by source-disk-id")
 	fs.StringVarP(&diskListParam.Storage, "storage", "", "", "set filter by storage-name")
+	fs.IntVarP(&diskListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&diskListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&diskListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&diskListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&diskListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&diskListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&diskListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&diskListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&diskListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&diskListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&diskListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&diskListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&diskListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&diskListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&diskListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var diskCreateCmd = &cobra.Command{
@@ -94,15 +106,28 @@ var diskCreateCmd = &cobra.Command{
 func diskCreateCmdInit() {
 	fs := diskCreateCmd.Flags()
 	fs.StringVarP(&diskCreateParam.Plan, "plan", "", "ssd", "set disk plan('hdd' or 'ssd')")
+	fs.StringVarP(&diskCreateParam.Connection, "connection", "", "virtio", "set disk connection('virtio' or 'ide')")
+	fs.VarP(newIDValue(0, &diskCreateParam.SourceArchiveId), "source-archive-id", "", "set source disk ID")
+	fs.VarP(newIDValue(0, &diskCreateParam.SourceDiskId), "source-disk-id", "", "set source disk ID")
 	fs.IntVarP(&diskCreateParam.Size, "size", "", 20, "set disk size(GB)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskCreateParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
 	fs.StringVarP(&diskCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&diskCreateParam.Description, "description", "", "", "set resource description")
-	fs.StringVarP(&diskCreateParam.Connection, "connection", "", "virtio", "set disk connection('virtio' or 'ide')")
-	fs.VarP(newIDValue(0, &diskCreateParam.SourceArchiveId), "source-archive-id", "", "set source disk ID")
-	fs.VarP(newIDValue(0, &diskCreateParam.SourceDiskId), "source-disk-id", "", "set source disk ID")
 	fs.StringSliceVarP(&diskCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &diskCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&diskCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&diskCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&diskCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&diskCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&diskCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&diskCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&diskCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&diskCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&diskCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&diskCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&diskCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&diskCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&diskCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var diskReadCmd = &cobra.Command{
@@ -119,6 +144,21 @@ var diskReadCmd = &cobra.Command{
 }
 
 func diskReadCmdInit() {
+	fs := diskReadCmd.Flags()
+	fs.StringSliceVarP(&diskReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&diskReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&diskReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&diskReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&diskReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&diskReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&diskReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&diskReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&diskReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&diskReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&diskReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&diskReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&diskReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &diskReadParam.Id), "id", "", "Set target ID")
 }
 
 var diskUpdateCmd = &cobra.Command{
@@ -136,11 +176,26 @@ var diskUpdateCmd = &cobra.Command{
 
 func diskUpdateCmdInit() {
 	fs := diskUpdateCmd.Flags()
+	fs.StringVarP(&diskUpdateParam.Connection, "connection", "", "", "set disk connection('virtio' or 'ide')")
+	fs.StringSliceVarP(&diskUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&diskUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&diskUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&diskUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &diskUpdateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringVarP(&diskUpdateParam.Connection, "connection", "", "", "set disk connection('virtio' or 'ide')")
+	fs.BoolVarP(&diskUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&diskUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&diskUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&diskUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&diskUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&diskUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&diskUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&diskUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&diskUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&diskUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&diskUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&diskUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&diskUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &diskUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var diskDeleteCmd = &cobra.Command{
@@ -157,6 +212,22 @@ var diskDeleteCmd = &cobra.Command{
 }
 
 func diskDeleteCmdInit() {
+	fs := diskDeleteCmd.Flags()
+	fs.StringSliceVarP(&diskDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&diskDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&diskDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&diskDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&diskDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&diskDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&diskDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&diskDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&diskDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&diskDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&diskDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&diskDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&diskDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&diskDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &diskDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var diskEditCmd = &cobra.Command{
@@ -174,14 +245,29 @@ var diskEditCmd = &cobra.Command{
 
 func diskEditCmdInit() {
 	fs := diskEditCmd.Flags()
-	fs.IntVarP(&diskEditParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress  prefix")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskEditParam.StartupScriptIds), "startup-script-ids", "", "set startup-script ID(s)")
 	fs.StringVarP(&diskEditParam.Hostname, "hostname", "", "", "set hostname")
 	fs.StringVarP(&diskEditParam.Password, "password", "", "", "set password")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskEditParam.SSHKeyIds), "ssh-key-ids", "", "set ssh-key ID(s)")
 	fs.BoolVarP(&diskEditParam.DisablePasswordAuth, "disable-password-auth", "", false, "disable password auth on SSH")
 	fs.StringVarP(&diskEditParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
 	fs.StringVarP(&diskEditParam.DefaultRoute, "default-route", "", "", "set default gateway")
+	fs.IntVarP(&diskEditParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress  prefix")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskEditParam.StartupScriptIds), "startup-script-ids", "", "set startup-script ID(s)")
+	fs.StringSliceVarP(&diskEditParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&diskEditParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&diskEditParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&diskEditParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&diskEditParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&diskEditParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&diskEditParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&diskEditParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&diskEditParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&diskEditParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&diskEditParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&diskEditParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&diskEditParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&diskEditParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &diskEditParam.Id), "id", "", "Set target ID")
 }
 
 var diskResizePartitionCmd = &cobra.Command{
@@ -198,6 +284,22 @@ var diskResizePartitionCmd = &cobra.Command{
 }
 
 func diskResizePartitionCmdInit() {
+	fs := diskResizePartitionCmd.Flags()
+	fs.StringSliceVarP(&diskResizePartitionParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&diskResizePartitionParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&diskResizePartitionParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&diskResizePartitionParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&diskResizePartitionParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&diskResizePartitionParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&diskResizePartitionParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&diskResizePartitionParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&diskResizePartitionParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&diskResizePartitionParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&diskResizePartitionParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&diskResizePartitionParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&diskResizePartitionParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&diskResizePartitionParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &diskResizePartitionParam.Id), "id", "", "Set target ID")
 }
 
 var diskReinstallFromArchiveCmd = &cobra.Command{
@@ -217,6 +319,14 @@ func diskReinstallFromArchiveCmdInit() {
 	fs := diskReinstallFromArchiveCmd.Flags()
 	fs.VarP(newIDValue(0, &diskReinstallFromArchiveParam.SourceArchiveId), "source-archive-id", "", "set source archive ID")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskReinstallFromArchiveParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
+	fs.StringSliceVarP(&diskReinstallFromArchiveParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&diskReinstallFromArchiveParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&diskReinstallFromArchiveParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&diskReinstallFromArchiveParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&diskReinstallFromArchiveParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&diskReinstallFromArchiveParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&diskReinstallFromArchiveParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &diskReinstallFromArchiveParam.Id), "id", "", "Set target ID")
 }
 
 var diskReinstallFromDiskCmd = &cobra.Command{
@@ -236,6 +346,14 @@ func diskReinstallFromDiskCmdInit() {
 	fs := diskReinstallFromDiskCmd.Flags()
 	fs.VarP(newIDValue(0, &diskReinstallFromDiskParam.SourceDiskId), "source-disk-id", "", "set source disk ID")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskReinstallFromDiskParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
+	fs.StringSliceVarP(&diskReinstallFromDiskParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&diskReinstallFromDiskParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&diskReinstallFromDiskParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&diskReinstallFromDiskParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&diskReinstallFromDiskParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&diskReinstallFromDiskParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&diskReinstallFromDiskParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &diskReinstallFromDiskParam.Id), "id", "", "Set target ID")
 }
 
 var diskReinstallToBlankCmd = &cobra.Command{
@@ -254,6 +372,14 @@ var diskReinstallToBlankCmd = &cobra.Command{
 func diskReinstallToBlankCmdInit() {
 	fs := diskReinstallToBlankCmd.Flags()
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskReinstallToBlankParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
+	fs.StringSliceVarP(&diskReinstallToBlankParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&diskReinstallToBlankParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&diskReinstallToBlankParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&diskReinstallToBlankParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&diskReinstallToBlankParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&diskReinstallToBlankParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&diskReinstallToBlankParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &diskReinstallToBlankParam.Id), "id", "", "Set target ID")
 }
 
 var diskServerConnectCmd = &cobra.Command{
@@ -272,6 +398,14 @@ var diskServerConnectCmd = &cobra.Command{
 func diskServerConnectCmdInit() {
 	fs := diskServerConnectCmd.Flags()
 	fs.VarP(newIDValue(0, &diskServerConnectParam.ServerId), "server-id", "", "set target server ID")
+	fs.StringSliceVarP(&diskServerConnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&diskServerConnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&diskServerConnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&diskServerConnectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&diskServerConnectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&diskServerConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&diskServerConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &diskServerConnectParam.Id), "id", "", "Set target ID")
 }
 
 var diskServerDisconnectCmd = &cobra.Command{
@@ -288,6 +422,15 @@ var diskServerDisconnectCmd = &cobra.Command{
 }
 
 func diskServerDisconnectCmdInit() {
+	fs := diskServerDisconnectCmd.Flags()
+	fs.StringSliceVarP(&diskServerDisconnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&diskServerDisconnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&diskServerDisconnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&diskServerDisconnectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&diskServerDisconnectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&diskServerDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&diskServerDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &diskServerDisconnectParam.Id), "id", "", "Set target ID")
 }
 
 var diskMonitorCmd = &cobra.Command{
@@ -305,9 +448,23 @@ var diskMonitorCmd = &cobra.Command{
 
 func diskMonitorCmdInit() {
 	fs := diskMonitorCmd.Flags()
-	fs.StringVarP(&diskMonitorParam.Start, "start", "", "", "set start-time")
+	fs.StringSliceVarP(&diskMonitorParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&diskMonitorParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&diskMonitorParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&diskMonitorParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&diskMonitorParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&diskMonitorParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&diskMonitorParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&diskMonitorParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&diskMonitorParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&diskMonitorParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&diskMonitorParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&diskMonitorParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&diskMonitorParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.StringVarP(&diskMonitorParam.End, "end", "", "", "set end-time")
+	fs.VarP(newIDValue(0, &diskMonitorParam.Id), "id", "", "Set target ID")
 	fs.StringVarP(&diskMonitorParam.KeyFormat, "key-format", "", "sakuracloud.disk.{{.ID}}.disk", "set monitoring value key-format")
+	fs.StringVarP(&diskMonitorParam.Start, "start", "", "", "set start-time")
 }
 
 var diskWaitForCopyCmd = &cobra.Command{
@@ -324,6 +481,14 @@ var diskWaitForCopyCmd = &cobra.Command{
 }
 
 func diskWaitForCopyCmdInit() {
+	fs := diskWaitForCopyCmd.Flags()
+	fs.StringSliceVarP(&diskWaitForCopyParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&diskWaitForCopyParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&diskWaitForCopyParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&diskWaitForCopyParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&diskWaitForCopyParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&diskWaitForCopyParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &diskWaitForCopyParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

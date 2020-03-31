@@ -29,11 +29,23 @@ import (
 
 // ListPriceParam is input parameters for the sacloud API
 type ListPriceParam struct {
-	From int
-	Max  int
-	Sort []string
-	Name []string
-	Id   []sacloud.ID
+	Name              []string
+	Id                []sacloud.ID
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -58,6 +70,12 @@ func (p *ListPriceParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListPriceParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = []sacloud.ID{}
+	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
@@ -67,11 +85,41 @@ func (p *ListPriceParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Id) {
-		p.Id = []sacloud.ID{}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -106,6 +154,25 @@ func (p *ListPriceParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -133,6 +200,20 @@ func (p *ListPriceParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListPriceParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListPriceParam) GetName() []string {
+	return p.Name
+}
+func (p *ListPriceParam) SetId(v []sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ListPriceParam) GetId() []sacloud.ID {
+	return p.Id
+}
 func (p *ListPriceParam) SetFrom(v int) {
 	p.From = v
 }
@@ -154,17 +235,87 @@ func (p *ListPriceParam) SetSort(v []string) {
 func (p *ListPriceParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListPriceParam) SetName(v []string) {
-	p.Name = v
+func (p *ListPriceParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
 }
 
-func (p *ListPriceParam) GetName() []string {
-	return p.Name
+func (p *ListPriceParam) GetParamTemplate() string {
+	return p.ParamTemplate
 }
-func (p *ListPriceParam) SetId(v []sacloud.ID) {
-	p.Id = v
+func (p *ListPriceParam) SetParameters(v string) {
+	p.Parameters = v
 }
 
-func (p *ListPriceParam) GetId() []sacloud.ID {
-	return p.Id
+func (p *ListPriceParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListPriceParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListPriceParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListPriceParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListPriceParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListPriceParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListPriceParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListPriceParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListPriceParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListPriceParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListPriceParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListPriceParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListPriceParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListPriceParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListPriceParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListPriceParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListPriceParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListPriceParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListPriceParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListPriceParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListPriceParam) GetQueryFile() string {
+	return p.QueryFile
 }

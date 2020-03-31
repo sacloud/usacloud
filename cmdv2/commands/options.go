@@ -55,8 +55,6 @@ type CLIOptions struct {
 
 	profile.ConfigValue
 
-	// Foramt コマンド出力時のフォーマット。Goテンプレートを指定
-	Format string
 	// DefaultOutputType デフォルトアウトプットタイプ
 	DefaultOutputType string
 	// NoColor ANSIエスケープシーケンスによる色つけを無効化
@@ -166,14 +164,6 @@ func (o *CLIOptions) loadFromFlags(flags *pflag.FlagSet) {
 			return
 		}
 		o.Zones = v
-	}
-	if flags.Changed("format") {
-		v, err := flags.GetString("format")
-		if err != nil {
-			fmt.Fprintf(out, "[WARN] reading value of %q flag is failed: %s", "format", err) // nolint
-			return
-		}
-		o.Format = v
 	}
 	if flags.Changed("no-color") {
 		v, err := flags.GetBool("no-color")

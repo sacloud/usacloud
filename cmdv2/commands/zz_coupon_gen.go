@@ -52,7 +52,19 @@ var couponListCmd = &cobra.Command{
 
 func couponListCmdInit() {
 	fs := couponListCmd.Flags()
+	fs.StringVarP(&couponListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&couponListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&couponListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&couponListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&couponListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&couponListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
 	fs.BoolVarP(&couponListParam.Usable, "usable", "", false, "show usable coupons only")
+	fs.StringSliceVarP(&couponListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&couponListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&couponListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&couponListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&couponListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&couponListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 func init() {

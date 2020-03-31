@@ -61,10 +61,22 @@ func switchListCmdInit() {
 	fs := switchListCmd.Flags()
 	fs.StringSliceVarP(&switchListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &switchListParam.Id), "id", "", "set filter by id(s)")
-	fs.IntVarP(&switchListParam.From, "from", "", 0, "set offset")
 	fs.StringSliceVarP(&switchListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.IntVarP(&switchListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&switchListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&switchListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&switchListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&switchListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&switchListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&switchListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&switchListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&switchListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&switchListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&switchListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&switchListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&switchListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&switchListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&switchListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var switchCreateCmd = &cobra.Command{
@@ -86,6 +98,19 @@ func switchCreateCmdInit() {
 	fs.StringVarP(&switchCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&switchCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &switchCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&switchCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&switchCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&switchCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&switchCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&switchCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&switchCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&switchCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&switchCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&switchCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&switchCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&switchCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&switchCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&switchCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var switchReadCmd = &cobra.Command{
@@ -102,6 +127,21 @@ var switchReadCmd = &cobra.Command{
 }
 
 func switchReadCmdInit() {
+	fs := switchReadCmd.Flags()
+	fs.StringSliceVarP(&switchReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&switchReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&switchReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&switchReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&switchReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&switchReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&switchReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&switchReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&switchReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&switchReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&switchReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&switchReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&switchReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &switchReadParam.Id), "id", "", "Set target ID")
 }
 
 var switchUpdateCmd = &cobra.Command{
@@ -119,10 +159,25 @@ var switchUpdateCmd = &cobra.Command{
 
 func switchUpdateCmdInit() {
 	fs := switchUpdateCmd.Flags()
+	fs.StringSliceVarP(&switchUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&switchUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&switchUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&switchUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &switchUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&switchUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&switchUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&switchUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&switchUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&switchUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&switchUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&switchUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&switchUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&switchUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&switchUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&switchUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&switchUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&switchUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &switchUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var switchDeleteCmd = &cobra.Command{
@@ -139,6 +194,22 @@ var switchDeleteCmd = &cobra.Command{
 }
 
 func switchDeleteCmdInit() {
+	fs := switchDeleteCmd.Flags()
+	fs.StringSliceVarP(&switchDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&switchDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&switchDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&switchDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&switchDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&switchDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&switchDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&switchDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&switchDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&switchDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&switchDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&switchDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&switchDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&switchDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &switchDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var switchBridgeConnectCmd = &cobra.Command{
@@ -157,6 +228,14 @@ var switchBridgeConnectCmd = &cobra.Command{
 func switchBridgeConnectCmdInit() {
 	fs := switchBridgeConnectCmd.Flags()
 	fs.VarP(newIDValue(0, &switchBridgeConnectParam.BridgeId), "bridge-id", "", "set Bridge ID")
+	fs.StringSliceVarP(&switchBridgeConnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&switchBridgeConnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&switchBridgeConnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&switchBridgeConnectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&switchBridgeConnectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&switchBridgeConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&switchBridgeConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &switchBridgeConnectParam.Id), "id", "", "Set target ID")
 }
 
 var switchBridgeDisconnectCmd = &cobra.Command{
@@ -173,6 +252,15 @@ var switchBridgeDisconnectCmd = &cobra.Command{
 }
 
 func switchBridgeDisconnectCmdInit() {
+	fs := switchBridgeDisconnectCmd.Flags()
+	fs.StringSliceVarP(&switchBridgeDisconnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&switchBridgeDisconnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&switchBridgeDisconnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&switchBridgeDisconnectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&switchBridgeDisconnectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&switchBridgeDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&switchBridgeDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &switchBridgeDisconnectParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

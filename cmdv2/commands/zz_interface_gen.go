@@ -59,11 +59,23 @@ var interfaceListCmd = &cobra.Command{
 
 func interfaceListCmdInit() {
 	fs := interfaceListCmd.Flags()
-	fs.StringSliceVarP(&interfaceListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
 	fs.StringSliceVarP(&interfaceListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &interfaceListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&interfaceListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&interfaceListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&interfaceListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&interfaceListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&interfaceListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&interfaceListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&interfaceListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&interfaceListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&interfaceListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&interfaceListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&interfaceListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&interfaceListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&interfaceListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&interfaceListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&interfaceListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var interfacePacketFilterConnectCmd = &cobra.Command{
@@ -82,6 +94,13 @@ var interfacePacketFilterConnectCmd = &cobra.Command{
 func interfacePacketFilterConnectCmdInit() {
 	fs := interfacePacketFilterConnectCmd.Flags()
 	fs.VarP(newIDValue(0, &interfacePacketFilterConnectParam.PacketFilterId), "packet-filter-id", "", "set packet filter ID")
+	fs.BoolVarP(&interfacePacketFilterConnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&interfacePacketFilterConnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&interfacePacketFilterConnectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&interfacePacketFilterConnectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&interfacePacketFilterConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&interfacePacketFilterConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &interfacePacketFilterConnectParam.Id), "id", "", "Set target ID")
 }
 
 var interfaceCreateCmd = &cobra.Command{
@@ -100,6 +119,19 @@ var interfaceCreateCmd = &cobra.Command{
 func interfaceCreateCmdInit() {
 	fs := interfaceCreateCmd.Flags()
 	fs.VarP(newIDValue(0, &interfaceCreateParam.ServerId), "server-id", "", "set server ID")
+	fs.BoolVarP(&interfaceCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&interfaceCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&interfaceCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&interfaceCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&interfaceCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&interfaceCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&interfaceCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&interfaceCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&interfaceCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&interfaceCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&interfaceCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&interfaceCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&interfaceCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var interfacePacketFilterDisconnectCmd = &cobra.Command{
@@ -118,6 +150,13 @@ var interfacePacketFilterDisconnectCmd = &cobra.Command{
 func interfacePacketFilterDisconnectCmdInit() {
 	fs := interfacePacketFilterDisconnectCmd.Flags()
 	fs.VarP(newIDValue(0, &interfacePacketFilterDisconnectParam.PacketFilterId), "packet-filter-id", "", "set packet filter ID")
+	fs.BoolVarP(&interfacePacketFilterDisconnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&interfacePacketFilterDisconnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&interfacePacketFilterDisconnectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&interfacePacketFilterDisconnectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&interfacePacketFilterDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&interfacePacketFilterDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &interfacePacketFilterDisconnectParam.Id), "id", "", "Set target ID")
 }
 
 var interfaceReadCmd = &cobra.Command{
@@ -134,6 +173,20 @@ var interfaceReadCmd = &cobra.Command{
 }
 
 func interfaceReadCmdInit() {
+	fs := interfaceReadCmd.Flags()
+	fs.StringVarP(&interfaceReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&interfaceReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&interfaceReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&interfaceReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&interfaceReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&interfaceReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&interfaceReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&interfaceReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&interfaceReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&interfaceReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&interfaceReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&interfaceReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &interfaceReadParam.Id), "id", "", "Set target ID")
 }
 
 var interfaceUpdateCmd = &cobra.Command{
@@ -152,6 +205,20 @@ var interfaceUpdateCmd = &cobra.Command{
 func interfaceUpdateCmdInit() {
 	fs := interfaceUpdateCmd.Flags()
 	fs.StringVarP(&interfaceUpdateParam.UserIpaddress, "user-ipaddress", "", "", "set user-ipaddress")
+	fs.BoolVarP(&interfaceUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&interfaceUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&interfaceUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&interfaceUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&interfaceUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&interfaceUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&interfaceUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&interfaceUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&interfaceUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&interfaceUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&interfaceUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&interfaceUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&interfaceUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &interfaceUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var interfaceDeleteCmd = &cobra.Command{
@@ -168,6 +235,21 @@ var interfaceDeleteCmd = &cobra.Command{
 }
 
 func interfaceDeleteCmdInit() {
+	fs := interfaceDeleteCmd.Flags()
+	fs.BoolVarP(&interfaceDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&interfaceDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&interfaceDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&interfaceDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&interfaceDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&interfaceDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&interfaceDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&interfaceDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&interfaceDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&interfaceDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&interfaceDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&interfaceDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&interfaceDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &interfaceDeleteParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

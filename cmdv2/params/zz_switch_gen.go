@@ -29,12 +29,24 @@ import (
 
 // ListSwitchParam is input parameters for the sacloud API
 type ListSwitchParam struct {
-	Tags []string
-	Id   []sacloud.ID
-	From int
-	Max  int
-	Sort []string
-	Name []string
+	Name              []string
+	Id                []sacloud.ID
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -59,11 +71,14 @@ func (p *ListSwitchParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListSwitchParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
 	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
@@ -74,8 +89,41 @@ func (p *ListSwitchParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -84,8 +132,10 @@ func (p *ListSwitchParam) validate() error {
 	var errors []error
 
 	{
-		validator := define.Resources["Switch"].Commands["list"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -109,15 +159,32 @@ func (p *ListSwitchParam) validate() error {
 	}
 
 	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
+		validator := define.Resources["Switch"].Commands["list"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -145,12 +212,12 @@ func (p *ListSwitchParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListSwitchParam) SetTags(v []string) {
-	p.Tags = v
+func (p *ListSwitchParam) SetName(v []string) {
+	p.Name = v
 }
 
-func (p *ListSwitchParam) GetTags() []string {
-	return p.Tags
+func (p *ListSwitchParam) GetName() []string {
+	return p.Name
 }
 func (p *ListSwitchParam) SetId(v []sacloud.ID) {
 	p.Id = v
@@ -158,6 +225,13 @@ func (p *ListSwitchParam) SetId(v []sacloud.ID) {
 
 func (p *ListSwitchParam) GetId() []sacloud.ID {
 	return p.Id
+}
+func (p *ListSwitchParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *ListSwitchParam) GetTags() []string {
+	return p.Tags
 }
 func (p *ListSwitchParam) SetFrom(v int) {
 	p.From = v
@@ -180,20 +254,110 @@ func (p *ListSwitchParam) SetSort(v []string) {
 func (p *ListSwitchParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListSwitchParam) SetName(v []string) {
-	p.Name = v
+func (p *ListSwitchParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
 }
 
-func (p *ListSwitchParam) GetName() []string {
-	return p.Name
+func (p *ListSwitchParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListSwitchParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListSwitchParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListSwitchParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListSwitchParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListSwitchParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListSwitchParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListSwitchParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListSwitchParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListSwitchParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListSwitchParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListSwitchParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListSwitchParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListSwitchParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListSwitchParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListSwitchParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListSwitchParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListSwitchParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListSwitchParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListSwitchParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListSwitchParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListSwitchParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListSwitchParam) GetQueryFile() string {
+	return p.QueryFile
 }
 
 // CreateSwitchParam is input parameters for the sacloud API
 type CreateSwitchParam struct {
-	Name        string
-	Description string
-	Tags        []string
-	IconId      sacloud.ID
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -229,6 +393,45 @@ func (p *CreateSwitchParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -275,6 +478,25 @@ func (p *CreateSwitchParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -330,9 +552,115 @@ func (p *CreateSwitchParam) SetIconId(v sacloud.ID) {
 func (p *CreateSwitchParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
+func (p *CreateSwitchParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *CreateSwitchParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *CreateSwitchParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateSwitchParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateSwitchParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateSwitchParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateSwitchParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateSwitchParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CreateSwitchParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateSwitchParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateSwitchParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateSwitchParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CreateSwitchParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateSwitchParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateSwitchParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateSwitchParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateSwitchParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateSwitchParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateSwitchParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateSwitchParam) GetFormat() string {
+	return p.Format
+}
+func (p *CreateSwitchParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CreateSwitchParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CreateSwitchParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateSwitchParam) GetQuery() string {
+	return p.Query
+}
+func (p *CreateSwitchParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateSwitchParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadSwitchParam is input parameters for the sacloud API
 type ReadSwitchParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -356,12 +684,81 @@ func (p *ReadSwitchParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadSwitchParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ReadSwitchParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -389,12 +786,126 @@ func (p *ReadSwitchParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadSwitchParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadSwitchParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ReadSwitchParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadSwitchParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadSwitchParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadSwitchParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadSwitchParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadSwitchParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadSwitchParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadSwitchParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadSwitchParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadSwitchParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadSwitchParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadSwitchParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadSwitchParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadSwitchParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadSwitchParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadSwitchParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadSwitchParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadSwitchParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadSwitchParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadSwitchParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadSwitchParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadSwitchParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadSwitchParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadSwitchParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ReadSwitchParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReadSwitchParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UpdateSwitchParam is input parameters for the sacloud API
 type UpdateSwitchParam struct {
-	Name        string
-	Description string
-	Tags        []string
-	IconId      sacloud.ID
+	Selector          []string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -419,6 +930,9 @@ func (p *UpdateSwitchParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateSwitchParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -430,6 +944,48 @@ func (p *UpdateSwitchParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -469,6 +1025,33 @@ func (p *UpdateSwitchParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -496,6 +1079,13 @@ func (p *UpdateSwitchParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *UpdateSwitchParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateSwitchParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateSwitchParam) SetName(v string) {
 	p.Name = v
 }
@@ -524,9 +1114,123 @@ func (p *UpdateSwitchParam) SetIconId(v sacloud.ID) {
 func (p *UpdateSwitchParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
+func (p *UpdateSwitchParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *UpdateSwitchParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UpdateSwitchParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateSwitchParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateSwitchParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateSwitchParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateSwitchParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateSwitchParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UpdateSwitchParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateSwitchParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateSwitchParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateSwitchParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UpdateSwitchParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateSwitchParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateSwitchParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateSwitchParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateSwitchParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateSwitchParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateSwitchParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateSwitchParam) GetFormat() string {
+	return p.Format
+}
+func (p *UpdateSwitchParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UpdateSwitchParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UpdateSwitchParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateSwitchParam) GetQuery() string {
+	return p.Query
+}
+func (p *UpdateSwitchParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateSwitchParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UpdateSwitchParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UpdateSwitchParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DeleteSwitchParam is input parameters for the sacloud API
 type DeleteSwitchParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -550,12 +1254,84 @@ func (p *DeleteSwitchParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *DeleteSwitchParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DeleteSwitchParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -583,9 +1359,123 @@ func (p *DeleteSwitchParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *DeleteSwitchParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteSwitchParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DeleteSwitchParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DeleteSwitchParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DeleteSwitchParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteSwitchParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteSwitchParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteSwitchParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteSwitchParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteSwitchParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DeleteSwitchParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteSwitchParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteSwitchParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteSwitchParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DeleteSwitchParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteSwitchParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteSwitchParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteSwitchParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteSwitchParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteSwitchParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteSwitchParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteSwitchParam) GetFormat() string {
+	return p.Format
+}
+func (p *DeleteSwitchParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DeleteSwitchParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DeleteSwitchParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteSwitchParam) GetQuery() string {
+	return p.Query
+}
+func (p *DeleteSwitchParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteSwitchParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *DeleteSwitchParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DeleteSwitchParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // BridgeConnectSwitchParam is input parameters for the sacloud API
 type BridgeConnectSwitchParam struct {
-	BridgeId sacloud.ID
+	BridgeId          sacloud.ID
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -613,6 +1503,30 @@ func (p *BridgeConnectSwitchParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.BridgeId) {
 		p.BridgeId = sacloud.ID(0)
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -629,6 +1543,14 @@ func (p *BridgeConnectSwitchParam) validate() error {
 	{
 		validator := define.Resources["Switch"].Commands["bridge-connect"].Params["bridge-id"].ValidateFunc
 		errs := validator("--bridge-id", p.BridgeId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -668,9 +1590,74 @@ func (p *BridgeConnectSwitchParam) SetBridgeId(v sacloud.ID) {
 func (p *BridgeConnectSwitchParam) GetBridgeId() sacloud.ID {
 	return p.BridgeId
 }
+func (p *BridgeConnectSwitchParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *BridgeConnectSwitchParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *BridgeConnectSwitchParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *BridgeConnectSwitchParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *BridgeConnectSwitchParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BridgeConnectSwitchParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BridgeConnectSwitchParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BridgeConnectSwitchParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BridgeConnectSwitchParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BridgeConnectSwitchParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BridgeConnectSwitchParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BridgeConnectSwitchParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BridgeConnectSwitchParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BridgeConnectSwitchParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BridgeConnectSwitchParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *BridgeConnectSwitchParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // BridgeDisconnectSwitchParam is input parameters for the sacloud API
 type BridgeDisconnectSwitchParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -694,11 +1681,43 @@ func (p *BridgeDisconnectSwitchParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *BridgeDisconnectSwitchParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *BridgeDisconnectSwitchParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -725,4 +1744,61 @@ func (p *BridgeDisconnectSwitchParam) TableType() output.TableType {
 
 func (p *BridgeDisconnectSwitchParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
+}
+
+func (p *BridgeDisconnectSwitchParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *BridgeDisconnectSwitchParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *BridgeDisconnectSwitchParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *BridgeDisconnectSwitchParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *BridgeDisconnectSwitchParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BridgeDisconnectSwitchParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BridgeDisconnectSwitchParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BridgeDisconnectSwitchParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BridgeDisconnectSwitchParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BridgeDisconnectSwitchParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BridgeDisconnectSwitchParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BridgeDisconnectSwitchParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BridgeDisconnectSwitchParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BridgeDisconnectSwitchParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BridgeDisconnectSwitchParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *BridgeDisconnectSwitchParam) GetId() sacloud.ID {
+	return p.Id
 }

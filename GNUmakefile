@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-TEST            ?=$$(go list ./... | grep -v vendor)
 VETARGS         ?=-all
 GOFMT_FILES     ?=$$(find . -name '*.go' | grep -v vendor)
 GOGEN_FILES     ?=$$(go list ./... | grep -v vendor)
@@ -123,7 +122,7 @@ deb: rpm
 
 .PHONY: test
 test: 
-	go test $(TEST) $(TESTARGS) -v -timeout=30m -parallel=4 ;
+	go test $(TESTARGS) -v ./...
 
 .PHONY: integration-test
 integration-test: bin/usacloud

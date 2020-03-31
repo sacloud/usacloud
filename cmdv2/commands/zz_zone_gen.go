@@ -59,6 +59,18 @@ func zoneListCmdInit() {
 	fs.IntVarP(&zoneListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&zoneListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&zoneListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&zoneListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&zoneListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&zoneListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&zoneListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&zoneListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&zoneListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&zoneListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&zoneListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&zoneListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&zoneListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&zoneListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&zoneListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var zoneReadCmd = &cobra.Command{
@@ -76,6 +88,19 @@ var zoneReadCmd = &cobra.Command{
 
 func zoneReadCmdInit() {
 	fs := zoneReadCmd.Flags()
+	fs.BoolVarP(&zoneReadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&zoneReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&zoneReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&zoneReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&zoneReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&zoneReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&zoneReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&zoneReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&zoneReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&zoneReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&zoneReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&zoneReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&zoneReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &zoneReadParam.Id), "id", "", "set resource ID")
 }
 

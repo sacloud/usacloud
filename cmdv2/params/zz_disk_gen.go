@@ -29,16 +29,28 @@ import (
 
 // ListDiskParam is input parameters for the sacloud API
 type ListDiskParam struct {
-	Id              []sacloud.ID
-	From            int
-	Tags            []string
-	SourceArchiveId sacloud.ID
-	SourceDiskId    sacloud.ID
-	Storage         string
-	Max             int
-	Name            []string
-	Scope           string
-	Sort            []string
+	Name              []string
+	Id                []sacloud.ID
+	Scope             string
+	Tags              []string
+	SourceArchiveId   sacloud.ID
+	SourceDiskId      sacloud.ID
+	Storage           string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -63,11 +75,14 @@ func (p *ListDiskParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListDiskParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
+	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.From) {
-		p.From = 0
+	if utils.IsEmpty(p.Scope) {
+		p.Scope = ""
 	}
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -81,23 +96,66 @@ func (p *ListDiskParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Storage) {
 		p.Storage = ""
 	}
+	if utils.IsEmpty(p.From) {
+		p.From = 0
+	}
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
-	}
-	if utils.IsEmpty(p.Scope) {
-		p.Scope = ""
-	}
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
 
 func (p *ListDiskParam) validate() error {
 	var errors []error
+
+	{
+		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["Disk"].Commands["list"].Params["id"].ValidateFunc
@@ -111,6 +169,14 @@ func (p *ListDiskParam) validate() error {
 
 			"--name": p.Name,
 		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Disk"].Commands["list"].Params["scope"].ValidateFunc
+		errs := validator("--scope", p.Scope)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -141,23 +207,24 @@ func (p *ListDiskParam) validate() error {
 	}
 
 	{
-		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-
 	{
-		validator := define.Resources["Disk"].Commands["list"].Params["scope"].ValidateFunc
-		errs := validator("--scope", p.Scope)
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -185,6 +252,13 @@ func (p *ListDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ListDiskParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListDiskParam) GetName() []string {
+	return p.Name
+}
 func (p *ListDiskParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
@@ -192,12 +266,12 @@ func (p *ListDiskParam) SetId(v []sacloud.ID) {
 func (p *ListDiskParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListDiskParam) SetFrom(v int) {
-	p.From = v
+func (p *ListDiskParam) SetScope(v string) {
+	p.Scope = v
 }
 
-func (p *ListDiskParam) GetFrom() int {
-	return p.From
+func (p *ListDiskParam) GetScope() string {
+	return p.Scope
 }
 func (p *ListDiskParam) SetTags(v []string) {
 	p.Tags = v
@@ -227,26 +301,19 @@ func (p *ListDiskParam) SetStorage(v string) {
 func (p *ListDiskParam) GetStorage() string {
 	return p.Storage
 }
+func (p *ListDiskParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListDiskParam) GetFrom() int {
+	return p.From
+}
 func (p *ListDiskParam) SetMax(v int) {
 	p.Max = v
 }
 
 func (p *ListDiskParam) GetMax() int {
 	return p.Max
-}
-func (p *ListDiskParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListDiskParam) GetName() []string {
-	return p.Name
-}
-func (p *ListDiskParam) SetScope(v string) {
-	p.Scope = v
-}
-
-func (p *ListDiskParam) GetScope() string {
-	return p.Scope
 }
 func (p *ListDiskParam) SetSort(v []string) {
 	p.Sort = v
@@ -255,19 +322,116 @@ func (p *ListDiskParam) SetSort(v []string) {
 func (p *ListDiskParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListDiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListDiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListDiskParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListDiskParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListDiskParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListDiskParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListDiskParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListDiskParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateDiskParam is input parameters for the sacloud API
 type CreateDiskParam struct {
-	Tags            []string
-	Plan            string
-	Connection      string
-	SourceDiskId    sacloud.ID
-	Size            int
-	DistantFrom     []sacloud.ID
-	Name            string
-	Description     string
-	IconId          sacloud.ID
-	SourceArchiveId sacloud.ID
+	Plan              string
+	Connection        string
+	SourceArchiveId   sacloud.ID
+	SourceDiskId      sacloud.ID
+	Size              int
+	DistantFrom       []sacloud.ID
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -293,14 +457,14 @@ func (p *CreateDiskParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateDiskParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
 	if utils.IsEmpty(p.Plan) {
 		p.Plan = ""
 	}
 	if utils.IsEmpty(p.Connection) {
 		p.Connection = ""
+	}
+	if utils.IsEmpty(p.SourceArchiveId) {
+		p.SourceArchiveId = sacloud.ID(0)
 	}
 	if utils.IsEmpty(p.SourceDiskId) {
 		p.SourceDiskId = sacloud.ID(0)
@@ -317,25 +481,56 @@ func (p *CreateDiskParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.SourceArchiveId) {
-		p.SourceArchiveId = sacloud.ID(0)
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
 
 func (p *CreateDiskParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Disk"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -362,6 +557,23 @@ func (p *CreateDiskParam) validate() error {
 	{
 		validator := define.Resources["Disk"].Commands["create"].Params["connection"].ValidateFunc
 		errs := validator("--connection", p.Connection)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Disk"].Commands["create"].Params["source-archive-id"].ValidateFunc
+		errs := validator("--source-archive-id", p.SourceArchiveId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validation.ConflictsWith("--source-archive-id", p.SourceArchiveId, map[string]interface{}{
+
+			"--source-disk-id": p.SourceDiskId,
+		})
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -431,6 +643,14 @@ func (p *CreateDiskParam) validate() error {
 	}
 
 	{
+		validator := define.Resources["Disk"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
 		validator := define.Resources["Disk"].Commands["create"].Params["icon-id"].ValidateFunc
 		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
@@ -439,22 +659,24 @@ func (p *CreateDiskParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["Disk"].Commands["create"].Params["source-archive-id"].ValidateFunc
-		errs := validator("--source-archive-id", p.SourceArchiveId)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		errs := validation.ConflictsWith("--source-archive-id", p.SourceArchiveId, map[string]interface{}{
-
-			"--source-disk-id": p.SourceDiskId,
-		})
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -482,13 +704,6 @@ func (p *CreateDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateDiskParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CreateDiskParam) GetTags() []string {
-	return p.Tags
-}
 func (p *CreateDiskParam) SetPlan(v string) {
 	p.Plan = v
 }
@@ -502,6 +717,13 @@ func (p *CreateDiskParam) SetConnection(v string) {
 
 func (p *CreateDiskParam) GetConnection() string {
 	return p.Connection
+}
+func (p *CreateDiskParam) SetSourceArchiveId(v sacloud.ID) {
+	p.SourceArchiveId = v
+}
+
+func (p *CreateDiskParam) GetSourceArchiveId() sacloud.ID {
+	return p.SourceArchiveId
 }
 func (p *CreateDiskParam) SetSourceDiskId(v sacloud.ID) {
 	p.SourceDiskId = v
@@ -538,6 +760,13 @@ func (p *CreateDiskParam) SetDescription(v string) {
 func (p *CreateDiskParam) GetDescription() string {
 	return p.Description
 }
+func (p *CreateDiskParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CreateDiskParam) GetTags() []string {
+	return p.Tags
+}
 func (p *CreateDiskParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
@@ -545,16 +774,115 @@ func (p *CreateDiskParam) SetIconId(v sacloud.ID) {
 func (p *CreateDiskParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *CreateDiskParam) SetSourceArchiveId(v sacloud.ID) {
-	p.SourceArchiveId = v
+func (p *CreateDiskParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
 }
 
-func (p *CreateDiskParam) GetSourceArchiveId() sacloud.ID {
-	return p.SourceArchiveId
+func (p *CreateDiskParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *CreateDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateDiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CreateDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateDiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CreateDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateDiskParam) GetFormat() string {
+	return p.Format
+}
+func (p *CreateDiskParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CreateDiskParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CreateDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateDiskParam) GetQuery() string {
+	return p.Query
+}
+func (p *CreateDiskParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateDiskParam) GetQueryFile() string {
+	return p.QueryFile
 }
 
 // ReadDiskParam is input parameters for the sacloud API
 type ReadDiskParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -578,12 +906,81 @@ func (p *ReadDiskParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadDiskParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ReadDiskParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -611,13 +1008,127 @@ func (p *ReadDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadDiskParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ReadDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadDiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadDiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadDiskParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadDiskParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadDiskParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadDiskParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadDiskParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadDiskParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ReadDiskParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReadDiskParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UpdateDiskParam is input parameters for the sacloud API
 type UpdateDiskParam struct {
-	Description string
-	Tags        []string
-	IconId      sacloud.ID
-	Connection  string
-	Name        string
+	Connection        string
+	Selector          []string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -642,6 +1153,15 @@ func (p *UpdateDiskParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateDiskParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Connection) {
+		p.Connection = ""
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
@@ -651,17 +1171,69 @@ func (p *UpdateDiskParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Connection) {
-		p.Connection = ""
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
 
 func (p *UpdateDiskParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["Disk"].Commands["update"].Params["connection"].ValidateFunc
+		errs := validator("--connection", p.Connection)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Disk"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["Disk"].Commands["update"].Params["description"].ValidateFunc
@@ -688,21 +1260,32 @@ func (p *UpdateDiskParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["Disk"].Commands["update"].Params["connection"].ValidateFunc
-		errs := validator("--connection", p.Connection)
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
 	{
-		validator := define.Resources["Disk"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -730,6 +1313,27 @@ func (p *UpdateDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *UpdateDiskParam) SetConnection(v string) {
+	p.Connection = v
+}
+
+func (p *UpdateDiskParam) GetConnection() string {
+	return p.Connection
+}
+func (p *UpdateDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateDiskParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *UpdateDiskParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateDiskParam) GetName() string {
+	return p.Name
+}
 func (p *UpdateDiskParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -751,23 +1355,123 @@ func (p *UpdateDiskParam) SetIconId(v sacloud.ID) {
 func (p *UpdateDiskParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *UpdateDiskParam) SetConnection(v string) {
-	p.Connection = v
+func (p *UpdateDiskParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
 }
 
-func (p *UpdateDiskParam) GetConnection() string {
-	return p.Connection
+func (p *UpdateDiskParam) GetAssumeyes() bool {
+	return p.Assumeyes
 }
-func (p *UpdateDiskParam) SetName(v string) {
-	p.Name = v
+func (p *UpdateDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
 }
 
-func (p *UpdateDiskParam) GetName() string {
-	return p.Name
+func (p *UpdateDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateDiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UpdateDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateDiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UpdateDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateDiskParam) GetFormat() string {
+	return p.Format
+}
+func (p *UpdateDiskParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UpdateDiskParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UpdateDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateDiskParam) GetQuery() string {
+	return p.Query
+}
+func (p *UpdateDiskParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateDiskParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UpdateDiskParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UpdateDiskParam) GetId() sacloud.ID {
+	return p.Id
 }
 
 // DeleteDiskParam is input parameters for the sacloud API
 type DeleteDiskParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -791,12 +1495,84 @@ func (p *DeleteDiskParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *DeleteDiskParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DeleteDiskParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -824,16 +1600,137 @@ func (p *DeleteDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *DeleteDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteDiskParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DeleteDiskParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DeleteDiskParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DeleteDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteDiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DeleteDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteDiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DeleteDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteDiskParam) GetFormat() string {
+	return p.Format
+}
+func (p *DeleteDiskParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DeleteDiskParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DeleteDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteDiskParam) GetQuery() string {
+	return p.Query
+}
+func (p *DeleteDiskParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteDiskParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *DeleteDiskParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DeleteDiskParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // EditDiskParam is input parameters for the sacloud API
 type EditDiskParam struct {
+	Hostname            string
+	Password            string
 	SSHKeyIds           []sacloud.ID
 	DisablePasswordAuth bool
 	Ipaddress           string
 	DefaultRoute        string
 	NwMasklen           int
 	StartupScriptIds    []sacloud.ID
-	Hostname            string
-	Password            string
+	Selector            []string
+	Assumeyes           bool
+	ParamTemplate       string
+	Parameters          string
+	ParamTemplateFile   string
+	ParameterFile       string
+	GenerateSkeleton    bool
+	OutputType          string
+	Column              []string
+	Quiet               bool
+	Format              string
+	FormatFile          string
+	Query               string
+	QueryFile           string
+	Id                  sacloud.ID
 
 	input Input
 }
@@ -859,6 +1756,12 @@ func (p *EditDiskParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *EditDiskParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Hostname) {
+		p.Hostname = ""
+	}
+	if utils.IsEmpty(p.Password) {
+		p.Password = ""
+	}
 	if utils.IsEmpty(p.SSHKeyIds) {
 		p.SSHKeyIds = []sacloud.ID{}
 	}
@@ -877,11 +1780,50 @@ func (p *EditDiskParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.StartupScriptIds) {
 		p.StartupScriptIds = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.Hostname) {
-		p.Hostname = ""
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Password) {
-		p.Password = ""
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -913,6 +1855,33 @@ func (p *EditDiskParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -940,6 +1909,20 @@ func (p *EditDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *EditDiskParam) SetHostname(v string) {
+	p.Hostname = v
+}
+
+func (p *EditDiskParam) GetHostname() string {
+	return p.Hostname
+}
+func (p *EditDiskParam) SetPassword(v string) {
+	p.Password = v
+}
+
+func (p *EditDiskParam) GetPassword() string {
+	return p.Password
+}
 func (p *EditDiskParam) SetSSHKeyIds(v []sacloud.ID) {
 	p.SSHKeyIds = v
 }
@@ -982,23 +1965,130 @@ func (p *EditDiskParam) SetStartupScriptIds(v []sacloud.ID) {
 func (p *EditDiskParam) GetStartupScriptIds() []sacloud.ID {
 	return p.StartupScriptIds
 }
-func (p *EditDiskParam) SetHostname(v string) {
-	p.Hostname = v
+func (p *EditDiskParam) SetSelector(v []string) {
+	p.Selector = v
 }
 
-func (p *EditDiskParam) GetHostname() string {
-	return p.Hostname
+func (p *EditDiskParam) GetSelector() []string {
+	return p.Selector
 }
-func (p *EditDiskParam) SetPassword(v string) {
-	p.Password = v
+func (p *EditDiskParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
 }
 
-func (p *EditDiskParam) GetPassword() string {
-	return p.Password
+func (p *EditDiskParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *EditDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *EditDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *EditDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *EditDiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *EditDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *EditDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *EditDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *EditDiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *EditDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *EditDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *EditDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *EditDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *EditDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *EditDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *EditDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *EditDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *EditDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *EditDiskParam) GetFormat() string {
+	return p.Format
+}
+func (p *EditDiskParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *EditDiskParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *EditDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *EditDiskParam) GetQuery() string {
+	return p.Query
+}
+func (p *EditDiskParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *EditDiskParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *EditDiskParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *EditDiskParam) GetId() sacloud.ID {
+	return p.Id
 }
 
 // ResizePartitionDiskParam is input parameters for the sacloud API
 type ResizePartitionDiskParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1022,12 +2112,84 @@ func (p *ResizePartitionDiskParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ResizePartitionDiskParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ResizePartitionDiskParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1055,10 +2217,124 @@ func (p *ResizePartitionDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ResizePartitionDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ResizePartitionDiskParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ResizePartitionDiskParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ResizePartitionDiskParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ResizePartitionDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ResizePartitionDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ResizePartitionDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ResizePartitionDiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ResizePartitionDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ResizePartitionDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ResizePartitionDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ResizePartitionDiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ResizePartitionDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ResizePartitionDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ResizePartitionDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ResizePartitionDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ResizePartitionDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ResizePartitionDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ResizePartitionDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ResizePartitionDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ResizePartitionDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ResizePartitionDiskParam) GetFormat() string {
+	return p.Format
+}
+func (p *ResizePartitionDiskParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ResizePartitionDiskParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ResizePartitionDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ResizePartitionDiskParam) GetQuery() string {
+	return p.Query
+}
+func (p *ResizePartitionDiskParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ResizePartitionDiskParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ResizePartitionDiskParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ResizePartitionDiskParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // ReinstallFromArchiveDiskParam is input parameters for the sacloud API
 type ReinstallFromArchiveDiskParam struct {
-	SourceArchiveId sacloud.ID
-	DistantFrom     []sacloud.ID
+	SourceArchiveId   sacloud.ID
+	DistantFrom       []sacloud.ID
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1089,6 +2365,30 @@ func (p *ReinstallFromArchiveDiskParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.DistantFrom) {
 		p.DistantFrom = []sacloud.ID{}
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -1113,6 +2413,14 @@ func (p *ReinstallFromArchiveDiskParam) validate() error {
 	{
 		validator := define.Resources["Disk"].Commands["reinstall-from-archive"].Params["distant-from"].ValidateFunc
 		errs := validator("--distant-from", p.DistantFrom)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1159,11 +2467,75 @@ func (p *ReinstallFromArchiveDiskParam) SetDistantFrom(v []sacloud.ID) {
 func (p *ReinstallFromArchiveDiskParam) GetDistantFrom() []sacloud.ID {
 	return p.DistantFrom
 }
+func (p *ReinstallFromArchiveDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ReinstallFromArchiveDiskParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ReinstallFromArchiveDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReinstallFromArchiveDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReinstallFromArchiveDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReinstallFromArchiveDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReinstallFromArchiveDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReinstallFromArchiveDiskParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // ReinstallFromDiskDiskParam is input parameters for the sacloud API
 type ReinstallFromDiskDiskParam struct {
-	SourceDiskId sacloud.ID
-	DistantFrom  []sacloud.ID
+	SourceDiskId      sacloud.ID
+	DistantFrom       []sacloud.ID
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1194,6 +2566,30 @@ func (p *ReinstallFromDiskDiskParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.DistantFrom) {
 		p.DistantFrom = []sacloud.ID{}
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -1218,6 +2614,14 @@ func (p *ReinstallFromDiskDiskParam) validate() error {
 	{
 		validator := define.Resources["Disk"].Commands["reinstall-from-disk"].Params["distant-from"].ValidateFunc
 		errs := validator("--distant-from", p.DistantFrom)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1264,10 +2668,74 @@ func (p *ReinstallFromDiskDiskParam) SetDistantFrom(v []sacloud.ID) {
 func (p *ReinstallFromDiskDiskParam) GetDistantFrom() []sacloud.ID {
 	return p.DistantFrom
 }
+func (p *ReinstallFromDiskDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReinstallFromDiskDiskParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ReinstallFromDiskDiskParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ReinstallFromDiskDiskParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ReinstallFromDiskDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReinstallFromDiskDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReinstallFromDiskDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReinstallFromDiskDiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReinstallFromDiskDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReinstallFromDiskDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReinstallFromDiskDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReinstallFromDiskDiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReinstallFromDiskDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReinstallFromDiskDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReinstallFromDiskDiskParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReinstallFromDiskDiskParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // ReinstallToBlankDiskParam is input parameters for the sacloud API
 type ReinstallToBlankDiskParam struct {
-	DistantFrom []sacloud.ID
+	DistantFrom       []sacloud.ID
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1295,6 +2763,30 @@ func (p *ReinstallToBlankDiskParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.DistantFrom) {
 		p.DistantFrom = []sacloud.ID{}
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -1304,6 +2796,14 @@ func (p *ReinstallToBlankDiskParam) validate() error {
 	{
 		validator := define.Resources["Disk"].Commands["reinstall-to-blank"].Params["distant-from"].ValidateFunc
 		errs := validator("--distant-from", p.DistantFrom)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1343,10 +2843,74 @@ func (p *ReinstallToBlankDiskParam) SetDistantFrom(v []sacloud.ID) {
 func (p *ReinstallToBlankDiskParam) GetDistantFrom() []sacloud.ID {
 	return p.DistantFrom
 }
+func (p *ReinstallToBlankDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ReinstallToBlankDiskParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ReinstallToBlankDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReinstallToBlankDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReinstallToBlankDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReinstallToBlankDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReinstallToBlankDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReinstallToBlankDiskParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // ServerConnectDiskParam is input parameters for the sacloud API
 type ServerConnectDiskParam struct {
-	ServerId sacloud.ID
+	ServerId          sacloud.ID
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1374,6 +2938,30 @@ func (p *ServerConnectDiskParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.ServerId) {
 		p.ServerId = sacloud.ID(0)
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -1390,6 +2978,14 @@ func (p *ServerConnectDiskParam) validate() error {
 	{
 		validator := define.Resources["Disk"].Commands["server-connect"].Params["server-id"].ValidateFunc
 		errs := validator("--server-id", p.ServerId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1429,9 +3025,74 @@ func (p *ServerConnectDiskParam) SetServerId(v sacloud.ID) {
 func (p *ServerConnectDiskParam) GetServerId() sacloud.ID {
 	return p.ServerId
 }
+func (p *ServerConnectDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ServerConnectDiskParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ServerConnectDiskParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ServerConnectDiskParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ServerConnectDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ServerConnectDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ServerConnectDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerConnectDiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerConnectDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ServerConnectDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ServerConnectDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerConnectDiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerConnectDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ServerConnectDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ServerConnectDiskParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ServerConnectDiskParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // ServerDisconnectDiskParam is input parameters for the sacloud API
 type ServerDisconnectDiskParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1455,11 +3116,43 @@ func (p *ServerDisconnectDiskParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ServerDisconnectDiskParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ServerDisconnectDiskParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1488,11 +3181,82 @@ func (p *ServerDisconnectDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ServerDisconnectDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ServerDisconnectDiskParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ServerDisconnectDiskParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ServerDisconnectDiskParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ServerDisconnectDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ServerDisconnectDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ServerDisconnectDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerDisconnectDiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerDisconnectDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ServerDisconnectDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ServerDisconnectDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerDisconnectDiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerDisconnectDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ServerDisconnectDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ServerDisconnectDiskParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ServerDisconnectDiskParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // MonitorDiskParam is input parameters for the sacloud API
 type MonitorDiskParam struct {
-	Start     string
-	End       string
-	KeyFormat string
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	End               string
+	Id                sacloud.ID
+	KeyFormat         string
+	Start             string
 
 	input Input
 }
@@ -1518,14 +3282,56 @@ func (p *MonitorDiskParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *MonitorDiskParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Start) {
-		p.Start = ""
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if utils.IsEmpty(p.End) {
 		p.End = ""
 	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
+	}
+	if utils.IsEmpty(p.Start) {
+		p.Start = ""
 	}
 
 }
@@ -1534,16 +3340,16 @@ func (p *MonitorDiskParam) validate() error {
 	var errors []error
 
 	{
-		validator := define.Resources["Disk"].Commands["monitor"].Params["start"].ValidateFunc
-		errs := validator("--start", p.Start)
+		validator := define.Resources["Disk"].Commands["monitor"].Params["end"].ValidateFunc
+		errs := validator("--end", p.End)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
 	{
-		validator := define.Resources["Disk"].Commands["monitor"].Params["end"].ValidateFunc
-		errs := validator("--end", p.End)
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1557,6 +3363,33 @@ func (p *MonitorDiskParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["Disk"].Commands["monitor"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1584,12 +3417,96 @@ func (p *MonitorDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *MonitorDiskParam) SetStart(v string) {
-	p.Start = v
+func (p *MonitorDiskParam) SetSelector(v []string) {
+	p.Selector = v
 }
 
-func (p *MonitorDiskParam) GetStart() string {
-	return p.Start
+func (p *MonitorDiskParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorDiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorDiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorDiskParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorDiskParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorDiskParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorDiskParam) GetQuery() string {
+	return p.Query
+}
+func (p *MonitorDiskParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorDiskParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *MonitorDiskParam) SetEnd(v string) {
 	p.End = v
@@ -1598,6 +3515,13 @@ func (p *MonitorDiskParam) SetEnd(v string) {
 func (p *MonitorDiskParam) GetEnd() string {
 	return p.End
 }
+func (p *MonitorDiskParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *MonitorDiskParam) GetId() sacloud.ID {
+	return p.Id
+}
 func (p *MonitorDiskParam) SetKeyFormat(v string) {
 	p.KeyFormat = v
 }
@@ -1605,9 +3529,24 @@ func (p *MonitorDiskParam) SetKeyFormat(v string) {
 func (p *MonitorDiskParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
+func (p *MonitorDiskParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorDiskParam) GetStart() string {
+	return p.Start
+}
 
 // WaitForCopyDiskParam is input parameters for the sacloud API
 type WaitForCopyDiskParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1631,11 +3570,40 @@ func (p *WaitForCopyDiskParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *WaitForCopyDiskParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *WaitForCopyDiskParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1662,4 +3630,54 @@ func (p *WaitForCopyDiskParam) TableType() output.TableType {
 
 func (p *WaitForCopyDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
+}
+
+func (p *WaitForCopyDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *WaitForCopyDiskParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *WaitForCopyDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForCopyDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForCopyDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForCopyDiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *WaitForCopyDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForCopyDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *WaitForCopyDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForCopyDiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *WaitForCopyDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForCopyDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *WaitForCopyDiskParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *WaitForCopyDiskParam) GetId() sacloud.ID {
+	return p.Id
 }

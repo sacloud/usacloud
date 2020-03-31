@@ -29,13 +29,25 @@ import (
 
 // ListISOImageParam is input parameters for the sacloud API
 type ListISOImageParam struct {
-	Scope string
-	Tags  []string
-	Name  []string
-	Id    []sacloud.ID
-	From  int
-	Max   int
-	Sort  []string
+	Name              []string
+	Id                []sacloud.ID
+	Scope             string
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -60,17 +72,17 @@ func (p *ListISOImageParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListISOImageParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Scope) {
-		p.Scope = ""
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
+	}
+	if utils.IsEmpty(p.Scope) {
+		p.Scope = ""
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
 	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
@@ -81,27 +93,47 @@ func (p *ListISOImageParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
 func (p *ListISOImageParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["ISOImage"].Commands["list"].Params["scope"].ValidateFunc
-		errs := validator("--scope", p.Scope)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["ISOImage"].Commands["list"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
@@ -130,6 +162,41 @@ func (p *ListISOImageParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["ISOImage"].Commands["list"].Params["scope"].ValidateFunc
+		errs := validator("--scope", p.Scope)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["ISOImage"].Commands["list"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -157,20 +224,6 @@ func (p *ListISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListISOImageParam) SetScope(v string) {
-	p.Scope = v
-}
-
-func (p *ListISOImageParam) GetScope() string {
-	return p.Scope
-}
-func (p *ListISOImageParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *ListISOImageParam) GetTags() []string {
-	return p.Tags
-}
 func (p *ListISOImageParam) SetName(v []string) {
 	p.Name = v
 }
@@ -184,6 +237,20 @@ func (p *ListISOImageParam) SetId(v []sacloud.ID) {
 
 func (p *ListISOImageParam) GetId() []sacloud.ID {
 	return p.Id
+}
+func (p *ListISOImageParam) SetScope(v string) {
+	p.Scope = v
+}
+
+func (p *ListISOImageParam) GetScope() string {
+	return p.Scope
+}
+func (p *ListISOImageParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *ListISOImageParam) GetTags() []string {
+	return p.Tags
 }
 func (p *ListISOImageParam) SetFrom(v int) {
 	p.From = v
@@ -206,15 +273,112 @@ func (p *ListISOImageParam) SetSort(v []string) {
 func (p *ListISOImageParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListISOImageParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListISOImageParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListISOImageParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListISOImageParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListISOImageParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListISOImageParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListISOImageParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListISOImageParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListISOImageParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListISOImageParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListISOImageParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListISOImageParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListISOImageParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListISOImageParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListISOImageParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateISOImageParam is input parameters for the sacloud API
 type CreateISOImageParam struct {
-	ISOFile     string
-	Name        string
-	Description string
-	Tags        []string
-	IconId      sacloud.ID
-	Size        int
+	Size              int
+	ISOFile           string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -240,6 +404,9 @@ func (p *CreateISOImageParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateISOImageParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Size) {
+		p.Size = 0
+	}
 	if utils.IsEmpty(p.ISOFile) {
 		p.ISOFile = ""
 	}
@@ -255,14 +422,65 @@ func (p *CreateISOImageParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Size) {
-		p.Size = 0
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
 
 func (p *CreateISOImageParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateRequired
+		errs := validator("--size", p.Size)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["create"].Params["size"].ValidateFunc
+		errs := validator("--size", p.Size)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["ISOImage"].Commands["create"].Params["iso-file"].ValidateFunc
@@ -312,20 +530,24 @@ func (p *CreateISOImageParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
-		errs := validator("--size", p.Size)
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["ISOImage"].Commands["create"].Params["size"].ValidateFunc
-		errs := validator("--size", p.Size)
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -353,6 +575,13 @@ func (p *CreateISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *CreateISOImageParam) SetSize(v int) {
+	p.Size = v
+}
+
+func (p *CreateISOImageParam) GetSize() int {
+	return p.Size
+}
 func (p *CreateISOImageParam) SetISOFile(v string) {
 	p.ISOFile = v
 }
@@ -388,16 +617,115 @@ func (p *CreateISOImageParam) SetIconId(v sacloud.ID) {
 func (p *CreateISOImageParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *CreateISOImageParam) SetSize(v int) {
-	p.Size = v
+func (p *CreateISOImageParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
 }
 
-func (p *CreateISOImageParam) GetSize() int {
-	return p.Size
+func (p *CreateISOImageParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *CreateISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateISOImageParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CreateISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CreateISOImageParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateISOImageParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateISOImageParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateISOImageParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateISOImageParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateISOImageParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateISOImageParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateISOImageParam) GetFormat() string {
+	return p.Format
+}
+func (p *CreateISOImageParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CreateISOImageParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CreateISOImageParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateISOImageParam) GetQuery() string {
+	return p.Query
+}
+func (p *CreateISOImageParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateISOImageParam) GetQueryFile() string {
+	return p.QueryFile
 }
 
 // ReadISOImageParam is input parameters for the sacloud API
 type ReadISOImageParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -421,12 +749,81 @@ func (p *ReadISOImageParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadISOImageParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ReadISOImageParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -454,12 +851,126 @@ func (p *ReadISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadISOImageParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadISOImageParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ReadISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadISOImageParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadISOImageParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadISOImageParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadISOImageParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadISOImageParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadISOImageParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadISOImageParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadISOImageParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadISOImageParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadISOImageParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadISOImageParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadISOImageParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadISOImageParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadISOImageParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadISOImageParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ReadISOImageParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReadISOImageParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UpdateISOImageParam is input parameters for the sacloud API
 type UpdateISOImageParam struct {
-	Name        string
-	Description string
-	Tags        []string
-	IconId      sacloud.ID
+	Selector          []string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -484,6 +995,9 @@ func (p *UpdateISOImageParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateISOImageParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -495,6 +1009,48 @@ func (p *UpdateISOImageParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -534,6 +1090,33 @@ func (p *UpdateISOImageParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -561,6 +1144,13 @@ func (p *UpdateISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *UpdateISOImageParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateISOImageParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateISOImageParam) SetName(v string) {
 	p.Name = v
 }
@@ -589,9 +1179,123 @@ func (p *UpdateISOImageParam) SetIconId(v sacloud.ID) {
 func (p *UpdateISOImageParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
+func (p *UpdateISOImageParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *UpdateISOImageParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UpdateISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateISOImageParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UpdateISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UpdateISOImageParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateISOImageParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateISOImageParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateISOImageParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateISOImageParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateISOImageParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateISOImageParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateISOImageParam) GetFormat() string {
+	return p.Format
+}
+func (p *UpdateISOImageParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UpdateISOImageParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UpdateISOImageParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateISOImageParam) GetQuery() string {
+	return p.Query
+}
+func (p *UpdateISOImageParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateISOImageParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UpdateISOImageParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UpdateISOImageParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DeleteISOImageParam is input parameters for the sacloud API
 type DeleteISOImageParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -615,12 +1319,84 @@ func (p *DeleteISOImageParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *DeleteISOImageParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DeleteISOImageParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -648,9 +1424,130 @@ func (p *DeleteISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *DeleteISOImageParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteISOImageParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DeleteISOImageParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DeleteISOImageParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DeleteISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteISOImageParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DeleteISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DeleteISOImageParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteISOImageParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteISOImageParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteISOImageParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteISOImageParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteISOImageParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteISOImageParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteISOImageParam) GetFormat() string {
+	return p.Format
+}
+func (p *DeleteISOImageParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DeleteISOImageParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DeleteISOImageParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteISOImageParam) GetQuery() string {
+	return p.Query
+}
+func (p *DeleteISOImageParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteISOImageParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *DeleteISOImageParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DeleteISOImageParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UploadISOImageParam is input parameters for the sacloud API
 type UploadISOImageParam struct {
-	ISOFile string
+	ISOFile           string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -678,6 +1575,51 @@ func (p *UploadISOImageParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.ISOFile) {
 		p.ISOFile = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -692,6 +1634,33 @@ func (p *UploadISOImageParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -726,10 +1695,123 @@ func (p *UploadISOImageParam) SetISOFile(v string) {
 func (p *UploadISOImageParam) GetISOFile() string {
 	return p.ISOFile
 }
+func (p *UploadISOImageParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UploadISOImageParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *UploadISOImageParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *UploadISOImageParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UploadISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UploadISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UploadISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UploadISOImageParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UploadISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UploadISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UploadISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UploadISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UploadISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UploadISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UploadISOImageParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UploadISOImageParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UploadISOImageParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UploadISOImageParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UploadISOImageParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UploadISOImageParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UploadISOImageParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UploadISOImageParam) GetFormat() string {
+	return p.Format
+}
+func (p *UploadISOImageParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UploadISOImageParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UploadISOImageParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UploadISOImageParam) GetQuery() string {
+	return p.Query
+}
+func (p *UploadISOImageParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UploadISOImageParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UploadISOImageParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UploadISOImageParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DownloadISOImageParam is input parameters for the sacloud API
 type DownloadISOImageParam struct {
-	FileDestination string
+	FileDestination   string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -757,11 +1839,43 @@ func (p *DownloadISOImageParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.FileDestination) {
 		p.FileDestination = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DownloadISOImageParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -797,9 +1911,81 @@ func (p *DownloadISOImageParam) SetFileDestination(v string) {
 func (p *DownloadISOImageParam) GetFileDestination() string {
 	return p.FileDestination
 }
+func (p *DownloadISOImageParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DownloadISOImageParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DownloadISOImageParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DownloadISOImageParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DownloadISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DownloadISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DownloadISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DownloadISOImageParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DownloadISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DownloadISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DownloadISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DownloadISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DownloadISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DownloadISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DownloadISOImageParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DownloadISOImageParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // FTPOpenISOImageParam is input parameters for the sacloud API
 type FTPOpenISOImageParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -823,12 +2009,84 @@ func (p *FTPOpenISOImageParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *FTPOpenISOImageParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *FTPOpenISOImageParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -856,8 +2114,123 @@ func (p *FTPOpenISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *FTPOpenISOImageParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *FTPOpenISOImageParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *FTPOpenISOImageParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *FTPOpenISOImageParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *FTPOpenISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *FTPOpenISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *FTPOpenISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *FTPOpenISOImageParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *FTPOpenISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *FTPOpenISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *FTPOpenISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *FTPOpenISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *FTPOpenISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *FTPOpenISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *FTPOpenISOImageParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *FTPOpenISOImageParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *FTPOpenISOImageParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *FTPOpenISOImageParam) GetColumn() []string {
+	return p.Column
+}
+func (p *FTPOpenISOImageParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *FTPOpenISOImageParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *FTPOpenISOImageParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *FTPOpenISOImageParam) GetFormat() string {
+	return p.Format
+}
+func (p *FTPOpenISOImageParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *FTPOpenISOImageParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *FTPOpenISOImageParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *FTPOpenISOImageParam) GetQuery() string {
+	return p.Query
+}
+func (p *FTPOpenISOImageParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *FTPOpenISOImageParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *FTPOpenISOImageParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *FTPOpenISOImageParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // FTPCloseISOImageParam is input parameters for the sacloud API
 type FTPCloseISOImageParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -881,11 +2254,43 @@ func (p *FTPCloseISOImageParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *FTPCloseISOImageParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *FTPCloseISOImageParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -912,4 +2317,61 @@ func (p *FTPCloseISOImageParam) TableType() output.TableType {
 
 func (p *FTPCloseISOImageParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
+}
+
+func (p *FTPCloseISOImageParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *FTPCloseISOImageParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *FTPCloseISOImageParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *FTPCloseISOImageParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *FTPCloseISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *FTPCloseISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *FTPCloseISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *FTPCloseISOImageParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *FTPCloseISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *FTPCloseISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *FTPCloseISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *FTPCloseISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *FTPCloseISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *FTPCloseISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *FTPCloseISOImageParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *FTPCloseISOImageParam) GetId() sacloud.ID {
+	return p.Id
 }

@@ -27,6 +27,18 @@ import (
 
 // ShowSummaryParam is input parameters for the sacloud API
 type ShowSummaryParam struct {
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 	PaidResourcesOnly bool
 
 	input Input
@@ -52,6 +64,42 @@ func (p *ShowSummaryParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ShowSummaryParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 	if utils.IsEmpty(p.PaidResourcesOnly) {
 		p.PaidResourcesOnly = false
 	}
@@ -61,6 +109,25 @@ func (p *ShowSummaryParam) fillValueToSkeleton() {
 func (p *ShowSummaryParam) validate() error {
 	var errors []error
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -88,6 +155,90 @@ func (p *ShowSummaryParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ShowSummaryParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShowSummaryParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShowSummaryParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShowSummaryParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ShowSummaryParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShowSummaryParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ShowSummaryParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShowSummaryParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ShowSummaryParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShowSummaryParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ShowSummaryParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ShowSummaryParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ShowSummaryParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ShowSummaryParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ShowSummaryParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ShowSummaryParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ShowSummaryParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ShowSummaryParam) GetFormat() string {
+	return p.Format
+}
+func (p *ShowSummaryParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ShowSummaryParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ShowSummaryParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ShowSummaryParam) GetQuery() string {
+	return p.Query
+}
+func (p *ShowSummaryParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ShowSummaryParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ShowSummaryParam) SetPaidResourcesOnly(v bool) {
 	p.PaidResourcesOnly = v
 }

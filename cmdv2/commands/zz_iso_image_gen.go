@@ -61,13 +61,25 @@ var isoImageListCmd = &cobra.Command{
 
 func isoImageListCmdInit() {
 	fs := isoImageListCmd.Flags()
+	fs.StringSliceVarP(&isoImageListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &isoImageListParam.Id), "id", "", "set filter by id(s)")
+	fs.StringVarP(&isoImageListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
+	fs.StringSliceVarP(&isoImageListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.IntVarP(&isoImageListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&isoImageListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&isoImageListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringVarP(&isoImageListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
-	fs.StringSliceVarP(&isoImageListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
-	fs.StringSliceVarP(&isoImageListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.StringVarP(&isoImageListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&isoImageListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&isoImageListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&isoImageListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&isoImageListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&isoImageListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&isoImageListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&isoImageListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&isoImageListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&isoImageListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&isoImageListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&isoImageListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var isoImageCreateCmd = &cobra.Command{
@@ -85,12 +97,25 @@ var isoImageCreateCmd = &cobra.Command{
 
 func isoImageCreateCmdInit() {
 	fs := isoImageCreateCmd.Flags()
-	fs.StringVarP(&isoImageCreateParam.Description, "description", "", "", "set resource description")
-	fs.StringSliceVarP(&isoImageCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &isoImageCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.IntVarP(&isoImageCreateParam.Size, "size", "", 5, "set iso size(GB)")
 	fs.StringVarP(&isoImageCreateParam.ISOFile, "iso-file", "", "", "set iso image file")
 	fs.StringVarP(&isoImageCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&isoImageCreateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&isoImageCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &isoImageCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&isoImageCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&isoImageCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&isoImageCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&isoImageCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&isoImageCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&isoImageCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&isoImageCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&isoImageCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&isoImageCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&isoImageCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&isoImageCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&isoImageCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&isoImageCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var isoImageReadCmd = &cobra.Command{
@@ -107,6 +132,21 @@ var isoImageReadCmd = &cobra.Command{
 }
 
 func isoImageReadCmdInit() {
+	fs := isoImageReadCmd.Flags()
+	fs.StringSliceVarP(&isoImageReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&isoImageReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&isoImageReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&isoImageReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&isoImageReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&isoImageReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&isoImageReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&isoImageReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&isoImageReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&isoImageReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&isoImageReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&isoImageReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&isoImageReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &isoImageReadParam.Id), "id", "", "Set target ID")
 }
 
 var isoImageUpdateCmd = &cobra.Command{
@@ -124,10 +164,25 @@ var isoImageUpdateCmd = &cobra.Command{
 
 func isoImageUpdateCmdInit() {
 	fs := isoImageUpdateCmd.Flags()
+	fs.StringSliceVarP(&isoImageUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&isoImageUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&isoImageUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&isoImageUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &isoImageUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&isoImageUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&isoImageUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&isoImageUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&isoImageUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&isoImageUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&isoImageUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&isoImageUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&isoImageUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&isoImageUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&isoImageUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&isoImageUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&isoImageUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&isoImageUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &isoImageUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var isoImageDeleteCmd = &cobra.Command{
@@ -144,6 +199,22 @@ var isoImageDeleteCmd = &cobra.Command{
 }
 
 func isoImageDeleteCmdInit() {
+	fs := isoImageDeleteCmd.Flags()
+	fs.StringSliceVarP(&isoImageDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&isoImageDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&isoImageDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&isoImageDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&isoImageDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&isoImageDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&isoImageDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&isoImageDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&isoImageDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&isoImageDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&isoImageDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&isoImageDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&isoImageDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&isoImageDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &isoImageDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var isoImageUploadCmd = &cobra.Command{
@@ -162,6 +233,21 @@ var isoImageUploadCmd = &cobra.Command{
 func isoImageUploadCmdInit() {
 	fs := isoImageUploadCmd.Flags()
 	fs.StringVarP(&isoImageUploadParam.ISOFile, "iso-file", "", "", "set iso image file")
+	fs.StringSliceVarP(&isoImageUploadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&isoImageUploadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&isoImageUploadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&isoImageUploadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&isoImageUploadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&isoImageUploadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&isoImageUploadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&isoImageUploadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&isoImageUploadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&isoImageUploadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&isoImageUploadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&isoImageUploadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&isoImageUploadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&isoImageUploadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &isoImageUploadParam.Id), "id", "", "Set target ID")
 }
 
 var isoImageDownloadCmd = &cobra.Command{
@@ -180,6 +266,14 @@ var isoImageDownloadCmd = &cobra.Command{
 func isoImageDownloadCmdInit() {
 	fs := isoImageDownloadCmd.Flags()
 	fs.StringVarP(&isoImageDownloadParam.FileDestination, "file-destination", "", "", "set file destination path")
+	fs.StringSliceVarP(&isoImageDownloadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&isoImageDownloadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&isoImageDownloadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&isoImageDownloadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&isoImageDownloadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&isoImageDownloadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&isoImageDownloadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &isoImageDownloadParam.Id), "id", "", "Set target ID")
 }
 
 var isoImageFTPOpenCmd = &cobra.Command{
@@ -196,6 +290,22 @@ var isoImageFTPOpenCmd = &cobra.Command{
 }
 
 func isoImageFTPOpenCmdInit() {
+	fs := isoImageFTPOpenCmd.Flags()
+	fs.StringSliceVarP(&isoImageFTPOpenParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&isoImageFTPOpenParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&isoImageFTPOpenParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&isoImageFTPOpenParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&isoImageFTPOpenParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&isoImageFTPOpenParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&isoImageFTPOpenParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&isoImageFTPOpenParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&isoImageFTPOpenParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&isoImageFTPOpenParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&isoImageFTPOpenParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&isoImageFTPOpenParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&isoImageFTPOpenParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&isoImageFTPOpenParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &isoImageFTPOpenParam.Id), "id", "", "Set target ID")
 }
 
 var isoImageFTPCloseCmd = &cobra.Command{
@@ -212,6 +322,15 @@ var isoImageFTPCloseCmd = &cobra.Command{
 }
 
 func isoImageFTPCloseCmdInit() {
+	fs := isoImageFTPCloseCmd.Flags()
+	fs.StringSliceVarP(&isoImageFTPCloseParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&isoImageFTPCloseParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&isoImageFTPCloseParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&isoImageFTPCloseParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&isoImageFTPCloseParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&isoImageFTPCloseParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&isoImageFTPCloseParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &isoImageFTPCloseParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

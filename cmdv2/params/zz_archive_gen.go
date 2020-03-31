@@ -29,15 +29,27 @@ import (
 
 // ListArchiveParam is input parameters for the sacloud API
 type ListArchiveParam struct {
-	Name            []string
-	Id              []sacloud.ID
-	From            int
-	Sort            []string
-	Scope           string
-	Tags            []string
-	SourceArchiveId sacloud.ID
-	SourceDiskId    sacloud.ID
-	Max             int
+	Name              []string
+	Id                []sacloud.ID
+	Scope             string
+	Tags              []string
+	SourceArchiveId   sacloud.ID
+	SourceDiskId      sacloud.ID
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -68,12 +80,6 @@ func (p *ListArchiveParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.From) {
-		p.From = 0
-	}
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
 	if utils.IsEmpty(p.Scope) {
 		p.Scope = ""
 	}
@@ -86,8 +92,50 @@ func (p *ListArchiveParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.SourceDiskId) {
 		p.SourceDiskId = sacloud.ID(0)
 	}
+	if utils.IsEmpty(p.From) {
+		p.From = 0
+	}
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
+	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -154,6 +202,25 @@ func (p *ListArchiveParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -195,20 +262,6 @@ func (p *ListArchiveParam) SetId(v []sacloud.ID) {
 func (p *ListArchiveParam) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListArchiveParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListArchiveParam) GetFrom() int {
-	return p.From
-}
-func (p *ListArchiveParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListArchiveParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListArchiveParam) SetScope(v string) {
 	p.Scope = v
 }
@@ -237,6 +290,13 @@ func (p *ListArchiveParam) SetSourceDiskId(v sacloud.ID) {
 func (p *ListArchiveParam) GetSourceDiskId() sacloud.ID {
 	return p.SourceDiskId
 }
+func (p *ListArchiveParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListArchiveParam) GetFrom() int {
+	return p.From
+}
 func (p *ListArchiveParam) SetMax(v int) {
 	p.Max = v
 }
@@ -244,17 +304,121 @@ func (p *ListArchiveParam) SetMax(v int) {
 func (p *ListArchiveParam) GetMax() int {
 	return p.Max
 }
+func (p *ListArchiveParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListArchiveParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListArchiveParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListArchiveParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListArchiveParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListArchiveParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListArchiveParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListArchiveParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListArchiveParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListArchiveParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListArchiveParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListArchiveParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListArchiveParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListArchiveParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListArchiveParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListArchiveParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListArchiveParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateArchiveParam is input parameters for the sacloud API
 type CreateArchiveParam struct {
-	Tags            []string
-	IconId          sacloud.ID
-	SourceDiskId    sacloud.ID
-	SourceArchiveId sacloud.ID
-	Size            int
-	ArchiveFile     string
-	Name            string
-	Description     string
+	SourceDiskId      sacloud.ID
+	SourceArchiveId   sacloud.ID
+	Size              int
+	ArchiveFile       string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -279,12 +443,6 @@ func (p *CreateArchiveParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateArchiveParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
 	if utils.IsEmpty(p.SourceDiskId) {
 		p.SourceDiskId = sacloud.ID(0)
 	}
@@ -303,27 +461,56 @@ func (p *CreateArchiveParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
 func (p *CreateArchiveParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Archive"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["Archive"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Archive"].Commands["create"].Params["source-disk-id"].ValidateFunc
@@ -422,6 +609,41 @@ func (p *CreateArchiveParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["Archive"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["Archive"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -449,20 +671,6 @@ func (p *CreateArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateArchiveParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CreateArchiveParam) GetTags() []string {
-	return p.Tags
-}
-func (p *CreateArchiveParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *CreateArchiveParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
 func (p *CreateArchiveParam) SetSourceDiskId(v sacloud.ID) {
 	p.SourceDiskId = v
 }
@@ -505,9 +713,129 @@ func (p *CreateArchiveParam) SetDescription(v string) {
 func (p *CreateArchiveParam) GetDescription() string {
 	return p.Description
 }
+func (p *CreateArchiveParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CreateArchiveParam) GetTags() []string {
+	return p.Tags
+}
+func (p *CreateArchiveParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *CreateArchiveParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+func (p *CreateArchiveParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *CreateArchiveParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *CreateArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateArchiveParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CreateArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CreateArchiveParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateArchiveParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateArchiveParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateArchiveParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateArchiveParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateArchiveParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateArchiveParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateArchiveParam) GetFormat() string {
+	return p.Format
+}
+func (p *CreateArchiveParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CreateArchiveParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CreateArchiveParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateArchiveParam) GetQuery() string {
+	return p.Query
+}
+func (p *CreateArchiveParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateArchiveParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadArchiveParam is input parameters for the sacloud API
 type ReadArchiveParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -531,12 +859,81 @@ func (p *ReadArchiveParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadArchiveParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ReadArchiveParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -564,12 +961,126 @@ func (p *ReadArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadArchiveParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadArchiveParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ReadArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadArchiveParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadArchiveParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadArchiveParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadArchiveParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadArchiveParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadArchiveParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadArchiveParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadArchiveParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadArchiveParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadArchiveParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadArchiveParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadArchiveParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadArchiveParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadArchiveParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadArchiveParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ReadArchiveParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReadArchiveParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UpdateArchiveParam is input parameters for the sacloud API
 type UpdateArchiveParam struct {
-	Description string
-	Tags        []string
-	IconId      sacloud.ID
-	Name        string
+	Selector          []string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -594,6 +1105,12 @@ func (p *UpdateArchiveParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateArchiveParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
@@ -603,14 +1120,61 @@ func (p *UpdateArchiveParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
 
 func (p *UpdateArchiveParam) validate() error {
 	var errors []error
+
+	{
+		validator := define.Resources["Archive"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := define.Resources["Archive"].Commands["update"].Params["description"].ValidateFunc
@@ -637,13 +1201,32 @@ func (p *UpdateArchiveParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["Archive"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -671,6 +1254,20 @@ func (p *UpdateArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *UpdateArchiveParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateArchiveParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *UpdateArchiveParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateArchiveParam) GetName() string {
+	return p.Name
+}
 func (p *UpdateArchiveParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -692,16 +1289,123 @@ func (p *UpdateArchiveParam) SetIconId(v sacloud.ID) {
 func (p *UpdateArchiveParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *UpdateArchiveParam) SetName(v string) {
-	p.Name = v
+func (p *UpdateArchiveParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
 }
 
-func (p *UpdateArchiveParam) GetName() string {
-	return p.Name
+func (p *UpdateArchiveParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UpdateArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateArchiveParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UpdateArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UpdateArchiveParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateArchiveParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateArchiveParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateArchiveParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateArchiveParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateArchiveParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateArchiveParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateArchiveParam) GetFormat() string {
+	return p.Format
+}
+func (p *UpdateArchiveParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UpdateArchiveParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UpdateArchiveParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateArchiveParam) GetQuery() string {
+	return p.Query
+}
+func (p *UpdateArchiveParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateArchiveParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UpdateArchiveParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UpdateArchiveParam) GetId() sacloud.ID {
+	return p.Id
 }
 
 // DeleteArchiveParam is input parameters for the sacloud API
 type DeleteArchiveParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -725,12 +1429,84 @@ func (p *DeleteArchiveParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *DeleteArchiveParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DeleteArchiveParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -758,9 +1534,130 @@ func (p *DeleteArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *DeleteArchiveParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteArchiveParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DeleteArchiveParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DeleteArchiveParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DeleteArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteArchiveParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DeleteArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DeleteArchiveParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteArchiveParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteArchiveParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteArchiveParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteArchiveParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteArchiveParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteArchiveParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteArchiveParam) GetFormat() string {
+	return p.Format
+}
+func (p *DeleteArchiveParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DeleteArchiveParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DeleteArchiveParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteArchiveParam) GetQuery() string {
+	return p.Query
+}
+func (p *DeleteArchiveParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteArchiveParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *DeleteArchiveParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DeleteArchiveParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UploadArchiveParam is input parameters for the sacloud API
 type UploadArchiveParam struct {
-	ArchiveFile string
+	ArchiveFile       string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -788,6 +1685,51 @@ func (p *UploadArchiveParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.ArchiveFile) {
 		p.ArchiveFile = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -802,6 +1744,33 @@ func (p *UploadArchiveParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -836,10 +1805,123 @@ func (p *UploadArchiveParam) SetArchiveFile(v string) {
 func (p *UploadArchiveParam) GetArchiveFile() string {
 	return p.ArchiveFile
 }
+func (p *UploadArchiveParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UploadArchiveParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *UploadArchiveParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *UploadArchiveParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UploadArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UploadArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UploadArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UploadArchiveParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UploadArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UploadArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UploadArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UploadArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UploadArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UploadArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UploadArchiveParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UploadArchiveParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UploadArchiveParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UploadArchiveParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UploadArchiveParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UploadArchiveParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UploadArchiveParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UploadArchiveParam) GetFormat() string {
+	return p.Format
+}
+func (p *UploadArchiveParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UploadArchiveParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UploadArchiveParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UploadArchiveParam) GetQuery() string {
+	return p.Query
+}
+func (p *UploadArchiveParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UploadArchiveParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UploadArchiveParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UploadArchiveParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DownloadArchiveParam is input parameters for the sacloud API
 type DownloadArchiveParam struct {
-	FileDestination string
+	FileDestination   string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -867,11 +1949,43 @@ func (p *DownloadArchiveParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.FileDestination) {
 		p.FileDestination = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DownloadArchiveParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -907,9 +2021,81 @@ func (p *DownloadArchiveParam) SetFileDestination(v string) {
 func (p *DownloadArchiveParam) GetFileDestination() string {
 	return p.FileDestination
 }
+func (p *DownloadArchiveParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DownloadArchiveParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DownloadArchiveParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DownloadArchiveParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DownloadArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DownloadArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DownloadArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DownloadArchiveParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DownloadArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DownloadArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DownloadArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DownloadArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DownloadArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DownloadArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DownloadArchiveParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DownloadArchiveParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // FTPOpenArchiveParam is input parameters for the sacloud API
 type FTPOpenArchiveParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -933,12 +2119,84 @@ func (p *FTPOpenArchiveParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *FTPOpenArchiveParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *FTPOpenArchiveParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -966,8 +2224,123 @@ func (p *FTPOpenArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *FTPOpenArchiveParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *FTPOpenArchiveParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *FTPOpenArchiveParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *FTPOpenArchiveParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *FTPOpenArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *FTPOpenArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *FTPOpenArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *FTPOpenArchiveParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *FTPOpenArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *FTPOpenArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *FTPOpenArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *FTPOpenArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *FTPOpenArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *FTPOpenArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *FTPOpenArchiveParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *FTPOpenArchiveParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *FTPOpenArchiveParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *FTPOpenArchiveParam) GetColumn() []string {
+	return p.Column
+}
+func (p *FTPOpenArchiveParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *FTPOpenArchiveParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *FTPOpenArchiveParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *FTPOpenArchiveParam) GetFormat() string {
+	return p.Format
+}
+func (p *FTPOpenArchiveParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *FTPOpenArchiveParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *FTPOpenArchiveParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *FTPOpenArchiveParam) GetQuery() string {
+	return p.Query
+}
+func (p *FTPOpenArchiveParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *FTPOpenArchiveParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *FTPOpenArchiveParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *FTPOpenArchiveParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // FTPCloseArchiveParam is input parameters for the sacloud API
 type FTPCloseArchiveParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -991,11 +2364,43 @@ func (p *FTPCloseArchiveParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *FTPCloseArchiveParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *FTPCloseArchiveParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1024,8 +2429,73 @@ func (p *FTPCloseArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *FTPCloseArchiveParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *FTPCloseArchiveParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *FTPCloseArchiveParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *FTPCloseArchiveParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *FTPCloseArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *FTPCloseArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *FTPCloseArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *FTPCloseArchiveParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *FTPCloseArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *FTPCloseArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *FTPCloseArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *FTPCloseArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *FTPCloseArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *FTPCloseArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *FTPCloseArchiveParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *FTPCloseArchiveParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // WaitForCopyArchiveParam is input parameters for the sacloud API
 type WaitForCopyArchiveParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1049,11 +2519,40 @@ func (p *WaitForCopyArchiveParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *WaitForCopyArchiveParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *WaitForCopyArchiveParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1080,4 +2579,54 @@ func (p *WaitForCopyArchiveParam) TableType() output.TableType {
 
 func (p *WaitForCopyArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
+}
+
+func (p *WaitForCopyArchiveParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *WaitForCopyArchiveParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *WaitForCopyArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForCopyArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForCopyArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForCopyArchiveParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *WaitForCopyArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForCopyArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *WaitForCopyArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForCopyArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *WaitForCopyArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForCopyArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *WaitForCopyArchiveParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *WaitForCopyArchiveParam) GetId() sacloud.ID {
+	return p.Id
 }

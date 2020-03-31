@@ -59,6 +59,18 @@ func regionListCmdInit() {
 	fs.IntVarP(&regionListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&regionListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&regionListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&regionListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&regionListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&regionListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&regionListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&regionListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&regionListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&regionListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&regionListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&regionListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&regionListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&regionListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&regionListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var regionReadCmd = &cobra.Command{
@@ -76,6 +88,19 @@ var regionReadCmd = &cobra.Command{
 
 func regionReadCmdInit() {
 	fs := regionReadCmd.Flags()
+	fs.BoolVarP(&regionReadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&regionReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&regionReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&regionReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&regionReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&regionReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&regionReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&regionReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&regionReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&regionReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&regionReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&regionReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&regionReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &regionReadParam.Id), "id", "", "set resource ID")
 }
 

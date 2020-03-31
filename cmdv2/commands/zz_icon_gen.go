@@ -57,13 +57,25 @@ var iconListCmd = &cobra.Command{
 
 func iconListCmdInit() {
 	fs := iconListCmd.Flags()
+	fs.StringSliceVarP(&iconListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &iconListParam.Id), "id", "", "set filter by id(s)")
+	fs.StringVarP(&iconListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
 	fs.StringSliceVarP(&iconListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.IntVarP(&iconListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&iconListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&iconListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&iconListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &iconListParam.Id), "id", "", "set filter by id(s)")
-	fs.StringVarP(&iconListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
+	fs.StringVarP(&iconListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&iconListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&iconListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&iconListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&iconListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&iconListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&iconListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&iconListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&iconListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&iconListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&iconListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&iconListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var iconCreateCmd = &cobra.Command{
@@ -81,9 +93,22 @@ var iconCreateCmd = &cobra.Command{
 
 func iconCreateCmdInit() {
 	fs := iconCreateCmd.Flags()
+	fs.StringVarP(&iconCreateParam.Image, "image", "", "", "set file path for upload")
 	fs.StringVarP(&iconCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringSliceVarP(&iconCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.StringVarP(&iconCreateParam.Image, "image", "", "", "set file path for upload")
+	fs.BoolVarP(&iconCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&iconCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&iconCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&iconCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&iconCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&iconCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&iconCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&iconCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&iconCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&iconCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&iconCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&iconCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&iconCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var iconReadCmd = &cobra.Command{
@@ -100,6 +125,21 @@ var iconReadCmd = &cobra.Command{
 }
 
 func iconReadCmdInit() {
+	fs := iconReadCmd.Flags()
+	fs.StringSliceVarP(&iconReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&iconReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&iconReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&iconReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&iconReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&iconReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&iconReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&iconReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&iconReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&iconReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&iconReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&iconReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&iconReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &iconReadParam.Id), "id", "", "Set target ID")
 }
 
 var iconUpdateCmd = &cobra.Command{
@@ -117,8 +157,23 @@ var iconUpdateCmd = &cobra.Command{
 
 func iconUpdateCmdInit() {
 	fs := iconUpdateCmd.Flags()
+	fs.StringSliceVarP(&iconUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&iconUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringSliceVarP(&iconUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.BoolVarP(&iconUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&iconUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&iconUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&iconUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&iconUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&iconUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&iconUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&iconUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&iconUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&iconUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&iconUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&iconUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&iconUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &iconUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var iconDeleteCmd = &cobra.Command{
@@ -135,6 +190,22 @@ var iconDeleteCmd = &cobra.Command{
 }
 
 func iconDeleteCmdInit() {
+	fs := iconDeleteCmd.Flags()
+	fs.StringSliceVarP(&iconDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&iconDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&iconDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&iconDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&iconDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&iconDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&iconDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&iconDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&iconDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&iconDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&iconDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&iconDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&iconDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&iconDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &iconDeleteParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

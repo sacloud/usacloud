@@ -66,12 +66,24 @@ var internetListCmd = &cobra.Command{
 
 func internetListCmdInit() {
 	fs := internetListCmd.Flags()
-	fs.StringSliceVarP(&internetListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&internetListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.StringSliceVarP(&internetListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &internetListParam.Id), "id", "", "set filter by id(s)")
+	fs.StringSliceVarP(&internetListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.IntVarP(&internetListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&internetListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&internetListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&internetListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&internetListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&internetListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&internetListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&internetListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&internetListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&internetListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&internetListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&internetListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&internetListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&internetListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&internetListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var internetCreateCmd = &cobra.Command{
@@ -89,12 +101,25 @@ var internetCreateCmd = &cobra.Command{
 
 func internetCreateCmdInit() {
 	fs := internetCreateCmd.Flags()
+	fs.IntVarP(&internetCreateParam.NwMasklen, "nw-masklen", "", 28, "set Global-IPAddress prefix")
+	fs.IntVarP(&internetCreateParam.BandWidth, "band-width", "", 100, "set band-width(Mbpm)")
 	fs.StringVarP(&internetCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&internetCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&internetCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &internetCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.IntVarP(&internetCreateParam.NwMasklen, "nw-masklen", "", 28, "set Global-IPAddress prefix")
-	fs.IntVarP(&internetCreateParam.BandWidth, "band-width", "", 100, "set band-width(Mbpm)")
+	fs.BoolVarP(&internetCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&internetCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&internetCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&internetCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&internetCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&internetCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&internetCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&internetCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&internetCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&internetCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&internetCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&internetCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&internetCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var internetReadCmd = &cobra.Command{
@@ -111,6 +136,21 @@ var internetReadCmd = &cobra.Command{
 }
 
 func internetReadCmdInit() {
+	fs := internetReadCmd.Flags()
+	fs.StringSliceVarP(&internetReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&internetReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&internetReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&internetReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&internetReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&internetReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&internetReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&internetReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&internetReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&internetReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&internetReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&internetReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&internetReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &internetReadParam.Id), "id", "", "Set target ID")
 }
 
 var internetUpdateCmd = &cobra.Command{
@@ -129,10 +169,25 @@ var internetUpdateCmd = &cobra.Command{
 func internetUpdateCmdInit() {
 	fs := internetUpdateCmd.Flags()
 	fs.IntVarP(&internetUpdateParam.BandWidth, "band-width", "", 0, "set band-width(Mbpm)")
+	fs.StringSliceVarP(&internetUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&internetUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&internetUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&internetUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &internetUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&internetUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&internetUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&internetUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&internetUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&internetUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&internetUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&internetUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&internetUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&internetUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&internetUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&internetUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&internetUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&internetUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &internetUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var internetDeleteCmd = &cobra.Command{
@@ -149,6 +204,22 @@ var internetDeleteCmd = &cobra.Command{
 }
 
 func internetDeleteCmdInit() {
+	fs := internetDeleteCmd.Flags()
+	fs.StringSliceVarP(&internetDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&internetDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&internetDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&internetDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&internetDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&internetDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&internetDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&internetDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&internetDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&internetDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&internetDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&internetDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&internetDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&internetDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &internetDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var internetUpdateBandwidthCmd = &cobra.Command{
@@ -167,6 +238,21 @@ var internetUpdateBandwidthCmd = &cobra.Command{
 func internetUpdateBandwidthCmdInit() {
 	fs := internetUpdateBandwidthCmd.Flags()
 	fs.IntVarP(&internetUpdateBandwidthParam.BandWidth, "band-width", "", 100, "set band-width(Mbpm)")
+	fs.StringSliceVarP(&internetUpdateBandwidthParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&internetUpdateBandwidthParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&internetUpdateBandwidthParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&internetUpdateBandwidthParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&internetUpdateBandwidthParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&internetUpdateBandwidthParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&internetUpdateBandwidthParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&internetUpdateBandwidthParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&internetUpdateBandwidthParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&internetUpdateBandwidthParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&internetUpdateBandwidthParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&internetUpdateBandwidthParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&internetUpdateBandwidthParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&internetUpdateBandwidthParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &internetUpdateBandwidthParam.Id), "id", "", "Set target ID")
 }
 
 var internetSubnetInfoCmd = &cobra.Command{
@@ -183,6 +269,21 @@ var internetSubnetInfoCmd = &cobra.Command{
 }
 
 func internetSubnetInfoCmdInit() {
+	fs := internetSubnetInfoCmd.Flags()
+	fs.StringSliceVarP(&internetSubnetInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&internetSubnetInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&internetSubnetInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&internetSubnetInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&internetSubnetInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&internetSubnetInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&internetSubnetInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&internetSubnetInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&internetSubnetInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&internetSubnetInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&internetSubnetInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&internetSubnetInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&internetSubnetInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &internetSubnetInfoParam.Id), "id", "", "Set target ID")
 }
 
 var internetSubnetAddCmd = &cobra.Command{
@@ -200,8 +301,23 @@ var internetSubnetAddCmd = &cobra.Command{
 
 func internetSubnetAddCmdInit() {
 	fs := internetSubnetAddCmd.Flags()
-	fs.IntVarP(&internetSubnetAddParam.NwMasklen, "nw-masklen", "", 28, "set Global-IPAddress(subnet) prefix")
 	fs.StringVarP(&internetSubnetAddParam.NextHop, "next-hop", "", "", "set NextHop IPAddress")
+	fs.IntVarP(&internetSubnetAddParam.NwMasklen, "nw-masklen", "", 28, "set Global-IPAddress(subnet) prefix")
+	fs.StringSliceVarP(&internetSubnetAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&internetSubnetAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&internetSubnetAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&internetSubnetAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&internetSubnetAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&internetSubnetAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&internetSubnetAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&internetSubnetAddParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&internetSubnetAddParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&internetSubnetAddParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&internetSubnetAddParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&internetSubnetAddParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&internetSubnetAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&internetSubnetAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &internetSubnetAddParam.Id), "id", "", "Set target ID")
 }
 
 var internetSubnetDeleteCmd = &cobra.Command{
@@ -220,6 +336,14 @@ var internetSubnetDeleteCmd = &cobra.Command{
 func internetSubnetDeleteCmdInit() {
 	fs := internetSubnetDeleteCmd.Flags()
 	fs.VarP(newIDValue(0, &internetSubnetDeleteParam.SubnetId), "subnet-id", "", "set Target Subnet ID")
+	fs.StringSliceVarP(&internetSubnetDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&internetSubnetDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&internetSubnetDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&internetSubnetDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&internetSubnetDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&internetSubnetDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&internetSubnetDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &internetSubnetDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var internetSubnetUpdateCmd = &cobra.Command{
@@ -237,8 +361,23 @@ var internetSubnetUpdateCmd = &cobra.Command{
 
 func internetSubnetUpdateCmdInit() {
 	fs := internetSubnetUpdateCmd.Flags()
-	fs.VarP(newIDValue(0, &internetSubnetUpdateParam.SubnetId), "subnet-id", "", "set Target Subnet ID")
 	fs.StringVarP(&internetSubnetUpdateParam.NextHop, "next-hop", "", "", "set NextHop IPAddress")
+	fs.VarP(newIDValue(0, &internetSubnetUpdateParam.SubnetId), "subnet-id", "", "set Target Subnet ID")
+	fs.StringSliceVarP(&internetSubnetUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&internetSubnetUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&internetSubnetUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&internetSubnetUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&internetSubnetUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&internetSubnetUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&internetSubnetUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&internetSubnetUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&internetSubnetUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&internetSubnetUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&internetSubnetUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&internetSubnetUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&internetSubnetUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&internetSubnetUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &internetSubnetUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var internetIPv6InfoCmd = &cobra.Command{
@@ -255,6 +394,21 @@ var internetIPv6InfoCmd = &cobra.Command{
 }
 
 func internetIPv6InfoCmdInit() {
+	fs := internetIPv6InfoCmd.Flags()
+	fs.StringSliceVarP(&internetIPv6InfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&internetIPv6InfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&internetIPv6InfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&internetIPv6InfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&internetIPv6InfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&internetIPv6InfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&internetIPv6InfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&internetIPv6InfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&internetIPv6InfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&internetIPv6InfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&internetIPv6InfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&internetIPv6InfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&internetIPv6InfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &internetIPv6InfoParam.Id), "id", "", "Set target ID")
 }
 
 var internetIPv6EnableCmd = &cobra.Command{
@@ -271,6 +425,22 @@ var internetIPv6EnableCmd = &cobra.Command{
 }
 
 func internetIPv6EnableCmdInit() {
+	fs := internetIPv6EnableCmd.Flags()
+	fs.StringSliceVarP(&internetIPv6EnableParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&internetIPv6EnableParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&internetIPv6EnableParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&internetIPv6EnableParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&internetIPv6EnableParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&internetIPv6EnableParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&internetIPv6EnableParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&internetIPv6EnableParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&internetIPv6EnableParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&internetIPv6EnableParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&internetIPv6EnableParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&internetIPv6EnableParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&internetIPv6EnableParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&internetIPv6EnableParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &internetIPv6EnableParam.Id), "id", "", "Set target ID")
 }
 
 var internetIPv6DisableCmd = &cobra.Command{
@@ -287,6 +457,15 @@ var internetIPv6DisableCmd = &cobra.Command{
 }
 
 func internetIPv6DisableCmdInit() {
+	fs := internetIPv6DisableCmd.Flags()
+	fs.StringSliceVarP(&internetIPv6DisableParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&internetIPv6DisableParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&internetIPv6DisableParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&internetIPv6DisableParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&internetIPv6DisableParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&internetIPv6DisableParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&internetIPv6DisableParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &internetIPv6DisableParam.Id), "id", "", "Set target ID")
 }
 
 var internetMonitorCmd = &cobra.Command{
@@ -307,6 +486,20 @@ func internetMonitorCmdInit() {
 	fs.StringVarP(&internetMonitorParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&internetMonitorParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&internetMonitorParam.KeyFormat, "key-format", "", "sakuracloud.internet.{{.ID}}.nic", "set monitoring value key-format")
+	fs.StringSliceVarP(&internetMonitorParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&internetMonitorParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&internetMonitorParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&internetMonitorParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&internetMonitorParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&internetMonitorParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&internetMonitorParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&internetMonitorParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&internetMonitorParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&internetMonitorParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&internetMonitorParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&internetMonitorParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&internetMonitorParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &internetMonitorParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

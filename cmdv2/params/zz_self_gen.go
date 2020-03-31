@@ -27,6 +27,12 @@ import (
 
 // InfoSelfParam is input parameters for the sacloud API
 type InfoSelfParam struct {
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+
 	input Input
 }
 
@@ -50,6 +56,21 @@ func (p *InfoSelfParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *InfoSelfParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
 
 }
 
@@ -81,4 +102,40 @@ func (p *InfoSelfParam) TableType() output.TableType {
 
 func (p *InfoSelfParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
+}
+
+func (p *InfoSelfParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *InfoSelfParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *InfoSelfParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *InfoSelfParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *InfoSelfParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *InfoSelfParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *InfoSelfParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *InfoSelfParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *InfoSelfParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *InfoSelfParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }

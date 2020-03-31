@@ -29,11 +29,23 @@ import (
 
 // ListLicenseParam is input parameters for the sacloud API
 type ListLicenseParam struct {
-	Name []string
-	Id   []sacloud.ID
-	From int
-	Max  int
-	Sort []string
+	Name              []string
+	Id                []sacloud.ID
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -73,6 +85,42 @@ func (p *ListLicenseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
@@ -106,6 +154,25 @@ func (p *ListLicenseParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -168,11 +235,108 @@ func (p *ListLicenseParam) SetSort(v []string) {
 func (p *ListLicenseParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListLicenseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListLicenseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListLicenseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListLicenseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListLicenseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListLicenseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListLicenseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListLicenseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListLicenseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListLicenseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListLicenseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListLicenseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListLicenseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListLicenseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListLicenseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListLicenseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListLicenseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListLicenseParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListLicenseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListLicenseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListLicenseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListLicenseParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListLicenseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListLicenseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateLicenseParam is input parameters for the sacloud API
 type CreateLicenseParam struct {
-	Name          string
-	LicenseInfoId sacloud.ID
+	LicenseInfoId     sacloud.ID
+	Name              string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -197,11 +361,50 @@ func (p *CreateLicenseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateLicenseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.LicenseInfoId) {
+		p.LicenseInfoId = sacloud.ID(0)
+	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.LicenseInfoId) {
-		p.LicenseInfoId = sacloud.ID(0)
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -224,6 +427,25 @@ func (p *CreateLicenseParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -251,13 +473,6 @@ func (p *CreateLicenseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateLicenseParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateLicenseParam) GetName() string {
-	return p.Name
-}
 func (p *CreateLicenseParam) SetLicenseInfoId(v sacloud.ID) {
 	p.LicenseInfoId = v
 }
@@ -265,9 +480,121 @@ func (p *CreateLicenseParam) SetLicenseInfoId(v sacloud.ID) {
 func (p *CreateLicenseParam) GetLicenseInfoId() sacloud.ID {
 	return p.LicenseInfoId
 }
+func (p *CreateLicenseParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateLicenseParam) GetName() string {
+	return p.Name
+}
+func (p *CreateLicenseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *CreateLicenseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *CreateLicenseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateLicenseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateLicenseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateLicenseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateLicenseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateLicenseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CreateLicenseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateLicenseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateLicenseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateLicenseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CreateLicenseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateLicenseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateLicenseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateLicenseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateLicenseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateLicenseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateLicenseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateLicenseParam) GetFormat() string {
+	return p.Format
+}
+func (p *CreateLicenseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CreateLicenseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CreateLicenseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateLicenseParam) GetQuery() string {
+	return p.Query
+}
+func (p *CreateLicenseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateLicenseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadLicenseParam is input parameters for the sacloud API
 type ReadLicenseParam struct {
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -291,12 +618,78 @@ func (p *ReadLicenseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadLicenseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ReadLicenseParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -324,9 +717,115 @@ func (p *ReadLicenseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadLicenseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadLicenseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadLicenseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadLicenseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadLicenseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadLicenseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadLicenseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadLicenseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadLicenseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadLicenseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadLicenseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadLicenseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadLicenseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadLicenseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadLicenseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadLicenseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadLicenseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadLicenseParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadLicenseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadLicenseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadLicenseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadLicenseParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadLicenseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadLicenseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ReadLicenseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReadLicenseParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UpdateLicenseParam is input parameters for the sacloud API
 type UpdateLicenseParam struct {
-	Name string
+	Name              string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -354,6 +853,48 @@ func (p *UpdateLicenseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -368,6 +909,33 @@ func (p *UpdateLicenseParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -402,9 +970,122 @@ func (p *UpdateLicenseParam) SetName(v string) {
 func (p *UpdateLicenseParam) GetName() string {
 	return p.Name
 }
+func (p *UpdateLicenseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *UpdateLicenseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UpdateLicenseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateLicenseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateLicenseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateLicenseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateLicenseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateLicenseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UpdateLicenseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateLicenseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateLicenseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateLicenseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UpdateLicenseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateLicenseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateLicenseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateLicenseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateLicenseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateLicenseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateLicenseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateLicenseParam) GetFormat() string {
+	return p.Format
+}
+func (p *UpdateLicenseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UpdateLicenseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UpdateLicenseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateLicenseParam) GetQuery() string {
+	return p.Query
+}
+func (p *UpdateLicenseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateLicenseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UpdateLicenseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UpdateLicenseParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DeleteLicenseParam is input parameters for the sacloud API
 type DeleteLicenseParam struct {
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -428,12 +1109,81 @@ func (p *DeleteLicenseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *DeleteLicenseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DeleteLicenseParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -459,4 +1209,103 @@ func (p *DeleteLicenseParam) TableType() output.TableType {
 
 func (p *DeleteLicenseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
+}
+
+func (p *DeleteLicenseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DeleteLicenseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DeleteLicenseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteLicenseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteLicenseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteLicenseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteLicenseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteLicenseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DeleteLicenseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteLicenseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteLicenseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteLicenseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DeleteLicenseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteLicenseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteLicenseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteLicenseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteLicenseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteLicenseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteLicenseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteLicenseParam) GetFormat() string {
+	return p.Format
+}
+func (p *DeleteLicenseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DeleteLicenseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DeleteLicenseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteLicenseParam) GetQuery() string {
+	return p.Query
+}
+func (p *DeleteLicenseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteLicenseParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *DeleteLicenseParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DeleteLicenseParam) GetId() sacloud.ID {
+	return p.Id
 }

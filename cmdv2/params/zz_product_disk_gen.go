@@ -29,11 +29,23 @@ import (
 
 // ListProductDiskParam is input parameters for the sacloud API
 type ListProductDiskParam struct {
-	Name []string
-	Id   []sacloud.ID
-	From int
-	Max  int
-	Sort []string
+	Name              []string
+	Id                []sacloud.ID
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -73,6 +85,42 @@ func (p *ListProductDiskParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
@@ -106,6 +154,25 @@ func (p *ListProductDiskParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -168,10 +235,107 @@ func (p *ListProductDiskParam) SetSort(v []string) {
 func (p *ListProductDiskParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListProductDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListProductDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListProductDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListProductDiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListProductDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListProductDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListProductDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListProductDiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListProductDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListProductDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListProductDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListProductDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListProductDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListProductDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListProductDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListProductDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListProductDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListProductDiskParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListProductDiskParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListProductDiskParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListProductDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListProductDiskParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListProductDiskParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListProductDiskParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadProductDiskParam is input parameters for the sacloud API
 type ReadProductDiskParam struct {
-	Id sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -196,6 +360,45 @@ func (p *ReadProductDiskParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadProductDiskParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
@@ -220,6 +423,25 @@ func (p *ReadProductDiskParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -247,6 +469,97 @@ func (p *ReadProductDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadProductDiskParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ReadProductDiskParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ReadProductDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadProductDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadProductDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadProductDiskParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadProductDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadProductDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadProductDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadProductDiskParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadProductDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadProductDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadProductDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadProductDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadProductDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadProductDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadProductDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadProductDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadProductDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadProductDiskParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadProductDiskParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadProductDiskParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadProductDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadProductDiskParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadProductDiskParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadProductDiskParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadProductDiskParam) SetId(v sacloud.ID) {
 	p.Id = v
 }

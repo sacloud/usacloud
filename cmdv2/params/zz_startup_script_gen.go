@@ -29,14 +29,26 @@ import (
 
 // ListStartupScriptParam is input parameters for the sacloud API
 type ListStartupScriptParam struct {
-	From  int
-	Max   int
-	Scope string
-	Tags  []string
-	Class []string
-	Sort  []string
-	Name  []string
-	Id    []sacloud.ID
+	Name              []string
+	Id                []sacloud.ID
+	Scope             string
+	Tags              []string
+	Class             []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -61,11 +73,11 @@ func (p *ListStartupScriptParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListStartupScriptParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.From) {
-		p.From = 0
+	if utils.IsEmpty(p.Name) {
+		p.Name = []string{""}
 	}
-	if utils.IsEmpty(p.Max) {
-		p.Max = 0
+	if utils.IsEmpty(p.Id) {
+		p.Id = []sacloud.ID{}
 	}
 	if utils.IsEmpty(p.Scope) {
 		p.Scope = ""
@@ -76,36 +88,56 @@ func (p *ListStartupScriptParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Class) {
 		p.Class = []string{""}
 	}
+	if utils.IsEmpty(p.From) {
+		p.From = 0
+	}
+	if utils.IsEmpty(p.Max) {
+		p.Max = 0
+	}
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = []string{""}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Id) {
-		p.Id = []sacloud.ID{}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
 
 func (p *ListStartupScriptParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["StartupScript"].Commands["list"].Params["scope"].ValidateFunc
-		errs := validator("--scope", p.Scope)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["StartupScript"].Commands["list"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		errs := validation.ConflictsWith("--name", p.Name, map[string]interface{}{
@@ -134,6 +166,41 @@ func (p *ListStartupScriptParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["StartupScript"].Commands["list"].Params["scope"].ValidateFunc
+		errs := validator("--scope", p.Scope)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["StartupScript"].Commands["list"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -161,19 +228,19 @@ func (p *ListStartupScriptParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListStartupScriptParam) SetFrom(v int) {
-	p.From = v
+func (p *ListStartupScriptParam) SetName(v []string) {
+	p.Name = v
 }
 
-func (p *ListStartupScriptParam) GetFrom() int {
-	return p.From
+func (p *ListStartupScriptParam) GetName() []string {
+	return p.Name
 }
-func (p *ListStartupScriptParam) SetMax(v int) {
-	p.Max = v
+func (p *ListStartupScriptParam) SetId(v []sacloud.ID) {
+	p.Id = v
 }
 
-func (p *ListStartupScriptParam) GetMax() int {
-	return p.Max
+func (p *ListStartupScriptParam) GetId() []sacloud.ID {
+	return p.Id
 }
 func (p *ListStartupScriptParam) SetScope(v string) {
 	p.Scope = v
@@ -196,6 +263,20 @@ func (p *ListStartupScriptParam) SetClass(v []string) {
 func (p *ListStartupScriptParam) GetClass() []string {
 	return p.Class
 }
+func (p *ListStartupScriptParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListStartupScriptParam) GetFrom() int {
+	return p.From
+}
+func (p *ListStartupScriptParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListStartupScriptParam) GetMax() int {
+	return p.Max
+}
 func (p *ListStartupScriptParam) SetSort(v []string) {
 	p.Sort = v
 }
@@ -203,29 +284,112 @@ func (p *ListStartupScriptParam) SetSort(v []string) {
 func (p *ListStartupScriptParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListStartupScriptParam) SetName(v []string) {
-	p.Name = v
+func (p *ListStartupScriptParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
 }
 
-func (p *ListStartupScriptParam) GetName() []string {
-	return p.Name
+func (p *ListStartupScriptParam) GetParamTemplate() string {
+	return p.ParamTemplate
 }
-func (p *ListStartupScriptParam) SetId(v []sacloud.ID) {
-	p.Id = v
+func (p *ListStartupScriptParam) SetParameters(v string) {
+	p.Parameters = v
 }
 
-func (p *ListStartupScriptParam) GetId() []sacloud.ID {
-	return p.Id
+func (p *ListStartupScriptParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListStartupScriptParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListStartupScriptParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListStartupScriptParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListStartupScriptParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListStartupScriptParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListStartupScriptParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListStartupScriptParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListStartupScriptParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListStartupScriptParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListStartupScriptParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListStartupScriptParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListStartupScriptParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListStartupScriptParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListStartupScriptParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListStartupScriptParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListStartupScriptParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListStartupScriptParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListStartupScriptParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListStartupScriptParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListStartupScriptParam) GetQueryFile() string {
+	return p.QueryFile
 }
 
 // CreateStartupScriptParam is input parameters for the sacloud API
 type CreateStartupScriptParam struct {
-	IconId        sacloud.ID
-	ScriptContent string
-	Script        string
-	Class         string
-	Name          string
-	Tags          []string
+	Script            string
+	ScriptContent     string
+	Class             string
+	Name              string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -251,14 +415,11 @@ func (p *CreateStartupScriptParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateStartupScriptParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
+	if utils.IsEmpty(p.Script) {
+		p.Script = ""
 	}
 	if utils.IsEmpty(p.ScriptContent) {
 		p.ScriptContent = ""
-	}
-	if utils.IsEmpty(p.Script) {
-		p.Script = ""
 	}
 	if utils.IsEmpty(p.Class) {
 		p.Class = ""
@@ -269,6 +430,48 @@ func (p *CreateStartupScriptParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
@@ -276,8 +479,8 @@ func (p *CreateStartupScriptParam) validate() error {
 	var errors []error
 
 	{
-		validator := define.Resources["StartupScript"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
+		validator := define.Resources["StartupScript"].Commands["create"].Params["script"].ValidateFunc
+		errs := validator("--script", p.Script)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -288,14 +491,6 @@ func (p *CreateStartupScriptParam) validate() error {
 
 			"--script": p.Script,
 		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["StartupScript"].Commands["create"].Params["script"].ValidateFunc
-		errs := validator("--script", p.Script)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -339,6 +534,33 @@ func (p *CreateStartupScriptParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["StartupScript"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -366,12 +588,12 @@ func (p *CreateStartupScriptParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateStartupScriptParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
+func (p *CreateStartupScriptParam) SetScript(v string) {
+	p.Script = v
 }
 
-func (p *CreateStartupScriptParam) GetIconId() sacloud.ID {
-	return p.IconId
+func (p *CreateStartupScriptParam) GetScript() string {
+	return p.Script
 }
 func (p *CreateStartupScriptParam) SetScriptContent(v string) {
 	p.ScriptContent = v
@@ -379,13 +601,6 @@ func (p *CreateStartupScriptParam) SetScriptContent(v string) {
 
 func (p *CreateStartupScriptParam) GetScriptContent() string {
 	return p.ScriptContent
-}
-func (p *CreateStartupScriptParam) SetScript(v string) {
-	p.Script = v
-}
-
-func (p *CreateStartupScriptParam) GetScript() string {
-	return p.Script
 }
 func (p *CreateStartupScriptParam) SetClass(v string) {
 	p.Class = v
@@ -408,9 +623,122 @@ func (p *CreateStartupScriptParam) SetTags(v []string) {
 func (p *CreateStartupScriptParam) GetTags() []string {
 	return p.Tags
 }
+func (p *CreateStartupScriptParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *CreateStartupScriptParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+func (p *CreateStartupScriptParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *CreateStartupScriptParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *CreateStartupScriptParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateStartupScriptParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateStartupScriptParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateStartupScriptParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateStartupScriptParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateStartupScriptParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CreateStartupScriptParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateStartupScriptParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateStartupScriptParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateStartupScriptParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CreateStartupScriptParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateStartupScriptParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateStartupScriptParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateStartupScriptParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateStartupScriptParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateStartupScriptParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateStartupScriptParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateStartupScriptParam) GetFormat() string {
+	return p.Format
+}
+func (p *CreateStartupScriptParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CreateStartupScriptParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CreateStartupScriptParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateStartupScriptParam) GetQuery() string {
+	return p.Query
+}
+func (p *CreateStartupScriptParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateStartupScriptParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadStartupScriptParam is input parameters for the sacloud API
 type ReadStartupScriptParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -434,12 +762,81 @@ func (p *ReadStartupScriptParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadStartupScriptParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ReadStartupScriptParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -467,14 +864,128 @@ func (p *ReadStartupScriptParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadStartupScriptParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadStartupScriptParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ReadStartupScriptParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadStartupScriptParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadStartupScriptParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadStartupScriptParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadStartupScriptParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadStartupScriptParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadStartupScriptParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadStartupScriptParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadStartupScriptParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadStartupScriptParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadStartupScriptParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadStartupScriptParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadStartupScriptParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadStartupScriptParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadStartupScriptParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadStartupScriptParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadStartupScriptParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadStartupScriptParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadStartupScriptParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadStartupScriptParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadStartupScriptParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadStartupScriptParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadStartupScriptParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadStartupScriptParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ReadStartupScriptParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReadStartupScriptParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UpdateStartupScriptParam is input parameters for the sacloud API
 type UpdateStartupScriptParam struct {
-	Script        string
-	Class         string
-	Name          string
-	Tags          []string
-	IconId        sacloud.ID
-	ScriptContent string
+	Script            string
+	ScriptContent     string
+	Class             string
+	Selector          []string
+	Name              string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -502,8 +1013,14 @@ func (p *UpdateStartupScriptParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Script) {
 		p.Script = ""
 	}
+	if utils.IsEmpty(p.ScriptContent) {
+		p.ScriptContent = ""
+	}
 	if utils.IsEmpty(p.Class) {
 		p.Class = ""
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
@@ -514,8 +1031,47 @@ func (p *UpdateStartupScriptParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.ScriptContent) {
-		p.ScriptContent = ""
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -526,6 +1082,16 @@ func (p *UpdateStartupScriptParam) validate() error {
 	{
 		validator := define.Resources["StartupScript"].Commands["update"].Params["script"].ValidateFunc
 		errs := validator("--script", p.Script)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		errs := validation.ConflictsWith("--script-content", p.ScriptContent, map[string]interface{}{
+
+			"--script": p.Script,
+		})
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -564,15 +1130,32 @@ func (p *UpdateStartupScriptParam) validate() error {
 	}
 
 	{
-		errs := validation.ConflictsWith("--script-content", p.ScriptContent, map[string]interface{}{
-
-			"--script": p.Script,
-		})
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -607,12 +1190,26 @@ func (p *UpdateStartupScriptParam) SetScript(v string) {
 func (p *UpdateStartupScriptParam) GetScript() string {
 	return p.Script
 }
+func (p *UpdateStartupScriptParam) SetScriptContent(v string) {
+	p.ScriptContent = v
+}
+
+func (p *UpdateStartupScriptParam) GetScriptContent() string {
+	return p.ScriptContent
+}
 func (p *UpdateStartupScriptParam) SetClass(v string) {
 	p.Class = v
 }
 
 func (p *UpdateStartupScriptParam) GetClass() string {
 	return p.Class
+}
+func (p *UpdateStartupScriptParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateStartupScriptParam) GetSelector() []string {
+	return p.Selector
 }
 func (p *UpdateStartupScriptParam) SetName(v string) {
 	p.Name = v
@@ -635,16 +1232,123 @@ func (p *UpdateStartupScriptParam) SetIconId(v sacloud.ID) {
 func (p *UpdateStartupScriptParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *UpdateStartupScriptParam) SetScriptContent(v string) {
-	p.ScriptContent = v
+func (p *UpdateStartupScriptParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
 }
 
-func (p *UpdateStartupScriptParam) GetScriptContent() string {
-	return p.ScriptContent
+func (p *UpdateStartupScriptParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UpdateStartupScriptParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateStartupScriptParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateStartupScriptParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateStartupScriptParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateStartupScriptParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateStartupScriptParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UpdateStartupScriptParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateStartupScriptParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateStartupScriptParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateStartupScriptParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UpdateStartupScriptParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateStartupScriptParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateStartupScriptParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateStartupScriptParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateStartupScriptParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateStartupScriptParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateStartupScriptParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateStartupScriptParam) GetFormat() string {
+	return p.Format
+}
+func (p *UpdateStartupScriptParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UpdateStartupScriptParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UpdateStartupScriptParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateStartupScriptParam) GetQuery() string {
+	return p.Query
+}
+func (p *UpdateStartupScriptParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateStartupScriptParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UpdateStartupScriptParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UpdateStartupScriptParam) GetId() sacloud.ID {
+	return p.Id
 }
 
 // DeleteStartupScriptParam is input parameters for the sacloud API
 type DeleteStartupScriptParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -668,12 +1372,84 @@ func (p *DeleteStartupScriptParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *DeleteStartupScriptParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DeleteStartupScriptParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -699,4 +1475,110 @@ func (p *DeleteStartupScriptParam) TableType() output.TableType {
 
 func (p *DeleteStartupScriptParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
+}
+
+func (p *DeleteStartupScriptParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteStartupScriptParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DeleteStartupScriptParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DeleteStartupScriptParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DeleteStartupScriptParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteStartupScriptParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteStartupScriptParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteStartupScriptParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteStartupScriptParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteStartupScriptParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DeleteStartupScriptParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteStartupScriptParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteStartupScriptParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteStartupScriptParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DeleteStartupScriptParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteStartupScriptParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteStartupScriptParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteStartupScriptParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteStartupScriptParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteStartupScriptParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteStartupScriptParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteStartupScriptParam) GetFormat() string {
+	return p.Format
+}
+func (p *DeleteStartupScriptParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DeleteStartupScriptParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DeleteStartupScriptParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteStartupScriptParam) GetQuery() string {
+	return p.Query
+}
+func (p *DeleteStartupScriptParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteStartupScriptParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *DeleteStartupScriptParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DeleteStartupScriptParam) GetId() sacloud.ID {
+	return p.Id
 }

@@ -29,11 +29,23 @@ import (
 
 // ListIPv4Param is input parameters for the sacloud API
 type ListIPv4Param struct {
-	Sort []string
-	Name []string
-	Id   []sacloud.ID
-	From int
-	Max  int
+	Name              []string
+	Id                []sacloud.ID
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -58,9 +70,6 @@ func (p *ListIPv4Param) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ListIPv4Param) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Sort) {
-		p.Sort = []string{""}
-	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -72,6 +81,45 @@ func (p *ListIPv4Param) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Max) {
 		p.Max = 0
+	}
+	if utils.IsEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -106,6 +154,25 @@ func (p *ListIPv4Param) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -133,13 +200,6 @@ func (p *ListIPv4Param) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ListIPv4Param) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListIPv4Param) GetSort() []string {
-	return p.Sort
-}
 func (p *ListIPv4Param) SetName(v []string) {
 	p.Name = v
 }
@@ -168,10 +228,114 @@ func (p *ListIPv4Param) SetMax(v int) {
 func (p *ListIPv4Param) GetMax() int {
 	return p.Max
 }
+func (p *ListIPv4Param) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListIPv4Param) GetSort() []string {
+	return p.Sort
+}
+func (p *ListIPv4Param) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListIPv4Param) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListIPv4Param) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListIPv4Param) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListIPv4Param) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListIPv4Param) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListIPv4Param) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListIPv4Param) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListIPv4Param) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListIPv4Param) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListIPv4Param) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListIPv4Param) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListIPv4Param) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListIPv4Param) GetColumn() []string {
+	return p.Column
+}
+func (p *ListIPv4Param) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListIPv4Param) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListIPv4Param) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListIPv4Param) GetFormat() string {
+	return p.Format
+}
+func (p *ListIPv4Param) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListIPv4Param) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListIPv4Param) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListIPv4Param) GetQuery() string {
+	return p.Query
+}
+func (p *ListIPv4Param) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListIPv4Param) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // PtrAddIPv4Param is input parameters for the sacloud API
 type PtrAddIPv4Param struct {
-	Hostname string
+	Hostname          string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -199,6 +363,45 @@ func (p *PtrAddIPv4Param) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Hostname) {
 		p.Hostname = ""
 	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
@@ -213,6 +416,25 @@ func (p *PtrAddIPv4Param) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -247,9 +469,113 @@ func (p *PtrAddIPv4Param) SetHostname(v string) {
 func (p *PtrAddIPv4Param) GetHostname() string {
 	return p.Hostname
 }
+func (p *PtrAddIPv4Param) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *PtrAddIPv4Param) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *PtrAddIPv4Param) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PtrAddIPv4Param) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PtrAddIPv4Param) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PtrAddIPv4Param) GetParameters() string {
+	return p.Parameters
+}
+func (p *PtrAddIPv4Param) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PtrAddIPv4Param) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *PtrAddIPv4Param) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PtrAddIPv4Param) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PtrAddIPv4Param) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PtrAddIPv4Param) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *PtrAddIPv4Param) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *PtrAddIPv4Param) GetOutputType() string {
+	return p.OutputType
+}
+func (p *PtrAddIPv4Param) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *PtrAddIPv4Param) GetColumn() []string {
+	return p.Column
+}
+func (p *PtrAddIPv4Param) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *PtrAddIPv4Param) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *PtrAddIPv4Param) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *PtrAddIPv4Param) GetFormat() string {
+	return p.Format
+}
+func (p *PtrAddIPv4Param) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *PtrAddIPv4Param) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *PtrAddIPv4Param) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *PtrAddIPv4Param) GetQuery() string {
+	return p.Query
+}
+func (p *PtrAddIPv4Param) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *PtrAddIPv4Param) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // PtrReadIPv4Param is input parameters for the sacloud API
 type PtrReadIPv4Param struct {
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+
 	input Input
 }
 
@@ -273,12 +599,67 @@ func (p *PtrReadIPv4Param) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *PtrReadIPv4Param) fillValueToSkeleton() {
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
 func (p *PtrReadIPv4Param) validate() error {
 	var errors []error
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -306,9 +687,107 @@ func (p *PtrReadIPv4Param) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *PtrReadIPv4Param) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PtrReadIPv4Param) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PtrReadIPv4Param) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PtrReadIPv4Param) GetParameters() string {
+	return p.Parameters
+}
+func (p *PtrReadIPv4Param) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PtrReadIPv4Param) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *PtrReadIPv4Param) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PtrReadIPv4Param) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PtrReadIPv4Param) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PtrReadIPv4Param) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *PtrReadIPv4Param) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *PtrReadIPv4Param) GetOutputType() string {
+	return p.OutputType
+}
+func (p *PtrReadIPv4Param) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *PtrReadIPv4Param) GetColumn() []string {
+	return p.Column
+}
+func (p *PtrReadIPv4Param) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *PtrReadIPv4Param) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *PtrReadIPv4Param) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *PtrReadIPv4Param) GetFormat() string {
+	return p.Format
+}
+func (p *PtrReadIPv4Param) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *PtrReadIPv4Param) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *PtrReadIPv4Param) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *PtrReadIPv4Param) GetQuery() string {
+	return p.Query
+}
+func (p *PtrReadIPv4Param) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *PtrReadIPv4Param) GetQueryFile() string {
+	return p.QueryFile
+}
+
 // PtrUpdateIPv4Param is input parameters for the sacloud API
 type PtrUpdateIPv4Param struct {
-	Hostname string
+	Hostname          string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -336,6 +815,45 @@ func (p *PtrUpdateIPv4Param) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Hostname) {
 		p.Hostname = ""
 	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
@@ -350,6 +868,25 @@ func (p *PtrUpdateIPv4Param) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -384,9 +921,114 @@ func (p *PtrUpdateIPv4Param) SetHostname(v string) {
 func (p *PtrUpdateIPv4Param) GetHostname() string {
 	return p.Hostname
 }
+func (p *PtrUpdateIPv4Param) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *PtrUpdateIPv4Param) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *PtrUpdateIPv4Param) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PtrUpdateIPv4Param) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PtrUpdateIPv4Param) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PtrUpdateIPv4Param) GetParameters() string {
+	return p.Parameters
+}
+func (p *PtrUpdateIPv4Param) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PtrUpdateIPv4Param) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *PtrUpdateIPv4Param) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PtrUpdateIPv4Param) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PtrUpdateIPv4Param) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PtrUpdateIPv4Param) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *PtrUpdateIPv4Param) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *PtrUpdateIPv4Param) GetOutputType() string {
+	return p.OutputType
+}
+func (p *PtrUpdateIPv4Param) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *PtrUpdateIPv4Param) GetColumn() []string {
+	return p.Column
+}
+func (p *PtrUpdateIPv4Param) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *PtrUpdateIPv4Param) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *PtrUpdateIPv4Param) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *PtrUpdateIPv4Param) GetFormat() string {
+	return p.Format
+}
+func (p *PtrUpdateIPv4Param) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *PtrUpdateIPv4Param) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *PtrUpdateIPv4Param) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *PtrUpdateIPv4Param) GetQuery() string {
+	return p.Query
+}
+func (p *PtrUpdateIPv4Param) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *PtrUpdateIPv4Param) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // PtrDeleteIPv4Param is input parameters for the sacloud API
 type PtrDeleteIPv4Param struct {
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+
 	input Input
 }
 
@@ -410,12 +1052,70 @@ func (p *PtrDeleteIPv4Param) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *PtrDeleteIPv4Param) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
 func (p *PtrDeleteIPv4Param) validate() error {
 	var errors []error
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -441,4 +1141,96 @@ func (p *PtrDeleteIPv4Param) TableType() output.TableType {
 
 func (p *PtrDeleteIPv4Param) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
+}
+
+func (p *PtrDeleteIPv4Param) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *PtrDeleteIPv4Param) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *PtrDeleteIPv4Param) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PtrDeleteIPv4Param) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PtrDeleteIPv4Param) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PtrDeleteIPv4Param) GetParameters() string {
+	return p.Parameters
+}
+func (p *PtrDeleteIPv4Param) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PtrDeleteIPv4Param) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *PtrDeleteIPv4Param) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PtrDeleteIPv4Param) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PtrDeleteIPv4Param) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PtrDeleteIPv4Param) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *PtrDeleteIPv4Param) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *PtrDeleteIPv4Param) GetOutputType() string {
+	return p.OutputType
+}
+func (p *PtrDeleteIPv4Param) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *PtrDeleteIPv4Param) GetColumn() []string {
+	return p.Column
+}
+func (p *PtrDeleteIPv4Param) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *PtrDeleteIPv4Param) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *PtrDeleteIPv4Param) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *PtrDeleteIPv4Param) GetFormat() string {
+	return p.Format
+}
+func (p *PtrDeleteIPv4Param) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *PtrDeleteIPv4Param) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *PtrDeleteIPv4Param) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *PtrDeleteIPv4Param) GetQuery() string {
+	return p.Query
+}
+func (p *PtrDeleteIPv4Param) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *PtrDeleteIPv4Param) GetQueryFile() string {
+	return p.QueryFile
 }

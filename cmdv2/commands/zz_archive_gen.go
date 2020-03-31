@@ -53,6 +53,7 @@ var archiveListCmd = &cobra.Command{
 	Short:   "List Archive",
 	Long:    `List Archive`,
 	RunE: func(cmd *cobra.Command, args []string) error {
+		fmt.Printf("global parameter: \n%s\n", debugMarshalIndent(cliOption))
 		err := archiveListParam.Initialize(newParamsAdapter(cmd.Flags()))
 		// TODO DEBUG
 		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(archiveListParam))
@@ -62,15 +63,27 @@ var archiveListCmd = &cobra.Command{
 
 func archiveListCmdInit() {
 	fs := archiveListCmd.Flags()
-	fs.IntVarP(&archiveListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&archiveListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringSliceVarP(&archiveListParam.Name, "name", "", []string{}, "set filter by name(s)")
+	fs.VarP(newIDSliceValue([]sacloud.ID{}, &archiveListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringVarP(&archiveListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
+	fs.StringSliceVarP(&archiveListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.VarP(newIDValue(0, &archiveListParam.SourceArchiveId), "source-archive-id", "", "set filter by source-archive-id")
 	fs.VarP(newIDValue(0, &archiveListParam.SourceDiskId), "source-disk-id", "", "set filter by source-disk-id")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &archiveListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&archiveListParam.From, "from", "", 0, "set offset")
-	fs.StringSliceVarP(&archiveListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.StringSliceVarP(&archiveListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.IntVarP(&archiveListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&archiveListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&archiveListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&archiveListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&archiveListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&archiveListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&archiveListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&archiveListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&archiveListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&archiveListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&archiveListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&archiveListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&archiveListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&archiveListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var archiveCreateCmd = &cobra.Command{
@@ -96,6 +109,19 @@ func archiveCreateCmdInit() {
 	fs.StringVarP(&archiveCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&archiveCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &archiveCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&archiveCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&archiveCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&archiveCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&archiveCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&archiveCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&archiveCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&archiveCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&archiveCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&archiveCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&archiveCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&archiveCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&archiveCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&archiveCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var archiveReadCmd = &cobra.Command{
@@ -112,6 +138,21 @@ var archiveReadCmd = &cobra.Command{
 }
 
 func archiveReadCmdInit() {
+	fs := archiveReadCmd.Flags()
+	fs.StringSliceVarP(&archiveReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&archiveReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&archiveReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&archiveReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&archiveReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&archiveReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&archiveReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&archiveReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&archiveReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&archiveReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&archiveReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&archiveReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&archiveReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &archiveReadParam.Id), "id", "", "Set target ID")
 }
 
 var archiveUpdateCmd = &cobra.Command{
@@ -129,10 +170,25 @@ var archiveUpdateCmd = &cobra.Command{
 
 func archiveUpdateCmdInit() {
 	fs := archiveUpdateCmd.Flags()
+	fs.StringSliceVarP(&archiveUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&archiveUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&archiveUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&archiveUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &archiveUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&archiveUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&archiveUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&archiveUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&archiveUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&archiveUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&archiveUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&archiveUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&archiveUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&archiveUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&archiveUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&archiveUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&archiveUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&archiveUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &archiveUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var archiveDeleteCmd = &cobra.Command{
@@ -149,6 +205,22 @@ var archiveDeleteCmd = &cobra.Command{
 }
 
 func archiveDeleteCmdInit() {
+	fs := archiveDeleteCmd.Flags()
+	fs.StringSliceVarP(&archiveDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&archiveDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&archiveDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&archiveDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&archiveDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&archiveDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&archiveDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&archiveDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&archiveDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&archiveDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&archiveDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&archiveDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&archiveDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&archiveDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &archiveDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var archiveUploadCmd = &cobra.Command{
@@ -167,6 +239,21 @@ var archiveUploadCmd = &cobra.Command{
 func archiveUploadCmdInit() {
 	fs := archiveUploadCmd.Flags()
 	fs.StringVarP(&archiveUploadParam.ArchiveFile, "archive-file", "", "", "set archive image file")
+	fs.StringSliceVarP(&archiveUploadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&archiveUploadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&archiveUploadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&archiveUploadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&archiveUploadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&archiveUploadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&archiveUploadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&archiveUploadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&archiveUploadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&archiveUploadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&archiveUploadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&archiveUploadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&archiveUploadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&archiveUploadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &archiveUploadParam.Id), "id", "", "Set target ID")
 }
 
 var archiveDownloadCmd = &cobra.Command{
@@ -185,6 +272,14 @@ var archiveDownloadCmd = &cobra.Command{
 func archiveDownloadCmdInit() {
 	fs := archiveDownloadCmd.Flags()
 	fs.StringVarP(&archiveDownloadParam.FileDestination, "file-destination", "", "", "set file destination path")
+	fs.StringSliceVarP(&archiveDownloadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&archiveDownloadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&archiveDownloadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&archiveDownloadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&archiveDownloadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&archiveDownloadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&archiveDownloadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &archiveDownloadParam.Id), "id", "", "Set target ID")
 }
 
 var archiveFTPOpenCmd = &cobra.Command{
@@ -201,6 +296,22 @@ var archiveFTPOpenCmd = &cobra.Command{
 }
 
 func archiveFTPOpenCmdInit() {
+	fs := archiveFTPOpenCmd.Flags()
+	fs.StringSliceVarP(&archiveFTPOpenParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&archiveFTPOpenParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&archiveFTPOpenParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&archiveFTPOpenParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&archiveFTPOpenParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&archiveFTPOpenParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&archiveFTPOpenParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&archiveFTPOpenParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&archiveFTPOpenParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&archiveFTPOpenParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&archiveFTPOpenParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&archiveFTPOpenParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&archiveFTPOpenParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&archiveFTPOpenParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &archiveFTPOpenParam.Id), "id", "", "Set target ID")
 }
 
 var archiveFTPCloseCmd = &cobra.Command{
@@ -217,6 +328,15 @@ var archiveFTPCloseCmd = &cobra.Command{
 }
 
 func archiveFTPCloseCmdInit() {
+	fs := archiveFTPCloseCmd.Flags()
+	fs.StringSliceVarP(&archiveFTPCloseParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&archiveFTPCloseParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&archiveFTPCloseParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&archiveFTPCloseParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&archiveFTPCloseParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&archiveFTPCloseParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&archiveFTPCloseParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &archiveFTPCloseParam.Id), "id", "", "Set target ID")
 }
 
 var archiveWaitForCopyCmd = &cobra.Command{
@@ -233,6 +353,14 @@ var archiveWaitForCopyCmd = &cobra.Command{
 }
 
 func archiveWaitForCopyCmdInit() {
+	fs := archiveWaitForCopyCmd.Flags()
+	fs.StringSliceVarP(&archiveWaitForCopyParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&archiveWaitForCopyParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&archiveWaitForCopyParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&archiveWaitForCopyParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&archiveWaitForCopyParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&archiveWaitForCopyParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &archiveWaitForCopyParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

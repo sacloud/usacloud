@@ -51,6 +51,12 @@ var selfInfoCmd = &cobra.Command{
 }
 
 func selfInfoCmdInit() {
+	fs := selfInfoCmd.Flags()
+	fs.StringVarP(&selfInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&selfInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&selfInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&selfInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&selfInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 }
 
 func init() {

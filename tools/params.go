@@ -29,15 +29,17 @@ import (
 type Parameter struct {
 	*schema.Schema
 
-	Name    string
-	Command *Command
+	Name     string
+	Category *schema.Category
+	Command  *Command
 }
 
-func NewParameter(name string, param *schema.Schema, parent *Command) *Parameter {
+func NewParameter(name string, param *schema.Schema, category *schema.Category, parent *Command) *Parameter {
 	return &Parameter{
-		Schema:  param,
-		Name:    name,
-		Command: parent,
+		Schema:   param,
+		Name:     name,
+		Category: category,
+		Command:  parent,
 	}
 }
 

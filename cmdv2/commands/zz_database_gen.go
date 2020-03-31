@@ -81,10 +81,22 @@ func databaseListCmdInit() {
 	fs := databaseListCmd.Flags()
 	fs.StringSliceVarP(&databaseListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &databaseListParam.Id), "id", "", "set filter by id(s)")
+	fs.StringSliceVarP(&databaseListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.IntVarP(&databaseListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&databaseListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&databaseListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&databaseListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.StringVarP(&databaseListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var databaseCreateCmd = &cobra.Command{
@@ -103,24 +115,37 @@ var databaseCreateCmd = &cobra.Command{
 func databaseCreateCmdInit() {
 	fs := databaseCreateCmd.Flags()
 	fs.VarP(newIDValue(0, &databaseCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
-	fs.StringVarP(&databaseCreateParam.Password, "password", "", "", "set database default user password")
-	fs.StringSliceVarP(&databaseCreateParam.BackupWeekdays, "backup-weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
-	fs.StringVarP(&databaseCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
-	fs.StringVarP(&databaseCreateParam.Description, "description", "", "", "set resource description")
 	fs.IntVarP(&databaseCreateParam.Plan, "plan", "", 10, "set plan[10/30/90/240/500/1000]")
 	fs.StringVarP(&databaseCreateParam.Database, "database", "", "", "set database type[postgresql/mariadb]")
-	fs.BoolVarP(&databaseCreateParam.EnableBackup, "enable-backup", "", false, "enable backup")
-	fs.StringVarP(&databaseCreateParam.BackupTime, "backup-time", "", "", "set backup start time")
-	fs.StringVarP(&databaseCreateParam.DefaultRoute, "default-route", "", "", "set default route")
-	fs.StringSliceVarP(&databaseCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.VarP(newIDValue(0, &databaseCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.StringVarP(&databaseCreateParam.Username, "username", "", "", "set database default user name")
-	fs.IntVarP(&databaseCreateParam.Port, "port", "", 0, "set database port")
-	fs.StringVarP(&databaseCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&databaseCreateParam.Password, "password", "", "", "set database default user password")
 	fs.StringVarP(&databaseCreateParam.ReplicaUserPassword, "replica-user-password", "", "", "set database replica user password")
 	fs.StringSliceVarP(&databaseCreateParam.SourceNetworks, "source-networks", "", []string{}, "set network of allow connection")
 	fs.BoolVarP(&databaseCreateParam.EnableWebUi, "enable-web-ui", "", false, "enable web-ui")
+	fs.BoolVarP(&databaseCreateParam.EnableBackup, "enable-backup", "", false, "enable backup")
+	fs.StringSliceVarP(&databaseCreateParam.BackupWeekdays, "backup-weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
+	fs.StringVarP(&databaseCreateParam.BackupTime, "backup-time", "", "", "set backup start time")
+	fs.IntVarP(&databaseCreateParam.Port, "port", "", 0, "set database port")
+	fs.StringVarP(&databaseCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
 	fs.IntVarP(&databaseCreateParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
+	fs.StringVarP(&databaseCreateParam.DefaultRoute, "default-route", "", "", "set default route")
+	fs.StringVarP(&databaseCreateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&databaseCreateParam.Description, "description", "", "", "set resource description")
+	fs.StringSliceVarP(&databaseCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &databaseCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&databaseCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&databaseCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var databaseReadCmd = &cobra.Command{
@@ -137,6 +162,21 @@ var databaseReadCmd = &cobra.Command{
 }
 
 func databaseReadCmdInit() {
+	fs := databaseReadCmd.Flags()
+	fs.StringSliceVarP(&databaseReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&databaseReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseReadParam.Id), "id", "", "Set target ID")
 }
 
 var databaseUpdateCmd = &cobra.Command{
@@ -154,19 +194,34 @@ var databaseUpdateCmd = &cobra.Command{
 
 func databaseUpdateCmdInit() {
 	fs := databaseUpdateCmd.Flags()
+	fs.StringVarP(&databaseUpdateParam.Password, "password", "", "", "set database default user password")
 	fs.StringVarP(&databaseUpdateParam.ReplicaUserPassword, "replica-user-password", "", "", "set database replica user password")
 	fs.BoolVarP(&databaseUpdateParam.EnableReplication, "enable-replication", "", false, "enable replication")
-	fs.StringSliceVarP(&databaseUpdateParam.SourceNetworks, "source-networks", "", []string{}, "set network of allow connection")
-	fs.StringSliceVarP(&databaseUpdateParam.BackupWeekdays, "backup-weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
-	fs.StringVarP(&databaseUpdateParam.BackupTime, "backup-time", "", "", "set backup start time")
-	fs.VarP(newIDValue(0, &databaseUpdateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringVarP(&databaseUpdateParam.Password, "password", "", "", "set database default user password")
 	fs.IntVarP(&databaseUpdateParam.Port, "port", "", 0, "set database port")
+	fs.StringSliceVarP(&databaseUpdateParam.SourceNetworks, "source-networks", "", []string{}, "set network of allow connection")
 	fs.BoolVarP(&databaseUpdateParam.EnableWebUi, "enable-web-ui", "", false, "enable web-ui")
 	fs.BoolVarP(&databaseUpdateParam.EnableBackup, "enable-backup", "", false, "enable backup")
+	fs.StringSliceVarP(&databaseUpdateParam.BackupWeekdays, "backup-weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
+	fs.StringVarP(&databaseUpdateParam.BackupTime, "backup-time", "", "", "set backup start time")
+	fs.StringSliceVarP(&databaseUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&databaseUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&databaseUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&databaseUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &databaseUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&databaseUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&databaseUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var databaseDeleteCmd = &cobra.Command{
@@ -184,7 +239,22 @@ var databaseDeleteCmd = &cobra.Command{
 
 func databaseDeleteCmdInit() {
 	fs := databaseDeleteCmd.Flags()
+	fs.StringSliceVarP(&databaseDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&databaseDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&databaseDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.BoolVarP(&databaseDeleteParam.Force, "force", "f", false, "forced-shutdown flag if database is running")
+	fs.VarP(newIDValue(0, &databaseDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var databaseBootCmd = &cobra.Command{
@@ -201,6 +271,15 @@ var databaseBootCmd = &cobra.Command{
 }
 
 func databaseBootCmdInit() {
+	fs := databaseBootCmd.Flags()
+	fs.StringSliceVarP(&databaseBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&databaseBootParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&databaseBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseBootParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &databaseBootParam.Id), "id", "", "Set target ID")
 }
 
 var databaseShutdownCmd = &cobra.Command{
@@ -217,6 +296,15 @@ var databaseShutdownCmd = &cobra.Command{
 }
 
 func databaseShutdownCmdInit() {
+	fs := databaseShutdownCmd.Flags()
+	fs.StringSliceVarP(&databaseShutdownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&databaseShutdownParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&databaseShutdownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseShutdownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseShutdownParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &databaseShutdownParam.Id), "id", "", "Set target ID")
 }
 
 var databaseShutdownForceCmd = &cobra.Command{
@@ -233,6 +321,15 @@ var databaseShutdownForceCmd = &cobra.Command{
 }
 
 func databaseShutdownForceCmdInit() {
+	fs := databaseShutdownForceCmd.Flags()
+	fs.StringSliceVarP(&databaseShutdownForceParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&databaseShutdownForceParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&databaseShutdownForceParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseShutdownForceParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseShutdownForceParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &databaseShutdownForceParam.Id), "id", "", "Set target ID")
 }
 
 var databaseResetCmd = &cobra.Command{
@@ -249,6 +346,15 @@ var databaseResetCmd = &cobra.Command{
 }
 
 func databaseResetCmdInit() {
+	fs := databaseResetCmd.Flags()
+	fs.StringSliceVarP(&databaseResetParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&databaseResetParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&databaseResetParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseResetParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseResetParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &databaseResetParam.Id), "id", "", "Set target ID")
 }
 
 var databaseWaitForBootCmd = &cobra.Command{
@@ -265,6 +371,14 @@ var databaseWaitForBootCmd = &cobra.Command{
 }
 
 func databaseWaitForBootCmdInit() {
+	fs := databaseWaitForBootCmd.Flags()
+	fs.StringSliceVarP(&databaseWaitForBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&databaseWaitForBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseWaitForBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseWaitForBootParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &databaseWaitForBootParam.Id), "id", "", "Set target ID")
 }
 
 var databaseWaitForDownCmd = &cobra.Command{
@@ -281,6 +395,14 @@ var databaseWaitForDownCmd = &cobra.Command{
 }
 
 func databaseWaitForDownCmdInit() {
+	fs := databaseWaitForDownCmd.Flags()
+	fs.StringSliceVarP(&databaseWaitForDownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&databaseWaitForDownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseWaitForDownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseWaitForDownParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &databaseWaitForDownParam.Id), "id", "", "Set target ID")
 }
 
 var databaseBackupInfoCmd = &cobra.Command{
@@ -297,6 +419,21 @@ var databaseBackupInfoCmd = &cobra.Command{
 }
 
 func databaseBackupInfoCmdInit() {
+	fs := databaseBackupInfoCmd.Flags()
+	fs.StringSliceVarP(&databaseBackupInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&databaseBackupInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseBackupInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseBackupInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseBackupInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseBackupInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseBackupInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseBackupInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseBackupInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseBackupInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseBackupInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseBackupInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseBackupInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseBackupInfoParam.Id), "id", "", "Set target ID")
 }
 
 var databaseBackupCreateCmd = &cobra.Command{
@@ -313,6 +450,21 @@ var databaseBackupCreateCmd = &cobra.Command{
 }
 
 func databaseBackupCreateCmdInit() {
+	fs := databaseBackupCreateCmd.Flags()
+	fs.BoolVarP(&databaseBackupCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&databaseBackupCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseBackupCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseBackupCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseBackupCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseBackupCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseBackupCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseBackupCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseBackupCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseBackupCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseBackupCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseBackupCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseBackupCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseBackupCreateParam.Id), "id", "", "Set target ID")
 }
 
 var databaseBackupRestoreCmd = &cobra.Command{
@@ -331,6 +483,20 @@ var databaseBackupRestoreCmd = &cobra.Command{
 func databaseBackupRestoreCmdInit() {
 	fs := databaseBackupRestoreCmd.Flags()
 	fs.IntVarP(&databaseBackupRestoreParam.Index, "index", "", 0, "index of target backup")
+	fs.BoolVarP(&databaseBackupRestoreParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&databaseBackupRestoreParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseBackupRestoreParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseBackupRestoreParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseBackupRestoreParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseBackupRestoreParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseBackupRestoreParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseBackupRestoreParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseBackupRestoreParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseBackupRestoreParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseBackupRestoreParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseBackupRestoreParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseBackupRestoreParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseBackupRestoreParam.Id), "id", "", "Set target ID")
 }
 
 var databaseBackupLockCmd = &cobra.Command{
@@ -349,6 +515,20 @@ var databaseBackupLockCmd = &cobra.Command{
 func databaseBackupLockCmdInit() {
 	fs := databaseBackupLockCmd.Flags()
 	fs.IntVarP(&databaseBackupLockParam.Index, "index", "", 0, "index of target backup")
+	fs.BoolVarP(&databaseBackupLockParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&databaseBackupLockParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseBackupLockParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseBackupLockParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseBackupLockParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseBackupLockParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseBackupLockParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseBackupLockParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseBackupLockParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseBackupLockParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseBackupLockParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseBackupLockParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseBackupLockParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseBackupLockParam.Id), "id", "", "Set target ID")
 }
 
 var databaseBackupUnlockCmd = &cobra.Command{
@@ -367,6 +547,20 @@ var databaseBackupUnlockCmd = &cobra.Command{
 func databaseBackupUnlockCmdInit() {
 	fs := databaseBackupUnlockCmd.Flags()
 	fs.IntVarP(&databaseBackupUnlockParam.Index, "index", "", 0, "index of target backup")
+	fs.BoolVarP(&databaseBackupUnlockParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&databaseBackupUnlockParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseBackupUnlockParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseBackupUnlockParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseBackupUnlockParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseBackupUnlockParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseBackupUnlockParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseBackupUnlockParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseBackupUnlockParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseBackupUnlockParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseBackupUnlockParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseBackupUnlockParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseBackupUnlockParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseBackupUnlockParam.Id), "id", "", "Set target ID")
 }
 
 var databaseBackupRemoveCmd = &cobra.Command{
@@ -385,6 +579,20 @@ var databaseBackupRemoveCmd = &cobra.Command{
 func databaseBackupRemoveCmdInit() {
 	fs := databaseBackupRemoveCmd.Flags()
 	fs.IntVarP(&databaseBackupRemoveParam.Index, "index", "", 0, "index of target backup")
+	fs.BoolVarP(&databaseBackupRemoveParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&databaseBackupRemoveParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseBackupRemoveParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseBackupRemoveParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseBackupRemoveParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseBackupRemoveParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseBackupRemoveParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseBackupRemoveParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseBackupRemoveParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseBackupRemoveParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseBackupRemoveParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseBackupRemoveParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseBackupRemoveParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseBackupRemoveParam.Id), "id", "", "Set target ID")
 }
 
 var databaseCloneCmd = &cobra.Command{
@@ -402,22 +610,36 @@ var databaseCloneCmd = &cobra.Command{
 
 func databaseCloneCmdInit() {
 	fs := databaseCloneCmd.Flags()
+	fs.IntVarP(&databaseCloneParam.Port, "port", "", 0, "set database port")
 	fs.VarP(newIDValue(0, &databaseCloneParam.SwitchId), "switch-id", "", "set connect switch ID")
-	fs.StringVarP(&databaseCloneParam.BackupTime, "backup-time", "", "", "set backup start time")
 	fs.StringVarP(&databaseCloneParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
+	fs.IntVarP(&databaseCloneParam.Plan, "plan", "", 10, "set plan[10/30/90/240/500/1000]")
 	fs.IntVarP(&databaseCloneParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
+	fs.StringVarP(&databaseCloneParam.DefaultRoute, "default-route", "", "", "set default route")
 	fs.StringVarP(&databaseCloneParam.ReplicaUserPassword, "replica-user-password", "", "", "set database replica user password")
+	fs.StringSliceVarP(&databaseCloneParam.SourceNetworks, "source-networks", "", []string{}, "set network of allow connection")
 	fs.BoolVarP(&databaseCloneParam.EnableWebUi, "enable-web-ui", "", false, "enable web-ui")
 	fs.BoolVarP(&databaseCloneParam.EnableBackup, "enable-backup", "", false, "enable backup")
-	fs.IntVarP(&databaseCloneParam.Plan, "plan", "", 10, "set plan[10/30/90/240/500/1000]")
+	fs.StringSliceVarP(&databaseCloneParam.BackupWeekdays, "backup-weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
+	fs.StringVarP(&databaseCloneParam.BackupTime, "backup-time", "", "", "set backup start time")
 	fs.StringVarP(&databaseCloneParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&databaseCloneParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&databaseCloneParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &databaseCloneParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringSliceVarP(&databaseCloneParam.SourceNetworks, "source-networks", "", []string{}, "set network of allow connection")
-	fs.StringSliceVarP(&databaseCloneParam.BackupWeekdays, "backup-weekdays", "", []string{"all"}, "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]")
-	fs.IntVarP(&databaseCloneParam.Port, "port", "", 0, "set database port")
-	fs.StringVarP(&databaseCloneParam.DefaultRoute, "default-route", "", "", "set default route")
-	fs.StringVarP(&databaseCloneParam.Description, "description", "", "", "set resource description")
+	fs.BoolVarP(&databaseCloneParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&databaseCloneParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseCloneParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseCloneParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseCloneParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseCloneParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseCloneParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseCloneParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseCloneParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseCloneParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseCloneParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseCloneParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseCloneParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseCloneParam.Id), "id", "", "Set target ID")
 }
 
 var databaseReplicaCreateCmd = &cobra.Command{
@@ -435,7 +657,6 @@ var databaseReplicaCreateCmd = &cobra.Command{
 
 func databaseReplicaCreateCmdInit() {
 	fs := databaseReplicaCreateCmd.Flags()
-	fs.VarP(newIDValue(0, &databaseReplicaCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.VarP(newIDValue(0, &databaseReplicaCreateParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.StringVarP(&databaseReplicaCreateParam.Ipaddress1, "ipaddress-1", "", "", "set ipaddress(#1)")
 	fs.IntVarP(&databaseReplicaCreateParam.NwMaskLen, "nw-mask-len", "", 0, "set network mask length")
@@ -443,6 +664,21 @@ func databaseReplicaCreateCmdInit() {
 	fs.StringVarP(&databaseReplicaCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&databaseReplicaCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&databaseReplicaCreateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &databaseReplicaCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&databaseReplicaCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&databaseReplicaCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseReplicaCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseReplicaCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseReplicaCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseReplicaCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseReplicaCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseReplicaCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseReplicaCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseReplicaCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseReplicaCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseReplicaCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseReplicaCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseReplicaCreateParam.Id), "id", "", "Set target ID")
 }
 
 var databaseMonitorCPUCmd = &cobra.Command{
@@ -463,6 +699,20 @@ func databaseMonitorCPUCmdInit() {
 	fs.StringVarP(&databaseMonitorCPUParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&databaseMonitorCPUParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorCPUParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.cpu", "set monitoring value key-format")
+	fs.StringSliceVarP(&databaseMonitorCPUParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&databaseMonitorCPUParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseMonitorCPUParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseMonitorCPUParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseMonitorCPUParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseMonitorCPUParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseMonitorCPUParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseMonitorCPUParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseMonitorCPUParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseMonitorCPUParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseMonitorCPUParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseMonitorCPUParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseMonitorCPUParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseMonitorCPUParam.Id), "id", "", "Set target ID")
 }
 
 var databaseMonitorMemoryCmd = &cobra.Command{
@@ -483,6 +733,20 @@ func databaseMonitorMemoryCmdInit() {
 	fs.StringVarP(&databaseMonitorMemoryParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&databaseMonitorMemoryParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorMemoryParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.memory", "set monitoring value key-format")
+	fs.StringSliceVarP(&databaseMonitorMemoryParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&databaseMonitorMemoryParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseMonitorMemoryParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseMonitorMemoryParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseMonitorMemoryParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseMonitorMemoryParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseMonitorMemoryParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseMonitorMemoryParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseMonitorMemoryParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseMonitorMemoryParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseMonitorMemoryParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseMonitorMemoryParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseMonitorMemoryParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseMonitorMemoryParam.Id), "id", "", "Set target ID")
 }
 
 var databaseMonitorNicCmd = &cobra.Command{
@@ -503,6 +767,20 @@ func databaseMonitorNicCmdInit() {
 	fs.StringVarP(&databaseMonitorNicParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&databaseMonitorNicParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorNicParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.nic", "set monitoring value key-format")
+	fs.StringSliceVarP(&databaseMonitorNicParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&databaseMonitorNicParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseMonitorNicParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseMonitorNicParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseMonitorNicParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseMonitorNicParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseMonitorNicParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseMonitorNicParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseMonitorNicParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseMonitorNicParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseMonitorNicParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseMonitorNicParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseMonitorNicParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseMonitorNicParam.Id), "id", "", "Set target ID")
 }
 
 var databaseMonitorSystemDiskCmd = &cobra.Command{
@@ -523,6 +801,20 @@ func databaseMonitorSystemDiskCmdInit() {
 	fs.StringVarP(&databaseMonitorSystemDiskParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&databaseMonitorSystemDiskParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorSystemDiskParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.disk1", "set monitoring value key-format")
+	fs.StringSliceVarP(&databaseMonitorSystemDiskParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&databaseMonitorSystemDiskParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseMonitorSystemDiskParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseMonitorSystemDiskParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseMonitorSystemDiskParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseMonitorSystemDiskParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseMonitorSystemDiskParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseMonitorSystemDiskParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseMonitorSystemDiskParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseMonitorSystemDiskParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseMonitorSystemDiskParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseMonitorSystemDiskParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseMonitorSystemDiskParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseMonitorSystemDiskParam.Id), "id", "", "Set target ID")
 }
 
 var databaseMonitorBackupDiskCmd = &cobra.Command{
@@ -543,6 +835,20 @@ func databaseMonitorBackupDiskCmdInit() {
 	fs.StringVarP(&databaseMonitorBackupDiskParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&databaseMonitorBackupDiskParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorBackupDiskParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.disk2", "set monitoring value key-format")
+	fs.StringSliceVarP(&databaseMonitorBackupDiskParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&databaseMonitorBackupDiskParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseMonitorBackupDiskParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseMonitorBackupDiskParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseMonitorBackupDiskParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseMonitorBackupDiskParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseMonitorBackupDiskParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseMonitorBackupDiskParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseMonitorBackupDiskParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseMonitorBackupDiskParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseMonitorBackupDiskParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseMonitorBackupDiskParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseMonitorBackupDiskParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseMonitorBackupDiskParam.Id), "id", "", "Set target ID")
 }
 
 var databaseMonitorSystemDiskSizeCmd = &cobra.Command{
@@ -563,6 +869,20 @@ func databaseMonitorSystemDiskSizeCmdInit() {
 	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.disk1", "set monitoring value key-format")
+	fs.StringSliceVarP(&databaseMonitorSystemDiskSizeParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseMonitorSystemDiskSizeParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseMonitorSystemDiskSizeParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseMonitorSystemDiskSizeParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseMonitorSystemDiskSizeParam.Id), "id", "", "Set target ID")
 }
 
 var databaseMonitorBackupDiskSizeCmd = &cobra.Command{
@@ -580,9 +900,23 @@ var databaseMonitorBackupDiskSizeCmd = &cobra.Command{
 
 func databaseMonitorBackupDiskSizeCmdInit() {
 	fs := databaseMonitorBackupDiskSizeCmd.Flags()
+	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.disk2", "set monitoring value key-format")
-	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.Start, "start", "", "", "set start-time")
+	fs.StringSliceVarP(&databaseMonitorBackupDiskSizeParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseMonitorBackupDiskSizeParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&databaseMonitorBackupDiskSizeParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&databaseMonitorBackupDiskSizeParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &databaseMonitorBackupDiskSizeParam.Id), "id", "", "Set target ID")
 }
 
 var databaseLogsCmd = &cobra.Command{
@@ -604,6 +938,13 @@ func databaseLogsCmdInit() {
 	fs.BoolVarP(&databaseLogsParam.Follow, "follow", "f", false, "follow log output")
 	fs.VarP(newIDValue(0, &databaseLogsParam.RefreshInterval), "refresh-interval", "", "log refresh interval second")
 	fs.BoolVarP(&databaseLogsParam.ListLogNames, "list-log-names", "", false, "show log-name list")
+	fs.StringSliceVarP(&databaseLogsParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&databaseLogsParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&databaseLogsParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&databaseLogsParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&databaseLogsParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&databaseLogsParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &databaseLogsParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

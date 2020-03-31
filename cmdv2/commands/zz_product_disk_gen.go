@@ -59,6 +59,18 @@ func productDiskListCmdInit() {
 	fs.IntVarP(&productDiskListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&productDiskListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&productDiskListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&productDiskListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&productDiskListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&productDiskListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&productDiskListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&productDiskListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&productDiskListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&productDiskListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&productDiskListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&productDiskListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&productDiskListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&productDiskListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&productDiskListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var productDiskReadCmd = &cobra.Command{
@@ -76,6 +88,19 @@ var productDiskReadCmd = &cobra.Command{
 
 func productDiskReadCmdInit() {
 	fs := productDiskReadCmd.Flags()
+	fs.BoolVarP(&productDiskReadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&productDiskReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&productDiskReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&productDiskReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&productDiskReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&productDiskReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&productDiskReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&productDiskReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&productDiskReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&productDiskReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&productDiskReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&productDiskReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&productDiskReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &productDiskReadParam.Id), "id", "", "set resource ID")
 }
 

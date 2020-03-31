@@ -29,12 +29,24 @@ import (
 
 // ListLoadBalancerParam is input parameters for the sacloud API
 type ListLoadBalancerParam struct {
-	Name []string
-	Id   []sacloud.ID
-	From int
-	Max  int
-	Sort []string
-	Tags []string
+	Name              []string
+	Id                []sacloud.ID
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -65,6 +77,9 @@ func (p *ListLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
 	if utils.IsEmpty(p.From) {
 		p.From = 0
 	}
@@ -74,8 +89,41 @@ func (p *ListLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -118,6 +166,25 @@ func (p *ListLoadBalancerParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -159,6 +226,13 @@ func (p *ListLoadBalancerParam) SetId(v []sacloud.ID) {
 func (p *ListLoadBalancerParam) GetId() []sacloud.ID {
 	return p.Id
 }
+func (p *ListLoadBalancerParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *ListLoadBalancerParam) GetTags() []string {
+	return p.Tags
+}
 func (p *ListLoadBalancerParam) SetFrom(v int) {
 	p.From = v
 }
@@ -180,28 +254,118 @@ func (p *ListLoadBalancerParam) SetSort(v []string) {
 func (p *ListLoadBalancerParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListLoadBalancerParam) SetTags(v []string) {
-	p.Tags = v
+func (p *ListLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
 }
 
-func (p *ListLoadBalancerParam) GetTags() []string {
-	return p.Tags
+func (p *ListLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListLoadBalancerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListLoadBalancerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListLoadBalancerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListLoadBalancerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListLoadBalancerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListLoadBalancerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListLoadBalancerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListLoadBalancerParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListLoadBalancerParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListLoadBalancerParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListLoadBalancerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListLoadBalancerParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListLoadBalancerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListLoadBalancerParam) GetQueryFile() string {
+	return p.QueryFile
 }
 
 // CreateLoadBalancerParam is input parameters for the sacloud API
 type CreateLoadBalancerParam struct {
-	IconId           sacloud.ID
-	Vrid             int
-	Plan             string
-	Ipaddress2       string
-	Name             string
-	Tags             []string
-	Description      string
-	SwitchId         sacloud.ID
-	HighAvailability bool
-	Ipaddress1       string
-	NwMaskLen        int
-	DefaultRoute     string
+	SwitchId          sacloud.ID
+	Vrid              int
+	HighAvailability  bool
+	Plan              string
+	Ipaddress1        string
+	Ipaddress2        string
+	NwMaskLen         int
+	DefaultRoute      string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -227,41 +391,80 @@ func (p *CreateLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateLoadBalancerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
+	if utils.IsEmpty(p.SwitchId) {
+		p.SwitchId = sacloud.ID(0)
 	}
 	if utils.IsEmpty(p.Vrid) {
 		p.Vrid = 0
 	}
-	if utils.IsEmpty(p.Plan) {
-		p.Plan = ""
-	}
-	if utils.IsEmpty(p.Ipaddress2) {
-		p.Ipaddress2 = ""
-	}
-	if utils.IsEmpty(p.Name) {
-		p.Name = ""
-	}
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.Description) {
-		p.Description = ""
-	}
-	if utils.IsEmpty(p.SwitchId) {
-		p.SwitchId = sacloud.ID(0)
-	}
 	if utils.IsEmpty(p.HighAvailability) {
 		p.HighAvailability = false
 	}
+	if utils.IsEmpty(p.Plan) {
+		p.Plan = ""
+	}
 	if utils.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
+	}
+	if utils.IsEmpty(p.Ipaddress2) {
+		p.Ipaddress2 = ""
 	}
 	if utils.IsEmpty(p.NwMaskLen) {
 		p.NwMaskLen = 0
 	}
 	if utils.IsEmpty(p.DefaultRoute) {
 		p.DefaultRoute = ""
+	}
+	if utils.IsEmpty(p.Name) {
+		p.Name = ""
+	}
+	if utils.IsEmpty(p.Description) {
+		p.Description = ""
+	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -270,8 +473,8 @@ func (p *CreateLoadBalancerParam) validate() error {
 	var errors []error
 
 	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["switch-id"].ValidateFunc
+		errs := validator("--switch-id", p.SwitchId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -301,53 +504,6 @@ func (p *CreateLoadBalancerParam) validate() error {
 	}
 
 	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["ipaddress2"].ValidateFunc
-		errs := validator("--ipaddress-2", p.Ipaddress2)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["create"].Params["switch-id"].ValidateFunc
-		errs := validator("--switch-id", p.SwitchId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
 		validator := validateRequired
 		errs := validator("--ipaddress-1", p.Ipaddress1)
 		if errs != nil {
@@ -357,6 +513,14 @@ func (p *CreateLoadBalancerParam) validate() error {
 	{
 		validator := define.Resources["LoadBalancer"].Commands["create"].Params["ipaddress1"].ValidateFunc
 		errs := validator("--ipaddress-1", p.Ipaddress1)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["ipaddress2"].ValidateFunc
+		errs := validator("--ipaddress-2", p.Ipaddress2)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -385,6 +549,64 @@ func (p *CreateLoadBalancerParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -412,12 +634,12 @@ func (p *CreateLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CreateLoadBalancerParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
+func (p *CreateLoadBalancerParam) SetSwitchId(v sacloud.ID) {
+	p.SwitchId = v
 }
 
-func (p *CreateLoadBalancerParam) GetIconId() sacloud.ID {
-	return p.IconId
+func (p *CreateLoadBalancerParam) GetSwitchId() sacloud.ID {
+	return p.SwitchId
 }
 func (p *CreateLoadBalancerParam) SetVrid(v int) {
 	p.Vrid = v
@@ -426,48 +648,6 @@ func (p *CreateLoadBalancerParam) SetVrid(v int) {
 func (p *CreateLoadBalancerParam) GetVrid() int {
 	return p.Vrid
 }
-func (p *CreateLoadBalancerParam) SetPlan(v string) {
-	p.Plan = v
-}
-
-func (p *CreateLoadBalancerParam) GetPlan() string {
-	return p.Plan
-}
-func (p *CreateLoadBalancerParam) SetIpaddress2(v string) {
-	p.Ipaddress2 = v
-}
-
-func (p *CreateLoadBalancerParam) GetIpaddress2() string {
-	return p.Ipaddress2
-}
-func (p *CreateLoadBalancerParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateLoadBalancerParam) GetName() string {
-	return p.Name
-}
-func (p *CreateLoadBalancerParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CreateLoadBalancerParam) GetTags() []string {
-	return p.Tags
-}
-func (p *CreateLoadBalancerParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *CreateLoadBalancerParam) GetDescription() string {
-	return p.Description
-}
-func (p *CreateLoadBalancerParam) SetSwitchId(v sacloud.ID) {
-	p.SwitchId = v
-}
-
-func (p *CreateLoadBalancerParam) GetSwitchId() sacloud.ID {
-	return p.SwitchId
-}
 func (p *CreateLoadBalancerParam) SetHighAvailability(v bool) {
 	p.HighAvailability = v
 }
@@ -475,12 +655,26 @@ func (p *CreateLoadBalancerParam) SetHighAvailability(v bool) {
 func (p *CreateLoadBalancerParam) GetHighAvailability() bool {
 	return p.HighAvailability
 }
+func (p *CreateLoadBalancerParam) SetPlan(v string) {
+	p.Plan = v
+}
+
+func (p *CreateLoadBalancerParam) GetPlan() string {
+	return p.Plan
+}
 func (p *CreateLoadBalancerParam) SetIpaddress1(v string) {
 	p.Ipaddress1 = v
 }
 
 func (p *CreateLoadBalancerParam) GetIpaddress1() string {
 	return p.Ipaddress1
+}
+func (p *CreateLoadBalancerParam) SetIpaddress2(v string) {
+	p.Ipaddress2 = v
+}
+
+func (p *CreateLoadBalancerParam) GetIpaddress2() string {
+	return p.Ipaddress2
 }
 func (p *CreateLoadBalancerParam) SetNwMaskLen(v int) {
 	p.NwMaskLen = v
@@ -496,9 +690,143 @@ func (p *CreateLoadBalancerParam) SetDefaultRoute(v string) {
 func (p *CreateLoadBalancerParam) GetDefaultRoute() string {
 	return p.DefaultRoute
 }
+func (p *CreateLoadBalancerParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateLoadBalancerParam) GetName() string {
+	return p.Name
+}
+func (p *CreateLoadBalancerParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *CreateLoadBalancerParam) GetDescription() string {
+	return p.Description
+}
+func (p *CreateLoadBalancerParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CreateLoadBalancerParam) GetTags() []string {
+	return p.Tags
+}
+func (p *CreateLoadBalancerParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *CreateLoadBalancerParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+func (p *CreateLoadBalancerParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *CreateLoadBalancerParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *CreateLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CreateLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CreateLoadBalancerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateLoadBalancerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateLoadBalancerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateLoadBalancerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateLoadBalancerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateLoadBalancerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateLoadBalancerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateLoadBalancerParam) GetFormat() string {
+	return p.Format
+}
+func (p *CreateLoadBalancerParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CreateLoadBalancerParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CreateLoadBalancerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateLoadBalancerParam) GetQuery() string {
+	return p.Query
+}
+func (p *CreateLoadBalancerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateLoadBalancerParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadLoadBalancerParam is input parameters for the sacloud API
 type ReadLoadBalancerParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -522,12 +850,81 @@ func (p *ReadLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadLoadBalancerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ReadLoadBalancerParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -555,12 +952,126 @@ func (p *ReadLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ReadLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadLoadBalancerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadLoadBalancerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadLoadBalancerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadLoadBalancerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadLoadBalancerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadLoadBalancerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadLoadBalancerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadLoadBalancerParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadLoadBalancerParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadLoadBalancerParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadLoadBalancerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadLoadBalancerParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadLoadBalancerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadLoadBalancerParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ReadLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReadLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UpdateLoadBalancerParam is input parameters for the sacloud API
 type UpdateLoadBalancerParam struct {
-	Name        string
-	Description string
-	Tags        []string
-	IconId      sacloud.ID
+	Selector          []string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -585,6 +1096,9 @@ func (p *UpdateLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateLoadBalancerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -596,6 +1110,48 @@ func (p *UpdateLoadBalancerParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -635,6 +1191,33 @@ func (p *UpdateLoadBalancerParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -662,6 +1245,13 @@ func (p *UpdateLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *UpdateLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateLoadBalancerParam) SetName(v string) {
 	p.Name = v
 }
@@ -690,10 +1280,123 @@ func (p *UpdateLoadBalancerParam) SetIconId(v sacloud.ID) {
 func (p *UpdateLoadBalancerParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
+func (p *UpdateLoadBalancerParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *UpdateLoadBalancerParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UpdateLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UpdateLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UpdateLoadBalancerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateLoadBalancerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateLoadBalancerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateLoadBalancerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateLoadBalancerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateLoadBalancerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateLoadBalancerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateLoadBalancerParam) GetFormat() string {
+	return p.Format
+}
+func (p *UpdateLoadBalancerParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UpdateLoadBalancerParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UpdateLoadBalancerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateLoadBalancerParam) GetQuery() string {
+	return p.Query
+}
+func (p *UpdateLoadBalancerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateLoadBalancerParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UpdateLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UpdateLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DeleteLoadBalancerParam is input parameters for the sacloud API
 type DeleteLoadBalancerParam struct {
-	Force bool
+	Force             bool
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -721,12 +1424,84 @@ func (p *DeleteLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Force) {
 		p.Force = false
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DeleteLoadBalancerParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -761,9 +1536,123 @@ func (p *DeleteLoadBalancerParam) SetForce(v bool) {
 func (p *DeleteLoadBalancerParam) GetForce() bool {
 	return p.Force
 }
+func (p *DeleteLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DeleteLoadBalancerParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DeleteLoadBalancerParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DeleteLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DeleteLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DeleteLoadBalancerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteLoadBalancerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteLoadBalancerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteLoadBalancerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteLoadBalancerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteLoadBalancerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteLoadBalancerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteLoadBalancerParam) GetFormat() string {
+	return p.Format
+}
+func (p *DeleteLoadBalancerParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DeleteLoadBalancerParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DeleteLoadBalancerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteLoadBalancerParam) GetQuery() string {
+	return p.Query
+}
+func (p *DeleteLoadBalancerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteLoadBalancerParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *DeleteLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DeleteLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // BootLoadBalancerParam is input parameters for the sacloud API
 type BootLoadBalancerParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -787,11 +1676,43 @@ func (p *BootLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *BootLoadBalancerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *BootLoadBalancerParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -820,8 +1741,74 @@ func (p *BootLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *BootLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *BootLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *BootLoadBalancerParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *BootLoadBalancerParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *BootLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BootLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BootLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BootLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *BootLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BootLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BootLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BootLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *BootLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BootLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BootLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *BootLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // ShutdownLoadBalancerParam is input parameters for the sacloud API
 type ShutdownLoadBalancerParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -845,11 +1832,43 @@ func (p *ShutdownLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ShutdownLoadBalancerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ShutdownLoadBalancerParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -878,8 +1897,74 @@ func (p *ShutdownLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ShutdownLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ShutdownLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ShutdownLoadBalancerParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ShutdownLoadBalancerParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ShutdownLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShutdownLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShutdownLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ShutdownLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShutdownLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ShutdownLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ShutdownLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShutdownLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ShutdownLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ShutdownLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // ShutdownForceLoadBalancerParam is input parameters for the sacloud API
 type ShutdownForceLoadBalancerParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -903,11 +1988,43 @@ func (p *ShutdownForceLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ShutdownForceLoadBalancerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ShutdownForceLoadBalancerParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -936,8 +2053,74 @@ func (p *ShutdownForceLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ShutdownForceLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ShutdownForceLoadBalancerParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ShutdownForceLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShutdownForceLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ShutdownForceLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ShutdownForceLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ShutdownForceLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ShutdownForceLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // ResetLoadBalancerParam is input parameters for the sacloud API
 type ResetLoadBalancerParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -961,11 +2144,43 @@ func (p *ResetLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ResetLoadBalancerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ResetLoadBalancerParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -994,8 +2209,73 @@ func (p *ResetLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ResetLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ResetLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ResetLoadBalancerParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ResetLoadBalancerParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ResetLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ResetLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ResetLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ResetLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ResetLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ResetLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ResetLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ResetLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ResetLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ResetLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ResetLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ResetLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // WaitForBootLoadBalancerParam is input parameters for the sacloud API
 type WaitForBootLoadBalancerParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1019,11 +2299,40 @@ func (p *WaitForBootLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *WaitForBootLoadBalancerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *WaitForBootLoadBalancerParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1052,8 +2361,66 @@ func (p *WaitForBootLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *WaitForBootLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *WaitForBootLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *WaitForBootLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForBootLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForBootLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForBootLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *WaitForBootLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForBootLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *WaitForBootLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForBootLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *WaitForBootLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForBootLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *WaitForBootLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *WaitForBootLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // WaitForDownLoadBalancerParam is input parameters for the sacloud API
 type WaitForDownLoadBalancerParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1077,11 +2444,40 @@ func (p *WaitForDownLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *WaitForDownLoadBalancerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *WaitForDownLoadBalancerParam) validate() error {
 	var errors []error
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return utils.FlattenErrors(errors)
 }
@@ -1110,8 +2506,73 @@ func (p *WaitForDownLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *WaitForDownLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *WaitForDownLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *WaitForDownLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForDownLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForDownLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForDownLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *WaitForDownLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForDownLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *WaitForDownLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForDownLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *WaitForDownLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForDownLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *WaitForDownLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *WaitForDownLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // VipInfoLoadBalancerParam is input parameters for the sacloud API
 type VipInfoLoadBalancerParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -1135,12 +2596,81 @@ func (p *VipInfoLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *VipInfoLoadBalancerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *VipInfoLoadBalancerParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1168,13 +2698,120 @@ func (p *VipInfoLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *VipInfoLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *VipInfoLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *VipInfoLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *VipInfoLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *VipInfoLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *VipInfoLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *VipInfoLoadBalancerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *VipInfoLoadBalancerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *VipInfoLoadBalancerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *VipInfoLoadBalancerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetFormat() string {
+	return p.Format
+}
+func (p *VipInfoLoadBalancerParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *VipInfoLoadBalancerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetQuery() string {
+	return p.Query
+}
+func (p *VipInfoLoadBalancerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *VipInfoLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // VipAddLoadBalancerParam is input parameters for the sacloud API
 type VipAddLoadBalancerParam struct {
-	DelayLoop   int
-	SorryServer string
-	Description string
-	Vip         string
-	Port        int
+	Vip               string
+	Port              int
+	DelayLoop         int
+	SorryServer       string
+	Description       string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1200,6 +2837,12 @@ func (p *VipAddLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *VipAddLoadBalancerParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Vip) {
+		p.Vip = ""
+	}
+	if utils.IsEmpty(p.Port) {
+		p.Port = 0
+	}
 	if utils.IsEmpty(p.DelayLoop) {
 		p.DelayLoop = 0
 	}
@@ -1209,33 +2852,35 @@ func (p *VipAddLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Vip) {
-		p.Vip = ""
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Port) {
-		p.Port = 0
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
 
 func (p *VipAddLoadBalancerParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["vip-add"].Params["delay-loop"].ValidateFunc
-		errs := validator("--delay-loop", p.DelayLoop)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["LoadBalancer"].Commands["vip-add"].Params["sorry-server"].ValidateFunc
-		errs := validator("--sorry-server", p.SorryServer)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -1262,6 +2907,30 @@ func (p *VipAddLoadBalancerParam) validate() error {
 	{
 		validator := define.Resources["LoadBalancer"].Commands["vip-add"].Params["port"].ValidateFunc
 		errs := validator("--port", p.Port)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["vip-add"].Params["delay-loop"].ValidateFunc
+		errs := validator("--delay-loop", p.DelayLoop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["LoadBalancer"].Commands["vip-add"].Params["sorry-server"].ValidateFunc
+		errs := validator("--sorry-server", p.SorryServer)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1294,6 +2963,20 @@ func (p *VipAddLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *VipAddLoadBalancerParam) SetVip(v string) {
+	p.Vip = v
+}
+
+func (p *VipAddLoadBalancerParam) GetVip() string {
+	return p.Vip
+}
+func (p *VipAddLoadBalancerParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *VipAddLoadBalancerParam) GetPort() int {
+	return p.Port
+}
 func (p *VipAddLoadBalancerParam) SetDelayLoop(v int) {
 	p.DelayLoop = v
 }
@@ -1315,29 +2998,79 @@ func (p *VipAddLoadBalancerParam) SetDescription(v string) {
 func (p *VipAddLoadBalancerParam) GetDescription() string {
 	return p.Description
 }
-func (p *VipAddLoadBalancerParam) SetVip(v string) {
-	p.Vip = v
+func (p *VipAddLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
 }
 
-func (p *VipAddLoadBalancerParam) GetVip() string {
-	return p.Vip
+func (p *VipAddLoadBalancerParam) GetSelector() []string {
+	return p.Selector
 }
-func (p *VipAddLoadBalancerParam) SetPort(v int) {
-	p.Port = v
+func (p *VipAddLoadBalancerParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
 }
 
-func (p *VipAddLoadBalancerParam) GetPort() int {
-	return p.Port
+func (p *VipAddLoadBalancerParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *VipAddLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *VipAddLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *VipAddLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *VipAddLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *VipAddLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *VipAddLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *VipAddLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *VipAddLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *VipAddLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *VipAddLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *VipAddLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *VipAddLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
 }
 
 // VipUpdateLoadBalancerParam is input parameters for the sacloud API
 type VipUpdateLoadBalancerParam struct {
-	Index       int
-	Vip         string
-	Port        int
-	DelayLoop   int
-	SorryServer string
-	Description string
+	Index             int
+	Vip               string
+	Port              int
+	DelayLoop         int
+	SorryServer       string
+	Description       string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1381,6 +3114,30 @@ func (p *VipUpdateLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -1422,6 +3179,14 @@ func (p *VipUpdateLoadBalancerParam) validate() error {
 	{
 		validator := define.Resources["LoadBalancer"].Commands["vip-update"].Params["sorry-server"].ValidateFunc
 		errs := validator("--sorry-server", p.SorryServer)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1496,10 +3261,74 @@ func (p *VipUpdateLoadBalancerParam) SetDescription(v string) {
 func (p *VipUpdateLoadBalancerParam) GetDescription() string {
 	return p.Description
 }
+func (p *VipUpdateLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *VipUpdateLoadBalancerParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *VipUpdateLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *VipUpdateLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *VipUpdateLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *VipUpdateLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *VipUpdateLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *VipUpdateLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // VipDeleteLoadBalancerParam is input parameters for the sacloud API
 type VipDeleteLoadBalancerParam struct {
-	Index int
+	Index             int
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1527,6 +3356,30 @@ func (p *VipDeleteLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -1536,6 +3389,14 @@ func (p *VipDeleteLoadBalancerParam) validate() error {
 	{
 		validator := validateRequired
 		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1575,12 +3436,82 @@ func (p *VipDeleteLoadBalancerParam) SetIndex(v int) {
 func (p *VipDeleteLoadBalancerParam) GetIndex() int {
 	return p.Index
 }
+func (p *VipDeleteLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *VipDeleteLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *VipDeleteLoadBalancerParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *VipDeleteLoadBalancerParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *VipDeleteLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *VipDeleteLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *VipDeleteLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *VipDeleteLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *VipDeleteLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *VipDeleteLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *VipDeleteLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *VipDeleteLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *VipDeleteLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *VipDeleteLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *VipDeleteLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *VipDeleteLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // ServerInfoLoadBalancerParam is input parameters for the sacloud API
 type ServerInfoLoadBalancerParam struct {
-	VipIndex int
-	Vip      string
-	Port     int
+	VipIndex          int
+	Vip               string
+	Port              int
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1613,6 +3544,48 @@ func (p *ServerInfoLoadBalancerParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Port) {
 		p.Port = 0
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1665,6 +3638,33 @@ func (p *ServerInfoLoadBalancerParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -1713,17 +3713,123 @@ func (p *ServerInfoLoadBalancerParam) SetPort(v int) {
 func (p *ServerInfoLoadBalancerParam) GetPort() int {
 	return p.Port
 }
+func (p *ServerInfoLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ServerInfoLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ServerInfoLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerInfoLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ServerInfoLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerInfoLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ServerInfoLoadBalancerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ServerInfoLoadBalancerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ServerInfoLoadBalancerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ServerInfoLoadBalancerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetFormat() string {
+	return p.Format
+}
+func (p *ServerInfoLoadBalancerParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ServerInfoLoadBalancerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetQuery() string {
+	return p.Query
+}
+func (p *ServerInfoLoadBalancerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ServerInfoLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // ServerAddLoadBalancerParam is input parameters for the sacloud API
 type ServerAddLoadBalancerParam struct {
-	VipIndex     int
-	Vip          string
-	Port         int
-	Ipaddress    string
-	Protocol     string
-	Path         string
-	ResponseCode int
-	Disabled     bool
+	VipIndex          int
+	Vip               string
+	Port              int
+	Ipaddress         string
+	Protocol          string
+	Path              string
+	ResponseCode      int
+	Disabled          bool
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1772,6 +3878,30 @@ func (p *ServerAddLoadBalancerParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Disabled) {
 		p.Disabled = false
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1849,6 +3979,14 @@ func (p *ServerAddLoadBalancerParam) validate() error {
 	{
 		validator := define.Resources["LoadBalancer"].Commands["server-add"].Params["protocol"].ValidateFunc
 		errs := validator("--protocol", p.Protocol)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1937,17 +4075,81 @@ func (p *ServerAddLoadBalancerParam) SetDisabled(v bool) {
 func (p *ServerAddLoadBalancerParam) GetDisabled() bool {
 	return p.Disabled
 }
+func (p *ServerAddLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ServerAddLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ServerAddLoadBalancerParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ServerAddLoadBalancerParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ServerAddLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ServerAddLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ServerAddLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerAddLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerAddLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ServerAddLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ServerAddLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerAddLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerAddLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ServerAddLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ServerAddLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ServerAddLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // ServerUpdateLoadBalancerParam is input parameters for the sacloud API
 type ServerUpdateLoadBalancerParam struct {
-	Path         string
-	ResponseCode int
-	Disabled     bool
-	VipIndex     int
-	Vip          string
-	Port         int
-	Ipaddress    string
-	Protocol     string
+	VipIndex          int
+	Vip               string
+	Port              int
+	Ipaddress         string
+	Protocol          string
+	Path              string
+	ResponseCode      int
+	Disabled          bool
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -1972,15 +4174,6 @@ func (p *ServerUpdateLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ServerUpdateLoadBalancerParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Path) {
-		p.Path = ""
-	}
-	if utils.IsEmpty(p.ResponseCode) {
-		p.ResponseCode = 0
-	}
-	if utils.IsEmpty(p.Disabled) {
-		p.Disabled = false
-	}
 	if utils.IsEmpty(p.VipIndex) {
 		p.VipIndex = 0
 	}
@@ -1995,6 +4188,39 @@ func (p *ServerUpdateLoadBalancerParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Protocol) {
 		p.Protocol = ""
+	}
+	if utils.IsEmpty(p.Path) {
+		p.Path = ""
+	}
+	if utils.IsEmpty(p.ResponseCode) {
+		p.ResponseCode = 0
+	}
+	if utils.IsEmpty(p.Disabled) {
+		p.Disabled = false
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2070,6 +4296,14 @@ func (p *ServerUpdateLoadBalancerParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
@@ -2097,27 +4331,6 @@ func (p *ServerUpdateLoadBalancerParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *ServerUpdateLoadBalancerParam) SetPath(v string) {
-	p.Path = v
-}
-
-func (p *ServerUpdateLoadBalancerParam) GetPath() string {
-	return p.Path
-}
-func (p *ServerUpdateLoadBalancerParam) SetResponseCode(v int) {
-	p.ResponseCode = v
-}
-
-func (p *ServerUpdateLoadBalancerParam) GetResponseCode() int {
-	return p.ResponseCode
-}
-func (p *ServerUpdateLoadBalancerParam) SetDisabled(v bool) {
-	p.Disabled = v
-}
-
-func (p *ServerUpdateLoadBalancerParam) GetDisabled() bool {
-	return p.Disabled
-}
 func (p *ServerUpdateLoadBalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
@@ -2153,13 +4366,98 @@ func (p *ServerUpdateLoadBalancerParam) SetProtocol(v string) {
 func (p *ServerUpdateLoadBalancerParam) GetProtocol() string {
 	return p.Protocol
 }
+func (p *ServerUpdateLoadBalancerParam) SetPath(v string) {
+	p.Path = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetPath() string {
+	return p.Path
+}
+func (p *ServerUpdateLoadBalancerParam) SetResponseCode(v int) {
+	p.ResponseCode = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetResponseCode() int {
+	return p.ResponseCode
+}
+func (p *ServerUpdateLoadBalancerParam) SetDisabled(v bool) {
+	p.Disabled = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetDisabled() bool {
+	return p.Disabled
+}
+func (p *ServerUpdateLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ServerUpdateLoadBalancerParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ServerUpdateLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ServerUpdateLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerUpdateLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ServerUpdateLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerUpdateLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ServerUpdateLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // ServerDeleteLoadBalancerParam is input parameters for the sacloud API
 type ServerDeleteLoadBalancerParam struct {
-	VipIndex  int
-	Vip       string
-	Port      int
-	Ipaddress string
+	VipIndex          int
+	Vip               string
+	Port              int
+	Ipaddress         string
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -2195,6 +4493,30 @@ func (p *ServerDeleteLoadBalancerParam) fillValueToSkeleton() {
 	}
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2262,6 +4584,14 @@ func (p *ServerDeleteLoadBalancerParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return utils.FlattenErrors(errors)
 }
 
@@ -2317,12 +4647,82 @@ func (p *ServerDeleteLoadBalancerParam) SetIpaddress(v string) {
 func (p *ServerDeleteLoadBalancerParam) GetIpaddress() string {
 	return p.Ipaddress
 }
+func (p *ServerDeleteLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ServerDeleteLoadBalancerParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ServerDeleteLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ServerDeleteLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ServerDeleteLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ServerDeleteLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ServerDeleteLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ServerDeleteLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // MonitorLoadBalancerParam is input parameters for the sacloud API
 type MonitorLoadBalancerParam struct {
-	Start     string
-	End       string
-	KeyFormat string
+	Start             string
+	End               string
+	KeyFormat         string
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -2357,6 +4757,48 @@ func (p *MonitorLoadBalancerParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -2387,6 +4829,33 @@ func (p *MonitorLoadBalancerParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -2434,4 +4903,102 @@ func (p *MonitorLoadBalancerParam) SetKeyFormat(v string) {
 
 func (p *MonitorLoadBalancerParam) GetKeyFormat() string {
 	return p.KeyFormat
+}
+func (p *MonitorLoadBalancerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorLoadBalancerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorLoadBalancerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorLoadBalancerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorLoadBalancerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorLoadBalancerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorLoadBalancerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorLoadBalancerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorLoadBalancerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorLoadBalancerParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorLoadBalancerParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorLoadBalancerParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorLoadBalancerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorLoadBalancerParam) GetQuery() string {
+	return p.Query
+}
+func (p *MonitorLoadBalancerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorLoadBalancerParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *MonitorLoadBalancerParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *MonitorLoadBalancerParam) GetId() sacloud.ID {
+	return p.Id
 }

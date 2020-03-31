@@ -78,12 +78,24 @@ var proxyLBListCmd = &cobra.Command{
 
 func proxyLBListCmdInit() {
 	fs := proxyLBListCmd.Flags()
-	fs.IntVarP(&proxyLBListParam.Max, "max", "", 0, "set limit")
-	fs.StringSliceVarP(&proxyLBListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&proxyLBListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.StringSliceVarP(&proxyLBListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &proxyLBListParam.Id), "id", "", "set filter by id(s)")
+	fs.StringSliceVarP(&proxyLBListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.IntVarP(&proxyLBListParam.From, "from", "", 0, "set offset")
+	fs.IntVarP(&proxyLBListParam.Max, "max", "", 0, "set limit")
+	fs.StringSliceVarP(&proxyLBListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&proxyLBListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var proxyLBCreateCmd = &cobra.Command{
@@ -101,19 +113,32 @@ var proxyLBCreateCmd = &cobra.Command{
 
 func proxyLBCreateCmdInit() {
 	fs := proxyLBCreateCmd.Flags()
+	fs.IntVarP(&proxyLBCreateParam.Plan, "plan", "", 1000, "set plan")
+	fs.StringVarP(&proxyLBCreateParam.Protocol, "protocol", "", "tcp", "set healthcheck protocol[http/tcp]")
+	fs.StringVarP(&proxyLBCreateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
+	fs.StringVarP(&proxyLBCreateParam.Path, "path", "", "/", "set path of http/https healthcheck request")
+	fs.IntVarP(&proxyLBCreateParam.DelayLoop, "delay-loop", "", 10, "set delay-loop of healthcheck")
 	fs.BoolVarP(&proxyLBCreateParam.StickySession, "sticky-session", "", false, "enable sticky-session")
 	fs.StringVarP(&proxyLBCreateParam.SorryServerIpaddress, "sorry-server-ipaddress", "", "", "set sorry-server ip address")
 	fs.IntVarP(&proxyLBCreateParam.SorryServerPort, "sorry-server-port", "", 0, "set sorry-server ports")
 	fs.IntVarP(&proxyLBCreateParam.Timeout, "timeout", "", 10, "set timeout")
+	fs.StringVarP(&proxyLBCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&proxyLBCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&proxyLBCreateParam.Tags, "tags", "", []string{}, "set resource tags")
-	fs.StringVarP(&proxyLBCreateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
-	fs.StringVarP(&proxyLBCreateParam.Protocol, "protocol", "", "tcp", "set healthcheck protocol[http/tcp]")
-	fs.StringVarP(&proxyLBCreateParam.Path, "path", "", "/", "set path of http/https healthcheck request")
-	fs.IntVarP(&proxyLBCreateParam.DelayLoop, "delay-loop", "", 10, "set delay-loop of healthcheck")
-	fs.StringVarP(&proxyLBCreateParam.Name, "name", "", "", "set resource display name")
 	fs.VarP(newIDValue(0, &proxyLBCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.IntVarP(&proxyLBCreateParam.Plan, "plan", "", 1000, "set plan")
+	fs.BoolVarP(&proxyLBCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var proxyLBReadCmd = &cobra.Command{
@@ -130,6 +155,21 @@ var proxyLBReadCmd = &cobra.Command{
 }
 
 func proxyLBReadCmdInit() {
+	fs := proxyLBReadCmd.Flags()
+	fs.StringSliceVarP(&proxyLBReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&proxyLBReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBReadParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBUpdateCmd = &cobra.Command{
@@ -147,18 +187,33 @@ var proxyLBUpdateCmd = &cobra.Command{
 
 func proxyLBUpdateCmdInit() {
 	fs := proxyLBUpdateCmd.Flags()
-	fs.IntVarP(&proxyLBUpdateParam.DelayLoop, "delay-loop", "", 0, "set delay-loop of healthcheck")
-	fs.BoolVarP(&proxyLBUpdateParam.StickySession, "sticky-session", "", false, "enable sticky-session")
-	fs.StringVarP(&proxyLBUpdateParam.SorryServerIpaddress, "sorry-server-ipaddress", "", "", "set sorry-server ip address")
-	fs.StringVarP(&proxyLBUpdateParam.Description, "description", "", "", "set resource description")
-	fs.VarP(newIDValue(0, &proxyLBUpdateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.StringVarP(&proxyLBUpdateParam.Protocol, "protocol", "", "", "set healthcheck protocol[http/tcp]")
 	fs.StringVarP(&proxyLBUpdateParam.HostHeader, "host-header", "", "", "set host header of http/https healthcheck request")
 	fs.StringVarP(&proxyLBUpdateParam.Path, "path", "", "", "set path of http/https healthcheck request")
+	fs.IntVarP(&proxyLBUpdateParam.DelayLoop, "delay-loop", "", 0, "set delay-loop of healthcheck")
+	fs.BoolVarP(&proxyLBUpdateParam.StickySession, "sticky-session", "", false, "enable sticky-session")
+	fs.StringVarP(&proxyLBUpdateParam.SorryServerIpaddress, "sorry-server-ipaddress", "", "", "set sorry-server ip address")
 	fs.IntVarP(&proxyLBUpdateParam.SorryServerPort, "sorry-server-port", "", 0, "set sorry-server ports")
 	fs.IntVarP(&proxyLBUpdateParam.Timeout, "timeout", "", 10, "set timeout")
+	fs.StringSliceVarP(&proxyLBUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&proxyLBUpdateParam.Name, "name", "", "", "set resource display name")
+	fs.StringVarP(&proxyLBUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&proxyLBUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &proxyLBUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&proxyLBUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBDeleteCmd = &cobra.Command{
@@ -175,6 +230,22 @@ var proxyLBDeleteCmd = &cobra.Command{
 }
 
 func proxyLBDeleteCmdInit() {
+	fs := proxyLBDeleteCmd.Flags()
+	fs.StringSliceVarP(&proxyLBDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&proxyLBDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBPlanChangeCmd = &cobra.Command{
@@ -193,6 +264,21 @@ var proxyLBPlanChangeCmd = &cobra.Command{
 func proxyLBPlanChangeCmdInit() {
 	fs := proxyLBPlanChangeCmd.Flags()
 	fs.IntVarP(&proxyLBPlanChangeParam.Plan, "plan", "", 0, "set plan")
+	fs.StringSliceVarP(&proxyLBPlanChangeParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&proxyLBPlanChangeParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBPlanChangeParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBPlanChangeParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBPlanChangeParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBPlanChangeParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBPlanChangeParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBPlanChangeParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBPlanChangeParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBPlanChangeParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBPlanChangeParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBPlanChangeParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBPlanChangeParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBPlanChangeParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBPlanChangeParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBBindPortInfoCmd = &cobra.Command{
@@ -209,6 +295,21 @@ var proxyLBBindPortInfoCmd = &cobra.Command{
 }
 
 func proxyLBBindPortInfoCmdInit() {
+	fs := proxyLBBindPortInfoCmd.Flags()
+	fs.StringSliceVarP(&proxyLBBindPortInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&proxyLBBindPortInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBBindPortInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBBindPortInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBBindPortInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBBindPortInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBBindPortInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBBindPortInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBBindPortInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBBindPortInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBBindPortInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBBindPortInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBBindPortInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBBindPortInfoParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBBindPortAddCmd = &cobra.Command{
@@ -230,6 +331,21 @@ func proxyLBBindPortAddCmdInit() {
 	fs.IntVarP(&proxyLBBindPortAddParam.Port, "port", "", 0, "set port number")
 	fs.BoolVarP(&proxyLBBindPortAddParam.RedirectToHttps, "redirect-to-https", "", false, "enable to redirect to https")
 	fs.BoolVarP(&proxyLBBindPortAddParam.SupportHttp2, "support-http-2", "", false, "enable http/2")
+	fs.StringSliceVarP(&proxyLBBindPortAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&proxyLBBindPortAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBBindPortAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBBindPortAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBBindPortAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBBindPortAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBBindPortAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBBindPortAddParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBBindPortAddParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBBindPortAddParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBBindPortAddParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBBindPortAddParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBBindPortAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBBindPortAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBBindPortAddParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBBindPortUpdateCmd = &cobra.Command{
@@ -252,6 +368,21 @@ func proxyLBBindPortUpdateCmdInit() {
 	fs.IntVarP(&proxyLBBindPortUpdateParam.Port, "port", "", 0, "set port number")
 	fs.BoolVarP(&proxyLBBindPortUpdateParam.RedirectToHttps, "redirect-to-https", "", false, "enable to redirect to https")
 	fs.BoolVarP(&proxyLBBindPortUpdateParam.SupportHttp2, "support-http-2", "", false, "enable http/2")
+	fs.StringSliceVarP(&proxyLBBindPortUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&proxyLBBindPortUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBBindPortUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBBindPortUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBBindPortUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBBindPortUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBBindPortUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBBindPortUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBBindPortUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBBindPortUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBBindPortUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBBindPortUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBBindPortUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBBindPortUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBBindPortUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBBindPortDeleteCmd = &cobra.Command{
@@ -270,6 +401,21 @@ var proxyLBBindPortDeleteCmd = &cobra.Command{
 func proxyLBBindPortDeleteCmdInit() {
 	fs := proxyLBBindPortDeleteCmd.Flags()
 	fs.IntVarP(&proxyLBBindPortDeleteParam.Index, "index", "", 0, "index of target bind-port")
+	fs.StringSliceVarP(&proxyLBBindPortDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&proxyLBBindPortDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBBindPortDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBBindPortDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBBindPortDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBBindPortDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBBindPortDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBBindPortDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBBindPortDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBBindPortDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBBindPortDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBBindPortDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBBindPortDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBBindPortDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBBindPortDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBResponseHeaderInfoCmd = &cobra.Command{
@@ -288,6 +434,20 @@ var proxyLBResponseHeaderInfoCmd = &cobra.Command{
 func proxyLBResponseHeaderInfoCmdInit() {
 	fs := proxyLBResponseHeaderInfoCmd.Flags()
 	fs.IntVarP(&proxyLBResponseHeaderInfoParam.PortIndex, "port-index", "", 0, "index of target bind-port")
+	fs.StringSliceVarP(&proxyLBResponseHeaderInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&proxyLBResponseHeaderInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBResponseHeaderInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBResponseHeaderInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBResponseHeaderInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBResponseHeaderInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBResponseHeaderInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBResponseHeaderInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBResponseHeaderInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBResponseHeaderInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBResponseHeaderInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBResponseHeaderInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBResponseHeaderInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBResponseHeaderInfoParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBResponseHeaderAddCmd = &cobra.Command{
@@ -308,6 +468,21 @@ func proxyLBResponseHeaderAddCmdInit() {
 	fs.IntVarP(&proxyLBResponseHeaderAddParam.PortIndex, "port-index", "", 0, "index of target bind-port")
 	fs.StringVarP(&proxyLBResponseHeaderAddParam.Header, "header", "", "", "set Header")
 	fs.StringVarP(&proxyLBResponseHeaderAddParam.Value, "value", "", "", "set Value")
+	fs.StringSliceVarP(&proxyLBResponseHeaderAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&proxyLBResponseHeaderAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBResponseHeaderAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBResponseHeaderAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBResponseHeaderAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBResponseHeaderAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBResponseHeaderAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBResponseHeaderAddParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBResponseHeaderAddParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBResponseHeaderAddParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBResponseHeaderAddParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBResponseHeaderAddParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBResponseHeaderAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBResponseHeaderAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBResponseHeaderAddParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBResponseHeaderUpdateCmd = &cobra.Command{
@@ -325,10 +500,25 @@ var proxyLBResponseHeaderUpdateCmd = &cobra.Command{
 
 func proxyLBResponseHeaderUpdateCmdInit() {
 	fs := proxyLBResponseHeaderUpdateCmd.Flags()
-	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.Header, "header", "", "", "set Header")
-	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.Value, "value", "", "", "set Value")
 	fs.IntVarP(&proxyLBResponseHeaderUpdateParam.Index, "index", "", 0, "index of target server")
 	fs.IntVarP(&proxyLBResponseHeaderUpdateParam.PortIndex, "port-index", "", 0, "index of target bind-port")
+	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.Header, "header", "", "", "set Header")
+	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.Value, "value", "", "", "set Value")
+	fs.StringSliceVarP(&proxyLBResponseHeaderUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&proxyLBResponseHeaderUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBResponseHeaderUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBResponseHeaderUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBResponseHeaderUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBResponseHeaderUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBResponseHeaderDeleteCmd = &cobra.Command{
@@ -348,6 +538,21 @@ func proxyLBResponseHeaderDeleteCmdInit() {
 	fs := proxyLBResponseHeaderDeleteCmd.Flags()
 	fs.IntVarP(&proxyLBResponseHeaderDeleteParam.Index, "index", "", 0, "index of target bind-port")
 	fs.IntVarP(&proxyLBResponseHeaderDeleteParam.PortIndex, "port-index", "", 0, "index of target bind-port")
+	fs.StringSliceVarP(&proxyLBResponseHeaderDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&proxyLBResponseHeaderDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBResponseHeaderDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBResponseHeaderDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBResponseHeaderDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBResponseHeaderDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBResponseHeaderDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBResponseHeaderDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBResponseHeaderDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBResponseHeaderDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBResponseHeaderDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBResponseHeaderDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBResponseHeaderDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBResponseHeaderDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBResponseHeaderDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBACMEInfoCmd = &cobra.Command{
@@ -364,6 +569,21 @@ var proxyLBACMEInfoCmd = &cobra.Command{
 }
 
 func proxyLBACMEInfoCmdInit() {
+	fs := proxyLBACMEInfoCmd.Flags()
+	fs.StringSliceVarP(&proxyLBACMEInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&proxyLBACMEInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBACMEInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBACMEInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBACMEInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBACMEInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBACMEInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBACMEInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBACMEInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBACMEInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBACMEInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBACMEInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBACMEInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBACMEInfoParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBACMESettingCmd = &cobra.Command{
@@ -384,6 +604,21 @@ func proxyLBACMESettingCmdInit() {
 	fs.BoolVarP(&proxyLBACMESettingParam.AcceptTos, "accept-tos", "", false, "the flag of accept Let's Encrypt's terms of services: https://letsencrypt.org/repository/")
 	fs.StringVarP(&proxyLBACMESettingParam.CommonName, "common-name", "", "", "set common name")
 	fs.BoolVarP(&proxyLBACMESettingParam.Disable, "disable", "", false, "the flag of disable Let's Encrypt")
+	fs.StringSliceVarP(&proxyLBACMESettingParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&proxyLBACMESettingParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBACMESettingParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBACMESettingParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBACMESettingParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBACMESettingParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBACMESettingParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBACMESettingParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBACMESettingParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBACMESettingParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBACMESettingParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBACMESettingParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBACMESettingParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBACMESettingParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBACMESettingParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBACMERenewCmd = &cobra.Command{
@@ -400,6 +635,15 @@ var proxyLBACMERenewCmd = &cobra.Command{
 }
 
 func proxyLBACMERenewCmdInit() {
+	fs := proxyLBACMERenewCmd.Flags()
+	fs.StringSliceVarP(&proxyLBACMERenewParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&proxyLBACMERenewParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBACMERenewParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBACMERenewParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBACMERenewParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBACMERenewParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBACMERenewParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &proxyLBACMERenewParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBServerInfoCmd = &cobra.Command{
@@ -416,6 +660,21 @@ var proxyLBServerInfoCmd = &cobra.Command{
 }
 
 func proxyLBServerInfoCmdInit() {
+	fs := proxyLBServerInfoCmd.Flags()
+	fs.StringSliceVarP(&proxyLBServerInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&proxyLBServerInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBServerInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBServerInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBServerInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBServerInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBServerInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBServerInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBServerInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBServerInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBServerInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBServerInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBServerInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBServerInfoParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBServerAddCmd = &cobra.Command{
@@ -433,9 +692,24 @@ var proxyLBServerAddCmd = &cobra.Command{
 
 func proxyLBServerAddCmdInit() {
 	fs := proxyLBServerAddCmd.Flags()
+	fs.StringVarP(&proxyLBServerAddParam.Ipaddress, "ipaddress", "", "", "set target ipaddress")
 	fs.BoolVarP(&proxyLBServerAddParam.Disabled, "disabled", "", false, "set disabled")
 	fs.IntVarP(&proxyLBServerAddParam.Port, "port", "", 0, "set server ports")
-	fs.StringVarP(&proxyLBServerAddParam.Ipaddress, "ipaddress", "", "", "set target ipaddress")
+	fs.StringSliceVarP(&proxyLBServerAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&proxyLBServerAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBServerAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBServerAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBServerAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBServerAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBServerAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBServerAddParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBServerAddParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBServerAddParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBServerAddParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBServerAddParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBServerAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBServerAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBServerAddParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBServerUpdateCmd = &cobra.Command{
@@ -457,6 +731,21 @@ func proxyLBServerUpdateCmdInit() {
 	fs.StringVarP(&proxyLBServerUpdateParam.Ipaddress, "ipaddress", "", "", "set target ipaddress")
 	fs.BoolVarP(&proxyLBServerUpdateParam.Disabled, "disabled", "", false, "set disabled")
 	fs.IntVarP(&proxyLBServerUpdateParam.Port, "port", "", 0, "set server ports")
+	fs.StringSliceVarP(&proxyLBServerUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&proxyLBServerUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBServerUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBServerUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBServerUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBServerUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBServerUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBServerUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBServerUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBServerUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBServerUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBServerUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBServerUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBServerUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBServerUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBServerDeleteCmd = &cobra.Command{
@@ -475,6 +764,21 @@ var proxyLBServerDeleteCmd = &cobra.Command{
 func proxyLBServerDeleteCmdInit() {
 	fs := proxyLBServerDeleteCmd.Flags()
 	fs.IntVarP(&proxyLBServerDeleteParam.Index, "index", "", 0, "index of target server")
+	fs.StringSliceVarP(&proxyLBServerDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&proxyLBServerDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBServerDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBServerDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBServerDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBServerDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBServerDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBServerDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBServerDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBServerDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBServerDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBServerDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBServerDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBServerDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBServerDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBCertificateInfoCmd = &cobra.Command{
@@ -491,6 +795,21 @@ var proxyLBCertificateInfoCmd = &cobra.Command{
 }
 
 func proxyLBCertificateInfoCmdInit() {
+	fs := proxyLBCertificateInfoCmd.Flags()
+	fs.StringSliceVarP(&proxyLBCertificateInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&proxyLBCertificateInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBCertificateInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBCertificateInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBCertificateInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBCertificateInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBCertificateInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBCertificateInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBCertificateInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBCertificateInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBCertificateInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBCertificateInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBCertificateInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBCertificateInfoParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBCertificateAddCmd = &cobra.Command{
@@ -511,6 +830,21 @@ func proxyLBCertificateAddCmdInit() {
 	fs.StringVarP(&proxyLBCertificateAddParam.ServerCertificate, "server-certificate", "", "", "")
 	fs.StringVarP(&proxyLBCertificateAddParam.IntermediateCertificate, "intermediate-certificate", "", "", "")
 	fs.StringVarP(&proxyLBCertificateAddParam.PrivateKey, "private-key", "", "", "")
+	fs.StringSliceVarP(&proxyLBCertificateAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&proxyLBCertificateAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBCertificateAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBCertificateAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBCertificateAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBCertificateAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBCertificateAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBCertificateAddParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBCertificateAddParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBCertificateAddParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBCertificateAddParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBCertificateAddParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBCertificateAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBCertificateAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBCertificateAddParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBCertificateUpdateCmd = &cobra.Command{
@@ -531,6 +865,21 @@ func proxyLBCertificateUpdateCmdInit() {
 	fs.StringVarP(&proxyLBCertificateUpdateParam.ServerCertificate, "server-certificate", "", "", "")
 	fs.StringVarP(&proxyLBCertificateUpdateParam.IntermediateCertificate, "intermediate-certificate", "", "", "")
 	fs.StringVarP(&proxyLBCertificateUpdateParam.PrivateKey, "private-key", "", "", "")
+	fs.StringSliceVarP(&proxyLBCertificateUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&proxyLBCertificateUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBCertificateUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBCertificateUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBCertificateUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBCertificateUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBCertificateUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBCertificateUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBCertificateUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBCertificateUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBCertificateUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBCertificateUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBCertificateUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBCertificateUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBCertificateUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBCertificateDeleteCmd = &cobra.Command{
@@ -547,6 +896,22 @@ var proxyLBCertificateDeleteCmd = &cobra.Command{
 }
 
 func proxyLBCertificateDeleteCmdInit() {
+	fs := proxyLBCertificateDeleteCmd.Flags()
+	fs.StringSliceVarP(&proxyLBCertificateDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&proxyLBCertificateDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&proxyLBCertificateDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBCertificateDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBCertificateDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBCertificateDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBCertificateDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBCertificateDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBCertificateDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBCertificateDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBCertificateDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBCertificateDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBCertificateDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBCertificateDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBCertificateDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var proxyLBMonitorCmd = &cobra.Command{
@@ -564,9 +929,23 @@ var proxyLBMonitorCmd = &cobra.Command{
 
 func proxyLBMonitorCmdInit() {
 	fs := proxyLBMonitorCmd.Flags()
-	fs.StringVarP(&proxyLBMonitorParam.KeyFormat, "key-format", "", "sakuracloud.proxylb.{{.ID}}", "set monitoring value key-format")
 	fs.StringVarP(&proxyLBMonitorParam.Start, "start", "", "", "set start-time")
 	fs.StringVarP(&proxyLBMonitorParam.End, "end", "", "", "set end-time")
+	fs.StringVarP(&proxyLBMonitorParam.KeyFormat, "key-format", "", "sakuracloud.proxylb.{{.ID}}", "set monitoring value key-format")
+	fs.StringSliceVarP(&proxyLBMonitorParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&proxyLBMonitorParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&proxyLBMonitorParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&proxyLBMonitorParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&proxyLBMonitorParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&proxyLBMonitorParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&proxyLBMonitorParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&proxyLBMonitorParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&proxyLBMonitorParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&proxyLBMonitorParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBMonitorParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&proxyLBMonitorParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&proxyLBMonitorParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &proxyLBMonitorParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

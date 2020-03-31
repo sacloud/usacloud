@@ -62,6 +62,18 @@ func ipv4ListCmdInit() {
 	fs.IntVarP(&ipv4ListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&ipv4ListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&ipv4ListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&ipv4ListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&ipv4ListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&ipv4ListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&ipv4ListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&ipv4ListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&ipv4ListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&ipv4ListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&ipv4ListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&ipv4ListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&ipv4ListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&ipv4ListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&ipv4ListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var ipv4PtrAddCmd = &cobra.Command{
@@ -80,6 +92,19 @@ var ipv4PtrAddCmd = &cobra.Command{
 func ipv4PtrAddCmdInit() {
 	fs := ipv4PtrAddCmd.Flags()
 	fs.StringVarP(&ipv4PtrAddParam.Hostname, "hostname", "", "", "set server hostname")
+	fs.BoolVarP(&ipv4PtrAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&ipv4PtrAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&ipv4PtrAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&ipv4PtrAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&ipv4PtrAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&ipv4PtrAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&ipv4PtrAddParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&ipv4PtrAddParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&ipv4PtrAddParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&ipv4PtrAddParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&ipv4PtrAddParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&ipv4PtrAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&ipv4PtrAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var ipv4PtrReadCmd = &cobra.Command{
@@ -96,6 +121,19 @@ var ipv4PtrReadCmd = &cobra.Command{
 }
 
 func ipv4PtrReadCmdInit() {
+	fs := ipv4PtrReadCmd.Flags()
+	fs.StringVarP(&ipv4PtrReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&ipv4PtrReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&ipv4PtrReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&ipv4PtrReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&ipv4PtrReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&ipv4PtrReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&ipv4PtrReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&ipv4PtrReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&ipv4PtrReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&ipv4PtrReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&ipv4PtrReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&ipv4PtrReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var ipv4PtrUpdateCmd = &cobra.Command{
@@ -114,6 +152,19 @@ var ipv4PtrUpdateCmd = &cobra.Command{
 func ipv4PtrUpdateCmdInit() {
 	fs := ipv4PtrUpdateCmd.Flags()
 	fs.StringVarP(&ipv4PtrUpdateParam.Hostname, "hostname", "", "", "set server hostname")
+	fs.BoolVarP(&ipv4PtrUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&ipv4PtrUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&ipv4PtrUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&ipv4PtrUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&ipv4PtrUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&ipv4PtrUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&ipv4PtrUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&ipv4PtrUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&ipv4PtrUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&ipv4PtrUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&ipv4PtrUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&ipv4PtrUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&ipv4PtrUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var ipv4PtrDeleteCmd = &cobra.Command{
@@ -130,6 +181,20 @@ var ipv4PtrDeleteCmd = &cobra.Command{
 }
 
 func ipv4PtrDeleteCmdInit() {
+	fs := ipv4PtrDeleteCmd.Flags()
+	fs.BoolVarP(&ipv4PtrDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&ipv4PtrDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&ipv4PtrDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&ipv4PtrDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&ipv4PtrDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&ipv4PtrDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&ipv4PtrDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&ipv4PtrDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&ipv4PtrDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&ipv4PtrDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&ipv4PtrDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&ipv4PtrDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&ipv4PtrDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 func init() {

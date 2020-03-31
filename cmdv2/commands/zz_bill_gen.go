@@ -53,9 +53,14 @@ var billCsvCmd = &cobra.Command{
 
 func billCsvCmdInit() {
 	fs := billCsvCmd.Flags()
-	fs.VarP(newIDValue(0, &billCsvParam.BillId), "bill-id", "", "set bill ID")
+	fs.StringVarP(&billCsvParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&billCsvParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&billCsvParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&billCsvParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&billCsvParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.BoolVarP(&billCsvParam.NoHeader, "no-header", "", false, "set output header flag")
 	fs.StringVarP(&billCsvParam.BillOutput, "bill-output", "", "", "set bill-detail output path")
+	fs.VarP(newIDValue(0, &billCsvParam.BillId), "bill-id", "", "set bill ID")
 }
 
 var billListCmd = &cobra.Command{
@@ -75,6 +80,18 @@ func billListCmdInit() {
 	fs := billListCmd.Flags()
 	fs.IntVarP(&billListParam.Year, "year", "", 0, "set year")
 	fs.IntVarP(&billListParam.Month, "month", "", 0, "set month")
+	fs.StringVarP(&billListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&billListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&billListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&billListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&billListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&billListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&billListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&billListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&billListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&billListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&billListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&billListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 func init() {

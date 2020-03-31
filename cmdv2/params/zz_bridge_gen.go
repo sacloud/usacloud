@@ -29,11 +29,23 @@ import (
 
 // ListBridgeParam is input parameters for the sacloud API
 type ListBridgeParam struct {
-	Name []string
-	Id   []sacloud.ID
-	From int
-	Max  int
-	Sort []string
+	Name              []string
+	Id                []sacloud.ID
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -73,6 +85,42 @@ func (p *ListBridgeParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
@@ -106,6 +154,25 @@ func (p *ListBridgeParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -168,11 +235,108 @@ func (p *ListBridgeParam) SetSort(v []string) {
 func (p *ListBridgeParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListBridgeParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListBridgeParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListBridgeParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListBridgeParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListBridgeParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListBridgeParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListBridgeParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListBridgeParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListBridgeParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListBridgeParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListBridgeParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListBridgeParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListBridgeParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListBridgeParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListBridgeParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListBridgeParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListBridgeParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListBridgeParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListBridgeParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListBridgeParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListBridgeParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListBridgeParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListBridgeParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListBridgeParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateBridgeParam is input parameters for the sacloud API
 type CreateBridgeParam struct {
-	Name        string
-	Description string
+	Name              string
+	Description       string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -203,6 +367,45 @@ func (p *CreateBridgeParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
@@ -232,6 +435,25 @@ func (p *CreateBridgeParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -273,9 +495,114 @@ func (p *CreateBridgeParam) SetDescription(v string) {
 func (p *CreateBridgeParam) GetDescription() string {
 	return p.Description
 }
+func (p *CreateBridgeParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *CreateBridgeParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *CreateBridgeParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateBridgeParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateBridgeParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateBridgeParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateBridgeParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateBridgeParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CreateBridgeParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateBridgeParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateBridgeParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateBridgeParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CreateBridgeParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateBridgeParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateBridgeParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateBridgeParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateBridgeParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateBridgeParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateBridgeParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateBridgeParam) GetFormat() string {
+	return p.Format
+}
+func (p *CreateBridgeParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CreateBridgeParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CreateBridgeParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateBridgeParam) GetQuery() string {
+	return p.Query
+}
+func (p *CreateBridgeParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateBridgeParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadBridgeParam is input parameters for the sacloud API
 type ReadBridgeParam struct {
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -299,12 +626,78 @@ func (p *ReadBridgeParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadBridgeParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ReadBridgeParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -332,10 +725,116 @@ func (p *ReadBridgeParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadBridgeParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadBridgeParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadBridgeParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadBridgeParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadBridgeParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadBridgeParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadBridgeParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadBridgeParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadBridgeParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadBridgeParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadBridgeParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadBridgeParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadBridgeParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadBridgeParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadBridgeParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadBridgeParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadBridgeParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadBridgeParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadBridgeParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadBridgeParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadBridgeParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadBridgeParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadBridgeParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadBridgeParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ReadBridgeParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReadBridgeParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UpdateBridgeParam is input parameters for the sacloud API
 type UpdateBridgeParam struct {
-	Name        string
-	Description string
+	Name              string
+	Description       string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -366,6 +865,48 @@ func (p *UpdateBridgeParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -388,6 +929,33 @@ func (p *UpdateBridgeParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -429,9 +997,122 @@ func (p *UpdateBridgeParam) SetDescription(v string) {
 func (p *UpdateBridgeParam) GetDescription() string {
 	return p.Description
 }
+func (p *UpdateBridgeParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *UpdateBridgeParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UpdateBridgeParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateBridgeParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateBridgeParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateBridgeParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateBridgeParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateBridgeParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UpdateBridgeParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateBridgeParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateBridgeParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateBridgeParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UpdateBridgeParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateBridgeParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateBridgeParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateBridgeParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateBridgeParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateBridgeParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateBridgeParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateBridgeParam) GetFormat() string {
+	return p.Format
+}
+func (p *UpdateBridgeParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UpdateBridgeParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UpdateBridgeParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateBridgeParam) GetQuery() string {
+	return p.Query
+}
+func (p *UpdateBridgeParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateBridgeParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UpdateBridgeParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UpdateBridgeParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DeleteBridgeParam is input parameters for the sacloud API
 type DeleteBridgeParam struct {
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -455,12 +1136,81 @@ func (p *DeleteBridgeParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *DeleteBridgeParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DeleteBridgeParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -486,4 +1236,103 @@ func (p *DeleteBridgeParam) TableType() output.TableType {
 
 func (p *DeleteBridgeParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
+}
+
+func (p *DeleteBridgeParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DeleteBridgeParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DeleteBridgeParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteBridgeParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteBridgeParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteBridgeParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteBridgeParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteBridgeParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DeleteBridgeParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteBridgeParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteBridgeParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteBridgeParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DeleteBridgeParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteBridgeParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteBridgeParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteBridgeParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteBridgeParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteBridgeParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteBridgeParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteBridgeParam) GetFormat() string {
+	return p.Format
+}
+func (p *DeleteBridgeParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DeleteBridgeParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DeleteBridgeParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteBridgeParam) GetQuery() string {
+	return p.Query
+}
+func (p *DeleteBridgeParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteBridgeParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *DeleteBridgeParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DeleteBridgeParam) GetId() sacloud.ID {
+	return p.Id
 }

@@ -87,10 +87,22 @@ func mobileGatewayListCmdInit() {
 	fs := mobileGatewayListCmd.Flags()
 	fs.StringSliceVarP(&mobileGatewayListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &mobileGatewayListParam.Id), "id", "", "set filter by id(s)")
+	fs.StringSliceVarP(&mobileGatewayListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.IntVarP(&mobileGatewayListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&mobileGatewayListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&mobileGatewayListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&mobileGatewayListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.StringVarP(&mobileGatewayListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&mobileGatewayListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&mobileGatewayListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&mobileGatewayListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&mobileGatewayListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewayListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewayListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&mobileGatewayListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var mobileGatewayCreateCmd = &cobra.Command{
@@ -108,11 +120,24 @@ var mobileGatewayCreateCmd = &cobra.Command{
 
 func mobileGatewayCreateCmdInit() {
 	fs := mobileGatewayCreateCmd.Flags()
+	fs.BoolVarP(&mobileGatewayCreateParam.InternetConnection, "internet-connection", "", false, "connect to internet")
 	fs.StringVarP(&mobileGatewayCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&mobileGatewayCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&mobileGatewayCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &mobileGatewayCreateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.BoolVarP(&mobileGatewayCreateParam.InternetConnection, "internet-connection", "", false, "connect to internet")
+	fs.BoolVarP(&mobileGatewayCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&mobileGatewayCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&mobileGatewayCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&mobileGatewayCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&mobileGatewayCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewayCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewayCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&mobileGatewayCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var mobileGatewayReadCmd = &cobra.Command{
@@ -129,6 +154,21 @@ var mobileGatewayReadCmd = &cobra.Command{
 }
 
 func mobileGatewayReadCmdInit() {
+	fs := mobileGatewayReadCmd.Flags()
+	fs.StringSliceVarP(&mobileGatewayReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&mobileGatewayReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&mobileGatewayReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&mobileGatewayReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&mobileGatewayReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&mobileGatewayReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewayReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewayReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&mobileGatewayReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &mobileGatewayReadParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayUpdateCmd = &cobra.Command{
@@ -146,11 +186,26 @@ var mobileGatewayUpdateCmd = &cobra.Command{
 
 func mobileGatewayUpdateCmdInit() {
 	fs := mobileGatewayUpdateCmd.Flags()
-	fs.VarP(newIDValue(0, &mobileGatewayUpdateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.BoolVarP(&mobileGatewayUpdateParam.InternetConnection, "internet-connection", "", false, "connect to internet")
+	fs.StringSliceVarP(&mobileGatewayUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.StringVarP(&mobileGatewayUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&mobileGatewayUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&mobileGatewayUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
+	fs.VarP(newIDValue(0, &mobileGatewayUpdateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&mobileGatewayUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&mobileGatewayUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&mobileGatewayUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&mobileGatewayUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&mobileGatewayUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewayUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewayUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&mobileGatewayUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &mobileGatewayUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayDeleteCmd = &cobra.Command{
@@ -169,6 +224,21 @@ var mobileGatewayDeleteCmd = &cobra.Command{
 func mobileGatewayDeleteCmdInit() {
 	fs := mobileGatewayDeleteCmd.Flags()
 	fs.BoolVarP(&mobileGatewayDeleteParam.Force, "force", "f", false, "forced-shutdown flag if mobile-gateway is running")
+	fs.StringSliceVarP(&mobileGatewayDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewayDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&mobileGatewayDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&mobileGatewayDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&mobileGatewayDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&mobileGatewayDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewayDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewayDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&mobileGatewayDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &mobileGatewayDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayBootCmd = &cobra.Command{
@@ -185,6 +255,15 @@ var mobileGatewayBootCmd = &cobra.Command{
 }
 
 func mobileGatewayBootCmdInit() {
+	fs := mobileGatewayBootCmd.Flags()
+	fs.StringSliceVarP(&mobileGatewayBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewayBootParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayBootParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayBootParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayShutdownCmd = &cobra.Command{
@@ -201,6 +280,15 @@ var mobileGatewayShutdownCmd = &cobra.Command{
 }
 
 func mobileGatewayShutdownCmdInit() {
+	fs := mobileGatewayShutdownCmd.Flags()
+	fs.StringSliceVarP(&mobileGatewayShutdownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewayShutdownParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayShutdownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayShutdownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayShutdownParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayShutdownParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayShutdownForceCmd = &cobra.Command{
@@ -217,6 +305,15 @@ var mobileGatewayShutdownForceCmd = &cobra.Command{
 }
 
 func mobileGatewayShutdownForceCmdInit() {
+	fs := mobileGatewayShutdownForceCmd.Flags()
+	fs.StringSliceVarP(&mobileGatewayShutdownForceParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewayShutdownForceParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayShutdownForceParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayShutdownForceParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayShutdownForceParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayShutdownForceParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayResetCmd = &cobra.Command{
@@ -233,6 +330,15 @@ var mobileGatewayResetCmd = &cobra.Command{
 }
 
 func mobileGatewayResetCmdInit() {
+	fs := mobileGatewayResetCmd.Flags()
+	fs.StringSliceVarP(&mobileGatewayResetParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewayResetParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayResetParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayResetParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayResetParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayResetParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayWaitForBootCmd = &cobra.Command{
@@ -249,6 +355,14 @@ var mobileGatewayWaitForBootCmd = &cobra.Command{
 }
 
 func mobileGatewayWaitForBootCmdInit() {
+	fs := mobileGatewayWaitForBootCmd.Flags()
+	fs.StringSliceVarP(&mobileGatewayWaitForBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&mobileGatewayWaitForBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayWaitForBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayWaitForBootParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayWaitForBootParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayWaitForDownCmd = &cobra.Command{
@@ -265,6 +379,14 @@ var mobileGatewayWaitForDownCmd = &cobra.Command{
 }
 
 func mobileGatewayWaitForDownCmdInit() {
+	fs := mobileGatewayWaitForDownCmd.Flags()
+	fs.StringSliceVarP(&mobileGatewayWaitForDownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&mobileGatewayWaitForDownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayWaitForDownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayWaitForDownParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayWaitForDownParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayInterfaceInfoCmd = &cobra.Command{
@@ -281,6 +403,21 @@ var mobileGatewayInterfaceInfoCmd = &cobra.Command{
 }
 
 func mobileGatewayInterfaceInfoCmdInit() {
+	fs := mobileGatewayInterfaceInfoCmd.Flags()
+	fs.StringSliceVarP(&mobileGatewayInterfaceInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&mobileGatewayInterfaceInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayInterfaceInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayInterfaceInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayInterfaceInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayInterfaceInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&mobileGatewayInterfaceInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&mobileGatewayInterfaceInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&mobileGatewayInterfaceInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&mobileGatewayInterfaceInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewayInterfaceInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewayInterfaceInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&mobileGatewayInterfaceInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &mobileGatewayInterfaceInfoParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayInterfaceConnectCmd = &cobra.Command{
@@ -298,9 +435,17 @@ var mobileGatewayInterfaceConnectCmd = &cobra.Command{
 
 func mobileGatewayInterfaceConnectCmdInit() {
 	fs := mobileGatewayInterfaceConnectCmd.Flags()
-	fs.VarP(newIDValue(0, &mobileGatewayInterfaceConnectParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.StringVarP(&mobileGatewayInterfaceConnectParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
+	fs.VarP(newIDValue(0, &mobileGatewayInterfaceConnectParam.SwitchId), "switch-id", "", "set connect switch ID")
 	fs.IntVarP(&mobileGatewayInterfaceConnectParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress prefix")
+	fs.StringSliceVarP(&mobileGatewayInterfaceConnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewayInterfaceConnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayInterfaceConnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayInterfaceConnectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayInterfaceConnectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayInterfaceConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayInterfaceConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayInterfaceConnectParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayInterfaceUpdateCmd = &cobra.Command{
@@ -320,6 +465,14 @@ func mobileGatewayInterfaceUpdateCmdInit() {
 	fs := mobileGatewayInterfaceUpdateCmd.Flags()
 	fs.StringVarP(&mobileGatewayInterfaceUpdateParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
 	fs.IntVarP(&mobileGatewayInterfaceUpdateParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress prefix")
+	fs.StringSliceVarP(&mobileGatewayInterfaceUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewayInterfaceUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayInterfaceUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayInterfaceUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayInterfaceUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayInterfaceUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayInterfaceUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayInterfaceUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayInterfaceDisconnectCmd = &cobra.Command{
@@ -336,6 +489,15 @@ var mobileGatewayInterfaceDisconnectCmd = &cobra.Command{
 }
 
 func mobileGatewayInterfaceDisconnectCmdInit() {
+	fs := mobileGatewayInterfaceDisconnectCmd.Flags()
+	fs.StringSliceVarP(&mobileGatewayInterfaceDisconnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewayInterfaceDisconnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayInterfaceDisconnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayInterfaceDisconnectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayInterfaceDisconnectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayInterfaceDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayInterfaceDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayInterfaceDisconnectParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayTrafficControlInfoCmd = &cobra.Command{
@@ -352,6 +514,21 @@ var mobileGatewayTrafficControlInfoCmd = &cobra.Command{
 }
 
 func mobileGatewayTrafficControlInfoCmdInit() {
+	fs := mobileGatewayTrafficControlInfoCmd.Flags()
+	fs.StringSliceVarP(&mobileGatewayTrafficControlInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&mobileGatewayTrafficControlInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayTrafficControlInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayTrafficControlInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayTrafficControlInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayTrafficControlInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&mobileGatewayTrafficControlInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&mobileGatewayTrafficControlInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&mobileGatewayTrafficControlInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&mobileGatewayTrafficControlInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewayTrafficControlInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewayTrafficControlInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&mobileGatewayTrafficControlInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &mobileGatewayTrafficControlInfoParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayTrafficControlEnableCmd = &cobra.Command{
@@ -374,6 +551,14 @@ func mobileGatewayTrafficControlEnableCmdInit() {
 	fs.BoolVarP(&mobileGatewayTrafficControlEnableParam.EnableEmail, "enable-email", "", false, "")
 	fs.StringVarP(&mobileGatewayTrafficControlEnableParam.SlackWebhookUrl, "slack-webhook-url", "", "", "")
 	fs.BoolVarP(&mobileGatewayTrafficControlEnableParam.AutoTrafficShaping, "auto-traffic-shaping", "", false, "")
+	fs.StringSliceVarP(&mobileGatewayTrafficControlEnableParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewayTrafficControlEnableParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayTrafficControlEnableParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayTrafficControlEnableParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayTrafficControlEnableParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayTrafficControlEnableParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayTrafficControlEnableParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayTrafficControlEnableParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayTrafficControlUpdateCmd = &cobra.Command{
@@ -391,11 +576,19 @@ var mobileGatewayTrafficControlUpdateCmd = &cobra.Command{
 
 func mobileGatewayTrafficControlUpdateCmdInit() {
 	fs := mobileGatewayTrafficControlUpdateCmd.Flags()
+	fs.IntVarP(&mobileGatewayTrafficControlUpdateParam.Quota, "quota", "", 0, "")
 	fs.IntVarP(&mobileGatewayTrafficControlUpdateParam.BandWidthLimit, "band-width-limit", "", 0, "")
 	fs.BoolVarP(&mobileGatewayTrafficControlUpdateParam.EnableEmail, "enable-email", "", false, "")
 	fs.StringVarP(&mobileGatewayTrafficControlUpdateParam.SlackWebhookUrl, "slack-webhook-url", "", "", "")
 	fs.BoolVarP(&mobileGatewayTrafficControlUpdateParam.AutoTrafficShaping, "auto-traffic-shaping", "", false, "")
-	fs.IntVarP(&mobileGatewayTrafficControlUpdateParam.Quota, "quota", "", 0, "")
+	fs.StringSliceVarP(&mobileGatewayTrafficControlUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewayTrafficControlUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayTrafficControlUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayTrafficControlUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayTrafficControlUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayTrafficControlUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayTrafficControlUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayTrafficControlUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayTrafficControlDisableCmd = &cobra.Command{
@@ -412,6 +605,15 @@ var mobileGatewayTrafficControlDisableCmd = &cobra.Command{
 }
 
 func mobileGatewayTrafficControlDisableCmdInit() {
+	fs := mobileGatewayTrafficControlDisableCmd.Flags()
+	fs.StringSliceVarP(&mobileGatewayTrafficControlDisableParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewayTrafficControlDisableParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayTrafficControlDisableParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayTrafficControlDisableParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayTrafficControlDisableParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayTrafficControlDisableParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayTrafficControlDisableParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayTrafficControlDisableParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayStaticRouteInfoCmd = &cobra.Command{
@@ -428,6 +630,21 @@ var mobileGatewayStaticRouteInfoCmd = &cobra.Command{
 }
 
 func mobileGatewayStaticRouteInfoCmdInit() {
+	fs := mobileGatewayStaticRouteInfoCmd.Flags()
+	fs.StringSliceVarP(&mobileGatewayStaticRouteInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&mobileGatewayStaticRouteInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayStaticRouteInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayStaticRouteInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayStaticRouteInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayStaticRouteInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&mobileGatewayStaticRouteInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&mobileGatewayStaticRouteInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&mobileGatewayStaticRouteInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&mobileGatewayStaticRouteInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewayStaticRouteInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewayStaticRouteInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&mobileGatewayStaticRouteInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &mobileGatewayStaticRouteInfoParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayStaticRouteAddCmd = &cobra.Command{
@@ -447,6 +664,14 @@ func mobileGatewayStaticRouteAddCmdInit() {
 	fs := mobileGatewayStaticRouteAddCmd.Flags()
 	fs.StringVarP(&mobileGatewayStaticRouteAddParam.Prefix, "prefix", "", "", "set prefix")
 	fs.StringVarP(&mobileGatewayStaticRouteAddParam.NextHop, "next-hop", "", "", "set next-hop")
+	fs.StringSliceVarP(&mobileGatewayStaticRouteAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewayStaticRouteAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayStaticRouteAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayStaticRouteAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayStaticRouteAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayStaticRouteAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayStaticRouteAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayStaticRouteAddParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayStaticRouteUpdateCmd = &cobra.Command{
@@ -467,6 +692,14 @@ func mobileGatewayStaticRouteUpdateCmdInit() {
 	fs.IntVarP(&mobileGatewayStaticRouteUpdateParam.Index, "index", "", 0, "index of target static-route")
 	fs.StringVarP(&mobileGatewayStaticRouteUpdateParam.Prefix, "prefix", "", "", "set prefix")
 	fs.StringVarP(&mobileGatewayStaticRouteUpdateParam.NextHop, "next-hop", "", "", "set next-hop")
+	fs.StringSliceVarP(&mobileGatewayStaticRouteUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewayStaticRouteUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayStaticRouteUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayStaticRouteUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayStaticRouteUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayStaticRouteUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayStaticRouteUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayStaticRouteUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayStaticRouteDeleteCmd = &cobra.Command{
@@ -485,6 +718,14 @@ var mobileGatewayStaticRouteDeleteCmd = &cobra.Command{
 func mobileGatewayStaticRouteDeleteCmdInit() {
 	fs := mobileGatewayStaticRouteDeleteCmd.Flags()
 	fs.IntVarP(&mobileGatewayStaticRouteDeleteParam.Index, "index", "", 0, "index of target static-route")
+	fs.StringSliceVarP(&mobileGatewayStaticRouteDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewayStaticRouteDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayStaticRouteDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayStaticRouteDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayStaticRouteDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayStaticRouteDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayStaticRouteDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayStaticRouteDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewaySIMInfoCmd = &cobra.Command{
@@ -501,6 +742,21 @@ var mobileGatewaySIMInfoCmd = &cobra.Command{
 }
 
 func mobileGatewaySIMInfoCmdInit() {
+	fs := mobileGatewaySIMInfoCmd.Flags()
+	fs.StringSliceVarP(&mobileGatewaySIMInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&mobileGatewaySIMInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewaySIMInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewaySIMInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewaySIMInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewaySIMInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&mobileGatewaySIMInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&mobileGatewaySIMInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&mobileGatewaySIMInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&mobileGatewaySIMInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewaySIMInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewaySIMInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&mobileGatewaySIMInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &mobileGatewaySIMInfoParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewaySIMAddCmd = &cobra.Command{
@@ -518,8 +774,16 @@ var mobileGatewaySIMAddCmd = &cobra.Command{
 
 func mobileGatewaySIMAddCmdInit() {
 	fs := mobileGatewaySIMAddCmd.Flags()
-	fs.VarP(newIDValue(0, &mobileGatewaySIMAddParam.SIMId), "sim-id", "", "")
 	fs.StringVarP(&mobileGatewaySIMAddParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
+	fs.VarP(newIDValue(0, &mobileGatewaySIMAddParam.SIMId), "sim-id", "", "")
+	fs.StringSliceVarP(&mobileGatewaySIMAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewaySIMAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewaySIMAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewaySIMAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewaySIMAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewaySIMAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewaySIMAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewaySIMAddParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewaySIMUpdateCmd = &cobra.Command{
@@ -537,8 +801,16 @@ var mobileGatewaySIMUpdateCmd = &cobra.Command{
 
 func mobileGatewaySIMUpdateCmdInit() {
 	fs := mobileGatewaySIMUpdateCmd.Flags()
-	fs.VarP(newIDValue(0, &mobileGatewaySIMUpdateParam.SIMId), "sim-id", "", "")
 	fs.StringVarP(&mobileGatewaySIMUpdateParam.Ipaddress, "ipaddress", "", "", "set ipaddress")
+	fs.VarP(newIDValue(0, &mobileGatewaySIMUpdateParam.SIMId), "sim-id", "", "")
+	fs.StringSliceVarP(&mobileGatewaySIMUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewaySIMUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewaySIMUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewaySIMUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewaySIMUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewaySIMUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewaySIMUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewaySIMUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewaySIMDeleteCmd = &cobra.Command{
@@ -557,6 +829,14 @@ var mobileGatewaySIMDeleteCmd = &cobra.Command{
 func mobileGatewaySIMDeleteCmdInit() {
 	fs := mobileGatewaySIMDeleteCmd.Flags()
 	fs.VarP(newIDValue(0, &mobileGatewaySIMDeleteParam.SIMId), "sim-id", "", "")
+	fs.StringSliceVarP(&mobileGatewaySIMDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewaySIMDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewaySIMDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewaySIMDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewaySIMDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewaySIMDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewaySIMDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewaySIMDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewaySIMRouteInfoCmd = &cobra.Command{
@@ -573,6 +853,21 @@ var mobileGatewaySIMRouteInfoCmd = &cobra.Command{
 }
 
 func mobileGatewaySIMRouteInfoCmdInit() {
+	fs := mobileGatewaySIMRouteInfoCmd.Flags()
+	fs.StringSliceVarP(&mobileGatewaySIMRouteInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&mobileGatewaySIMRouteInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewaySIMRouteInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewaySIMRouteInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewaySIMRouteInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewaySIMRouteInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&mobileGatewaySIMRouteInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&mobileGatewaySIMRouteInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&mobileGatewaySIMRouteInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&mobileGatewaySIMRouteInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewaySIMRouteInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&mobileGatewaySIMRouteInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&mobileGatewaySIMRouteInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &mobileGatewaySIMRouteInfoParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewaySIMRouteAddCmd = &cobra.Command{
@@ -592,6 +887,14 @@ func mobileGatewaySIMRouteAddCmdInit() {
 	fs := mobileGatewaySIMRouteAddCmd.Flags()
 	fs.StringVarP(&mobileGatewaySIMRouteAddParam.Prefix, "prefix", "", "", "set prefix")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMRouteAddParam.SIM), "sim", "", "set sim")
+	fs.StringSliceVarP(&mobileGatewaySIMRouteAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewaySIMRouteAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewaySIMRouteAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewaySIMRouteAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewaySIMRouteAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewaySIMRouteAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewaySIMRouteAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewaySIMRouteAddParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewaySIMRouteUpdateCmd = &cobra.Command{
@@ -612,6 +915,14 @@ func mobileGatewaySIMRouteUpdateCmdInit() {
 	fs.IntVarP(&mobileGatewaySIMRouteUpdateParam.Index, "index", "", 0, "index of target sim-route")
 	fs.StringVarP(&mobileGatewaySIMRouteUpdateParam.Prefix, "prefix", "", "", "set prefix")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMRouteUpdateParam.SIM), "sim", "", "set sim")
+	fs.StringSliceVarP(&mobileGatewaySIMRouteUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewaySIMRouteUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewaySIMRouteUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewaySIMRouteUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewaySIMRouteUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewaySIMRouteUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewaySIMRouteUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewaySIMRouteUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewaySIMRouteDeleteCmd = &cobra.Command{
@@ -630,6 +941,14 @@ var mobileGatewaySIMRouteDeleteCmd = &cobra.Command{
 func mobileGatewaySIMRouteDeleteCmdInit() {
 	fs := mobileGatewaySIMRouteDeleteCmd.Flags()
 	fs.IntVarP(&mobileGatewaySIMRouteDeleteParam.Index, "index", "", 0, "index of target sim-route")
+	fs.StringSliceVarP(&mobileGatewaySIMRouteDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewaySIMRouteDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewaySIMRouteDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewaySIMRouteDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewaySIMRouteDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewaySIMRouteDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewaySIMRouteDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewaySIMRouteDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayDNSUpdateCmd = &cobra.Command{
@@ -649,6 +968,14 @@ func mobileGatewayDNSUpdateCmdInit() {
 	fs := mobileGatewayDNSUpdateCmd.Flags()
 	fs.StringVarP(&mobileGatewayDNSUpdateParam.DNS1, "dns-1", "", "", "set DNS server address")
 	fs.StringVarP(&mobileGatewayDNSUpdateParam.DNS2, "dns-2", "", "", "set DNS server address")
+	fs.StringSliceVarP(&mobileGatewayDNSUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&mobileGatewayDNSUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&mobileGatewayDNSUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayDNSUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayDNSUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayDNSUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayDNSUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayDNSUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var mobileGatewayLogsCmd = &cobra.Command{
@@ -668,6 +995,13 @@ func mobileGatewayLogsCmdInit() {
 	fs := mobileGatewayLogsCmd.Flags()
 	fs.BoolVarP(&mobileGatewayLogsParam.Follow, "follow", "f", false, "follow log output")
 	fs.Int64VarP(&mobileGatewayLogsParam.RefreshInterval, "refresh-interval", "", 3, "log refresh interval second")
+	fs.StringSliceVarP(&mobileGatewayLogsParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&mobileGatewayLogsParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&mobileGatewayLogsParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&mobileGatewayLogsParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&mobileGatewayLogsParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&mobileGatewayLogsParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.VarP(newIDValue(0, &mobileGatewayLogsParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

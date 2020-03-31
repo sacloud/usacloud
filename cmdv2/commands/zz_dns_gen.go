@@ -62,12 +62,24 @@ var dnsListCmd = &cobra.Command{
 
 func dnsListCmdInit() {
 	fs := dnsListCmd.Flags()
+	fs.StringSliceVarP(&dnsListParam.Name, "name", "", []string{}, "set filter by name(s)")
 	fs.VarP(newIDSliceValue([]sacloud.ID{}, &dnsListParam.Id), "id", "", "set filter by id(s)")
+	fs.StringSliceVarP(&dnsListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
 	fs.IntVarP(&dnsListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&dnsListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&dnsListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringSliceVarP(&dnsListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.StringSliceVarP(&dnsListParam.Tags, "tags", "", []string{}, "set filter by tags(AND)")
+	fs.StringVarP(&dnsListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&dnsListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&dnsListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&dnsListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&dnsListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&dnsListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&dnsListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&dnsListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&dnsListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&dnsListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&dnsListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&dnsListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var dnsRecordInfoCmd = &cobra.Command{
@@ -87,6 +99,20 @@ func dnsRecordInfoCmdInit() {
 	fs := dnsRecordInfoCmd.Flags()
 	fs.StringVarP(&dnsRecordInfoParam.Name, "name", "", "", "set name")
 	fs.StringVarP(&dnsRecordInfoParam.Type, "type", "", "", "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]")
+	fs.StringSliceVarP(&dnsRecordInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&dnsRecordInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&dnsRecordInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&dnsRecordInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&dnsRecordInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&dnsRecordInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&dnsRecordInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&dnsRecordInfoParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&dnsRecordInfoParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&dnsRecordInfoParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&dnsRecordInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&dnsRecordInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&dnsRecordInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &dnsRecordInfoParam.Id), "id", "", "Set target ID")
 }
 
 var dnsRecordBulkUpdateCmd = &cobra.Command{
@@ -106,6 +132,21 @@ func dnsRecordBulkUpdateCmdInit() {
 	fs := dnsRecordBulkUpdateCmd.Flags()
 	fs.StringVarP(&dnsRecordBulkUpdateParam.File, "file", "", "", "set name")
 	fs.StringVarP(&dnsRecordBulkUpdateParam.Mode, "mode", "", "upsert-only", "set name")
+	fs.StringSliceVarP(&dnsRecordBulkUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&dnsRecordBulkUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&dnsRecordBulkUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&dnsRecordBulkUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&dnsRecordBulkUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&dnsRecordBulkUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&dnsRecordBulkUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&dnsRecordBulkUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&dnsRecordBulkUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&dnsRecordBulkUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&dnsRecordBulkUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&dnsRecordBulkUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&dnsRecordBulkUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&dnsRecordBulkUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &dnsRecordBulkUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var dnsCreateCmd = &cobra.Command{
@@ -127,6 +168,19 @@ func dnsCreateCmdInit() {
 	fs.StringVarP(&dnsCreateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&dnsCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &dnsCreateParam.IconId), "icon-id", "", "set Icon ID")
+	fs.BoolVarP(&dnsCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&dnsCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&dnsCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&dnsCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&dnsCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&dnsCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&dnsCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&dnsCreateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&dnsCreateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&dnsCreateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&dnsCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&dnsCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&dnsCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var dnsRecordAddCmd = &cobra.Command{
@@ -144,15 +198,30 @@ var dnsRecordAddCmd = &cobra.Command{
 
 func dnsRecordAddCmdInit() {
 	fs := dnsRecordAddCmd.Flags()
-	fs.StringVarP(&dnsRecordAddParam.SrvTarget, "srv-target", "", "", "set SRV priority")
 	fs.StringVarP(&dnsRecordAddParam.Name, "name", "", "", "set name")
 	fs.StringVarP(&dnsRecordAddParam.Type, "type", "", "", "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]")
 	fs.StringVarP(&dnsRecordAddParam.Value, "value", "", "", "set record data")
-	fs.IntVarP(&dnsRecordAddParam.MxPriority, "mx-priority", "", 10, "set MX priority")
 	fs.IntVarP(&dnsRecordAddParam.Ttl, "ttl", "", 3600, "set ttl")
+	fs.IntVarP(&dnsRecordAddParam.MxPriority, "mx-priority", "", 10, "set MX priority")
 	fs.IntVarP(&dnsRecordAddParam.SrvPriority, "srv-priority", "", 0, "set SRV priority")
 	fs.IntVarP(&dnsRecordAddParam.SrvWeight, "srv-weight", "", 0, "set SRV priority")
 	fs.IntVarP(&dnsRecordAddParam.SrvPort, "srv-port", "", 0, "set SRV priority")
+	fs.StringVarP(&dnsRecordAddParam.SrvTarget, "srv-target", "", "", "set SRV priority")
+	fs.StringSliceVarP(&dnsRecordAddParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&dnsRecordAddParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&dnsRecordAddParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&dnsRecordAddParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&dnsRecordAddParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&dnsRecordAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&dnsRecordAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&dnsRecordAddParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&dnsRecordAddParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&dnsRecordAddParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&dnsRecordAddParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&dnsRecordAddParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&dnsRecordAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&dnsRecordAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &dnsRecordAddParam.Id), "id", "", "Set target ID")
 }
 
 var dnsReadCmd = &cobra.Command{
@@ -169,6 +238,21 @@ var dnsReadCmd = &cobra.Command{
 }
 
 func dnsReadCmdInit() {
+	fs := dnsReadCmd.Flags()
+	fs.StringSliceVarP(&dnsReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&dnsReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&dnsReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&dnsReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&dnsReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&dnsReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&dnsReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&dnsReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&dnsReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&dnsReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&dnsReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&dnsReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&dnsReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &dnsReadParam.Id), "id", "", "Set target ID")
 }
 
 var dnsRecordUpdateCmd = &cobra.Command{
@@ -187,15 +271,30 @@ var dnsRecordUpdateCmd = &cobra.Command{
 func dnsRecordUpdateCmdInit() {
 	fs := dnsRecordUpdateCmd.Flags()
 	fs.IntVarP(&dnsRecordUpdateParam.Index, "index", "", 0, "index of target record")
+	fs.StringVarP(&dnsRecordUpdateParam.Name, "name", "", "", "set name")
 	fs.StringVarP(&dnsRecordUpdateParam.Type, "type", "", "", "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]")
+	fs.StringVarP(&dnsRecordUpdateParam.Value, "value", "", "", "set record data")
 	fs.IntVarP(&dnsRecordUpdateParam.Ttl, "ttl", "", 0, "set ttl")
+	fs.IntVarP(&dnsRecordUpdateParam.MxPriority, "mx-priority", "", 0, "set MX priority")
 	fs.IntVarP(&dnsRecordUpdateParam.SrvPriority, "srv-priority", "", 0, "set SRV priority")
 	fs.IntVarP(&dnsRecordUpdateParam.SrvWeight, "srv-weight", "", 0, "set SRV priority")
 	fs.IntVarP(&dnsRecordUpdateParam.SrvPort, "srv-port", "", 0, "set SRV priority")
-	fs.StringVarP(&dnsRecordUpdateParam.Name, "name", "", "", "set name")
-	fs.StringVarP(&dnsRecordUpdateParam.Value, "value", "", "", "set record data")
-	fs.IntVarP(&dnsRecordUpdateParam.MxPriority, "mx-priority", "", 0, "set MX priority")
 	fs.StringVarP(&dnsRecordUpdateParam.SrvTarget, "srv-target", "", "", "set SRV priority")
+	fs.StringSliceVarP(&dnsRecordUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&dnsRecordUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&dnsRecordUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&dnsRecordUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&dnsRecordUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&dnsRecordUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&dnsRecordUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&dnsRecordUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&dnsRecordUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&dnsRecordUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&dnsRecordUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&dnsRecordUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&dnsRecordUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&dnsRecordUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &dnsRecordUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var dnsRecordDeleteCmd = &cobra.Command{
@@ -214,6 +313,21 @@ var dnsRecordDeleteCmd = &cobra.Command{
 func dnsRecordDeleteCmdInit() {
 	fs := dnsRecordDeleteCmd.Flags()
 	fs.IntVarP(&dnsRecordDeleteParam.Index, "index", "", 0, "index of target record")
+	fs.StringSliceVarP(&dnsRecordDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&dnsRecordDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&dnsRecordDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&dnsRecordDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&dnsRecordDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&dnsRecordDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&dnsRecordDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&dnsRecordDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&dnsRecordDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&dnsRecordDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&dnsRecordDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&dnsRecordDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&dnsRecordDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&dnsRecordDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &dnsRecordDeleteParam.Id), "id", "", "Set target ID")
 }
 
 var dnsUpdateCmd = &cobra.Command{
@@ -231,9 +345,24 @@ var dnsUpdateCmd = &cobra.Command{
 
 func dnsUpdateCmdInit() {
 	fs := dnsUpdateCmd.Flags()
+	fs.StringSliceVarP(&dnsUpdateParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.StringVarP(&dnsUpdateParam.Description, "description", "", "", "set resource description")
 	fs.StringSliceVarP(&dnsUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &dnsUpdateParam.IconId), "icon-id", "", "set Icon ID")
-	fs.StringVarP(&dnsUpdateParam.Description, "description", "", "", "set resource description")
+	fs.BoolVarP(&dnsUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&dnsUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&dnsUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&dnsUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&dnsUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&dnsUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&dnsUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&dnsUpdateParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&dnsUpdateParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&dnsUpdateParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&dnsUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&dnsUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&dnsUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &dnsUpdateParam.Id), "id", "", "Set target ID")
 }
 
 var dnsDeleteCmd = &cobra.Command{
@@ -250,6 +379,22 @@ var dnsDeleteCmd = &cobra.Command{
 }
 
 func dnsDeleteCmdInit() {
+	fs := dnsDeleteCmd.Flags()
+	fs.StringSliceVarP(&dnsDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
+	fs.BoolVarP(&dnsDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&dnsDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&dnsDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&dnsDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&dnsDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&dnsDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&dnsDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&dnsDeleteParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&dnsDeleteParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&dnsDeleteParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&dnsDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&dnsDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&dnsDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.VarP(newIDValue(0, &dnsDeleteParam.Id), "id", "", "Set target ID")
 }
 
 func init() {

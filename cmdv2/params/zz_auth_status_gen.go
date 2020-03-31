@@ -27,6 +27,19 @@ import (
 
 // ShowAuthStatusParam is input parameters for the sacloud API
 type ShowAuthStatusParam struct {
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+
 	input Input
 }
 
@@ -50,12 +63,67 @@ func (p *ShowAuthStatusParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ShowAuthStatusParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
 func (p *ShowAuthStatusParam) validate() error {
 	var errors []error
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -81,4 +149,89 @@ func (p *ShowAuthStatusParam) TableType() output.TableType {
 
 func (p *ShowAuthStatusParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
+}
+
+func (p *ShowAuthStatusParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShowAuthStatusParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShowAuthStatusParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShowAuthStatusParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ShowAuthStatusParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShowAuthStatusParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ShowAuthStatusParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShowAuthStatusParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ShowAuthStatusParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShowAuthStatusParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ShowAuthStatusParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ShowAuthStatusParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ShowAuthStatusParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ShowAuthStatusParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ShowAuthStatusParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ShowAuthStatusParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ShowAuthStatusParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ShowAuthStatusParam) GetFormat() string {
+	return p.Format
+}
+func (p *ShowAuthStatusParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ShowAuthStatusParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ShowAuthStatusParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ShowAuthStatusParam) GetQuery() string {
+	return p.Query
+}
+func (p *ShowAuthStatusParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ShowAuthStatusParam) GetQueryFile() string {
+	return p.QueryFile
 }

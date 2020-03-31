@@ -59,6 +59,18 @@ func productLicenseListCmdInit() {
 	fs.IntVarP(&productLicenseListParam.From, "from", "", 0, "set offset")
 	fs.IntVarP(&productLicenseListParam.Max, "max", "", 0, "set limit")
 	fs.StringSliceVarP(&productLicenseListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
+	fs.StringVarP(&productLicenseListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&productLicenseListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&productLicenseListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&productLicenseListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&productLicenseListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&productLicenseListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&productLicenseListParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&productLicenseListParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&productLicenseListParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&productLicenseListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&productLicenseListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&productLicenseListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 }
 
 var productLicenseReadCmd = &cobra.Command{
@@ -76,6 +88,19 @@ var productLicenseReadCmd = &cobra.Command{
 
 func productLicenseReadCmdInit() {
 	fs := productLicenseReadCmd.Flags()
+	fs.BoolVarP(&productLicenseReadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&productLicenseReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
+	fs.StringVarP(&productLicenseReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
+	fs.StringVarP(&productLicenseReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
+	fs.StringVarP(&productLicenseReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
+	fs.BoolVarP(&productLicenseReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.StringVarP(&productLicenseReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv]")
+	fs.StringSliceVarP(&productLicenseReadParam.Column, "column", "", []string{}, "Output columns(using when '--output-type' is in [csv/tsv] only)")
+	fs.BoolVarP(&productLicenseReadParam.Quiet, "quiet", "q", false, "Only display IDs")
+	fs.StringVarP(&productLicenseReadParam.Format, "format", "", "", "Output format(see text/template package document for detail)")
+	fs.StringVarP(&productLicenseReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
+	fs.StringVarP(&productLicenseReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
+	fs.StringVarP(&productLicenseReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &productLicenseReadParam.Id), "id", "", "set resource ID")
 }
 

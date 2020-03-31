@@ -28,9 +28,14 @@ import (
 
 // CsvBillParam is input parameters for the sacloud API
 type CsvBillParam struct {
-	BillId     sacloud.ID
-	NoHeader   bool
-	BillOutput string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	NoHeader          bool
+	BillOutput        string
+	BillId            sacloud.ID
 
 	input Input
 }
@@ -55,14 +60,29 @@ func (p *CsvBillParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CsvBillParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.BillId) {
-		p.BillId = sacloud.ID(0)
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
 	}
 	if utils.IsEmpty(p.NoHeader) {
 		p.NoHeader = false
 	}
 	if utils.IsEmpty(p.BillOutput) {
 		p.BillOutput = ""
+	}
+	if utils.IsEmpty(p.BillId) {
+		p.BillId = sacloud.ID(0)
 	}
 
 }
@@ -105,12 +125,40 @@ func (p *CsvBillParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *CsvBillParam) SetBillId(v sacloud.ID) {
-	p.BillId = v
+func (p *CsvBillParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
 }
 
-func (p *CsvBillParam) GetBillId() sacloud.ID {
-	return p.BillId
+func (p *CsvBillParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CsvBillParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CsvBillParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CsvBillParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CsvBillParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CsvBillParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CsvBillParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CsvBillParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CsvBillParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *CsvBillParam) SetNoHeader(v bool) {
 	p.NoHeader = v
@@ -126,11 +174,30 @@ func (p *CsvBillParam) SetBillOutput(v string) {
 func (p *CsvBillParam) GetBillOutput() string {
 	return p.BillOutput
 }
+func (p *CsvBillParam) SetBillId(v sacloud.ID) {
+	p.BillId = v
+}
+
+func (p *CsvBillParam) GetBillId() sacloud.ID {
+	return p.BillId
+}
 
 // ListBillParam is input parameters for the sacloud API
 type ListBillParam struct {
-	Year  int
-	Month int
+	Year              int
+	Month             int
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -161,6 +228,42 @@ func (p *ListBillParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Month) {
 		p.Month = 0
 	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
@@ -183,6 +286,25 @@ func (p *ListBillParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -223,4 +345,88 @@ func (p *ListBillParam) SetMonth(v int) {
 
 func (p *ListBillParam) GetMonth() int {
 	return p.Month
+}
+func (p *ListBillParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListBillParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListBillParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListBillParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListBillParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListBillParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListBillParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListBillParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListBillParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListBillParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListBillParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListBillParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListBillParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListBillParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListBillParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListBillParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListBillParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListBillParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListBillParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListBillParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListBillParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListBillParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListBillParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListBillParam) GetQueryFile() string {
+	return p.QueryFile
 }

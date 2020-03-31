@@ -29,11 +29,23 @@ import (
 
 // ListProductLicenseParam is input parameters for the sacloud API
 type ListProductLicenseParam struct {
-	Name []string
-	Id   []sacloud.ID
-	From int
-	Max  int
-	Sort []string
+	Name              []string
+	Id                []sacloud.ID
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -73,6 +85,42 @@ func (p *ListProductLicenseParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
@@ -106,6 +154,25 @@ func (p *ListProductLicenseParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -168,10 +235,107 @@ func (p *ListProductLicenseParam) SetSort(v []string) {
 func (p *ListProductLicenseParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListProductLicenseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListProductLicenseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListProductLicenseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListProductLicenseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListProductLicenseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListProductLicenseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListProductLicenseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListProductLicenseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListProductLicenseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListProductLicenseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListProductLicenseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListProductLicenseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListProductLicenseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListProductLicenseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListProductLicenseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListProductLicenseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListProductLicenseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListProductLicenseParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListProductLicenseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListProductLicenseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListProductLicenseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListProductLicenseParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListProductLicenseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListProductLicenseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadProductLicenseParam is input parameters for the sacloud API
 type ReadProductLicenseParam struct {
-	Id sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -196,6 +360,45 @@ func (p *ReadProductLicenseParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadProductLicenseParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 	if utils.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
@@ -220,6 +423,25 @@ func (p *ReadProductLicenseParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -247,6 +469,97 @@ func (p *ReadProductLicenseParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadProductLicenseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ReadProductLicenseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ReadProductLicenseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadProductLicenseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadProductLicenseParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadProductLicenseParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadProductLicenseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadProductLicenseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadProductLicenseParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadProductLicenseParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadProductLicenseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadProductLicenseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadProductLicenseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadProductLicenseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadProductLicenseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadProductLicenseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadProductLicenseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadProductLicenseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadProductLicenseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadProductLicenseParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadProductLicenseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadProductLicenseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadProductLicenseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadProductLicenseParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadProductLicenseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadProductLicenseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadProductLicenseParam) SetId(v sacloud.ID) {
 	p.Id = v
 }

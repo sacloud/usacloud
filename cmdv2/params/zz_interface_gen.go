@@ -29,11 +29,23 @@ import (
 
 // ListInterfaceParam is input parameters for the sacloud API
 type ListInterfaceParam struct {
-	Name []string
-	Id   []sacloud.ID
-	From int
-	Max  int
-	Sort []string
+	Name              []string
+	Id                []sacloud.ID
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -73,6 +85,42 @@ func (p *ListInterfaceParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
@@ -106,6 +154,25 @@ func (p *ListInterfaceParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -168,10 +235,101 @@ func (p *ListInterfaceParam) SetSort(v []string) {
 func (p *ListInterfaceParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListInterfaceParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListInterfaceParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListInterfaceParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListInterfaceParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListInterfaceParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListInterfaceParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListInterfaceParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListInterfaceParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListInterfaceParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListInterfaceParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListInterfaceParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListInterfaceParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListInterfaceParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListInterfaceParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListInterfaceParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListInterfaceParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListInterfaceParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListInterfaceParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListInterfaceParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListInterfaceParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListInterfaceParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListInterfaceParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListInterfaceParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListInterfaceParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // PacketFilterConnectInterfaceParam is input parameters for the sacloud API
 type PacketFilterConnectInterfaceParam struct {
-	PacketFilterId sacloud.ID
+	PacketFilterId    sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -199,6 +357,27 @@ func (p *PacketFilterConnectInterfaceParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.PacketFilterId) {
 		p.PacketFilterId = sacloud.ID(0)
 	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -215,6 +394,14 @@ func (p *PacketFilterConnectInterfaceParam) validate() error {
 	{
 		validator := define.Resources["Interface"].Commands["packet-filter-connect"].Params["packet-filter-id"].ValidateFunc
 		errs := validator("--packet-filter-id", p.PacketFilterId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -254,10 +441,72 @@ func (p *PacketFilterConnectInterfaceParam) SetPacketFilterId(v sacloud.ID) {
 func (p *PacketFilterConnectInterfaceParam) GetPacketFilterId() sacloud.ID {
 	return p.PacketFilterId
 }
+func (p *PacketFilterConnectInterfaceParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *PacketFilterConnectInterfaceParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PacketFilterConnectInterfaceParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *PacketFilterConnectInterfaceParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *PacketFilterConnectInterfaceParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PacketFilterConnectInterfaceParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *PacketFilterConnectInterfaceParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // CreateInterfaceParam is input parameters for the sacloud API
 type CreateInterfaceParam struct {
-	ServerId sacloud.ID
+	ServerId          sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -285,6 +534,45 @@ func (p *CreateInterfaceParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.ServerId) {
 		p.ServerId = sacloud.ID(0)
 	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
@@ -306,6 +594,25 @@ func (p *CreateInterfaceParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -340,10 +647,108 @@ func (p *CreateInterfaceParam) SetServerId(v sacloud.ID) {
 func (p *CreateInterfaceParam) GetServerId() sacloud.ID {
 	return p.ServerId
 }
+func (p *CreateInterfaceParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *CreateInterfaceParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *CreateInterfaceParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateInterfaceParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateInterfaceParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateInterfaceParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateInterfaceParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateInterfaceParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CreateInterfaceParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateInterfaceParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateInterfaceParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateInterfaceParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CreateInterfaceParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateInterfaceParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateInterfaceParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateInterfaceParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateInterfaceParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateInterfaceParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateInterfaceParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateInterfaceParam) GetFormat() string {
+	return p.Format
+}
+func (p *CreateInterfaceParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CreateInterfaceParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CreateInterfaceParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateInterfaceParam) GetQuery() string {
+	return p.Query
+}
+func (p *CreateInterfaceParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateInterfaceParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // PacketFilterDisconnectInterfaceParam is input parameters for the sacloud API
 type PacketFilterDisconnectInterfaceParam struct {
-	PacketFilterId sacloud.ID
+	PacketFilterId    sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	Id                sacloud.ID
 
 	input Input
 }
@@ -371,6 +776,27 @@ func (p *PacketFilterDisconnectInterfaceParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.PacketFilterId) {
 		p.PacketFilterId = sacloud.ID(0)
 	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -387,6 +813,14 @@ func (p *PacketFilterDisconnectInterfaceParam) validate() error {
 	{
 		validator := define.Resources["Interface"].Commands["packet-filter-disconnect"].Params["packet-filter-id"].ValidateFunc
 		errs := validator("--packet-filter-id", p.PacketFilterId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -426,9 +860,72 @@ func (p *PacketFilterDisconnectInterfaceParam) SetPacketFilterId(v sacloud.ID) {
 func (p *PacketFilterDisconnectInterfaceParam) GetPacketFilterId() sacloud.ID {
 	return p.PacketFilterId
 }
+func (p *PacketFilterDisconnectInterfaceParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *PacketFilterDisconnectInterfaceParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PacketFilterDisconnectInterfaceParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *PacketFilterDisconnectInterfaceParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *PacketFilterDisconnectInterfaceParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PacketFilterDisconnectInterfaceParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *PacketFilterDisconnectInterfaceParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // ReadInterfaceParam is input parameters for the sacloud API
 type ReadInterfaceParam struct {
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -452,12 +949,78 @@ func (p *ReadInterfaceParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadInterfaceParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ReadInterfaceParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -485,9 +1048,115 @@ func (p *ReadInterfaceParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadInterfaceParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadInterfaceParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadInterfaceParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadInterfaceParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadInterfaceParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadInterfaceParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadInterfaceParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadInterfaceParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadInterfaceParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadInterfaceParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadInterfaceParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadInterfaceParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadInterfaceParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadInterfaceParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadInterfaceParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadInterfaceParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadInterfaceParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadInterfaceParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadInterfaceParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadInterfaceParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadInterfaceParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadInterfaceParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadInterfaceParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadInterfaceParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ReadInterfaceParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReadInterfaceParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UpdateInterfaceParam is input parameters for the sacloud API
 type UpdateInterfaceParam struct {
-	UserIpaddress string
+	UserIpaddress     string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -515,6 +1184,48 @@ func (p *UpdateInterfaceParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.UserIpaddress) {
 		p.UserIpaddress = ""
 	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
@@ -529,6 +1240,33 @@ func (p *UpdateInterfaceParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -563,9 +1301,122 @@ func (p *UpdateInterfaceParam) SetUserIpaddress(v string) {
 func (p *UpdateInterfaceParam) GetUserIpaddress() string {
 	return p.UserIpaddress
 }
+func (p *UpdateInterfaceParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *UpdateInterfaceParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UpdateInterfaceParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateInterfaceParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateInterfaceParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateInterfaceParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateInterfaceParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateInterfaceParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UpdateInterfaceParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateInterfaceParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateInterfaceParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateInterfaceParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UpdateInterfaceParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateInterfaceParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateInterfaceParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateInterfaceParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateInterfaceParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateInterfaceParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateInterfaceParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateInterfaceParam) GetFormat() string {
+	return p.Format
+}
+func (p *UpdateInterfaceParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UpdateInterfaceParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UpdateInterfaceParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateInterfaceParam) GetQuery() string {
+	return p.Query
+}
+func (p *UpdateInterfaceParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateInterfaceParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UpdateInterfaceParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UpdateInterfaceParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DeleteInterfaceParam is input parameters for the sacloud API
 type DeleteInterfaceParam struct {
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -589,12 +1440,81 @@ func (p *DeleteInterfaceParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *DeleteInterfaceParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DeleteInterfaceParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -620,4 +1540,103 @@ func (p *DeleteInterfaceParam) TableType() output.TableType {
 
 func (p *DeleteInterfaceParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
+}
+
+func (p *DeleteInterfaceParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DeleteInterfaceParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DeleteInterfaceParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteInterfaceParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteInterfaceParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteInterfaceParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteInterfaceParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteInterfaceParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DeleteInterfaceParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteInterfaceParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteInterfaceParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteInterfaceParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DeleteInterfaceParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteInterfaceParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteInterfaceParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteInterfaceParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteInterfaceParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteInterfaceParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteInterfaceParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteInterfaceParam) GetFormat() string {
+	return p.Format
+}
+func (p *DeleteInterfaceParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DeleteInterfaceParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DeleteInterfaceParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteInterfaceParam) GetQuery() string {
+	return p.Query
+}
+func (p *DeleteInterfaceParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteInterfaceParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *DeleteInterfaceParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DeleteInterfaceParam) GetId() sacloud.ID {
+	return p.Id
 }

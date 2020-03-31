@@ -29,12 +29,24 @@ import (
 
 // ListAutoBackupParam is input parameters for the sacloud API
 type ListAutoBackupParam struct {
-	Name []string
-	Id   []sacloud.ID
-	Tags []string
-	From int
-	Max  int
-	Sort []string
+	Name              []string
+	Id                []sacloud.ID
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -77,6 +89,42 @@ func (p *ListAutoBackupParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
 
 }
 
@@ -118,6 +166,25 @@ func (p *ListAutoBackupParam) validate() error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -187,16 +254,113 @@ func (p *ListAutoBackupParam) SetSort(v []string) {
 func (p *ListAutoBackupParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListAutoBackupParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListAutoBackupParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListAutoBackupParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListAutoBackupParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListAutoBackupParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListAutoBackupParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ListAutoBackupParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListAutoBackupParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListAutoBackupParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListAutoBackupParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ListAutoBackupParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListAutoBackupParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListAutoBackupParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListAutoBackupParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListAutoBackupParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListAutoBackupParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListAutoBackupParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListAutoBackupParam) GetFormat() string {
+	return p.Format
+}
+func (p *ListAutoBackupParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ListAutoBackupParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ListAutoBackupParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListAutoBackupParam) GetQuery() string {
+	return p.Query
+}
+func (p *ListAutoBackupParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListAutoBackupParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateAutoBackupParam is input parameters for the sacloud API
 type CreateAutoBackupParam struct {
-	Name        string
-	Description string
-	Tags        []string
-	IconId      sacloud.ID
-	DiskId      sacloud.ID
-	Weekdays    []string
-	Generation  int
+	DiskId            sacloud.ID
+	Weekdays          []string
+	Generation        int
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
 
 	input Input
 }
@@ -222,6 +386,15 @@ func (p *CreateAutoBackupParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *CreateAutoBackupParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.DiskId) {
+		p.DiskId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Weekdays) {
+		p.Weekdays = []string{""}
+	}
+	if utils.IsEmpty(p.Generation) {
+		p.Generation = 0
+	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -234,59 +407,50 @@ func (p *CreateAutoBackupParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.DiskId) {
-		p.DiskId = sacloud.ID(0)
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.Weekdays) {
-		p.Weekdays = []string{""}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Generation) {
-		p.Generation = 0
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
 
 func (p *CreateAutoBackupParam) validate() error {
 	var errors []error
-
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["AutoBackup"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["AutoBackup"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["AutoBackup"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["AutoBackup"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := validateRequired
@@ -333,6 +497,64 @@ func (p *CreateAutoBackupParam) validate() error {
 		}
 	}
 
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["AutoBackup"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["AutoBackup"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["AutoBackup"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["AutoBackup"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -360,6 +582,27 @@ func (p *CreateAutoBackupParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *CreateAutoBackupParam) SetDiskId(v sacloud.ID) {
+	p.DiskId = v
+}
+
+func (p *CreateAutoBackupParam) GetDiskId() sacloud.ID {
+	return p.DiskId
+}
+func (p *CreateAutoBackupParam) SetWeekdays(v []string) {
+	p.Weekdays = v
+}
+
+func (p *CreateAutoBackupParam) GetWeekdays() []string {
+	return p.Weekdays
+}
+func (p *CreateAutoBackupParam) SetGeneration(v int) {
+	p.Generation = v
+}
+
+func (p *CreateAutoBackupParam) GetGeneration() int {
+	return p.Generation
+}
 func (p *CreateAutoBackupParam) SetName(v string) {
 	p.Name = v
 }
@@ -388,30 +631,115 @@ func (p *CreateAutoBackupParam) SetIconId(v sacloud.ID) {
 func (p *CreateAutoBackupParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *CreateAutoBackupParam) SetDiskId(v sacloud.ID) {
-	p.DiskId = v
+func (p *CreateAutoBackupParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
 }
 
-func (p *CreateAutoBackupParam) GetDiskId() sacloud.ID {
-	return p.DiskId
+func (p *CreateAutoBackupParam) GetAssumeyes() bool {
+	return p.Assumeyes
 }
-func (p *CreateAutoBackupParam) SetWeekdays(v []string) {
-	p.Weekdays = v
-}
-
-func (p *CreateAutoBackupParam) GetWeekdays() []string {
-	return p.Weekdays
-}
-func (p *CreateAutoBackupParam) SetGeneration(v int) {
-	p.Generation = v
+func (p *CreateAutoBackupParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
 }
 
-func (p *CreateAutoBackupParam) GetGeneration() int {
-	return p.Generation
+func (p *CreateAutoBackupParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateAutoBackupParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateAutoBackupParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *CreateAutoBackupParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateAutoBackupParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CreateAutoBackupParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateAutoBackupParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *CreateAutoBackupParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateAutoBackupParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CreateAutoBackupParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateAutoBackupParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateAutoBackupParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateAutoBackupParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateAutoBackupParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateAutoBackupParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateAutoBackupParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateAutoBackupParam) GetFormat() string {
+	return p.Format
+}
+func (p *CreateAutoBackupParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CreateAutoBackupParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CreateAutoBackupParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateAutoBackupParam) GetQuery() string {
+	return p.Query
+}
+func (p *CreateAutoBackupParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateAutoBackupParam) GetQueryFile() string {
+	return p.QueryFile
 }
 
 // ReadAutoBackupParam is input parameters for the sacloud API
 type ReadAutoBackupParam struct {
+	Selector          []string
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -435,12 +763,81 @@ func (p *ReadAutoBackupParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *ReadAutoBackupParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *ReadAutoBackupParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -468,14 +865,128 @@ func (p *ReadAutoBackupParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
+func (p *ReadAutoBackupParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadAutoBackupParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ReadAutoBackupParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadAutoBackupParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadAutoBackupParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadAutoBackupParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ReadAutoBackupParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadAutoBackupParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ReadAutoBackupParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadAutoBackupParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ReadAutoBackupParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadAutoBackupParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ReadAutoBackupParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadAutoBackupParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadAutoBackupParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadAutoBackupParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadAutoBackupParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadAutoBackupParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadAutoBackupParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadAutoBackupParam) GetFormat() string {
+	return p.Format
+}
+func (p *ReadAutoBackupParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ReadAutoBackupParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ReadAutoBackupParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadAutoBackupParam) GetQuery() string {
+	return p.Query
+}
+func (p *ReadAutoBackupParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadAutoBackupParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ReadAutoBackupParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *ReadAutoBackupParam) GetId() sacloud.ID {
+	return p.Id
+}
+
 // UpdateAutoBackupParam is input parameters for the sacloud API
 type UpdateAutoBackupParam struct {
-	Tags        []string
-	IconId      sacloud.ID
-	Weekdays    []string
-	Generation  int
-	Name        string
-	Description string
+	Weekdays          []string
+	Generation        int
+	Selector          []string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            sacloud.ID
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
 
 	input Input
 }
@@ -500,17 +1011,14 @@ func (p *UpdateAutoBackupParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *UpdateAutoBackupParam) fillValueToSkeleton() {
-	if utils.IsEmpty(p.Tags) {
-		p.Tags = []string{""}
-	}
-	if utils.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
-	}
 	if utils.IsEmpty(p.Weekdays) {
 		p.Weekdays = []string{""}
 	}
 	if utils.IsEmpty(p.Generation) {
 		p.Generation = 0
+	}
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
@@ -518,27 +1026,59 @@ func (p *UpdateAutoBackupParam) fillValueToSkeleton() {
 	if utils.IsEmpty(p.Description) {
 		p.Description = ""
 	}
+	if utils.IsEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if utils.IsEmpty(p.IconId) {
+		p.IconId = sacloud.ID(0)
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *UpdateAutoBackupParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["AutoBackup"].Commands["update"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := define.Resources["AutoBackup"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["AutoBackup"].Commands["update"].Params["weekdays"].ValidateFunc
@@ -572,6 +1112,49 @@ func (p *UpdateAutoBackupParam) validate() error {
 		}
 	}
 
+	{
+		validator := define.Resources["AutoBackup"].Commands["update"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := define.Resources["AutoBackup"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -599,20 +1182,6 @@ func (p *UpdateAutoBackupParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-func (p *UpdateAutoBackupParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *UpdateAutoBackupParam) GetTags() []string {
-	return p.Tags
-}
-func (p *UpdateAutoBackupParam) SetIconId(v sacloud.ID) {
-	p.IconId = v
-}
-
-func (p *UpdateAutoBackupParam) GetIconId() sacloud.ID {
-	return p.IconId
-}
 func (p *UpdateAutoBackupParam) SetWeekdays(v []string) {
 	p.Weekdays = v
 }
@@ -626,6 +1195,13 @@ func (p *UpdateAutoBackupParam) SetGeneration(v int) {
 
 func (p *UpdateAutoBackupParam) GetGeneration() int {
 	return p.Generation
+}
+func (p *UpdateAutoBackupParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateAutoBackupParam) GetSelector() []string {
+	return p.Selector
 }
 func (p *UpdateAutoBackupParam) SetName(v string) {
 	p.Name = v
@@ -641,9 +1217,137 @@ func (p *UpdateAutoBackupParam) SetDescription(v string) {
 func (p *UpdateAutoBackupParam) GetDescription() string {
 	return p.Description
 }
+func (p *UpdateAutoBackupParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *UpdateAutoBackupParam) GetTags() []string {
+	return p.Tags
+}
+func (p *UpdateAutoBackupParam) SetIconId(v sacloud.ID) {
+	p.IconId = v
+}
+
+func (p *UpdateAutoBackupParam) GetIconId() sacloud.ID {
+	return p.IconId
+}
+func (p *UpdateAutoBackupParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *UpdateAutoBackupParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *UpdateAutoBackupParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateAutoBackupParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateAutoBackupParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateAutoBackupParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *UpdateAutoBackupParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateAutoBackupParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *UpdateAutoBackupParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateAutoBackupParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *UpdateAutoBackupParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateAutoBackupParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *UpdateAutoBackupParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateAutoBackupParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateAutoBackupParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateAutoBackupParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateAutoBackupParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateAutoBackupParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateAutoBackupParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateAutoBackupParam) GetFormat() string {
+	return p.Format
+}
+func (p *UpdateAutoBackupParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *UpdateAutoBackupParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *UpdateAutoBackupParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateAutoBackupParam) GetQuery() string {
+	return p.Query
+}
+func (p *UpdateAutoBackupParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateAutoBackupParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *UpdateAutoBackupParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *UpdateAutoBackupParam) GetId() sacloud.ID {
+	return p.Id
+}
 
 // DeleteAutoBackupParam is input parameters for the sacloud API
 type DeleteAutoBackupParam struct {
+	Selector          []string
+	Assumeyes         bool
+	ParamTemplate     string
+	Parameters        string
+	ParamTemplateFile string
+	ParameterFile     string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Query             string
+	QueryFile         string
+	Id                sacloud.ID
+
 	input Input
 }
 
@@ -667,12 +1371,84 @@ func (p *DeleteAutoBackupParam) WriteSkeleton(writer io.Writer) error {
 }
 
 func (p *DeleteAutoBackupParam) fillValueToSkeleton() {
+	if utils.IsEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if utils.IsEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if utils.IsEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if utils.IsEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
+	if utils.IsEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if utils.IsEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
+	}
+	if utils.IsEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if utils.IsEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if utils.IsEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if utils.IsEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if utils.IsEmpty(p.Format) {
+		p.Format = ""
+	}
+	if utils.IsEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if utils.IsEmpty(p.Query) {
+		p.Query = ""
+	}
+	if utils.IsEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if utils.IsEmpty(p.Id) {
+		p.Id = sacloud.ID(0)
+	}
 
 }
 
 func (p *DeleteAutoBackupParam) validate() error {
 	var errors []error
 
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	return utils.FlattenErrors(errors)
 }
 
@@ -698,4 +1474,110 @@ func (p *DeleteAutoBackupParam) TableType() output.TableType {
 
 func (p *DeleteAutoBackupParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
+}
+
+func (p *DeleteAutoBackupParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteAutoBackupParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DeleteAutoBackupParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DeleteAutoBackupParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DeleteAutoBackupParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteAutoBackupParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteAutoBackupParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteAutoBackupParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *DeleteAutoBackupParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteAutoBackupParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DeleteAutoBackupParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteAutoBackupParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *DeleteAutoBackupParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteAutoBackupParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DeleteAutoBackupParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteAutoBackupParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteAutoBackupParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteAutoBackupParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteAutoBackupParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteAutoBackupParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteAutoBackupParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteAutoBackupParam) GetFormat() string {
+	return p.Format
+}
+func (p *DeleteAutoBackupParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *DeleteAutoBackupParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *DeleteAutoBackupParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteAutoBackupParam) GetQuery() string {
+	return p.Query
+}
+func (p *DeleteAutoBackupParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteAutoBackupParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *DeleteAutoBackupParam) SetId(v sacloud.ID) {
+	p.Id = v
+}
+
+func (p *DeleteAutoBackupParam) GetId() sacloud.ID {
+	return p.Id
 }
