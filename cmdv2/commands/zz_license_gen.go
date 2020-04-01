@@ -50,6 +50,14 @@ func licenseListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if licenseListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, licenseListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LicenseList(ctx, licenseListParam.ToV0())
 		},
 	}
@@ -90,6 +98,14 @@ func licenseCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if licenseCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, licenseCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LicenseCreate(ctx, licenseCreateParam.ToV0())
 		},
 	}
@@ -128,6 +144,14 @@ func licenseReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if licenseReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, licenseReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LicenseRead(ctx, licenseReadParam.ToV0())
 		},
 	}
@@ -164,6 +188,14 @@ func licenseUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if licenseUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, licenseUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LicenseUpdate(ctx, licenseUpdateParam.ToV0())
 		},
 	}
@@ -202,6 +234,14 @@ func licenseDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if licenseDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, licenseDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LicenseDelete(ctx, licenseDeleteParam.ToV0())
 		},
 	}

@@ -71,7 +71,8 @@ func (p *ListServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -477,7 +478,8 @@ func (p *BuildServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *BuildServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *BuildServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Core) {
 		p.Core = 0
 	}
@@ -1474,7 +1476,8 @@ func (p *ReadServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1774,7 +1777,8 @@ func (p *UpdateServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.InterfaceDriver) {
 		p.InterfaceDriver = ""
 	}
@@ -2176,7 +2180,8 @@ func (p *DeleteServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Force) {
 		p.Force = false
 	}
@@ -2507,7 +2512,8 @@ func (p *PlanChangeServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PlanChangeServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PlanChangeServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Core) {
 		p.Core = 0
 	}
@@ -2862,7 +2868,8 @@ func (p *BootServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *BootServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *BootServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3069,7 +3076,8 @@ func (p *ShutdownServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ShutdownServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ShutdownServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3276,7 +3284,8 @@ func (p *ShutdownForceServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ShutdownForceServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ShutdownForceServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3483,7 +3492,8 @@ func (p *ResetServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ResetServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ResetServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3689,7 +3699,8 @@ func (p *WaitForBootServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *WaitForBootServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *WaitForBootServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3884,7 +3895,8 @@ func (p *WaitForDownServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *WaitForDownServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *WaitForDownServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -4085,7 +4097,8 @@ func (p *SSHServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SSHServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SSHServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Key) {
 		p.Key = ""
 	}
@@ -4356,7 +4369,8 @@ func (p *SSHExecServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SSHExecServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SSHExecServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Key) {
 		p.Key = ""
 	}
@@ -4617,7 +4631,8 @@ func (p *ScpServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ScpServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ScpServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Key) {
 		p.Key = ""
 	}
@@ -4876,7 +4891,8 @@ func (p *VncServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *VncServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *VncServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.WaitForBoot) {
 		p.WaitForBoot = false
 	}
@@ -5090,7 +5106,8 @@ func (p *VncInfoServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *VncInfoServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *VncInfoServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.WaitForBoot) {
 		p.WaitForBoot = false
 	}
@@ -5400,7 +5417,8 @@ func (p *VncSendServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *VncSendServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *VncSendServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Command) {
 		p.Command = ""
 	}
@@ -5780,7 +5798,8 @@ func (p *VncSnapshotServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *VncSnapshotServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *VncSnapshotServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.WaitForBoot) {
 		p.WaitForBoot = false
 	}
@@ -6102,7 +6121,8 @@ func (p *RemoteDesktopServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RemoteDesktopServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *RemoteDesktopServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.User) {
 		p.User = ""
 	}
@@ -6345,7 +6365,8 @@ func (p *RemoteDesktopInfoServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RemoteDesktopInfoServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *RemoteDesktopInfoServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.User) {
 		p.User = ""
 	}
@@ -6676,7 +6697,8 @@ func (p *DiskInfoServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DiskInfoServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DiskInfoServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -6964,7 +6986,8 @@ func (p *DiskConnectServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DiskConnectServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DiskConnectServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.DiskId) {
 		p.DiskId = sacloud.ID(0)
 	}
@@ -7198,7 +7221,8 @@ func (p *DiskDisconnectServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DiskDisconnectServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DiskDisconnectServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.DiskId) {
 		p.DiskId = sacloud.ID(0)
 	}
@@ -7437,7 +7461,8 @@ func (p *InterfaceInfoServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceInfoServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *InterfaceInfoServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -7725,7 +7750,8 @@ func (p *InterfaceAddForInternetServerParam) WriteSkeleton(writer io.Writer) err
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceAddForInternetServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *InterfaceAddForInternetServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.WithoutDiskEdit) {
 		p.WithoutDiskEdit = false
 	}
@@ -7949,7 +7975,8 @@ func (p *InterfaceAddForRouterServerParam) WriteSkeleton(writer io.Writer) error
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceAddForRouterServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *InterfaceAddForRouterServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.SwitchId) {
 		p.SwitchId = sacloud.ID(0)
 	}
@@ -8256,7 +8283,8 @@ func (p *InterfaceAddForSwitchServerParam) WriteSkeleton(writer io.Writer) error
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceAddForSwitchServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *InterfaceAddForSwitchServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.SwitchId) {
 		p.SwitchId = sacloud.ID(0)
 	}
@@ -8557,7 +8585,8 @@ func (p *InterfaceAddDisconnectedServerParam) WriteSkeleton(writer io.Writer) er
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceAddDisconnectedServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *InterfaceAddDisconnectedServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -8770,7 +8799,8 @@ func (p *ISOInfoServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ISOInfoServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ISOInfoServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -9065,7 +9095,8 @@ func (p *ISOInsertServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ISOInsertServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ISOInsertServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ISOImageId) {
 		p.ISOImageId = sacloud.ID(0)
 	}
@@ -9397,7 +9428,8 @@ func (p *ISOEjectServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ISOEjectServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ISOEjectServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -9614,7 +9646,8 @@ func (p *MonitorCPUServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *MonitorCPUServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *MonitorCPUServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Start) {
 		p.Start = ""
 	}
@@ -9969,7 +10002,8 @@ func (p *MonitorNicServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *MonitorNicServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *MonitorNicServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Start) {
 		p.Start = ""
 	}
@@ -10335,7 +10369,8 @@ func (p *MonitorDiskServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *MonitorDiskServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *MonitorDiskServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Start) {
 		p.Start = ""
 	}
@@ -10694,7 +10729,8 @@ func (p *MaintenanceInfoServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *MaintenanceInfoServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *MaintenanceInfoServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}

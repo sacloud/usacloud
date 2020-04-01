@@ -71,7 +71,8 @@ func (p *ListVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -447,7 +448,8 @@ func (p *CreateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreateVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Plan) {
 		p.Plan = ""
 	}
@@ -947,7 +949,8 @@ func (p *ReadVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1247,7 +1250,8 @@ func (p *UpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.SyslogHost) {
 		p.SyslogHost = ""
 	}
@@ -1659,7 +1663,8 @@ func (p *DeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Force) {
 		p.Force = false
 	}
@@ -1968,7 +1973,8 @@ func (p *BootVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *BootVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *BootVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2175,7 +2181,8 @@ func (p *ShutdownVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ShutdownVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ShutdownVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2382,7 +2389,8 @@ func (p *ShutdownForceVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ShutdownForceVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ShutdownForceVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2589,7 +2597,8 @@ func (p *ResetVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ResetVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ResetVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2795,7 +2804,8 @@ func (p *WaitForBootVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *WaitForBootVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *WaitForBootVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2990,7 +3000,8 @@ func (p *WaitForDownVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *WaitForDownVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *WaitForDownVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3186,7 +3197,8 @@ func (p *EnableInternetConnectionVPCRouterParam) WriteSkeleton(writer io.Writer)
 	return writeSkeleton(p, writer)
 }
 
-func (p *EnableInternetConnectionVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *EnableInternetConnectionVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3393,7 +3405,8 @@ func (p *DisableInternetConnectionVPCRouterParam) WriteSkeleton(writer io.Writer
 	return writeSkeleton(p, writer)
 }
 
-func (p *DisableInternetConnectionVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DisableInternetConnectionVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3606,7 +3619,8 @@ func (p *InterfaceInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceInfoVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *InterfaceInfoVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3901,7 +3915,8 @@ func (p *InterfaceConnectVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceConnectVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *InterfaceConnectVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = ""
 	}
@@ -4263,7 +4278,8 @@ func (p *InterfaceUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceUpdateVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *InterfaceUpdateVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = ""
 	}
@@ -4623,7 +4639,8 @@ func (p *InterfaceDisconnectVPCRouterParam) WriteSkeleton(writer io.Writer) erro
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceDisconnectVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *InterfaceDisconnectVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = ""
 	}
@@ -4873,7 +4890,8 @@ func (p *StaticNatInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticNatInfoVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *StaticNatInfoVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -5163,7 +5181,8 @@ func (p *StaticNatAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticNatAddVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *StaticNatAddVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Global) {
 		p.Global = ""
 	}
@@ -5445,7 +5464,8 @@ func (p *StaticNatUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticNatUpdateVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *StaticNatUpdateVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -5729,7 +5749,8 @@ func (p *StaticNatDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticNatDeleteVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *StaticNatDeleteVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -5961,7 +5982,8 @@ func (p *PortForwardingInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error
 	return writeSkeleton(p, writer)
 }
 
-func (p *PortForwardingInfoVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PortForwardingInfoVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -6253,7 +6275,8 @@ func (p *PortForwardingAddVPCRouterParam) WriteSkeleton(writer io.Writer) error 
 	return writeSkeleton(p, writer)
 }
 
-func (p *PortForwardingAddVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PortForwardingAddVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
@@ -6589,7 +6612,8 @@ func (p *PortForwardingUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) err
 	return writeSkeleton(p, writer)
 }
 
-func (p *PortForwardingUpdateVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PortForwardingUpdateVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -6911,7 +6935,8 @@ func (p *PortForwardingDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) err
 	return writeSkeleton(p, writer)
 }
 
-func (p *PortForwardingDeleteVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PortForwardingDeleteVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -7146,7 +7171,8 @@ func (p *FirewallInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *FirewallInfoVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *FirewallInfoVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
@@ -7489,7 +7515,8 @@ func (p *FirewallAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *FirewallAddVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *FirewallAddVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
@@ -7911,7 +7938,8 @@ func (p *FirewallUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *FirewallUpdateVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *FirewallUpdateVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
@@ -8330,7 +8358,8 @@ func (p *FirewallDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *FirewallDeleteVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *FirewallDeleteVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
@@ -8607,7 +8636,8 @@ func (p *DhcpServerInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DhcpServerInfoVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DhcpServerInfoVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -8898,7 +8928,8 @@ func (p *DhcpServerAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DhcpServerAddVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DhcpServerAddVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
@@ -9206,7 +9237,8 @@ func (p *DhcpServerUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DhcpServerUpdateVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DhcpServerUpdateVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
@@ -9497,7 +9529,8 @@ func (p *DhcpServerDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DhcpServerDeleteVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DhcpServerDeleteVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
@@ -9736,7 +9769,8 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) WriteSkeleton(writer io.Writer) er
 	return writeSkeleton(p, writer)
 }
 
-func (p *DhcpStaticMappingInfoVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DhcpStaticMappingInfoVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -10025,7 +10059,8 @@ func (p *DhcpStaticMappingAddVPCRouterParam) WriteSkeleton(writer io.Writer) err
 	return writeSkeleton(p, writer)
 }
 
-func (p *DhcpStaticMappingAddVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DhcpStaticMappingAddVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Macaddress) {
 		p.Macaddress = ""
 	}
@@ -10287,7 +10322,8 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) 
 	return writeSkeleton(p, writer)
 }
 
-func (p *DhcpStaticMappingUpdateVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DhcpStaticMappingUpdateVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -10552,7 +10588,8 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) 
 	return writeSkeleton(p, writer)
 }
 
-func (p *DhcpStaticMappingDeleteVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DhcpStaticMappingDeleteVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -10784,7 +10821,8 @@ func (p *PptpServerInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PptpServerInfoVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PptpServerInfoVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -11074,7 +11112,8 @@ func (p *PptpServerUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PptpServerUpdateVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PptpServerUpdateVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Disabled) {
 		p.Disabled = false
 	}
@@ -11336,7 +11375,8 @@ func (p *L2TPServerInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *L2TPServerInfoVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *L2TPServerInfoVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -11627,7 +11667,8 @@ func (p *L2TPServerUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *L2TPServerUpdateVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *L2TPServerUpdateVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Disabled) {
 		p.Disabled = false
 	}
@@ -11908,7 +11949,8 @@ func (p *UserInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UserInfoVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UserInfoVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -12197,7 +12239,8 @@ func (p *UserAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UserAddVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UserAddVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Username) {
 		p.Username = ""
 	}
@@ -12459,7 +12502,8 @@ func (p *UserUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UserUpdateVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UserUpdateVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -12724,7 +12768,8 @@ func (p *UserDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UserDeleteVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UserDeleteVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -12956,7 +13001,8 @@ func (p *SiteToSiteVPNInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error 
 	return writeSkeleton(p, writer)
 }
 
-func (p *SiteToSiteVPNInfoVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SiteToSiteVPNInfoVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -13248,7 +13294,8 @@ func (p *SiteToSiteVPNAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SiteToSiteVPNAddVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SiteToSiteVPNAddVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Peer) {
 		p.Peer = ""
 	}
@@ -13584,7 +13631,8 @@ func (p *SiteToSiteVPNUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) erro
 	return writeSkeleton(p, writer)
 }
 
-func (p *SiteToSiteVPNUpdateVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SiteToSiteVPNUpdateVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -13898,7 +13946,8 @@ func (p *SiteToSiteVPNDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) erro
 	return writeSkeleton(p, writer)
 }
 
-func (p *SiteToSiteVPNDeleteVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SiteToSiteVPNDeleteVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -14130,7 +14179,8 @@ func (p *SiteToSiteVPNPeersVPCRouterParam) WriteSkeleton(writer io.Writer) error
 	return writeSkeleton(p, writer)
 }
 
-func (p *SiteToSiteVPNPeersVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SiteToSiteVPNPeersVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -14423,7 +14473,8 @@ func (p *StaticRouteInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticRouteInfoVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *StaticRouteInfoVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -14712,7 +14763,8 @@ func (p *StaticRouteAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticRouteAddVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *StaticRouteAddVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Prefix) {
 		p.Prefix = ""
 	}
@@ -14974,7 +15026,8 @@ func (p *StaticRouteUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error 
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticRouteUpdateVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *StaticRouteUpdateVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -15239,7 +15292,8 @@ func (p *StaticRouteDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error 
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticRouteDeleteVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *StaticRouteDeleteVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -15476,7 +15530,8 @@ func (p *MonitorVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *MonitorVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *MonitorVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Interface) {
 		p.Interface = ""
 	}
@@ -15850,7 +15905,8 @@ func (p *LogsVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *LogsVPCRouterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *LogsVPCRouterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.LogName) {
 		p.LogName = ""
 	}

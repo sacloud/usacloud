@@ -50,6 +50,14 @@ func databaseListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseList(ctx, databaseListParam.ToV0())
 		},
 	}
@@ -91,6 +99,14 @@ func databaseCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseCreate(ctx, databaseCreateParam.ToV0())
 		},
 	}
@@ -146,6 +162,14 @@ func databaseReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseRead(ctx, databaseReadParam.ToV0())
 		},
 	}
@@ -183,6 +207,14 @@ func databaseUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseUpdate(ctx, databaseUpdateParam.ToV0())
 		},
 	}
@@ -234,6 +266,14 @@ func databaseDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseDelete(ctx, databaseDeleteParam.ToV0())
 		},
 	}
@@ -273,6 +313,14 @@ func databaseBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseBootParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseBootParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseBoot(ctx, databaseBootParam.ToV0())
 		},
 	}
@@ -304,6 +352,14 @@ func databaseShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseShutdownParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseShutdownParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseShutdown(ctx, databaseShutdownParam.ToV0())
 		},
 	}
@@ -335,6 +391,14 @@ func databaseShutdownForceCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseShutdownForceParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseShutdownForceParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseShutdownForce(ctx, databaseShutdownForceParam.ToV0())
 		},
 	}
@@ -366,6 +430,14 @@ func databaseResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseResetParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseResetParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseReset(ctx, databaseResetParam.ToV0())
 		},
 	}
@@ -397,6 +469,14 @@ func databaseWaitForBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseWaitForBootParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseWaitForBootParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseWaitForBoot(ctx, databaseWaitForBootParam.ToV0())
 		},
 	}
@@ -427,6 +507,14 @@ func databaseWaitForDownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseWaitForDownParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseWaitForDownParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseWaitForDown(ctx, databaseWaitForDownParam.ToV0())
 		},
 	}
@@ -457,6 +545,14 @@ func databaseBackupInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseBackupInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseBackupInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseBackupInfo(ctx, databaseBackupInfoParam.ToV0())
 		},
 	}
@@ -494,6 +590,14 @@ func databaseBackupCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseBackupCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseBackupCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseBackupCreate(ctx, databaseBackupCreateParam.ToV0())
 		},
 	}
@@ -531,6 +635,14 @@ func databaseBackupRestoreCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseBackupRestoreParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseBackupRestoreParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseBackupRestore(ctx, databaseBackupRestoreParam.ToV0())
 		},
 	}
@@ -569,6 +681,14 @@ func databaseBackupLockCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseBackupLockParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseBackupLockParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseBackupLock(ctx, databaseBackupLockParam.ToV0())
 		},
 	}
@@ -607,6 +727,14 @@ func databaseBackupUnlockCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseBackupUnlockParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseBackupUnlockParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseBackupUnlock(ctx, databaseBackupUnlockParam.ToV0())
 		},
 	}
@@ -645,6 +773,14 @@ func databaseBackupRemoveCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseBackupRemoveParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseBackupRemoveParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseBackupRemove(ctx, databaseBackupRemoveParam.ToV0())
 		},
 	}
@@ -683,6 +819,14 @@ func databaseCloneCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseCloneParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseCloneParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseClone(ctx, databaseCloneParam.ToV0())
 		},
 	}
@@ -736,6 +880,14 @@ func databaseReplicaCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseReplicaCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseReplicaCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseReplicaCreate(ctx, databaseReplicaCreateParam.ToV0())
 		},
 	}
@@ -781,6 +933,14 @@ func databaseMonitorCPUCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseMonitorCPUParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseMonitorCPUParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseMonitorCPU(ctx, databaseMonitorCPUParam.ToV0())
 		},
 	}
@@ -821,6 +981,14 @@ func databaseMonitorMemoryCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseMonitorMemoryParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseMonitorMemoryParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseMonitorMemory(ctx, databaseMonitorMemoryParam.ToV0())
 		},
 	}
@@ -861,6 +1029,14 @@ func databaseMonitorNicCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseMonitorNicParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseMonitorNicParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseMonitorNic(ctx, databaseMonitorNicParam.ToV0())
 		},
 	}
@@ -901,6 +1077,14 @@ func databaseMonitorSystemDiskCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseMonitorSystemDiskParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseMonitorSystemDiskParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseMonitorSystemDisk(ctx, databaseMonitorSystemDiskParam.ToV0())
 		},
 	}
@@ -941,6 +1125,14 @@ func databaseMonitorBackupDiskCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseMonitorBackupDiskParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseMonitorBackupDiskParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseMonitorBackupDisk(ctx, databaseMonitorBackupDiskParam.ToV0())
 		},
 	}
@@ -981,6 +1173,14 @@ func databaseMonitorSystemDiskSizeCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseMonitorSystemDiskSizeParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseMonitorSystemDiskSizeParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseMonitorSystemDiskSize(ctx, databaseMonitorSystemDiskSizeParam.ToV0())
 		},
 	}
@@ -1021,6 +1221,14 @@ func databaseMonitorBackupDiskSizeCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseMonitorBackupDiskSizeParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseMonitorBackupDiskSizeParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseMonitorBackupDiskSize(ctx, databaseMonitorBackupDiskSizeParam.ToV0())
 		},
 	}
@@ -1061,6 +1269,14 @@ func databaseLogsCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if databaseLogsParam.GenerateSkeleton {
+				return generateSkeleton(ctx, databaseLogsParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DatabaseLogs(ctx, databaseLogsParam.ToV0())
 		},
 	}

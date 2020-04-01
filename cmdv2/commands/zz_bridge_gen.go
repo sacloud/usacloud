@@ -50,6 +50,14 @@ func bridgeListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if bridgeListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, bridgeListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.BridgeList(ctx, bridgeListParam.ToV0())
 		},
 	}
@@ -90,6 +98,14 @@ func bridgeCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if bridgeCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, bridgeCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.BridgeCreate(ctx, bridgeCreateParam.ToV0())
 		},
 	}
@@ -128,6 +144,14 @@ func bridgeReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if bridgeReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, bridgeReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.BridgeRead(ctx, bridgeReadParam.ToV0())
 		},
 	}
@@ -164,6 +188,14 @@ func bridgeUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if bridgeUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, bridgeUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.BridgeUpdate(ctx, bridgeUpdateParam.ToV0())
 		},
 	}
@@ -203,6 +235,14 @@ func bridgeDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if bridgeDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, bridgeDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.BridgeDelete(ctx, bridgeDeleteParam.ToV0())
 		},
 	}

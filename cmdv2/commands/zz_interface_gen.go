@@ -50,6 +50,14 @@ func interfaceListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if interfaceListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, interfaceListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InterfaceList(ctx, interfaceListParam.ToV0())
 		},
 	}
@@ -90,6 +98,14 @@ func interfacePacketFilterConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if interfacePacketFilterConnectParam.GenerateSkeleton {
+				return generateSkeleton(ctx, interfacePacketFilterConnectParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InterfacePacketFilterConnect(ctx, interfacePacketFilterConnectParam.ToV0())
 		},
 	}
@@ -121,6 +137,14 @@ func interfaceCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if interfaceCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, interfaceCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InterfaceCreate(ctx, interfaceCreateParam.ToV0())
 		},
 	}
@@ -158,6 +182,14 @@ func interfacePacketFilterDisconnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if interfacePacketFilterDisconnectParam.GenerateSkeleton {
+				return generateSkeleton(ctx, interfacePacketFilterDisconnectParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InterfacePacketFilterDisconnect(ctx, interfacePacketFilterDisconnectParam.ToV0())
 		},
 	}
@@ -189,6 +221,14 @@ func interfaceReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if interfaceReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, interfaceReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InterfaceRead(ctx, interfaceReadParam.ToV0())
 		},
 	}
@@ -225,6 +265,14 @@ func interfaceUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if interfaceUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, interfaceUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InterfaceUpdate(ctx, interfaceUpdateParam.ToV0())
 		},
 	}
@@ -263,6 +311,14 @@ func interfaceDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if interfaceDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, interfaceDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InterfaceDelete(ctx, interfaceDeleteParam.ToV0())
 		},
 	}

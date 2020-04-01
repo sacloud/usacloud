@@ -72,7 +72,8 @@ func (p *ListIPv6Param) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListIPv6Param) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListIPv6Param) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -455,7 +456,8 @@ func (p *PtrAddIPv6Param) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PtrAddIPv6Param) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PtrAddIPv6Param) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Hostname) {
 		p.Hostname = ""
 	}
@@ -746,7 +748,8 @@ func (p *PtrReadIPv6Param) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PtrReadIPv6Param) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PtrReadIPv6Param) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -1009,7 +1012,8 @@ func (p *PtrUpdateIPv6Param) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PtrUpdateIPv6Param) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PtrUpdateIPv6Param) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Hostname) {
 		p.Hostname = ""
 	}
@@ -1301,7 +1305,8 @@ func (p *PtrDeleteIPv6Param) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PtrDeleteIPv6Param) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PtrDeleteIPv6Param) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}

@@ -50,6 +50,14 @@ func autoBackupListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if autoBackupListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, autoBackupListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.AutoBackupList(ctx, autoBackupListParam.ToV0())
 		},
 	}
@@ -91,6 +99,14 @@ func autoBackupCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if autoBackupCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, autoBackupCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.AutoBackupCreate(ctx, autoBackupCreateParam.ToV0())
 		},
 	}
@@ -134,6 +150,14 @@ func autoBackupReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if autoBackupReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, autoBackupReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.AutoBackupRead(ctx, autoBackupReadParam.ToV0())
 		},
 	}
@@ -171,6 +195,14 @@ func autoBackupUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if autoBackupUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, autoBackupUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.AutoBackupUpdate(ctx, autoBackupUpdateParam.ToV0())
 		},
 	}
@@ -215,6 +247,14 @@ func autoBackupDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if autoBackupDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, autoBackupDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.AutoBackupDelete(ctx, autoBackupDeleteParam.ToV0())
 		},
 	}

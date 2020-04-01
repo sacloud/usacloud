@@ -71,7 +71,8 @@ func (p *ListPrivateHostParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListPrivateHostParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListPrivateHostParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -438,7 +439,8 @@ func (p *CreatePrivateHostParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreatePrivateHostParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreatePrivateHostParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -795,7 +797,8 @@ func (p *ReadPrivateHostParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadPrivateHostParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadPrivateHostParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1093,7 +1096,8 @@ func (p *UpdatePrivateHostParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdatePrivateHostParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdatePrivateHostParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1474,7 +1478,8 @@ func (p *DeletePrivateHostParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeletePrivateHostParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeletePrivateHostParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1778,7 +1783,8 @@ func (p *ServerInfoPrivateHostParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerInfoPrivateHostParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ServerInfoPrivateHostParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2073,7 +2079,8 @@ func (p *ServerAddPrivateHostParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerAddPrivateHostParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ServerAddPrivateHostParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ServerId) {
 		p.ServerId = sacloud.ID(0)
 	}
@@ -2405,7 +2412,8 @@ func (p *ServerDeletePrivateHostParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerDeletePrivateHostParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ServerDeletePrivateHostParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ServerId) {
 		p.ServerId = sacloud.ID(0)
 	}

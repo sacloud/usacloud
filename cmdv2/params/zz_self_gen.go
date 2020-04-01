@@ -56,7 +56,8 @@ func (p *InfoSelfParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *InfoSelfParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *InfoSelfParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}

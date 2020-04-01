@@ -49,6 +49,14 @@ func objectStorageListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if objectStorageListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, objectStorageListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ObjectStorageList(ctx, objectStorageListParam.ToV0())
 		},
 	}
@@ -87,6 +95,14 @@ func objectStoragePutCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if objectStoragePutParam.GenerateSkeleton {
+				return generateSkeleton(ctx, objectStoragePutParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ObjectStoragePut(ctx, objectStoragePutParam.ToV0())
 		},
 	}
@@ -121,6 +137,14 @@ func objectStorageGetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if objectStorageGetParam.GenerateSkeleton {
+				return generateSkeleton(ctx, objectStorageGetParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ObjectStorageGet(ctx, objectStorageGetParam.ToV0())
 		},
 	}
@@ -153,6 +177,14 @@ func objectStorageDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if objectStorageDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, objectStorageDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ObjectStorageDelete(ctx, objectStorageDeleteParam.ToV0())
 		},
 	}

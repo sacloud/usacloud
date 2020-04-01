@@ -50,6 +50,14 @@ func dnsListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if dnsListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, dnsListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DNSList(ctx, dnsListParam.ToV0())
 		},
 	}
@@ -91,6 +99,14 @@ func dnsRecordInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if dnsRecordInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, dnsRecordInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DNSRecordInfo(ctx, dnsRecordInfoParam.ToV0())
 		},
 	}
@@ -130,6 +146,14 @@ func dnsRecordBulkUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if dnsRecordBulkUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, dnsRecordBulkUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DNSRecordBulkUpdate(ctx, dnsRecordBulkUpdateParam.ToV0())
 		},
 	}
@@ -170,6 +194,14 @@ func dnsCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if dnsCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, dnsCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DNSCreate(ctx, dnsCreateParam.ToV0())
 		},
 	}
@@ -210,6 +242,14 @@ func dnsRecordAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if dnsRecordAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, dnsRecordAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DNSRecordAdd(ctx, dnsRecordAddParam.ToV0())
 		},
 	}
@@ -257,6 +297,14 @@ func dnsReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if dnsReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, dnsReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DNSRead(ctx, dnsReadParam.ToV0())
 		},
 	}
@@ -294,6 +342,14 @@ func dnsRecordUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if dnsRecordUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, dnsRecordUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DNSRecordUpdate(ctx, dnsRecordUpdateParam.ToV0())
 		},
 	}
@@ -342,6 +398,14 @@ func dnsRecordDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if dnsRecordDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, dnsRecordDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DNSRecordDelete(ctx, dnsRecordDeleteParam.ToV0())
 		},
 	}
@@ -381,6 +445,14 @@ func dnsUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if dnsUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, dnsUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DNSUpdate(ctx, dnsUpdateParam.ToV0())
 		},
 	}
@@ -422,6 +494,14 @@ func dnsDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if dnsDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, dnsDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DNSDelete(ctx, dnsDeleteParam.ToV0())
 		},
 	}

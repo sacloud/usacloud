@@ -70,7 +70,8 @@ func (p *ListIPv4Param) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListIPv4Param) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListIPv4Param) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -415,7 +416,8 @@ func (p *PtrAddIPv4Param) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PtrAddIPv4Param) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PtrAddIPv4Param) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Hostname) {
 		p.Hostname = ""
 	}
@@ -706,7 +708,8 @@ func (p *PtrReadIPv4Param) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PtrReadIPv4Param) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PtrReadIPv4Param) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -969,7 +972,8 @@ func (p *PtrUpdateIPv4Param) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PtrUpdateIPv4Param) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PtrUpdateIPv4Param) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Hostname) {
 		p.Hostname = ""
 	}
@@ -1261,7 +1265,8 @@ func (p *PtrDeleteIPv4Param) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PtrDeleteIPv4Param) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PtrDeleteIPv4Param) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}

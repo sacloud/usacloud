@@ -50,6 +50,14 @@ func productLicenseListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if productLicenseListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, productLicenseListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProductLicenseList(ctx, productLicenseListParam.ToV0())
 		},
 	}
@@ -90,6 +98,14 @@ func productLicenseReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if productLicenseReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, productLicenseReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProductLicenseRead(ctx, productLicenseReadParam.ToV0())
 		},
 	}

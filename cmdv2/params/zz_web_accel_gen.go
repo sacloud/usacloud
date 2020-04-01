@@ -65,7 +65,8 @@ func (p *ListWebAccelParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListWebAccelParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListWebAccelParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -328,7 +329,8 @@ func (p *ReadWebAccelParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadWebAccelParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadWebAccelParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -621,7 +623,8 @@ func (p *CertificateInfoWebAccelParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CertificateInfoWebAccelParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CertificateInfoWebAccelParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -919,7 +922,8 @@ func (p *CertificateNewWebAccelParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CertificateNewWebAccelParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CertificateNewWebAccelParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Cert) {
 		p.Cert = ""
 	}
@@ -1308,7 +1312,8 @@ func (p *CertificateUpdateWebAccelParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CertificateUpdateWebAccelParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CertificateUpdateWebAccelParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Cert) {
 		p.Cert = ""
 	}
@@ -1691,7 +1696,8 @@ func (p *DeleteCacheWebAccelParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteCacheWebAccelParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteCacheWebAccelParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}

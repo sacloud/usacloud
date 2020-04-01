@@ -71,7 +71,8 @@ func (p *ListDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListDNSParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListDNSParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -437,7 +438,8 @@ func (p *RecordInfoDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RecordInfoDNSParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *RecordInfoDNSParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -772,7 +774,8 @@ func (p *RecordBulkUpdateDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RecordBulkUpdateDNSParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *RecordBulkUpdateDNSParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.File) {
 		p.File = ""
 	}
@@ -1131,7 +1134,8 @@ func (p *CreateDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateDNSParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreateDNSParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -1499,7 +1503,8 @@ func (p *RecordAddDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RecordAddDNSParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *RecordAddDNSParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -1980,7 +1985,8 @@ func (p *ReadDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadDNSParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadDNSParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2284,7 +2290,8 @@ func (p *RecordUpdateDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RecordUpdateDNSParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *RecordUpdateDNSParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -2772,7 +2779,8 @@ func (p *RecordDeleteDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RecordDeleteDNSParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *RecordDeleteDNSParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -3099,7 +3107,8 @@ func (p *UpdateDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateDNSParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateDNSParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3461,7 +3470,8 @@ func (p *DeleteDNSParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteDNSParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteDNSParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}

@@ -50,6 +50,14 @@ func startupScriptListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if startupScriptListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, startupScriptListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.StartupScriptList(ctx, startupScriptListParam.ToV0())
 		},
 	}
@@ -93,6 +101,14 @@ func startupScriptCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if startupScriptCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, startupScriptCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.StartupScriptCreate(ctx, startupScriptCreateParam.ToV0())
 		},
 	}
@@ -135,6 +151,14 @@ func startupScriptReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if startupScriptReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, startupScriptReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.StartupScriptRead(ctx, startupScriptReadParam.ToV0())
 		},
 	}
@@ -172,6 +196,14 @@ func startupScriptUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if startupScriptUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, startupScriptUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.StartupScriptUpdate(ctx, startupScriptUpdateParam.ToV0())
 		},
 	}
@@ -216,6 +248,14 @@ func startupScriptDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if startupScriptDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, startupScriptDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.StartupScriptDelete(ctx, startupScriptDeleteParam.ToV0())
 		},
 	}

@@ -70,7 +70,8 @@ func (p *ListProductServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListProductServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListProductServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -415,7 +416,8 @@ func (p *ReadProductServerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadProductServerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadProductServerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}

@@ -50,6 +50,14 @@ func vpcRouterListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterList(ctx, vpcRouterListParam.ToV0())
 		},
 	}
@@ -91,6 +99,14 @@ func vpcRouterCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterCreate(ctx, vpcRouterCreateParam.ToV0())
 		},
 	}
@@ -139,6 +155,14 @@ func vpcRouterReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterRead(ctx, vpcRouterReadParam.ToV0())
 		},
 	}
@@ -176,6 +200,14 @@ func vpcRouterUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterUpdate(ctx, vpcRouterUpdateParam.ToV0())
 		},
 	}
@@ -220,6 +252,14 @@ func vpcRouterDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterDelete(ctx, vpcRouterDeleteParam.ToV0())
 		},
 	}
@@ -259,6 +299,14 @@ func vpcRouterBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterBootParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterBootParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterBoot(ctx, vpcRouterBootParam.ToV0())
 		},
 	}
@@ -290,6 +338,14 @@ func vpcRouterShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterShutdownParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterShutdownParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterShutdown(ctx, vpcRouterShutdownParam.ToV0())
 		},
 	}
@@ -321,6 +377,14 @@ func vpcRouterShutdownForceCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterShutdownForceParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterShutdownForceParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterShutdownForce(ctx, vpcRouterShutdownForceParam.ToV0())
 		},
 	}
@@ -352,6 +416,14 @@ func vpcRouterResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterResetParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterResetParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterReset(ctx, vpcRouterResetParam.ToV0())
 		},
 	}
@@ -383,6 +455,14 @@ func vpcRouterWaitForBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterWaitForBootParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterWaitForBootParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterWaitForBoot(ctx, vpcRouterWaitForBootParam.ToV0())
 		},
 	}
@@ -413,6 +493,14 @@ func vpcRouterWaitForDownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterWaitForDownParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterWaitForDownParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterWaitForDown(ctx, vpcRouterWaitForDownParam.ToV0())
 		},
 	}
@@ -443,6 +531,14 @@ func vpcRouterEnableInternetConnectionCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterEnableInternetConnectionParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterEnableInternetConnectionParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterEnableInternetConnection(ctx, vpcRouterEnableInternetConnectionParam.ToV0())
 		},
 	}
@@ -474,6 +570,14 @@ func vpcRouterDisableInternetConnectionCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterDisableInternetConnectionParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterDisableInternetConnectionParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterDisableInternetConnection(ctx, vpcRouterDisableInternetConnectionParam.ToV0())
 		},
 	}
@@ -505,6 +609,14 @@ func vpcRouterInterfaceInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterInterfaceInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterInterfaceInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterInterfaceInfo(ctx, vpcRouterInterfaceInfoParam.ToV0())
 		},
 	}
@@ -542,6 +654,14 @@ func vpcRouterInterfaceConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterInterfaceConnectParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterInterfaceConnectParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterInterfaceConnect(ctx, vpcRouterInterfaceConnectParam.ToV0())
 		},
 	}
@@ -580,6 +700,14 @@ func vpcRouterInterfaceUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterInterfaceUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterInterfaceUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterInterfaceUpdate(ctx, vpcRouterInterfaceUpdateParam.ToV0())
 		},
 	}
@@ -619,6 +747,14 @@ func vpcRouterInterfaceDisconnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterInterfaceDisconnectParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterInterfaceDisconnectParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterInterfaceDisconnect(ctx, vpcRouterInterfaceDisconnectParam.ToV0())
 		},
 	}
@@ -652,6 +788,14 @@ func vpcRouterStaticNatInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterStaticNatInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterStaticNatInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterStaticNatInfo(ctx, vpcRouterStaticNatInfoParam.ToV0())
 		},
 	}
@@ -689,6 +833,14 @@ func vpcRouterStaticNatAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterStaticNatAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterStaticNatAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterStaticNatAdd(ctx, vpcRouterStaticNatAddParam.ToV0())
 		},
 	}
@@ -723,6 +875,14 @@ func vpcRouterStaticNatUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterStaticNatUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterStaticNatUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterStaticNatUpdate(ctx, vpcRouterStaticNatUpdateParam.ToV0())
 		},
 	}
@@ -758,6 +918,14 @@ func vpcRouterStaticNatDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterStaticNatDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterStaticNatDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterStaticNatDelete(ctx, vpcRouterStaticNatDeleteParam.ToV0())
 		},
 	}
@@ -790,6 +958,14 @@ func vpcRouterPortForwardingInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterPortForwardingInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterPortForwardingInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterPortForwardingInfo(ctx, vpcRouterPortForwardingInfoParam.ToV0())
 		},
 	}
@@ -827,6 +1003,14 @@ func vpcRouterPortForwardingAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterPortForwardingAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterPortForwardingAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterPortForwardingAdd(ctx, vpcRouterPortForwardingAddParam.ToV0())
 		},
 	}
@@ -863,6 +1047,14 @@ func vpcRouterPortForwardingUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterPortForwardingUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterPortForwardingUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterPortForwardingUpdate(ctx, vpcRouterPortForwardingUpdateParam.ToV0())
 		},
 	}
@@ -900,6 +1092,14 @@ func vpcRouterPortForwardingDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterPortForwardingDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterPortForwardingDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterPortForwardingDelete(ctx, vpcRouterPortForwardingDeleteParam.ToV0())
 		},
 	}
@@ -932,6 +1132,14 @@ func vpcRouterFirewallInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterFirewallInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterFirewallInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterFirewallInfo(ctx, vpcRouterFirewallInfoParam.ToV0())
 		},
 	}
@@ -971,6 +1179,14 @@ func vpcRouterFirewallAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterFirewallAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterFirewallAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterFirewallAdd(ctx, vpcRouterFirewallAddParam.ToV0())
 		},
 	}
@@ -1012,6 +1228,14 @@ func vpcRouterFirewallUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterFirewallUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterFirewallUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterFirewallUpdate(ctx, vpcRouterFirewallUpdateParam.ToV0())
 		},
 	}
@@ -1054,6 +1278,14 @@ func vpcRouterFirewallDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterFirewallDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterFirewallDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterFirewallDelete(ctx, vpcRouterFirewallDeleteParam.ToV0())
 		},
 	}
@@ -1088,6 +1320,14 @@ func vpcRouterDhcpServerInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterDhcpServerInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterDhcpServerInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterDhcpServerInfo(ctx, vpcRouterDhcpServerInfoParam.ToV0())
 		},
 	}
@@ -1125,6 +1365,14 @@ func vpcRouterDhcpServerAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterDhcpServerAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterDhcpServerAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterDhcpServerAdd(ctx, vpcRouterDhcpServerAddParam.ToV0())
 		},
 	}
@@ -1160,6 +1408,14 @@ func vpcRouterDhcpServerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterDhcpServerUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterDhcpServerUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterDhcpServerUpdate(ctx, vpcRouterDhcpServerUpdateParam.ToV0())
 		},
 	}
@@ -1195,6 +1451,14 @@ func vpcRouterDhcpServerDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterDhcpServerDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterDhcpServerDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterDhcpServerDelete(ctx, vpcRouterDhcpServerDeleteParam.ToV0())
 		},
 	}
@@ -1227,6 +1491,14 @@ func vpcRouterDhcpStaticMappingInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterDhcpStaticMappingInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterDhcpStaticMappingInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterDhcpStaticMappingInfo(ctx, vpcRouterDhcpStaticMappingInfoParam.ToV0())
 		},
 	}
@@ -1264,6 +1536,14 @@ func vpcRouterDhcpStaticMappingAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterDhcpStaticMappingAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterDhcpStaticMappingAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterDhcpStaticMappingAdd(ctx, vpcRouterDhcpStaticMappingAddParam.ToV0())
 		},
 	}
@@ -1297,6 +1577,14 @@ func vpcRouterDhcpStaticMappingUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterDhcpStaticMappingUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterDhcpStaticMappingUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterDhcpStaticMappingUpdate(ctx, vpcRouterDhcpStaticMappingUpdateParam.ToV0())
 		},
 	}
@@ -1331,6 +1619,14 @@ func vpcRouterDhcpStaticMappingDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterDhcpStaticMappingDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterDhcpStaticMappingDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterDhcpStaticMappingDelete(ctx, vpcRouterDhcpStaticMappingDeleteParam.ToV0())
 		},
 	}
@@ -1363,6 +1659,14 @@ func vpcRouterPptpServerInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterPptpServerInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterPptpServerInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterPptpServerInfo(ctx, vpcRouterPptpServerInfoParam.ToV0())
 		},
 	}
@@ -1400,6 +1704,14 @@ func vpcRouterPptpServerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterPptpServerUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterPptpServerUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterPptpServerUpdate(ctx, vpcRouterPptpServerUpdateParam.ToV0())
 		},
 	}
@@ -1434,6 +1746,14 @@ func vpcRouterL2TPServerInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterL2TPServerInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterL2TPServerInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterL2TPServerInfo(ctx, vpcRouterL2TPServerInfoParam.ToV0())
 		},
 	}
@@ -1471,6 +1791,14 @@ func vpcRouterL2TPServerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterL2TPServerUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterL2TPServerUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterL2TPServerUpdate(ctx, vpcRouterL2TPServerUpdateParam.ToV0())
 		},
 	}
@@ -1506,6 +1834,14 @@ func vpcRouterUserInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterUserInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterUserInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterUserInfo(ctx, vpcRouterUserInfoParam.ToV0())
 		},
 	}
@@ -1543,6 +1879,14 @@ func vpcRouterUserAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterUserAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterUserAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterUserAdd(ctx, vpcRouterUserAddParam.ToV0())
 		},
 	}
@@ -1576,6 +1920,14 @@ func vpcRouterUserUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterUserUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterUserUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterUserUpdate(ctx, vpcRouterUserUpdateParam.ToV0())
 		},
 	}
@@ -1610,6 +1962,14 @@ func vpcRouterUserDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterUserDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterUserDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterUserDelete(ctx, vpcRouterUserDeleteParam.ToV0())
 		},
 	}
@@ -1642,6 +2002,14 @@ func vpcRouterSiteToSiteVPNInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterSiteToSiteVPNInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterSiteToSiteVPNInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterSiteToSiteVPNInfo(ctx, vpcRouterSiteToSiteVPNInfoParam.ToV0())
 		},
 	}
@@ -1679,6 +2047,14 @@ func vpcRouterSiteToSiteVPNAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterSiteToSiteVPNAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterSiteToSiteVPNAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterSiteToSiteVPNAdd(ctx, vpcRouterSiteToSiteVPNAddParam.ToV0())
 		},
 	}
@@ -1715,6 +2091,14 @@ func vpcRouterSiteToSiteVPNUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterSiteToSiteVPNUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterSiteToSiteVPNUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterSiteToSiteVPNUpdate(ctx, vpcRouterSiteToSiteVPNUpdateParam.ToV0())
 		},
 	}
@@ -1752,6 +2136,14 @@ func vpcRouterSiteToSiteVPNDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterSiteToSiteVPNDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterSiteToSiteVPNDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterSiteToSiteVPNDelete(ctx, vpcRouterSiteToSiteVPNDeleteParam.ToV0())
 		},
 	}
@@ -1784,6 +2176,14 @@ func vpcRouterSiteToSiteVPNPeersCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterSiteToSiteVPNPeersParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterSiteToSiteVPNPeersParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterSiteToSiteVPNPeers(ctx, vpcRouterSiteToSiteVPNPeersParam.ToV0())
 		},
 	}
@@ -1821,6 +2221,14 @@ func vpcRouterStaticRouteInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterStaticRouteInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterStaticRouteInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterStaticRouteInfo(ctx, vpcRouterStaticRouteInfoParam.ToV0())
 		},
 	}
@@ -1858,6 +2266,14 @@ func vpcRouterStaticRouteAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterStaticRouteAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterStaticRouteAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterStaticRouteAdd(ctx, vpcRouterStaticRouteAddParam.ToV0())
 		},
 	}
@@ -1891,6 +2307,14 @@ func vpcRouterStaticRouteUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterStaticRouteUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterStaticRouteUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterStaticRouteUpdate(ctx, vpcRouterStaticRouteUpdateParam.ToV0())
 		},
 	}
@@ -1925,6 +2349,14 @@ func vpcRouterStaticRouteDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterStaticRouteDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterStaticRouteDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterStaticRouteDelete(ctx, vpcRouterStaticRouteDeleteParam.ToV0())
 		},
 	}
@@ -1957,6 +2389,14 @@ func vpcRouterMonitorCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterMonitorParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterMonitorParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterMonitor(ctx, vpcRouterMonitorParam.ToV0())
 		},
 	}
@@ -1998,6 +2438,14 @@ func vpcRouterLogsCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if vpcRouterLogsParam.GenerateSkeleton {
+				return generateSkeleton(ctx, vpcRouterLogsParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.VPCRouterLogs(ctx, vpcRouterLogsParam.ToV0())
 		},
 	}

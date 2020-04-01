@@ -72,7 +72,8 @@ func (p *ListIconParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListIconParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListIconParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -457,7 +458,8 @@ func (p *CreateIconParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateIconParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreateIconParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Image) {
 		p.Image = ""
 	}
@@ -802,7 +804,8 @@ func (p *ReadIconParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadIconParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadIconParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1098,7 +1101,8 @@ func (p *UpdateIconParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateIconParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateIconParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1441,7 +1445,8 @@ func (p *DeleteIconParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteIconParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteIconParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}

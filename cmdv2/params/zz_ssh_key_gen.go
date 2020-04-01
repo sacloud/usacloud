@@ -70,7 +70,8 @@ func (p *ListSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListSSHKeyParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListSSHKeyParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -418,7 +419,8 @@ func (p *CreateSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateSSHKeyParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreateSSHKeyParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.PublicKey) {
 		p.PublicKey = ""
 	}
@@ -776,7 +778,8 @@ func (p *ReadSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadSSHKeyParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadSSHKeyParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -1060,7 +1063,8 @@ func (p *UpdateSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateSSHKeyParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateSSHKeyParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -1391,7 +1395,8 @@ func (p *DeleteSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteSSHKeyParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteSSHKeyParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1687,7 +1692,8 @@ func (p *GenerateSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *GenerateSSHKeyParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *GenerateSSHKeyParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.PassPhrase) {
 		p.PassPhrase = ""
 	}

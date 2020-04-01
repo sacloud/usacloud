@@ -74,7 +74,8 @@ func (p *ListArchiveParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListArchiveParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListArchiveParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -502,7 +503,8 @@ func (p *CreateArchiveParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateArchiveParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreateArchiveParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.SourceDiskId) {
 		p.SourceDiskId = sacloud.ID(0)
 	}
@@ -977,7 +979,8 @@ func (p *ReadArchiveParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadArchiveParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadArchiveParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1275,7 +1278,8 @@ func (p *UpdateArchiveParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateArchiveParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateArchiveParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1656,7 +1660,8 @@ func (p *DeleteArchiveParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteArchiveParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteArchiveParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1962,7 +1967,8 @@ func (p *UploadArchiveParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UploadArchiveParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UploadArchiveParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ArchiveFile) {
 		p.ArchiveFile = ""
 	}
@@ -2280,7 +2286,8 @@ func (p *DownloadArchiveParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DownloadArchiveParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DownloadArchiveParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.FileDestination) {
 		p.FileDestination = ""
 	}
@@ -2505,7 +2512,8 @@ func (p *FTPOpenArchiveParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *FTPOpenArchiveParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *FTPOpenArchiveParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2803,7 +2811,8 @@ func (p *FTPCloseArchiveParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *FTPCloseArchiveParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *FTPCloseArchiveParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3009,7 +3018,8 @@ func (p *WaitForCopyArchiveParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *WaitForCopyArchiveParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *WaitForCopyArchiveParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}

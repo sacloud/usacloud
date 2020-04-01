@@ -50,6 +50,14 @@ func gslbListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if gslbListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, gslbListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.GSLBList(ctx, gslbListParam.ToV0())
 		},
 	}
@@ -91,6 +99,14 @@ func gslbServerInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if gslbServerInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, gslbServerInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.GSLBServerInfo(ctx, gslbServerInfoParam.ToV0())
 		},
 	}
@@ -128,6 +144,14 @@ func gslbCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if gslbCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, gslbCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.GSLBCreate(ctx, gslbCreateParam.ToV0())
 		},
 	}
@@ -176,6 +200,14 @@ func gslbServerAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if gslbServerAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, gslbServerAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.GSLBServerAdd(ctx, gslbServerAddParam.ToV0())
 		},
 	}
@@ -217,6 +249,14 @@ func gslbReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if gslbReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, gslbReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.GSLBRead(ctx, gslbReadParam.ToV0())
 		},
 	}
@@ -254,6 +294,14 @@ func gslbServerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if gslbServerUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, gslbServerUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.GSLBServerUpdate(ctx, gslbServerUpdateParam.ToV0())
 		},
 	}
@@ -296,6 +344,14 @@ func gslbServerDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if gslbServerDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, gslbServerDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.GSLBServerDelete(ctx, gslbServerDeleteParam.ToV0())
 		},
 	}
@@ -335,6 +391,14 @@ func gslbUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if gslbUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, gslbUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.GSLBUpdate(ctx, gslbUpdateParam.ToV0())
 		},
 	}
@@ -385,6 +449,14 @@ func gslbDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if gslbDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, gslbDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.GSLBDelete(ctx, gslbDeleteParam.ToV0())
 		},
 	}

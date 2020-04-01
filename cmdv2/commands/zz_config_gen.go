@@ -49,6 +49,14 @@ func configCurrentCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if configCurrentParam.GenerateSkeleton {
+				return generateSkeleton(ctx, configCurrentParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ConfigCurrent(ctx, configCurrentParam.ToV0())
 		},
 	}
@@ -77,6 +85,14 @@ func configDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if configDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, configDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ConfigDelete(ctx, configDeleteParam.ToV0())
 		},
 	}
@@ -106,6 +122,14 @@ func configEditCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if configEditParam.GenerateSkeleton {
+				return generateSkeleton(ctx, configEditParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ConfigEdit(ctx, configEditParam.ToV0())
 		},
 	}
@@ -138,6 +162,14 @@ func configListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if configListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, configListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ConfigList(ctx, configListParam.ToV0())
 		},
 	}
@@ -166,6 +198,14 @@ func configMigrateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if configMigrateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, configMigrateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ConfigMigrate(ctx, configMigrateParam.ToV0())
 		},
 	}
@@ -194,6 +234,14 @@ func configShowCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if configShowParam.GenerateSkeleton {
+				return generateSkeleton(ctx, configShowParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ConfigShow(ctx, configShowParam.ToV0())
 		},
 	}
@@ -222,6 +270,14 @@ func configUseCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if configUseParam.GenerateSkeleton {
+				return generateSkeleton(ctx, configUseParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ConfigUse(ctx, configUseParam.ToV0())
 		},
 	}

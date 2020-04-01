@@ -50,6 +50,14 @@ func simListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SIMList(ctx, simListParam.ToV0())
 		},
 	}
@@ -91,6 +99,14 @@ func simCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SIMCreate(ctx, simCreateParam.ToV0())
 		},
 	}
@@ -136,6 +152,14 @@ func simReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SIMRead(ctx, simReadParam.ToV0())
 		},
 	}
@@ -173,6 +197,14 @@ func simUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SIMUpdate(ctx, simUpdateParam.ToV0())
 		},
 	}
@@ -215,6 +247,14 @@ func simDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SIMDelete(ctx, simDeleteParam.ToV0())
 		},
 	}
@@ -247,6 +287,14 @@ func simCarrierInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simCarrierInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simCarrierInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SIMCarrierInfo(ctx, simCarrierInfoParam.ToV0())
 		},
 	}
@@ -284,6 +332,14 @@ func simCarrierUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simCarrierUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simCarrierUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SIMCarrierUpdate(ctx, simCarrierUpdateParam.ToV0())
 		},
 	}
@@ -316,6 +372,14 @@ func simActivateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simActivateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simActivateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SIMActivate(ctx, simActivateParam.ToV0())
 		},
 	}
@@ -347,6 +411,14 @@ func simDeactivateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simDeactivateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simDeactivateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SIMDeactivate(ctx, simDeactivateParam.ToV0())
 		},
 	}
@@ -378,6 +450,14 @@ func simImeiLockCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simImeiLockParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simImeiLockParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SIMImeiLock(ctx, simImeiLockParam.ToV0())
 		},
 	}
@@ -410,6 +490,14 @@ func simIpAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simIpAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simIpAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SIMIpAdd(ctx, simIpAddParam.ToV0())
 		},
 	}
@@ -442,6 +530,14 @@ func simImeiUnlockCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simImeiUnlockParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simImeiUnlockParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SIMImeiUnlock(ctx, simImeiUnlockParam.ToV0())
 		},
 	}
@@ -473,6 +569,14 @@ func simIpDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simIpDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simIpDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SIMIpDelete(ctx, simIpDeleteParam.ToV0())
 		},
 	}
@@ -504,6 +608,14 @@ func simLogsCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simLogsParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simLogsParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SIMLogs(ctx, simLogsParam.ToV0())
 		},
 	}
@@ -543,6 +655,14 @@ func simMonitorCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simMonitorParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simMonitorParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SIMMonitor(ctx, simMonitorParam.ToV0())
 		},
 	}

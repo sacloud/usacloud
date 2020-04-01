@@ -75,7 +75,8 @@ func (p *ListDiskParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListDiskParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListDiskParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -517,7 +518,8 @@ func (p *CreateDiskParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateDiskParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreateDiskParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Plan) {
 		p.Plan = ""
 	}
@@ -1027,7 +1029,8 @@ func (p *ReadDiskParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadDiskParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadDiskParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1326,7 +1329,8 @@ func (p *UpdateDiskParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateDiskParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateDiskParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Connection) {
 		p.Connection = ""
 	}
@@ -1726,7 +1730,8 @@ func (p *DeleteDiskParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteDiskParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteDiskParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2040,7 +2045,8 @@ func (p *EditDiskParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *EditDiskParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *EditDiskParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Hostname) {
 		p.Hostname = ""
 	}
@@ -2457,7 +2463,8 @@ func (p *ResizePartitionDiskParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ResizePartitionDiskParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ResizePartitionDiskParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2757,7 +2764,8 @@ func (p *ReinstallFromArchiveDiskParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReinstallFromArchiveDiskParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReinstallFromArchiveDiskParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.SourceArchiveId) {
 		p.SourceArchiveId = sacloud.ID(0)
 	}
@@ -3011,7 +3019,8 @@ func (p *ReinstallFromDiskDiskParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReinstallFromDiskDiskParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReinstallFromDiskDiskParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.SourceDiskId) {
 		p.SourceDiskId = sacloud.ID(0)
 	}
@@ -3264,7 +3273,8 @@ func (p *ReinstallToBlankDiskParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReinstallToBlankDiskParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReinstallToBlankDiskParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.DistantFrom) {
 		p.DistantFrom = []sacloud.ID{}
 	}
@@ -3491,7 +3501,8 @@ func (p *ServerConnectDiskParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerConnectDiskParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ServerConnectDiskParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ServerId) {
 		p.ServerId = sacloud.ID(0)
 	}
@@ -3724,7 +3735,8 @@ func (p *ServerDisconnectDiskParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerDisconnectDiskParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ServerDisconnectDiskParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3941,7 +3953,8 @@ func (p *MonitorDiskParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *MonitorDiskParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *MonitorDiskParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -4284,7 +4297,8 @@ func (p *WaitForCopyDiskParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *WaitForCopyDiskParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *WaitForCopyDiskParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}

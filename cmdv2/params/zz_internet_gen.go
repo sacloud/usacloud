@@ -71,7 +71,8 @@ func (p *ListInternetParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListInternetParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListInternetParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -441,7 +442,8 @@ func (p *CreateInternetParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateInternetParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreateInternetParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.NwMasklen) {
 		p.NwMasklen = 0
 	}
@@ -850,7 +852,8 @@ func (p *ReadInternetParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadInternetParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadInternetParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1149,7 +1152,8 @@ func (p *UpdateInternetParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateInternetParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateInternetParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.BandWidth) {
 		p.BandWidth = 0
 	}
@@ -1549,7 +1553,8 @@ func (p *DeleteInternetParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteInternetParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteInternetParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1856,7 +1861,8 @@ func (p *UpdateBandwidthInternetParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateBandwidthInternetParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateBandwidthInternetParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.BandWidth) {
 		p.BandWidth = 0
 	}
@@ -2186,7 +2192,8 @@ func (p *SubnetInfoInternetParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SubnetInfoInternetParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SubnetInfoInternetParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2483,7 +2490,8 @@ func (p *SubnetAddInternetParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SubnetAddInternetParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SubnetAddInternetParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.NextHop) {
 		p.NextHop = ""
 	}
@@ -2834,7 +2842,8 @@ func (p *SubnetDeleteInternetParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SubnetDeleteInternetParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SubnetDeleteInternetParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.SubnetId) {
 		p.SubnetId = sacloud.ID(0)
 	}
@@ -3069,7 +3078,8 @@ func (p *SubnetUpdateInternetParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SubnetUpdateInternetParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SubnetUpdateInternetParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.NextHop) {
 		p.NextHop = ""
 	}
@@ -3418,7 +3428,8 @@ func (p *IPv6InfoInternetParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *IPv6InfoInternetParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *IPv6InfoInternetParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3712,7 +3723,8 @@ func (p *IPv6EnableInternetParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *IPv6EnableInternetParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *IPv6EnableInternetParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -4010,7 +4022,8 @@ func (p *IPv6DisableInternetParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *IPv6DisableInternetParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *IPv6DisableInternetParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -4227,7 +4240,8 @@ func (p *MonitorInternetParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *MonitorInternetParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *MonitorInternetParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Start) {
 		p.Start = ""
 	}

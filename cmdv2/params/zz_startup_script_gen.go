@@ -73,7 +73,8 @@ func (p *ListStartupScriptParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListStartupScriptParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListStartupScriptParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -473,7 +474,8 @@ func (p *CreateStartupScriptParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateStartupScriptParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreateStartupScriptParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Script) {
 		p.Script = ""
 	}
@@ -877,7 +879,8 @@ func (p *ReadStartupScriptParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadStartupScriptParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadStartupScriptParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1177,7 +1180,8 @@ func (p *UpdateStartupScriptParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateStartupScriptParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateStartupScriptParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Script) {
 		p.Script = ""
 	}
@@ -1598,7 +1602,8 @@ func (p *DeleteStartupScriptParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteStartupScriptParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteStartupScriptParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}

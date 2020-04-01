@@ -71,7 +71,8 @@ func (p *ListProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -448,7 +449,8 @@ func (p *CreateProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreateProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Plan) {
 		p.Plan = 0
 	}
@@ -958,7 +960,8 @@ func (p *ReadProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1265,7 +1268,8 @@ func (p *UpdateProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
@@ -1766,7 +1770,8 @@ func (p *DeleteProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2072,7 +2077,8 @@ func (p *PlanChangeProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PlanChangeProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PlanChangeProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Plan) {
 		p.Plan = 0
 	}
@@ -2402,7 +2408,8 @@ func (p *BindPortInfoProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *BindPortInfoProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *BindPortInfoProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2700,7 +2707,8 @@ func (p *BindPortAddProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *BindPortAddProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *BindPortAddProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Mode) {
 		p.Mode = ""
 	}
@@ -3084,7 +3092,8 @@ func (p *BindPortUpdateProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *BindPortUpdateProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *BindPortUpdateProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -3469,7 +3478,8 @@ func (p *BindPortDeleteProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *BindPortDeleteProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *BindPortDeleteProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -3793,7 +3803,8 @@ func (p *ResponseHeaderInfoProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ResponseHeaderInfoProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.PortIndex) {
 		p.PortIndex = 0
 	}
@@ -4109,7 +4120,8 @@ func (p *ResponseHeaderAddProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ResponseHeaderAddProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ResponseHeaderAddProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.PortIndex) {
 		p.PortIndex = 0
 	}
@@ -4475,7 +4487,8 @@ func (p *ResponseHeaderUpdateProxyLBParam) WriteSkeleton(writer io.Writer) error
 	return writeSkeleton(p, writer)
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ResponseHeaderUpdateProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -4842,7 +4855,8 @@ func (p *ResponseHeaderDeleteProxyLBParam) WriteSkeleton(writer io.Writer) error
 	return writeSkeleton(p, writer)
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ResponseHeaderDeleteProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -5184,7 +5198,8 @@ func (p *ACMEInfoProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ACMEInfoProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ACMEInfoProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -5481,7 +5496,8 @@ func (p *ACMESettingProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ACMESettingProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ACMESettingProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.AcceptTos) {
 		p.AcceptTos = false
 	}
@@ -5812,7 +5828,8 @@ func (p *ACMERenewProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ACMERenewProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ACMERenewProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -6025,7 +6042,8 @@ func (p *ServerInfoProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerInfoProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ServerInfoProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -6322,7 +6340,8 @@ func (p *ServerAddProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerAddProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ServerAddProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
@@ -6694,7 +6713,8 @@ func (p *ServerUpdateProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerUpdateProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ServerUpdateProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -7068,7 +7088,8 @@ func (p *ServerDeleteProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerDeleteProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ServerDeleteProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -7391,7 +7412,8 @@ func (p *CertificateInfoProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CertificateInfoProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CertificateInfoProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -7688,7 +7710,8 @@ func (p *CertificateAddProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CertificateAddProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CertificateAddProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ServerCertificate) {
 		p.ServerCertificate = ""
 	}
@@ -8045,7 +8068,8 @@ func (p *CertificateUpdateProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CertificateUpdateProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CertificateUpdateProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ServerCertificate) {
 		p.ServerCertificate = ""
 	}
@@ -8383,7 +8407,8 @@ func (p *CertificateDeleteProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CertificateDeleteProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CertificateDeleteProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -8691,7 +8716,8 @@ func (p *MonitorProxyLBParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *MonitorProxyLBParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *MonitorProxyLBParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Start) {
 		p.Start = ""
 	}

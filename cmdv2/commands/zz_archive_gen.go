@@ -50,6 +50,14 @@ func archiveListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if archiveListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, archiveListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ArchiveList(ctx, archiveListParam.ToV0())
 		},
 	}
@@ -94,6 +102,14 @@ func archiveCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if archiveCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, archiveCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ArchiveCreate(ctx, archiveCreateParam.ToV0())
 		},
 	}
@@ -138,6 +154,14 @@ func archiveReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if archiveReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, archiveReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ArchiveRead(ctx, archiveReadParam.ToV0())
 		},
 	}
@@ -175,6 +199,14 @@ func archiveUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if archiveUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, archiveUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ArchiveUpdate(ctx, archiveUpdateParam.ToV0())
 		},
 	}
@@ -217,6 +249,14 @@ func archiveDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if archiveDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, archiveDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ArchiveDelete(ctx, archiveDeleteParam.ToV0())
 		},
 	}
@@ -255,6 +295,14 @@ func archiveUploadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if archiveUploadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, archiveUploadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ArchiveUpload(ctx, archiveUploadParam.ToV0())
 		},
 	}
@@ -294,6 +342,14 @@ func archiveDownloadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if archiveDownloadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, archiveDownloadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ArchiveDownload(ctx, archiveDownloadParam.ToV0())
 		},
 	}
@@ -326,6 +382,14 @@ func archiveFTPOpenCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if archiveFTPOpenParam.GenerateSkeleton {
+				return generateSkeleton(ctx, archiveFTPOpenParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ArchiveFTPOpen(ctx, archiveFTPOpenParam.ToV0())
 		},
 	}
@@ -364,6 +428,14 @@ func archiveFTPCloseCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if archiveFTPCloseParam.GenerateSkeleton {
+				return generateSkeleton(ctx, archiveFTPCloseParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ArchiveFTPClose(ctx, archiveFTPCloseParam.ToV0())
 		},
 	}
@@ -395,6 +467,14 @@ func archiveWaitForCopyCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if archiveWaitForCopyParam.GenerateSkeleton {
+				return generateSkeleton(ctx, archiveWaitForCopyParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ArchiveWaitForCopy(ctx, archiveWaitForCopyParam.ToV0())
 		},
 	}

@@ -50,6 +50,14 @@ func mobileGatewayListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayList(ctx, mobileGatewayListParam.ToV0())
 		},
 	}
@@ -91,6 +99,14 @@ func mobileGatewayCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayCreate(ctx, mobileGatewayCreateParam.ToV0())
 		},
 	}
@@ -132,6 +148,14 @@ func mobileGatewayReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayRead(ctx, mobileGatewayReadParam.ToV0())
 		},
 	}
@@ -169,6 +193,14 @@ func mobileGatewayUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayUpdate(ctx, mobileGatewayUpdateParam.ToV0())
 		},
 	}
@@ -212,6 +244,14 @@ func mobileGatewayDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayDelete(ctx, mobileGatewayDeleteParam.ToV0())
 		},
 	}
@@ -251,6 +291,14 @@ func mobileGatewayBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayBootParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayBootParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayBoot(ctx, mobileGatewayBootParam.ToV0())
 		},
 	}
@@ -282,6 +330,14 @@ func mobileGatewayShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayShutdownParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayShutdownParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayShutdown(ctx, mobileGatewayShutdownParam.ToV0())
 		},
 	}
@@ -313,6 +369,14 @@ func mobileGatewayShutdownForceCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayShutdownForceParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayShutdownForceParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayShutdownForce(ctx, mobileGatewayShutdownForceParam.ToV0())
 		},
 	}
@@ -344,6 +408,14 @@ func mobileGatewayResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayResetParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayResetParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayReset(ctx, mobileGatewayResetParam.ToV0())
 		},
 	}
@@ -375,6 +447,14 @@ func mobileGatewayWaitForBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayWaitForBootParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayWaitForBootParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayWaitForBoot(ctx, mobileGatewayWaitForBootParam.ToV0())
 		},
 	}
@@ -405,6 +485,14 @@ func mobileGatewayWaitForDownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayWaitForDownParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayWaitForDownParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayWaitForDown(ctx, mobileGatewayWaitForDownParam.ToV0())
 		},
 	}
@@ -435,6 +523,14 @@ func mobileGatewayInterfaceInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayInterfaceInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayInterfaceInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayInterfaceInfo(ctx, mobileGatewayInterfaceInfoParam.ToV0())
 		},
 	}
@@ -472,6 +568,14 @@ func mobileGatewayInterfaceConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayInterfaceConnectParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayInterfaceConnectParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayInterfaceConnect(ctx, mobileGatewayInterfaceConnectParam.ToV0())
 		},
 	}
@@ -506,6 +610,14 @@ func mobileGatewayInterfaceUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayInterfaceUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayInterfaceUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayInterfaceUpdate(ctx, mobileGatewayInterfaceUpdateParam.ToV0())
 		},
 	}
@@ -539,6 +651,14 @@ func mobileGatewayInterfaceDisconnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayInterfaceDisconnectParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayInterfaceDisconnectParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayInterfaceDisconnect(ctx, mobileGatewayInterfaceDisconnectParam.ToV0())
 		},
 	}
@@ -570,6 +690,14 @@ func mobileGatewayTrafficControlInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayTrafficControlInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayTrafficControlInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayTrafficControlInfo(ctx, mobileGatewayTrafficControlInfoParam.ToV0())
 		},
 	}
@@ -607,6 +735,14 @@ func mobileGatewayTrafficControlEnableCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayTrafficControlEnableParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayTrafficControlEnableParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayTrafficControlEnable(ctx, mobileGatewayTrafficControlEnableParam.ToV0())
 		},
 	}
@@ -643,6 +779,14 @@ func mobileGatewayTrafficControlUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayTrafficControlUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayTrafficControlUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayTrafficControlUpdate(ctx, mobileGatewayTrafficControlUpdateParam.ToV0())
 		},
 	}
@@ -679,6 +823,14 @@ func mobileGatewayTrafficControlDisableCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayTrafficControlDisableParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayTrafficControlDisableParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayTrafficControlDisable(ctx, mobileGatewayTrafficControlDisableParam.ToV0())
 		},
 	}
@@ -710,6 +862,14 @@ func mobileGatewayStaticRouteInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayStaticRouteInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayStaticRouteInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayStaticRouteInfo(ctx, mobileGatewayStaticRouteInfoParam.ToV0())
 		},
 	}
@@ -747,6 +907,14 @@ func mobileGatewayStaticRouteAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayStaticRouteAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayStaticRouteAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayStaticRouteAdd(ctx, mobileGatewayStaticRouteAddParam.ToV0())
 		},
 	}
@@ -780,6 +948,14 @@ func mobileGatewayStaticRouteUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayStaticRouteUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayStaticRouteUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayStaticRouteUpdate(ctx, mobileGatewayStaticRouteUpdateParam.ToV0())
 		},
 	}
@@ -814,6 +990,14 @@ func mobileGatewayStaticRouteDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayStaticRouteDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayStaticRouteDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayStaticRouteDelete(ctx, mobileGatewayStaticRouteDeleteParam.ToV0())
 		},
 	}
@@ -846,6 +1030,14 @@ func mobileGatewaySIMInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewaySIMInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewaySIMInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewaySIMInfo(ctx, mobileGatewaySIMInfoParam.ToV0())
 		},
 	}
@@ -883,6 +1075,14 @@ func mobileGatewaySIMAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewaySIMAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewaySIMAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewaySIMAdd(ctx, mobileGatewaySIMAddParam.ToV0())
 		},
 	}
@@ -916,6 +1116,14 @@ func mobileGatewaySIMUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewaySIMUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewaySIMUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewaySIMUpdate(ctx, mobileGatewaySIMUpdateParam.ToV0())
 		},
 	}
@@ -949,6 +1157,14 @@ func mobileGatewaySIMDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewaySIMDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewaySIMDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewaySIMDelete(ctx, mobileGatewaySIMDeleteParam.ToV0())
 		},
 	}
@@ -981,6 +1197,14 @@ func mobileGatewaySIMRouteInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewaySIMRouteInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewaySIMRouteInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewaySIMRouteInfo(ctx, mobileGatewaySIMRouteInfoParam.ToV0())
 		},
 	}
@@ -1018,6 +1242,14 @@ func mobileGatewaySIMRouteAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewaySIMRouteAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewaySIMRouteAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewaySIMRouteAdd(ctx, mobileGatewaySIMRouteAddParam.ToV0())
 		},
 	}
@@ -1051,6 +1283,14 @@ func mobileGatewaySIMRouteUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewaySIMRouteUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewaySIMRouteUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewaySIMRouteUpdate(ctx, mobileGatewaySIMRouteUpdateParam.ToV0())
 		},
 	}
@@ -1085,6 +1325,14 @@ func mobileGatewaySIMRouteDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewaySIMRouteDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewaySIMRouteDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewaySIMRouteDelete(ctx, mobileGatewaySIMRouteDeleteParam.ToV0())
 		},
 	}
@@ -1117,6 +1365,14 @@ func mobileGatewayDNSUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayDNSUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayDNSUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayDNSUpdate(ctx, mobileGatewayDNSUpdateParam.ToV0())
 		},
 	}
@@ -1150,6 +1406,14 @@ func mobileGatewayLogsCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if mobileGatewayLogsParam.GenerateSkeleton {
+				return generateSkeleton(ctx, mobileGatewayLogsParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.MobileGatewayLogs(ctx, mobileGatewayLogsParam.ToV0())
 		},
 	}

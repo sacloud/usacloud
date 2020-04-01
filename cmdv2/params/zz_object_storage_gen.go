@@ -66,7 +66,8 @@ func (p *ListObjectStorageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListObjectStorageParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListObjectStorageParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.AccessKey) {
 		p.AccessKey = ""
 	}
@@ -376,7 +377,8 @@ func (p *PutObjectStorageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *PutObjectStorageParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PutObjectStorageParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.AccessKey) {
 		p.AccessKey = ""
 	}
@@ -625,7 +627,8 @@ func (p *GetObjectStorageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *GetObjectStorageParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *GetObjectStorageParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.AccessKey) {
 		p.AccessKey = ""
 	}
@@ -853,7 +856,8 @@ func (p *DeleteObjectStorageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteObjectStorageParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteObjectStorageParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.AccessKey) {
 		p.AccessKey = ""
 	}

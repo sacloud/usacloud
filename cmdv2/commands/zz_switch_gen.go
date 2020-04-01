@@ -50,6 +50,14 @@ func switchListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if switchListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, switchListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SwitchList(ctx, switchListParam.ToV0())
 		},
 	}
@@ -91,6 +99,14 @@ func switchCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if switchCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, switchCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SwitchCreate(ctx, switchCreateParam.ToV0())
 		},
 	}
@@ -131,6 +147,14 @@ func switchReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if switchReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, switchReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SwitchRead(ctx, switchReadParam.ToV0())
 		},
 	}
@@ -168,6 +192,14 @@ func switchUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if switchUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, switchUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SwitchUpdate(ctx, switchUpdateParam.ToV0())
 		},
 	}
@@ -210,6 +242,14 @@ func switchDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if switchDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, switchDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SwitchDelete(ctx, switchDeleteParam.ToV0())
 		},
 	}
@@ -248,6 +288,14 @@ func switchBridgeConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if switchBridgeConnectParam.GenerateSkeleton {
+				return generateSkeleton(ctx, switchBridgeConnectParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SwitchBridgeConnect(ctx, switchBridgeConnectParam.ToV0())
 		},
 	}
@@ -280,6 +328,14 @@ func switchBridgeDisconnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if switchBridgeDisconnectParam.GenerateSkeleton {
+				return generateSkeleton(ctx, switchBridgeDisconnectParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SwitchBridgeDisconnect(ctx, switchBridgeDisconnectParam.ToV0())
 		},
 	}

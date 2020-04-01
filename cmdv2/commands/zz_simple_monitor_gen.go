@@ -50,6 +50,14 @@ func simpleMonitorListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simpleMonitorListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simpleMonitorListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SimpleMonitorList(ctx, simpleMonitorListParam.ToV0())
 		},
 	}
@@ -92,6 +100,14 @@ func simpleMonitorCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simpleMonitorCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simpleMonitorCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SimpleMonitorCreate(ctx, simpleMonitorCreateParam.ToV0())
 		},
 	}
@@ -149,6 +165,14 @@ func simpleMonitorReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simpleMonitorReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simpleMonitorReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SimpleMonitorRead(ctx, simpleMonitorReadParam.ToV0())
 		},
 	}
@@ -186,6 +210,14 @@ func simpleMonitorUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simpleMonitorUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simpleMonitorUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SimpleMonitorUpdate(ctx, simpleMonitorUpdateParam.ToV0())
 		},
 	}
@@ -244,6 +276,14 @@ func simpleMonitorDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simpleMonitorDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simpleMonitorDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SimpleMonitorDelete(ctx, simpleMonitorDeleteParam.ToV0())
 		},
 	}
@@ -282,6 +322,14 @@ func simpleMonitorHealthCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if simpleMonitorHealthParam.GenerateSkeleton {
+				return generateSkeleton(ctx, simpleMonitorHealthParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SimpleMonitorHealth(ctx, simpleMonitorHealthParam.ToV0())
 		},
 	}

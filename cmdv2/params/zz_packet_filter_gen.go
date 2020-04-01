@@ -70,7 +70,8 @@ func (p *ListPacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListPacketFilterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListPacketFilterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -416,7 +417,8 @@ func (p *CreatePacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreatePacketFilterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreatePacketFilterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -734,7 +736,8 @@ func (p *ReadPacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadPacketFilterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadPacketFilterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -1018,7 +1021,8 @@ func (p *UpdatePacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdatePacketFilterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdatePacketFilterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -1349,7 +1353,8 @@ func (p *DeletePacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeletePacketFilterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeletePacketFilterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1641,7 +1646,8 @@ func (p *RuleInfoPacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RuleInfoPacketFilterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *RuleInfoPacketFilterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -1931,7 +1937,8 @@ func (p *RuleAddPacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RuleAddPacketFilterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *RuleAddPacketFilterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -2356,7 +2363,8 @@ func (p *RuleUpdatePacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RuleUpdatePacketFilterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *RuleUpdatePacketFilterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -2783,7 +2791,8 @@ func (p *RuleDeletePacketFilterParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *RuleDeletePacketFilterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *RuleDeletePacketFilterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -3089,7 +3098,8 @@ func (p *InterfaceConnectPacketFilterParam) WriteSkeleton(writer io.Writer) erro
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceConnectPacketFilterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *InterfaceConnectPacketFilterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.InterfaceId) {
 		p.InterfaceId = sacloud.ID(0)
 	}
@@ -3311,7 +3321,8 @@ func (p *InterfaceDisconnectPacketFilterParam) WriteSkeleton(writer io.Writer) e
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceDisconnectPacketFilterParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *InterfaceDisconnectPacketFilterParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.InterfaceId) {
 		p.InterfaceId = sacloud.ID(0)
 	}

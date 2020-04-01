@@ -49,6 +49,14 @@ func webAccelListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if webAccelListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, webAccelListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.WebAccelList(ctx, webAccelListParam.ToV0())
 		},
 	}
@@ -84,6 +92,14 @@ func webAccelReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if webAccelReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, webAccelReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.WebAccelRead(ctx, webAccelReadParam.ToV0())
 		},
 	}
@@ -121,6 +137,14 @@ func webAccelCertificateInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if webAccelCertificateInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, webAccelCertificateInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.WebAccelCertificateInfo(ctx, webAccelCertificateInfoParam.ToV0())
 		},
 	}
@@ -158,6 +182,14 @@ func webAccelCertificateNewCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if webAccelCertificateNewParam.GenerateSkeleton {
+				return generateSkeleton(ctx, webAccelCertificateNewParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.WebAccelCertificateNew(ctx, webAccelCertificateNewParam.ToV0())
 		},
 	}
@@ -200,6 +232,14 @@ func webAccelCertificateUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if webAccelCertificateUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, webAccelCertificateUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.WebAccelCertificateUpdate(ctx, webAccelCertificateUpdateParam.ToV0())
 		},
 	}
@@ -242,6 +282,14 @@ func webAccelDeleteCacheCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if webAccelDeleteCacheParam.GenerateSkeleton {
+				return generateSkeleton(ctx, webAccelDeleteCacheParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.WebAccelDeleteCache(ctx, webAccelDeleteCacheParam.ToV0())
 		},
 	}

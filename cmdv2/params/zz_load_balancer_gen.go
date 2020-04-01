@@ -71,7 +71,8 @@ func (p *ListLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -447,7 +448,8 @@ func (p *CreateLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreateLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.SwitchId) {
 		p.SwitchId = sacloud.ID(0)
 	}
@@ -969,7 +971,8 @@ func (p *ReadLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1267,7 +1270,8 @@ func (p *UpdateLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1649,7 +1653,8 @@ func (p *DeleteLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Force) {
 		p.Force = false
 	}
@@ -1958,7 +1963,8 @@ func (p *BootLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *BootLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *BootLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2165,7 +2171,8 @@ func (p *ShutdownLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ShutdownLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ShutdownLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2372,7 +2379,8 @@ func (p *ShutdownForceLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ShutdownForceLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ShutdownForceLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2579,7 +2587,8 @@ func (p *ResetLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ResetLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ResetLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2785,7 +2794,8 @@ func (p *WaitForBootLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *WaitForBootLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *WaitForBootLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2980,7 +2990,8 @@ func (p *WaitForDownLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *WaitForDownLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *WaitForDownLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3182,7 +3193,8 @@ func (p *VipInfoLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *VipInfoLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *VipInfoLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3475,7 +3487,8 @@ func (p *VipAddLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *VipAddLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *VipAddLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Vip) {
 		p.Vip = ""
 	}
@@ -3790,7 +3803,8 @@ func (p *VipUpdateLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *VipUpdateLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *VipUpdateLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -4104,7 +4118,8 @@ func (p *VipDeleteLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *VipDeleteLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *VipDeleteLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -4339,7 +4354,8 @@ func (p *ServerInfoLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerInfoLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ServerInfoLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.VipIndex) {
 		p.VipIndex = 0
 	}
@@ -4713,7 +4729,8 @@ func (p *ServerAddLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerAddLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ServerAddLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.VipIndex) {
 		p.VipIndex = 0
 	}
@@ -5091,7 +5108,8 @@ func (p *ServerUpdateLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerUpdateLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ServerUpdateLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.VipIndex) {
 		p.VipIndex = 0
 	}
@@ -5458,7 +5476,8 @@ func (p *ServerDeleteLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ServerDeleteLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ServerDeleteLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.VipIndex) {
 		p.VipIndex = 0
 	}
@@ -5779,7 +5798,8 @@ func (p *MonitorLoadBalancerParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *MonitorLoadBalancerParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *MonitorLoadBalancerParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Start) {
 		p.Start = ""
 	}

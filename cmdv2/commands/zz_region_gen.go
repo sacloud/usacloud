@@ -50,6 +50,14 @@ func regionListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if regionListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, regionListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.RegionList(ctx, regionListParam.ToV0())
 		},
 	}
@@ -90,6 +98,14 @@ func regionReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if regionReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, regionReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.RegionRead(ctx, regionReadParam.ToV0())
 		},
 	}

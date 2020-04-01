@@ -50,6 +50,14 @@ func isoImageListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if isoImageListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, isoImageListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ISOImageList(ctx, isoImageListParam.ToV0())
 		},
 	}
@@ -92,6 +100,14 @@ func isoImageCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if isoImageCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, isoImageCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ISOImageCreate(ctx, isoImageCreateParam.ToV0())
 		},
 	}
@@ -134,6 +150,14 @@ func isoImageReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if isoImageReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, isoImageReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ISOImageRead(ctx, isoImageReadParam.ToV0())
 		},
 	}
@@ -171,6 +195,14 @@ func isoImageUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if isoImageUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, isoImageUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ISOImageUpdate(ctx, isoImageUpdateParam.ToV0())
 		},
 	}
@@ -213,6 +245,14 @@ func isoImageDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if isoImageDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, isoImageDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ISOImageDelete(ctx, isoImageDeleteParam.ToV0())
 		},
 	}
@@ -251,6 +291,14 @@ func isoImageUploadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if isoImageUploadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, isoImageUploadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ISOImageUpload(ctx, isoImageUploadParam.ToV0())
 		},
 	}
@@ -290,6 +338,14 @@ func isoImageDownloadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if isoImageDownloadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, isoImageDownloadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ISOImageDownload(ctx, isoImageDownloadParam.ToV0())
 		},
 	}
@@ -322,6 +378,14 @@ func isoImageFTPOpenCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if isoImageFTPOpenParam.GenerateSkeleton {
+				return generateSkeleton(ctx, isoImageFTPOpenParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ISOImageFTPOpen(ctx, isoImageFTPOpenParam.ToV0())
 		},
 	}
@@ -360,6 +424,14 @@ func isoImageFTPCloseCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if isoImageFTPCloseParam.GenerateSkeleton {
+				return generateSkeleton(ctx, isoImageFTPCloseParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ISOImageFTPClose(ctx, isoImageFTPCloseParam.ToV0())
 		},
 	}

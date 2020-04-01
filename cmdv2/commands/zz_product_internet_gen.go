@@ -50,6 +50,14 @@ func productInternetListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if productInternetListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, productInternetListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProductInternetList(ctx, productInternetListParam.ToV0())
 		},
 	}
@@ -90,6 +98,14 @@ func productInternetReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if productInternetReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, productInternetReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProductInternetRead(ctx, productInternetReadParam.ToV0())
 		},
 	}

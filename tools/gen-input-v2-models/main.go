@@ -135,7 +135,8 @@ func (p *{{.InputParameterTypeName}}) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *{{.InputParameterTypeName}}) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *{{.InputParameterTypeName}}) FillValueToSkeleton() {
 	{{ range .Params -}}
 	if utils.IsEmpty(p.{{.FieldName}}){
 		p.{{.FieldName}} = {{.SetEmptyStatement}}

@@ -50,6 +50,14 @@ func proxyLBListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBList(ctx, proxyLBListParam.ToV0())
 		},
 	}
@@ -91,6 +99,14 @@ func proxyLBCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBCreate(ctx, proxyLBCreateParam.ToV0())
 		},
 	}
@@ -140,6 +156,14 @@ func proxyLBReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBRead(ctx, proxyLBReadParam.ToV0())
 		},
 	}
@@ -177,6 +201,14 @@ func proxyLBUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBUpdate(ctx, proxyLBUpdateParam.ToV0())
 		},
 	}
@@ -227,6 +259,14 @@ func proxyLBDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBDelete(ctx, proxyLBDeleteParam.ToV0())
 		},
 	}
@@ -265,6 +305,14 @@ func proxyLBPlanChangeCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBPlanChangeParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBPlanChangeParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBPlanChange(ctx, proxyLBPlanChangeParam.ToV0())
 		},
 	}
@@ -304,6 +352,14 @@ func proxyLBBindPortInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBBindPortInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBBindPortInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBBindPortInfo(ctx, proxyLBBindPortInfoParam.ToV0())
 		},
 	}
@@ -341,6 +397,14 @@ func proxyLBBindPortAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBBindPortAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBBindPortAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBBindPortAdd(ctx, proxyLBBindPortAddParam.ToV0())
 		},
 	}
@@ -383,6 +447,14 @@ func proxyLBBindPortUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBBindPortUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBBindPortUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBBindPortUpdate(ctx, proxyLBBindPortUpdateParam.ToV0())
 		},
 	}
@@ -426,6 +498,14 @@ func proxyLBBindPortDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBBindPortDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBBindPortDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBBindPortDelete(ctx, proxyLBBindPortDeleteParam.ToV0())
 		},
 	}
@@ -465,6 +545,14 @@ func proxyLBResponseHeaderInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBResponseHeaderInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBResponseHeaderInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBResponseHeaderInfo(ctx, proxyLBResponseHeaderInfoParam.ToV0())
 		},
 	}
@@ -503,6 +591,14 @@ func proxyLBResponseHeaderAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBResponseHeaderAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBResponseHeaderAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBResponseHeaderAdd(ctx, proxyLBResponseHeaderAddParam.ToV0())
 		},
 	}
@@ -544,6 +640,14 @@ func proxyLBResponseHeaderUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBResponseHeaderUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBResponseHeaderUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBResponseHeaderUpdate(ctx, proxyLBResponseHeaderUpdateParam.ToV0())
 		},
 	}
@@ -586,6 +690,14 @@ func proxyLBResponseHeaderDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBResponseHeaderDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBResponseHeaderDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBResponseHeaderDelete(ctx, proxyLBResponseHeaderDeleteParam.ToV0())
 		},
 	}
@@ -626,6 +738,14 @@ func proxyLBACMEInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBACMEInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBACMEInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBACMEInfo(ctx, proxyLBACMEInfoParam.ToV0())
 		},
 	}
@@ -663,6 +783,14 @@ func proxyLBACMESettingCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBACMESettingParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBACMESettingParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBACMESetting(ctx, proxyLBACMESettingParam.ToV0())
 		},
 	}
@@ -704,6 +832,14 @@ func proxyLBACMERenewCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBACMERenewParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBACMERenewParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBACMERenew(ctx, proxyLBACMERenewParam.ToV0())
 		},
 	}
@@ -735,6 +871,14 @@ func proxyLBServerInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBServerInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBServerInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBServerInfo(ctx, proxyLBServerInfoParam.ToV0())
 		},
 	}
@@ -772,6 +916,14 @@ func proxyLBServerAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBServerAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBServerAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBServerAdd(ctx, proxyLBServerAddParam.ToV0())
 		},
 	}
@@ -813,6 +965,14 @@ func proxyLBServerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBServerUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBServerUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBServerUpdate(ctx, proxyLBServerUpdateParam.ToV0())
 		},
 	}
@@ -855,6 +1015,14 @@ func proxyLBServerDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBServerDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBServerDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBServerDelete(ctx, proxyLBServerDeleteParam.ToV0())
 		},
 	}
@@ -894,6 +1062,14 @@ func proxyLBCertificateInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBCertificateInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBCertificateInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBCertificateInfo(ctx, proxyLBCertificateInfoParam.ToV0())
 		},
 	}
@@ -931,6 +1107,14 @@ func proxyLBCertificateAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBCertificateAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBCertificateAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBCertificateAdd(ctx, proxyLBCertificateAddParam.ToV0())
 		},
 	}
@@ -972,6 +1156,14 @@ func proxyLBCertificateUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBCertificateUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBCertificateUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBCertificateUpdate(ctx, proxyLBCertificateUpdateParam.ToV0())
 		},
 	}
@@ -1013,6 +1205,14 @@ func proxyLBCertificateDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBCertificateDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBCertificateDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBCertificateDelete(ctx, proxyLBCertificateDeleteParam.ToV0())
 		},
 	}
@@ -1051,6 +1251,14 @@ func proxyLBMonitorCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if proxyLBMonitorParam.GenerateSkeleton {
+				return generateSkeleton(ctx, proxyLBMonitorParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProxyLBMonitor(ctx, proxyLBMonitorParam.ToV0())
 		},
 	}

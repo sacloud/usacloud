@@ -50,6 +50,14 @@ func productServerListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if productServerListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, productServerListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProductServerList(ctx, productServerListParam.ToV0())
 		},
 	}
@@ -90,6 +98,14 @@ func productServerReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if productServerReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, productServerReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProductServerRead(ctx, productServerReadParam.ToV0())
 		},
 	}

@@ -50,6 +50,14 @@ func nfsListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if nfsListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, nfsListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.NFSList(ctx, nfsListParam.ToV0())
 		},
 	}
@@ -91,6 +99,14 @@ func nfsCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if nfsCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, nfsCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.NFSCreate(ctx, nfsCreateParam.ToV0())
 		},
 	}
@@ -137,6 +153,14 @@ func nfsReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if nfsReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, nfsReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.NFSRead(ctx, nfsReadParam.ToV0())
 		},
 	}
@@ -174,6 +198,14 @@ func nfsUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if nfsUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, nfsUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.NFSUpdate(ctx, nfsUpdateParam.ToV0())
 		},
 	}
@@ -216,6 +248,14 @@ func nfsDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if nfsDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, nfsDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.NFSDelete(ctx, nfsDeleteParam.ToV0())
 		},
 	}
@@ -255,6 +295,14 @@ func nfsBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if nfsBootParam.GenerateSkeleton {
+				return generateSkeleton(ctx, nfsBootParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.NFSBoot(ctx, nfsBootParam.ToV0())
 		},
 	}
@@ -286,6 +334,14 @@ func nfsShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if nfsShutdownParam.GenerateSkeleton {
+				return generateSkeleton(ctx, nfsShutdownParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.NFSShutdown(ctx, nfsShutdownParam.ToV0())
 		},
 	}
@@ -317,6 +373,14 @@ func nfsShutdownForceCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if nfsShutdownForceParam.GenerateSkeleton {
+				return generateSkeleton(ctx, nfsShutdownForceParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.NFSShutdownForce(ctx, nfsShutdownForceParam.ToV0())
 		},
 	}
@@ -348,6 +412,14 @@ func nfsResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if nfsResetParam.GenerateSkeleton {
+				return generateSkeleton(ctx, nfsResetParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.NFSReset(ctx, nfsResetParam.ToV0())
 		},
 	}
@@ -379,6 +451,14 @@ func nfsWaitForBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if nfsWaitForBootParam.GenerateSkeleton {
+				return generateSkeleton(ctx, nfsWaitForBootParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.NFSWaitForBoot(ctx, nfsWaitForBootParam.ToV0())
 		},
 	}
@@ -409,6 +489,14 @@ func nfsWaitForDownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if nfsWaitForDownParam.GenerateSkeleton {
+				return generateSkeleton(ctx, nfsWaitForDownParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.NFSWaitForDown(ctx, nfsWaitForDownParam.ToV0())
 		},
 	}
@@ -439,6 +527,14 @@ func nfsMonitorNicCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if nfsMonitorNicParam.GenerateSkeleton {
+				return generateSkeleton(ctx, nfsMonitorNicParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.NFSMonitorNic(ctx, nfsMonitorNicParam.ToV0())
 		},
 	}
@@ -479,6 +575,14 @@ func nfsMonitorFreeDiskSizeCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if nfsMonitorFreeDiskSizeParam.GenerateSkeleton {
+				return generateSkeleton(ctx, nfsMonitorFreeDiskSizeParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.NFSMonitorFreeDiskSize(ctx, nfsMonitorFreeDiskSizeParam.ToV0())
 		},
 	}

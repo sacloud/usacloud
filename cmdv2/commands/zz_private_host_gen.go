@@ -50,6 +50,14 @@ func privateHostListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if privateHostListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, privateHostListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PrivateHostList(ctx, privateHostListParam.ToV0())
 		},
 	}
@@ -91,6 +99,14 @@ func privateHostCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if privateHostCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, privateHostCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PrivateHostCreate(ctx, privateHostCreateParam.ToV0())
 		},
 	}
@@ -131,6 +147,14 @@ func privateHostReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if privateHostReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, privateHostReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PrivateHostRead(ctx, privateHostReadParam.ToV0())
 		},
 	}
@@ -168,6 +192,14 @@ func privateHostUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if privateHostUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, privateHostUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PrivateHostUpdate(ctx, privateHostUpdateParam.ToV0())
 		},
 	}
@@ -210,6 +242,14 @@ func privateHostDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if privateHostDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, privateHostDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PrivateHostDelete(ctx, privateHostDeleteParam.ToV0())
 		},
 	}
@@ -248,6 +288,14 @@ func privateHostServerInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if privateHostServerInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, privateHostServerInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PrivateHostServerInfo(ctx, privateHostServerInfoParam.ToV0())
 		},
 	}
@@ -285,6 +333,14 @@ func privateHostServerAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if privateHostServerAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, privateHostServerAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PrivateHostServerAdd(ctx, privateHostServerAddParam.ToV0())
 		},
 	}
@@ -324,6 +380,14 @@ func privateHostServerDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if privateHostServerDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, privateHostServerDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PrivateHostServerDelete(ctx, privateHostServerDeleteParam.ToV0())
 		},
 	}

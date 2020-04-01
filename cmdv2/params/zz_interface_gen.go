@@ -70,7 +70,8 @@ func (p *ListInterfaceParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListInterfaceParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListInterfaceParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -409,7 +410,8 @@ func (p *PacketFilterConnectInterfaceParam) WriteSkeleton(writer io.Writer) erro
 	return writeSkeleton(p, writer)
 }
 
-func (p *PacketFilterConnectInterfaceParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PacketFilterConnectInterfaceParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.PacketFilterId) {
 		p.PacketFilterId = sacloud.ID(0)
 	}
@@ -637,7 +639,8 @@ func (p *CreateInterfaceParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateInterfaceParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreateInterfaceParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ServerId) {
 		p.ServerId = sacloud.ID(0)
 	}
@@ -931,7 +934,8 @@ func (p *PacketFilterDisconnectInterfaceParam) WriteSkeleton(writer io.Writer) e
 	return writeSkeleton(p, writer)
 }
 
-func (p *PacketFilterDisconnectInterfaceParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *PacketFilterDisconnectInterfaceParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.PacketFilterId) {
 		p.PacketFilterId = sacloud.ID(0)
 	}
@@ -1158,7 +1162,8 @@ func (p *ReadInterfaceParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadInterfaceParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadInterfaceParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -1441,7 +1446,8 @@ func (p *UpdateInterfaceParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateInterfaceParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateInterfaceParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.UserIpaddress) {
 		p.UserIpaddress = ""
 	}
@@ -1753,7 +1759,8 @@ func (p *DeleteInterfaceParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteInterfaceParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteInterfaceParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}

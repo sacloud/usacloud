@@ -50,6 +50,14 @@ func internetListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if internetListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, internetListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InternetList(ctx, internetListParam.ToV0())
 		},
 	}
@@ -91,6 +99,14 @@ func internetCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if internetCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, internetCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InternetCreate(ctx, internetCreateParam.ToV0())
 		},
 	}
@@ -133,6 +149,14 @@ func internetReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if internetReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, internetReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InternetRead(ctx, internetReadParam.ToV0())
 		},
 	}
@@ -170,6 +194,14 @@ func internetUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if internetUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, internetUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InternetUpdate(ctx, internetUpdateParam.ToV0())
 		},
 	}
@@ -213,6 +245,14 @@ func internetDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if internetDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, internetDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InternetDelete(ctx, internetDeleteParam.ToV0())
 		},
 	}
@@ -251,6 +291,14 @@ func internetUpdateBandwidthCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if internetUpdateBandwidthParam.GenerateSkeleton {
+				return generateSkeleton(ctx, internetUpdateBandwidthParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InternetUpdateBandwidth(ctx, internetUpdateBandwidthParam.ToV0())
 		},
 	}
@@ -290,6 +338,14 @@ func internetSubnetInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if internetSubnetInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, internetSubnetInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InternetSubnetInfo(ctx, internetSubnetInfoParam.ToV0())
 		},
 	}
@@ -327,6 +383,14 @@ func internetSubnetAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if internetSubnetAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, internetSubnetAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InternetSubnetAdd(ctx, internetSubnetAddParam.ToV0())
 		},
 	}
@@ -367,6 +431,14 @@ func internetSubnetDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if internetSubnetDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, internetSubnetDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InternetSubnetDelete(ctx, internetSubnetDeleteParam.ToV0())
 		},
 	}
@@ -399,6 +471,14 @@ func internetSubnetUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if internetSubnetUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, internetSubnetUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InternetSubnetUpdate(ctx, internetSubnetUpdateParam.ToV0())
 		},
 	}
@@ -439,6 +519,14 @@ func internetIPv6InfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if internetIPv6InfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, internetIPv6InfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InternetIPv6Info(ctx, internetIPv6InfoParam.ToV0())
 		},
 	}
@@ -476,6 +564,14 @@ func internetIPv6EnableCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if internetIPv6EnableParam.GenerateSkeleton {
+				return generateSkeleton(ctx, internetIPv6EnableParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InternetIPv6Enable(ctx, internetIPv6EnableParam.ToV0())
 		},
 	}
@@ -514,6 +610,14 @@ func internetIPv6DisableCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if internetIPv6DisableParam.GenerateSkeleton {
+				return generateSkeleton(ctx, internetIPv6DisableParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InternetIPv6Disable(ctx, internetIPv6DisableParam.ToV0())
 		},
 	}
@@ -545,6 +649,14 @@ func internetMonitorCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if internetMonitorParam.GenerateSkeleton {
+				return generateSkeleton(ctx, internetMonitorParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.InternetMonitor(ctx, internetMonitorParam.ToV0())
 		},
 	}

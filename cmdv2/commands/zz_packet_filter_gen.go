@@ -50,6 +50,14 @@ func packetFilterListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if packetFilterListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, packetFilterListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PacketFilterList(ctx, packetFilterListParam.ToV0())
 		},
 	}
@@ -90,6 +98,14 @@ func packetFilterCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if packetFilterCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, packetFilterCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PacketFilterCreate(ctx, packetFilterCreateParam.ToV0())
 		},
 	}
@@ -128,6 +144,14 @@ func packetFilterReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if packetFilterReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, packetFilterReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PacketFilterRead(ctx, packetFilterReadParam.ToV0())
 		},
 	}
@@ -164,6 +188,14 @@ func packetFilterUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if packetFilterUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, packetFilterUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PacketFilterUpdate(ctx, packetFilterUpdateParam.ToV0())
 		},
 	}
@@ -203,6 +235,14 @@ func packetFilterDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if packetFilterDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, packetFilterDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PacketFilterDelete(ctx, packetFilterDeleteParam.ToV0())
 		},
 	}
@@ -240,6 +280,14 @@ func packetFilterRuleInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if packetFilterRuleInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, packetFilterRuleInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PacketFilterRuleInfo(ctx, packetFilterRuleInfoParam.ToV0())
 		},
 	}
@@ -276,6 +324,14 @@ func packetFilterRuleAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if packetFilterRuleAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, packetFilterRuleAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PacketFilterRuleAdd(ctx, packetFilterRuleAddParam.ToV0())
 		},
 	}
@@ -320,6 +376,14 @@ func packetFilterRuleUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if packetFilterRuleUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, packetFilterRuleUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PacketFilterRuleUpdate(ctx, packetFilterRuleUpdateParam.ToV0())
 		},
 	}
@@ -364,6 +428,14 @@ func packetFilterRuleDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if packetFilterRuleDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, packetFilterRuleDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PacketFilterRuleDelete(ctx, packetFilterRuleDeleteParam.ToV0())
 		},
 	}
@@ -402,6 +474,14 @@ func packetFilterInterfaceConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if packetFilterInterfaceConnectParam.GenerateSkeleton {
+				return generateSkeleton(ctx, packetFilterInterfaceConnectParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PacketFilterInterfaceConnect(ctx, packetFilterInterfaceConnectParam.ToV0())
 		},
 	}
@@ -433,6 +513,14 @@ func packetFilterInterfaceDisconnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if packetFilterInterfaceDisconnectParam.GenerateSkeleton {
+				return generateSkeleton(ctx, packetFilterInterfaceDisconnectParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PacketFilterInterfaceDisconnect(ctx, packetFilterInterfaceDisconnectParam.ToV0())
 		},
 	}

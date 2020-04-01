@@ -72,7 +72,8 @@ func (p *ListSimpleMonitorParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListSimpleMonitorParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListSimpleMonitorParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -476,7 +477,8 @@ func (p *CreateSimpleMonitorParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateSimpleMonitorParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreateSimpleMonitorParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Target) {
 		p.Target = ""
 	}
@@ -1075,7 +1077,8 @@ func (p *ReadSimpleMonitorParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadSimpleMonitorParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadSimpleMonitorParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1390,7 +1393,8 @@ func (p *UpdateSimpleMonitorParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateSimpleMonitorParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateSimpleMonitorParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
@@ -1987,7 +1991,8 @@ func (p *DeleteSimpleMonitorParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteSimpleMonitorParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteSimpleMonitorParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2291,7 +2296,8 @@ func (p *HealthSimpleMonitorParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *HealthSimpleMonitorParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *HealthSimpleMonitorParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}

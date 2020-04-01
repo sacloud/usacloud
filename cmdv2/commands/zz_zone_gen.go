@@ -50,6 +50,14 @@ func zoneListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if zoneListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, zoneListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ZoneList(ctx, zoneListParam.ToV0())
 		},
 	}
@@ -90,6 +98,14 @@ func zoneReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if zoneReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, zoneReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ZoneRead(ctx, zoneReadParam.ToV0())
 		},
 	}

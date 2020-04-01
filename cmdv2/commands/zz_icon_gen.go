@@ -50,6 +50,14 @@ func iconListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if iconListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, iconListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.IconList(ctx, iconListParam.ToV0())
 		},
 	}
@@ -92,6 +100,14 @@ func iconCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if iconCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, iconCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.IconCreate(ctx, iconCreateParam.ToV0())
 		},
 	}
@@ -131,6 +147,14 @@ func iconReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if iconReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, iconReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.IconRead(ctx, iconReadParam.ToV0())
 		},
 	}
@@ -168,6 +192,14 @@ func iconUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if iconUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, iconUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.IconUpdate(ctx, iconUpdateParam.ToV0())
 		},
 	}
@@ -208,6 +240,14 @@ func iconDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if iconDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, iconDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.IconDelete(ctx, iconDeleteParam.ToV0())
 		},
 	}

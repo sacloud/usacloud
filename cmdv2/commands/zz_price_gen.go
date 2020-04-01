@@ -50,6 +50,14 @@ func priceListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if priceListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, priceListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.PriceList(ctx, priceListParam.ToV0())
 		},
 	}

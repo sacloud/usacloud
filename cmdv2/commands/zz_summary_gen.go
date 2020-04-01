@@ -49,6 +49,14 @@ func summaryShowCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if summaryShowParam.GenerateSkeleton {
+				return generateSkeleton(ctx, summaryShowParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SummaryShow(ctx, summaryShowParam.ToV0())
 		},
 	}

@@ -71,7 +71,8 @@ func (p *ListMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -439,7 +440,8 @@ func (p *CreateMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreateMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.InternetConnection) {
 		p.InternetConnection = false
 	}
@@ -807,7 +809,8 @@ func (p *ReadMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1106,7 +1109,8 @@ func (p *UpdateMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.InternetConnection) {
 		p.InternetConnection = false
 	}
@@ -1499,7 +1503,8 @@ func (p *DeleteMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Force) {
 		p.Force = false
 	}
@@ -1808,7 +1813,8 @@ func (p *BootMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *BootMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *BootMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2015,7 +2021,8 @@ func (p *ShutdownMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ShutdownMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ShutdownMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2222,7 +2229,8 @@ func (p *ShutdownForceMobileGatewayParam) WriteSkeleton(writer io.Writer) error 
 	return writeSkeleton(p, writer)
 }
 
-func (p *ShutdownForceMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ShutdownForceMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2429,7 +2437,8 @@ func (p *ResetMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ResetMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ResetMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2635,7 +2644,8 @@ func (p *WaitForBootMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *WaitForBootMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *WaitForBootMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2830,7 +2840,8 @@ func (p *WaitForDownMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *WaitForDownMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *WaitForDownMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3032,7 +3043,8 @@ func (p *InterfaceInfoMobileGatewayParam) WriteSkeleton(writer io.Writer) error 
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceInfoMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *InterfaceInfoMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -3323,7 +3335,8 @@ func (p *InterfaceConnectMobileGatewayParam) WriteSkeleton(writer io.Writer) err
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceConnectMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *InterfaceConnectMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
@@ -3604,7 +3617,8 @@ func (p *InterfaceUpdateMobileGatewayParam) WriteSkeleton(writer io.Writer) erro
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceUpdateMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *InterfaceUpdateMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
@@ -3849,7 +3863,8 @@ func (p *InterfaceDisconnectMobileGatewayParam) WriteSkeleton(writer io.Writer) 
 	return writeSkeleton(p, writer)
 }
 
-func (p *InterfaceDisconnectMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *InterfaceDisconnectMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -4062,7 +4077,8 @@ func (p *TrafficControlInfoMobileGatewayParam) WriteSkeleton(writer io.Writer) e
 	return writeSkeleton(p, writer)
 }
 
-func (p *TrafficControlInfoMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *TrafficControlInfoMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -4355,7 +4371,8 @@ func (p *TrafficControlEnableMobileGatewayParam) WriteSkeleton(writer io.Writer)
 	return writeSkeleton(p, writer)
 }
 
-func (p *TrafficControlEnableMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *TrafficControlEnableMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Quota) {
 		p.Quota = 0
 	}
@@ -4653,7 +4670,8 @@ func (p *TrafficControlUpdateMobileGatewayParam) WriteSkeleton(writer io.Writer)
 	return writeSkeleton(p, writer)
 }
 
-func (p *TrafficControlUpdateMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *TrafficControlUpdateMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Quota) {
 		p.Quota = 0
 	}
@@ -4939,7 +4957,8 @@ func (p *TrafficControlDisableMobileGatewayParam) WriteSkeleton(writer io.Writer
 	return writeSkeleton(p, writer)
 }
 
-func (p *TrafficControlDisableMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *TrafficControlDisableMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -5152,7 +5171,8 @@ func (p *StaticRouteInfoMobileGatewayParam) WriteSkeleton(writer io.Writer) erro
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticRouteInfoMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *StaticRouteInfoMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -5441,7 +5461,8 @@ func (p *StaticRouteAddMobileGatewayParam) WriteSkeleton(writer io.Writer) error
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticRouteAddMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *StaticRouteAddMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Prefix) {
 		p.Prefix = ""
 	}
@@ -5703,7 +5724,8 @@ func (p *StaticRouteUpdateMobileGatewayParam) WriteSkeleton(writer io.Writer) er
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticRouteUpdateMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *StaticRouteUpdateMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -5968,7 +5990,8 @@ func (p *StaticRouteDeleteMobileGatewayParam) WriteSkeleton(writer io.Writer) er
 	return writeSkeleton(p, writer)
 }
 
-func (p *StaticRouteDeleteMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *StaticRouteDeleteMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -6200,7 +6223,8 @@ func (p *SIMInfoMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SIMInfoMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SIMInfoMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -6489,7 +6513,8 @@ func (p *SIMAddMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SIMAddMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SIMAddMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
@@ -6750,7 +6775,8 @@ func (p *SIMUpdateMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SIMUpdateMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SIMUpdateMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
@@ -7003,7 +7029,8 @@ func (p *SIMDeleteMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SIMDeleteMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SIMDeleteMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.SIMId) {
 		p.SIMId = sacloud.ID(0)
 	}
@@ -7242,7 +7269,8 @@ func (p *SIMRouteInfoMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SIMRouteInfoMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SIMRouteInfoMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -7531,7 +7559,8 @@ func (p *SIMRouteAddMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *SIMRouteAddMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SIMRouteAddMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Prefix) {
 		p.Prefix = ""
 	}
@@ -7793,7 +7822,8 @@ func (p *SIMRouteUpdateMobileGatewayParam) WriteSkeleton(writer io.Writer) error
 	return writeSkeleton(p, writer)
 }
 
-func (p *SIMRouteUpdateMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SIMRouteUpdateMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -8058,7 +8088,8 @@ func (p *SIMRouteDeleteMobileGatewayParam) WriteSkeleton(writer io.Writer) error
 	return writeSkeleton(p, writer)
 }
 
-func (p *SIMRouteDeleteMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *SIMRouteDeleteMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Index) {
 		p.Index = 0
 	}
@@ -8286,7 +8317,8 @@ func (p *DNSUpdateMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DNSUpdateMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DNSUpdateMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.DNS1) {
 		p.DNS1 = ""
 	}
@@ -8547,7 +8579,8 @@ func (p *LogsMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *LogsMobileGatewayParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *LogsMobileGatewayParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Follow) {
 		p.Follow = false
 	}

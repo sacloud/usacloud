@@ -50,6 +50,14 @@ func diskListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if diskListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, diskListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DiskList(ctx, diskListParam.ToV0())
 		},
 	}
@@ -95,6 +103,14 @@ func diskCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if diskCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, diskCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DiskCreate(ctx, diskCreateParam.ToV0())
 		},
 	}
@@ -141,6 +157,14 @@ func diskReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if diskReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, diskReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DiskRead(ctx, diskReadParam.ToV0())
 		},
 	}
@@ -178,6 +202,14 @@ func diskUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if diskUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, diskUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DiskUpdate(ctx, diskUpdateParam.ToV0())
 		},
 	}
@@ -221,6 +253,14 @@ func diskDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if diskDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, diskDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DiskDelete(ctx, diskDeleteParam.ToV0())
 		},
 	}
@@ -259,6 +299,14 @@ func diskEditCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if diskEditParam.GenerateSkeleton {
+				return generateSkeleton(ctx, diskEditParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DiskEdit(ctx, diskEditParam.ToV0())
 		},
 	}
@@ -305,6 +353,14 @@ func diskResizePartitionCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if diskResizePartitionParam.GenerateSkeleton {
+				return generateSkeleton(ctx, diskResizePartitionParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DiskResizePartition(ctx, diskResizePartitionParam.ToV0())
 		},
 	}
@@ -343,6 +399,14 @@ func diskReinstallFromArchiveCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if diskReinstallFromArchiveParam.GenerateSkeleton {
+				return generateSkeleton(ctx, diskReinstallFromArchiveParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DiskReinstallFromArchive(ctx, diskReinstallFromArchiveParam.ToV0())
 		},
 	}
@@ -376,6 +440,14 @@ func diskReinstallFromDiskCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if diskReinstallFromDiskParam.GenerateSkeleton {
+				return generateSkeleton(ctx, diskReinstallFromDiskParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DiskReinstallFromDisk(ctx, diskReinstallFromDiskParam.ToV0())
 		},
 	}
@@ -409,6 +481,14 @@ func diskReinstallToBlankCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if diskReinstallToBlankParam.GenerateSkeleton {
+				return generateSkeleton(ctx, diskReinstallToBlankParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DiskReinstallToBlank(ctx, diskReinstallToBlankParam.ToV0())
 		},
 	}
@@ -441,6 +521,14 @@ func diskServerConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if diskServerConnectParam.GenerateSkeleton {
+				return generateSkeleton(ctx, diskServerConnectParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DiskServerConnect(ctx, diskServerConnectParam.ToV0())
 		},
 	}
@@ -473,6 +561,14 @@ func diskServerDisconnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if diskServerDisconnectParam.GenerateSkeleton {
+				return generateSkeleton(ctx, diskServerDisconnectParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DiskServerDisconnect(ctx, diskServerDisconnectParam.ToV0())
 		},
 	}
@@ -504,6 +600,14 @@ func diskMonitorCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if diskMonitorParam.GenerateSkeleton {
+				return generateSkeleton(ctx, diskMonitorParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DiskMonitor(ctx, diskMonitorParam.ToV0())
 		},
 	}
@@ -544,6 +648,14 @@ func diskWaitForCopyCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if diskWaitForCopyParam.GenerateSkeleton {
+				return generateSkeleton(ctx, diskWaitForCopyParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.DiskWaitForCopy(ctx, diskWaitForCopyParam.ToV0())
 		},
 	}

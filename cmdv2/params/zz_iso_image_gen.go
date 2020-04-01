@@ -72,7 +72,8 @@ func (p *ListISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListISOImageParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListISOImageParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -461,7 +462,8 @@ func (p *CreateISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateISOImageParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreateISOImageParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Size) {
 		p.Size = 0
 	}
@@ -863,7 +865,8 @@ func (p *ReadISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadISOImageParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadISOImageParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1161,7 +1164,8 @@ func (p *UpdateISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateISOImageParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateISOImageParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1542,7 +1546,8 @@ func (p *DeleteISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteISOImageParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteISOImageParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1848,7 +1853,8 @@ func (p *UploadISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UploadISOImageParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UploadISOImageParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.ISOFile) {
 		p.ISOFile = ""
 	}
@@ -2166,7 +2172,8 @@ func (p *DownloadISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DownloadISOImageParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DownloadISOImageParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.FileDestination) {
 		p.FileDestination = ""
 	}
@@ -2391,7 +2398,8 @@ func (p *FTPOpenISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *FTPOpenISOImageParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *FTPOpenISOImageParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2689,7 +2697,8 @@ func (p *FTPCloseISOImageParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *FTPCloseISOImageParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *FTPCloseISOImageParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}

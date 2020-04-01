@@ -50,6 +50,14 @@ func productDiskListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if productDiskListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, productDiskListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProductDiskList(ctx, productDiskListParam.ToV0())
 		},
 	}
@@ -90,6 +98,14 @@ func productDiskReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if productDiskReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, productDiskReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ProductDiskRead(ctx, productDiskReadParam.ToV0())
 		},
 	}

@@ -71,7 +71,8 @@ func (p *ListAutoBackupParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ListAutoBackupParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ListAutoBackupParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
@@ -442,7 +443,8 @@ func (p *CreateAutoBackupParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *CreateAutoBackupParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *CreateAutoBackupParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.DiskId) {
 		p.DiskId = sacloud.ID(0)
 	}
@@ -877,7 +879,8 @@ func (p *ReadAutoBackupParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *ReadAutoBackupParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *ReadAutoBackupParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1177,7 +1180,8 @@ func (p *UpdateAutoBackupParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *UpdateAutoBackupParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *UpdateAutoBackupParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Weekdays) {
 		p.Weekdays = []string{""}
 	}
@@ -1596,7 +1600,8 @@ func (p *DeleteAutoBackupParam) WriteSkeleton(writer io.Writer) error {
 	return writeSkeleton(p, writer)
 }
 
-func (p *DeleteAutoBackupParam) fillValueToSkeleton() {
+// FillValueToSkeleton fills empty value to the parameter
+func (p *DeleteAutoBackupParam) FillValueToSkeleton() {
 	if utils.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}

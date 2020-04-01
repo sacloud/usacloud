@@ -50,6 +50,14 @@ func sshKeyListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if sshKeyListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, sshKeyListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SSHKeyList(ctx, sshKeyListParam.ToV0())
 		},
 	}
@@ -90,6 +98,14 @@ func sshKeyCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if sshKeyCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, sshKeyCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SSHKeyCreate(ctx, sshKeyCreateParam.ToV0())
 		},
 	}
@@ -130,6 +146,14 @@ func sshKeyReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if sshKeyReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, sshKeyReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SSHKeyRead(ctx, sshKeyReadParam.ToV0())
 		},
 	}
@@ -166,6 +190,14 @@ func sshKeyUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if sshKeyUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, sshKeyUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SSHKeyUpdate(ctx, sshKeyUpdateParam.ToV0())
 		},
 	}
@@ -205,6 +237,14 @@ func sshKeyDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if sshKeyDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, sshKeyDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SSHKeyDelete(ctx, sshKeyDeleteParam.ToV0())
 		},
 	}
@@ -242,6 +282,14 @@ func sshKeyGenerateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if sshKeyGenerateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, sshKeyGenerateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.SSHKeyGenerate(ctx, sshKeyGenerateParam.ToV0())
 		},
 	}

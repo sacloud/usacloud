@@ -107,6 +107,14 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if {{ .InputParameterVariable }}.GenerateSkeleton {
+				return generateSkeleton(ctx, {{ .InputParameterVariable }})
+			}
+			
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.{{ .FunctionName }}(ctx, {{ .InputParameterVariable }}.ToV0())
 		},
 	}

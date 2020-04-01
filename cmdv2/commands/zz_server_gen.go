@@ -50,6 +50,14 @@ func serverListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerList(ctx, serverListParam.ToV0())
 		},
 	}
@@ -91,6 +99,14 @@ func serverBuildCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverBuildParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverBuildParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerBuild(ctx, serverBuildParam.ToV0())
 		},
 	}
@@ -169,6 +185,14 @@ func serverReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerRead(ctx, serverReadParam.ToV0())
 		},
 	}
@@ -206,6 +230,14 @@ func serverUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerUpdate(ctx, serverUpdateParam.ToV0())
 		},
 	}
@@ -249,6 +281,14 @@ func serverDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerDelete(ctx, serverDeleteParam.ToV0())
 		},
 	}
@@ -289,6 +329,14 @@ func serverPlanChangeCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverPlanChangeParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverPlanChangeParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerPlanChange(ctx, serverPlanChangeParam.ToV0())
 		},
 	}
@@ -330,6 +378,14 @@ func serverBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverBootParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverBootParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerBoot(ctx, serverBootParam.ToV0())
 		},
 	}
@@ -361,6 +417,14 @@ func serverShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverShutdownParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverShutdownParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerShutdown(ctx, serverShutdownParam.ToV0())
 		},
 	}
@@ -392,6 +456,14 @@ func serverShutdownForceCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverShutdownForceParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverShutdownForceParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerShutdownForce(ctx, serverShutdownForceParam.ToV0())
 		},
 	}
@@ -423,6 +495,14 @@ func serverResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverResetParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverResetParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerReset(ctx, serverResetParam.ToV0())
 		},
 	}
@@ -454,6 +534,14 @@ func serverWaitForBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverWaitForBootParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverWaitForBootParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerWaitForBoot(ctx, serverWaitForBootParam.ToV0())
 		},
 	}
@@ -484,6 +572,14 @@ func serverWaitForDownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverWaitForDownParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverWaitForDownParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerWaitForDown(ctx, serverWaitForDownParam.ToV0())
 		},
 	}
@@ -514,6 +610,14 @@ func serverSSHCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverSSHParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverSSHParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerSSH(ctx, serverSSHParam.ToV0())
 		},
 	}
@@ -549,6 +653,14 @@ func serverSSHExecCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverSSHExecParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverSSHExecParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerSSHExec(ctx, serverSSHExecParam.ToV0())
 		},
 	}
@@ -583,6 +695,14 @@ func serverScpCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverScpParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverScpParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerScp(ctx, serverScpParam.ToV0())
 		},
 	}
@@ -618,6 +738,14 @@ func serverVncCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverVncParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverVncParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerVnc(ctx, serverVncParam.ToV0())
 		},
 	}
@@ -649,6 +777,14 @@ func serverVncInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverVncInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverVncInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerVncInfo(ctx, serverVncInfoParam.ToV0())
 		},
 	}
@@ -687,6 +823,14 @@ func serverVncSendCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverVncSendParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverVncSendParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerVncSend(ctx, serverVncSendParam.ToV0())
 		},
 	}
@@ -730,6 +874,14 @@ func serverVncSnapshotCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverVncSnapshotParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverVncSnapshotParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerVncSnapshot(ctx, serverVncSnapshotParam.ToV0())
 		},
 	}
@@ -770,6 +922,14 @@ func serverRemoteDesktopCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverRemoteDesktopParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverRemoteDesktopParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerRemoteDesktop(ctx, serverRemoteDesktopParam.ToV0())
 		},
 	}
@@ -802,6 +962,14 @@ func serverRemoteDesktopInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverRemoteDesktopInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverRemoteDesktopInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerRemoteDesktopInfo(ctx, serverRemoteDesktopInfoParam.ToV0())
 		},
 	}
@@ -841,6 +1009,14 @@ func serverDiskInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverDiskInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverDiskInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerDiskInfo(ctx, serverDiskInfoParam.ToV0())
 		},
 	}
@@ -878,6 +1054,14 @@ func serverDiskConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverDiskConnectParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverDiskConnectParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerDiskConnect(ctx, serverDiskConnectParam.ToV0())
 		},
 	}
@@ -910,6 +1094,14 @@ func serverDiskDisconnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverDiskDisconnectParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverDiskDisconnectParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerDiskDisconnect(ctx, serverDiskDisconnectParam.ToV0())
 		},
 	}
@@ -942,6 +1134,14 @@ func serverInterfaceInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverInterfaceInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverInterfaceInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerInterfaceInfo(ctx, serverInterfaceInfoParam.ToV0())
 		},
 	}
@@ -979,6 +1179,14 @@ func serverInterfaceAddForInternetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverInterfaceAddForInternetParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverInterfaceAddForInternetParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerInterfaceAddForInternet(ctx, serverInterfaceAddForInternetParam.ToV0())
 		},
 	}
@@ -1011,6 +1219,14 @@ func serverInterfaceAddForRouterCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverInterfaceAddForRouterParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverInterfaceAddForRouterParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerInterfaceAddForRouter(ctx, serverInterfaceAddForRouterParam.ToV0())
 		},
 	}
@@ -1047,6 +1263,14 @@ func serverInterfaceAddForSwitchCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverInterfaceAddForSwitchParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverInterfaceAddForSwitchParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerInterfaceAddForSwitch(ctx, serverInterfaceAddForSwitchParam.ToV0())
 		},
 	}
@@ -1083,6 +1307,14 @@ func serverInterfaceAddDisconnectedCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverInterfaceAddDisconnectedParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverInterfaceAddDisconnectedParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerInterfaceAddDisconnected(ctx, serverInterfaceAddDisconnectedParam.ToV0())
 		},
 	}
@@ -1114,6 +1346,14 @@ func serverISOInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverISOInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverISOInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerISOInfo(ctx, serverISOInfoParam.ToV0())
 		},
 	}
@@ -1151,6 +1391,14 @@ func serverISOInsertCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverISOInsertParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverISOInsertParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerISOInsert(ctx, serverISOInsertParam.ToV0())
 		},
 	}
@@ -1189,6 +1437,14 @@ func serverISOEjectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverISOEjectParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverISOEjectParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerISOEject(ctx, serverISOEjectParam.ToV0())
 		},
 	}
@@ -1220,6 +1476,14 @@ func serverMonitorCPUCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverMonitorCPUParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverMonitorCPUParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerMonitorCPU(ctx, serverMonitorCPUParam.ToV0())
 		},
 	}
@@ -1260,6 +1524,14 @@ func serverMonitorNicCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverMonitorNicParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverMonitorNicParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerMonitorNic(ctx, serverMonitorNicParam.ToV0())
 		},
 	}
@@ -1301,6 +1573,14 @@ func serverMonitorDiskCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverMonitorDiskParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverMonitorDiskParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerMonitorDisk(ctx, serverMonitorDiskParam.ToV0())
 		},
 	}
@@ -1342,6 +1622,14 @@ func serverMaintenanceInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if serverMaintenanceInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, serverMaintenanceInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.ServerMaintenanceInfo(ctx, serverMaintenanceInfoParam.ToV0())
 		},
 	}

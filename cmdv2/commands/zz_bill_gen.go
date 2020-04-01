@@ -49,6 +49,14 @@ func billCsvCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if billCsvParam.GenerateSkeleton {
+				return generateSkeleton(ctx, billCsvParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.BillCsv(ctx, billCsvParam.ToV0())
 		},
 	}
@@ -80,6 +88,14 @@ func billListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if billListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, billListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.BillList(ctx, billListParam.ToV0())
 		},
 	}

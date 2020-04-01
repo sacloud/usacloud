@@ -50,6 +50,14 @@ func ipv4ListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if ipv4ListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, ipv4ListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.IPv4List(ctx, ipv4ListParam.ToV0())
 		},
 	}
@@ -90,6 +98,14 @@ func ipv4PtrAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if ipv4PtrAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, ipv4PtrAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.IPv4PtrAdd(ctx, ipv4PtrAddParam.ToV0())
 		},
 	}
@@ -127,6 +143,14 @@ func ipv4PtrReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if ipv4PtrReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, ipv4PtrReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.IPv4PtrRead(ctx, ipv4PtrReadParam.ToV0())
 		},
 	}
@@ -162,6 +186,14 @@ func ipv4PtrUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if ipv4PtrUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, ipv4PtrUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.IPv4PtrUpdate(ctx, ipv4PtrUpdateParam.ToV0())
 		},
 	}
@@ -199,6 +231,14 @@ func ipv4PtrDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if ipv4PtrDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, ipv4PtrDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.IPv4PtrDelete(ctx, ipv4PtrDeleteParam.ToV0())
 		},
 	}

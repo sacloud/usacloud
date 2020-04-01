@@ -50,6 +50,14 @@ func loadBalancerListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerListParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerListParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerList(ctx, loadBalancerListParam.ToV0())
 		},
 	}
@@ -91,6 +99,14 @@ func loadBalancerCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerCreateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerCreateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerCreate(ctx, loadBalancerCreateParam.ToV0())
 		},
 	}
@@ -139,6 +155,14 @@ func loadBalancerReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerReadParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerReadParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerRead(ctx, loadBalancerReadParam.ToV0())
 		},
 	}
@@ -176,6 +200,14 @@ func loadBalancerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerUpdate(ctx, loadBalancerUpdateParam.ToV0())
 		},
 	}
@@ -218,6 +250,14 @@ func loadBalancerDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerDelete(ctx, loadBalancerDeleteParam.ToV0())
 		},
 	}
@@ -257,6 +297,14 @@ func loadBalancerBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerBootParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerBootParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerBoot(ctx, loadBalancerBootParam.ToV0())
 		},
 	}
@@ -288,6 +336,14 @@ func loadBalancerShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerShutdownParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerShutdownParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerShutdown(ctx, loadBalancerShutdownParam.ToV0())
 		},
 	}
@@ -319,6 +375,14 @@ func loadBalancerShutdownForceCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerShutdownForceParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerShutdownForceParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerShutdownForce(ctx, loadBalancerShutdownForceParam.ToV0())
 		},
 	}
@@ -350,6 +414,14 @@ func loadBalancerResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerResetParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerResetParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerReset(ctx, loadBalancerResetParam.ToV0())
 		},
 	}
@@ -381,6 +453,14 @@ func loadBalancerWaitForBootCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerWaitForBootParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerWaitForBootParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerWaitForBoot(ctx, loadBalancerWaitForBootParam.ToV0())
 		},
 	}
@@ -411,6 +491,14 @@ func loadBalancerWaitForDownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerWaitForDownParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerWaitForDownParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerWaitForDown(ctx, loadBalancerWaitForDownParam.ToV0())
 		},
 	}
@@ -441,6 +529,14 @@ func loadBalancerVipInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerVipInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerVipInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerVipInfo(ctx, loadBalancerVipInfoParam.ToV0())
 		},
 	}
@@ -478,6 +574,14 @@ func loadBalancerVipAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerVipAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerVipAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerVipAdd(ctx, loadBalancerVipAddParam.ToV0())
 		},
 	}
@@ -514,6 +618,14 @@ func loadBalancerVipUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerVipUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerVipUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerVipUpdate(ctx, loadBalancerVipUpdateParam.ToV0())
 		},
 	}
@@ -551,6 +663,14 @@ func loadBalancerVipDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerVipDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerVipDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerVipDelete(ctx, loadBalancerVipDeleteParam.ToV0())
 		},
 	}
@@ -583,6 +703,14 @@ func loadBalancerServerInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerServerInfoParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerServerInfoParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerServerInfo(ctx, loadBalancerServerInfoParam.ToV0())
 		},
 	}
@@ -623,6 +751,14 @@ func loadBalancerServerAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerServerAddParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerServerAddParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerServerAdd(ctx, loadBalancerServerAddParam.ToV0())
 		},
 	}
@@ -662,6 +798,14 @@ func loadBalancerServerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerServerUpdateParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerServerUpdateParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerServerUpdate(ctx, loadBalancerServerUpdateParam.ToV0())
 		},
 	}
@@ -701,6 +845,14 @@ func loadBalancerServerDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerServerDeleteParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerServerDeleteParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerServerDelete(ctx, loadBalancerServerDeleteParam.ToV0())
 		},
 	}
@@ -736,6 +888,14 @@ func loadBalancerMonitorCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			if loadBalancerMonitorParam.GenerateSkeleton {
+				return generateSkeleton(ctx, loadBalancerMonitorParam)
+			}
+
+			// TODO implements ID parameter handling
+
+			// Run
 			return funcs.LoadBalancerMonitor(ctx, loadBalancerMonitorParam.ToV0())
 		},
 	}
