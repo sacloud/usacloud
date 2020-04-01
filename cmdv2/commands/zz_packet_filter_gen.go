@@ -17,9 +17,12 @@
 package commands
 
 import (
+	"errors"
+
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -104,6 +107,20 @@ func packetFilterCreateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !packetFilterCreateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.PacketFilterCreate(ctx, packetFilterCreateParam.ToV0())
@@ -195,6 +212,20 @@ func packetFilterUpdateCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !packetFilterUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.PacketFilterUpdate(ctx, packetFilterUpdateParam.ToV0())
 		},
@@ -241,6 +272,20 @@ func packetFilterDeleteCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !packetFilterDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.PacketFilterDelete(ctx, packetFilterDeleteParam.ToV0())
@@ -331,6 +376,20 @@ func packetFilterRuleAddCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !packetFilterRuleAddParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("rule-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.PacketFilterRuleAdd(ctx, packetFilterRuleAddParam.ToV0())
 		},
@@ -382,6 +441,20 @@ func packetFilterRuleUpdateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !packetFilterRuleUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("rule-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.PacketFilterRuleUpdate(ctx, packetFilterRuleUpdateParam.ToV0())
@@ -435,6 +508,20 @@ func packetFilterRuleDeleteCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !packetFilterRuleDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("delete rule", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.PacketFilterRuleDelete(ctx, packetFilterRuleDeleteParam.ToV0())
 		},
@@ -481,6 +568,20 @@ func packetFilterInterfaceConnectCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !packetFilterInterfaceConnectParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("interface-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.PacketFilterInterfaceConnect(ctx, packetFilterInterfaceConnectParam.ToV0())
 		},
@@ -519,6 +620,20 @@ func packetFilterInterfaceDisconnectCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !packetFilterInterfaceDisconnectParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("interface-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.PacketFilterInterfaceDisconnect(ctx, packetFilterInterfaceDisconnectParam.ToV0())

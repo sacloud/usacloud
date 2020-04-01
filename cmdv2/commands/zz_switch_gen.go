@@ -17,9 +17,12 @@
 package commands
 
 import (
+	"errors"
+
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -105,6 +108,20 @@ func switchCreateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !switchCreateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.SwitchCreate(ctx, switchCreateParam.ToV0())
@@ -199,6 +216,20 @@ func switchUpdateCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !switchUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.SwitchUpdate(ctx, switchUpdateParam.ToV0())
 		},
@@ -249,6 +280,20 @@ func switchDeleteCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !switchDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.SwitchDelete(ctx, switchDeleteParam.ToV0())
 		},
@@ -295,6 +340,20 @@ func switchBridgeConnectCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !switchBridgeConnectParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("bridge-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.SwitchBridgeConnect(ctx, switchBridgeConnectParam.ToV0())
 		},
@@ -334,6 +393,20 @@ func switchBridgeDisconnectCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !switchBridgeDisconnectParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("bridge-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.SwitchBridgeDisconnect(ctx, switchBridgeDisconnectParam.ToV0())

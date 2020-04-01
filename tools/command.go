@@ -108,3 +108,14 @@ func (c *Command) InputParameterTypeName() string {
 func (c *Command) FunctionName() string {
 	return fmt.Sprintf("%s%s", ToCamelCaseName(c.Resource.Name), ToCamelCaseName(c.Name))
 }
+
+func (c *Command) NeedConfirm() bool {
+	return c.Type.IsNeedConfirmType() && !c.NeedlessConfirm
+}
+
+func (c *Command) ConfirmMessage() string {
+	if c.Command.ConfirmMessage == "" {
+		return ToDashedName(c.Name)
+	}
+	return c.Command.ConfirmMessage
+}

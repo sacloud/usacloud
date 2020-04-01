@@ -17,9 +17,12 @@
 package commands
 
 import (
+	"errors"
+
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -105,6 +108,20 @@ func mobileGatewayCreateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !mobileGatewayCreateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.MobileGatewayCreate(ctx, mobileGatewayCreateParam.ToV0())
@@ -200,6 +217,20 @@ func mobileGatewayUpdateCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !mobileGatewayUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.MobileGatewayUpdate(ctx, mobileGatewayUpdateParam.ToV0())
 		},
@@ -251,6 +282,20 @@ func mobileGatewayDeleteCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !mobileGatewayDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.MobileGatewayDelete(ctx, mobileGatewayDeleteParam.ToV0())
 		},
@@ -298,6 +343,20 @@ func mobileGatewayBootCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !mobileGatewayBootParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.MobileGatewayBoot(ctx, mobileGatewayBootParam.ToV0())
 		},
@@ -336,6 +395,20 @@ func mobileGatewayShutdownCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !mobileGatewayShutdownParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.MobileGatewayShutdown(ctx, mobileGatewayShutdownParam.ToV0())
@@ -376,6 +449,20 @@ func mobileGatewayShutdownForceCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !mobileGatewayShutdownForceParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.MobileGatewayShutdownForce(ctx, mobileGatewayShutdownForceParam.ToV0())
 		},
@@ -414,6 +501,20 @@ func mobileGatewayResetCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !mobileGatewayResetParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.MobileGatewayReset(ctx, mobileGatewayResetParam.ToV0())
@@ -575,6 +676,20 @@ func mobileGatewayInterfaceConnectCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !mobileGatewayInterfaceConnectParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("interface-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.MobileGatewayInterfaceConnect(ctx, mobileGatewayInterfaceConnectParam.ToV0())
 		},
@@ -617,6 +732,20 @@ func mobileGatewayInterfaceUpdateCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !mobileGatewayInterfaceUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("interface-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.MobileGatewayInterfaceUpdate(ctx, mobileGatewayInterfaceUpdateParam.ToV0())
 		},
@@ -657,6 +786,20 @@ func mobileGatewayInterfaceDisconnectCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !mobileGatewayInterfaceDisconnectParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("interface-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.MobileGatewayInterfaceDisconnect(ctx, mobileGatewayInterfaceDisconnectParam.ToV0())
@@ -742,6 +885,20 @@ func mobileGatewayTrafficControlEnableCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !mobileGatewayTrafficControlEnableParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("traffic-control-enable", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.MobileGatewayTrafficControlEnable(ctx, mobileGatewayTrafficControlEnableParam.ToV0())
 		},
@@ -786,6 +943,20 @@ func mobileGatewayTrafficControlUpdateCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !mobileGatewayTrafficControlUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("traffic-control-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.MobileGatewayTrafficControlUpdate(ctx, mobileGatewayTrafficControlUpdateParam.ToV0())
 		},
@@ -829,6 +1000,20 @@ func mobileGatewayTrafficControlDisableCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !mobileGatewayTrafficControlDisableParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("traffic-control-disable", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.MobileGatewayTrafficControlDisable(ctx, mobileGatewayTrafficControlDisableParam.ToV0())
@@ -914,6 +1099,20 @@ func mobileGatewayStaticRouteAddCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !mobileGatewayStaticRouteAddParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("static-route-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.MobileGatewayStaticRouteAdd(ctx, mobileGatewayStaticRouteAddParam.ToV0())
 		},
@@ -954,6 +1153,20 @@ func mobileGatewayStaticRouteUpdateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !mobileGatewayStaticRouteUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("static-route-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.MobileGatewayStaticRouteUpdate(ctx, mobileGatewayStaticRouteUpdateParam.ToV0())
@@ -996,6 +1209,20 @@ func mobileGatewayStaticRouteDeleteCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !mobileGatewayStaticRouteDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("static-route-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.MobileGatewayStaticRouteDelete(ctx, mobileGatewayStaticRouteDeleteParam.ToV0())
@@ -1082,6 +1309,20 @@ func mobileGatewaySIMAddCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !mobileGatewaySIMAddParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("sim-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.MobileGatewaySIMAdd(ctx, mobileGatewaySIMAddParam.ToV0())
 		},
@@ -1123,6 +1364,20 @@ func mobileGatewaySIMUpdateCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !mobileGatewaySIMUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("sim-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.MobileGatewaySIMUpdate(ctx, mobileGatewaySIMUpdateParam.ToV0())
 		},
@@ -1163,6 +1418,20 @@ func mobileGatewaySIMDeleteCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !mobileGatewaySIMDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("sim-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.MobileGatewaySIMDelete(ctx, mobileGatewaySIMDeleteParam.ToV0())
@@ -1249,6 +1518,20 @@ func mobileGatewaySIMRouteAddCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !mobileGatewaySIMRouteAddParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("sim-route-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.MobileGatewaySIMRouteAdd(ctx, mobileGatewaySIMRouteAddParam.ToV0())
 		},
@@ -1289,6 +1572,20 @@ func mobileGatewaySIMRouteUpdateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !mobileGatewaySIMRouteUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("sim-route-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.MobileGatewaySIMRouteUpdate(ctx, mobileGatewaySIMRouteUpdateParam.ToV0())
@@ -1332,6 +1629,20 @@ func mobileGatewaySIMRouteDeleteCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !mobileGatewaySIMRouteDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("sim-route-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.MobileGatewaySIMRouteDelete(ctx, mobileGatewaySIMRouteDeleteParam.ToV0())
 		},
@@ -1371,6 +1682,20 @@ func mobileGatewayDNSUpdateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !mobileGatewayDNSUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("dns-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.MobileGatewayDNSUpdate(ctx, mobileGatewayDNSUpdateParam.ToV0())

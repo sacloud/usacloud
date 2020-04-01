@@ -17,9 +17,12 @@
 package commands
 
 import (
+	"errors"
+
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -153,6 +156,20 @@ func dnsRecordBulkUpdateCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !dnsRecordBulkUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("record-bulk-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.DNSRecordBulkUpdate(ctx, dnsRecordBulkUpdateParam.ToV0())
 		},
@@ -201,6 +218,20 @@ func dnsCreateCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !dnsCreateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.DNSCreate(ctx, dnsCreateParam.ToV0())
 		},
@@ -248,6 +279,20 @@ func dnsRecordAddCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !dnsRecordAddParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("record-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.DNSRecordAdd(ctx, dnsRecordAddParam.ToV0())
@@ -349,6 +394,20 @@ func dnsRecordUpdateCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !dnsRecordUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("record-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.DNSRecordUpdate(ctx, dnsRecordUpdateParam.ToV0())
 		},
@@ -405,6 +464,20 @@ func dnsRecordDeleteCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !dnsRecordDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("delete record", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.DNSRecordDelete(ctx, dnsRecordDeleteParam.ToV0())
 		},
@@ -451,6 +524,20 @@ func dnsUpdateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !dnsUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.DNSUpdate(ctx, dnsUpdateParam.ToV0())
@@ -500,6 +587,20 @@ func dnsDeleteCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !dnsDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.DNSDelete(ctx, dnsDeleteParam.ToV0())

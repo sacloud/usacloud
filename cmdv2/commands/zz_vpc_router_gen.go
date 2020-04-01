@@ -17,9 +17,12 @@
 package commands
 
 import (
+	"errors"
+
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -105,6 +108,20 @@ func vpcRouterCreateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterCreateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterCreate(ctx, vpcRouterCreateParam.ToV0())
@@ -207,6 +224,20 @@ func vpcRouterUpdateCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !vpcRouterUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.VPCRouterUpdate(ctx, vpcRouterUpdateParam.ToV0())
 		},
@@ -259,6 +290,20 @@ func vpcRouterDeleteCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !vpcRouterDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.VPCRouterDelete(ctx, vpcRouterDeleteParam.ToV0())
 		},
@@ -306,6 +351,20 @@ func vpcRouterBootCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !vpcRouterBootParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.VPCRouterBoot(ctx, vpcRouterBootParam.ToV0())
 		},
@@ -344,6 +403,20 @@ func vpcRouterShutdownCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterShutdownParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterShutdown(ctx, vpcRouterShutdownParam.ToV0())
@@ -384,6 +457,20 @@ func vpcRouterShutdownForceCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !vpcRouterShutdownForceParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.VPCRouterShutdownForce(ctx, vpcRouterShutdownForceParam.ToV0())
 		},
@@ -422,6 +509,20 @@ func vpcRouterResetCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterResetParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterReset(ctx, vpcRouterResetParam.ToV0())
@@ -538,6 +639,20 @@ func vpcRouterEnableInternetConnectionCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !vpcRouterEnableInternetConnectionParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("enable-internet-connection", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.VPCRouterEnableInternetConnection(ctx, vpcRouterEnableInternetConnectionParam.ToV0())
 		},
@@ -576,6 +691,20 @@ func vpcRouterDisableInternetConnectionCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterDisableInternetConnectionParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("disable-internet-connection", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterDisableInternetConnection(ctx, vpcRouterDisableInternetConnectionParam.ToV0())
@@ -661,6 +790,20 @@ func vpcRouterInterfaceConnectCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !vpcRouterInterfaceConnectParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("interface-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.VPCRouterInterfaceConnect(ctx, vpcRouterInterfaceConnectParam.ToV0())
 		},
@@ -706,6 +849,20 @@ func vpcRouterInterfaceUpdateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterInterfaceUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("interface-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterInterfaceUpdate(ctx, vpcRouterInterfaceUpdateParam.ToV0())
@@ -753,6 +910,20 @@ func vpcRouterInterfaceDisconnectCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterInterfaceDisconnectParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("interface-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterInterfaceDisconnect(ctx, vpcRouterInterfaceDisconnectParam.ToV0())
@@ -840,6 +1011,20 @@ func vpcRouterStaticNatAddCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !vpcRouterStaticNatAddParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("static-nat-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.VPCRouterStaticNatAdd(ctx, vpcRouterStaticNatAddParam.ToV0())
 		},
@@ -881,6 +1066,20 @@ func vpcRouterStaticNatUpdateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterStaticNatUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("static-nat-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterStaticNatUpdate(ctx, vpcRouterStaticNatUpdateParam.ToV0())
@@ -924,6 +1123,20 @@ func vpcRouterStaticNatDeleteCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterStaticNatDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("static-nat-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterStaticNatDelete(ctx, vpcRouterStaticNatDeleteParam.ToV0())
@@ -1010,6 +1223,20 @@ func vpcRouterPortForwardingAddCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !vpcRouterPortForwardingAddParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("port-forwarding-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.VPCRouterPortForwardingAdd(ctx, vpcRouterPortForwardingAddParam.ToV0())
 		},
@@ -1053,6 +1280,20 @@ func vpcRouterPortForwardingUpdateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterPortForwardingUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("port-forwarding-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterPortForwardingUpdate(ctx, vpcRouterPortForwardingUpdateParam.ToV0())
@@ -1098,6 +1339,20 @@ func vpcRouterPortForwardingDeleteCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterPortForwardingDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("port-forwarding-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterPortForwardingDelete(ctx, vpcRouterPortForwardingDeleteParam.ToV0())
@@ -1186,6 +1441,20 @@ func vpcRouterFirewallAddCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !vpcRouterFirewallAddParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("firewall-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.VPCRouterFirewallAdd(ctx, vpcRouterFirewallAddParam.ToV0())
 		},
@@ -1234,6 +1503,20 @@ func vpcRouterFirewallUpdateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterFirewallUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("firewall-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterFirewallUpdate(ctx, vpcRouterFirewallUpdateParam.ToV0())
@@ -1284,6 +1567,20 @@ func vpcRouterFirewallDeleteCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterFirewallDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("firewall-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterFirewallDelete(ctx, vpcRouterFirewallDeleteParam.ToV0())
@@ -1372,6 +1669,20 @@ func vpcRouterDhcpServerAddCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !vpcRouterDhcpServerAddParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("dhcp-server-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.VPCRouterDhcpServerAdd(ctx, vpcRouterDhcpServerAddParam.ToV0())
 		},
@@ -1415,6 +1726,20 @@ func vpcRouterDhcpServerUpdateCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !vpcRouterDhcpServerUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("dhcp-server-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.VPCRouterDhcpServerUpdate(ctx, vpcRouterDhcpServerUpdateParam.ToV0())
 		},
@@ -1457,6 +1782,20 @@ func vpcRouterDhcpServerDeleteCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterDhcpServerDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("dhcp-server-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterDhcpServerDelete(ctx, vpcRouterDhcpServerDeleteParam.ToV0())
@@ -1543,6 +1882,20 @@ func vpcRouterDhcpStaticMappingAddCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !vpcRouterDhcpStaticMappingAddParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("dhcp-static-mapping-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.VPCRouterDhcpStaticMappingAdd(ctx, vpcRouterDhcpStaticMappingAddParam.ToV0())
 		},
@@ -1583,6 +1936,20 @@ func vpcRouterDhcpStaticMappingUpdateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterDhcpStaticMappingUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("dhcp-static-mapping-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterDhcpStaticMappingUpdate(ctx, vpcRouterDhcpStaticMappingUpdateParam.ToV0())
@@ -1625,6 +1992,20 @@ func vpcRouterDhcpStaticMappingDeleteCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterDhcpStaticMappingDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("dhcp-static-mapping-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterDhcpStaticMappingDelete(ctx, vpcRouterDhcpStaticMappingDeleteParam.ToV0())
@@ -1710,6 +2091,20 @@ func vpcRouterPptpServerUpdateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterPptpServerUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("pptp-server-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterPptpServerUpdate(ctx, vpcRouterPptpServerUpdateParam.ToV0())
@@ -1797,6 +2192,20 @@ func vpcRouterL2TPServerUpdateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterL2TPServerUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("l2tp-server-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterL2TPServerUpdate(ctx, vpcRouterL2TPServerUpdateParam.ToV0())
@@ -1886,6 +2295,20 @@ func vpcRouterUserAddCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !vpcRouterUserAddParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("user-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.VPCRouterUserAdd(ctx, vpcRouterUserAddParam.ToV0())
 		},
@@ -1926,6 +2349,20 @@ func vpcRouterUserUpdateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterUserUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("user-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterUserUpdate(ctx, vpcRouterUserUpdateParam.ToV0())
@@ -1968,6 +2405,20 @@ func vpcRouterUserDeleteCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterUserDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("user-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterUserDelete(ctx, vpcRouterUserDeleteParam.ToV0())
@@ -2054,6 +2505,20 @@ func vpcRouterSiteToSiteVPNAddCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !vpcRouterSiteToSiteVPNAddParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("site-to-site-vpn-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.VPCRouterSiteToSiteVPNAdd(ctx, vpcRouterSiteToSiteVPNAddParam.ToV0())
 		},
@@ -2097,6 +2562,20 @@ func vpcRouterSiteToSiteVPNUpdateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterSiteToSiteVPNUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("site-to-site-vpn-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterSiteToSiteVPNUpdate(ctx, vpcRouterSiteToSiteVPNUpdateParam.ToV0())
@@ -2142,6 +2621,20 @@ func vpcRouterSiteToSiteVPNDeleteCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterSiteToSiteVPNDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("site-to-site-vpn-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterSiteToSiteVPNDelete(ctx, vpcRouterSiteToSiteVPNDeleteParam.ToV0())
@@ -2273,6 +2766,20 @@ func vpcRouterStaticRouteAddCmd() *cobra.Command {
 
 			// TODO implements ID parameter handling
 
+			// confirm
+			if !vpcRouterStaticRouteAddParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("static-route-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
+
 			// Run
 			return funcs.VPCRouterStaticRouteAdd(ctx, vpcRouterStaticRouteAddParam.ToV0())
 		},
@@ -2313,6 +2820,20 @@ func vpcRouterStaticRouteUpdateCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterStaticRouteUpdateParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("static-route-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterStaticRouteUpdate(ctx, vpcRouterStaticRouteUpdateParam.ToV0())
@@ -2355,6 +2876,20 @@ func vpcRouterStaticRouteDeleteCmd() *cobra.Command {
 			}
 
 			// TODO implements ID parameter handling
+
+			// confirm
+			if !vpcRouterStaticRouteDeleteParam.Assumeyes {
+				if !utils.IsTerminal() {
+					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := utils.ConfirmContinue("static-route-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				if err != nil {
+					return err
+				}
+				if !result {
+					return nil // canceled
+				}
+			}
 
 			// Run
 			return funcs.VPCRouterStaticRouteDelete(ctx, vpcRouterStaticRouteDeleteParam.ToV0())

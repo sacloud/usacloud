@@ -12,16 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package commands
+package utils
 
-import (
-	"encoding/json"
-)
+import "github.com/sacloud/libsacloud/sacloud"
 
-func debugMarshalIndent(in interface{}) string {
-	data, err := json.MarshalIndent(in, "", "    ")
-	if err != nil {
-		return ""
+// StringIDs sacloud.IDスライスを文字列のスライスに変換する
+func StringIDs(ids []sacloud.ID) []string {
+	var res []string
+
+	for _, v := range ids {
+		if v != 0 {
+			res = append(res, v.String())
+		}
 	}
-	return string(data)
+
+	return res
 }
