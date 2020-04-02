@@ -51,7 +51,7 @@ func NewListCouponParam() *ListCouponParam {
 }
 
 // Initialize init ListCouponParam
-func (p *ListCouponParam) Initialize(in Input) error {
+func (p *ListCouponParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

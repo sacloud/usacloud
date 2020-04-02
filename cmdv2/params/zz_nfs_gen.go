@@ -58,7 +58,7 @@ func NewListNFSParam() *ListNFSParam {
 }
 
 // Initialize init ListNFSParam
-func (p *ListNFSParam) Initialize(in Input) error {
+func (p *ListNFSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -433,7 +433,7 @@ func NewCreateNFSParam() *CreateNFSParam {
 }
 
 // Initialize init CreateNFSParam
-func (p *CreateNFSParam) Initialize(in Input) error {
+func (p *CreateNFSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -940,7 +940,7 @@ func NewReadNFSParam() *ReadNFSParam {
 }
 
 // Initialize init ReadNFSParam
-func (p *ReadNFSParam) Initialize(in Input) error {
+func (p *ReadNFSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1239,7 +1239,7 @@ func NewUpdateNFSParam() *UpdateNFSParam {
 }
 
 // Initialize init UpdateNFSParam
-func (p *UpdateNFSParam) Initialize(in Input) error {
+func (p *UpdateNFSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1622,7 +1622,7 @@ func NewDeleteNFSParam() *DeleteNFSParam {
 }
 
 // Initialize init DeleteNFSParam
-func (p *DeleteNFSParam) Initialize(in Input) error {
+func (p *DeleteNFSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1932,7 +1932,7 @@ func NewBootNFSParam() *BootNFSParam {
 }
 
 // Initialize init BootNFSParam
-func (p *BootNFSParam) Initialize(in Input) error {
+func (p *BootNFSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2140,7 +2140,7 @@ func NewShutdownNFSParam() *ShutdownNFSParam {
 }
 
 // Initialize init ShutdownNFSParam
-func (p *ShutdownNFSParam) Initialize(in Input) error {
+func (p *ShutdownNFSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2348,7 +2348,7 @@ func NewShutdownForceNFSParam() *ShutdownForceNFSParam {
 }
 
 // Initialize init ShutdownForceNFSParam
-func (p *ShutdownForceNFSParam) Initialize(in Input) error {
+func (p *ShutdownForceNFSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2556,7 +2556,7 @@ func NewResetNFSParam() *ResetNFSParam {
 }
 
 // Initialize init ResetNFSParam
-func (p *ResetNFSParam) Initialize(in Input) error {
+func (p *ResetNFSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2763,7 +2763,7 @@ func NewWaitForBootNFSParam() *WaitForBootNFSParam {
 }
 
 // Initialize init WaitForBootNFSParam
-func (p *WaitForBootNFSParam) Initialize(in Input) error {
+func (p *WaitForBootNFSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2959,7 +2959,7 @@ func NewWaitForDownNFSParam() *WaitForDownNFSParam {
 }
 
 // Initialize init WaitForDownNFSParam
-func (p *WaitForDownNFSParam) Initialize(in Input) error {
+func (p *WaitForDownNFSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3166,7 +3166,7 @@ func NewMonitorNicNFSParam() *MonitorNicNFSParam {
 }
 
 // Initialize init MonitorNicNFSParam
-func (p *MonitorNicNFSParam) Initialize(in Input) error {
+func (p *MonitorNicNFSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3521,7 +3521,7 @@ func NewMonitorFreeDiskSizeNFSParam() *MonitorFreeDiskSizeNFSParam {
 }
 
 // Initialize init MonitorFreeDiskSizeNFSParam
-func (p *MonitorFreeDiskSizeNFSParam) Initialize(in Input) error {
+func (p *MonitorFreeDiskSizeNFSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

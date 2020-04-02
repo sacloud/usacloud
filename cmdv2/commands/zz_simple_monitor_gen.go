@@ -46,7 +46,7 @@ func simpleMonitorListCmd() *cobra.Command {
 		Short:   "List SimpleMonitor",
 		Long:    `List SimpleMonitor`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simpleMonitorListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simpleMonitorListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simpleMonitorListParam)
@@ -96,7 +96,7 @@ func simpleMonitorCreateCmd() *cobra.Command {
 		Short: "Create SimpleMonitor",
 		Long:  `Create SimpleMonitor`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simpleMonitorCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simpleMonitorCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simpleMonitorCreateParam)
@@ -116,11 +116,8 @@ func simpleMonitorCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -175,7 +172,7 @@ func simpleMonitorReadCmd() *cobra.Command {
 		Short: "Read SimpleMonitor",
 		Long:  `Read SimpleMonitor`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simpleMonitorReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simpleMonitorReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simpleMonitorReadParam)
@@ -220,7 +217,7 @@ func simpleMonitorUpdateCmd() *cobra.Command {
 		Short: "Update SimpleMonitor",
 		Long:  `Update SimpleMonitor`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simpleMonitorUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simpleMonitorUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simpleMonitorUpdateParam)
@@ -240,11 +237,8 @@ func simpleMonitorUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -300,7 +294,7 @@ func simpleMonitorDeleteCmd() *cobra.Command {
 		Short:   "Delete SimpleMonitor",
 		Long:    `Delete SimpleMonitor`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simpleMonitorDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simpleMonitorDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simpleMonitorDeleteParam)
@@ -320,11 +314,8 @@ func simpleMonitorDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -360,7 +351,7 @@ func simpleMonitorHealthCmd() *cobra.Command {
 		Short: "Health SimpleMonitor",
 		Long:  `Health SimpleMonitor`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simpleMonitorHealthParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simpleMonitorHealthParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simpleMonitorHealthParam)

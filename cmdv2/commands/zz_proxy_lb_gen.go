@@ -46,7 +46,7 @@ func proxyLBListCmd() *cobra.Command {
 		Short:   "List ProxyLB",
 		Long:    `List ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBListParam)
@@ -95,7 +95,7 @@ func proxyLBCreateCmd() *cobra.Command {
 		Short: "Create ProxyLB",
 		Long:  `Create ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBCreateParam)
@@ -115,11 +115,8 @@ func proxyLBCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -166,7 +163,7 @@ func proxyLBReadCmd() *cobra.Command {
 		Short: "Read ProxyLB",
 		Long:  `Read ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBReadParam)
@@ -211,7 +208,7 @@ func proxyLBUpdateCmd() *cobra.Command {
 		Short: "Update ProxyLB",
 		Long:  `Update ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBUpdateParam)
@@ -231,11 +228,8 @@ func proxyLBUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -283,7 +277,7 @@ func proxyLBDeleteCmd() *cobra.Command {
 		Short:   "Delete ProxyLB",
 		Long:    `Delete ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBDeleteParam)
@@ -303,11 +297,8 @@ func proxyLBDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -343,7 +334,7 @@ func proxyLBPlanChangeCmd() *cobra.Command {
 		Short: "Change ProxyLB plan",
 		Long:  `Change ProxyLB plan`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBPlanChangeParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBPlanChangeParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBPlanChangeParam)
@@ -363,11 +354,8 @@ func proxyLBPlanChangeCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("plan-change", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -404,7 +392,7 @@ func proxyLBBindPortInfoCmd() *cobra.Command {
 		Short:   "BindPortInfo ProxyLB",
 		Long:    `BindPortInfo ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBBindPortInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBBindPortInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBBindPortInfoParam)
@@ -449,7 +437,7 @@ func proxyLBBindPortAddCmd() *cobra.Command {
 		Short: "BindPortAdd ProxyLB",
 		Long:  `BindPortAdd ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBBindPortAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBBindPortAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBBindPortAddParam)
@@ -469,11 +457,8 @@ func proxyLBBindPortAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("bind-port-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -513,7 +498,7 @@ func proxyLBBindPortUpdateCmd() *cobra.Command {
 		Short: "BindPortUpdate ProxyLB",
 		Long:  `BindPortUpdate ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBBindPortUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBBindPortUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBBindPortUpdateParam)
@@ -533,11 +518,8 @@ func proxyLBBindPortUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("bind-port-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -578,7 +560,7 @@ func proxyLBBindPortDeleteCmd() *cobra.Command {
 		Short: "BindPortDelete ProxyLB",
 		Long:  `BindPortDelete ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBBindPortDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBBindPortDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBBindPortDeleteParam)
@@ -598,11 +580,8 @@ func proxyLBBindPortDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete bind-port", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -639,7 +618,7 @@ func proxyLBResponseHeaderInfoCmd() *cobra.Command {
 		Short:   "ResponseHeaderInfo ProxyLB",
 		Long:    `ResponseHeaderInfo ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBResponseHeaderInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBResponseHeaderInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBResponseHeaderInfoParam)
@@ -685,7 +664,7 @@ func proxyLBResponseHeaderAddCmd() *cobra.Command {
 		Short: "ResponseHeaderAdd ProxyLB",
 		Long:  `ResponseHeaderAdd ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBResponseHeaderAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBResponseHeaderAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBResponseHeaderAddParam)
@@ -705,11 +684,8 @@ func proxyLBResponseHeaderAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("response-header-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -748,7 +724,7 @@ func proxyLBResponseHeaderUpdateCmd() *cobra.Command {
 		Short: "ResponseHeaderUpdate ProxyLB",
 		Long:  `ResponseHeaderUpdate ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBResponseHeaderUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBResponseHeaderUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBResponseHeaderUpdateParam)
@@ -768,11 +744,8 @@ func proxyLBResponseHeaderUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("response-header-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -812,7 +785,7 @@ func proxyLBResponseHeaderDeleteCmd() *cobra.Command {
 		Short: "ResponseHeaderDelete ProxyLB",
 		Long:  `ResponseHeaderDelete ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBResponseHeaderDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBResponseHeaderDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBResponseHeaderDeleteParam)
@@ -832,11 +805,8 @@ func proxyLBResponseHeaderDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete response-header", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -874,7 +844,7 @@ func proxyLBACMEInfoCmd() *cobra.Command {
 		Short: "ACMEInfo ProxyLB",
 		Long:  `ACMEInfo ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBACMEInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBACMEInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBACMEInfoParam)
@@ -919,7 +889,7 @@ func proxyLBACMESettingCmd() *cobra.Command {
 		Short: "ACMESetting ProxyLB",
 		Long:  `ACMESetting ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBACMESettingParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBACMESettingParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBACMESettingParam)
@@ -939,11 +909,8 @@ func proxyLBACMESettingCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("acme-setting", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -982,7 +949,7 @@ func proxyLBACMERenewCmd() *cobra.Command {
 		Short: "ACMERenew ProxyLB",
 		Long:  `ACMERenew ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBACMERenewParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBACMERenewParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBACMERenewParam)
@@ -1002,11 +969,8 @@ func proxyLBACMERenewCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("acme-renew", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1035,7 +999,7 @@ func proxyLBServerInfoCmd() *cobra.Command {
 		Short:   "ServerInfo ProxyLB",
 		Long:    `ServerInfo ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBServerInfoParam)
@@ -1080,7 +1044,7 @@ func proxyLBServerAddCmd() *cobra.Command {
 		Short: "ServerAdd ProxyLB",
 		Long:  `ServerAdd ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBServerAddParam)
@@ -1100,11 +1064,8 @@ func proxyLBServerAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("server-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1143,7 +1104,7 @@ func proxyLBServerUpdateCmd() *cobra.Command {
 		Short: "ServerUpdate ProxyLB",
 		Long:  `ServerUpdate ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBServerUpdateParam)
@@ -1163,11 +1124,8 @@ func proxyLBServerUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("server-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1207,7 +1165,7 @@ func proxyLBServerDeleteCmd() *cobra.Command {
 		Short: "ServerDelete ProxyLB",
 		Long:  `ServerDelete ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBServerDeleteParam)
@@ -1227,11 +1185,8 @@ func proxyLBServerDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete server", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1268,7 +1223,7 @@ func proxyLBCertificateInfoCmd() *cobra.Command {
 		Short:   "CertificateInfo ProxyLB",
 		Long:    `CertificateInfo ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBCertificateInfoParam)
@@ -1313,7 +1268,7 @@ func proxyLBCertificateAddCmd() *cobra.Command {
 		Short:   "CertificateAdd ProxyLB",
 		Long:    `CertificateAdd ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBCertificateAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBCertificateAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBCertificateAddParam)
@@ -1333,11 +1288,8 @@ func proxyLBCertificateAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("certificate-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1376,7 +1328,7 @@ func proxyLBCertificateUpdateCmd() *cobra.Command {
 		Short:   "CertificateUpdate ProxyLB",
 		Long:    `CertificateUpdate ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBCertificateUpdateParam)
@@ -1396,11 +1348,8 @@ func proxyLBCertificateUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("certificate-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1439,7 +1388,7 @@ func proxyLBCertificateDeleteCmd() *cobra.Command {
 		Short:   "CertificateDelete ProxyLB",
 		Long:    `CertificateDelete ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBCertificateDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBCertificateDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBCertificateDeleteParam)
@@ -1459,11 +1408,8 @@ func proxyLBCertificateDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete certificate", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1499,7 +1445,7 @@ func proxyLBMonitorCmd() *cobra.Command {
 		Short: "Monitor ProxyLB",
 		Long:  `Monitor ProxyLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return proxyLBMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, proxyLBMonitorParam)

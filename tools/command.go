@@ -119,3 +119,11 @@ func (c *Command) ConfirmMessage() string {
 	}
 	return c.Command.ConfirmMessage
 }
+
+func (c *Command) RequireID() bool {
+	return c.Command.Type.IsRequiredIDType()
+}
+
+func (c *Command) SingleArgToIdParam() bool {
+	return c.Command.Type.IsNeedIDOnlyType()
+}

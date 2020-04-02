@@ -122,8 +122,17 @@ func New{{.InputParameterTypeName}}() *{{.InputParameterTypeName}}{
 }
 
 // Initialize init {{.InputParameterTypeName}}
-func (p *{{.InputParameterTypeName}}) Initialize(in Input) error {
+func (p *{{.InputParameterTypeName}}) Initialize(in Input, args []string) error {
 	p.input = in
+	{{ if .SingleArgToIdParam }}
+	if len(args) == 0 {
+		return fmt.Errorf("argument <ID> is required")
+	}
+	p.Id = sacloud.StringID(args[0])
+	if p.Id.IsEmpty() {
+		return fmt.Errorf("argument <ID> is required")
+	}
+	{{ end -}}
 	if err := p.validate(); err != nil {
 		return err
 	}

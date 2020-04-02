@@ -58,7 +58,7 @@ func NewListInternetParam() *ListInternetParam {
 }
 
 // Initialize init ListInternetParam
-func (p *ListInternetParam) Initialize(in Input) error {
+func (p *ListInternetParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -429,7 +429,7 @@ func NewCreateInternetParam() *CreateInternetParam {
 }
 
 // Initialize init CreateInternetParam
-func (p *CreateInternetParam) Initialize(in Input) error {
+func (p *CreateInternetParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -839,7 +839,7 @@ func NewReadInternetParam() *ReadInternetParam {
 }
 
 // Initialize init ReadInternetParam
-func (p *ReadInternetParam) Initialize(in Input) error {
+func (p *ReadInternetParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1139,7 +1139,7 @@ func NewUpdateInternetParam() *UpdateInternetParam {
 }
 
 // Initialize init UpdateInternetParam
-func (p *UpdateInternetParam) Initialize(in Input) error {
+func (p *UpdateInternetParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1540,7 +1540,7 @@ func NewDeleteInternetParam() *DeleteInternetParam {
 }
 
 // Initialize init DeleteInternetParam
-func (p *DeleteInternetParam) Initialize(in Input) error {
+func (p *DeleteInternetParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1848,7 +1848,7 @@ func NewUpdateBandwidthInternetParam() *UpdateBandwidthInternetParam {
 }
 
 // Initialize init UpdateBandwidthInternetParam
-func (p *UpdateBandwidthInternetParam) Initialize(in Input) error {
+func (p *UpdateBandwidthInternetParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2179,7 +2179,7 @@ func NewSubnetInfoInternetParam() *SubnetInfoInternetParam {
 }
 
 // Initialize init SubnetInfoInternetParam
-func (p *SubnetInfoInternetParam) Initialize(in Input) error {
+func (p *SubnetInfoInternetParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2477,7 +2477,7 @@ func NewSubnetAddInternetParam() *SubnetAddInternetParam {
 }
 
 // Initialize init SubnetAddInternetParam
-func (p *SubnetAddInternetParam) Initialize(in Input) error {
+func (p *SubnetAddInternetParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2829,7 +2829,7 @@ func NewSubnetDeleteInternetParam() *SubnetDeleteInternetParam {
 }
 
 // Initialize init SubnetDeleteInternetParam
-func (p *SubnetDeleteInternetParam) Initialize(in Input) error {
+func (p *SubnetDeleteInternetParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3065,7 +3065,7 @@ func NewSubnetUpdateInternetParam() *SubnetUpdateInternetParam {
 }
 
 // Initialize init SubnetUpdateInternetParam
-func (p *SubnetUpdateInternetParam) Initialize(in Input) error {
+func (p *SubnetUpdateInternetParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3415,7 +3415,7 @@ func NewIPv6InfoInternetParam() *IPv6InfoInternetParam {
 }
 
 // Initialize init IPv6InfoInternetParam
-func (p *IPv6InfoInternetParam) Initialize(in Input) error {
+func (p *IPv6InfoInternetParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3710,7 +3710,7 @@ func NewIPv6EnableInternetParam() *IPv6EnableInternetParam {
 }
 
 // Initialize init IPv6EnableInternetParam
-func (p *IPv6EnableInternetParam) Initialize(in Input) error {
+func (p *IPv6EnableInternetParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4009,7 +4009,7 @@ func NewIPv6DisableInternetParam() *IPv6DisableInternetParam {
 }
 
 // Initialize init IPv6DisableInternetParam
-func (p *IPv6DisableInternetParam) Initialize(in Input) error {
+func (p *IPv6DisableInternetParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4227,7 +4227,7 @@ func NewMonitorInternetParam() *MonitorInternetParam {
 }
 
 // Initialize init MonitorInternetParam
-func (p *MonitorInternetParam) Initialize(in Input) error {
+func (p *MonitorInternetParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

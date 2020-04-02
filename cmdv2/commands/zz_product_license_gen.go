@@ -46,7 +46,7 @@ func productLicenseListCmd() *cobra.Command {
 		Short:   "List ProductLicense (default)",
 		Long:    `List ProductLicense (default)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return productLicenseListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return productLicenseListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, productLicenseListParam)
@@ -94,7 +94,7 @@ func productLicenseReadCmd() *cobra.Command {
 		Short: "Read ProductLicense",
 		Long:  `Read ProductLicense`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return productLicenseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return productLicenseReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, productLicenseReadParam)
@@ -114,11 +114,8 @@ func productLicenseReadCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

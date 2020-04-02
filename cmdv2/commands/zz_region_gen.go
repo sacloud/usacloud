@@ -46,7 +46,7 @@ func regionListCmd() *cobra.Command {
 		Short:   "List Region (default)",
 		Long:    `List Region (default)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return regionListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return regionListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, regionListParam)
@@ -94,7 +94,7 @@ func regionReadCmd() *cobra.Command {
 		Short: "Read Region",
 		Long:  `Read Region`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return regionReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return regionReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, regionReadParam)
@@ -114,11 +114,8 @@ func regionReadCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

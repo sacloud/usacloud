@@ -58,7 +58,7 @@ func NewListSIMParam() *ListSIMParam {
 }
 
 // Initialize init ListSIMParam
-func (p *ListSIMParam) Initialize(in Input) error {
+func (p *ListSIMParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -431,7 +431,7 @@ func NewCreateSIMParam() *CreateSIMParam {
 }
 
 // Initialize init CreateSIMParam
-func (p *CreateSIMParam) Initialize(in Input) error {
+func (p *CreateSIMParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -881,7 +881,7 @@ func NewReadSIMParam() *ReadSIMParam {
 }
 
 // Initialize init ReadSIMParam
-func (p *ReadSIMParam) Initialize(in Input) error {
+func (p *ReadSIMParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1180,7 +1180,7 @@ func NewUpdateSIMParam() *UpdateSIMParam {
 }
 
 // Initialize init UpdateSIMParam
-func (p *UpdateSIMParam) Initialize(in Input) error {
+func (p *UpdateSIMParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1556,7 +1556,7 @@ func NewDeleteSIMParam() *DeleteSIMParam {
 }
 
 // Initialize init DeleteSIMParam
-func (p *DeleteSIMParam) Initialize(in Input) error {
+func (p *DeleteSIMParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1781,7 +1781,7 @@ func NewCarrierInfoSIMParam() *CarrierInfoSIMParam {
 }
 
 // Initialize init CarrierInfoSIMParam
-func (p *CarrierInfoSIMParam) Initialize(in Input) error {
+func (p *CarrierInfoSIMParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2070,7 +2070,7 @@ func NewCarrierUpdateSIMParam() *CarrierUpdateSIMParam {
 }
 
 // Initialize init CarrierUpdateSIMParam
-func (p *CarrierUpdateSIMParam) Initialize(in Input) error {
+func (p *CarrierUpdateSIMParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2310,7 +2310,7 @@ func NewActivateSIMParam() *ActivateSIMParam {
 }
 
 // Initialize init ActivateSIMParam
-func (p *ActivateSIMParam) Initialize(in Input) error {
+func (p *ActivateSIMParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2518,7 +2518,7 @@ func NewDeactivateSIMParam() *DeactivateSIMParam {
 }
 
 // Initialize init DeactivateSIMParam
-func (p *DeactivateSIMParam) Initialize(in Input) error {
+func (p *DeactivateSIMParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2727,7 +2727,7 @@ func NewImeiLockSIMParam() *ImeiLockSIMParam {
 }
 
 // Initialize init ImeiLockSIMParam
-func (p *ImeiLockSIMParam) Initialize(in Input) error {
+func (p *ImeiLockSIMParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2955,7 +2955,7 @@ func NewIpAddSIMParam() *IpAddSIMParam {
 }
 
 // Initialize init IpAddSIMParam
-func (p *IpAddSIMParam) Initialize(in Input) error {
+func (p *IpAddSIMParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3189,7 +3189,7 @@ func NewImeiUnlockSIMParam() *ImeiUnlockSIMParam {
 }
 
 // Initialize init ImeiUnlockSIMParam
-func (p *ImeiUnlockSIMParam) Initialize(in Input) error {
+func (p *ImeiUnlockSIMParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3397,7 +3397,7 @@ func NewIpDeleteSIMParam() *IpDeleteSIMParam {
 }
 
 // Initialize init IpDeleteSIMParam
-func (p *IpDeleteSIMParam) Initialize(in Input) error {
+func (p *IpDeleteSIMParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3614,7 +3614,7 @@ func NewLogsSIMParam() *LogsSIMParam {
 }
 
 // Initialize init LogsSIMParam
-func (p *LogsSIMParam) Initialize(in Input) error {
+func (p *LogsSIMParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3942,7 +3942,7 @@ func NewMonitorSIMParam() *MonitorSIMParam {
 }
 
 // Initialize init MonitorSIMParam
-func (p *MonitorSIMParam) Initialize(in Input) error {
+func (p *MonitorSIMParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

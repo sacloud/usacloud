@@ -50,7 +50,7 @@ func NewShowAuthStatusParam() *ShowAuthStatusParam {
 }
 
 // Initialize init ShowAuthStatusParam
-func (p *ShowAuthStatusParam) Initialize(in Input) error {
+func (p *ShowAuthStatusParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

@@ -57,7 +57,7 @@ func NewListIPv4Param() *ListIPv4Param {
 }
 
 // Initialize init ListIPv4Param
-func (p *ListIPv4Param) Initialize(in Input) error {
+func (p *ListIPv4Param) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -403,7 +403,7 @@ func NewPtrAddIPv4Param() *PtrAddIPv4Param {
 }
 
 // Initialize init PtrAddIPv4Param
-func (p *PtrAddIPv4Param) Initialize(in Input) error {
+func (p *PtrAddIPv4Param) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -695,7 +695,7 @@ func NewPtrReadIPv4Param() *PtrReadIPv4Param {
 }
 
 // Initialize init PtrReadIPv4Param
-func (p *PtrReadIPv4Param) Initialize(in Input) error {
+func (p *PtrReadIPv4Param) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -959,7 +959,7 @@ func NewPtrUpdateIPv4Param() *PtrUpdateIPv4Param {
 }
 
 // Initialize init PtrUpdateIPv4Param
-func (p *PtrUpdateIPv4Param) Initialize(in Input) error {
+func (p *PtrUpdateIPv4Param) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1252,7 +1252,7 @@ func NewPtrDeleteIPv4Param() *PtrDeleteIPv4Param {
 }
 
 // Initialize init PtrDeleteIPv4Param
-func (p *PtrDeleteIPv4Param) Initialize(in Input) error {
+func (p *PtrDeleteIPv4Param) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

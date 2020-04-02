@@ -46,7 +46,7 @@ func isoImageListCmd() *cobra.Command {
 		Short:   "List ISOImage",
 		Long:    `List ISOImage`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return isoImageListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return isoImageListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, isoImageListParam)
@@ -96,7 +96,7 @@ func isoImageCreateCmd() *cobra.Command {
 		Short: "Create ISOImage",
 		Long:  `Create ISOImage`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return isoImageCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return isoImageCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, isoImageCreateParam)
@@ -116,11 +116,8 @@ func isoImageCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -160,7 +157,7 @@ func isoImageReadCmd() *cobra.Command {
 		Short: "Read ISOImage",
 		Long:  `Read ISOImage`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return isoImageReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return isoImageReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, isoImageReadParam)
@@ -205,7 +202,7 @@ func isoImageUpdateCmd() *cobra.Command {
 		Short: "Update ISOImage",
 		Long:  `Update ISOImage`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return isoImageUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return isoImageUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, isoImageUpdateParam)
@@ -225,11 +222,8 @@ func isoImageUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -269,7 +263,7 @@ func isoImageDeleteCmd() *cobra.Command {
 		Short:   "Delete ISOImage",
 		Long:    `Delete ISOImage`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return isoImageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return isoImageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, isoImageDeleteParam)
@@ -289,11 +283,8 @@ func isoImageDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -329,7 +320,7 @@ func isoImageUploadCmd() *cobra.Command {
 		Short: "Upload ISOImage",
 		Long:  `Upload ISOImage`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return isoImageUploadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return isoImageUploadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, isoImageUploadParam)
@@ -349,11 +340,8 @@ func isoImageUploadCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("upload", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -390,7 +378,7 @@ func isoImageDownloadCmd() *cobra.Command {
 		Short: "Download ISOImage",
 		Long:  `Download ISOImage`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return isoImageDownloadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return isoImageDownloadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, isoImageDownloadParam)
@@ -410,11 +398,8 @@ func isoImageDownloadCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("download", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -444,7 +429,7 @@ func isoImageFTPOpenCmd() *cobra.Command {
 		Short: "FTPOpen ISOImage",
 		Long:  `FTPOpen ISOImage`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return isoImageFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return isoImageFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, isoImageFTPOpenParam)
@@ -464,11 +449,8 @@ func isoImageFTPOpenCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("ftp-open", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -504,7 +486,7 @@ func isoImageFTPCloseCmd() *cobra.Command {
 		Short: "FTPClose ISOImage",
 		Long:  `FTPClose ISOImage`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return isoImageFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return isoImageFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, isoImageFTPCloseParam)
@@ -524,11 +506,8 @@ func isoImageFTPCloseCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("ftp-close", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

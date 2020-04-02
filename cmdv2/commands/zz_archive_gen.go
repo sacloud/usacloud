@@ -46,7 +46,7 @@ func archiveListCmd() *cobra.Command {
 		Short:   "List Archive",
 		Long:    `List Archive`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return archiveListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, archiveListParam)
@@ -98,7 +98,7 @@ func archiveCreateCmd() *cobra.Command {
 		Short: "Create Archive",
 		Long:  `Create Archive`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return archiveCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, archiveCreateParam)
@@ -118,11 +118,8 @@ func archiveCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -164,7 +161,7 @@ func archiveReadCmd() *cobra.Command {
 		Short: "Read Archive",
 		Long:  `Read Archive`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return archiveReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, archiveReadParam)
@@ -209,7 +206,7 @@ func archiveUpdateCmd() *cobra.Command {
 		Short: "Update Archive",
 		Long:  `Update Archive`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return archiveUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, archiveUpdateParam)
@@ -229,11 +226,8 @@ func archiveUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -273,7 +267,7 @@ func archiveDeleteCmd() *cobra.Command {
 		Short:   "Delete Archive",
 		Long:    `Delete Archive`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return archiveDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, archiveDeleteParam)
@@ -293,11 +287,8 @@ func archiveDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -333,7 +324,7 @@ func archiveUploadCmd() *cobra.Command {
 		Short: "Upload Archive",
 		Long:  `Upload Archive`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveUploadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return archiveUploadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, archiveUploadParam)
@@ -353,11 +344,8 @@ func archiveUploadCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("upload", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -394,7 +382,7 @@ func archiveDownloadCmd() *cobra.Command {
 		Short: "Download Archive",
 		Long:  `Download Archive`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveDownloadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return archiveDownloadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, archiveDownloadParam)
@@ -414,11 +402,8 @@ func archiveDownloadCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("download", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -448,7 +433,7 @@ func archiveFTPOpenCmd() *cobra.Command {
 		Short: "FTPOpen Archive",
 		Long:  `FTPOpen Archive`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return archiveFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, archiveFTPOpenParam)
@@ -468,11 +453,8 @@ func archiveFTPOpenCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("ftp-open", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -508,7 +490,7 @@ func archiveFTPCloseCmd() *cobra.Command {
 		Short: "FTPClose Archive",
 		Long:  `FTPClose Archive`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return archiveFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, archiveFTPCloseParam)
@@ -528,11 +510,8 @@ func archiveFTPCloseCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("ftp-close", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -561,7 +540,7 @@ func archiveWaitForCopyCmd() *cobra.Command {
 		Short: "WaitForCopy Archive",
 		Long:  `WaitForCopy Archive`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return archiveWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, archiveWaitForCopyParam)

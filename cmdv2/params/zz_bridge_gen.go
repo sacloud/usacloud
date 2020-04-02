@@ -57,7 +57,7 @@ func NewListBridgeParam() *ListBridgeParam {
 }
 
 // Initialize init ListBridgeParam
-func (p *ListBridgeParam) Initialize(in Input) error {
+func (p *ListBridgeParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -404,7 +404,7 @@ func NewCreateBridgeParam() *CreateBridgeParam {
 }
 
 // Initialize init CreateBridgeParam
-func (p *CreateBridgeParam) Initialize(in Input) error {
+func (p *CreateBridgeParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -723,7 +723,7 @@ func NewReadBridgeParam() *ReadBridgeParam {
 }
 
 // Initialize init ReadBridgeParam
-func (p *ReadBridgeParam) Initialize(in Input) error {
+func (p *ReadBridgeParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1008,7 +1008,7 @@ func NewUpdateBridgeParam() *UpdateBridgeParam {
 }
 
 // Initialize init UpdateBridgeParam
-func (p *UpdateBridgeParam) Initialize(in Input) error {
+func (p *UpdateBridgeParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1340,7 +1340,7 @@ func NewDeleteBridgeParam() *DeleteBridgeParam {
 }
 
 // Initialize init DeleteBridgeParam
-func (p *DeleteBridgeParam) Initialize(in Input) error {
+func (p *DeleteBridgeParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

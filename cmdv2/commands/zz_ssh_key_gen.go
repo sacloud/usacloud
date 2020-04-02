@@ -46,7 +46,7 @@ func sshKeyListCmd() *cobra.Command {
 		Short:   "List SSHKey",
 		Long:    `List SSHKey`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return sshKeyListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return sshKeyListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, sshKeyListParam)
@@ -94,7 +94,7 @@ func sshKeyCreateCmd() *cobra.Command {
 		Short: "Create SSHKey",
 		Long:  `Create SSHKey`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return sshKeyCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return sshKeyCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, sshKeyCreateParam)
@@ -114,11 +114,8 @@ func sshKeyCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -156,7 +153,7 @@ func sshKeyReadCmd() *cobra.Command {
 		Short: "Read SSHKey",
 		Long:  `Read SSHKey`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return sshKeyReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return sshKeyReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, sshKeyReadParam)
@@ -200,7 +197,7 @@ func sshKeyUpdateCmd() *cobra.Command {
 		Short: "Update SSHKey",
 		Long:  `Update SSHKey`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return sshKeyUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return sshKeyUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, sshKeyUpdateParam)
@@ -220,11 +217,8 @@ func sshKeyUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -261,7 +255,7 @@ func sshKeyDeleteCmd() *cobra.Command {
 		Short:   "Delete SSHKey",
 		Long:    `Delete SSHKey`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return sshKeyDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return sshKeyDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, sshKeyDeleteParam)
@@ -281,11 +275,8 @@ func sshKeyDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -320,7 +311,7 @@ func sshKeyGenerateCmd() *cobra.Command {
 		Short:   "Generate SSHKey",
 		Long:    `Generate SSHKey`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return sshKeyGenerateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return sshKeyGenerateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, sshKeyGenerateParam)
@@ -340,11 +331,8 @@ func sshKeyGenerateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("generate", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

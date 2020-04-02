@@ -46,7 +46,7 @@ func gslbListCmd() *cobra.Command {
 		Short:   "List GSLB",
 		Long:    `List GSLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return gslbListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, gslbListParam)
@@ -95,7 +95,7 @@ func gslbServerInfoCmd() *cobra.Command {
 		Short:   "ServerInfo GSLB",
 		Long:    `ServerInfo GSLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return gslbServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, gslbServerInfoParam)
@@ -140,7 +140,7 @@ func gslbCreateCmd() *cobra.Command {
 		Short: "Create GSLB",
 		Long:  `Create GSLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return gslbCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, gslbCreateParam)
@@ -160,11 +160,8 @@ func gslbCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -210,7 +207,7 @@ func gslbServerAddCmd() *cobra.Command {
 		Short: "ServerAdd GSLB",
 		Long:  `ServerAdd GSLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return gslbServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, gslbServerAddParam)
@@ -230,11 +227,8 @@ func gslbServerAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("server-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -273,7 +267,7 @@ func gslbReadCmd() *cobra.Command {
 		Short: "Read GSLB",
 		Long:  `Read GSLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return gslbReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, gslbReadParam)
@@ -318,7 +312,7 @@ func gslbServerUpdateCmd() *cobra.Command {
 		Short: "ServerUpdate GSLB",
 		Long:  `ServerUpdate GSLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return gslbServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, gslbServerUpdateParam)
@@ -338,11 +332,8 @@ func gslbServerUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("server-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -382,7 +373,7 @@ func gslbServerDeleteCmd() *cobra.Command {
 		Short: "ServerDelete GSLB",
 		Long:  `ServerDelete GSLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return gslbServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, gslbServerDeleteParam)
@@ -402,11 +393,8 @@ func gslbServerDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete server", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -443,7 +431,7 @@ func gslbUpdateCmd() *cobra.Command {
 		Short: "Update GSLB",
 		Long:  `Update GSLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return gslbUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, gslbUpdateParam)
@@ -463,11 +451,8 @@ func gslbUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -515,7 +500,7 @@ func gslbDeleteCmd() *cobra.Command {
 		Short:   "Delete GSLB",
 		Long:    `Delete GSLB`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return gslbDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, gslbDeleteParam)
@@ -535,11 +520,8 @@ func gslbDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

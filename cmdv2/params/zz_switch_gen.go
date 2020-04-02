@@ -58,7 +58,7 @@ func NewListSwitchParam() *ListSwitchParam {
 }
 
 // Initialize init ListSwitchParam
-func (p *ListSwitchParam) Initialize(in Input) error {
+func (p *ListSwitchParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -426,7 +426,7 @@ func NewCreateSwitchParam() *CreateSwitchParam {
 }
 
 // Initialize init CreateSwitchParam
-func (p *CreateSwitchParam) Initialize(in Input) error {
+func (p *CreateSwitchParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -784,7 +784,7 @@ func NewReadSwitchParam() *ReadSwitchParam {
 }
 
 // Initialize init ReadSwitchParam
-func (p *ReadSwitchParam) Initialize(in Input) error {
+func (p *ReadSwitchParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1083,7 +1083,7 @@ func NewUpdateSwitchParam() *UpdateSwitchParam {
 }
 
 // Initialize init UpdateSwitchParam
-func (p *UpdateSwitchParam) Initialize(in Input) error {
+func (p *UpdateSwitchParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1465,7 +1465,7 @@ func NewDeleteSwitchParam() *DeleteSwitchParam {
 }
 
 // Initialize init DeleteSwitchParam
-func (p *DeleteSwitchParam) Initialize(in Input) error {
+func (p *DeleteSwitchParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1765,7 +1765,7 @@ func NewBridgeConnectSwitchParam() *BridgeConnectSwitchParam {
 }
 
 // Initialize init BridgeConnectSwitchParam
-func (p *BridgeConnectSwitchParam) Initialize(in Input) error {
+func (p *BridgeConnectSwitchParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1999,7 +1999,7 @@ func NewBridgeDisconnectSwitchParam() *BridgeDisconnectSwitchParam {
 }
 
 // Initialize init BridgeDisconnectSwitchParam
-func (p *BridgeDisconnectSwitchParam) Initialize(in Input) error {
+func (p *BridgeDisconnectSwitchParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

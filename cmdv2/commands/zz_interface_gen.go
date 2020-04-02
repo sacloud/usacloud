@@ -46,7 +46,7 @@ func interfaceListCmd() *cobra.Command {
 		Short:   "List Interface",
 		Long:    `List Interface`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return interfaceListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return interfaceListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, interfaceListParam)
@@ -94,7 +94,7 @@ func interfacePacketFilterConnectCmd() *cobra.Command {
 		Short: "PacketFilterConnect Interface",
 		Long:  `PacketFilterConnect Interface`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return interfacePacketFilterConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return interfacePacketFilterConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, interfacePacketFilterConnectParam)
@@ -114,11 +114,8 @@ func interfacePacketFilterConnectCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("packet-filter-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -147,7 +144,7 @@ func interfaceCreateCmd() *cobra.Command {
 		Short: "Create Interface",
 		Long:  `Create Interface`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return interfaceCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return interfaceCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, interfaceCreateParam)
@@ -167,11 +164,8 @@ func interfaceCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -206,7 +200,7 @@ func interfacePacketFilterDisconnectCmd() *cobra.Command {
 		Short: "PacketFilterDisconnect Interface",
 		Long:  `PacketFilterDisconnect Interface`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return interfacePacketFilterDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return interfacePacketFilterDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, interfacePacketFilterDisconnectParam)
@@ -226,11 +220,8 @@ func interfacePacketFilterDisconnectCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("packet-filter-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -259,7 +250,7 @@ func interfaceReadCmd() *cobra.Command {
 		Short: "Read Interface",
 		Long:  `Read Interface`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return interfaceReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return interfaceReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, interfaceReadParam)
@@ -303,7 +294,7 @@ func interfaceUpdateCmd() *cobra.Command {
 		Short: "Update Interface",
 		Long:  `Update Interface`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return interfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return interfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, interfaceUpdateParam)
@@ -323,11 +314,8 @@ func interfaceUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -363,7 +351,7 @@ func interfaceDeleteCmd() *cobra.Command {
 		Short:   "Delete Interface",
 		Long:    `Delete Interface`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return interfaceDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return interfaceDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, interfaceDeleteParam)
@@ -383,11 +371,8 @@ func interfaceDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

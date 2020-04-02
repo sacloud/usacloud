@@ -17,6 +17,7 @@
 package params
 
 import (
+	"fmt"
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
@@ -57,7 +58,7 @@ func NewListProductInternetParam() *ListProductInternetParam {
 }
 
 // Initialize init ListProductInternetParam
-func (p *ListProductInternetParam) Initialize(in Input) error {
+func (p *ListProductInternetParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -403,8 +404,16 @@ func NewReadProductInternetParam() *ReadProductInternetParam {
 }
 
 // Initialize init ReadProductInternetParam
-func (p *ReadProductInternetParam) Initialize(in Input) error {
+func (p *ReadProductInternetParam) Initialize(in Input, args []string) error {
 	p.input = in
+
+	if len(args) == 0 {
+		return fmt.Errorf("argument <ID> is required")
+	}
+	p.Id = sacloud.StringID(args[0])
+	if p.Id.IsEmpty() {
+		return fmt.Errorf("argument <ID> is required")
+	}
 	if err := p.validate(); err != nil {
 		return err
 	}

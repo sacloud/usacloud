@@ -58,7 +58,7 @@ func NewListMobileGatewayParam() *ListMobileGatewayParam {
 }
 
 // Initialize init ListMobileGatewayParam
-func (p *ListMobileGatewayParam) Initialize(in Input) error {
+func (p *ListMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -427,7 +427,7 @@ func NewCreateMobileGatewayParam() *CreateMobileGatewayParam {
 }
 
 // Initialize init CreateMobileGatewayParam
-func (p *CreateMobileGatewayParam) Initialize(in Input) error {
+func (p *CreateMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -796,7 +796,7 @@ func NewReadMobileGatewayParam() *ReadMobileGatewayParam {
 }
 
 // Initialize init ReadMobileGatewayParam
-func (p *ReadMobileGatewayParam) Initialize(in Input) error {
+func (p *ReadMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1096,7 +1096,7 @@ func NewUpdateMobileGatewayParam() *UpdateMobileGatewayParam {
 }
 
 // Initialize init UpdateMobileGatewayParam
-func (p *UpdateMobileGatewayParam) Initialize(in Input) error {
+func (p *UpdateMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1490,7 +1490,7 @@ func NewDeleteMobileGatewayParam() *DeleteMobileGatewayParam {
 }
 
 // Initialize init DeleteMobileGatewayParam
-func (p *DeleteMobileGatewayParam) Initialize(in Input) error {
+func (p *DeleteMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1800,7 +1800,7 @@ func NewBootMobileGatewayParam() *BootMobileGatewayParam {
 }
 
 // Initialize init BootMobileGatewayParam
-func (p *BootMobileGatewayParam) Initialize(in Input) error {
+func (p *BootMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2008,7 +2008,7 @@ func NewShutdownMobileGatewayParam() *ShutdownMobileGatewayParam {
 }
 
 // Initialize init ShutdownMobileGatewayParam
-func (p *ShutdownMobileGatewayParam) Initialize(in Input) error {
+func (p *ShutdownMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2216,7 +2216,7 @@ func NewShutdownForceMobileGatewayParam() *ShutdownForceMobileGatewayParam {
 }
 
 // Initialize init ShutdownForceMobileGatewayParam
-func (p *ShutdownForceMobileGatewayParam) Initialize(in Input) error {
+func (p *ShutdownForceMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2424,7 +2424,7 @@ func NewResetMobileGatewayParam() *ResetMobileGatewayParam {
 }
 
 // Initialize init ResetMobileGatewayParam
-func (p *ResetMobileGatewayParam) Initialize(in Input) error {
+func (p *ResetMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2631,7 +2631,7 @@ func NewWaitForBootMobileGatewayParam() *WaitForBootMobileGatewayParam {
 }
 
 // Initialize init WaitForBootMobileGatewayParam
-func (p *WaitForBootMobileGatewayParam) Initialize(in Input) error {
+func (p *WaitForBootMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2827,7 +2827,7 @@ func NewWaitForDownMobileGatewayParam() *WaitForDownMobileGatewayParam {
 }
 
 // Initialize init WaitForDownMobileGatewayParam
-func (p *WaitForDownMobileGatewayParam) Initialize(in Input) error {
+func (p *WaitForDownMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3030,7 +3030,7 @@ func NewInterfaceInfoMobileGatewayParam() *InterfaceInfoMobileGatewayParam {
 }
 
 // Initialize init InterfaceInfoMobileGatewayParam
-func (p *InterfaceInfoMobileGatewayParam) Initialize(in Input) error {
+func (p *InterfaceInfoMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3322,7 +3322,7 @@ func NewInterfaceConnectMobileGatewayParam() *InterfaceConnectMobileGatewayParam
 }
 
 // Initialize init InterfaceConnectMobileGatewayParam
-func (p *InterfaceConnectMobileGatewayParam) Initialize(in Input) error {
+func (p *InterfaceConnectMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3604,7 +3604,7 @@ func NewInterfaceUpdateMobileGatewayParam() *InterfaceUpdateMobileGatewayParam {
 }
 
 // Initialize init InterfaceUpdateMobileGatewayParam
-func (p *InterfaceUpdateMobileGatewayParam) Initialize(in Input) error {
+func (p *InterfaceUpdateMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3850,7 +3850,7 @@ func NewInterfaceDisconnectMobileGatewayParam() *InterfaceDisconnectMobileGatewa
 }
 
 // Initialize init InterfaceDisconnectMobileGatewayParam
-func (p *InterfaceDisconnectMobileGatewayParam) Initialize(in Input) error {
+func (p *InterfaceDisconnectMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4064,7 +4064,7 @@ func NewTrafficControlInfoMobileGatewayParam() *TrafficControlInfoMobileGatewayP
 }
 
 // Initialize init TrafficControlInfoMobileGatewayParam
-func (p *TrafficControlInfoMobileGatewayParam) Initialize(in Input) error {
+func (p *TrafficControlInfoMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4358,7 +4358,7 @@ func NewTrafficControlEnableMobileGatewayParam() *TrafficControlEnableMobileGate
 }
 
 // Initialize init TrafficControlEnableMobileGatewayParam
-func (p *TrafficControlEnableMobileGatewayParam) Initialize(in Input) error {
+func (p *TrafficControlEnableMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4657,7 +4657,7 @@ func NewTrafficControlUpdateMobileGatewayParam() *TrafficControlUpdateMobileGate
 }
 
 // Initialize init TrafficControlUpdateMobileGatewayParam
-func (p *TrafficControlUpdateMobileGatewayParam) Initialize(in Input) error {
+func (p *TrafficControlUpdateMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4944,7 +4944,7 @@ func NewTrafficControlDisableMobileGatewayParam() *TrafficControlDisableMobileGa
 }
 
 // Initialize init TrafficControlDisableMobileGatewayParam
-func (p *TrafficControlDisableMobileGatewayParam) Initialize(in Input) error {
+func (p *TrafficControlDisableMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5158,7 +5158,7 @@ func NewStaticRouteInfoMobileGatewayParam() *StaticRouteInfoMobileGatewayParam {
 }
 
 // Initialize init StaticRouteInfoMobileGatewayParam
-func (p *StaticRouteInfoMobileGatewayParam) Initialize(in Input) error {
+func (p *StaticRouteInfoMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5448,7 +5448,7 @@ func NewStaticRouteAddMobileGatewayParam() *StaticRouteAddMobileGatewayParam {
 }
 
 // Initialize init StaticRouteAddMobileGatewayParam
-func (p *StaticRouteAddMobileGatewayParam) Initialize(in Input) error {
+func (p *StaticRouteAddMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5711,7 +5711,7 @@ func NewStaticRouteUpdateMobileGatewayParam() *StaticRouteUpdateMobileGatewayPar
 }
 
 // Initialize init StaticRouteUpdateMobileGatewayParam
-func (p *StaticRouteUpdateMobileGatewayParam) Initialize(in Input) error {
+func (p *StaticRouteUpdateMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5977,7 +5977,7 @@ func NewStaticRouteDeleteMobileGatewayParam() *StaticRouteDeleteMobileGatewayPar
 }
 
 // Initialize init StaticRouteDeleteMobileGatewayParam
-func (p *StaticRouteDeleteMobileGatewayParam) Initialize(in Input) error {
+func (p *StaticRouteDeleteMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6210,7 +6210,7 @@ func NewSIMInfoMobileGatewayParam() *SIMInfoMobileGatewayParam {
 }
 
 // Initialize init SIMInfoMobileGatewayParam
-func (p *SIMInfoMobileGatewayParam) Initialize(in Input) error {
+func (p *SIMInfoMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6500,7 +6500,7 @@ func NewSIMAddMobileGatewayParam() *SIMAddMobileGatewayParam {
 }
 
 // Initialize init SIMAddMobileGatewayParam
-func (p *SIMAddMobileGatewayParam) Initialize(in Input) error {
+func (p *SIMAddMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6762,7 +6762,7 @@ func NewSIMUpdateMobileGatewayParam() *SIMUpdateMobileGatewayParam {
 }
 
 // Initialize init SIMUpdateMobileGatewayParam
-func (p *SIMUpdateMobileGatewayParam) Initialize(in Input) error {
+func (p *SIMUpdateMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7016,7 +7016,7 @@ func NewSIMDeleteMobileGatewayParam() *SIMDeleteMobileGatewayParam {
 }
 
 // Initialize init SIMDeleteMobileGatewayParam
-func (p *SIMDeleteMobileGatewayParam) Initialize(in Input) error {
+func (p *SIMDeleteMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7256,7 +7256,7 @@ func NewSIMRouteInfoMobileGatewayParam() *SIMRouteInfoMobileGatewayParam {
 }
 
 // Initialize init SIMRouteInfoMobileGatewayParam
-func (p *SIMRouteInfoMobileGatewayParam) Initialize(in Input) error {
+func (p *SIMRouteInfoMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7546,7 +7546,7 @@ func NewSIMRouteAddMobileGatewayParam() *SIMRouteAddMobileGatewayParam {
 }
 
 // Initialize init SIMRouteAddMobileGatewayParam
-func (p *SIMRouteAddMobileGatewayParam) Initialize(in Input) error {
+func (p *SIMRouteAddMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7809,7 +7809,7 @@ func NewSIMRouteUpdateMobileGatewayParam() *SIMRouteUpdateMobileGatewayParam {
 }
 
 // Initialize init SIMRouteUpdateMobileGatewayParam
-func (p *SIMRouteUpdateMobileGatewayParam) Initialize(in Input) error {
+func (p *SIMRouteUpdateMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -8075,7 +8075,7 @@ func NewSIMRouteDeleteMobileGatewayParam() *SIMRouteDeleteMobileGatewayParam {
 }
 
 // Initialize init SIMRouteDeleteMobileGatewayParam
-func (p *SIMRouteDeleteMobileGatewayParam) Initialize(in Input) error {
+func (p *SIMRouteDeleteMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -8304,7 +8304,7 @@ func NewDNSUpdateMobileGatewayParam() *DNSUpdateMobileGatewayParam {
 }
 
 // Initialize init DNSUpdateMobileGatewayParam
-func (p *DNSUpdateMobileGatewayParam) Initialize(in Input) error {
+func (p *DNSUpdateMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -8566,7 +8566,7 @@ func NewLogsMobileGatewayParam() *LogsMobileGatewayParam {
 }
 
 // Initialize init LogsMobileGatewayParam
-func (p *LogsMobileGatewayParam) Initialize(in Input) error {
+func (p *LogsMobileGatewayParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

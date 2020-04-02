@@ -102,7 +102,7 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 		Short: "{{ .Usage }}",
 		Long: ` + "`{{ .Usage }}`" + `,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return {{ .InputParameterVariable }}.Initialize(newParamsAdapter(cmd.Flags()))
+			return {{ .InputParameterVariable }}.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, {{ .InputParameterVariable }})
@@ -123,11 +123,8 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 				    return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("{{.ConfirmMessage}}", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 			{{ end }}

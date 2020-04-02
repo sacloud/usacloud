@@ -46,7 +46,7 @@ func dnsListCmd() *cobra.Command {
 		Short:   "List DNS",
 		Long:    `List DNS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return dnsListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return dnsListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, dnsListParam)
@@ -95,7 +95,7 @@ func dnsRecordInfoCmd() *cobra.Command {
 		Short:   "RecordInfo DNS",
 		Long:    `RecordInfo DNS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return dnsRecordInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return dnsRecordInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, dnsRecordInfoParam)
@@ -142,7 +142,7 @@ func dnsRecordBulkUpdateCmd() *cobra.Command {
 		Short: "RecordBulkUpdate DNS",
 		Long:  `RecordBulkUpdate DNS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return dnsRecordBulkUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return dnsRecordBulkUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, dnsRecordBulkUpdateParam)
@@ -162,11 +162,8 @@ func dnsRecordBulkUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("record-bulk-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -204,7 +201,7 @@ func dnsCreateCmd() *cobra.Command {
 		Short: "Create DNS",
 		Long:  `Create DNS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return dnsCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return dnsCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, dnsCreateParam)
@@ -224,11 +221,8 @@ func dnsCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -266,7 +260,7 @@ func dnsRecordAddCmd() *cobra.Command {
 		Short: "RecordAdd DNS",
 		Long:  `RecordAdd DNS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return dnsRecordAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return dnsRecordAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, dnsRecordAddParam)
@@ -286,11 +280,8 @@ func dnsRecordAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("record-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -335,7 +326,7 @@ func dnsReadCmd() *cobra.Command {
 		Short: "Read DNS",
 		Long:  `Read DNS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return dnsReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return dnsReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, dnsReadParam)
@@ -380,7 +371,7 @@ func dnsRecordUpdateCmd() *cobra.Command {
 		Short: "RecordUpdate DNS",
 		Long:  `RecordUpdate DNS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return dnsRecordUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return dnsRecordUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, dnsRecordUpdateParam)
@@ -400,11 +391,8 @@ func dnsRecordUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("record-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -450,7 +438,7 @@ func dnsRecordDeleteCmd() *cobra.Command {
 		Short: "RecordDelete DNS",
 		Long:  `RecordDelete DNS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return dnsRecordDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return dnsRecordDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, dnsRecordDeleteParam)
@@ -470,11 +458,8 @@ func dnsRecordDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete record", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -511,7 +496,7 @@ func dnsUpdateCmd() *cobra.Command {
 		Short: "Update DNS",
 		Long:  `Update DNS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return dnsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return dnsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, dnsUpdateParam)
@@ -531,11 +516,8 @@ func dnsUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -574,7 +556,7 @@ func dnsDeleteCmd() *cobra.Command {
 		Short:   "Delete DNS",
 		Long:    `Delete DNS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return dnsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return dnsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, dnsDeleteParam)
@@ -594,11 +576,8 @@ func dnsDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

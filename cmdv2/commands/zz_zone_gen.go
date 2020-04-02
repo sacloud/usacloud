@@ -46,7 +46,7 @@ func zoneListCmd() *cobra.Command {
 		Short:   "List Zone (default)",
 		Long:    `List Zone (default)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return zoneListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return zoneListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, zoneListParam)
@@ -94,7 +94,7 @@ func zoneReadCmd() *cobra.Command {
 		Short: "Read Zone",
 		Long:  `Read Zone`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return zoneReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return zoneReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, zoneReadParam)
@@ -114,11 +114,8 @@ func zoneReadCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

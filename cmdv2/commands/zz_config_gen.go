@@ -45,7 +45,7 @@ func configCurrentCmd() *cobra.Command {
 		Short: "Current Config",
 		Long:  `Current Config`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return configCurrentParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return configCurrentParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, configCurrentParam)
@@ -81,7 +81,7 @@ func configDeleteCmd() *cobra.Command {
 		Short:   "Delete Config",
 		Long:    `Delete Config`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return configDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return configDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, configDeleteParam)
@@ -101,11 +101,8 @@ func configDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -132,7 +129,7 @@ func configEditCmd() *cobra.Command {
 		Short: "Edit Config (default)",
 		Long:  `Edit Config (default)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return configEditParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return configEditParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, configEditParam)
@@ -172,7 +169,7 @@ func configListCmd() *cobra.Command {
 		Short:   "List Config",
 		Long:    `List Config`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return configListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return configListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, configListParam)
@@ -208,7 +205,7 @@ func configMigrateCmd() *cobra.Command {
 		Short: "Migrate Config",
 		Long:  `Migrate Config`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return configMigrateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return configMigrateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, configMigrateParam)
@@ -244,7 +241,7 @@ func configShowCmd() *cobra.Command {
 		Short: "Show Config",
 		Long:  `Show Config`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return configShowParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return configShowParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, configShowParam)
@@ -280,7 +277,7 @@ func configUseCmd() *cobra.Command {
 		Short: "Use Config",
 		Long:  `Use Config`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return configUseParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return configUseParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, configUseParam)

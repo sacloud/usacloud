@@ -59,7 +59,7 @@ func NewListISOImageParam() *ListISOImageParam {
 }
 
 // Initialize init ListISOImageParam
-func (p *ListISOImageParam) Initialize(in Input) error {
+func (p *ListISOImageParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -449,7 +449,7 @@ func NewCreateISOImageParam() *CreateISOImageParam {
 }
 
 // Initialize init CreateISOImageParam
-func (p *CreateISOImageParam) Initialize(in Input) error {
+func (p *CreateISOImageParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -852,7 +852,7 @@ func NewReadISOImageParam() *ReadISOImageParam {
 }
 
 // Initialize init ReadISOImageParam
-func (p *ReadISOImageParam) Initialize(in Input) error {
+func (p *ReadISOImageParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1151,7 +1151,7 @@ func NewUpdateISOImageParam() *UpdateISOImageParam {
 }
 
 // Initialize init UpdateISOImageParam
-func (p *UpdateISOImageParam) Initialize(in Input) error {
+func (p *UpdateISOImageParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1533,7 +1533,7 @@ func NewDeleteISOImageParam() *DeleteISOImageParam {
 }
 
 // Initialize init DeleteISOImageParam
-func (p *DeleteISOImageParam) Initialize(in Input) error {
+func (p *DeleteISOImageParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1840,7 +1840,7 @@ func NewUploadISOImageParam() *UploadISOImageParam {
 }
 
 // Initialize init UploadISOImageParam
-func (p *UploadISOImageParam) Initialize(in Input) error {
+func (p *UploadISOImageParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2159,7 +2159,7 @@ func NewDownloadISOImageParam() *DownloadISOImageParam {
 }
 
 // Initialize init DownloadISOImageParam
-func (p *DownloadISOImageParam) Initialize(in Input) error {
+func (p *DownloadISOImageParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2385,7 +2385,7 @@ func NewFTPOpenISOImageParam() *FTPOpenISOImageParam {
 }
 
 // Initialize init FTPOpenISOImageParam
-func (p *FTPOpenISOImageParam) Initialize(in Input) error {
+func (p *FTPOpenISOImageParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2684,7 +2684,7 @@ func NewFTPCloseISOImageParam() *FTPCloseISOImageParam {
 }
 
 // Initialize init FTPCloseISOImageParam
-func (p *FTPCloseISOImageParam) Initialize(in Input) error {
+func (p *FTPCloseISOImageParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

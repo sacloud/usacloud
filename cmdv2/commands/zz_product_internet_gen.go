@@ -46,7 +46,7 @@ func productInternetListCmd() *cobra.Command {
 		Short:   "List ProductInternet (default)",
 		Long:    `List ProductInternet (default)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return productInternetListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return productInternetListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, productInternetListParam)
@@ -94,7 +94,7 @@ func productInternetReadCmd() *cobra.Command {
 		Short: "Read ProductInternet",
 		Long:  `Read ProductInternet`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return productInternetReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return productInternetReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, productInternetReadParam)
@@ -114,11 +114,8 @@ func productInternetReadCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

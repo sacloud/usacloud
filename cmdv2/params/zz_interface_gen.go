@@ -57,7 +57,7 @@ func NewListInterfaceParam() *ListInterfaceParam {
 }
 
 // Initialize init ListInterfaceParam
-func (p *ListInterfaceParam) Initialize(in Input) error {
+func (p *ListInterfaceParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -397,7 +397,7 @@ func NewPacketFilterConnectInterfaceParam() *PacketFilterConnectInterfaceParam {
 }
 
 // Initialize init PacketFilterConnectInterfaceParam
-func (p *PacketFilterConnectInterfaceParam) Initialize(in Input) error {
+func (p *PacketFilterConnectInterfaceParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -626,7 +626,7 @@ func NewCreateInterfaceParam() *CreateInterfaceParam {
 }
 
 // Initialize init CreateInterfaceParam
-func (p *CreateInterfaceParam) Initialize(in Input) error {
+func (p *CreateInterfaceParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -921,7 +921,7 @@ func NewPacketFilterDisconnectInterfaceParam() *PacketFilterDisconnectInterfaceP
 }
 
 // Initialize init PacketFilterDisconnectInterfaceParam
-func (p *PacketFilterDisconnectInterfaceParam) Initialize(in Input) error {
+func (p *PacketFilterDisconnectInterfaceParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1149,7 +1149,7 @@ func NewReadInterfaceParam() *ReadInterfaceParam {
 }
 
 // Initialize init ReadInterfaceParam
-func (p *ReadInterfaceParam) Initialize(in Input) error {
+func (p *ReadInterfaceParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1433,7 +1433,7 @@ func NewUpdateInterfaceParam() *UpdateInterfaceParam {
 }
 
 // Initialize init UpdateInterfaceParam
-func (p *UpdateInterfaceParam) Initialize(in Input) error {
+func (p *UpdateInterfaceParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1746,7 +1746,7 @@ func NewDeleteInterfaceParam() *DeleteInterfaceParam {
 }
 
 // Initialize init DeleteInterfaceParam
-func (p *DeleteInterfaceParam) Initialize(in Input) error {
+func (p *DeleteInterfaceParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

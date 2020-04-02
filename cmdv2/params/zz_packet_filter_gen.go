@@ -57,7 +57,7 @@ func NewListPacketFilterParam() *ListPacketFilterParam {
 }
 
 // Initialize init ListPacketFilterParam
-func (p *ListPacketFilterParam) Initialize(in Input) error {
+func (p *ListPacketFilterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -404,7 +404,7 @@ func NewCreatePacketFilterParam() *CreatePacketFilterParam {
 }
 
 // Initialize init CreatePacketFilterParam
-func (p *CreatePacketFilterParam) Initialize(in Input) error {
+func (p *CreatePacketFilterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -723,7 +723,7 @@ func NewReadPacketFilterParam() *ReadPacketFilterParam {
 }
 
 // Initialize init ReadPacketFilterParam
-func (p *ReadPacketFilterParam) Initialize(in Input) error {
+func (p *ReadPacketFilterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1008,7 +1008,7 @@ func NewUpdatePacketFilterParam() *UpdatePacketFilterParam {
 }
 
 // Initialize init UpdatePacketFilterParam
-func (p *UpdatePacketFilterParam) Initialize(in Input) error {
+func (p *UpdatePacketFilterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1340,7 +1340,7 @@ func NewDeletePacketFilterParam() *DeletePacketFilterParam {
 }
 
 // Initialize init DeletePacketFilterParam
-func (p *DeletePacketFilterParam) Initialize(in Input) error {
+func (p *DeletePacketFilterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1633,7 +1633,7 @@ func NewRuleInfoPacketFilterParam() *RuleInfoPacketFilterParam {
 }
 
 // Initialize init RuleInfoPacketFilterParam
-func (p *RuleInfoPacketFilterParam) Initialize(in Input) error {
+func (p *RuleInfoPacketFilterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1924,7 +1924,7 @@ func NewRuleAddPacketFilterParam() *RuleAddPacketFilterParam {
 }
 
 // Initialize init RuleAddPacketFilterParam
-func (p *RuleAddPacketFilterParam) Initialize(in Input) error {
+func (p *RuleAddPacketFilterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2350,7 +2350,7 @@ func NewRuleUpdatePacketFilterParam() *RuleUpdatePacketFilterParam {
 }
 
 // Initialize init RuleUpdatePacketFilterParam
-func (p *RuleUpdatePacketFilterParam) Initialize(in Input) error {
+func (p *RuleUpdatePacketFilterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2778,7 +2778,7 @@ func NewRuleDeletePacketFilterParam() *RuleDeletePacketFilterParam {
 }
 
 // Initialize init RuleDeletePacketFilterParam
-func (p *RuleDeletePacketFilterParam) Initialize(in Input) error {
+func (p *RuleDeletePacketFilterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3085,7 +3085,7 @@ func NewInterfaceConnectPacketFilterParam() *InterfaceConnectPacketFilterParam {
 }
 
 // Initialize init InterfaceConnectPacketFilterParam
-func (p *InterfaceConnectPacketFilterParam) Initialize(in Input) error {
+func (p *InterfaceConnectPacketFilterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3308,7 +3308,7 @@ func NewInterfaceDisconnectPacketFilterParam() *InterfaceDisconnectPacketFilterP
 }
 
 // Initialize init InterfaceDisconnectPacketFilterParam
-func (p *InterfaceDisconnectPacketFilterParam) Initialize(in Input) error {
+func (p *InterfaceDisconnectPacketFilterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

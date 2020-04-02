@@ -46,7 +46,7 @@ func bridgeListCmd() *cobra.Command {
 		Short:   "List Bridge",
 		Long:    `List Bridge`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return bridgeListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return bridgeListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, bridgeListParam)
@@ -94,7 +94,7 @@ func bridgeCreateCmd() *cobra.Command {
 		Short: "Create Bridge",
 		Long:  `Create Bridge`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return bridgeCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return bridgeCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, bridgeCreateParam)
@@ -114,11 +114,8 @@ func bridgeCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -154,7 +151,7 @@ func bridgeReadCmd() *cobra.Command {
 		Short: "Read Bridge",
 		Long:  `Read Bridge`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return bridgeReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return bridgeReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, bridgeReadParam)
@@ -198,7 +195,7 @@ func bridgeUpdateCmd() *cobra.Command {
 		Short: "Update Bridge",
 		Long:  `Update Bridge`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return bridgeUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return bridgeUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, bridgeUpdateParam)
@@ -218,11 +215,8 @@ func bridgeUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -259,7 +253,7 @@ func bridgeDeleteCmd() *cobra.Command {
 		Short:   "Delete Bridge",
 		Long:    `Delete Bridge`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return bridgeDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return bridgeDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, bridgeDeleteParam)
@@ -279,11 +273,8 @@ func bridgeDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

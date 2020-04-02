@@ -58,7 +58,7 @@ func NewListAutoBackupParam() *ListAutoBackupParam {
 }
 
 // Initialize init ListAutoBackupParam
-func (p *ListAutoBackupParam) Initialize(in Input) error {
+func (p *ListAutoBackupParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -430,7 +430,7 @@ func NewCreateAutoBackupParam() *CreateAutoBackupParam {
 }
 
 // Initialize init CreateAutoBackupParam
-func (p *CreateAutoBackupParam) Initialize(in Input) error {
+func (p *CreateAutoBackupParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -866,7 +866,7 @@ func NewReadAutoBackupParam() *ReadAutoBackupParam {
 }
 
 // Initialize init ReadAutoBackupParam
-func (p *ReadAutoBackupParam) Initialize(in Input) error {
+func (p *ReadAutoBackupParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1167,7 +1167,7 @@ func NewUpdateAutoBackupParam() *UpdateAutoBackupParam {
 }
 
 // Initialize init UpdateAutoBackupParam
-func (p *UpdateAutoBackupParam) Initialize(in Input) error {
+func (p *UpdateAutoBackupParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1587,7 +1587,7 @@ func NewDeleteAutoBackupParam() *DeleteAutoBackupParam {
 }
 
 // Initialize init DeleteAutoBackupParam
-func (p *DeleteAutoBackupParam) Initialize(in Input) error {
+func (p *DeleteAutoBackupParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

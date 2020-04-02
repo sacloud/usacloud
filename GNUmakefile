@@ -63,14 +63,17 @@ tools:
 	GO111MODULE=off go get github.com/sacloud/addlicense
 
 .PHONY: gen
-gen: command/cli/*_gen.go command/funcs/*_gen.go command/params/*_gen.go set-license fmt goimports
+gen: command/*/*_gen.go cmdv2/*/*_gen.go set-license fmt goimports
 
 .PHONY: gen-force
 gen-force: clean-all _gen-force set-license fmt goimports
 _gen-force: 
 	go generate ./...
 
-command/*_gen.go: define/*.go tools/gen-cli-commands/*.go tools/gen-command-funcs/*.go tools/gen-input-models/*.go
+command/*/*_gen.go: define/*.go tools/gen-*/*.go tools/*.go
+	go generate ./...
+
+cmdv2/*/*_gen.go: define/*.go tools/gen-*/*.go tools/*.go
 	go generate ./...
 
 .PHONY: build build-x build-darwin build-windows build-linux

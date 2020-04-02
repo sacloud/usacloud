@@ -46,7 +46,7 @@ func startupScriptListCmd() *cobra.Command {
 		Short:   "List StartupScript",
 		Long:    `List StartupScript`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return startupScriptListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return startupScriptListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, startupScriptListParam)
@@ -97,7 +97,7 @@ func startupScriptCreateCmd() *cobra.Command {
 		Short: "Create StartupScript",
 		Long:  `Create StartupScript`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return startupScriptCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return startupScriptCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, startupScriptCreateParam)
@@ -117,11 +117,8 @@ func startupScriptCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -161,7 +158,7 @@ func startupScriptReadCmd() *cobra.Command {
 		Short: "Read StartupScript",
 		Long:  `Read StartupScript`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return startupScriptReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return startupScriptReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, startupScriptReadParam)
@@ -206,7 +203,7 @@ func startupScriptUpdateCmd() *cobra.Command {
 		Short: "Update StartupScript",
 		Long:  `Update StartupScript`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return startupScriptUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return startupScriptUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, startupScriptUpdateParam)
@@ -226,11 +223,8 @@ func startupScriptUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -272,7 +266,7 @@ func startupScriptDeleteCmd() *cobra.Command {
 		Short:   "Delete StartupScript",
 		Long:    `Delete StartupScript`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return startupScriptDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return startupScriptDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, startupScriptDeleteParam)
@@ -292,11 +286,8 @@ func startupScriptDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

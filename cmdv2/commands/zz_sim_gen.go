@@ -46,7 +46,7 @@ func simListCmd() *cobra.Command {
 		Short:   "List SIM",
 		Long:    `List SIM`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simListParam)
@@ -95,7 +95,7 @@ func simCreateCmd() *cobra.Command {
 		Short: "Create SIM",
 		Long:  `Create SIM`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simCreateParam)
@@ -115,11 +115,8 @@ func simCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -162,7 +159,7 @@ func simReadCmd() *cobra.Command {
 		Short: "Read SIM",
 		Long:  `Read SIM`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simReadParam)
@@ -207,7 +204,7 @@ func simUpdateCmd() *cobra.Command {
 		Short: "Update SIM",
 		Long:  `Update SIM`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simUpdateParam)
@@ -227,11 +224,8 @@ func simUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -271,7 +265,7 @@ func simDeleteCmd() *cobra.Command {
 		Short:   "Delete SIM",
 		Long:    `Delete SIM`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simDeleteParam)
@@ -291,11 +285,8 @@ func simDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -325,7 +316,7 @@ func simCarrierInfoCmd() *cobra.Command {
 		Short:   "CarrierInfo SIM",
 		Long:    `CarrierInfo SIM`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simCarrierInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simCarrierInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simCarrierInfoParam)
@@ -370,7 +361,7 @@ func simCarrierUpdateCmd() *cobra.Command {
 		Short: "CarrierUpdate SIM",
 		Long:  `CarrierUpdate SIM`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simCarrierUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simCarrierUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simCarrierUpdateParam)
@@ -390,11 +381,8 @@ func simCarrierUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("carrier-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -424,7 +412,7 @@ func simActivateCmd() *cobra.Command {
 		Short: "Activate SIM",
 		Long:  `Activate SIM`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simActivateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simActivateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simActivateParam)
@@ -444,11 +432,8 @@ func simActivateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("activate", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -477,7 +462,7 @@ func simDeactivateCmd() *cobra.Command {
 		Short: "Deactivate SIM",
 		Long:  `Deactivate SIM`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simDeactivateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simDeactivateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simDeactivateParam)
@@ -497,11 +482,8 @@ func simDeactivateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("deactivate", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -530,7 +512,7 @@ func simImeiLockCmd() *cobra.Command {
 		Short: "ImeiLock SIM",
 		Long:  `ImeiLock SIM`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simImeiLockParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simImeiLockParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simImeiLockParam)
@@ -550,11 +532,8 @@ func simImeiLockCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("imei-lock", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -584,7 +563,7 @@ func simIpAddCmd() *cobra.Command {
 		Short: "IpAdd SIM",
 		Long:  `IpAdd SIM`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simIpAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simIpAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simIpAddParam)
@@ -604,11 +583,8 @@ func simIpAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("ip-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -638,7 +614,7 @@ func simImeiUnlockCmd() *cobra.Command {
 		Short: "ImeiUnlock SIM",
 		Long:  `ImeiUnlock SIM`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simImeiUnlockParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simImeiUnlockParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simImeiUnlockParam)
@@ -658,11 +634,8 @@ func simImeiUnlockCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("imei-unlock", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -691,7 +664,7 @@ func simIpDeleteCmd() *cobra.Command {
 		Short:   "IpDelete SIM",
 		Long:    `IpDelete SIM`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simIpDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simIpDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simIpDeleteParam)
@@ -711,11 +684,8 @@ func simIpDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("ip-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -744,7 +714,7 @@ func simLogsCmd() *cobra.Command {
 		Short: "Logs SIM",
 		Long:  `Logs SIM`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simLogsParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simLogsParam)
@@ -791,7 +761,7 @@ func simMonitorCmd() *cobra.Command {
 		Short: "Monitor SIM",
 		Long:  `Monitor SIM`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return simMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, simMonitorParam)

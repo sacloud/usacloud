@@ -46,7 +46,7 @@ func licenseListCmd() *cobra.Command {
 		Short:   "List License",
 		Long:    `List License`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return licenseListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return licenseListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, licenseListParam)
@@ -94,7 +94,7 @@ func licenseCreateCmd() *cobra.Command {
 		Short: "Create License",
 		Long:  `Create License`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return licenseCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return licenseCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, licenseCreateParam)
@@ -114,11 +114,8 @@ func licenseCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -154,7 +151,7 @@ func licenseReadCmd() *cobra.Command {
 		Short: "Read License",
 		Long:  `Read License`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return licenseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return licenseReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, licenseReadParam)
@@ -198,7 +195,7 @@ func licenseUpdateCmd() *cobra.Command {
 		Short: "Update License",
 		Long:  `Update License`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return licenseUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return licenseUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, licenseUpdateParam)
@@ -218,11 +215,8 @@ func licenseUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -258,7 +252,7 @@ func licenseDeleteCmd() *cobra.Command {
 		Short:   "Delete License",
 		Long:    `Delete License`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return licenseDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return licenseDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, licenseDeleteParam)
@@ -278,11 +272,8 @@ func licenseDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

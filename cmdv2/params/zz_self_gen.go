@@ -43,7 +43,7 @@ func NewInfoSelfParam() *InfoSelfParam {
 }
 
 // Initialize init InfoSelfParam
-func (p *InfoSelfParam) Initialize(in Input) error {
+func (p *InfoSelfParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

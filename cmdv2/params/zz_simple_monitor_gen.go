@@ -59,7 +59,7 @@ func NewListSimpleMonitorParam() *ListSimpleMonitorParam {
 }
 
 // Initialize init ListSimpleMonitorParam
-func (p *ListSimpleMonitorParam) Initialize(in Input) error {
+func (p *ListSimpleMonitorParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -464,7 +464,7 @@ func NewCreateSimpleMonitorParam() *CreateSimpleMonitorParam {
 }
 
 // Initialize init CreateSimpleMonitorParam
-func (p *CreateSimpleMonitorParam) Initialize(in Input) error {
+func (p *CreateSimpleMonitorParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1064,7 +1064,7 @@ func NewReadSimpleMonitorParam() *ReadSimpleMonitorParam {
 }
 
 // Initialize init ReadSimpleMonitorParam
-func (p *ReadSimpleMonitorParam) Initialize(in Input) error {
+func (p *ReadSimpleMonitorParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1380,7 +1380,7 @@ func NewUpdateSimpleMonitorParam() *UpdateSimpleMonitorParam {
 }
 
 // Initialize init UpdateSimpleMonitorParam
-func (p *UpdateSimpleMonitorParam) Initialize(in Input) error {
+func (p *UpdateSimpleMonitorParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1978,7 +1978,7 @@ func NewDeleteSimpleMonitorParam() *DeleteSimpleMonitorParam {
 }
 
 // Initialize init DeleteSimpleMonitorParam
-func (p *DeleteSimpleMonitorParam) Initialize(in Input) error {
+func (p *DeleteSimpleMonitorParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2283,7 +2283,7 @@ func NewHealthSimpleMonitorParam() *HealthSimpleMonitorParam {
 }
 
 // Initialize init HealthSimpleMonitorParam
-func (p *HealthSimpleMonitorParam) Initialize(in Input) error {
+func (p *HealthSimpleMonitorParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

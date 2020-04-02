@@ -46,7 +46,7 @@ func databaseListCmd() *cobra.Command {
 		Short:   "List Database",
 		Long:    `List Database`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseListParam)
@@ -95,7 +95,7 @@ func databaseCreateCmd() *cobra.Command {
 		Short: "Create Database",
 		Long:  `Create Database`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseCreateParam)
@@ -115,11 +115,8 @@ func databaseCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -172,7 +169,7 @@ func databaseReadCmd() *cobra.Command {
 		Short: "Read Database",
 		Long:  `Read Database`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseReadParam)
@@ -217,7 +214,7 @@ func databaseUpdateCmd() *cobra.Command {
 		Short: "Update Database",
 		Long:  `Update Database`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseUpdateParam)
@@ -237,11 +234,8 @@ func databaseUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -290,7 +284,7 @@ func databaseDeleteCmd() *cobra.Command {
 		Short:   "Delete Database",
 		Long:    `Delete Database`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseDeleteParam)
@@ -310,11 +304,8 @@ func databaseDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -351,7 +342,7 @@ func databaseBootCmd() *cobra.Command {
 		Short:   "Boot Database",
 		Long:    `Boot Database`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseBootParam)
@@ -371,11 +362,8 @@ func databaseBootCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -404,7 +392,7 @@ func databaseShutdownCmd() *cobra.Command {
 		Short:   "Shutdown Database",
 		Long:    `Shutdown Database`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseShutdownParam)
@@ -424,11 +412,8 @@ func databaseShutdownCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -457,7 +442,7 @@ func databaseShutdownForceCmd() *cobra.Command {
 		Short:   "ShutdownForce Database",
 		Long:    `ShutdownForce Database`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseShutdownForceParam)
@@ -477,11 +462,8 @@ func databaseShutdownForceCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -510,7 +492,7 @@ func databaseResetCmd() *cobra.Command {
 		Short: "Reset Database",
 		Long:  `Reset Database`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseResetParam)
@@ -530,11 +512,8 @@ func databaseResetCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -563,7 +542,7 @@ func databaseWaitForBootCmd() *cobra.Command {
 		Short: "Wait until boot is completed",
 		Long:  `Wait until boot is completed`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseWaitForBootParam)
@@ -601,7 +580,7 @@ func databaseWaitForDownCmd() *cobra.Command {
 		Short: "Wait until shutdown is completed",
 		Long:  `Wait until shutdown is completed`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseWaitForDownParam)
@@ -639,7 +618,7 @@ func databaseBackupInfoCmd() *cobra.Command {
 		Short:   "Show information of backup",
 		Long:    `Show information of backup`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseBackupInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseBackupInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseBackupInfoParam)
@@ -684,7 +663,7 @@ func databaseBackupCreateCmd() *cobra.Command {
 		Short: "Make new database backup",
 		Long:  `Make new database backup`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseBackupCreateParam)
@@ -704,11 +683,8 @@ func databaseBackupCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("backup-create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -743,7 +719,7 @@ func databaseBackupRestoreCmd() *cobra.Command {
 		Short: "Restore database from backup",
 		Long:  `Restore database from backup`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseBackupRestoreParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseBackupRestoreParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseBackupRestoreParam)
@@ -763,11 +739,8 @@ func databaseBackupRestoreCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("backup-restore", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -803,7 +776,7 @@ func databaseBackupLockCmd() *cobra.Command {
 		Short: "Lock backup",
 		Long:  `Lock backup`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseBackupLockParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseBackupLockParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseBackupLockParam)
@@ -823,11 +796,8 @@ func databaseBackupLockCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("backup-lock", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -863,7 +833,7 @@ func databaseBackupUnlockCmd() *cobra.Command {
 		Short: "Unlock backup",
 		Long:  `Unlock backup`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseBackupUnlockParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseBackupUnlockParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseBackupUnlockParam)
@@ -883,11 +853,8 @@ func databaseBackupUnlockCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("backup-unlock", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -923,7 +890,7 @@ func databaseBackupRemoveCmd() *cobra.Command {
 		Short: "Remove backup",
 		Long:  `Remove backup`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseBackupRemoveParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseBackupRemoveParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseBackupRemoveParam)
@@ -943,11 +910,8 @@ func databaseBackupRemoveCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("backup-remove", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -983,7 +947,7 @@ func databaseCloneCmd() *cobra.Command {
 		Short: "Create clone instance",
 		Long:  `Create clone instance`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseCloneParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseCloneParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseCloneParam)
@@ -1003,11 +967,8 @@ func databaseCloneCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("clone", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1058,7 +1019,7 @@ func databaseReplicaCreateCmd() *cobra.Command {
 		Short: "Create replication slave instance",
 		Long:  `Create replication slave instance`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseReplicaCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseReplicaCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseReplicaCreateParam)
@@ -1078,11 +1039,8 @@ func databaseReplicaCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("replica-create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1125,7 +1083,7 @@ func databaseMonitorCPUCmd() *cobra.Command {
 		Short: "Collect CPU monitor values",
 		Long:  `Collect CPU monitor values`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseMonitorCPUParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseMonitorCPUParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseMonitorCPUParam)
@@ -1173,7 +1131,7 @@ func databaseMonitorMemoryCmd() *cobra.Command {
 		Short: "Collect memory monitor values",
 		Long:  `Collect memory monitor values`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseMonitorMemoryParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseMonitorMemoryParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseMonitorMemoryParam)
@@ -1221,7 +1179,7 @@ func databaseMonitorNicCmd() *cobra.Command {
 		Short: "Collect NIC(s) monitor values",
 		Long:  `Collect NIC(s) monitor values`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseMonitorNicParam)
@@ -1269,7 +1227,7 @@ func databaseMonitorSystemDiskCmd() *cobra.Command {
 		Short: "Collect system-disk monitor values(IO)",
 		Long:  `Collect system-disk monitor values(IO)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseMonitorSystemDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseMonitorSystemDiskParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseMonitorSystemDiskParam)
@@ -1317,7 +1275,7 @@ func databaseMonitorBackupDiskCmd() *cobra.Command {
 		Short: "Collect backup-disk monitor values(IO)",
 		Long:  `Collect backup-disk monitor values(IO)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseMonitorBackupDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseMonitorBackupDiskParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseMonitorBackupDiskParam)
@@ -1365,7 +1323,7 @@ func databaseMonitorSystemDiskSizeCmd() *cobra.Command {
 		Short: "Collect system-disk monitor values(usage)",
 		Long:  `Collect system-disk monitor values(usage)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseMonitorSystemDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseMonitorSystemDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseMonitorSystemDiskSizeParam)
@@ -1413,7 +1371,7 @@ func databaseMonitorBackupDiskSizeCmd() *cobra.Command {
 		Short: "Collect backup-disk monitor values(usage)",
 		Long:  `Collect backup-disk monitor values(usage)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseMonitorBackupDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseMonitorBackupDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseMonitorBackupDiskSizeParam)
@@ -1461,7 +1419,7 @@ func databaseLogsCmd() *cobra.Command {
 		Short: "Logs Database",
 		Long:  `Logs Database`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return databaseLogsParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, databaseLogsParam)

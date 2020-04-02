@@ -46,7 +46,7 @@ func autoBackupListCmd() *cobra.Command {
 		Short:   "List AutoBackup",
 		Long:    `List AutoBackup`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return autoBackupListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return autoBackupListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, autoBackupListParam)
@@ -95,7 +95,7 @@ func autoBackupCreateCmd() *cobra.Command {
 		Short: "Create AutoBackup",
 		Long:  `Create AutoBackup`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return autoBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return autoBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, autoBackupCreateParam)
@@ -115,11 +115,8 @@ func autoBackupCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -160,7 +157,7 @@ func autoBackupReadCmd() *cobra.Command {
 		Short: "Read AutoBackup",
 		Long:  `Read AutoBackup`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return autoBackupReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return autoBackupReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, autoBackupReadParam)
@@ -205,7 +202,7 @@ func autoBackupUpdateCmd() *cobra.Command {
 		Short: "Update AutoBackup",
 		Long:  `Update AutoBackup`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return autoBackupUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return autoBackupUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, autoBackupUpdateParam)
@@ -225,11 +222,8 @@ func autoBackupUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -271,7 +265,7 @@ func autoBackupDeleteCmd() *cobra.Command {
 		Short:   "Delete AutoBackup",
 		Long:    `Delete AutoBackup`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return autoBackupDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return autoBackupDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, autoBackupDeleteParam)
@@ -291,11 +285,8 @@ func autoBackupDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

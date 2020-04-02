@@ -58,7 +58,7 @@ func NewListProxyLBParam() *ListProxyLBParam {
 }
 
 // Initialize init ListProxyLBParam
-func (p *ListProxyLBParam) Initialize(in Input) error {
+func (p *ListProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -436,7 +436,7 @@ func NewCreateProxyLBParam() *CreateProxyLBParam {
 }
 
 // Initialize init CreateProxyLBParam
-func (p *CreateProxyLBParam) Initialize(in Input) error {
+func (p *CreateProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -947,7 +947,7 @@ func NewReadProxyLBParam() *ReadProxyLBParam {
 }
 
 // Initialize init ReadProxyLBParam
-func (p *ReadProxyLBParam) Initialize(in Input) error {
+func (p *ReadProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1255,7 +1255,7 @@ func NewUpdateProxyLBParam() *UpdateProxyLBParam {
 }
 
 // Initialize init UpdateProxyLBParam
-func (p *UpdateProxyLBParam) Initialize(in Input) error {
+func (p *UpdateProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1757,7 +1757,7 @@ func NewDeleteProxyLBParam() *DeleteProxyLBParam {
 }
 
 // Initialize init DeleteProxyLBParam
-func (p *DeleteProxyLBParam) Initialize(in Input) error {
+func (p *DeleteProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2064,7 +2064,7 @@ func NewPlanChangeProxyLBParam() *PlanChangeProxyLBParam {
 }
 
 // Initialize init PlanChangeProxyLBParam
-func (p *PlanChangeProxyLBParam) Initialize(in Input) error {
+func (p *PlanChangeProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2395,7 +2395,7 @@ func NewBindPortInfoProxyLBParam() *BindPortInfoProxyLBParam {
 }
 
 // Initialize init BindPortInfoProxyLBParam
-func (p *BindPortInfoProxyLBParam) Initialize(in Input) error {
+func (p *BindPortInfoProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2694,7 +2694,7 @@ func NewBindPortAddProxyLBParam() *BindPortAddProxyLBParam {
 }
 
 // Initialize init BindPortAddProxyLBParam
-func (p *BindPortAddProxyLBParam) Initialize(in Input) error {
+func (p *BindPortAddProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3079,7 +3079,7 @@ func NewBindPortUpdateProxyLBParam() *BindPortUpdateProxyLBParam {
 }
 
 // Initialize init BindPortUpdateProxyLBParam
-func (p *BindPortUpdateProxyLBParam) Initialize(in Input) error {
+func (p *BindPortUpdateProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3465,7 +3465,7 @@ func NewBindPortDeleteProxyLBParam() *BindPortDeleteProxyLBParam {
 }
 
 // Initialize init BindPortDeleteProxyLBParam
-func (p *BindPortDeleteProxyLBParam) Initialize(in Input) error {
+func (p *BindPortDeleteProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3790,7 +3790,7 @@ func NewResponseHeaderInfoProxyLBParam() *ResponseHeaderInfoProxyLBParam {
 }
 
 // Initialize init ResponseHeaderInfoProxyLBParam
-func (p *ResponseHeaderInfoProxyLBParam) Initialize(in Input) error {
+func (p *ResponseHeaderInfoProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4107,7 +4107,7 @@ func NewResponseHeaderAddProxyLBParam() *ResponseHeaderAddProxyLBParam {
 }
 
 // Initialize init ResponseHeaderAddProxyLBParam
-func (p *ResponseHeaderAddProxyLBParam) Initialize(in Input) error {
+func (p *ResponseHeaderAddProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4474,7 +4474,7 @@ func NewResponseHeaderUpdateProxyLBParam() *ResponseHeaderUpdateProxyLBParam {
 }
 
 // Initialize init ResponseHeaderUpdateProxyLBParam
-func (p *ResponseHeaderUpdateProxyLBParam) Initialize(in Input) error {
+func (p *ResponseHeaderUpdateProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4842,7 +4842,7 @@ func NewResponseHeaderDeleteProxyLBParam() *ResponseHeaderDeleteProxyLBParam {
 }
 
 // Initialize init ResponseHeaderDeleteProxyLBParam
-func (p *ResponseHeaderDeleteProxyLBParam) Initialize(in Input) error {
+func (p *ResponseHeaderDeleteProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5185,7 +5185,7 @@ func NewACMEInfoProxyLBParam() *ACMEInfoProxyLBParam {
 }
 
 // Initialize init ACMEInfoProxyLBParam
-func (p *ACMEInfoProxyLBParam) Initialize(in Input) error {
+func (p *ACMEInfoProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5483,7 +5483,7 @@ func NewACMESettingProxyLBParam() *ACMESettingProxyLBParam {
 }
 
 // Initialize init ACMESettingProxyLBParam
-func (p *ACMESettingProxyLBParam) Initialize(in Input) error {
+func (p *ACMESettingProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5815,7 +5815,7 @@ func NewACMERenewProxyLBParam() *ACMERenewProxyLBParam {
 }
 
 // Initialize init ACMERenewProxyLBParam
-func (p *ACMERenewProxyLBParam) Initialize(in Input) error {
+func (p *ACMERenewProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6029,7 +6029,7 @@ func NewServerInfoProxyLBParam() *ServerInfoProxyLBParam {
 }
 
 // Initialize init ServerInfoProxyLBParam
-func (p *ServerInfoProxyLBParam) Initialize(in Input) error {
+func (p *ServerInfoProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6327,7 +6327,7 @@ func NewServerAddProxyLBParam() *ServerAddProxyLBParam {
 }
 
 // Initialize init ServerAddProxyLBParam
-func (p *ServerAddProxyLBParam) Initialize(in Input) error {
+func (p *ServerAddProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6700,7 +6700,7 @@ func NewServerUpdateProxyLBParam() *ServerUpdateProxyLBParam {
 }
 
 // Initialize init ServerUpdateProxyLBParam
-func (p *ServerUpdateProxyLBParam) Initialize(in Input) error {
+func (p *ServerUpdateProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7075,7 +7075,7 @@ func NewServerDeleteProxyLBParam() *ServerDeleteProxyLBParam {
 }
 
 // Initialize init ServerDeleteProxyLBParam
-func (p *ServerDeleteProxyLBParam) Initialize(in Input) error {
+func (p *ServerDeleteProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7399,7 +7399,7 @@ func NewCertificateInfoProxyLBParam() *CertificateInfoProxyLBParam {
 }
 
 // Initialize init CertificateInfoProxyLBParam
-func (p *CertificateInfoProxyLBParam) Initialize(in Input) error {
+func (p *CertificateInfoProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7697,7 +7697,7 @@ func NewCertificateAddProxyLBParam() *CertificateAddProxyLBParam {
 }
 
 // Initialize init CertificateAddProxyLBParam
-func (p *CertificateAddProxyLBParam) Initialize(in Input) error {
+func (p *CertificateAddProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -8055,7 +8055,7 @@ func NewCertificateUpdateProxyLBParam() *CertificateUpdateProxyLBParam {
 }
 
 // Initialize init CertificateUpdateProxyLBParam
-func (p *CertificateUpdateProxyLBParam) Initialize(in Input) error {
+func (p *CertificateUpdateProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -8394,7 +8394,7 @@ func NewCertificateDeleteProxyLBParam() *CertificateDeleteProxyLBParam {
 }
 
 // Initialize init CertificateDeleteProxyLBParam
-func (p *CertificateDeleteProxyLBParam) Initialize(in Input) error {
+func (p *CertificateDeleteProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -8703,7 +8703,7 @@ func NewMonitorProxyLBParam() *MonitorProxyLBParam {
 }
 
 // Initialize init MonitorProxyLBParam
-func (p *MonitorProxyLBParam) Initialize(in Input) error {
+func (p *MonitorProxyLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

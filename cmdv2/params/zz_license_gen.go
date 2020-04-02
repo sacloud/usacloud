@@ -57,7 +57,7 @@ func NewListLicenseParam() *ListLicenseParam {
 }
 
 // Initialize init ListLicenseParam
-func (p *ListLicenseParam) Initialize(in Input) error {
+func (p *ListLicenseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -404,7 +404,7 @@ func NewCreateLicenseParam() *CreateLicenseParam {
 }
 
 // Initialize init CreateLicenseParam
-func (p *CreateLicenseParam) Initialize(in Input) error {
+func (p *CreateLicenseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -715,7 +715,7 @@ func NewReadLicenseParam() *ReadLicenseParam {
 }
 
 // Initialize init ReadLicenseParam
-func (p *ReadLicenseParam) Initialize(in Input) error {
+func (p *ReadLicenseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -999,7 +999,7 @@ func NewUpdateLicenseParam() *UpdateLicenseParam {
 }
 
 // Initialize init UpdateLicenseParam
-func (p *UpdateLicenseParam) Initialize(in Input) error {
+func (p *UpdateLicenseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1312,7 +1312,7 @@ func NewDeleteLicenseParam() *DeleteLicenseParam {
 }
 
 // Initialize init DeleteLicenseParam
-func (p *DeleteLicenseParam) Initialize(in Input) error {
+func (p *DeleteLicenseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

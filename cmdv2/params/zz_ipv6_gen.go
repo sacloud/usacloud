@@ -59,7 +59,7 @@ func NewListIPv6Param() *ListIPv6Param {
 }
 
 // Initialize init ListIPv6Param
-func (p *ListIPv6Param) Initialize(in Input) error {
+func (p *ListIPv6Param) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -443,7 +443,7 @@ func NewPtrAddIPv6Param() *PtrAddIPv6Param {
 }
 
 // Initialize init PtrAddIPv6Param
-func (p *PtrAddIPv6Param) Initialize(in Input) error {
+func (p *PtrAddIPv6Param) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -735,7 +735,7 @@ func NewPtrReadIPv6Param() *PtrReadIPv6Param {
 }
 
 // Initialize init PtrReadIPv6Param
-func (p *PtrReadIPv6Param) Initialize(in Input) error {
+func (p *PtrReadIPv6Param) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -999,7 +999,7 @@ func NewPtrUpdateIPv6Param() *PtrUpdateIPv6Param {
 }
 
 // Initialize init PtrUpdateIPv6Param
-func (p *PtrUpdateIPv6Param) Initialize(in Input) error {
+func (p *PtrUpdateIPv6Param) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1292,7 +1292,7 @@ func NewPtrDeleteIPv6Param() *PtrDeleteIPv6Param {
 }
 
 // Initialize init PtrDeleteIPv6Param
-func (p *PtrDeleteIPv6Param) Initialize(in Input) error {
+func (p *PtrDeleteIPv6Param) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

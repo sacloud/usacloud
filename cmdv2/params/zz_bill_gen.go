@@ -47,7 +47,7 @@ func NewCsvBillParam() *CsvBillParam {
 }
 
 // Initialize init CsvBillParam
-func (p *CsvBillParam) Initialize(in Input) error {
+func (p *CsvBillParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -261,7 +261,7 @@ func NewListBillParam() *ListBillParam {
 }
 
 // Initialize init ListBillParam
-func (p *ListBillParam) Initialize(in Input) error {
+func (p *ListBillParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

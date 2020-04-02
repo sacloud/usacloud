@@ -46,7 +46,7 @@ func packetFilterListCmd() *cobra.Command {
 		Short:   "List PacketFilter",
 		Long:    `List PacketFilter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return packetFilterListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, packetFilterListParam)
@@ -94,7 +94,7 @@ func packetFilterCreateCmd() *cobra.Command {
 		Short: "Create PacketFilter",
 		Long:  `Create PacketFilter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return packetFilterCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, packetFilterCreateParam)
@@ -114,11 +114,8 @@ func packetFilterCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -154,7 +151,7 @@ func packetFilterReadCmd() *cobra.Command {
 		Short: "Read PacketFilter",
 		Long:  `Read PacketFilter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return packetFilterReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, packetFilterReadParam)
@@ -198,7 +195,7 @@ func packetFilterUpdateCmd() *cobra.Command {
 		Short: "Update PacketFilter",
 		Long:  `Update PacketFilter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return packetFilterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, packetFilterUpdateParam)
@@ -218,11 +215,8 @@ func packetFilterUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -259,7 +253,7 @@ func packetFilterDeleteCmd() *cobra.Command {
 		Short:   "Delete PacketFilter",
 		Long:    `Delete PacketFilter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return packetFilterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, packetFilterDeleteParam)
@@ -279,11 +273,8 @@ func packetFilterDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -318,7 +309,7 @@ func packetFilterRuleInfoCmd() *cobra.Command {
 		Short:   "RuleInfo PacketFilter",
 		Long:    `RuleInfo PacketFilter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterRuleInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return packetFilterRuleInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, packetFilterRuleInfoParam)
@@ -362,7 +353,7 @@ func packetFilterRuleAddCmd() *cobra.Command {
 		Short: "RuleAdd PacketFilter",
 		Long:  `RuleAdd PacketFilter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterRuleAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return packetFilterRuleAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, packetFilterRuleAddParam)
@@ -382,11 +373,8 @@ func packetFilterRuleAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("rule-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -428,7 +416,7 @@ func packetFilterRuleUpdateCmd() *cobra.Command {
 		Short: "RuleUpdate PacketFilter",
 		Long:  `RuleUpdate PacketFilter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterRuleUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return packetFilterRuleUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, packetFilterRuleUpdateParam)
@@ -448,11 +436,8 @@ func packetFilterRuleUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("rule-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -494,7 +479,7 @@ func packetFilterRuleDeleteCmd() *cobra.Command {
 		Short: "RuleDelete PacketFilter",
 		Long:  `RuleDelete PacketFilter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterRuleDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return packetFilterRuleDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, packetFilterRuleDeleteParam)
@@ -514,11 +499,8 @@ func packetFilterRuleDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete rule", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -554,7 +536,7 @@ func packetFilterInterfaceConnectCmd() *cobra.Command {
 		Short: "InterfaceConnect PacketFilter",
 		Long:  `InterfaceConnect PacketFilter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return packetFilterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, packetFilterInterfaceConnectParam)
@@ -574,11 +556,8 @@ func packetFilterInterfaceConnectCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("interface-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -607,7 +586,7 @@ func packetFilterInterfaceDisconnectCmd() *cobra.Command {
 		Short: "InterfaceDisconnect PacketFilter",
 		Long:  `InterfaceDisconnect PacketFilter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return packetFilterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, packetFilterInterfaceDisconnectParam)
@@ -627,11 +606,8 @@ func packetFilterInterfaceDisconnectCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("interface-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

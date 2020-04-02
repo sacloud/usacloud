@@ -17,6 +17,7 @@
 package params
 
 import (
+	"fmt"
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
@@ -57,7 +58,7 @@ func NewListRegionParam() *ListRegionParam {
 }
 
 // Initialize init ListRegionParam
-func (p *ListRegionParam) Initialize(in Input) error {
+func (p *ListRegionParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -403,8 +404,16 @@ func NewReadRegionParam() *ReadRegionParam {
 }
 
 // Initialize init ReadRegionParam
-func (p *ReadRegionParam) Initialize(in Input) error {
+func (p *ReadRegionParam) Initialize(in Input, args []string) error {
 	p.input = in
+
+	if len(args) == 0 {
+		return fmt.Errorf("argument <ID> is required")
+	}
+	p.Id = sacloud.StringID(args[0])
+	if p.Id.IsEmpty() {
+		return fmt.Errorf("argument <ID> is required")
+	}
 	if err := p.validate(); err != nil {
 		return err
 	}

@@ -51,7 +51,7 @@ func NewShowSummaryParam() *ShowSummaryParam {
 }
 
 // Initialize init ShowSummaryParam
-func (p *ShowSummaryParam) Initialize(in Input) error {
+func (p *ShowSummaryParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

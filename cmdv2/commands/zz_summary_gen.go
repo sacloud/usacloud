@@ -42,7 +42,7 @@ func summaryShowCmd() *cobra.Command {
 		Short: "Show Summary (default)",
 		Long:  `Show Summary (default)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return summaryShowParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return summaryShowParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, summaryShowParam)

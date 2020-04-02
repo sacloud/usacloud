@@ -46,7 +46,7 @@ func loadBalancerListCmd() *cobra.Command {
 		Short:   "List LoadBalancer",
 		Long:    `List LoadBalancer`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerListParam)
@@ -95,7 +95,7 @@ func loadBalancerCreateCmd() *cobra.Command {
 		Short: "Create LoadBalancer",
 		Long:  `Create LoadBalancer`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerCreateParam)
@@ -115,11 +115,8 @@ func loadBalancerCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -165,7 +162,7 @@ func loadBalancerReadCmd() *cobra.Command {
 		Short: "Read LoadBalancer",
 		Long:  `Read LoadBalancer`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerReadParam)
@@ -210,7 +207,7 @@ func loadBalancerUpdateCmd() *cobra.Command {
 		Short: "Update LoadBalancer",
 		Long:  `Update LoadBalancer`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerUpdateParam)
@@ -230,11 +227,8 @@ func loadBalancerUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -274,7 +268,7 @@ func loadBalancerDeleteCmd() *cobra.Command {
 		Short:   "Delete LoadBalancer",
 		Long:    `Delete LoadBalancer`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerDeleteParam)
@@ -294,11 +288,8 @@ func loadBalancerDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -335,7 +326,7 @@ func loadBalancerBootCmd() *cobra.Command {
 		Short:   "Boot LoadBalancer",
 		Long:    `Boot LoadBalancer`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerBootParam)
@@ -355,11 +346,8 @@ func loadBalancerBootCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -388,7 +376,7 @@ func loadBalancerShutdownCmd() *cobra.Command {
 		Short:   "Shutdown LoadBalancer",
 		Long:    `Shutdown LoadBalancer`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerShutdownParam)
@@ -408,11 +396,8 @@ func loadBalancerShutdownCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -441,7 +426,7 @@ func loadBalancerShutdownForceCmd() *cobra.Command {
 		Short:   "ShutdownForce LoadBalancer",
 		Long:    `ShutdownForce LoadBalancer`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerShutdownForceParam)
@@ -461,11 +446,8 @@ func loadBalancerShutdownForceCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -494,7 +476,7 @@ func loadBalancerResetCmd() *cobra.Command {
 		Short: "Reset LoadBalancer",
 		Long:  `Reset LoadBalancer`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerResetParam)
@@ -514,11 +496,8 @@ func loadBalancerResetCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -547,7 +526,7 @@ func loadBalancerWaitForBootCmd() *cobra.Command {
 		Short: "Wait until boot is completed",
 		Long:  `Wait until boot is completed`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerWaitForBootParam)
@@ -585,7 +564,7 @@ func loadBalancerWaitForDownCmd() *cobra.Command {
 		Short: "Wait until shutdown is completed",
 		Long:  `Wait until shutdown is completed`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerWaitForDownParam)
@@ -623,7 +602,7 @@ func loadBalancerVipInfoCmd() *cobra.Command {
 		Short: "Show information of VIP(s)",
 		Long:  `Show information of VIP(s)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerVipInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerVipInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerVipInfoParam)
@@ -668,7 +647,7 @@ func loadBalancerVipAddCmd() *cobra.Command {
 		Short: "Add VIP to LoadBalancer",
 		Long:  `Add VIP to LoadBalancer`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerVipAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerVipAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerVipAddParam)
@@ -688,11 +667,8 @@ func loadBalancerVipAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("vip-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -726,7 +702,7 @@ func loadBalancerVipUpdateCmd() *cobra.Command {
 		Short: "Update VIP",
 		Long:  `Update VIP`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerVipUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerVipUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerVipUpdateParam)
@@ -746,11 +722,8 @@ func loadBalancerVipUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("vip-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -785,7 +758,7 @@ func loadBalancerVipDeleteCmd() *cobra.Command {
 		Short: "Delete VIP from LoadBalancer",
 		Long:  `Delete VIP from LoadBalancer`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerVipDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerVipDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerVipDeleteParam)
@@ -805,11 +778,8 @@ func loadBalancerVipDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("vip-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -839,7 +809,7 @@ func loadBalancerServerInfoCmd() *cobra.Command {
 		Short: "Show servers under VIP(s)",
 		Long:  `Show servers under VIP(s)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerServerInfoParam)
@@ -887,7 +857,7 @@ func loadBalancerServerAddCmd() *cobra.Command {
 		Short: "Add server under VIP(s)",
 		Long:  `Add server under VIP(s)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerServerAddParam)
@@ -907,11 +877,8 @@ func loadBalancerServerAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("server-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -948,7 +915,7 @@ func loadBalancerServerUpdateCmd() *cobra.Command {
 		Short: "Update server under VIP(s)",
 		Long:  `Update server under VIP(s)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerServerUpdateParam)
@@ -968,11 +935,8 @@ func loadBalancerServerUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("server-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1009,7 +973,7 @@ func loadBalancerServerDeleteCmd() *cobra.Command {
 		Short: "Delete server under VIP(s)",
 		Long:  `Delete server under VIP(s)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerServerDeleteParam)
@@ -1029,11 +993,8 @@ func loadBalancerServerDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("server-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1066,7 +1027,7 @@ func loadBalancerMonitorCmd() *cobra.Command {
 		Short: "Monitor LoadBalancer",
 		Long:  `Monitor LoadBalancer`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return loadBalancerMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return loadBalancerMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, loadBalancerMonitorParam)

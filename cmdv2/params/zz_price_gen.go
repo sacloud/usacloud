@@ -57,7 +57,7 @@ func NewListPriceParam() *ListPriceParam {
 }
 
 // Initialize init ListPriceParam
-func (p *ListPriceParam) Initialize(in Input) error {
+func (p *ListPriceParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

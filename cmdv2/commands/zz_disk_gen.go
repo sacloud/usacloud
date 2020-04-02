@@ -46,7 +46,7 @@ func diskListCmd() *cobra.Command {
 		Short:   "List Disk",
 		Long:    `List Disk`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return diskListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, diskListParam)
@@ -99,7 +99,7 @@ func diskCreateCmd() *cobra.Command {
 		Short: "Create Disk",
 		Long:  `Create Disk`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return diskCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, diskCreateParam)
@@ -119,11 +119,8 @@ func diskCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -167,7 +164,7 @@ func diskReadCmd() *cobra.Command {
 		Short: "Read Disk",
 		Long:  `Read Disk`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return diskReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, diskReadParam)
@@ -212,7 +209,7 @@ func diskUpdateCmd() *cobra.Command {
 		Short: "Update Disk",
 		Long:  `Update Disk`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return diskUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, diskUpdateParam)
@@ -232,11 +229,8 @@ func diskUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -277,7 +271,7 @@ func diskDeleteCmd() *cobra.Command {
 		Short:   "Delete Disk",
 		Long:    `Delete Disk`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return diskDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, diskDeleteParam)
@@ -297,11 +291,8 @@ func diskDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -337,7 +328,7 @@ func diskEditCmd() *cobra.Command {
 		Short:   "Edit Disk",
 		Long:    `Edit Disk`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskEditParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return diskEditParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, diskEditParam)
@@ -357,11 +348,8 @@ func diskEditCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("edit", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -405,7 +393,7 @@ func diskResizePartitionCmd() *cobra.Command {
 		Short: "ResizePartition Disk",
 		Long:  `ResizePartition Disk`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskResizePartitionParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return diskResizePartitionParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, diskResizePartitionParam)
@@ -425,11 +413,8 @@ func diskResizePartitionCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("resize-partition", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -465,7 +450,7 @@ func diskReinstallFromArchiveCmd() *cobra.Command {
 		Short: "ReinstallFromArchive Disk",
 		Long:  `ReinstallFromArchive Disk`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskReinstallFromArchiveParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return diskReinstallFromArchiveParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, diskReinstallFromArchiveParam)
@@ -485,11 +470,8 @@ func diskReinstallFromArchiveCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("re-install from archive", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -520,7 +502,7 @@ func diskReinstallFromDiskCmd() *cobra.Command {
 		Short: "ReinstallFromDisk Disk",
 		Long:  `ReinstallFromDisk Disk`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskReinstallFromDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return diskReinstallFromDiskParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, diskReinstallFromDiskParam)
@@ -540,11 +522,8 @@ func diskReinstallFromDiskCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("re-install from disk", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -575,7 +554,7 @@ func diskReinstallToBlankCmd() *cobra.Command {
 		Short: "ReinstallToBlank Disk",
 		Long:  `ReinstallToBlank Disk`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskReinstallToBlankParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return diskReinstallToBlankParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, diskReinstallToBlankParam)
@@ -595,11 +574,8 @@ func diskReinstallToBlankCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("re-install to blank", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -629,7 +605,7 @@ func diskServerConnectCmd() *cobra.Command {
 		Short: "ServerConnect Disk",
 		Long:  `ServerConnect Disk`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskServerConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return diskServerConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, diskServerConnectParam)
@@ -649,11 +625,8 @@ func diskServerConnectCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("server-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -683,7 +656,7 @@ func diskServerDisconnectCmd() *cobra.Command {
 		Short: "ServerDisconnect Disk",
 		Long:  `ServerDisconnect Disk`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskServerDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return diskServerDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, diskServerDisconnectParam)
@@ -703,11 +676,8 @@ func diskServerDisconnectCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("server-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -736,7 +706,7 @@ func diskMonitorCmd() *cobra.Command {
 		Short: "Monitor Disk",
 		Long:  `Monitor Disk`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return diskMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, diskMonitorParam)
@@ -784,7 +754,7 @@ func diskWaitForCopyCmd() *cobra.Command {
 		Short:   "WaitForCopy Disk",
 		Long:    `WaitForCopy Disk`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return diskWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, diskWaitForCopyParam)

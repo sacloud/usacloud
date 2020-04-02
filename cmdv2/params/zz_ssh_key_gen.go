@@ -57,7 +57,7 @@ func NewListSSHKeyParam() *ListSSHKeyParam {
 }
 
 // Initialize init ListSSHKeyParam
-func (p *ListSSHKeyParam) Initialize(in Input) error {
+func (p *ListSSHKeyParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -406,7 +406,7 @@ func NewCreateSSHKeyParam() *CreateSSHKeyParam {
 }
 
 // Initialize init CreateSSHKeyParam
-func (p *CreateSSHKeyParam) Initialize(in Input) error {
+func (p *CreateSSHKeyParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -765,7 +765,7 @@ func NewReadSSHKeyParam() *ReadSSHKeyParam {
 }
 
 // Initialize init ReadSSHKeyParam
-func (p *ReadSSHKeyParam) Initialize(in Input) error {
+func (p *ReadSSHKeyParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1050,7 +1050,7 @@ func NewUpdateSSHKeyParam() *UpdateSSHKeyParam {
 }
 
 // Initialize init UpdateSSHKeyParam
-func (p *UpdateSSHKeyParam) Initialize(in Input) error {
+func (p *UpdateSSHKeyParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1382,7 +1382,7 @@ func NewDeleteSSHKeyParam() *DeleteSSHKeyParam {
 }
 
 // Initialize init DeleteSSHKeyParam
-func (p *DeleteSSHKeyParam) Initialize(in Input) error {
+func (p *DeleteSSHKeyParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1679,7 +1679,7 @@ func NewGenerateSSHKeyParam() *GenerateSSHKeyParam {
 }
 
 // Initialize init GenerateSSHKeyParam
-func (p *GenerateSSHKeyParam) Initialize(in Input) error {
+func (p *GenerateSSHKeyParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

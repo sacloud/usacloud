@@ -58,7 +58,7 @@ func NewListVPCRouterParam() *ListVPCRouterParam {
 }
 
 // Initialize init ListVPCRouterParam
-func (p *ListVPCRouterParam) Initialize(in Input) error {
+func (p *ListVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -435,7 +435,7 @@ func NewCreateVPCRouterParam() *CreateVPCRouterParam {
 }
 
 // Initialize init CreateVPCRouterParam
-func (p *CreateVPCRouterParam) Initialize(in Input) error {
+func (p *CreateVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -936,7 +936,7 @@ func NewReadVPCRouterParam() *ReadVPCRouterParam {
 }
 
 // Initialize init ReadVPCRouterParam
-func (p *ReadVPCRouterParam) Initialize(in Input) error {
+func (p *ReadVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1237,7 +1237,7 @@ func NewUpdateVPCRouterParam() *UpdateVPCRouterParam {
 }
 
 // Initialize init UpdateVPCRouterParam
-func (p *UpdateVPCRouterParam) Initialize(in Input) error {
+func (p *UpdateVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1650,7 +1650,7 @@ func NewDeleteVPCRouterParam() *DeleteVPCRouterParam {
 }
 
 // Initialize init DeleteVPCRouterParam
-func (p *DeleteVPCRouterParam) Initialize(in Input) error {
+func (p *DeleteVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1960,7 +1960,7 @@ func NewBootVPCRouterParam() *BootVPCRouterParam {
 }
 
 // Initialize init BootVPCRouterParam
-func (p *BootVPCRouterParam) Initialize(in Input) error {
+func (p *BootVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2168,7 +2168,7 @@ func NewShutdownVPCRouterParam() *ShutdownVPCRouterParam {
 }
 
 // Initialize init ShutdownVPCRouterParam
-func (p *ShutdownVPCRouterParam) Initialize(in Input) error {
+func (p *ShutdownVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2376,7 +2376,7 @@ func NewShutdownForceVPCRouterParam() *ShutdownForceVPCRouterParam {
 }
 
 // Initialize init ShutdownForceVPCRouterParam
-func (p *ShutdownForceVPCRouterParam) Initialize(in Input) error {
+func (p *ShutdownForceVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2584,7 +2584,7 @@ func NewResetVPCRouterParam() *ResetVPCRouterParam {
 }
 
 // Initialize init ResetVPCRouterParam
-func (p *ResetVPCRouterParam) Initialize(in Input) error {
+func (p *ResetVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2791,7 +2791,7 @@ func NewWaitForBootVPCRouterParam() *WaitForBootVPCRouterParam {
 }
 
 // Initialize init WaitForBootVPCRouterParam
-func (p *WaitForBootVPCRouterParam) Initialize(in Input) error {
+func (p *WaitForBootVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2987,7 +2987,7 @@ func NewWaitForDownVPCRouterParam() *WaitForDownVPCRouterParam {
 }
 
 // Initialize init WaitForDownVPCRouterParam
-func (p *WaitForDownVPCRouterParam) Initialize(in Input) error {
+func (p *WaitForDownVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3184,7 +3184,7 @@ func NewEnableInternetConnectionVPCRouterParam() *EnableInternetConnectionVPCRou
 }
 
 // Initialize init EnableInternetConnectionVPCRouterParam
-func (p *EnableInternetConnectionVPCRouterParam) Initialize(in Input) error {
+func (p *EnableInternetConnectionVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3392,7 +3392,7 @@ func NewDisableInternetConnectionVPCRouterParam() *DisableInternetConnectionVPCR
 }
 
 // Initialize init DisableInternetConnectionVPCRouterParam
-func (p *DisableInternetConnectionVPCRouterParam) Initialize(in Input) error {
+func (p *DisableInternetConnectionVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3606,7 +3606,7 @@ func NewInterfaceInfoVPCRouterParam() *InterfaceInfoVPCRouterParam {
 }
 
 // Initialize init InterfaceInfoVPCRouterParam
-func (p *InterfaceInfoVPCRouterParam) Initialize(in Input) error {
+func (p *InterfaceInfoVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3902,7 +3902,7 @@ func NewInterfaceConnectVPCRouterParam() *InterfaceConnectVPCRouterParam {
 }
 
 // Initialize init InterfaceConnectVPCRouterParam
-func (p *InterfaceConnectVPCRouterParam) Initialize(in Input) error {
+func (p *InterfaceConnectVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4265,7 +4265,7 @@ func NewInterfaceUpdateVPCRouterParam() *InterfaceUpdateVPCRouterParam {
 }
 
 // Initialize init InterfaceUpdateVPCRouterParam
-func (p *InterfaceUpdateVPCRouterParam) Initialize(in Input) error {
+func (p *InterfaceUpdateVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4626,7 +4626,7 @@ func NewInterfaceDisconnectVPCRouterParam() *InterfaceDisconnectVPCRouterParam {
 }
 
 // Initialize init InterfaceDisconnectVPCRouterParam
-func (p *InterfaceDisconnectVPCRouterParam) Initialize(in Input) error {
+func (p *InterfaceDisconnectVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4877,7 +4877,7 @@ func NewStaticNatInfoVPCRouterParam() *StaticNatInfoVPCRouterParam {
 }
 
 // Initialize init StaticNatInfoVPCRouterParam
-func (p *StaticNatInfoVPCRouterParam) Initialize(in Input) error {
+func (p *StaticNatInfoVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5168,7 +5168,7 @@ func NewStaticNatAddVPCRouterParam() *StaticNatAddVPCRouterParam {
 }
 
 // Initialize init StaticNatAddVPCRouterParam
-func (p *StaticNatAddVPCRouterParam) Initialize(in Input) error {
+func (p *StaticNatAddVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5451,7 +5451,7 @@ func NewStaticNatUpdateVPCRouterParam() *StaticNatUpdateVPCRouterParam {
 }
 
 // Initialize init StaticNatUpdateVPCRouterParam
-func (p *StaticNatUpdateVPCRouterParam) Initialize(in Input) error {
+func (p *StaticNatUpdateVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5736,7 +5736,7 @@ func NewStaticNatDeleteVPCRouterParam() *StaticNatDeleteVPCRouterParam {
 }
 
 // Initialize init StaticNatDeleteVPCRouterParam
-func (p *StaticNatDeleteVPCRouterParam) Initialize(in Input) error {
+func (p *StaticNatDeleteVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5969,7 +5969,7 @@ func NewPortForwardingInfoVPCRouterParam() *PortForwardingInfoVPCRouterParam {
 }
 
 // Initialize init PortForwardingInfoVPCRouterParam
-func (p *PortForwardingInfoVPCRouterParam) Initialize(in Input) error {
+func (p *PortForwardingInfoVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6262,7 +6262,7 @@ func NewPortForwardingAddVPCRouterParam() *PortForwardingAddVPCRouterParam {
 }
 
 // Initialize init PortForwardingAddVPCRouterParam
-func (p *PortForwardingAddVPCRouterParam) Initialize(in Input) error {
+func (p *PortForwardingAddVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6599,7 +6599,7 @@ func NewPortForwardingUpdateVPCRouterParam() *PortForwardingUpdateVPCRouterParam
 }
 
 // Initialize init PortForwardingUpdateVPCRouterParam
-func (p *PortForwardingUpdateVPCRouterParam) Initialize(in Input) error {
+func (p *PortForwardingUpdateVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6922,7 +6922,7 @@ func NewPortForwardingDeleteVPCRouterParam() *PortForwardingDeleteVPCRouterParam
 }
 
 // Initialize init PortForwardingDeleteVPCRouterParam
-func (p *PortForwardingDeleteVPCRouterParam) Initialize(in Input) error {
+func (p *PortForwardingDeleteVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7158,7 +7158,7 @@ func NewFirewallInfoVPCRouterParam() *FirewallInfoVPCRouterParam {
 }
 
 // Initialize init FirewallInfoVPCRouterParam
-func (p *FirewallInfoVPCRouterParam) Initialize(in Input) error {
+func (p *FirewallInfoVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7502,7 +7502,7 @@ func NewFirewallAddVPCRouterParam() *FirewallAddVPCRouterParam {
 }
 
 // Initialize init FirewallAddVPCRouterParam
-func (p *FirewallAddVPCRouterParam) Initialize(in Input) error {
+func (p *FirewallAddVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7925,7 +7925,7 @@ func NewFirewallUpdateVPCRouterParam() *FirewallUpdateVPCRouterParam {
 }
 
 // Initialize init FirewallUpdateVPCRouterParam
-func (p *FirewallUpdateVPCRouterParam) Initialize(in Input) error {
+func (p *FirewallUpdateVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -8345,7 +8345,7 @@ func NewFirewallDeleteVPCRouterParam() *FirewallDeleteVPCRouterParam {
 }
 
 // Initialize init FirewallDeleteVPCRouterParam
-func (p *FirewallDeleteVPCRouterParam) Initialize(in Input) error {
+func (p *FirewallDeleteVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -8623,7 +8623,7 @@ func NewDhcpServerInfoVPCRouterParam() *DhcpServerInfoVPCRouterParam {
 }
 
 // Initialize init DhcpServerInfoVPCRouterParam
-func (p *DhcpServerInfoVPCRouterParam) Initialize(in Input) error {
+func (p *DhcpServerInfoVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -8915,7 +8915,7 @@ func NewDhcpServerAddVPCRouterParam() *DhcpServerAddVPCRouterParam {
 }
 
 // Initialize init DhcpServerAddVPCRouterParam
-func (p *DhcpServerAddVPCRouterParam) Initialize(in Input) error {
+func (p *DhcpServerAddVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -9224,7 +9224,7 @@ func NewDhcpServerUpdateVPCRouterParam() *DhcpServerUpdateVPCRouterParam {
 }
 
 // Initialize init DhcpServerUpdateVPCRouterParam
-func (p *DhcpServerUpdateVPCRouterParam) Initialize(in Input) error {
+func (p *DhcpServerUpdateVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -9516,7 +9516,7 @@ func NewDhcpServerDeleteVPCRouterParam() *DhcpServerDeleteVPCRouterParam {
 }
 
 // Initialize init DhcpServerDeleteVPCRouterParam
-func (p *DhcpServerDeleteVPCRouterParam) Initialize(in Input) error {
+func (p *DhcpServerDeleteVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -9756,7 +9756,7 @@ func NewDhcpStaticMappingInfoVPCRouterParam() *DhcpStaticMappingInfoVPCRouterPar
 }
 
 // Initialize init DhcpStaticMappingInfoVPCRouterParam
-func (p *DhcpStaticMappingInfoVPCRouterParam) Initialize(in Input) error {
+func (p *DhcpStaticMappingInfoVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -10046,7 +10046,7 @@ func NewDhcpStaticMappingAddVPCRouterParam() *DhcpStaticMappingAddVPCRouterParam
 }
 
 // Initialize init DhcpStaticMappingAddVPCRouterParam
-func (p *DhcpStaticMappingAddVPCRouterParam) Initialize(in Input) error {
+func (p *DhcpStaticMappingAddVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -10309,7 +10309,7 @@ func NewDhcpStaticMappingUpdateVPCRouterParam() *DhcpStaticMappingUpdateVPCRoute
 }
 
 // Initialize init DhcpStaticMappingUpdateVPCRouterParam
-func (p *DhcpStaticMappingUpdateVPCRouterParam) Initialize(in Input) error {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -10575,7 +10575,7 @@ func NewDhcpStaticMappingDeleteVPCRouterParam() *DhcpStaticMappingDeleteVPCRoute
 }
 
 // Initialize init DhcpStaticMappingDeleteVPCRouterParam
-func (p *DhcpStaticMappingDeleteVPCRouterParam) Initialize(in Input) error {
+func (p *DhcpStaticMappingDeleteVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -10808,7 +10808,7 @@ func NewPptpServerInfoVPCRouterParam() *PptpServerInfoVPCRouterParam {
 }
 
 // Initialize init PptpServerInfoVPCRouterParam
-func (p *PptpServerInfoVPCRouterParam) Initialize(in Input) error {
+func (p *PptpServerInfoVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -11099,7 +11099,7 @@ func NewPptpServerUpdateVPCRouterParam() *PptpServerUpdateVPCRouterParam {
 }
 
 // Initialize init PptpServerUpdateVPCRouterParam
-func (p *PptpServerUpdateVPCRouterParam) Initialize(in Input) error {
+func (p *PptpServerUpdateVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -11362,7 +11362,7 @@ func NewL2TPServerInfoVPCRouterParam() *L2TPServerInfoVPCRouterParam {
 }
 
 // Initialize init L2TPServerInfoVPCRouterParam
-func (p *L2TPServerInfoVPCRouterParam) Initialize(in Input) error {
+func (p *L2TPServerInfoVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -11654,7 +11654,7 @@ func NewL2TPServerUpdateVPCRouterParam() *L2TPServerUpdateVPCRouterParam {
 }
 
 // Initialize init L2TPServerUpdateVPCRouterParam
-func (p *L2TPServerUpdateVPCRouterParam) Initialize(in Input) error {
+func (p *L2TPServerUpdateVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -11936,7 +11936,7 @@ func NewUserInfoVPCRouterParam() *UserInfoVPCRouterParam {
 }
 
 // Initialize init UserInfoVPCRouterParam
-func (p *UserInfoVPCRouterParam) Initialize(in Input) error {
+func (p *UserInfoVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -12226,7 +12226,7 @@ func NewUserAddVPCRouterParam() *UserAddVPCRouterParam {
 }
 
 // Initialize init UserAddVPCRouterParam
-func (p *UserAddVPCRouterParam) Initialize(in Input) error {
+func (p *UserAddVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -12489,7 +12489,7 @@ func NewUserUpdateVPCRouterParam() *UserUpdateVPCRouterParam {
 }
 
 // Initialize init UserUpdateVPCRouterParam
-func (p *UserUpdateVPCRouterParam) Initialize(in Input) error {
+func (p *UserUpdateVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -12755,7 +12755,7 @@ func NewUserDeleteVPCRouterParam() *UserDeleteVPCRouterParam {
 }
 
 // Initialize init UserDeleteVPCRouterParam
-func (p *UserDeleteVPCRouterParam) Initialize(in Input) error {
+func (p *UserDeleteVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -12988,7 +12988,7 @@ func NewSiteToSiteVPNInfoVPCRouterParam() *SiteToSiteVPNInfoVPCRouterParam {
 }
 
 // Initialize init SiteToSiteVPNInfoVPCRouterParam
-func (p *SiteToSiteVPNInfoVPCRouterParam) Initialize(in Input) error {
+func (p *SiteToSiteVPNInfoVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -13281,7 +13281,7 @@ func NewSiteToSiteVPNAddVPCRouterParam() *SiteToSiteVPNAddVPCRouterParam {
 }
 
 // Initialize init SiteToSiteVPNAddVPCRouterParam
-func (p *SiteToSiteVPNAddVPCRouterParam) Initialize(in Input) error {
+func (p *SiteToSiteVPNAddVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -13618,7 +13618,7 @@ func NewSiteToSiteVPNUpdateVPCRouterParam() *SiteToSiteVPNUpdateVPCRouterParam {
 }
 
 // Initialize init SiteToSiteVPNUpdateVPCRouterParam
-func (p *SiteToSiteVPNUpdateVPCRouterParam) Initialize(in Input) error {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -13933,7 +13933,7 @@ func NewSiteToSiteVPNDeleteVPCRouterParam() *SiteToSiteVPNDeleteVPCRouterParam {
 }
 
 // Initialize init SiteToSiteVPNDeleteVPCRouterParam
-func (p *SiteToSiteVPNDeleteVPCRouterParam) Initialize(in Input) error {
+func (p *SiteToSiteVPNDeleteVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -14166,7 +14166,7 @@ func NewSiteToSiteVPNPeersVPCRouterParam() *SiteToSiteVPNPeersVPCRouterParam {
 }
 
 // Initialize init SiteToSiteVPNPeersVPCRouterParam
-func (p *SiteToSiteVPNPeersVPCRouterParam) Initialize(in Input) error {
+func (p *SiteToSiteVPNPeersVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -14460,7 +14460,7 @@ func NewStaticRouteInfoVPCRouterParam() *StaticRouteInfoVPCRouterParam {
 }
 
 // Initialize init StaticRouteInfoVPCRouterParam
-func (p *StaticRouteInfoVPCRouterParam) Initialize(in Input) error {
+func (p *StaticRouteInfoVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -14750,7 +14750,7 @@ func NewStaticRouteAddVPCRouterParam() *StaticRouteAddVPCRouterParam {
 }
 
 // Initialize init StaticRouteAddVPCRouterParam
-func (p *StaticRouteAddVPCRouterParam) Initialize(in Input) error {
+func (p *StaticRouteAddVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -15013,7 +15013,7 @@ func NewStaticRouteUpdateVPCRouterParam() *StaticRouteUpdateVPCRouterParam {
 }
 
 // Initialize init StaticRouteUpdateVPCRouterParam
-func (p *StaticRouteUpdateVPCRouterParam) Initialize(in Input) error {
+func (p *StaticRouteUpdateVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -15279,7 +15279,7 @@ func NewStaticRouteDeleteVPCRouterParam() *StaticRouteDeleteVPCRouterParam {
 }
 
 // Initialize init StaticRouteDeleteVPCRouterParam
-func (p *StaticRouteDeleteVPCRouterParam) Initialize(in Input) error {
+func (p *StaticRouteDeleteVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -15517,7 +15517,7 @@ func NewMonitorVPCRouterParam() *MonitorVPCRouterParam {
 }
 
 // Initialize init MonitorVPCRouterParam
-func (p *MonitorVPCRouterParam) Initialize(in Input) error {
+func (p *MonitorVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -15892,7 +15892,7 @@ func NewLogsVPCRouterParam() *LogsVPCRouterParam {
 }
 
 // Initialize init LogsVPCRouterParam
-func (p *LogsVPCRouterParam) Initialize(in Input) error {
+func (p *LogsVPCRouterParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

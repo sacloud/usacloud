@@ -46,7 +46,7 @@ func vpcRouterListCmd() *cobra.Command {
 		Short:   "List VPCRouter",
 		Long:    `List VPCRouter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterListParam)
@@ -95,7 +95,7 @@ func vpcRouterCreateCmd() *cobra.Command {
 		Short: "Create VPCRouter",
 		Long:  `Create VPCRouter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterCreateParam)
@@ -115,11 +115,8 @@ func vpcRouterCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -165,7 +162,7 @@ func vpcRouterReadCmd() *cobra.Command {
 		Short: "Read VPCRouter",
 		Long:  `Read VPCRouter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterReadParam)
@@ -210,7 +207,7 @@ func vpcRouterUpdateCmd() *cobra.Command {
 		Short: "Update VPCRouter",
 		Long:  `Update VPCRouter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterUpdateParam)
@@ -230,11 +227,8 @@ func vpcRouterUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -276,7 +270,7 @@ func vpcRouterDeleteCmd() *cobra.Command {
 		Short:   "Delete VPCRouter",
 		Long:    `Delete VPCRouter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterDeleteParam)
@@ -296,11 +290,8 @@ func vpcRouterDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -337,7 +328,7 @@ func vpcRouterBootCmd() *cobra.Command {
 		Short:   "Boot VPCRouter",
 		Long:    `Boot VPCRouter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterBootParam)
@@ -357,11 +348,8 @@ func vpcRouterBootCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -390,7 +378,7 @@ func vpcRouterShutdownCmd() *cobra.Command {
 		Short:   "Shutdown VPCRouter",
 		Long:    `Shutdown VPCRouter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterShutdownParam)
@@ -410,11 +398,8 @@ func vpcRouterShutdownCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -443,7 +428,7 @@ func vpcRouterShutdownForceCmd() *cobra.Command {
 		Short:   "ShutdownForce VPCRouter",
 		Long:    `ShutdownForce VPCRouter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterShutdownForceParam)
@@ -463,11 +448,8 @@ func vpcRouterShutdownForceCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -496,7 +478,7 @@ func vpcRouterResetCmd() *cobra.Command {
 		Short: "Reset VPCRouter",
 		Long:  `Reset VPCRouter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterResetParam)
@@ -516,11 +498,8 @@ func vpcRouterResetCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -549,7 +528,7 @@ func vpcRouterWaitForBootCmd() *cobra.Command {
 		Short: "Wait until boot is completed",
 		Long:  `Wait until boot is completed`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterWaitForBootParam)
@@ -587,7 +566,7 @@ func vpcRouterWaitForDownCmd() *cobra.Command {
 		Short: "Wait until shutdown is completed",
 		Long:  `Wait until shutdown is completed`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterWaitForDownParam)
@@ -625,7 +604,7 @@ func vpcRouterEnableInternetConnectionCmd() *cobra.Command {
 		Short: "Enable internet connection from VPCRouter",
 		Long:  `Enable internet connection from VPCRouter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterEnableInternetConnectionParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterEnableInternetConnectionParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterEnableInternetConnectionParam)
@@ -645,11 +624,8 @@ func vpcRouterEnableInternetConnectionCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("enable-internet-connection", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -678,7 +654,7 @@ func vpcRouterDisableInternetConnectionCmd() *cobra.Command {
 		Short: "Enable internet connection from VPCRouter",
 		Long:  `Enable internet connection from VPCRouter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDisableInternetConnectionParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterDisableInternetConnectionParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterDisableInternetConnectionParam)
@@ -698,11 +674,8 @@ func vpcRouterDisableInternetConnectionCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("disable-internet-connection", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -731,7 +704,7 @@ func vpcRouterInterfaceInfoCmd() *cobra.Command {
 		Short:   "Show information of NIC(s) connected to vpc-router",
 		Long:    `Show information of NIC(s) connected to vpc-router`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterInterfaceInfoParam)
@@ -776,7 +749,7 @@ func vpcRouterInterfaceConnectCmd() *cobra.Command {
 		Short: "Connected to switch",
 		Long:  `Connected to switch`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterInterfaceConnectParam)
@@ -796,11 +769,8 @@ func vpcRouterInterfaceConnectCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("interface-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -836,7 +806,7 @@ func vpcRouterInterfaceUpdateCmd() *cobra.Command {
 		Short: "Update interface",
 		Long:  `Update interface`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterInterfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterInterfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterInterfaceUpdateParam)
@@ -856,11 +826,8 @@ func vpcRouterInterfaceUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("interface-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -897,7 +864,7 @@ func vpcRouterInterfaceDisconnectCmd() *cobra.Command {
 		Short: "Disconnected to switch",
 		Long:  `Disconnected to switch`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterInterfaceDisconnectParam)
@@ -917,11 +884,8 @@ func vpcRouterInterfaceDisconnectCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("interface-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -952,7 +916,7 @@ func vpcRouterStaticNatInfoCmd() *cobra.Command {
 		Short:   "Show information of static NAT settings",
 		Long:    `Show information of static NAT settings`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterStaticNatInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterStaticNatInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterStaticNatInfoParam)
@@ -997,7 +961,7 @@ func vpcRouterStaticNatAddCmd() *cobra.Command {
 		Short: "Add static NAT",
 		Long:  `Add static NAT`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterStaticNatAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterStaticNatAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterStaticNatAddParam)
@@ -1017,11 +981,8 @@ func vpcRouterStaticNatAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("static-nat-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1053,7 +1014,7 @@ func vpcRouterStaticNatUpdateCmd() *cobra.Command {
 		Short: "Update static NAT",
 		Long:  `Update static NAT`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterStaticNatUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterStaticNatUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterStaticNatUpdateParam)
@@ -1073,11 +1034,8 @@ func vpcRouterStaticNatUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("static-nat-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1110,7 +1068,7 @@ func vpcRouterStaticNatDeleteCmd() *cobra.Command {
 		Short: "Delete static NAT",
 		Long:  `Delete static NAT`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterStaticNatDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterStaticNatDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterStaticNatDeleteParam)
@@ -1130,11 +1088,8 @@ func vpcRouterStaticNatDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("static-nat-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1164,7 +1119,7 @@ func vpcRouterPortForwardingInfoCmd() *cobra.Command {
 		Short:   "Show information of port-forwarding settings",
 		Long:    `Show information of port-forwarding settings`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterPortForwardingInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterPortForwardingInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterPortForwardingInfoParam)
@@ -1209,7 +1164,7 @@ func vpcRouterPortForwardingAddCmd() *cobra.Command {
 		Short: "Add port forwarding",
 		Long:  `Add port forwarding`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterPortForwardingAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterPortForwardingAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterPortForwardingAddParam)
@@ -1229,11 +1184,8 @@ func vpcRouterPortForwardingAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("port-forwarding-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1267,7 +1219,7 @@ func vpcRouterPortForwardingUpdateCmd() *cobra.Command {
 		Short: "Update port forwarding",
 		Long:  `Update port forwarding`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterPortForwardingUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterPortForwardingUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterPortForwardingUpdateParam)
@@ -1287,11 +1239,8 @@ func vpcRouterPortForwardingUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("port-forwarding-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1326,7 +1275,7 @@ func vpcRouterPortForwardingDeleteCmd() *cobra.Command {
 		Short: "Delete port forwarding",
 		Long:  `Delete port forwarding`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterPortForwardingDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterPortForwardingDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterPortForwardingDeleteParam)
@@ -1346,11 +1295,8 @@ func vpcRouterPortForwardingDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("port-forwarding-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1380,7 +1326,7 @@ func vpcRouterFirewallInfoCmd() *cobra.Command {
 		Short:   "Show information of firewall rules",
 		Long:    `Show information of firewall rules`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterFirewallInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterFirewallInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterFirewallInfoParam)
@@ -1427,7 +1373,7 @@ func vpcRouterFirewallAddCmd() *cobra.Command {
 		Short: "Add firewall rule",
 		Long:  `Add firewall rule`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterFirewallAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterFirewallAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterFirewallAddParam)
@@ -1447,11 +1393,8 @@ func vpcRouterFirewallAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("firewall-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1490,7 +1433,7 @@ func vpcRouterFirewallUpdateCmd() *cobra.Command {
 		Short: "Update firewall rule",
 		Long:  `Update firewall rule`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterFirewallUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterFirewallUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterFirewallUpdateParam)
@@ -1510,11 +1453,8 @@ func vpcRouterFirewallUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("firewall-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1554,7 +1494,7 @@ func vpcRouterFirewallDeleteCmd() *cobra.Command {
 		Short: "Delete firewall rule",
 		Long:  `Delete firewall rule`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterFirewallDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterFirewallDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterFirewallDeleteParam)
@@ -1574,11 +1514,8 @@ func vpcRouterFirewallDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("firewall-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1610,7 +1547,7 @@ func vpcRouterDhcpServerInfoCmd() *cobra.Command {
 		Short:   "Show information of DHCP servers",
 		Long:    `Show information of DHCP servers`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDhcpServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterDhcpServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterDhcpServerInfoParam)
@@ -1655,7 +1592,7 @@ func vpcRouterDhcpServerAddCmd() *cobra.Command {
 		Short: "Add DHCP server",
 		Long:  `Add DHCP server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDhcpServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterDhcpServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterDhcpServerAddParam)
@@ -1675,11 +1612,8 @@ func vpcRouterDhcpServerAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("dhcp-server-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1712,7 +1646,7 @@ func vpcRouterDhcpServerUpdateCmd() *cobra.Command {
 		Short: "Update DHCP server",
 		Long:  `Update DHCP server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDhcpServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterDhcpServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterDhcpServerUpdateParam)
@@ -1732,11 +1666,8 @@ func vpcRouterDhcpServerUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("dhcp-server-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1769,7 +1700,7 @@ func vpcRouterDhcpServerDeleteCmd() *cobra.Command {
 		Short: "Delete DHCP server",
 		Long:  `Delete DHCP server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDhcpServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterDhcpServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterDhcpServerDeleteParam)
@@ -1789,11 +1720,8 @@ func vpcRouterDhcpServerDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("dhcp-server-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1823,7 +1751,7 @@ func vpcRouterDhcpStaticMappingInfoCmd() *cobra.Command {
 		Short:   "Show information of DHCP static mapping",
 		Long:    `Show information of DHCP static mapping`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDhcpStaticMappingInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterDhcpStaticMappingInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterDhcpStaticMappingInfoParam)
@@ -1868,7 +1796,7 @@ func vpcRouterDhcpStaticMappingAddCmd() *cobra.Command {
 		Short: "Add DHCP static mapping",
 		Long:  `Add DHCP static mapping`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDhcpStaticMappingAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterDhcpStaticMappingAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterDhcpStaticMappingAddParam)
@@ -1888,11 +1816,8 @@ func vpcRouterDhcpStaticMappingAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("dhcp-static-mapping-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1923,7 +1848,7 @@ func vpcRouterDhcpStaticMappingUpdateCmd() *cobra.Command {
 		Short: "Update DHCP static mapping",
 		Long:  `Update DHCP static mapping`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDhcpStaticMappingUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterDhcpStaticMappingUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterDhcpStaticMappingUpdateParam)
@@ -1943,11 +1868,8 @@ func vpcRouterDhcpStaticMappingUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("dhcp-static-mapping-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1979,7 +1901,7 @@ func vpcRouterDhcpStaticMappingDeleteCmd() *cobra.Command {
 		Short: "Delete DHCP static mapping",
 		Long:  `Delete DHCP static mapping`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDhcpStaticMappingDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterDhcpStaticMappingDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterDhcpStaticMappingDeleteParam)
@@ -1999,11 +1921,8 @@ func vpcRouterDhcpStaticMappingDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("dhcp-static-mapping-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -2033,7 +1952,7 @@ func vpcRouterPptpServerInfoCmd() *cobra.Command {
 		Short: "Show information of PPTP server",
 		Long:  `Show information of PPTP server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterPptpServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterPptpServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterPptpServerInfoParam)
@@ -2078,7 +1997,7 @@ func vpcRouterPptpServerUpdateCmd() *cobra.Command {
 		Short: "Update PPTP server setting",
 		Long:  `Update PPTP server setting`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterPptpServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterPptpServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterPptpServerUpdateParam)
@@ -2098,11 +2017,8 @@ func vpcRouterPptpServerUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("pptp-server-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -2134,7 +2050,7 @@ func vpcRouterL2TPServerInfoCmd() *cobra.Command {
 		Short: "Show information of L2TP/IPSec server",
 		Long:  `Show information of L2TP/IPSec server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterL2TPServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterL2TPServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterL2TPServerInfoParam)
@@ -2179,7 +2095,7 @@ func vpcRouterL2TPServerUpdateCmd() *cobra.Command {
 		Short: "Update L2TP/IPSec server setting",
 		Long:  `Update L2TP/IPSec server setting`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterL2TPServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterL2TPServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterL2TPServerUpdateParam)
@@ -2199,11 +2115,8 @@ func vpcRouterL2TPServerUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("l2tp-server-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -2236,7 +2149,7 @@ func vpcRouterUserInfoCmd() *cobra.Command {
 		Short:   "Show information of remote-access users",
 		Long:    `Show information of remote-access users`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterUserInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterUserInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterUserInfoParam)
@@ -2281,7 +2194,7 @@ func vpcRouterUserAddCmd() *cobra.Command {
 		Short: "Add remote-access user",
 		Long:  `Add remote-access user`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterUserAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterUserAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterUserAddParam)
@@ -2301,11 +2214,8 @@ func vpcRouterUserAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("user-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -2336,7 +2246,7 @@ func vpcRouterUserUpdateCmd() *cobra.Command {
 		Short: "Update remote-access user",
 		Long:  `Update remote-access user`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterUserUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterUserUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterUserUpdateParam)
@@ -2356,11 +2266,8 @@ func vpcRouterUserUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("user-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -2392,7 +2299,7 @@ func vpcRouterUserDeleteCmd() *cobra.Command {
 		Short: "Delete remote-access user",
 		Long:  `Delete remote-access user`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterUserDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterUserDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterUserDeleteParam)
@@ -2412,11 +2319,8 @@ func vpcRouterUserDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("user-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -2446,7 +2350,7 @@ func vpcRouterSiteToSiteVPNInfoCmd() *cobra.Command {
 		Short:   "Show information of site-to-site IPSec VPN settings",
 		Long:    `Show information of site-to-site IPSec VPN settings`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterSiteToSiteVPNInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterSiteToSiteVPNInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterSiteToSiteVPNInfoParam)
@@ -2491,7 +2395,7 @@ func vpcRouterSiteToSiteVPNAddCmd() *cobra.Command {
 		Short: "Add site-to-site IPSec VPN setting",
 		Long:  `Add site-to-site IPSec VPN setting`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterSiteToSiteVPNAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterSiteToSiteVPNAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterSiteToSiteVPNAddParam)
@@ -2511,11 +2415,8 @@ func vpcRouterSiteToSiteVPNAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("site-to-site-vpn-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -2549,7 +2450,7 @@ func vpcRouterSiteToSiteVPNUpdateCmd() *cobra.Command {
 		Short: "Update site-to-site IPSec VPN setting",
 		Long:  `Update site-to-site IPSec VPN setting`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterSiteToSiteVPNUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterSiteToSiteVPNUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterSiteToSiteVPNUpdateParam)
@@ -2569,11 +2470,8 @@ func vpcRouterSiteToSiteVPNUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("site-to-site-vpn-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -2608,7 +2506,7 @@ func vpcRouterSiteToSiteVPNDeleteCmd() *cobra.Command {
 		Short: "Delete site-to-site IPSec VPN setting",
 		Long:  `Delete site-to-site IPSec VPN setting`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterSiteToSiteVPNDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterSiteToSiteVPNDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterSiteToSiteVPNDeleteParam)
@@ -2628,11 +2526,8 @@ func vpcRouterSiteToSiteVPNDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("site-to-site-vpn-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -2662,7 +2557,7 @@ func vpcRouterSiteToSiteVPNPeersCmd() *cobra.Command {
 		Short: "Show status of site-to-site IPSec VPN peers",
 		Long:  `Show status of site-to-site IPSec VPN peers`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterSiteToSiteVPNPeersParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterSiteToSiteVPNPeersParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterSiteToSiteVPNPeersParam)
@@ -2707,7 +2602,7 @@ func vpcRouterStaticRouteInfoCmd() *cobra.Command {
 		Short:   "Show information of static-routes",
 		Long:    `Show information of static-routes`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterStaticRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterStaticRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterStaticRouteInfoParam)
@@ -2752,7 +2647,7 @@ func vpcRouterStaticRouteAddCmd() *cobra.Command {
 		Short: "Add static-route",
 		Long:  `Add static-route`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterStaticRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterStaticRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterStaticRouteAddParam)
@@ -2772,11 +2667,8 @@ func vpcRouterStaticRouteAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("static-route-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -2807,7 +2699,7 @@ func vpcRouterStaticRouteUpdateCmd() *cobra.Command {
 		Short: "Update static-route",
 		Long:  `Update static-route`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterStaticRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterStaticRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterStaticRouteUpdateParam)
@@ -2827,11 +2719,8 @@ func vpcRouterStaticRouteUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("static-route-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -2863,7 +2752,7 @@ func vpcRouterStaticRouteDeleteCmd() *cobra.Command {
 		Short: "Delete static-route",
 		Long:  `Delete static-route`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterStaticRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterStaticRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterStaticRouteDeleteParam)
@@ -2883,11 +2772,8 @@ func vpcRouterStaticRouteDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("static-route-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -2917,7 +2803,7 @@ func vpcRouterMonitorCmd() *cobra.Command {
 		Short: "Monitor VPCRouter",
 		Long:  `Monitor VPCRouter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterMonitorParam)
@@ -2966,7 +2852,7 @@ func vpcRouterLogsCmd() *cobra.Command {
 		Short: "Logs VPCRouter",
 		Long:  `Logs VPCRouter`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return vpcRouterLogsParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, vpcRouterLogsParam)

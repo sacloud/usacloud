@@ -42,7 +42,7 @@ func couponListCmd() *cobra.Command {
 		Short:   "List Coupon (default)",
 		Long:    `List Coupon (default)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return couponListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return couponListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, couponListParam)

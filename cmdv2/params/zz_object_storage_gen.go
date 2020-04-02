@@ -53,7 +53,7 @@ func NewListObjectStorageParam() *ListObjectStorageParam {
 }
 
 // Initialize init ListObjectStorageParam
-func (p *ListObjectStorageParam) Initialize(in Input) error {
+func (p *ListObjectStorageParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -364,7 +364,7 @@ func NewPutObjectStorageParam() *PutObjectStorageParam {
 }
 
 // Initialize init PutObjectStorageParam
-func (p *PutObjectStorageParam) Initialize(in Input) error {
+func (p *PutObjectStorageParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -614,7 +614,7 @@ func NewGetObjectStorageParam() *GetObjectStorageParam {
 }
 
 // Initialize init GetObjectStorageParam
-func (p *GetObjectStorageParam) Initialize(in Input) error {
+func (p *GetObjectStorageParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -843,7 +843,7 @@ func NewDeleteObjectStorageParam() *DeleteObjectStorageParam {
 }
 
 // Initialize init DeleteObjectStorageParam
-func (p *DeleteObjectStorageParam) Initialize(in Input) error {
+func (p *DeleteObjectStorageParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

@@ -46,7 +46,7 @@ func switchListCmd() *cobra.Command {
 		Short:   "List Switch",
 		Long:    `List Switch`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return switchListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return switchListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, switchListParam)
@@ -95,7 +95,7 @@ func switchCreateCmd() *cobra.Command {
 		Short: "Create Switch",
 		Long:  `Create Switch`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return switchCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return switchCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, switchCreateParam)
@@ -115,11 +115,8 @@ func switchCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -157,7 +154,7 @@ func switchReadCmd() *cobra.Command {
 		Short: "Read Switch",
 		Long:  `Read Switch`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return switchReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return switchReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, switchReadParam)
@@ -202,7 +199,7 @@ func switchUpdateCmd() *cobra.Command {
 		Short: "Update Switch",
 		Long:  `Update Switch`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return switchUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return switchUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, switchUpdateParam)
@@ -222,11 +219,8 @@ func switchUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -266,7 +260,7 @@ func switchDeleteCmd() *cobra.Command {
 		Short:   "Delete Switch",
 		Long:    `Delete Switch`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return switchDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return switchDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, switchDeleteParam)
@@ -286,11 +280,8 @@ func switchDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -326,7 +317,7 @@ func switchBridgeConnectCmd() *cobra.Command {
 		Short: "BridgeConnect Switch",
 		Long:  `BridgeConnect Switch`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return switchBridgeConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return switchBridgeConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, switchBridgeConnectParam)
@@ -346,11 +337,8 @@ func switchBridgeConnectCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("bridge-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -380,7 +368,7 @@ func switchBridgeDisconnectCmd() *cobra.Command {
 		Short: "BridgeDisconnect Switch",
 		Long:  `BridgeDisconnect Switch`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return switchBridgeDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return switchBridgeDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, switchBridgeDisconnectParam)
@@ -400,11 +388,8 @@ func switchBridgeDisconnectCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("bridge-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

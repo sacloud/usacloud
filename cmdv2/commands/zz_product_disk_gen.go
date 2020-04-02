@@ -46,7 +46,7 @@ func productDiskListCmd() *cobra.Command {
 		Short:   "List ProductDisk (default)",
 		Long:    `List ProductDisk (default)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return productDiskListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return productDiskListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, productDiskListParam)
@@ -94,7 +94,7 @@ func productDiskReadCmd() *cobra.Command {
 		Short: "Read ProductDisk",
 		Long:  `Read ProductDisk`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return productDiskReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return productDiskReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, productDiskReadParam)
@@ -114,11 +114,8 @@ func productDiskReadCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

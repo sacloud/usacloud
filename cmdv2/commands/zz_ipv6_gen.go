@@ -46,7 +46,7 @@ func ipv6ListCmd() *cobra.Command {
 		Short:   "List IPv6",
 		Long:    `List IPv6`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return ipv6ListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return ipv6ListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, ipv6ListParam)
@@ -96,7 +96,7 @@ func ipv6PtrAddCmd() *cobra.Command {
 		Short: "PtrAdd IPv6",
 		Long:  `PtrAdd IPv6`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return ipv6PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return ipv6PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, ipv6PtrAddParam)
@@ -116,11 +116,8 @@ func ipv6PtrAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("ptr-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -155,7 +152,7 @@ func ipv6PtrReadCmd() *cobra.Command {
 		Short: "PtrRead IPv6",
 		Long:  `PtrRead IPv6`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return ipv6PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return ipv6PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, ipv6PtrReadParam)
@@ -198,7 +195,7 @@ func ipv6PtrUpdateCmd() *cobra.Command {
 		Short: "PtrUpdate IPv6",
 		Long:  `PtrUpdate IPv6`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return ipv6PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return ipv6PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, ipv6PtrUpdateParam)
@@ -218,11 +215,8 @@ func ipv6PtrUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("ptr-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -257,7 +251,7 @@ func ipv6PtrDeleteCmd() *cobra.Command {
 		Short: "PtrDelete IPv6",
 		Long:  `PtrDelete IPv6`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return ipv6PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return ipv6PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, ipv6PtrDeleteParam)
@@ -277,11 +271,8 @@ func ipv6PtrDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("ptr-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

@@ -46,7 +46,7 @@ func internetListCmd() *cobra.Command {
 		Short:   "List Internet",
 		Long:    `List Internet`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return internetListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return internetListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, internetListParam)
@@ -95,7 +95,7 @@ func internetCreateCmd() *cobra.Command {
 		Short: "Create Internet",
 		Long:  `Create Internet`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return internetCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return internetCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, internetCreateParam)
@@ -115,11 +115,8 @@ func internetCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -159,7 +156,7 @@ func internetReadCmd() *cobra.Command {
 		Short: "Read Internet",
 		Long:  `Read Internet`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return internetReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return internetReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, internetReadParam)
@@ -204,7 +201,7 @@ func internetUpdateCmd() *cobra.Command {
 		Short: "Update Internet",
 		Long:  `Update Internet`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return internetUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return internetUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, internetUpdateParam)
@@ -224,11 +221,8 @@ func internetUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -269,7 +263,7 @@ func internetDeleteCmd() *cobra.Command {
 		Short:   "Delete Internet",
 		Long:    `Delete Internet`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return internetDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return internetDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, internetDeleteParam)
@@ -289,11 +283,8 @@ func internetDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -329,7 +320,7 @@ func internetUpdateBandwidthCmd() *cobra.Command {
 		Short: "UpdateBandwidth Internet",
 		Long:  `UpdateBandwidth Internet`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return internetUpdateBandwidthParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return internetUpdateBandwidthParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, internetUpdateBandwidthParam)
@@ -349,11 +340,8 @@ func internetUpdateBandwidthCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update-bandwidth", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -390,7 +378,7 @@ func internetSubnetInfoCmd() *cobra.Command {
 		Short: "SubnetInfo Internet",
 		Long:  `SubnetInfo Internet`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return internetSubnetInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return internetSubnetInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, internetSubnetInfoParam)
@@ -435,7 +423,7 @@ func internetSubnetAddCmd() *cobra.Command {
 		Short: "SubnetAdd Internet",
 		Long:  `SubnetAdd Internet`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return internetSubnetAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return internetSubnetAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, internetSubnetAddParam)
@@ -455,11 +443,8 @@ func internetSubnetAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("subnet-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -497,7 +482,7 @@ func internetSubnetDeleteCmd() *cobra.Command {
 		Short: "SubnetDelete Internet",
 		Long:  `SubnetDelete Internet`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return internetSubnetDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return internetSubnetDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, internetSubnetDeleteParam)
@@ -517,11 +502,8 @@ func internetSubnetDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("subnet-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -551,7 +533,7 @@ func internetSubnetUpdateCmd() *cobra.Command {
 		Short: "SubnetUpdate Internet",
 		Long:  `SubnetUpdate Internet`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return internetSubnetUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return internetSubnetUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, internetSubnetUpdateParam)
@@ -571,11 +553,8 @@ func internetSubnetUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("subnet-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -613,7 +592,7 @@ func internetIPv6InfoCmd() *cobra.Command {
 		Short: "IPv6Info Internet",
 		Long:  `IPv6Info Internet`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return internetIPv6InfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return internetIPv6InfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, internetIPv6InfoParam)
@@ -658,7 +637,7 @@ func internetIPv6EnableCmd() *cobra.Command {
 		Short: "IPv6Enable Internet",
 		Long:  `IPv6Enable Internet`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return internetIPv6EnableParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return internetIPv6EnableParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, internetIPv6EnableParam)
@@ -678,11 +657,8 @@ func internetIPv6EnableCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("ipv6-enable", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -718,7 +694,7 @@ func internetIPv6DisableCmd() *cobra.Command {
 		Short: "IPv6Disable Internet",
 		Long:  `IPv6Disable Internet`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return internetIPv6DisableParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return internetIPv6DisableParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, internetIPv6DisableParam)
@@ -738,11 +714,8 @@ func internetIPv6DisableCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("ipv6-disable", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -771,7 +744,7 @@ func internetMonitorCmd() *cobra.Command {
 		Short: "Monitor Internet",
 		Long:  `Monitor Internet`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return internetMonitorParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return internetMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, internetMonitorParam)

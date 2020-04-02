@@ -46,7 +46,7 @@ func mobileGatewayListCmd() *cobra.Command {
 		Short:   "List MobileGateway",
 		Long:    `List MobileGateway`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayListParam)
@@ -95,7 +95,7 @@ func mobileGatewayCreateCmd() *cobra.Command {
 		Short: "Create MobileGateway",
 		Long:  `Create MobileGateway`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayCreateParam)
@@ -115,11 +115,8 @@ func mobileGatewayCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -158,7 +155,7 @@ func mobileGatewayReadCmd() *cobra.Command {
 		Short: "Read MobileGateway",
 		Long:  `Read MobileGateway`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayReadParam)
@@ -203,7 +200,7 @@ func mobileGatewayUpdateCmd() *cobra.Command {
 		Short: "Update MobileGateway",
 		Long:  `Update MobileGateway`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayUpdateParam)
@@ -223,11 +220,8 @@ func mobileGatewayUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -268,7 +262,7 @@ func mobileGatewayDeleteCmd() *cobra.Command {
 		Short:   "Delete MobileGateway",
 		Long:    `Delete MobileGateway`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayDeleteParam)
@@ -288,11 +282,8 @@ func mobileGatewayDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -329,7 +320,7 @@ func mobileGatewayBootCmd() *cobra.Command {
 		Short:   "Boot MobileGateway",
 		Long:    `Boot MobileGateway`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayBootParam)
@@ -349,11 +340,8 @@ func mobileGatewayBootCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -382,7 +370,7 @@ func mobileGatewayShutdownCmd() *cobra.Command {
 		Short:   "Shutdown MobileGateway",
 		Long:    `Shutdown MobileGateway`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayShutdownParam)
@@ -402,11 +390,8 @@ func mobileGatewayShutdownCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -435,7 +420,7 @@ func mobileGatewayShutdownForceCmd() *cobra.Command {
 		Short:   "ShutdownForce MobileGateway",
 		Long:    `ShutdownForce MobileGateway`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayShutdownForceParam)
@@ -455,11 +440,8 @@ func mobileGatewayShutdownForceCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -488,7 +470,7 @@ func mobileGatewayResetCmd() *cobra.Command {
 		Short: "Reset MobileGateway",
 		Long:  `Reset MobileGateway`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayResetParam)
@@ -508,11 +490,8 @@ func mobileGatewayResetCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -541,7 +520,7 @@ func mobileGatewayWaitForBootCmd() *cobra.Command {
 		Short: "Wait until boot is completed",
 		Long:  `Wait until boot is completed`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayWaitForBootParam)
@@ -579,7 +558,7 @@ func mobileGatewayWaitForDownCmd() *cobra.Command {
 		Short: "Wait until shutdown is completed",
 		Long:  `Wait until shutdown is completed`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayWaitForDownParam)
@@ -617,7 +596,7 @@ func mobileGatewayInterfaceInfoCmd() *cobra.Command {
 		Short:   "Show information of NIC(s) connected to mobile-gateway",
 		Long:    `Show information of NIC(s) connected to mobile-gateway`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayInterfaceInfoParam)
@@ -662,7 +641,7 @@ func mobileGatewayInterfaceConnectCmd() *cobra.Command {
 		Short: "Connected to switch",
 		Long:  `Connected to switch`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayInterfaceConnectParam)
@@ -682,11 +661,8 @@ func mobileGatewayInterfaceConnectCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("interface-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -718,7 +694,7 @@ func mobileGatewayInterfaceUpdateCmd() *cobra.Command {
 		Short: "Update interface",
 		Long:  `Update interface`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayInterfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayInterfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayInterfaceUpdateParam)
@@ -738,11 +714,8 @@ func mobileGatewayInterfaceUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("interface-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -773,7 +746,7 @@ func mobileGatewayInterfaceDisconnectCmd() *cobra.Command {
 		Short: "Disconnected to switch",
 		Long:  `Disconnected to switch`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayInterfaceDisconnectParam)
@@ -793,11 +766,8 @@ func mobileGatewayInterfaceDisconnectCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("interface-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -826,7 +796,7 @@ func mobileGatewayTrafficControlInfoCmd() *cobra.Command {
 		Short: "Show information of traffic-control",
 		Long:  `Show information of traffic-control`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayTrafficControlInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayTrafficControlInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayTrafficControlInfoParam)
@@ -871,7 +841,7 @@ func mobileGatewayTrafficControlEnableCmd() *cobra.Command {
 		Short: "Enable traffic-control",
 		Long:  `Enable traffic-control`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayTrafficControlEnableParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayTrafficControlEnableParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayTrafficControlEnableParam)
@@ -891,11 +861,8 @@ func mobileGatewayTrafficControlEnableCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("traffic-control-enable", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -929,7 +896,7 @@ func mobileGatewayTrafficControlUpdateCmd() *cobra.Command {
 		Short: "Update traffic-control config",
 		Long:  `Update traffic-control config`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayTrafficControlUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayTrafficControlUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayTrafficControlUpdateParam)
@@ -949,11 +916,8 @@ func mobileGatewayTrafficControlUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("traffic-control-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -987,7 +951,7 @@ func mobileGatewayTrafficControlDisableCmd() *cobra.Command {
 		Short:   "Disable traffic-control config",
 		Long:    `Disable traffic-control config`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayTrafficControlDisableParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayTrafficControlDisableParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayTrafficControlDisableParam)
@@ -1007,11 +971,8 @@ func mobileGatewayTrafficControlDisableCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("traffic-control-disable", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1040,7 +1001,7 @@ func mobileGatewayStaticRouteInfoCmd() *cobra.Command {
 		Short:   "Show information of static-routes",
 		Long:    `Show information of static-routes`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayStaticRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayStaticRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayStaticRouteInfoParam)
@@ -1085,7 +1046,7 @@ func mobileGatewayStaticRouteAddCmd() *cobra.Command {
 		Short: "Add static-route",
 		Long:  `Add static-route`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayStaticRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayStaticRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayStaticRouteAddParam)
@@ -1105,11 +1066,8 @@ func mobileGatewayStaticRouteAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("static-route-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1140,7 +1098,7 @@ func mobileGatewayStaticRouteUpdateCmd() *cobra.Command {
 		Short: "Update static-route",
 		Long:  `Update static-route`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayStaticRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayStaticRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayStaticRouteUpdateParam)
@@ -1160,11 +1118,8 @@ func mobileGatewayStaticRouteUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("static-route-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1196,7 +1151,7 @@ func mobileGatewayStaticRouteDeleteCmd() *cobra.Command {
 		Short: "Delete static-route",
 		Long:  `Delete static-route`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayStaticRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayStaticRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayStaticRouteDeleteParam)
@@ -1216,11 +1171,8 @@ func mobileGatewayStaticRouteDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("static-route-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1250,7 +1202,7 @@ func mobileGatewaySIMInfoCmd() *cobra.Command {
 		Short:   "Show information of NIC(s) connected to mobile-gateway",
 		Long:    `Show information of NIC(s) connected to mobile-gateway`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewaySIMInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewaySIMInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewaySIMInfoParam)
@@ -1295,7 +1247,7 @@ func mobileGatewaySIMAddCmd() *cobra.Command {
 		Short: "Connected to switch",
 		Long:  `Connected to switch`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewaySIMAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewaySIMAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewaySIMAddParam)
@@ -1315,11 +1267,8 @@ func mobileGatewaySIMAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("sim-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1350,7 +1299,7 @@ func mobileGatewaySIMUpdateCmd() *cobra.Command {
 		Short: "Connected to switch",
 		Long:  `Connected to switch`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewaySIMUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewaySIMUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewaySIMUpdateParam)
@@ -1370,11 +1319,8 @@ func mobileGatewaySIMUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("sim-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1405,7 +1351,7 @@ func mobileGatewaySIMDeleteCmd() *cobra.Command {
 		Short: "Disconnected to switch",
 		Long:  `Disconnected to switch`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewaySIMDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewaySIMDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewaySIMDeleteParam)
@@ -1425,11 +1371,8 @@ func mobileGatewaySIMDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("sim-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1459,7 +1402,7 @@ func mobileGatewaySIMRouteInfoCmd() *cobra.Command {
 		Short:   "Show information of sim-routes",
 		Long:    `Show information of sim-routes`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewaySIMRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewaySIMRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewaySIMRouteInfoParam)
@@ -1504,7 +1447,7 @@ func mobileGatewaySIMRouteAddCmd() *cobra.Command {
 		Short: "Add sim-route",
 		Long:  `Add sim-route`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewaySIMRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewaySIMRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewaySIMRouteAddParam)
@@ -1524,11 +1467,8 @@ func mobileGatewaySIMRouteAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("sim-route-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1559,7 +1499,7 @@ func mobileGatewaySIMRouteUpdateCmd() *cobra.Command {
 		Short: "Update sim-route",
 		Long:  `Update sim-route`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewaySIMRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewaySIMRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewaySIMRouteUpdateParam)
@@ -1579,11 +1519,8 @@ func mobileGatewaySIMRouteUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("sim-route-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1615,7 +1552,7 @@ func mobileGatewaySIMRouteDeleteCmd() *cobra.Command {
 		Short: "Delete sim-route",
 		Long:  `Delete sim-route`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewaySIMRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewaySIMRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewaySIMRouteDeleteParam)
@@ -1635,11 +1572,8 @@ func mobileGatewaySIMRouteDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("sim-route-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1669,7 +1603,7 @@ func mobileGatewayDNSUpdateCmd() *cobra.Command {
 		Short: "Update interface",
 		Long:  `Update interface`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayDNSUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayDNSUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayDNSUpdateParam)
@@ -1689,11 +1623,8 @@ func mobileGatewayDNSUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("dns-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1724,7 +1655,7 @@ func mobileGatewayLogsCmd() *cobra.Command {
 		Short: "Logs MobileGateway",
 		Long:  `Logs MobileGateway`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return mobileGatewayLogsParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return mobileGatewayLogsParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayLogsParam)

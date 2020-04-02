@@ -52,7 +52,7 @@ func NewListWebAccelParam() *ListWebAccelParam {
 }
 
 // Initialize init ListWebAccelParam
-func (p *ListWebAccelParam) Initialize(in Input) error {
+func (p *ListWebAccelParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -316,7 +316,7 @@ func NewReadWebAccelParam() *ReadWebAccelParam {
 }
 
 // Initialize init ReadWebAccelParam
-func (p *ReadWebAccelParam) Initialize(in Input) error {
+func (p *ReadWebAccelParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -610,7 +610,7 @@ func NewCertificateInfoWebAccelParam() *CertificateInfoWebAccelParam {
 }
 
 // Initialize init CertificateInfoWebAccelParam
-func (p *CertificateInfoWebAccelParam) Initialize(in Input) error {
+func (p *CertificateInfoWebAccelParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -909,7 +909,7 @@ func NewCertificateNewWebAccelParam() *CertificateNewWebAccelParam {
 }
 
 // Initialize init CertificateNewWebAccelParam
-func (p *CertificateNewWebAccelParam) Initialize(in Input) error {
+func (p *CertificateNewWebAccelParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1299,7 +1299,7 @@ func NewCertificateUpdateWebAccelParam() *CertificateUpdateWebAccelParam {
 }
 
 // Initialize init CertificateUpdateWebAccelParam
-func (p *CertificateUpdateWebAccelParam) Initialize(in Input) error {
+func (p *CertificateUpdateWebAccelParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1683,7 +1683,7 @@ func NewDeleteCacheWebAccelParam() *DeleteCacheWebAccelParam {
 }
 
 // Initialize init DeleteCacheWebAccelParam
-func (p *DeleteCacheWebAccelParam) Initialize(in Input) error {
+func (p *DeleteCacheWebAccelParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

@@ -58,7 +58,7 @@ func NewListDatabaseParam() *ListDatabaseParam {
 }
 
 // Initialize init ListDatabaseParam
-func (p *ListDatabaseParam) Initialize(in Input) error {
+func (p *ListDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -442,7 +442,7 @@ func NewCreateDatabaseParam() *CreateDatabaseParam {
 }
 
 // Initialize init CreateDatabaseParam
-func (p *CreateDatabaseParam) Initialize(in Input) error {
+func (p *CreateDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1125,7 +1125,7 @@ func NewReadDatabaseParam() *ReadDatabaseParam {
 }
 
 // Initialize init ReadDatabaseParam
-func (p *ReadDatabaseParam) Initialize(in Input) error {
+func (p *ReadDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1434,7 +1434,7 @@ func NewUpdateDatabaseParam() *UpdateDatabaseParam {
 }
 
 // Initialize init UpdateDatabaseParam
-func (p *UpdateDatabaseParam) Initialize(in Input) error {
+func (p *UpdateDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1964,7 +1964,7 @@ func NewDeleteDatabaseParam() *DeleteDatabaseParam {
 }
 
 // Initialize init DeleteDatabaseParam
-func (p *DeleteDatabaseParam) Initialize(in Input) error {
+func (p *DeleteDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2274,7 +2274,7 @@ func NewBootDatabaseParam() *BootDatabaseParam {
 }
 
 // Initialize init BootDatabaseParam
-func (p *BootDatabaseParam) Initialize(in Input) error {
+func (p *BootDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2482,7 +2482,7 @@ func NewShutdownDatabaseParam() *ShutdownDatabaseParam {
 }
 
 // Initialize init ShutdownDatabaseParam
-func (p *ShutdownDatabaseParam) Initialize(in Input) error {
+func (p *ShutdownDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2690,7 +2690,7 @@ func NewShutdownForceDatabaseParam() *ShutdownForceDatabaseParam {
 }
 
 // Initialize init ShutdownForceDatabaseParam
-func (p *ShutdownForceDatabaseParam) Initialize(in Input) error {
+func (p *ShutdownForceDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2898,7 +2898,7 @@ func NewResetDatabaseParam() *ResetDatabaseParam {
 }
 
 // Initialize init ResetDatabaseParam
-func (p *ResetDatabaseParam) Initialize(in Input) error {
+func (p *ResetDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3105,7 +3105,7 @@ func NewWaitForBootDatabaseParam() *WaitForBootDatabaseParam {
 }
 
 // Initialize init WaitForBootDatabaseParam
-func (p *WaitForBootDatabaseParam) Initialize(in Input) error {
+func (p *WaitForBootDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3301,7 +3301,7 @@ func NewWaitForDownDatabaseParam() *WaitForDownDatabaseParam {
 }
 
 // Initialize init WaitForDownDatabaseParam
-func (p *WaitForDownDatabaseParam) Initialize(in Input) error {
+func (p *WaitForDownDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3504,7 +3504,7 @@ func NewBackupInfoDatabaseParam() *BackupInfoDatabaseParam {
 }
 
 // Initialize init BackupInfoDatabaseParam
-func (p *BackupInfoDatabaseParam) Initialize(in Input) error {
+func (p *BackupInfoDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3798,7 +3798,7 @@ func NewBackupCreateDatabaseParam() *BackupCreateDatabaseParam {
 }
 
 // Initialize init BackupCreateDatabaseParam
-func (p *BackupCreateDatabaseParam) Initialize(in Input) error {
+func (p *BackupCreateDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4093,7 +4093,7 @@ func NewBackupRestoreDatabaseParam() *BackupRestoreDatabaseParam {
 }
 
 // Initialize init BackupRestoreDatabaseParam
-func (p *BackupRestoreDatabaseParam) Initialize(in Input) error {
+func (p *BackupRestoreDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4414,7 +4414,7 @@ func NewBackupLockDatabaseParam() *BackupLockDatabaseParam {
 }
 
 // Initialize init BackupLockDatabaseParam
-func (p *BackupLockDatabaseParam) Initialize(in Input) error {
+func (p *BackupLockDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4735,7 +4735,7 @@ func NewBackupUnlockDatabaseParam() *BackupUnlockDatabaseParam {
 }
 
 // Initialize init BackupUnlockDatabaseParam
-func (p *BackupUnlockDatabaseParam) Initialize(in Input) error {
+func (p *BackupUnlockDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5056,7 +5056,7 @@ func NewBackupRemoveDatabaseParam() *BackupRemoveDatabaseParam {
 }
 
 // Initialize init BackupRemoveDatabaseParam
-func (p *BackupRemoveDatabaseParam) Initialize(in Input) error {
+func (p *BackupRemoveDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5393,7 +5393,7 @@ func NewCloneDatabaseParam() *CloneDatabaseParam {
 }
 
 // Initialize init CloneDatabaseParam
-func (p *CloneDatabaseParam) Initialize(in Input) error {
+func (p *CloneDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6004,7 +6004,7 @@ func NewReplicaCreateDatabaseParam() *ReplicaCreateDatabaseParam {
 }
 
 // Initialize init ReplicaCreateDatabaseParam
-func (p *ReplicaCreateDatabaseParam) Initialize(in Input) error {
+func (p *ReplicaCreateDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6468,7 +6468,7 @@ func NewMonitorCPUDatabaseParam() *MonitorCPUDatabaseParam {
 }
 
 // Initialize init MonitorCPUDatabaseParam
-func (p *MonitorCPUDatabaseParam) Initialize(in Input) error {
+func (p *MonitorCPUDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6823,7 +6823,7 @@ func NewMonitorMemoryDatabaseParam() *MonitorMemoryDatabaseParam {
 }
 
 // Initialize init MonitorMemoryDatabaseParam
-func (p *MonitorMemoryDatabaseParam) Initialize(in Input) error {
+func (p *MonitorMemoryDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7178,7 +7178,7 @@ func NewMonitorNicDatabaseParam() *MonitorNicDatabaseParam {
 }
 
 // Initialize init MonitorNicDatabaseParam
-func (p *MonitorNicDatabaseParam) Initialize(in Input) error {
+func (p *MonitorNicDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7533,7 +7533,7 @@ func NewMonitorSystemDiskDatabaseParam() *MonitorSystemDiskDatabaseParam {
 }
 
 // Initialize init MonitorSystemDiskDatabaseParam
-func (p *MonitorSystemDiskDatabaseParam) Initialize(in Input) error {
+func (p *MonitorSystemDiskDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7888,7 +7888,7 @@ func NewMonitorBackupDiskDatabaseParam() *MonitorBackupDiskDatabaseParam {
 }
 
 // Initialize init MonitorBackupDiskDatabaseParam
-func (p *MonitorBackupDiskDatabaseParam) Initialize(in Input) error {
+func (p *MonitorBackupDiskDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -8243,7 +8243,7 @@ func NewMonitorSystemDiskSizeDatabaseParam() *MonitorSystemDiskSizeDatabaseParam
 }
 
 // Initialize init MonitorSystemDiskSizeDatabaseParam
-func (p *MonitorSystemDiskSizeDatabaseParam) Initialize(in Input) error {
+func (p *MonitorSystemDiskSizeDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -8598,7 +8598,7 @@ func NewMonitorBackupDiskSizeDatabaseParam() *MonitorBackupDiskSizeDatabaseParam
 }
 
 // Initialize init MonitorBackupDiskSizeDatabaseParam
-func (p *MonitorBackupDiskSizeDatabaseParam) Initialize(in Input) error {
+func (p *MonitorBackupDiskSizeDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -8947,7 +8947,7 @@ func NewLogsDatabaseParam() *LogsDatabaseParam {
 }
 
 // Initialize init LogsDatabaseParam
-func (p *LogsDatabaseParam) Initialize(in Input) error {
+func (p *LogsDatabaseParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

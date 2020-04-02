@@ -46,7 +46,7 @@ func serverListCmd() *cobra.Command {
 		Short:   "List Server",
 		Long:    `List Server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverListParam)
@@ -95,7 +95,7 @@ func serverBuildCmd() *cobra.Command {
 		Short: "Build Server",
 		Long:  `Build Server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverBuildParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverBuildParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverBuildParam)
@@ -115,11 +115,8 @@ func serverBuildCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("build", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -195,7 +192,7 @@ func serverReadCmd() *cobra.Command {
 		Short: "Read Server",
 		Long:  `Read Server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverReadParam)
@@ -240,7 +237,7 @@ func serverUpdateCmd() *cobra.Command {
 		Short: "Update Server",
 		Long:  `Update Server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverUpdateParam)
@@ -260,11 +257,8 @@ func serverUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -305,7 +299,7 @@ func serverDeleteCmd() *cobra.Command {
 		Short:   "Delete Server",
 		Long:    `Delete Server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverDeleteParam)
@@ -325,11 +319,8 @@ func serverDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -367,7 +358,7 @@ func serverPlanChangeCmd() *cobra.Command {
 		Short: "Change server plan(core/memory)",
 		Long:  `Change server plan(core/memory)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverPlanChangeParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverPlanChangeParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverPlanChangeParam)
@@ -387,11 +378,8 @@ func serverPlanChangeCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("plan-change", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -430,7 +418,7 @@ func serverBootCmd() *cobra.Command {
 		Short:   "Boot Server",
 		Long:    `Boot Server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverBootParam)
@@ -450,11 +438,8 @@ func serverBootCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -483,7 +468,7 @@ func serverShutdownCmd() *cobra.Command {
 		Short:   "Shutdown Server",
 		Long:    `Shutdown Server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverShutdownParam)
@@ -503,11 +488,8 @@ func serverShutdownCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -536,7 +518,7 @@ func serverShutdownForceCmd() *cobra.Command {
 		Short:   "ShutdownForce Server",
 		Long:    `ShutdownForce Server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverShutdownForceParam)
@@ -556,11 +538,8 @@ func serverShutdownForceCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -589,7 +568,7 @@ func serverResetCmd() *cobra.Command {
 		Short: "Reset Server",
 		Long:  `Reset Server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverResetParam)
@@ -609,11 +588,8 @@ func serverResetCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -642,7 +618,7 @@ func serverWaitForBootCmd() *cobra.Command {
 		Short: "Wait until boot is completed",
 		Long:  `Wait until boot is completed`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverWaitForBootParam)
@@ -680,7 +656,7 @@ func serverWaitForDownCmd() *cobra.Command {
 		Short: "Wait until shutdown is completed",
 		Long:  `Wait until shutdown is completed`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverWaitForDownParam)
@@ -718,7 +694,7 @@ func serverSSHCmd() *cobra.Command {
 		Short: "Connect to server by SSH",
 		Long:  `Connect to server by SSH`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverSSHParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverSSHParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverSSHParam)
@@ -761,7 +737,7 @@ func serverSSHExecCmd() *cobra.Command {
 		Short: "Execute command on server connected by SSH",
 		Long:  `Execute command on server connected by SSH`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverSSHExecParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverSSHExecParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverSSHExecParam)
@@ -803,7 +779,7 @@ func serverScpCmd() *cobra.Command {
 		Short: "Copy files/directories by SSH",
 		Long:  `Copy files/directories by SSH`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverScpParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverScpParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverScpParam)
@@ -823,11 +799,8 @@ func serverScpCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("scp", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -860,7 +833,7 @@ func serverVncCmd() *cobra.Command {
 		Short: "Open VNC client using the OS's default application",
 		Long:  `Open VNC client using the OS's default application`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverVncParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverVncParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverVncParam)
@@ -899,7 +872,7 @@ func serverVncInfoCmd() *cobra.Command {
 		Short: "Show VNC proxy information",
 		Long:  `Show VNC proxy information`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverVncInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverVncInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverVncInfoParam)
@@ -945,7 +918,7 @@ func serverVncSendCmd() *cobra.Command {
 		Short: "Send keys over VNC connection",
 		Long:  `Send keys over VNC connection`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverVncSendParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverVncSendParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverVncSendParam)
@@ -965,11 +938,8 @@ func serverVncSendCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("vnc-send", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1010,7 +980,7 @@ func serverVncSnapshotCmd() *cobra.Command {
 		Short: "Capture VNC snapshot",
 		Long:  `Capture VNC snapshot`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverVncSnapshotParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverVncSnapshotParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverVncSnapshotParam)
@@ -1030,11 +1000,8 @@ func serverVncSnapshotCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("vnc-snapshot", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1072,7 +1039,7 @@ func serverRemoteDesktopCmd() *cobra.Command {
 		Short:   "Open RDP client using the OS's default application",
 		Long:    `Open RDP client using the OS's default application`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverRemoteDesktopParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverRemoteDesktopParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverRemoteDesktopParam)
@@ -1112,7 +1079,7 @@ func serverRemoteDesktopInfoCmd() *cobra.Command {
 		Short:   "Show RDP information(.rdp)",
 		Long:    `Show RDP information(.rdp)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverRemoteDesktopInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverRemoteDesktopInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverRemoteDesktopInfoParam)
@@ -1159,7 +1126,7 @@ func serverDiskInfoCmd() *cobra.Command {
 		Short:   "Show information of disk(s) connected to server",
 		Long:    `Show information of disk(s) connected to server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverDiskInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverDiskInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverDiskInfoParam)
@@ -1204,7 +1171,7 @@ func serverDiskConnectCmd() *cobra.Command {
 		Short: "Connect disk to server",
 		Long:  `Connect disk to server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverDiskConnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverDiskConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverDiskConnectParam)
@@ -1224,11 +1191,8 @@ func serverDiskConnectCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("disk-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1258,7 +1222,7 @@ func serverDiskDisconnectCmd() *cobra.Command {
 		Short: "Disconnect disk from server",
 		Long:  `Disconnect disk from server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverDiskDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverDiskDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverDiskDisconnectParam)
@@ -1278,11 +1242,8 @@ func serverDiskDisconnectCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("disk-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1312,7 +1273,7 @@ func serverInterfaceInfoCmd() *cobra.Command {
 		Short:   "Show information of NIC(s) connected to server",
 		Long:    `Show information of NIC(s) connected to server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverInterfaceInfoParam)
@@ -1357,7 +1318,7 @@ func serverInterfaceAddForInternetCmd() *cobra.Command {
 		Short: "Create and connect NIC connected to the internet",
 		Long:  `Create and connect NIC connected to the internet`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverInterfaceAddForInternetParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverInterfaceAddForInternetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverInterfaceAddForInternetParam)
@@ -1377,11 +1338,8 @@ func serverInterfaceAddForInternetCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("interface-add-for-internet", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1411,7 +1369,7 @@ func serverInterfaceAddForRouterCmd() *cobra.Command {
 		Short: "Create and connect NIC connected to the router",
 		Long:  `Create and connect NIC connected to the router`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverInterfaceAddForRouterParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverInterfaceAddForRouterParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverInterfaceAddForRouterParam)
@@ -1431,11 +1389,8 @@ func serverInterfaceAddForRouterCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("interface-add-for-router", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1469,7 +1424,7 @@ func serverInterfaceAddForSwitchCmd() *cobra.Command {
 		Short: "Create and connect NIC connected to the switch",
 		Long:  `Create and connect NIC connected to the switch`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverInterfaceAddForSwitchParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverInterfaceAddForSwitchParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverInterfaceAddForSwitchParam)
@@ -1489,11 +1444,8 @@ func serverInterfaceAddForSwitchCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("interface-add-for-switch", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1527,7 +1479,7 @@ func serverInterfaceAddDisconnectedCmd() *cobra.Command {
 		Short: "Create and connect a disconnected NIC",
 		Long:  `Create and connect a disconnected NIC`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverInterfaceAddDisconnectedParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverInterfaceAddDisconnectedParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverInterfaceAddDisconnectedParam)
@@ -1547,11 +1499,8 @@ func serverInterfaceAddDisconnectedCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("interface-add-disconnected", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1580,7 +1529,7 @@ func serverISOInfoCmd() *cobra.Command {
 		Short: "Show information of ISO-Image inserted to server",
 		Long:  `Show information of ISO-Image inserted to server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverISOInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverISOInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverISOInfoParam)
@@ -1625,7 +1574,7 @@ func serverISOInsertCmd() *cobra.Command {
 		Short: "Insert ISO-Image to server",
 		Long:  `Insert ISO-Image to server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverISOInsertParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverISOInsertParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverISOInsertParam)
@@ -1645,11 +1594,8 @@ func serverISOInsertCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("iso-insert", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1685,7 +1631,7 @@ func serverISOEjectCmd() *cobra.Command {
 		Short: "Eject ISO-Image from server",
 		Long:  `Eject ISO-Image from server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverISOEjectParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverISOEjectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverISOEjectParam)
@@ -1705,11 +1651,8 @@ func serverISOEjectCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("iso-eject", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -1738,7 +1681,7 @@ func serverMonitorCPUCmd() *cobra.Command {
 		Short: "Collect CPU monitor values",
 		Long:  `Collect CPU monitor values`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverMonitorCPUParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverMonitorCPUParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverMonitorCPUParam)
@@ -1786,7 +1729,7 @@ func serverMonitorNicCmd() *cobra.Command {
 		Short: "Collect NIC(s) monitor values",
 		Long:  `Collect NIC(s) monitor values`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverMonitorNicParam)
@@ -1835,7 +1778,7 @@ func serverMonitorDiskCmd() *cobra.Command {
 		Short: "Collect Disk(s) monitor values",
 		Long:  `Collect Disk(s) monitor values`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverMonitorDiskParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverMonitorDiskParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverMonitorDiskParam)
@@ -1884,7 +1827,7 @@ func serverMaintenanceInfoCmd() *cobra.Command {
 		Short: "MaintenanceInfo Server",
 		Long:  `MaintenanceInfo Server`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverMaintenanceInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return serverMaintenanceInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, serverMaintenanceInfoParam)

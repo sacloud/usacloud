@@ -59,7 +59,7 @@ func NewListIconParam() *ListIconParam {
 }
 
 // Initialize init ListIconParam
-func (p *ListIconParam) Initialize(in Input) error {
+func (p *ListIconParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -445,7 +445,7 @@ func NewCreateIconParam() *CreateIconParam {
 }
 
 // Initialize init CreateIconParam
-func (p *CreateIconParam) Initialize(in Input) error {
+func (p *CreateIconParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -791,7 +791,7 @@ func NewReadIconParam() *ReadIconParam {
 }
 
 // Initialize init ReadIconParam
-func (p *ReadIconParam) Initialize(in Input) error {
+func (p *ReadIconParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1088,7 +1088,7 @@ func NewUpdateIconParam() *UpdateIconParam {
 }
 
 // Initialize init UpdateIconParam
-func (p *UpdateIconParam) Initialize(in Input) error {
+func (p *UpdateIconParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1432,7 +1432,7 @@ func NewDeleteIconParam() *DeleteIconParam {
 }
 
 // Initialize init DeleteIconParam
-func (p *DeleteIconParam) Initialize(in Input) error {
+func (p *DeleteIconParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

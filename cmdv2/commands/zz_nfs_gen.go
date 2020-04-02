@@ -46,7 +46,7 @@ func nfsListCmd() *cobra.Command {
 		Short:   "List NFS",
 		Long:    `List NFS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return nfsListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, nfsListParam)
@@ -95,7 +95,7 @@ func nfsCreateCmd() *cobra.Command {
 		Short: "Create NFS",
 		Long:  `Create NFS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return nfsCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, nfsCreateParam)
@@ -115,11 +115,8 @@ func nfsCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -163,7 +160,7 @@ func nfsReadCmd() *cobra.Command {
 		Short: "Read NFS",
 		Long:  `Read NFS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return nfsReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, nfsReadParam)
@@ -208,7 +205,7 @@ func nfsUpdateCmd() *cobra.Command {
 		Short: "Update NFS",
 		Long:  `Update NFS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return nfsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, nfsUpdateParam)
@@ -228,11 +225,8 @@ func nfsUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -272,7 +266,7 @@ func nfsDeleteCmd() *cobra.Command {
 		Short:   "Delete NFS",
 		Long:    `Delete NFS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return nfsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, nfsDeleteParam)
@@ -292,11 +286,8 @@ func nfsDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -333,7 +324,7 @@ func nfsBootCmd() *cobra.Command {
 		Short:   "Boot NFS",
 		Long:    `Boot NFS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return nfsBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, nfsBootParam)
@@ -353,11 +344,8 @@ func nfsBootCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -386,7 +374,7 @@ func nfsShutdownCmd() *cobra.Command {
 		Short:   "Shutdown NFS",
 		Long:    `Shutdown NFS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsShutdownParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return nfsShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, nfsShutdownParam)
@@ -406,11 +394,8 @@ func nfsShutdownCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -439,7 +424,7 @@ func nfsShutdownForceCmd() *cobra.Command {
 		Short:   "ShutdownForce NFS",
 		Long:    `ShutdownForce NFS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return nfsShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, nfsShutdownForceParam)
@@ -459,11 +444,8 @@ func nfsShutdownForceCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -492,7 +474,7 @@ func nfsResetCmd() *cobra.Command {
 		Short: "Reset NFS",
 		Long:  `Reset NFS`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsResetParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return nfsResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, nfsResetParam)
@@ -512,11 +494,8 @@ func nfsResetCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -545,7 +524,7 @@ func nfsWaitForBootCmd() *cobra.Command {
 		Short: "Wait until boot is completed",
 		Long:  `Wait until boot is completed`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return nfsWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, nfsWaitForBootParam)
@@ -583,7 +562,7 @@ func nfsWaitForDownCmd() *cobra.Command {
 		Short: "Wait until shutdown is completed",
 		Long:  `Wait until shutdown is completed`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return nfsWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, nfsWaitForDownParam)
@@ -621,7 +600,7 @@ func nfsMonitorNicCmd() *cobra.Command {
 		Short: "Collect NIC(s) monitor values",
 		Long:  `Collect NIC(s) monitor values`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return nfsMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, nfsMonitorNicParam)
@@ -669,7 +648,7 @@ func nfsMonitorFreeDiskSizeCmd() *cobra.Command {
 		Short: "Collect system-disk monitor values(IO)",
 		Long:  `Collect system-disk monitor values(IO)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsMonitorFreeDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return nfsMonitorFreeDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, nfsMonitorFreeDiskSizeParam)

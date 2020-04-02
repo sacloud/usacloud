@@ -45,7 +45,7 @@ func webAccelListCmd() *cobra.Command {
 		Short:   "List WebAccel",
 		Long:    `List WebAccel`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return webAccelListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return webAccelListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, webAccelListParam)
@@ -88,7 +88,7 @@ func webAccelReadCmd() *cobra.Command {
 		Short: "Read WebAccel",
 		Long:  `Read WebAccel`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return webAccelReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return webAccelReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, webAccelReadParam)
@@ -133,7 +133,7 @@ func webAccelCertificateInfoCmd() *cobra.Command {
 		Short:   "CertificateInfo WebAccel",
 		Long:    `CertificateInfo WebAccel`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return webAccelCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return webAccelCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, webAccelCertificateInfoParam)
@@ -178,7 +178,7 @@ func webAccelCertificateNewCmd() *cobra.Command {
 		Short:   "CertificateNew WebAccel",
 		Long:    `CertificateNew WebAccel`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return webAccelCertificateNewParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return webAccelCertificateNewParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, webAccelCertificateNewParam)
@@ -198,11 +198,8 @@ func webAccelCertificateNewCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("certificate-new", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -242,7 +239,7 @@ func webAccelCertificateUpdateCmd() *cobra.Command {
 		Short:   "CertificateUpdate WebAccel",
 		Long:    `CertificateUpdate WebAccel`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return webAccelCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return webAccelCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, webAccelCertificateUpdateParam)
@@ -262,11 +259,8 @@ func webAccelCertificateUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("certificate-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -306,7 +300,7 @@ func webAccelDeleteCacheCmd() *cobra.Command {
 		Short:   "DeleteCache WebAccel",
 		Long:    `DeleteCache WebAccel`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return webAccelDeleteCacheParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return webAccelDeleteCacheParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, webAccelDeleteCacheParam)
@@ -326,11 +320,8 @@ func webAccelDeleteCacheCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete-cache", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

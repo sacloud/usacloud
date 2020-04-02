@@ -58,7 +58,7 @@ func NewListPrivateHostParam() *ListPrivateHostParam {
 }
 
 // Initialize init ListPrivateHostParam
-func (p *ListPrivateHostParam) Initialize(in Input) error {
+func (p *ListPrivateHostParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -426,7 +426,7 @@ func NewCreatePrivateHostParam() *CreatePrivateHostParam {
 }
 
 // Initialize init CreatePrivateHostParam
-func (p *CreatePrivateHostParam) Initialize(in Input) error {
+func (p *CreatePrivateHostParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -784,7 +784,7 @@ func NewReadPrivateHostParam() *ReadPrivateHostParam {
 }
 
 // Initialize init ReadPrivateHostParam
-func (p *ReadPrivateHostParam) Initialize(in Input) error {
+func (p *ReadPrivateHostParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1083,7 +1083,7 @@ func NewUpdatePrivateHostParam() *UpdatePrivateHostParam {
 }
 
 // Initialize init UpdatePrivateHostParam
-func (p *UpdatePrivateHostParam) Initialize(in Input) error {
+func (p *UpdatePrivateHostParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1465,7 +1465,7 @@ func NewDeletePrivateHostParam() *DeletePrivateHostParam {
 }
 
 // Initialize init DeletePrivateHostParam
-func (p *DeletePrivateHostParam) Initialize(in Input) error {
+func (p *DeletePrivateHostParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1770,7 +1770,7 @@ func NewServerInfoPrivateHostParam() *ServerInfoPrivateHostParam {
 }
 
 // Initialize init ServerInfoPrivateHostParam
-func (p *ServerInfoPrivateHostParam) Initialize(in Input) error {
+func (p *ServerInfoPrivateHostParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2066,7 +2066,7 @@ func NewServerAddPrivateHostParam() *ServerAddPrivateHostParam {
 }
 
 // Initialize init ServerAddPrivateHostParam
-func (p *ServerAddPrivateHostParam) Initialize(in Input) error {
+func (p *ServerAddPrivateHostParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2399,7 +2399,7 @@ func NewServerDeletePrivateHostParam() *ServerDeletePrivateHostParam {
 }
 
 // Initialize init ServerDeletePrivateHostParam
-func (p *ServerDeletePrivateHostParam) Initialize(in Input) error {
+func (p *ServerDeletePrivateHostParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

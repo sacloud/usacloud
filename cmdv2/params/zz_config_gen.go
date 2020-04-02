@@ -43,7 +43,7 @@ func NewCurrentConfigParam() *CurrentConfigParam {
 }
 
 // Initialize init CurrentConfigParam
-func (p *CurrentConfigParam) Initialize(in Input) error {
+func (p *CurrentConfigParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -208,7 +208,7 @@ func NewDeleteConfigParam() *DeleteConfigParam {
 }
 
 // Initialize init DeleteConfigParam
-func (p *DeleteConfigParam) Initialize(in Input) error {
+func (p *DeleteConfigParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -387,7 +387,7 @@ func NewEditConfigParam() *EditConfigParam {
 }
 
 // Initialize init EditConfigParam
-func (p *EditConfigParam) Initialize(in Input) error {
+func (p *EditConfigParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -611,7 +611,7 @@ func NewListConfigParam() *ListConfigParam {
 }
 
 // Initialize init ListConfigParam
-func (p *ListConfigParam) Initialize(in Input) error {
+func (p *ListConfigParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -775,7 +775,7 @@ func NewMigrateConfigParam() *MigrateConfigParam {
 }
 
 // Initialize init MigrateConfigParam
-func (p *MigrateConfigParam) Initialize(in Input) error {
+func (p *MigrateConfigParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -939,7 +939,7 @@ func NewShowConfigParam() *ShowConfigParam {
 }
 
 // Initialize init ShowConfigParam
-func (p *ShowConfigParam) Initialize(in Input) error {
+func (p *ShowConfigParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1103,7 +1103,7 @@ func NewUseConfigParam() *UseConfigParam {
 }
 
 // Initialize init UseConfigParam
-func (p *UseConfigParam) Initialize(in Input) error {
+func (p *UseConfigParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

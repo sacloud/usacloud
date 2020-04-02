@@ -45,7 +45,7 @@ func objectStorageListCmd() *cobra.Command {
 		Short:   "List ObjectStorage",
 		Long:    `List ObjectStorage`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return objectStorageListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return objectStorageListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, objectStorageListParam)
@@ -91,7 +91,7 @@ func objectStoragePutCmd() *cobra.Command {
 		Short: "Put ObjectStorage",
 		Long:  `Put ObjectStorage`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return objectStoragePutParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return objectStoragePutParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, objectStoragePutParam)
@@ -111,11 +111,8 @@ func objectStoragePutCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("put", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -147,7 +144,7 @@ func objectStorageGetCmd() *cobra.Command {
 		Short: "Get ObjectStorage",
 		Long:  `Get ObjectStorage`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return objectStorageGetParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return objectStorageGetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, objectStorageGetParam)
@@ -187,7 +184,7 @@ func objectStorageDeleteCmd() *cobra.Command {
 		Short:   "Delete ObjectStorage",
 		Long:    `Delete ObjectStorage`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return objectStorageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return objectStorageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, objectStorageDeleteParam)
@@ -207,11 +204,8 @@ func objectStorageDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

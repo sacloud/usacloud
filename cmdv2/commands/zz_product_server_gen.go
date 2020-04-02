@@ -46,7 +46,7 @@ func productServerListCmd() *cobra.Command {
 		Short:   "List ProductServer (default)",
 		Long:    `List ProductServer (default)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return productServerListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return productServerListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, productServerListParam)
@@ -94,7 +94,7 @@ func productServerReadCmd() *cobra.Command {
 		Short: "Read ProductServer",
 		Long:  `Read ProductServer`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return productServerReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return productServerReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, productServerReadParam)
@@ -114,11 +114,8 @@ func productServerReadCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

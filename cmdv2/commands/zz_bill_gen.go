@@ -42,7 +42,7 @@ func billCsvCmd() *cobra.Command {
 		Short: "Csv Bill",
 		Long:  `Csv Bill`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return billCsvParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return billCsvParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, billCsvParam)
@@ -81,7 +81,7 @@ func billListCmd() *cobra.Command {
 		Short:   "List Bill (default)",
 		Long:    `List Bill (default)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return billListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return billListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, billListParam)

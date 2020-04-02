@@ -58,7 +58,7 @@ func NewListGSLBParam() *ListGSLBParam {
 }
 
 // Initialize init ListGSLBParam
-func (p *ListGSLBParam) Initialize(in Input) error {
+func (p *ListGSLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -423,7 +423,7 @@ func NewServerInfoGSLBParam() *ServerInfoGSLBParam {
 }
 
 // Initialize init ServerInfoGSLBParam
-func (p *ServerInfoGSLBParam) Initialize(in Input) error {
+func (p *ServerInfoGSLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -729,7 +729,7 @@ func NewCreateGSLBParam() *CreateGSLBParam {
 }
 
 // Initialize init CreateGSLBParam
-func (p *CreateGSLBParam) Initialize(in Input) error {
+func (p *CreateGSLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1217,7 +1217,7 @@ func NewServerAddGSLBParam() *ServerAddGSLBParam {
 }
 
 // Initialize init ServerAddGSLBParam
-func (p *ServerAddGSLBParam) Initialize(in Input) error {
+func (p *ServerAddGSLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1571,7 +1571,7 @@ func NewReadGSLBParam() *ReadGSLBParam {
 }
 
 // Initialize init ReadGSLBParam
-func (p *ReadGSLBParam) Initialize(in Input) error {
+func (p *ReadGSLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1870,7 +1870,7 @@ func NewServerUpdateGSLBParam() *ServerUpdateGSLBParam {
 }
 
 // Initialize init ServerUpdateGSLBParam
-func (p *ServerUpdateGSLBParam) Initialize(in Input) error {
+func (p *ServerUpdateGSLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2245,7 +2245,7 @@ func NewServerDeleteGSLBParam() *ServerDeleteGSLBParam {
 }
 
 // Initialize init ServerDeleteGSLBParam
-func (p *ServerDeleteGSLBParam) Initialize(in Input) error {
+func (p *ServerDeleteGSLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2582,7 +2582,7 @@ func NewUpdateGSLBParam() *UpdateGSLBParam {
 }
 
 // Initialize init UpdateGSLBParam
-func (p *UpdateGSLBParam) Initialize(in Input) error {
+func (p *UpdateGSLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3076,7 +3076,7 @@ func NewDeleteGSLBParam() *DeleteGSLBParam {
 }
 
 // Initialize init DeleteGSLBParam
-func (p *DeleteGSLBParam) Initialize(in Input) error {
+func (p *DeleteGSLBParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

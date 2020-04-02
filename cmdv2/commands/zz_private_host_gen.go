@@ -46,7 +46,7 @@ func privateHostListCmd() *cobra.Command {
 		Short:   "List PrivateHost",
 		Long:    `List PrivateHost`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return privateHostListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return privateHostListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, privateHostListParam)
@@ -95,7 +95,7 @@ func privateHostCreateCmd() *cobra.Command {
 		Short: "Create PrivateHost",
 		Long:  `Create PrivateHost`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return privateHostCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return privateHostCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, privateHostCreateParam)
@@ -115,11 +115,8 @@ func privateHostCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -157,7 +154,7 @@ func privateHostReadCmd() *cobra.Command {
 		Short: "Read PrivateHost",
 		Long:  `Read PrivateHost`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return privateHostReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return privateHostReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, privateHostReadParam)
@@ -202,7 +199,7 @@ func privateHostUpdateCmd() *cobra.Command {
 		Short: "Update PrivateHost",
 		Long:  `Update PrivateHost`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return privateHostUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return privateHostUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, privateHostUpdateParam)
@@ -222,11 +219,8 @@ func privateHostUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -266,7 +260,7 @@ func privateHostDeleteCmd() *cobra.Command {
 		Short:   "Delete PrivateHost",
 		Long:    `Delete PrivateHost`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return privateHostDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return privateHostDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, privateHostDeleteParam)
@@ -286,11 +280,8 @@ func privateHostDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -326,7 +317,7 @@ func privateHostServerInfoCmd() *cobra.Command {
 		Short:   "ServerInfo PrivateHost",
 		Long:    `ServerInfo PrivateHost`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return privateHostServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return privateHostServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, privateHostServerInfoParam)
@@ -371,7 +362,7 @@ func privateHostServerAddCmd() *cobra.Command {
 		Short: "ServerAdd PrivateHost",
 		Long:  `ServerAdd PrivateHost`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return privateHostServerAddParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return privateHostServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, privateHostServerAddParam)
@@ -391,11 +382,8 @@ func privateHostServerAddCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("server-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -432,7 +420,7 @@ func privateHostServerDeleteCmd() *cobra.Command {
 		Short: "ServerDelete PrivateHost",
 		Long:  `ServerDelete PrivateHost`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return privateHostServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return privateHostServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, privateHostServerDeleteParam)
@@ -452,11 +440,8 @@ func privateHostServerDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("server-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

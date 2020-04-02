@@ -61,7 +61,7 @@ func NewListArchiveParam() *ListArchiveParam {
 }
 
 // Initialize init ListArchiveParam
-func (p *ListArchiveParam) Initialize(in Input) error {
+func (p *ListArchiveParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -490,7 +490,7 @@ func NewCreateArchiveParam() *CreateArchiveParam {
 }
 
 // Initialize init CreateArchiveParam
-func (p *CreateArchiveParam) Initialize(in Input) error {
+func (p *CreateArchiveParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -966,7 +966,7 @@ func NewReadArchiveParam() *ReadArchiveParam {
 }
 
 // Initialize init ReadArchiveParam
-func (p *ReadArchiveParam) Initialize(in Input) error {
+func (p *ReadArchiveParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1265,7 +1265,7 @@ func NewUpdateArchiveParam() *UpdateArchiveParam {
 }
 
 // Initialize init UpdateArchiveParam
-func (p *UpdateArchiveParam) Initialize(in Input) error {
+func (p *UpdateArchiveParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1647,7 +1647,7 @@ func NewDeleteArchiveParam() *DeleteArchiveParam {
 }
 
 // Initialize init DeleteArchiveParam
-func (p *DeleteArchiveParam) Initialize(in Input) error {
+func (p *DeleteArchiveParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1954,7 +1954,7 @@ func NewUploadArchiveParam() *UploadArchiveParam {
 }
 
 // Initialize init UploadArchiveParam
-func (p *UploadArchiveParam) Initialize(in Input) error {
+func (p *UploadArchiveParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2273,7 +2273,7 @@ func NewDownloadArchiveParam() *DownloadArchiveParam {
 }
 
 // Initialize init DownloadArchiveParam
-func (p *DownloadArchiveParam) Initialize(in Input) error {
+func (p *DownloadArchiveParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2499,7 +2499,7 @@ func NewFTPOpenArchiveParam() *FTPOpenArchiveParam {
 }
 
 // Initialize init FTPOpenArchiveParam
-func (p *FTPOpenArchiveParam) Initialize(in Input) error {
+func (p *FTPOpenArchiveParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2798,7 +2798,7 @@ func NewFTPCloseArchiveParam() *FTPCloseArchiveParam {
 }
 
 // Initialize init FTPCloseArchiveParam
-func (p *FTPCloseArchiveParam) Initialize(in Input) error {
+func (p *FTPCloseArchiveParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3005,7 +3005,7 @@ func NewWaitForCopyArchiveParam() *WaitForCopyArchiveParam {
 }
 
 // Initialize init WaitForCopyArchiveParam
-func (p *WaitForCopyArchiveParam) Initialize(in Input) error {
+func (p *WaitForCopyArchiveParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

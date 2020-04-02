@@ -62,7 +62,7 @@ func NewListDiskParam() *ListDiskParam {
 }
 
 // Initialize init ListDiskParam
-func (p *ListDiskParam) Initialize(in Input) error {
+func (p *ListDiskParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -505,7 +505,7 @@ func NewCreateDiskParam() *CreateDiskParam {
 }
 
 // Initialize init CreateDiskParam
-func (p *CreateDiskParam) Initialize(in Input) error {
+func (p *CreateDiskParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1016,7 +1016,7 @@ func NewReadDiskParam() *ReadDiskParam {
 }
 
 // Initialize init ReadDiskParam
-func (p *ReadDiskParam) Initialize(in Input) error {
+func (p *ReadDiskParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1316,7 +1316,7 @@ func NewUpdateDiskParam() *UpdateDiskParam {
 }
 
 // Initialize init UpdateDiskParam
-func (p *UpdateDiskParam) Initialize(in Input) error {
+func (p *UpdateDiskParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1717,7 +1717,7 @@ func NewDeleteDiskParam() *DeleteDiskParam {
 }
 
 // Initialize init DeleteDiskParam
-func (p *DeleteDiskParam) Initialize(in Input) error {
+func (p *DeleteDiskParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2032,7 +2032,7 @@ func NewEditDiskParam() *EditDiskParam {
 }
 
 // Initialize init EditDiskParam
-func (p *EditDiskParam) Initialize(in Input) error {
+func (p *EditDiskParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2450,7 +2450,7 @@ func NewResizePartitionDiskParam() *ResizePartitionDiskParam {
 }
 
 // Initialize init ResizePartitionDiskParam
-func (p *ResizePartitionDiskParam) Initialize(in Input) error {
+func (p *ResizePartitionDiskParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2751,7 +2751,7 @@ func NewReinstallFromArchiveDiskParam() *ReinstallFromArchiveDiskParam {
 }
 
 // Initialize init ReinstallFromArchiveDiskParam
-func (p *ReinstallFromArchiveDiskParam) Initialize(in Input) error {
+func (p *ReinstallFromArchiveDiskParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3006,7 +3006,7 @@ func NewReinstallFromDiskDiskParam() *ReinstallFromDiskDiskParam {
 }
 
 // Initialize init ReinstallFromDiskDiskParam
-func (p *ReinstallFromDiskDiskParam) Initialize(in Input) error {
+func (p *ReinstallFromDiskDiskParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3260,7 +3260,7 @@ func NewReinstallToBlankDiskParam() *ReinstallToBlankDiskParam {
 }
 
 // Initialize init ReinstallToBlankDiskParam
-func (p *ReinstallToBlankDiskParam) Initialize(in Input) error {
+func (p *ReinstallToBlankDiskParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3488,7 +3488,7 @@ func NewServerConnectDiskParam() *ServerConnectDiskParam {
 }
 
 // Initialize init ServerConnectDiskParam
-func (p *ServerConnectDiskParam) Initialize(in Input) error {
+func (p *ServerConnectDiskParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3722,7 +3722,7 @@ func NewServerDisconnectDiskParam() *ServerDisconnectDiskParam {
 }
 
 // Initialize init ServerDisconnectDiskParam
-func (p *ServerDisconnectDiskParam) Initialize(in Input) error {
+func (p *ServerDisconnectDiskParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3940,7 +3940,7 @@ func NewMonitorDiskParam() *MonitorDiskParam {
 }
 
 // Initialize init MonitorDiskParam
-func (p *MonitorDiskParam) Initialize(in Input) error {
+func (p *MonitorDiskParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4284,7 +4284,7 @@ func NewWaitForCopyDiskParam() *WaitForCopyDiskParam {
 }
 
 // Initialize init WaitForCopyDiskParam
-func (p *WaitForCopyDiskParam) Initialize(in Input) error {
+func (p *WaitForCopyDiskParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

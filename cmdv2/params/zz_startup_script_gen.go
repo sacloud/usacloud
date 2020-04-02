@@ -60,7 +60,7 @@ func NewListStartupScriptParam() *ListStartupScriptParam {
 }
 
 // Initialize init ListStartupScriptParam
-func (p *ListStartupScriptParam) Initialize(in Input) error {
+func (p *ListStartupScriptParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -461,7 +461,7 @@ func NewCreateStartupScriptParam() *CreateStartupScriptParam {
 }
 
 // Initialize init CreateStartupScriptParam
-func (p *CreateStartupScriptParam) Initialize(in Input) error {
+func (p *CreateStartupScriptParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -866,7 +866,7 @@ func NewReadStartupScriptParam() *ReadStartupScriptParam {
 }
 
 // Initialize init ReadStartupScriptParam
-func (p *ReadStartupScriptParam) Initialize(in Input) error {
+func (p *ReadStartupScriptParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1167,7 +1167,7 @@ func NewUpdateStartupScriptParam() *UpdateStartupScriptParam {
 }
 
 // Initialize init UpdateStartupScriptParam
-func (p *UpdateStartupScriptParam) Initialize(in Input) error {
+func (p *UpdateStartupScriptParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1589,7 +1589,7 @@ func NewDeleteStartupScriptParam() *DeleteStartupScriptParam {
 }
 
 // Initialize init DeleteStartupScriptParam
-func (p *DeleteStartupScriptParam) Initialize(in Input) error {
+func (p *DeleteStartupScriptParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

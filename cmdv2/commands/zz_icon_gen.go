@@ -46,7 +46,7 @@ func iconListCmd() *cobra.Command {
 		Short:   "List Icon",
 		Long:    `List Icon`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return iconListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return iconListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, iconListParam)
@@ -96,7 +96,7 @@ func iconCreateCmd() *cobra.Command {
 		Short: "Create Icon",
 		Long:  `Create Icon`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return iconCreateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return iconCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, iconCreateParam)
@@ -116,11 +116,8 @@ func iconCreateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -157,7 +154,7 @@ func iconReadCmd() *cobra.Command {
 		Short: "Read Icon",
 		Long:  `Read Icon`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return iconReadParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return iconReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, iconReadParam)
@@ -202,7 +199,7 @@ func iconUpdateCmd() *cobra.Command {
 		Short: "Update Icon",
 		Long:  `Update Icon`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return iconUpdateParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return iconUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, iconUpdateParam)
@@ -222,11 +219,8 @@ func iconUpdateCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 
@@ -264,7 +258,7 @@ func iconDeleteCmd() *cobra.Command {
 		Short:   "Delete Icon",
 		Long:    `Delete Icon`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return iconDeleteParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return iconDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, iconDeleteParam)
@@ -284,11 +278,8 @@ func iconDeleteCmd() *cobra.Command {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
-				if err != nil {
+				if err != nil || !result {
 					return err
-				}
-				if !result {
-					return nil // canceled
 				}
 			}
 

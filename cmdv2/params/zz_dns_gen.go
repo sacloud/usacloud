@@ -58,7 +58,7 @@ func NewListDNSParam() *ListDNSParam {
 }
 
 // Initialize init ListDNSParam
-func (p *ListDNSParam) Initialize(in Input) error {
+func (p *ListDNSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -425,7 +425,7 @@ func NewRecordInfoDNSParam() *RecordInfoDNSParam {
 }
 
 // Initialize init RecordInfoDNSParam
-func (p *RecordInfoDNSParam) Initialize(in Input) error {
+func (p *RecordInfoDNSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -761,7 +761,7 @@ func NewRecordBulkUpdateDNSParam() *RecordBulkUpdateDNSParam {
 }
 
 // Initialize init RecordBulkUpdateDNSParam
-func (p *RecordBulkUpdateDNSParam) Initialize(in Input) error {
+func (p *RecordBulkUpdateDNSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1121,7 +1121,7 @@ func NewCreateDNSParam() *CreateDNSParam {
 }
 
 // Initialize init CreateDNSParam
-func (p *CreateDNSParam) Initialize(in Input) error {
+func (p *CreateDNSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1490,7 +1490,7 @@ func NewRecordAddDNSParam() *RecordAddDNSParam {
 }
 
 // Initialize init RecordAddDNSParam
-func (p *RecordAddDNSParam) Initialize(in Input) error {
+func (p *RecordAddDNSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1972,7 +1972,7 @@ func NewReadDNSParam() *ReadDNSParam {
 }
 
 // Initialize init ReadDNSParam
-func (p *ReadDNSParam) Initialize(in Input) error {
+func (p *ReadDNSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2277,7 +2277,7 @@ func NewRecordUpdateDNSParam() *RecordUpdateDNSParam {
 }
 
 // Initialize init RecordUpdateDNSParam
-func (p *RecordUpdateDNSParam) Initialize(in Input) error {
+func (p *RecordUpdateDNSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2766,7 +2766,7 @@ func NewRecordDeleteDNSParam() *RecordDeleteDNSParam {
 }
 
 // Initialize init RecordDeleteDNSParam
-func (p *RecordDeleteDNSParam) Initialize(in Input) error {
+func (p *RecordDeleteDNSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3094,7 +3094,7 @@ func NewUpdateDNSParam() *UpdateDNSParam {
 }
 
 // Initialize init UpdateDNSParam
-func (p *UpdateDNSParam) Initialize(in Input) error {
+func (p *UpdateDNSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3457,7 +3457,7 @@ func NewDeleteDNSParam() *DeleteDNSParam {
 }
 
 // Initialize init DeleteDNSParam
-func (p *DeleteDNSParam) Initialize(in Input) error {
+func (p *DeleteDNSParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

@@ -58,7 +58,7 @@ func NewListLoadBalancerParam() *ListLoadBalancerParam {
 }
 
 // Initialize init ListLoadBalancerParam
-func (p *ListLoadBalancerParam) Initialize(in Input) error {
+func (p *ListLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -435,7 +435,7 @@ func NewCreateLoadBalancerParam() *CreateLoadBalancerParam {
 }
 
 // Initialize init CreateLoadBalancerParam
-func (p *CreateLoadBalancerParam) Initialize(in Input) error {
+func (p *CreateLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -958,7 +958,7 @@ func NewReadLoadBalancerParam() *ReadLoadBalancerParam {
 }
 
 // Initialize init ReadLoadBalancerParam
-func (p *ReadLoadBalancerParam) Initialize(in Input) error {
+func (p *ReadLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1257,7 +1257,7 @@ func NewUpdateLoadBalancerParam() *UpdateLoadBalancerParam {
 }
 
 // Initialize init UpdateLoadBalancerParam
-func (p *UpdateLoadBalancerParam) Initialize(in Input) error {
+func (p *UpdateLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1640,7 +1640,7 @@ func NewDeleteLoadBalancerParam() *DeleteLoadBalancerParam {
 }
 
 // Initialize init DeleteLoadBalancerParam
-func (p *DeleteLoadBalancerParam) Initialize(in Input) error {
+func (p *DeleteLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1950,7 +1950,7 @@ func NewBootLoadBalancerParam() *BootLoadBalancerParam {
 }
 
 // Initialize init BootLoadBalancerParam
-func (p *BootLoadBalancerParam) Initialize(in Input) error {
+func (p *BootLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2158,7 +2158,7 @@ func NewShutdownLoadBalancerParam() *ShutdownLoadBalancerParam {
 }
 
 // Initialize init ShutdownLoadBalancerParam
-func (p *ShutdownLoadBalancerParam) Initialize(in Input) error {
+func (p *ShutdownLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2366,7 +2366,7 @@ func NewShutdownForceLoadBalancerParam() *ShutdownForceLoadBalancerParam {
 }
 
 // Initialize init ShutdownForceLoadBalancerParam
-func (p *ShutdownForceLoadBalancerParam) Initialize(in Input) error {
+func (p *ShutdownForceLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2574,7 +2574,7 @@ func NewResetLoadBalancerParam() *ResetLoadBalancerParam {
 }
 
 // Initialize init ResetLoadBalancerParam
-func (p *ResetLoadBalancerParam) Initialize(in Input) error {
+func (p *ResetLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2781,7 +2781,7 @@ func NewWaitForBootLoadBalancerParam() *WaitForBootLoadBalancerParam {
 }
 
 // Initialize init WaitForBootLoadBalancerParam
-func (p *WaitForBootLoadBalancerParam) Initialize(in Input) error {
+func (p *WaitForBootLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2977,7 +2977,7 @@ func NewWaitForDownLoadBalancerParam() *WaitForDownLoadBalancerParam {
 }
 
 // Initialize init WaitForDownLoadBalancerParam
-func (p *WaitForDownLoadBalancerParam) Initialize(in Input) error {
+func (p *WaitForDownLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3180,7 +3180,7 @@ func NewVipInfoLoadBalancerParam() *VipInfoLoadBalancerParam {
 }
 
 // Initialize init VipInfoLoadBalancerParam
-func (p *VipInfoLoadBalancerParam) Initialize(in Input) error {
+func (p *VipInfoLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3474,7 +3474,7 @@ func NewVipAddLoadBalancerParam() *VipAddLoadBalancerParam {
 }
 
 // Initialize init VipAddLoadBalancerParam
-func (p *VipAddLoadBalancerParam) Initialize(in Input) error {
+func (p *VipAddLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3790,7 +3790,7 @@ func NewVipUpdateLoadBalancerParam() *VipUpdateLoadBalancerParam {
 }
 
 // Initialize init VipUpdateLoadBalancerParam
-func (p *VipUpdateLoadBalancerParam) Initialize(in Input) error {
+func (p *VipUpdateLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4105,7 +4105,7 @@ func NewVipDeleteLoadBalancerParam() *VipDeleteLoadBalancerParam {
 }
 
 // Initialize init VipDeleteLoadBalancerParam
-func (p *VipDeleteLoadBalancerParam) Initialize(in Input) error {
+func (p *VipDeleteLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4341,7 +4341,7 @@ func NewServerInfoLoadBalancerParam() *ServerInfoLoadBalancerParam {
 }
 
 // Initialize init ServerInfoLoadBalancerParam
-func (p *ServerInfoLoadBalancerParam) Initialize(in Input) error {
+func (p *ServerInfoLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4716,7 +4716,7 @@ func NewServerAddLoadBalancerParam() *ServerAddLoadBalancerParam {
 }
 
 // Initialize init ServerAddLoadBalancerParam
-func (p *ServerAddLoadBalancerParam) Initialize(in Input) error {
+func (p *ServerAddLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5095,7 +5095,7 @@ func NewServerUpdateLoadBalancerParam() *ServerUpdateLoadBalancerParam {
 }
 
 // Initialize init ServerUpdateLoadBalancerParam
-func (p *ServerUpdateLoadBalancerParam) Initialize(in Input) error {
+func (p *ServerUpdateLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5463,7 +5463,7 @@ func NewServerDeleteLoadBalancerParam() *ServerDeleteLoadBalancerParam {
 }
 
 // Initialize init ServerDeleteLoadBalancerParam
-func (p *ServerDeleteLoadBalancerParam) Initialize(in Input) error {
+func (p *ServerDeleteLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5785,7 +5785,7 @@ func NewMonitorLoadBalancerParam() *MonitorLoadBalancerParam {
 }
 
 // Initialize init MonitorLoadBalancerParam
-func (p *MonitorLoadBalancerParam) Initialize(in Input) error {
+func (p *MonitorLoadBalancerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err

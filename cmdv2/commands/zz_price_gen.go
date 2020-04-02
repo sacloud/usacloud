@@ -43,7 +43,7 @@ func priceListCmd() *cobra.Command {
 		Short:   "List Price (default)",
 		Long:    `List Price (default)`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return priceListParam.Initialize(newParamsAdapter(cmd.Flags()))
+			return priceListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := newCLIContext(globalFlags(), args, priceListParam)

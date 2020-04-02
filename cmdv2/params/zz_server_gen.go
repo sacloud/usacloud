@@ -58,7 +58,7 @@ func NewListServerParam() *ListServerParam {
 }
 
 // Initialize init ListServerParam
-func (p *ListServerParam) Initialize(in Input) error {
+func (p *ListServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -465,7 +465,7 @@ func NewBuildServerParam() *BuildServerParam {
 }
 
 // Initialize init BuildServerParam
-func (p *BuildServerParam) Initialize(in Input) error {
+func (p *BuildServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1463,7 +1463,7 @@ func NewReadServerParam() *ReadServerParam {
 }
 
 // Initialize init ReadServerParam
-func (p *ReadServerParam) Initialize(in Input) error {
+func (p *ReadServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -1764,7 +1764,7 @@ func NewUpdateServerParam() *UpdateServerParam {
 }
 
 // Initialize init UpdateServerParam
-func (p *UpdateServerParam) Initialize(in Input) error {
+func (p *UpdateServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2167,7 +2167,7 @@ func NewDeleteServerParam() *DeleteServerParam {
 }
 
 // Initialize init DeleteServerParam
-func (p *DeleteServerParam) Initialize(in Input) error {
+func (p *DeleteServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2499,7 +2499,7 @@ func NewPlanChangeServerParam() *PlanChangeServerParam {
 }
 
 // Initialize init PlanChangeServerParam
-func (p *PlanChangeServerParam) Initialize(in Input) error {
+func (p *PlanChangeServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -2855,7 +2855,7 @@ func NewBootServerParam() *BootServerParam {
 }
 
 // Initialize init BootServerParam
-func (p *BootServerParam) Initialize(in Input) error {
+func (p *BootServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3063,7 +3063,7 @@ func NewShutdownServerParam() *ShutdownServerParam {
 }
 
 // Initialize init ShutdownServerParam
-func (p *ShutdownServerParam) Initialize(in Input) error {
+func (p *ShutdownServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3271,7 +3271,7 @@ func NewShutdownForceServerParam() *ShutdownForceServerParam {
 }
 
 // Initialize init ShutdownForceServerParam
-func (p *ShutdownForceServerParam) Initialize(in Input) error {
+func (p *ShutdownForceServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3479,7 +3479,7 @@ func NewResetServerParam() *ResetServerParam {
 }
 
 // Initialize init ResetServerParam
-func (p *ResetServerParam) Initialize(in Input) error {
+func (p *ResetServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3686,7 +3686,7 @@ func NewWaitForBootServerParam() *WaitForBootServerParam {
 }
 
 // Initialize init WaitForBootServerParam
-func (p *WaitForBootServerParam) Initialize(in Input) error {
+func (p *WaitForBootServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -3882,7 +3882,7 @@ func NewWaitForDownServerParam() *WaitForDownServerParam {
 }
 
 // Initialize init WaitForDownServerParam
-func (p *WaitForDownServerParam) Initialize(in Input) error {
+func (p *WaitForDownServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4084,7 +4084,7 @@ func NewSSHServerParam() *SSHServerParam {
 }
 
 // Initialize init SSHServerParam
-func (p *SSHServerParam) Initialize(in Input) error {
+func (p *SSHServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4356,7 +4356,7 @@ func NewSSHExecServerParam() *SSHExecServerParam {
 }
 
 // Initialize init SSHExecServerParam
-func (p *SSHExecServerParam) Initialize(in Input) error {
+func (p *SSHExecServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4618,7 +4618,7 @@ func NewScpServerParam() *ScpServerParam {
 }
 
 // Initialize init ScpServerParam
-func (p *ScpServerParam) Initialize(in Input) error {
+func (p *ScpServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -4878,7 +4878,7 @@ func NewVncServerParam() *VncServerParam {
 }
 
 // Initialize init VncServerParam
-func (p *VncServerParam) Initialize(in Input) error {
+func (p *VncServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5093,7 +5093,7 @@ func NewVncInfoServerParam() *VncInfoServerParam {
 }
 
 // Initialize init VncInfoServerParam
-func (p *VncInfoServerParam) Initialize(in Input) error {
+func (p *VncInfoServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5404,7 +5404,7 @@ func NewVncSendServerParam() *VncSendServerParam {
 }
 
 // Initialize init VncSendServerParam
-func (p *VncSendServerParam) Initialize(in Input) error {
+func (p *VncSendServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -5785,7 +5785,7 @@ func NewVncSnapshotServerParam() *VncSnapshotServerParam {
 }
 
 // Initialize init VncSnapshotServerParam
-func (p *VncSnapshotServerParam) Initialize(in Input) error {
+func (p *VncSnapshotServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6108,7 +6108,7 @@ func NewRemoteDesktopServerParam() *RemoteDesktopServerParam {
 }
 
 // Initialize init RemoteDesktopServerParam
-func (p *RemoteDesktopServerParam) Initialize(in Input) error {
+func (p *RemoteDesktopServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6352,7 +6352,7 @@ func NewRemoteDesktopInfoServerParam() *RemoteDesktopInfoServerParam {
 }
 
 // Initialize init RemoteDesktopInfoServerParam
-func (p *RemoteDesktopInfoServerParam) Initialize(in Input) error {
+func (p *RemoteDesktopInfoServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6684,7 +6684,7 @@ func NewDiskInfoServerParam() *DiskInfoServerParam {
 }
 
 // Initialize init DiskInfoServerParam
-func (p *DiskInfoServerParam) Initialize(in Input) error {
+func (p *DiskInfoServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -6973,7 +6973,7 @@ func NewDiskConnectServerParam() *DiskConnectServerParam {
 }
 
 // Initialize init DiskConnectServerParam
-func (p *DiskConnectServerParam) Initialize(in Input) error {
+func (p *DiskConnectServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7208,7 +7208,7 @@ func NewDiskDisconnectServerParam() *DiskDisconnectServerParam {
 }
 
 // Initialize init DiskDisconnectServerParam
-func (p *DiskDisconnectServerParam) Initialize(in Input) error {
+func (p *DiskDisconnectServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7448,7 +7448,7 @@ func NewInterfaceInfoServerParam() *InterfaceInfoServerParam {
 }
 
 // Initialize init InterfaceInfoServerParam
-func (p *InterfaceInfoServerParam) Initialize(in Input) error {
+func (p *InterfaceInfoServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7737,7 +7737,7 @@ func NewInterfaceAddForInternetServerParam() *InterfaceAddForInternetServerParam
 }
 
 // Initialize init InterfaceAddForInternetServerParam
-func (p *InterfaceAddForInternetServerParam) Initialize(in Input) error {
+func (p *InterfaceAddForInternetServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -7962,7 +7962,7 @@ func NewInterfaceAddForRouterServerParam() *InterfaceAddForRouterServerParam {
 }
 
 // Initialize init InterfaceAddForRouterServerParam
-func (p *InterfaceAddForRouterServerParam) Initialize(in Input) error {
+func (p *InterfaceAddForRouterServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -8270,7 +8270,7 @@ func NewInterfaceAddForSwitchServerParam() *InterfaceAddForSwitchServerParam {
 }
 
 // Initialize init InterfaceAddForSwitchServerParam
-func (p *InterfaceAddForSwitchServerParam) Initialize(in Input) error {
+func (p *InterfaceAddForSwitchServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -8572,7 +8572,7 @@ func NewInterfaceAddDisconnectedServerParam() *InterfaceAddDisconnectedServerPar
 }
 
 // Initialize init InterfaceAddDisconnectedServerParam
-func (p *InterfaceAddDisconnectedServerParam) Initialize(in Input) error {
+func (p *InterfaceAddDisconnectedServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -8786,7 +8786,7 @@ func NewISOInfoServerParam() *ISOInfoServerParam {
 }
 
 // Initialize init ISOInfoServerParam
-func (p *ISOInfoServerParam) Initialize(in Input) error {
+func (p *ISOInfoServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -9082,7 +9082,7 @@ func NewISOInsertServerParam() *ISOInsertServerParam {
 }
 
 // Initialize init ISOInsertServerParam
-func (p *ISOInsertServerParam) Initialize(in Input) error {
+func (p *ISOInsertServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -9415,7 +9415,7 @@ func NewISOEjectServerParam() *ISOEjectServerParam {
 }
 
 // Initialize init ISOEjectServerParam
-func (p *ISOEjectServerParam) Initialize(in Input) error {
+func (p *ISOEjectServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -9633,7 +9633,7 @@ func NewMonitorCPUServerParam() *MonitorCPUServerParam {
 }
 
 // Initialize init MonitorCPUServerParam
-func (p *MonitorCPUServerParam) Initialize(in Input) error {
+func (p *MonitorCPUServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -9989,7 +9989,7 @@ func NewMonitorNicServerParam() *MonitorNicServerParam {
 }
 
 // Initialize init MonitorNicServerParam
-func (p *MonitorNicServerParam) Initialize(in Input) error {
+func (p *MonitorNicServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -10356,7 +10356,7 @@ func NewMonitorDiskServerParam() *MonitorDiskServerParam {
 }
 
 // Initialize init MonitorDiskServerParam
-func (p *MonitorDiskServerParam) Initialize(in Input) error {
+func (p *MonitorDiskServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
@@ -10716,7 +10716,7 @@ func NewMaintenanceInfoServerParam() *MaintenanceInfoServerParam {
 }
 
 // Initialize init MaintenanceInfoServerParam
-func (p *MaintenanceInfoServerParam) Initialize(in Input) error {
+func (p *MaintenanceInfoServerParam) Initialize(in Input, args []string) error {
 	p.input = in
 	if err := p.validate(); err != nil {
 		return err
