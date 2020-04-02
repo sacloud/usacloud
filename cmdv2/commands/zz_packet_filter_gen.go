@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func packetFilterListCmd() *cobra.Command {
 				return generateSkeleton(ctx, packetFilterListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.PacketFilterList(ctx, packetFilterListParam.ToV0())
+
 		},
 	}
 
@@ -106,21 +106,19 @@ func packetFilterCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, packetFilterCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !packetFilterCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.PacketFilterCreate(ctx, packetFilterCreateParam.ToV0())
+
 		},
 	}
 
@@ -163,10 +161,28 @@ func packetFilterReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, packetFilterReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findPacketFilterReadTargets(ctx, packetFilterReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.PacketFilterRead(ctx, packetFilterReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				packetFilterReadParam.SetId(id)
+				go func(p *params.ReadPacketFilterParam) {
+					err := funcs.PacketFilterRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(packetFilterReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -207,21 +223,39 @@ func packetFilterUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, packetFilterUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findPacketFilterUpdateTargets(ctx, packetFilterUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !packetFilterUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.PacketFilterUpdate(ctx, packetFilterUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				packetFilterUpdateParam.SetId(id)
+				go func(p *params.UpdatePacketFilterParam) {
+					err := funcs.PacketFilterUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(packetFilterUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -265,21 +299,39 @@ func packetFilterDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, packetFilterDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findPacketFilterDeleteTargets(ctx, packetFilterDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !packetFilterDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.PacketFilterDelete(ctx, packetFilterDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				packetFilterDeleteParam.SetId(id)
+				go func(p *params.DeletePacketFilterParam) {
+					err := funcs.PacketFilterDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(packetFilterDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -321,10 +373,28 @@ func packetFilterRuleInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, packetFilterRuleInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findPacketFilterRuleInfoTargets(ctx, packetFilterRuleInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.PacketFilterRuleInfo(ctx, packetFilterRuleInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				packetFilterRuleInfoParam.SetId(id)
+				go func(p *params.RuleInfoPacketFilterParam) {
+					err := funcs.PacketFilterRuleInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(packetFilterRuleInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -365,21 +435,39 @@ func packetFilterRuleAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, packetFilterRuleAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findPacketFilterRuleAddTargets(ctx, packetFilterRuleAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !packetFilterRuleAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("rule-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("rule-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.PacketFilterRuleAdd(ctx, packetFilterRuleAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				packetFilterRuleAddParam.SetId(id)
+				go func(p *params.RuleAddPacketFilterParam) {
+					err := funcs.PacketFilterRuleAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(packetFilterRuleAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -428,21 +516,39 @@ func packetFilterRuleUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, packetFilterRuleUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findPacketFilterRuleUpdateTargets(ctx, packetFilterRuleUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !packetFilterRuleUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("rule-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("rule-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.PacketFilterRuleUpdate(ctx, packetFilterRuleUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				packetFilterRuleUpdateParam.SetId(id)
+				go func(p *params.RuleUpdatePacketFilterParam) {
+					err := funcs.PacketFilterRuleUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(packetFilterRuleUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -491,21 +597,39 @@ func packetFilterRuleDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, packetFilterRuleDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findPacketFilterRuleDeleteTargets(ctx, packetFilterRuleDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !packetFilterRuleDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete rule", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete rule", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.PacketFilterRuleDelete(ctx, packetFilterRuleDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				packetFilterRuleDeleteParam.SetId(id)
+				go func(p *params.RuleDeletePacketFilterParam) {
+					err := funcs.PacketFilterRuleDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(packetFilterRuleDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -548,21 +672,39 @@ func packetFilterInterfaceConnectCmd() *cobra.Command {
 				return generateSkeleton(ctx, packetFilterInterfaceConnectParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findPacketFilterInterfaceConnectTargets(ctx, packetFilterInterfaceConnectParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !packetFilterInterfaceConnectParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("interface-connect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.PacketFilterInterfaceConnect(ctx, packetFilterInterfaceConnectParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				packetFilterInterfaceConnectParam.SetId(id)
+				go func(p *params.InterfaceConnectPacketFilterParam) {
+					err := funcs.PacketFilterInterfaceConnect(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(packetFilterInterfaceConnectParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -598,21 +740,39 @@ func packetFilterInterfaceDisconnectCmd() *cobra.Command {
 				return generateSkeleton(ctx, packetFilterInterfaceDisconnectParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findPacketFilterInterfaceDisconnectTargets(ctx, packetFilterInterfaceDisconnectParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !packetFilterInterfaceDisconnectParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("interface-disconnect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.PacketFilterInterfaceDisconnect(ctx, packetFilterInterfaceDisconnectParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				packetFilterInterfaceDisconnectParam.SetId(id)
+				go func(p *params.InterfaceDisconnectPacketFilterParam) {
+					err := funcs.PacketFilterInterfaceDisconnect(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(packetFilterInterfaceDisconnectParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

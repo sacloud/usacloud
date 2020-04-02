@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func databaseListCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.DatabaseList(ctx, databaseListParam.ToV0())
+
 		},
 	}
 
@@ -107,21 +107,19 @@ func databaseCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !databaseCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.DatabaseCreate(ctx, databaseCreateParam.ToV0())
+
 		},
 	}
 
@@ -181,10 +179,28 @@ func databaseReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseReadTargets(ctx, databaseReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DatabaseRead(ctx, databaseReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseReadParam.SetId(id)
+				go func(p *params.ReadDatabaseParam) {
+					err := funcs.DatabaseRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -226,21 +242,39 @@ func databaseUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseUpdateTargets(ctx, databaseUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !databaseUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DatabaseUpdate(ctx, databaseUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseUpdateParam.SetId(id)
+				go func(p *params.UpdateDatabaseParam) {
+					err := funcs.DatabaseUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -296,21 +330,39 @@ func databaseDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseDeleteTargets(ctx, databaseDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !databaseDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DatabaseDelete(ctx, databaseDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseDeleteParam.SetId(id)
+				go func(p *params.DeleteDatabaseParam) {
+					err := funcs.DatabaseDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -354,21 +406,39 @@ func databaseBootCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseBootParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseBootTargets(ctx, databaseBootParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !databaseBootParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DatabaseBoot(ctx, databaseBootParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseBootParam.SetId(id)
+				go func(p *params.BootDatabaseParam) {
+					err := funcs.DatabaseBoot(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseBootParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -404,21 +474,39 @@ func databaseShutdownCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseShutdownParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseShutdownTargets(ctx, databaseShutdownParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !databaseShutdownParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DatabaseShutdown(ctx, databaseShutdownParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseShutdownParam.SetId(id)
+				go func(p *params.ShutdownDatabaseParam) {
+					err := funcs.DatabaseShutdown(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseShutdownParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -454,21 +542,39 @@ func databaseShutdownForceCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseShutdownForceParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseShutdownForceTargets(ctx, databaseShutdownForceParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !databaseShutdownForceParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DatabaseShutdownForce(ctx, databaseShutdownForceParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseShutdownForceParam.SetId(id)
+				go func(p *params.ShutdownForceDatabaseParam) {
+					err := funcs.DatabaseShutdownForce(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseShutdownForceParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -504,21 +610,39 @@ func databaseResetCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseResetParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseResetTargets(ctx, databaseResetParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !databaseResetParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DatabaseReset(ctx, databaseResetParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseResetParam.SetId(id)
+				go func(p *params.ResetDatabaseParam) {
+					err := funcs.DatabaseReset(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseResetParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -554,10 +678,28 @@ func databaseWaitForBootCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseWaitForBootParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseWaitForBootTargets(ctx, databaseWaitForBootParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DatabaseWaitForBoot(ctx, databaseWaitForBootParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseWaitForBootParam.SetId(id)
+				go func(p *params.WaitForBootDatabaseParam) {
+					err := funcs.DatabaseWaitForBoot(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseWaitForBootParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -592,10 +734,28 @@ func databaseWaitForDownCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseWaitForDownParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseWaitForDownTargets(ctx, databaseWaitForDownParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DatabaseWaitForDown(ctx, databaseWaitForDownParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseWaitForDownParam.SetId(id)
+				go func(p *params.WaitForDownDatabaseParam) {
+					err := funcs.DatabaseWaitForDown(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseWaitForDownParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -630,10 +790,28 @@ func databaseBackupInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseBackupInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseBackupInfoTargets(ctx, databaseBackupInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DatabaseBackupInfo(ctx, databaseBackupInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseBackupInfoParam.SetId(id)
+				go func(p *params.BackupInfoDatabaseParam) {
+					err := funcs.DatabaseBackupInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseBackupInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -675,21 +853,39 @@ func databaseBackupCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseBackupCreateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseBackupCreateTargets(ctx, databaseBackupCreateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !databaseBackupCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("backup-create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("backup-create", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DatabaseBackupCreate(ctx, databaseBackupCreateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseBackupCreateParam.SetId(id)
+				go func(p *params.BackupCreateDatabaseParam) {
+					err := funcs.DatabaseBackupCreate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseBackupCreateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -731,21 +927,39 @@ func databaseBackupRestoreCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseBackupRestoreParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseBackupRestoreTargets(ctx, databaseBackupRestoreParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !databaseBackupRestoreParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("backup-restore", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("backup-restore", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DatabaseBackupRestore(ctx, databaseBackupRestoreParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseBackupRestoreParam.SetId(id)
+				go func(p *params.BackupRestoreDatabaseParam) {
+					err := funcs.DatabaseBackupRestore(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseBackupRestoreParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -788,21 +1002,39 @@ func databaseBackupLockCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseBackupLockParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseBackupLockTargets(ctx, databaseBackupLockParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !databaseBackupLockParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("backup-lock", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("backup-lock", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DatabaseBackupLock(ctx, databaseBackupLockParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseBackupLockParam.SetId(id)
+				go func(p *params.BackupLockDatabaseParam) {
+					err := funcs.DatabaseBackupLock(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseBackupLockParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -845,21 +1077,39 @@ func databaseBackupUnlockCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseBackupUnlockParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseBackupUnlockTargets(ctx, databaseBackupUnlockParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !databaseBackupUnlockParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("backup-unlock", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("backup-unlock", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DatabaseBackupUnlock(ctx, databaseBackupUnlockParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseBackupUnlockParam.SetId(id)
+				go func(p *params.BackupUnlockDatabaseParam) {
+					err := funcs.DatabaseBackupUnlock(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseBackupUnlockParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -902,21 +1152,39 @@ func databaseBackupRemoveCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseBackupRemoveParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseBackupRemoveTargets(ctx, databaseBackupRemoveParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !databaseBackupRemoveParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("backup-remove", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("backup-remove", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DatabaseBackupRemove(ctx, databaseBackupRemoveParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseBackupRemoveParam.SetId(id)
+				go func(p *params.BackupRemoveDatabaseParam) {
+					err := funcs.DatabaseBackupRemove(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseBackupRemoveParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -959,21 +1227,39 @@ func databaseCloneCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseCloneParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseCloneTargets(ctx, databaseCloneParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !databaseCloneParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("clone", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("clone", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DatabaseClone(ctx, databaseCloneParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseCloneParam.SetId(id)
+				go func(p *params.CloneDatabaseParam) {
+					err := funcs.DatabaseClone(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseCloneParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1031,21 +1317,39 @@ func databaseReplicaCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseReplicaCreateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseReplicaCreateTargets(ctx, databaseReplicaCreateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !databaseReplicaCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("replica-create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("replica-create", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DatabaseReplicaCreate(ctx, databaseReplicaCreateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseReplicaCreateParam.SetId(id)
+				go func(p *params.ReplicaCreateDatabaseParam) {
+					err := funcs.DatabaseReplicaCreate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseReplicaCreateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1095,10 +1399,28 @@ func databaseMonitorCPUCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseMonitorCPUParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseMonitorCPUTargets(ctx, databaseMonitorCPUParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DatabaseMonitorCPU(ctx, databaseMonitorCPUParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseMonitorCPUParam.SetId(id)
+				go func(p *params.MonitorCPUDatabaseParam) {
+					err := funcs.DatabaseMonitorCPU(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseMonitorCPUParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1143,10 +1465,28 @@ func databaseMonitorMemoryCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseMonitorMemoryParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseMonitorMemoryTargets(ctx, databaseMonitorMemoryParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DatabaseMonitorMemory(ctx, databaseMonitorMemoryParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseMonitorMemoryParam.SetId(id)
+				go func(p *params.MonitorMemoryDatabaseParam) {
+					err := funcs.DatabaseMonitorMemory(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseMonitorMemoryParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1191,10 +1531,28 @@ func databaseMonitorNicCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseMonitorNicParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseMonitorNicTargets(ctx, databaseMonitorNicParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DatabaseMonitorNic(ctx, databaseMonitorNicParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseMonitorNicParam.SetId(id)
+				go func(p *params.MonitorNicDatabaseParam) {
+					err := funcs.DatabaseMonitorNic(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseMonitorNicParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1239,10 +1597,28 @@ func databaseMonitorSystemDiskCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseMonitorSystemDiskParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseMonitorSystemDiskTargets(ctx, databaseMonitorSystemDiskParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DatabaseMonitorSystemDisk(ctx, databaseMonitorSystemDiskParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseMonitorSystemDiskParam.SetId(id)
+				go func(p *params.MonitorSystemDiskDatabaseParam) {
+					err := funcs.DatabaseMonitorSystemDisk(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseMonitorSystemDiskParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1287,10 +1663,28 @@ func databaseMonitorBackupDiskCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseMonitorBackupDiskParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseMonitorBackupDiskTargets(ctx, databaseMonitorBackupDiskParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DatabaseMonitorBackupDisk(ctx, databaseMonitorBackupDiskParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseMonitorBackupDiskParam.SetId(id)
+				go func(p *params.MonitorBackupDiskDatabaseParam) {
+					err := funcs.DatabaseMonitorBackupDisk(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseMonitorBackupDiskParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1335,10 +1729,28 @@ func databaseMonitorSystemDiskSizeCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseMonitorSystemDiskSizeParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseMonitorSystemDiskSizeTargets(ctx, databaseMonitorSystemDiskSizeParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DatabaseMonitorSystemDiskSize(ctx, databaseMonitorSystemDiskSizeParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseMonitorSystemDiskSizeParam.SetId(id)
+				go func(p *params.MonitorSystemDiskSizeDatabaseParam) {
+					err := funcs.DatabaseMonitorSystemDiskSize(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseMonitorSystemDiskSizeParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1383,10 +1795,28 @@ func databaseMonitorBackupDiskSizeCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseMonitorBackupDiskSizeParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseMonitorBackupDiskSizeTargets(ctx, databaseMonitorBackupDiskSizeParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DatabaseMonitorBackupDiskSize(ctx, databaseMonitorBackupDiskSizeParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseMonitorBackupDiskSizeParam.SetId(id)
+				go func(p *params.MonitorBackupDiskSizeDatabaseParam) {
+					err := funcs.DatabaseMonitorBackupDiskSize(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseMonitorBackupDiskSizeParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1431,10 +1861,28 @@ func databaseLogsCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseLogsParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDatabaseLogsTargets(ctx, databaseLogsParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DatabaseLogs(ctx, databaseLogsParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				databaseLogsParam.SetId(id)
+				go func(p *params.LogsDatabaseParam) {
+					err := funcs.DatabaseLogs(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(databaseLogsParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func startupScriptListCmd() *cobra.Command {
 				return generateSkeleton(ctx, startupScriptListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.StartupScriptList(ctx, startupScriptListParam.ToV0())
+
 		},
 	}
 
@@ -109,21 +109,19 @@ func startupScriptCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, startupScriptCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !startupScriptCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.StartupScriptCreate(ctx, startupScriptCreateParam.ToV0())
+
 		},
 	}
 
@@ -170,10 +168,28 @@ func startupScriptReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, startupScriptReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findStartupScriptReadTargets(ctx, startupScriptReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.StartupScriptRead(ctx, startupScriptReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				startupScriptReadParam.SetId(id)
+				go func(p *params.ReadStartupScriptParam) {
+					err := funcs.StartupScriptRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(startupScriptReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -215,21 +231,39 @@ func startupScriptUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, startupScriptUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findStartupScriptUpdateTargets(ctx, startupScriptUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !startupScriptUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.StartupScriptUpdate(ctx, startupScriptUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				startupScriptUpdateParam.SetId(id)
+				go func(p *params.UpdateStartupScriptParam) {
+					err := funcs.StartupScriptUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(startupScriptUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -278,21 +312,39 @@ func startupScriptDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, startupScriptDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findStartupScriptDeleteTargets(ctx, startupScriptDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !startupScriptDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.StartupScriptDelete(ctx, startupScriptDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				startupScriptDeleteParam.SetId(id)
+				go func(p *params.DeleteStartupScriptParam) {
+					err := funcs.StartupScriptDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(startupScriptDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

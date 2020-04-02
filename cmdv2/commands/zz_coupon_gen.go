@@ -54,10 +54,8 @@ func couponListCmd() *cobra.Command {
 				return generateSkeleton(ctx, couponListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.CouponList(ctx, couponListParam.ToV0())
+
 		},
 	}
 

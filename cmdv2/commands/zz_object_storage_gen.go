@@ -57,10 +57,8 @@ func objectStorageListCmd() *cobra.Command {
 				return generateSkeleton(ctx, objectStorageListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.ObjectStorageList(ctx, objectStorageListParam.ToV0())
+
 		},
 	}
 
@@ -103,21 +101,19 @@ func objectStoragePutCmd() *cobra.Command {
 				return generateSkeleton(ctx, objectStoragePutParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !objectStoragePutParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("put", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("put", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.ObjectStoragePut(ctx, objectStoragePutParam.ToV0())
+
 		},
 	}
 
@@ -156,10 +152,8 @@ func objectStorageGetCmd() *cobra.Command {
 				return generateSkeleton(ctx, objectStorageGetParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.ObjectStorageGet(ctx, objectStorageGetParam.ToV0())
+
 		},
 	}
 
@@ -196,21 +190,19 @@ func objectStorageDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, objectStorageDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !objectStorageDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.ObjectStorageDelete(ctx, objectStorageDeleteParam.ToV0())
+
 		},
 	}
 

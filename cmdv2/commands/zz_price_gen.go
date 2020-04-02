@@ -55,10 +55,8 @@ func priceListCmd() *cobra.Command {
 				return generateSkeleton(ctx, priceListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.PriceList(ctx, priceListParam.ToV0())
+
 		},
 	}
 

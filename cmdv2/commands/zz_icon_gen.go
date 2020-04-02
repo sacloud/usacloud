@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func iconListCmd() *cobra.Command {
 				return generateSkeleton(ctx, iconListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.IconList(ctx, iconListParam.ToV0())
+
 		},
 	}
 
@@ -108,21 +108,19 @@ func iconCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, iconCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !iconCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.IconCreate(ctx, iconCreateParam.ToV0())
+
 		},
 	}
 
@@ -166,10 +164,28 @@ func iconReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, iconReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findIconReadTargets(ctx, iconReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.IconRead(ctx, iconReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				iconReadParam.SetId(id)
+				go func(p *params.ReadIconParam) {
+					err := funcs.IconRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(iconReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -211,21 +227,39 @@ func iconUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, iconUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findIconUpdateTargets(ctx, iconUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !iconUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.IconUpdate(ctx, iconUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				iconUpdateParam.SetId(id)
+				go func(p *params.UpdateIconParam) {
+					err := funcs.IconUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(iconUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -270,21 +304,39 @@ func iconDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, iconDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findIconDeleteTargets(ctx, iconDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !iconDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.IconDelete(ctx, iconDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				iconDeleteParam.SetId(id)
+				go func(p *params.DeleteIconParam) {
+					err := funcs.IconDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(iconDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

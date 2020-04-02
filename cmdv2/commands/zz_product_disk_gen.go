@@ -58,10 +58,8 @@ func productDiskListCmd() *cobra.Command {
 				return generateSkeleton(ctx, productDiskListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.ProductDiskList(ctx, productDiskListParam.ToV0())
+
 		},
 	}
 
@@ -106,21 +104,19 @@ func productDiskReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, productDiskReadParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !productDiskReadParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.ProductDiskRead(ctx, productDiskReadParam.ToV0())
+
 		},
 	}
 

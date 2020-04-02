@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func archiveListCmd() *cobra.Command {
 				return generateSkeleton(ctx, archiveListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.ArchiveList(ctx, archiveListParam.ToV0())
+
 		},
 	}
 
@@ -110,21 +110,19 @@ func archiveCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, archiveCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !archiveCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.ArchiveCreate(ctx, archiveCreateParam.ToV0())
+
 		},
 	}
 
@@ -173,10 +171,28 @@ func archiveReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, archiveReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findArchiveReadTargets(ctx, archiveReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ArchiveRead(ctx, archiveReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				archiveReadParam.SetId(id)
+				go func(p *params.ReadArchiveParam) {
+					err := funcs.ArchiveRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(archiveReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -218,21 +234,39 @@ func archiveUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, archiveUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findArchiveUpdateTargets(ctx, archiveUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !archiveUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ArchiveUpdate(ctx, archiveUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				archiveUpdateParam.SetId(id)
+				go func(p *params.UpdateArchiveParam) {
+					err := funcs.ArchiveUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(archiveUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -279,21 +313,39 @@ func archiveDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, archiveDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findArchiveDeleteTargets(ctx, archiveDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !archiveDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ArchiveDelete(ctx, archiveDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				archiveDeleteParam.SetId(id)
+				go func(p *params.DeleteArchiveParam) {
+					err := funcs.ArchiveDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(archiveDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -336,21 +388,39 @@ func archiveUploadCmd() *cobra.Command {
 				return generateSkeleton(ctx, archiveUploadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findArchiveUploadTargets(ctx, archiveUploadParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !archiveUploadParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("upload", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("upload", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ArchiveUpload(ctx, archiveUploadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				archiveUploadParam.SetId(id)
+				go func(p *params.UploadArchiveParam) {
+					err := funcs.ArchiveUpload(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(archiveUploadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -394,21 +464,39 @@ func archiveDownloadCmd() *cobra.Command {
 				return generateSkeleton(ctx, archiveDownloadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findArchiveDownloadTargets(ctx, archiveDownloadParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !archiveDownloadParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("download", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("download", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ArchiveDownload(ctx, archiveDownloadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				archiveDownloadParam.SetId(id)
+				go func(p *params.DownloadArchiveParam) {
+					err := funcs.ArchiveDownload(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(archiveDownloadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -445,21 +533,39 @@ func archiveFTPOpenCmd() *cobra.Command {
 				return generateSkeleton(ctx, archiveFTPOpenParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findArchiveFTPOpenTargets(ctx, archiveFTPOpenParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !archiveFTPOpenParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ftp-open", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("ftp-open", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ArchiveFTPOpen(ctx, archiveFTPOpenParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				archiveFTPOpenParam.SetId(id)
+				go func(p *params.FTPOpenArchiveParam) {
+					err := funcs.ArchiveFTPOpen(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(archiveFTPOpenParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -502,21 +608,39 @@ func archiveFTPCloseCmd() *cobra.Command {
 				return generateSkeleton(ctx, archiveFTPCloseParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findArchiveFTPCloseTargets(ctx, archiveFTPCloseParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !archiveFTPCloseParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ftp-close", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("ftp-close", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ArchiveFTPClose(ctx, archiveFTPCloseParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				archiveFTPCloseParam.SetId(id)
+				go func(p *params.FTPCloseArchiveParam) {
+					err := funcs.ArchiveFTPClose(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(archiveFTPCloseParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -552,10 +676,28 @@ func archiveWaitForCopyCmd() *cobra.Command {
 				return generateSkeleton(ctx, archiveWaitForCopyParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findArchiveWaitForCopyTargets(ctx, archiveWaitForCopyParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ArchiveWaitForCopy(ctx, archiveWaitForCopyParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				archiveWaitForCopyParam.SetId(id)
+				go func(p *params.WaitForCopyArchiveParam) {
+					err := funcs.ArchiveWaitForCopy(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(archiveWaitForCopyParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

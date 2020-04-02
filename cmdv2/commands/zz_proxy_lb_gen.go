@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func proxyLBListCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.ProxyLBList(ctx, proxyLBListParam.ToV0())
+
 		},
 	}
 
@@ -107,21 +107,19 @@ func proxyLBCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !proxyLBCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.ProxyLBCreate(ctx, proxyLBCreateParam.ToV0())
+
 		},
 	}
 
@@ -175,10 +173,28 @@ func proxyLBReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBReadTargets(ctx, proxyLBReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ProxyLBRead(ctx, proxyLBReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBReadParam.SetId(id)
+				go func(p *params.ReadProxyLBParam) {
+					err := funcs.ProxyLBRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -220,21 +236,39 @@ func proxyLBUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBUpdateTargets(ctx, proxyLBUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBUpdate(ctx, proxyLBUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBUpdateParam.SetId(id)
+				go func(p *params.UpdateProxyLBParam) {
+					err := funcs.ProxyLBUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -289,21 +323,39 @@ func proxyLBDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBDeleteTargets(ctx, proxyLBDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBDelete(ctx, proxyLBDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBDeleteParam.SetId(id)
+				go func(p *params.DeleteProxyLBParam) {
+					err := funcs.ProxyLBDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -346,21 +398,39 @@ func proxyLBPlanChangeCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBPlanChangeParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBPlanChangeTargets(ctx, proxyLBPlanChangeParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBPlanChangeParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("plan-change", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("plan-change", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBPlanChange(ctx, proxyLBPlanChangeParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBPlanChangeParam.SetId(id)
+				go func(p *params.PlanChangeProxyLBParam) {
+					err := funcs.ProxyLBPlanChange(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBPlanChangeParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -404,10 +474,28 @@ func proxyLBBindPortInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBBindPortInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBBindPortInfoTargets(ctx, proxyLBBindPortInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ProxyLBBindPortInfo(ctx, proxyLBBindPortInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBBindPortInfoParam.SetId(id)
+				go func(p *params.BindPortInfoProxyLBParam) {
+					err := funcs.ProxyLBBindPortInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBBindPortInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -449,21 +537,39 @@ func proxyLBBindPortAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBBindPortAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBBindPortAddTargets(ctx, proxyLBBindPortAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBBindPortAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("bind-port-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("bind-port-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBBindPortAdd(ctx, proxyLBBindPortAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBBindPortAddParam.SetId(id)
+				go func(p *params.BindPortAddProxyLBParam) {
+					err := funcs.ProxyLBBindPortAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBBindPortAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -510,21 +616,39 @@ func proxyLBBindPortUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBBindPortUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBBindPortUpdateTargets(ctx, proxyLBBindPortUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBBindPortUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("bind-port-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("bind-port-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBBindPortUpdate(ctx, proxyLBBindPortUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBBindPortUpdateParam.SetId(id)
+				go func(p *params.BindPortUpdateProxyLBParam) {
+					err := funcs.ProxyLBBindPortUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBBindPortUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -572,21 +696,39 @@ func proxyLBBindPortDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBBindPortDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBBindPortDeleteTargets(ctx, proxyLBBindPortDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBBindPortDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete bind-port", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete bind-port", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBBindPortDelete(ctx, proxyLBBindPortDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBBindPortDeleteParam.SetId(id)
+				go func(p *params.BindPortDeleteProxyLBParam) {
+					err := funcs.ProxyLBBindPortDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBBindPortDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -630,10 +772,28 @@ func proxyLBResponseHeaderInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBResponseHeaderInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBResponseHeaderInfoTargets(ctx, proxyLBResponseHeaderInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ProxyLBResponseHeaderInfo(ctx, proxyLBResponseHeaderInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBResponseHeaderInfoParam.SetId(id)
+				go func(p *params.ResponseHeaderInfoProxyLBParam) {
+					err := funcs.ProxyLBResponseHeaderInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBResponseHeaderInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -676,21 +836,39 @@ func proxyLBResponseHeaderAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBResponseHeaderAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBResponseHeaderAddTargets(ctx, proxyLBResponseHeaderAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBResponseHeaderAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("response-header-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("response-header-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBResponseHeaderAdd(ctx, proxyLBResponseHeaderAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBResponseHeaderAddParam.SetId(id)
+				go func(p *params.ResponseHeaderAddProxyLBParam) {
+					err := funcs.ProxyLBResponseHeaderAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBResponseHeaderAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -736,21 +914,39 @@ func proxyLBResponseHeaderUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBResponseHeaderUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBResponseHeaderUpdateTargets(ctx, proxyLBResponseHeaderUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBResponseHeaderUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("response-header-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("response-header-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBResponseHeaderUpdate(ctx, proxyLBResponseHeaderUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBResponseHeaderUpdateParam.SetId(id)
+				go func(p *params.ResponseHeaderUpdateProxyLBParam) {
+					err := funcs.ProxyLBResponseHeaderUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBResponseHeaderUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -797,21 +993,39 @@ func proxyLBResponseHeaderDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBResponseHeaderDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBResponseHeaderDeleteTargets(ctx, proxyLBResponseHeaderDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBResponseHeaderDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete response-header", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete response-header", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBResponseHeaderDelete(ctx, proxyLBResponseHeaderDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBResponseHeaderDeleteParam.SetId(id)
+				go func(p *params.ResponseHeaderDeleteProxyLBParam) {
+					err := funcs.ProxyLBResponseHeaderDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBResponseHeaderDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -856,10 +1070,28 @@ func proxyLBACMEInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBACMEInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBACMEInfoTargets(ctx, proxyLBACMEInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ProxyLBACMEInfo(ctx, proxyLBACMEInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBACMEInfoParam.SetId(id)
+				go func(p *params.ACMEInfoProxyLBParam) {
+					err := funcs.ProxyLBACMEInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBACMEInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -901,21 +1133,39 @@ func proxyLBACMESettingCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBACMESettingParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBACMESettingTargets(ctx, proxyLBACMESettingParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBACMESettingParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("acme-setting", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("acme-setting", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBACMESetting(ctx, proxyLBACMESettingParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBACMESettingParam.SetId(id)
+				go func(p *params.ACMESettingProxyLBParam) {
+					err := funcs.ProxyLBACMESetting(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBACMESettingParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -961,21 +1211,39 @@ func proxyLBACMERenewCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBACMERenewParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBACMERenewTargets(ctx, proxyLBACMERenewParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBACMERenewParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("acme-renew", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("acme-renew", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBACMERenew(ctx, proxyLBACMERenewParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBACMERenewParam.SetId(id)
+				go func(p *params.ACMERenewProxyLBParam) {
+					err := funcs.ProxyLBACMERenew(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBACMERenewParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1011,10 +1279,28 @@ func proxyLBServerInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBServerInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBServerInfoTargets(ctx, proxyLBServerInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ProxyLBServerInfo(ctx, proxyLBServerInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBServerInfoParam.SetId(id)
+				go func(p *params.ServerInfoProxyLBParam) {
+					err := funcs.ProxyLBServerInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBServerInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1056,21 +1342,39 @@ func proxyLBServerAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBServerAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBServerAddTargets(ctx, proxyLBServerAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBServerAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("server-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("server-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBServerAdd(ctx, proxyLBServerAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBServerAddParam.SetId(id)
+				go func(p *params.ServerAddProxyLBParam) {
+					err := funcs.ProxyLBServerAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBServerAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1116,21 +1420,39 @@ func proxyLBServerUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBServerUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBServerUpdateTargets(ctx, proxyLBServerUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBServerUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("server-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("server-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBServerUpdate(ctx, proxyLBServerUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBServerUpdateParam.SetId(id)
+				go func(p *params.ServerUpdateProxyLBParam) {
+					err := funcs.ProxyLBServerUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBServerUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1177,21 +1499,39 @@ func proxyLBServerDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBServerDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBServerDeleteTargets(ctx, proxyLBServerDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBServerDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete server", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete server", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBServerDelete(ctx, proxyLBServerDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBServerDeleteParam.SetId(id)
+				go func(p *params.ServerDeleteProxyLBParam) {
+					err := funcs.ProxyLBServerDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBServerDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1235,10 +1575,28 @@ func proxyLBCertificateInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBCertificateInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBCertificateInfoTargets(ctx, proxyLBCertificateInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ProxyLBCertificateInfo(ctx, proxyLBCertificateInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBCertificateInfoParam.SetId(id)
+				go func(p *params.CertificateInfoProxyLBParam) {
+					err := funcs.ProxyLBCertificateInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBCertificateInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1280,21 +1638,39 @@ func proxyLBCertificateAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBCertificateAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBCertificateAddTargets(ctx, proxyLBCertificateAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBCertificateAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("certificate-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("certificate-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBCertificateAdd(ctx, proxyLBCertificateAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBCertificateAddParam.SetId(id)
+				go func(p *params.CertificateAddProxyLBParam) {
+					err := funcs.ProxyLBCertificateAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBCertificateAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1340,21 +1716,39 @@ func proxyLBCertificateUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBCertificateUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBCertificateUpdateTargets(ctx, proxyLBCertificateUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBCertificateUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("certificate-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("certificate-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBCertificateUpdate(ctx, proxyLBCertificateUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBCertificateUpdateParam.SetId(id)
+				go func(p *params.CertificateUpdateProxyLBParam) {
+					err := funcs.ProxyLBCertificateUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBCertificateUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1400,21 +1794,39 @@ func proxyLBCertificateDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBCertificateDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBCertificateDeleteTargets(ctx, proxyLBCertificateDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !proxyLBCertificateDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete certificate", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete certificate", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ProxyLBCertificateDelete(ctx, proxyLBCertificateDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBCertificateDeleteParam.SetId(id)
+				go func(p *params.CertificateDeleteProxyLBParam) {
+					err := funcs.ProxyLBCertificateDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBCertificateDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1457,10 +1869,28 @@ func proxyLBMonitorCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBMonitorParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findProxyLBMonitorTargets(ctx, proxyLBMonitorParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ProxyLBMonitor(ctx, proxyLBMonitorParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				proxyLBMonitorParam.SetId(id)
+				go func(p *params.MonitorProxyLBParam) {
+					err := funcs.ProxyLBMonitor(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(proxyLBMonitorParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

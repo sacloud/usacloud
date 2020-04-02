@@ -58,10 +58,8 @@ func regionListCmd() *cobra.Command {
 				return generateSkeleton(ctx, regionListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.RegionList(ctx, regionListParam.ToV0())
+
 		},
 	}
 
@@ -106,21 +104,19 @@ func regionReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, regionReadParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !regionReadParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.RegionRead(ctx, regionReadParam.ToV0())
+
 		},
 	}
 

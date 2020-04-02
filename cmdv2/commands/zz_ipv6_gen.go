@@ -58,10 +58,8 @@ func ipv6ListCmd() *cobra.Command {
 				return generateSkeleton(ctx, ipv6ListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.IPv6List(ctx, ipv6ListParam.ToV0())
+
 		},
 	}
 
@@ -108,21 +106,19 @@ func ipv6PtrAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, ipv6PtrAddParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !ipv6PtrAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ptr-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("ptr-add", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.IPv6PtrAdd(ctx, ipv6PtrAddParam.ToV0())
+
 		},
 	}
 
@@ -164,10 +160,8 @@ func ipv6PtrReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, ipv6PtrReadParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.IPv6PtrRead(ctx, ipv6PtrReadParam.ToV0())
+
 		},
 	}
 
@@ -207,21 +201,19 @@ func ipv6PtrUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, ipv6PtrUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !ipv6PtrUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ptr-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("ptr-update", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.IPv6PtrUpdate(ctx, ipv6PtrUpdateParam.ToV0())
+
 		},
 	}
 
@@ -263,21 +255,19 @@ func ipv6PtrDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, ipv6PtrDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !ipv6PtrDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ptr-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("ptr-delete", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.IPv6PtrDelete(ctx, ipv6PtrDeleteParam.ToV0())
+
 		},
 	}
 

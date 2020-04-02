@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func sshKeyListCmd() *cobra.Command {
 				return generateSkeleton(ctx, sshKeyListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.SSHKeyList(ctx, sshKeyListParam.ToV0())
+
 		},
 	}
 
@@ -106,21 +106,19 @@ func sshKeyCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, sshKeyCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !sshKeyCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.SSHKeyCreate(ctx, sshKeyCreateParam.ToV0())
+
 		},
 	}
 
@@ -165,10 +163,28 @@ func sshKeyReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, sshKeyReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSSHKeyReadTargets(ctx, sshKeyReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.SSHKeyRead(ctx, sshKeyReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				sshKeyReadParam.SetId(id)
+				go func(p *params.ReadSSHKeyParam) {
+					err := funcs.SSHKeyRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(sshKeyReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -209,21 +225,39 @@ func sshKeyUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, sshKeyUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSSHKeyUpdateTargets(ctx, sshKeyUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !sshKeyUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SSHKeyUpdate(ctx, sshKeyUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				sshKeyUpdateParam.SetId(id)
+				go func(p *params.UpdateSSHKeyParam) {
+					err := funcs.SSHKeyUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(sshKeyUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -267,21 +301,39 @@ func sshKeyDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, sshKeyDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSSHKeyDeleteTargets(ctx, sshKeyDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !sshKeyDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SSHKeyDelete(ctx, sshKeyDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				sshKeyDeleteParam.SetId(id)
+				go func(p *params.DeleteSSHKeyParam) {
+					err := funcs.SSHKeyDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(sshKeyDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -323,21 +375,19 @@ func sshKeyGenerateCmd() *cobra.Command {
 				return generateSkeleton(ctx, sshKeyGenerateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !sshKeyGenerateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("generate", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("generate", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.SSHKeyGenerate(ctx, sshKeyGenerateParam.ToV0())
+
 		},
 	}
 

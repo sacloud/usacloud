@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func mobileGatewayListCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.MobileGatewayList(ctx, mobileGatewayListParam.ToV0())
+
 		},
 	}
 
@@ -107,21 +107,19 @@ func mobileGatewayCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !mobileGatewayCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.MobileGatewayCreate(ctx, mobileGatewayCreateParam.ToV0())
+
 		},
 	}
 
@@ -167,10 +165,28 @@ func mobileGatewayReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayReadTargets(ctx, mobileGatewayReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.MobileGatewayRead(ctx, mobileGatewayReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayReadParam.SetId(id)
+				go func(p *params.ReadMobileGatewayParam) {
+					err := funcs.MobileGatewayRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -212,21 +228,39 @@ func mobileGatewayUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayUpdateTargets(ctx, mobileGatewayUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewayUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewayUpdate(ctx, mobileGatewayUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayUpdateParam.SetId(id)
+				go func(p *params.UpdateMobileGatewayParam) {
+					err := funcs.MobileGatewayUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -274,21 +308,39 @@ func mobileGatewayDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayDeleteTargets(ctx, mobileGatewayDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewayDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewayDelete(ctx, mobileGatewayDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayDeleteParam.SetId(id)
+				go func(p *params.DeleteMobileGatewayParam) {
+					err := funcs.MobileGatewayDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -332,21 +384,39 @@ func mobileGatewayBootCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayBootParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayBootTargets(ctx, mobileGatewayBootParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewayBootParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewayBoot(ctx, mobileGatewayBootParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayBootParam.SetId(id)
+				go func(p *params.BootMobileGatewayParam) {
+					err := funcs.MobileGatewayBoot(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayBootParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -382,21 +452,39 @@ func mobileGatewayShutdownCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayShutdownParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayShutdownTargets(ctx, mobileGatewayShutdownParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewayShutdownParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewayShutdown(ctx, mobileGatewayShutdownParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayShutdownParam.SetId(id)
+				go func(p *params.ShutdownMobileGatewayParam) {
+					err := funcs.MobileGatewayShutdown(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayShutdownParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -432,21 +520,39 @@ func mobileGatewayShutdownForceCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayShutdownForceParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayShutdownForceTargets(ctx, mobileGatewayShutdownForceParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewayShutdownForceParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewayShutdownForce(ctx, mobileGatewayShutdownForceParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayShutdownForceParam.SetId(id)
+				go func(p *params.ShutdownForceMobileGatewayParam) {
+					err := funcs.MobileGatewayShutdownForce(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayShutdownForceParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -482,21 +588,39 @@ func mobileGatewayResetCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayResetParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayResetTargets(ctx, mobileGatewayResetParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewayResetParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewayReset(ctx, mobileGatewayResetParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayResetParam.SetId(id)
+				go func(p *params.ResetMobileGatewayParam) {
+					err := funcs.MobileGatewayReset(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayResetParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -532,10 +656,28 @@ func mobileGatewayWaitForBootCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayWaitForBootParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayWaitForBootTargets(ctx, mobileGatewayWaitForBootParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.MobileGatewayWaitForBoot(ctx, mobileGatewayWaitForBootParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayWaitForBootParam.SetId(id)
+				go func(p *params.WaitForBootMobileGatewayParam) {
+					err := funcs.MobileGatewayWaitForBoot(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayWaitForBootParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -570,10 +712,28 @@ func mobileGatewayWaitForDownCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayWaitForDownParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayWaitForDownTargets(ctx, mobileGatewayWaitForDownParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.MobileGatewayWaitForDown(ctx, mobileGatewayWaitForDownParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayWaitForDownParam.SetId(id)
+				go func(p *params.WaitForDownMobileGatewayParam) {
+					err := funcs.MobileGatewayWaitForDown(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayWaitForDownParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -608,10 +768,28 @@ func mobileGatewayInterfaceInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayInterfaceInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayInterfaceInfoTargets(ctx, mobileGatewayInterfaceInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.MobileGatewayInterfaceInfo(ctx, mobileGatewayInterfaceInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayInterfaceInfoParam.SetId(id)
+				go func(p *params.InterfaceInfoMobileGatewayParam) {
+					err := funcs.MobileGatewayInterfaceInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayInterfaceInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -653,21 +831,39 @@ func mobileGatewayInterfaceConnectCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayInterfaceConnectParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayInterfaceConnectTargets(ctx, mobileGatewayInterfaceConnectParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewayInterfaceConnectParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("interface-connect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewayInterfaceConnect(ctx, mobileGatewayInterfaceConnectParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayInterfaceConnectParam.SetId(id)
+				go func(p *params.InterfaceConnectMobileGatewayParam) {
+					err := funcs.MobileGatewayInterfaceConnect(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayInterfaceConnectParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -706,21 +902,39 @@ func mobileGatewayInterfaceUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayInterfaceUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayInterfaceUpdateTargets(ctx, mobileGatewayInterfaceUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewayInterfaceUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("interface-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewayInterfaceUpdate(ctx, mobileGatewayInterfaceUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayInterfaceUpdateParam.SetId(id)
+				go func(p *params.InterfaceUpdateMobileGatewayParam) {
+					err := funcs.MobileGatewayInterfaceUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayInterfaceUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -758,21 +972,39 @@ func mobileGatewayInterfaceDisconnectCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayInterfaceDisconnectParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayInterfaceDisconnectTargets(ctx, mobileGatewayInterfaceDisconnectParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewayInterfaceDisconnectParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("interface-disconnect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewayInterfaceDisconnect(ctx, mobileGatewayInterfaceDisconnectParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayInterfaceDisconnectParam.SetId(id)
+				go func(p *params.InterfaceDisconnectMobileGatewayParam) {
+					err := funcs.MobileGatewayInterfaceDisconnect(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayInterfaceDisconnectParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -808,10 +1040,28 @@ func mobileGatewayTrafficControlInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayTrafficControlInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayTrafficControlInfoTargets(ctx, mobileGatewayTrafficControlInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.MobileGatewayTrafficControlInfo(ctx, mobileGatewayTrafficControlInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayTrafficControlInfoParam.SetId(id)
+				go func(p *params.TrafficControlInfoMobileGatewayParam) {
+					err := funcs.MobileGatewayTrafficControlInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayTrafficControlInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -853,21 +1103,39 @@ func mobileGatewayTrafficControlEnableCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayTrafficControlEnableParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayTrafficControlEnableTargets(ctx, mobileGatewayTrafficControlEnableParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewayTrafficControlEnableParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("traffic-control-enable", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("traffic-control-enable", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewayTrafficControlEnable(ctx, mobileGatewayTrafficControlEnableParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayTrafficControlEnableParam.SetId(id)
+				go func(p *params.TrafficControlEnableMobileGatewayParam) {
+					err := funcs.MobileGatewayTrafficControlEnable(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayTrafficControlEnableParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -908,21 +1176,39 @@ func mobileGatewayTrafficControlUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayTrafficControlUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayTrafficControlUpdateTargets(ctx, mobileGatewayTrafficControlUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewayTrafficControlUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("traffic-control-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("traffic-control-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewayTrafficControlUpdate(ctx, mobileGatewayTrafficControlUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayTrafficControlUpdateParam.SetId(id)
+				go func(p *params.TrafficControlUpdateMobileGatewayParam) {
+					err := funcs.MobileGatewayTrafficControlUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayTrafficControlUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -963,21 +1249,39 @@ func mobileGatewayTrafficControlDisableCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayTrafficControlDisableParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayTrafficControlDisableTargets(ctx, mobileGatewayTrafficControlDisableParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewayTrafficControlDisableParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("traffic-control-disable", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("traffic-control-disable", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewayTrafficControlDisable(ctx, mobileGatewayTrafficControlDisableParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayTrafficControlDisableParam.SetId(id)
+				go func(p *params.TrafficControlDisableMobileGatewayParam) {
+					err := funcs.MobileGatewayTrafficControlDisable(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayTrafficControlDisableParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1013,10 +1317,28 @@ func mobileGatewayStaticRouteInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayStaticRouteInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayStaticRouteInfoTargets(ctx, mobileGatewayStaticRouteInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.MobileGatewayStaticRouteInfo(ctx, mobileGatewayStaticRouteInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayStaticRouteInfoParam.SetId(id)
+				go func(p *params.StaticRouteInfoMobileGatewayParam) {
+					err := funcs.MobileGatewayStaticRouteInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayStaticRouteInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1058,21 +1380,39 @@ func mobileGatewayStaticRouteAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayStaticRouteAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayStaticRouteAddTargets(ctx, mobileGatewayStaticRouteAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewayStaticRouteAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("static-route-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("static-route-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewayStaticRouteAdd(ctx, mobileGatewayStaticRouteAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayStaticRouteAddParam.SetId(id)
+				go func(p *params.StaticRouteAddMobileGatewayParam) {
+					err := funcs.MobileGatewayStaticRouteAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayStaticRouteAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1110,21 +1450,39 @@ func mobileGatewayStaticRouteUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayStaticRouteUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayStaticRouteUpdateTargets(ctx, mobileGatewayStaticRouteUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewayStaticRouteUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("static-route-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("static-route-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewayStaticRouteUpdate(ctx, mobileGatewayStaticRouteUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayStaticRouteUpdateParam.SetId(id)
+				go func(p *params.StaticRouteUpdateMobileGatewayParam) {
+					err := funcs.MobileGatewayStaticRouteUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayStaticRouteUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1163,21 +1521,39 @@ func mobileGatewayStaticRouteDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayStaticRouteDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayStaticRouteDeleteTargets(ctx, mobileGatewayStaticRouteDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewayStaticRouteDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("static-route-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("static-route-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewayStaticRouteDelete(ctx, mobileGatewayStaticRouteDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayStaticRouteDeleteParam.SetId(id)
+				go func(p *params.StaticRouteDeleteMobileGatewayParam) {
+					err := funcs.MobileGatewayStaticRouteDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayStaticRouteDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1214,10 +1590,28 @@ func mobileGatewaySIMInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewaySIMInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewaySIMInfoTargets(ctx, mobileGatewaySIMInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.MobileGatewaySIMInfo(ctx, mobileGatewaySIMInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewaySIMInfoParam.SetId(id)
+				go func(p *params.SIMInfoMobileGatewayParam) {
+					err := funcs.MobileGatewaySIMInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewaySIMInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1259,21 +1653,39 @@ func mobileGatewaySIMAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewaySIMAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewaySIMAddTargets(ctx, mobileGatewaySIMAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewaySIMAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("sim-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("sim-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewaySIMAdd(ctx, mobileGatewaySIMAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewaySIMAddParam.SetId(id)
+				go func(p *params.SIMAddMobileGatewayParam) {
+					err := funcs.MobileGatewaySIMAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewaySIMAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1311,21 +1723,39 @@ func mobileGatewaySIMUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewaySIMUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewaySIMUpdateTargets(ctx, mobileGatewaySIMUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewaySIMUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("sim-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("sim-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewaySIMUpdate(ctx, mobileGatewaySIMUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewaySIMUpdateParam.SetId(id)
+				go func(p *params.SIMUpdateMobileGatewayParam) {
+					err := funcs.MobileGatewaySIMUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewaySIMUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1363,21 +1793,39 @@ func mobileGatewaySIMDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewaySIMDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewaySIMDeleteTargets(ctx, mobileGatewaySIMDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewaySIMDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("sim-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("sim-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewaySIMDelete(ctx, mobileGatewaySIMDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewaySIMDeleteParam.SetId(id)
+				go func(p *params.SIMDeleteMobileGatewayParam) {
+					err := funcs.MobileGatewaySIMDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewaySIMDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1414,10 +1862,28 @@ func mobileGatewaySIMRouteInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewaySIMRouteInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewaySIMRouteInfoTargets(ctx, mobileGatewaySIMRouteInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.MobileGatewaySIMRouteInfo(ctx, mobileGatewaySIMRouteInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewaySIMRouteInfoParam.SetId(id)
+				go func(p *params.SIMRouteInfoMobileGatewayParam) {
+					err := funcs.MobileGatewaySIMRouteInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewaySIMRouteInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1459,21 +1925,39 @@ func mobileGatewaySIMRouteAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewaySIMRouteAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewaySIMRouteAddTargets(ctx, mobileGatewaySIMRouteAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewaySIMRouteAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("sim-route-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("sim-route-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewaySIMRouteAdd(ctx, mobileGatewaySIMRouteAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewaySIMRouteAddParam.SetId(id)
+				go func(p *params.SIMRouteAddMobileGatewayParam) {
+					err := funcs.MobileGatewaySIMRouteAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewaySIMRouteAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1511,21 +1995,39 @@ func mobileGatewaySIMRouteUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewaySIMRouteUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewaySIMRouteUpdateTargets(ctx, mobileGatewaySIMRouteUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewaySIMRouteUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("sim-route-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("sim-route-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewaySIMRouteUpdate(ctx, mobileGatewaySIMRouteUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewaySIMRouteUpdateParam.SetId(id)
+				go func(p *params.SIMRouteUpdateMobileGatewayParam) {
+					err := funcs.MobileGatewaySIMRouteUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewaySIMRouteUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1564,21 +2066,39 @@ func mobileGatewaySIMRouteDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewaySIMRouteDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewaySIMRouteDeleteTargets(ctx, mobileGatewaySIMRouteDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewaySIMRouteDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("sim-route-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("sim-route-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewaySIMRouteDelete(ctx, mobileGatewaySIMRouteDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewaySIMRouteDeleteParam.SetId(id)
+				go func(p *params.SIMRouteDeleteMobileGatewayParam) {
+					err := funcs.MobileGatewaySIMRouteDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewaySIMRouteDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1615,21 +2135,39 @@ func mobileGatewayDNSUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayDNSUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayDNSUpdateTargets(ctx, mobileGatewayDNSUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !mobileGatewayDNSUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("dns-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("dns-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.MobileGatewayDNSUpdate(ctx, mobileGatewayDNSUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayDNSUpdateParam.SetId(id)
+				go func(p *params.DNSUpdateMobileGatewayParam) {
+					err := funcs.MobileGatewayDNSUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayDNSUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1667,10 +2205,28 @@ func mobileGatewayLogsCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayLogsParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findMobileGatewayLogsTargets(ctx, mobileGatewayLogsParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.MobileGatewayLogs(ctx, mobileGatewayLogsParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				mobileGatewayLogsParam.SetId(id)
+				go func(p *params.LogsMobileGatewayParam) {
+					err := funcs.MobileGatewayLogs(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(mobileGatewayLogsParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

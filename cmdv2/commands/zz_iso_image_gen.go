@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func isoImageListCmd() *cobra.Command {
 				return generateSkeleton(ctx, isoImageListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.ISOImageList(ctx, isoImageListParam.ToV0())
+
 		},
 	}
 
@@ -108,21 +108,19 @@ func isoImageCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, isoImageCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !isoImageCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.ISOImageCreate(ctx, isoImageCreateParam.ToV0())
+
 		},
 	}
 
@@ -169,10 +167,28 @@ func isoImageReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, isoImageReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findISOImageReadTargets(ctx, isoImageReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ISOImageRead(ctx, isoImageReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				isoImageReadParam.SetId(id)
+				go func(p *params.ReadISOImageParam) {
+					err := funcs.ISOImageRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(isoImageReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -214,21 +230,39 @@ func isoImageUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, isoImageUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findISOImageUpdateTargets(ctx, isoImageUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !isoImageUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ISOImageUpdate(ctx, isoImageUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				isoImageUpdateParam.SetId(id)
+				go func(p *params.UpdateISOImageParam) {
+					err := funcs.ISOImageUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(isoImageUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -275,21 +309,39 @@ func isoImageDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, isoImageDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findISOImageDeleteTargets(ctx, isoImageDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !isoImageDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ISOImageDelete(ctx, isoImageDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				isoImageDeleteParam.SetId(id)
+				go func(p *params.DeleteISOImageParam) {
+					err := funcs.ISOImageDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(isoImageDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -332,21 +384,39 @@ func isoImageUploadCmd() *cobra.Command {
 				return generateSkeleton(ctx, isoImageUploadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findISOImageUploadTargets(ctx, isoImageUploadParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !isoImageUploadParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("upload", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("upload", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ISOImageUpload(ctx, isoImageUploadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				isoImageUploadParam.SetId(id)
+				go func(p *params.UploadISOImageParam) {
+					err := funcs.ISOImageUpload(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(isoImageUploadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -390,21 +460,39 @@ func isoImageDownloadCmd() *cobra.Command {
 				return generateSkeleton(ctx, isoImageDownloadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findISOImageDownloadTargets(ctx, isoImageDownloadParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !isoImageDownloadParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("download", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("download", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ISOImageDownload(ctx, isoImageDownloadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				isoImageDownloadParam.SetId(id)
+				go func(p *params.DownloadISOImageParam) {
+					err := funcs.ISOImageDownload(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(isoImageDownloadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -441,21 +529,39 @@ func isoImageFTPOpenCmd() *cobra.Command {
 				return generateSkeleton(ctx, isoImageFTPOpenParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findISOImageFTPOpenTargets(ctx, isoImageFTPOpenParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !isoImageFTPOpenParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ftp-open", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("ftp-open", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ISOImageFTPOpen(ctx, isoImageFTPOpenParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				isoImageFTPOpenParam.SetId(id)
+				go func(p *params.FTPOpenISOImageParam) {
+					err := funcs.ISOImageFTPOpen(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(isoImageFTPOpenParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -498,21 +604,39 @@ func isoImageFTPCloseCmd() *cobra.Command {
 				return generateSkeleton(ctx, isoImageFTPCloseParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findISOImageFTPCloseTargets(ctx, isoImageFTPCloseParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !isoImageFTPCloseParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ftp-close", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("ftp-close", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ISOImageFTPClose(ctx, isoImageFTPCloseParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				isoImageFTPCloseParam.SetId(id)
+				go func(p *params.FTPCloseISOImageParam) {
+					err := funcs.ISOImageFTPClose(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(isoImageFTPCloseParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

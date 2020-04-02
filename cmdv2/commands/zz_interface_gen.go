@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func interfaceListCmd() *cobra.Command {
 				return generateSkeleton(ctx, interfaceListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.InterfaceList(ctx, interfaceListParam.ToV0())
+
 		},
 	}
 
@@ -106,21 +106,39 @@ func interfacePacketFilterConnectCmd() *cobra.Command {
 				return generateSkeleton(ctx, interfacePacketFilterConnectParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInterfacePacketFilterConnectTargets(ctx, interfacePacketFilterConnectParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !interfacePacketFilterConnectParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("packet-filter-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("packet-filter-connect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.InterfacePacketFilterConnect(ctx, interfacePacketFilterConnectParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				interfacePacketFilterConnectParam.SetId(id)
+				go func(p *params.PacketFilterConnectInterfaceParam) {
+					err := funcs.InterfacePacketFilterConnect(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(interfacePacketFilterConnectParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -156,21 +174,19 @@ func interfaceCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, interfaceCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !interfaceCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.InterfaceCreate(ctx, interfaceCreateParam.ToV0())
+
 		},
 	}
 
@@ -212,21 +228,39 @@ func interfacePacketFilterDisconnectCmd() *cobra.Command {
 				return generateSkeleton(ctx, interfacePacketFilterDisconnectParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInterfacePacketFilterDisconnectTargets(ctx, interfacePacketFilterDisconnectParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !interfacePacketFilterDisconnectParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("packet-filter-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("packet-filter-disconnect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.InterfacePacketFilterDisconnect(ctx, interfacePacketFilterDisconnectParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				interfacePacketFilterDisconnectParam.SetId(id)
+				go func(p *params.PacketFilterDisconnectInterfaceParam) {
+					err := funcs.InterfacePacketFilterDisconnect(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(interfacePacketFilterDisconnectParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -262,10 +296,28 @@ func interfaceReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, interfaceReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInterfaceReadTargets(ctx, interfaceReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.InterfaceRead(ctx, interfaceReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				interfaceReadParam.SetId(id)
+				go func(p *params.ReadInterfaceParam) {
+					err := funcs.InterfaceRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(interfaceReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -306,21 +358,39 @@ func interfaceUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, interfaceUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInterfaceUpdateTargets(ctx, interfaceUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !interfaceUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.InterfaceUpdate(ctx, interfaceUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				interfaceUpdateParam.SetId(id)
+				go func(p *params.UpdateInterfaceParam) {
+					err := funcs.InterfaceUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(interfaceUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -363,21 +433,39 @@ func interfaceDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, interfaceDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInterfaceDeleteTargets(ctx, interfaceDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !interfaceDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.InterfaceDelete(ctx, interfaceDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				interfaceDeleteParam.SetId(id)
+				go func(p *params.DeleteInterfaceParam) {
+					err := funcs.InterfaceDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(interfaceDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

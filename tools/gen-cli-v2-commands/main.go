@@ -114,7 +114,13 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 				return generateSkeleton(ctx, {{ .InputParameterVariable }})
 			}
 			
-			// TODO implements ID parameter handling
+			{{ if .MultipleArgToIdParams -}}
+			// parse ID or Name arguments
+			ids, err := {{ .ArgToIdFunc }}(ctx, {{ .InputParameterVariable }})
+			if err != nil {
+				return err
+			}
+			{{ end -}}
 
 			{{ if .NeedConfirm }}
 			// confirm
@@ -122,15 +128,32 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 				if !utils.IsTerminal(){
 				    return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("{{.ConfirmMessage}}", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("{{.ConfirmMessage}}", ctx.IO().In(), ctx.IO().Out(){{ if .MultipleArgToIdParams }}, ids...{{ end }})
 				if err != nil || !result {
 					return err
 				}
 			}
 			{{ end }}
 
-			// Run
+			{{ if .MultipleArgToIdParams -}}
+			var wg sync.WaitGroup
+			var errs []error
+			for _ , id := range ids {
+				wg.Add(1)
+				{{ .InputParameterVariable }}.SetId(id)
+				go func(p *params.{{ .InputParameterTypeName }}) {
+					err := funcs.{{ .FunctionName }}(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}({{ .InputParameterVariable }})
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+			{{ else }}
 			return funcs.{{ .FunctionName }}(ctx, {{ .InputParameterVariable }}.ToV0())
+			{{ end }}
 		},
 	}
 

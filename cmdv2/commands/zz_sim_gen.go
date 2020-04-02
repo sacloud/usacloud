@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func simListCmd() *cobra.Command {
 				return generateSkeleton(ctx, simListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.SIMList(ctx, simListParam.ToV0())
+
 		},
 	}
 
@@ -107,21 +107,19 @@ func simCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, simCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !simCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.SIMCreate(ctx, simCreateParam.ToV0())
+
 		},
 	}
 
@@ -171,10 +169,28 @@ func simReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, simReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSIMReadTargets(ctx, simReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.SIMRead(ctx, simReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simReadParam.SetId(id)
+				go func(p *params.ReadSIMParam) {
+					err := funcs.SIMRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -216,21 +232,39 @@ func simUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, simUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSIMUpdateTargets(ctx, simUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !simUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SIMUpdate(ctx, simUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simUpdateParam.SetId(id)
+				go func(p *params.UpdateSIMParam) {
+					err := funcs.SIMUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -277,21 +311,39 @@ func simDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, simDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSIMDeleteTargets(ctx, simDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !simDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SIMDelete(ctx, simDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simDeleteParam.SetId(id)
+				go func(p *params.DeleteSIMParam) {
+					err := funcs.SIMDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -328,10 +380,28 @@ func simCarrierInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, simCarrierInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSIMCarrierInfoTargets(ctx, simCarrierInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.SIMCarrierInfo(ctx, simCarrierInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simCarrierInfoParam.SetId(id)
+				go func(p *params.CarrierInfoSIMParam) {
+					err := funcs.SIMCarrierInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simCarrierInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -373,21 +443,39 @@ func simCarrierUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, simCarrierUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSIMCarrierUpdateTargets(ctx, simCarrierUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !simCarrierUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("carrier-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("carrier-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SIMCarrierUpdate(ctx, simCarrierUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simCarrierUpdateParam.SetId(id)
+				go func(p *params.CarrierUpdateSIMParam) {
+					err := funcs.SIMCarrierUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simCarrierUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -424,21 +512,39 @@ func simActivateCmd() *cobra.Command {
 				return generateSkeleton(ctx, simActivateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSIMActivateTargets(ctx, simActivateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !simActivateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("activate", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("activate", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SIMActivate(ctx, simActivateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simActivateParam.SetId(id)
+				go func(p *params.ActivateSIMParam) {
+					err := funcs.SIMActivate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simActivateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -474,21 +580,39 @@ func simDeactivateCmd() *cobra.Command {
 				return generateSkeleton(ctx, simDeactivateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSIMDeactivateTargets(ctx, simDeactivateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !simDeactivateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("deactivate", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("deactivate", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SIMDeactivate(ctx, simDeactivateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simDeactivateParam.SetId(id)
+				go func(p *params.DeactivateSIMParam) {
+					err := funcs.SIMDeactivate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simDeactivateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -524,21 +648,39 @@ func simImeiLockCmd() *cobra.Command {
 				return generateSkeleton(ctx, simImeiLockParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSIMImeiLockTargets(ctx, simImeiLockParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !simImeiLockParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("imei-lock", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("imei-lock", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SIMImeiLock(ctx, simImeiLockParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simImeiLockParam.SetId(id)
+				go func(p *params.ImeiLockSIMParam) {
+					err := funcs.SIMImeiLock(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simImeiLockParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -575,21 +717,39 @@ func simIpAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, simIpAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSIMIpAddTargets(ctx, simIpAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !simIpAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ip-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("ip-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SIMIpAdd(ctx, simIpAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simIpAddParam.SetId(id)
+				go func(p *params.IpAddSIMParam) {
+					err := funcs.SIMIpAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simIpAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -626,21 +786,39 @@ func simImeiUnlockCmd() *cobra.Command {
 				return generateSkeleton(ctx, simImeiUnlockParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSIMImeiUnlockTargets(ctx, simImeiUnlockParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !simImeiUnlockParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("imei-unlock", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("imei-unlock", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SIMImeiUnlock(ctx, simImeiUnlockParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simImeiUnlockParam.SetId(id)
+				go func(p *params.ImeiUnlockSIMParam) {
+					err := funcs.SIMImeiUnlock(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simImeiUnlockParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -676,21 +854,39 @@ func simIpDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, simIpDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSIMIpDeleteTargets(ctx, simIpDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !simIpDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ip-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("ip-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SIMIpDelete(ctx, simIpDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simIpDeleteParam.SetId(id)
+				go func(p *params.IpDeleteSIMParam) {
+					err := funcs.SIMIpDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simIpDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -726,10 +922,28 @@ func simLogsCmd() *cobra.Command {
 				return generateSkeleton(ctx, simLogsParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSIMLogsTargets(ctx, simLogsParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.SIMLogs(ctx, simLogsParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simLogsParam.SetId(id)
+				go func(p *params.LogsSIMParam) {
+					err := funcs.SIMLogs(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simLogsParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -773,10 +987,28 @@ func simMonitorCmd() *cobra.Command {
 				return generateSkeleton(ctx, simMonitorParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSIMMonitorTargets(ctx, simMonitorParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.SIMMonitor(ctx, simMonitorParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simMonitorParam.SetId(id)
+				go func(p *params.MonitorSIMParam) {
+					err := funcs.SIMMonitor(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simMonitorParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

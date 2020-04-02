@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func licenseListCmd() *cobra.Command {
 				return generateSkeleton(ctx, licenseListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.LicenseList(ctx, licenseListParam.ToV0())
+
 		},
 	}
 
@@ -106,21 +106,19 @@ func licenseCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, licenseCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !licenseCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.LicenseCreate(ctx, licenseCreateParam.ToV0())
+
 		},
 	}
 
@@ -163,10 +161,28 @@ func licenseReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, licenseReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLicenseReadTargets(ctx, licenseReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.LicenseRead(ctx, licenseReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				licenseReadParam.SetId(id)
+				go func(p *params.ReadLicenseParam) {
+					err := funcs.LicenseRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(licenseReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -207,21 +223,39 @@ func licenseUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, licenseUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLicenseUpdateTargets(ctx, licenseUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !licenseUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.LicenseUpdate(ctx, licenseUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				licenseUpdateParam.SetId(id)
+				go func(p *params.UpdateLicenseParam) {
+					err := funcs.LicenseUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(licenseUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -264,21 +298,39 @@ func licenseDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, licenseDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLicenseDeleteTargets(ctx, licenseDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !licenseDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.LicenseDelete(ctx, licenseDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				licenseDeleteParam.SetId(id)
+				go func(p *params.DeleteLicenseParam) {
+					err := funcs.LicenseDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(licenseDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

@@ -58,10 +58,8 @@ func ipv4ListCmd() *cobra.Command {
 				return generateSkeleton(ctx, ipv4ListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.IPv4List(ctx, ipv4ListParam.ToV0())
+
 		},
 	}
 
@@ -106,21 +104,19 @@ func ipv4PtrAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, ipv4PtrAddParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !ipv4PtrAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ptr-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("ptr-add", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.IPv4PtrAdd(ctx, ipv4PtrAddParam.ToV0())
+
 		},
 	}
 
@@ -162,10 +158,8 @@ func ipv4PtrReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, ipv4PtrReadParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.IPv4PtrRead(ctx, ipv4PtrReadParam.ToV0())
+
 		},
 	}
 
@@ -205,21 +199,19 @@ func ipv4PtrUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, ipv4PtrUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !ipv4PtrUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ptr-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("ptr-update", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.IPv4PtrUpdate(ctx, ipv4PtrUpdateParam.ToV0())
+
 		},
 	}
 
@@ -261,21 +253,19 @@ func ipv4PtrDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, ipv4PtrDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !ipv4PtrDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ptr-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("ptr-delete", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.IPv4PtrDelete(ctx, ipv4PtrDeleteParam.ToV0())
+
 		},
 	}
 

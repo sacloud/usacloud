@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func internetListCmd() *cobra.Command {
 				return generateSkeleton(ctx, internetListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.InternetList(ctx, internetListParam.ToV0())
+
 		},
 	}
 
@@ -107,21 +107,19 @@ func internetCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, internetCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !internetCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.InternetCreate(ctx, internetCreateParam.ToV0())
+
 		},
 	}
 
@@ -168,10 +166,28 @@ func internetReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, internetReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInternetReadTargets(ctx, internetReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.InternetRead(ctx, internetReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				internetReadParam.SetId(id)
+				go func(p *params.ReadInternetParam) {
+					err := funcs.InternetRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(internetReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -213,21 +229,39 @@ func internetUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, internetUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInternetUpdateTargets(ctx, internetUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !internetUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.InternetUpdate(ctx, internetUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				internetUpdateParam.SetId(id)
+				go func(p *params.UpdateInternetParam) {
+					err := funcs.InternetUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(internetUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -275,21 +309,39 @@ func internetDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, internetDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInternetDeleteTargets(ctx, internetDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !internetDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.InternetDelete(ctx, internetDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				internetDeleteParam.SetId(id)
+				go func(p *params.DeleteInternetParam) {
+					err := funcs.InternetDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(internetDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -332,21 +384,39 @@ func internetUpdateBandwidthCmd() *cobra.Command {
 				return generateSkeleton(ctx, internetUpdateBandwidthParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInternetUpdateBandwidthTargets(ctx, internetUpdateBandwidthParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !internetUpdateBandwidthParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update-bandwidth", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update-bandwidth", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.InternetUpdateBandwidth(ctx, internetUpdateBandwidthParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				internetUpdateBandwidthParam.SetId(id)
+				go func(p *params.UpdateBandwidthInternetParam) {
+					err := funcs.InternetUpdateBandwidth(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(internetUpdateBandwidthParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -390,10 +460,28 @@ func internetSubnetInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, internetSubnetInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInternetSubnetInfoTargets(ctx, internetSubnetInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.InternetSubnetInfo(ctx, internetSubnetInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				internetSubnetInfoParam.SetId(id)
+				go func(p *params.SubnetInfoInternetParam) {
+					err := funcs.InternetSubnetInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(internetSubnetInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -435,21 +523,39 @@ func internetSubnetAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, internetSubnetAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInternetSubnetAddTargets(ctx, internetSubnetAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !internetSubnetAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("subnet-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("subnet-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.InternetSubnetAdd(ctx, internetSubnetAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				internetSubnetAddParam.SetId(id)
+				go func(p *params.SubnetAddInternetParam) {
+					err := funcs.InternetSubnetAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(internetSubnetAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -494,21 +600,39 @@ func internetSubnetDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, internetSubnetDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInternetSubnetDeleteTargets(ctx, internetSubnetDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !internetSubnetDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("subnet-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("subnet-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.InternetSubnetDelete(ctx, internetSubnetDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				internetSubnetDeleteParam.SetId(id)
+				go func(p *params.SubnetDeleteInternetParam) {
+					err := funcs.InternetSubnetDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(internetSubnetDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -545,21 +669,39 @@ func internetSubnetUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, internetSubnetUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInternetSubnetUpdateTargets(ctx, internetSubnetUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !internetSubnetUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("subnet-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("subnet-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.InternetSubnetUpdate(ctx, internetSubnetUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				internetSubnetUpdateParam.SetId(id)
+				go func(p *params.SubnetUpdateInternetParam) {
+					err := funcs.InternetSubnetUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(internetSubnetUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -604,10 +746,28 @@ func internetIPv6InfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, internetIPv6InfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInternetIPv6InfoTargets(ctx, internetIPv6InfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.InternetIPv6Info(ctx, internetIPv6InfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				internetIPv6InfoParam.SetId(id)
+				go func(p *params.IPv6InfoInternetParam) {
+					err := funcs.InternetIPv6Info(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(internetIPv6InfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -649,21 +809,39 @@ func internetIPv6EnableCmd() *cobra.Command {
 				return generateSkeleton(ctx, internetIPv6EnableParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInternetIPv6EnableTargets(ctx, internetIPv6EnableParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !internetIPv6EnableParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ipv6-enable", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("ipv6-enable", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.InternetIPv6Enable(ctx, internetIPv6EnableParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				internetIPv6EnableParam.SetId(id)
+				go func(p *params.IPv6EnableInternetParam) {
+					err := funcs.InternetIPv6Enable(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(internetIPv6EnableParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -706,21 +884,39 @@ func internetIPv6DisableCmd() *cobra.Command {
 				return generateSkeleton(ctx, internetIPv6DisableParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInternetIPv6DisableTargets(ctx, internetIPv6DisableParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !internetIPv6DisableParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ipv6-disable", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("ipv6-disable", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.InternetIPv6Disable(ctx, internetIPv6DisableParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				internetIPv6DisableParam.SetId(id)
+				go func(p *params.IPv6DisableInternetParam) {
+					err := funcs.InternetIPv6Disable(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(internetIPv6DisableParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -756,10 +952,28 @@ func internetMonitorCmd() *cobra.Command {
 				return generateSkeleton(ctx, internetMonitorParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findInternetMonitorTargets(ctx, internetMonitorParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.InternetMonitor(ctx, internetMonitorParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				internetMonitorParam.SetId(id)
+				go func(p *params.MonitorInternetParam) {
+					err := funcs.InternetMonitor(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(internetMonitorParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

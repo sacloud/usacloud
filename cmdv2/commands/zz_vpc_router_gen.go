@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func vpcRouterListCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.VPCRouterList(ctx, vpcRouterListParam.ToV0())
+
 		},
 	}
 
@@ -107,21 +107,19 @@ func vpcRouterCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !vpcRouterCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.VPCRouterCreate(ctx, vpcRouterCreateParam.ToV0())
+
 		},
 	}
 
@@ -174,10 +172,28 @@ func vpcRouterReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterReadTargets(ctx, vpcRouterReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterRead(ctx, vpcRouterReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterReadParam.SetId(id)
+				go func(p *params.ReadVPCRouterParam) {
+					err := funcs.VPCRouterRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -219,21 +235,39 @@ func vpcRouterUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterUpdateTargets(ctx, vpcRouterUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterUpdate(ctx, vpcRouterUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterUpdateParam.SetId(id)
+				go func(p *params.UpdateVPCRouterParam) {
+					err := funcs.VPCRouterUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -282,21 +316,39 @@ func vpcRouterDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterDeleteTargets(ctx, vpcRouterDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterDelete(ctx, vpcRouterDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterDeleteParam.SetId(id)
+				go func(p *params.DeleteVPCRouterParam) {
+					err := funcs.VPCRouterDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -340,21 +392,39 @@ func vpcRouterBootCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterBootParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterBootTargets(ctx, vpcRouterBootParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterBootParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterBoot(ctx, vpcRouterBootParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterBootParam.SetId(id)
+				go func(p *params.BootVPCRouterParam) {
+					err := funcs.VPCRouterBoot(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterBootParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -390,21 +460,39 @@ func vpcRouterShutdownCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterShutdownParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterShutdownTargets(ctx, vpcRouterShutdownParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterShutdownParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterShutdown(ctx, vpcRouterShutdownParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterShutdownParam.SetId(id)
+				go func(p *params.ShutdownVPCRouterParam) {
+					err := funcs.VPCRouterShutdown(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterShutdownParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -440,21 +528,39 @@ func vpcRouterShutdownForceCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterShutdownForceParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterShutdownForceTargets(ctx, vpcRouterShutdownForceParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterShutdownForceParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterShutdownForce(ctx, vpcRouterShutdownForceParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterShutdownForceParam.SetId(id)
+				go func(p *params.ShutdownForceVPCRouterParam) {
+					err := funcs.VPCRouterShutdownForce(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterShutdownForceParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -490,21 +596,39 @@ func vpcRouterResetCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterResetParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterResetTargets(ctx, vpcRouterResetParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterResetParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterReset(ctx, vpcRouterResetParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterResetParam.SetId(id)
+				go func(p *params.ResetVPCRouterParam) {
+					err := funcs.VPCRouterReset(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterResetParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -540,10 +664,28 @@ func vpcRouterWaitForBootCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterWaitForBootParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterWaitForBootTargets(ctx, vpcRouterWaitForBootParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterWaitForBoot(ctx, vpcRouterWaitForBootParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterWaitForBootParam.SetId(id)
+				go func(p *params.WaitForBootVPCRouterParam) {
+					err := funcs.VPCRouterWaitForBoot(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterWaitForBootParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -578,10 +720,28 @@ func vpcRouterWaitForDownCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterWaitForDownParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterWaitForDownTargets(ctx, vpcRouterWaitForDownParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterWaitForDown(ctx, vpcRouterWaitForDownParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterWaitForDownParam.SetId(id)
+				go func(p *params.WaitForDownVPCRouterParam) {
+					err := funcs.VPCRouterWaitForDown(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterWaitForDownParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -616,21 +776,39 @@ func vpcRouterEnableInternetConnectionCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterEnableInternetConnectionParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterEnableInternetConnectionTargets(ctx, vpcRouterEnableInternetConnectionParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterEnableInternetConnectionParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("enable-internet-connection", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("enable-internet-connection", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterEnableInternetConnection(ctx, vpcRouterEnableInternetConnectionParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterEnableInternetConnectionParam.SetId(id)
+				go func(p *params.EnableInternetConnectionVPCRouterParam) {
+					err := funcs.VPCRouterEnableInternetConnection(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterEnableInternetConnectionParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -666,21 +844,39 @@ func vpcRouterDisableInternetConnectionCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterDisableInternetConnectionParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterDisableInternetConnectionTargets(ctx, vpcRouterDisableInternetConnectionParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterDisableInternetConnectionParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("disable-internet-connection", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("disable-internet-connection", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterDisableInternetConnection(ctx, vpcRouterDisableInternetConnectionParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterDisableInternetConnectionParam.SetId(id)
+				go func(p *params.DisableInternetConnectionVPCRouterParam) {
+					err := funcs.VPCRouterDisableInternetConnection(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterDisableInternetConnectionParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -716,10 +912,28 @@ func vpcRouterInterfaceInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterInterfaceInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterInterfaceInfoTargets(ctx, vpcRouterInterfaceInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterInterfaceInfo(ctx, vpcRouterInterfaceInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterInterfaceInfoParam.SetId(id)
+				go func(p *params.InterfaceInfoVPCRouterParam) {
+					err := funcs.VPCRouterInterfaceInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterInterfaceInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -761,21 +975,39 @@ func vpcRouterInterfaceConnectCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterInterfaceConnectParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterInterfaceConnectTargets(ctx, vpcRouterInterfaceConnectParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterInterfaceConnectParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("interface-connect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterInterfaceConnect(ctx, vpcRouterInterfaceConnectParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterInterfaceConnectParam.SetId(id)
+				go func(p *params.InterfaceConnectVPCRouterParam) {
+					err := funcs.VPCRouterInterfaceConnect(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterInterfaceConnectParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -818,21 +1050,39 @@ func vpcRouterInterfaceUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterInterfaceUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterInterfaceUpdateTargets(ctx, vpcRouterInterfaceUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterInterfaceUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("interface-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterInterfaceUpdate(ctx, vpcRouterInterfaceUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterInterfaceUpdateParam.SetId(id)
+				go func(p *params.InterfaceUpdateVPCRouterParam) {
+					err := funcs.VPCRouterInterfaceUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterInterfaceUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -876,21 +1126,39 @@ func vpcRouterInterfaceDisconnectCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterInterfaceDisconnectParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterInterfaceDisconnectTargets(ctx, vpcRouterInterfaceDisconnectParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterInterfaceDisconnectParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("interface-disconnect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterInterfaceDisconnect(ctx, vpcRouterInterfaceDisconnectParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterInterfaceDisconnectParam.SetId(id)
+				go func(p *params.InterfaceDisconnectVPCRouterParam) {
+					err := funcs.VPCRouterInterfaceDisconnect(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterInterfaceDisconnectParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -928,10 +1196,28 @@ func vpcRouterStaticNatInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterStaticNatInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterStaticNatInfoTargets(ctx, vpcRouterStaticNatInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterStaticNatInfo(ctx, vpcRouterStaticNatInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterStaticNatInfoParam.SetId(id)
+				go func(p *params.StaticNatInfoVPCRouterParam) {
+					err := funcs.VPCRouterStaticNatInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterStaticNatInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -973,21 +1259,39 @@ func vpcRouterStaticNatAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterStaticNatAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterStaticNatAddTargets(ctx, vpcRouterStaticNatAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterStaticNatAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("static-nat-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("static-nat-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterStaticNatAdd(ctx, vpcRouterStaticNatAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterStaticNatAddParam.SetId(id)
+				go func(p *params.StaticNatAddVPCRouterParam) {
+					err := funcs.VPCRouterStaticNatAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterStaticNatAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1026,21 +1330,39 @@ func vpcRouterStaticNatUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterStaticNatUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterStaticNatUpdateTargets(ctx, vpcRouterStaticNatUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterStaticNatUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("static-nat-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("static-nat-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterStaticNatUpdate(ctx, vpcRouterStaticNatUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterStaticNatUpdateParam.SetId(id)
+				go func(p *params.StaticNatUpdateVPCRouterParam) {
+					err := funcs.VPCRouterStaticNatUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterStaticNatUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1080,21 +1402,39 @@ func vpcRouterStaticNatDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterStaticNatDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterStaticNatDeleteTargets(ctx, vpcRouterStaticNatDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterStaticNatDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("static-nat-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("static-nat-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterStaticNatDelete(ctx, vpcRouterStaticNatDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterStaticNatDeleteParam.SetId(id)
+				go func(p *params.StaticNatDeleteVPCRouterParam) {
+					err := funcs.VPCRouterStaticNatDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterStaticNatDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1131,10 +1471,28 @@ func vpcRouterPortForwardingInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterPortForwardingInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterPortForwardingInfoTargets(ctx, vpcRouterPortForwardingInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterPortForwardingInfo(ctx, vpcRouterPortForwardingInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterPortForwardingInfoParam.SetId(id)
+				go func(p *params.PortForwardingInfoVPCRouterParam) {
+					err := funcs.VPCRouterPortForwardingInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterPortForwardingInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1176,21 +1534,39 @@ func vpcRouterPortForwardingAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterPortForwardingAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterPortForwardingAddTargets(ctx, vpcRouterPortForwardingAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterPortForwardingAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("port-forwarding-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("port-forwarding-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterPortForwardingAdd(ctx, vpcRouterPortForwardingAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterPortForwardingAddParam.SetId(id)
+				go func(p *params.PortForwardingAddVPCRouterParam) {
+					err := funcs.VPCRouterPortForwardingAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterPortForwardingAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1231,21 +1607,39 @@ func vpcRouterPortForwardingUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterPortForwardingUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterPortForwardingUpdateTargets(ctx, vpcRouterPortForwardingUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterPortForwardingUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("port-forwarding-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("port-forwarding-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterPortForwardingUpdate(ctx, vpcRouterPortForwardingUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterPortForwardingUpdateParam.SetId(id)
+				go func(p *params.PortForwardingUpdateVPCRouterParam) {
+					err := funcs.VPCRouterPortForwardingUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterPortForwardingUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1287,21 +1681,39 @@ func vpcRouterPortForwardingDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterPortForwardingDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterPortForwardingDeleteTargets(ctx, vpcRouterPortForwardingDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterPortForwardingDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("port-forwarding-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("port-forwarding-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterPortForwardingDelete(ctx, vpcRouterPortForwardingDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterPortForwardingDeleteParam.SetId(id)
+				go func(p *params.PortForwardingDeleteVPCRouterParam) {
+					err := funcs.VPCRouterPortForwardingDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterPortForwardingDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1338,10 +1750,28 @@ func vpcRouterFirewallInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterFirewallInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterFirewallInfoTargets(ctx, vpcRouterFirewallInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterFirewallInfo(ctx, vpcRouterFirewallInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterFirewallInfoParam.SetId(id)
+				go func(p *params.FirewallInfoVPCRouterParam) {
+					err := funcs.VPCRouterFirewallInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterFirewallInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1385,21 +1815,39 @@ func vpcRouterFirewallAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterFirewallAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterFirewallAddTargets(ctx, vpcRouterFirewallAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterFirewallAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("firewall-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("firewall-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterFirewallAdd(ctx, vpcRouterFirewallAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterFirewallAddParam.SetId(id)
+				go func(p *params.FirewallAddVPCRouterParam) {
+					err := funcs.VPCRouterFirewallAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterFirewallAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1445,21 +1893,39 @@ func vpcRouterFirewallUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterFirewallUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterFirewallUpdateTargets(ctx, vpcRouterFirewallUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterFirewallUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("firewall-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("firewall-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterFirewallUpdate(ctx, vpcRouterFirewallUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterFirewallUpdateParam.SetId(id)
+				go func(p *params.FirewallUpdateVPCRouterParam) {
+					err := funcs.VPCRouterFirewallUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterFirewallUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1506,21 +1972,39 @@ func vpcRouterFirewallDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterFirewallDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterFirewallDeleteTargets(ctx, vpcRouterFirewallDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterFirewallDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("firewall-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("firewall-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterFirewallDelete(ctx, vpcRouterFirewallDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterFirewallDeleteParam.SetId(id)
+				go func(p *params.FirewallDeleteVPCRouterParam) {
+					err := funcs.VPCRouterFirewallDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterFirewallDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1559,10 +2043,28 @@ func vpcRouterDhcpServerInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterDhcpServerInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterDhcpServerInfoTargets(ctx, vpcRouterDhcpServerInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterDhcpServerInfo(ctx, vpcRouterDhcpServerInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterDhcpServerInfoParam.SetId(id)
+				go func(p *params.DhcpServerInfoVPCRouterParam) {
+					err := funcs.VPCRouterDhcpServerInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterDhcpServerInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1604,21 +2106,39 @@ func vpcRouterDhcpServerAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterDhcpServerAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterDhcpServerAddTargets(ctx, vpcRouterDhcpServerAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterDhcpServerAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("dhcp-server-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("dhcp-server-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterDhcpServerAdd(ctx, vpcRouterDhcpServerAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterDhcpServerAddParam.SetId(id)
+				go func(p *params.DhcpServerAddVPCRouterParam) {
+					err := funcs.VPCRouterDhcpServerAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterDhcpServerAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1658,21 +2178,39 @@ func vpcRouterDhcpServerUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterDhcpServerUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterDhcpServerUpdateTargets(ctx, vpcRouterDhcpServerUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterDhcpServerUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("dhcp-server-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("dhcp-server-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterDhcpServerUpdate(ctx, vpcRouterDhcpServerUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterDhcpServerUpdateParam.SetId(id)
+				go func(p *params.DhcpServerUpdateVPCRouterParam) {
+					err := funcs.VPCRouterDhcpServerUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterDhcpServerUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1712,21 +2250,39 @@ func vpcRouterDhcpServerDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterDhcpServerDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterDhcpServerDeleteTargets(ctx, vpcRouterDhcpServerDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterDhcpServerDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("dhcp-server-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("dhcp-server-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterDhcpServerDelete(ctx, vpcRouterDhcpServerDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterDhcpServerDeleteParam.SetId(id)
+				go func(p *params.DhcpServerDeleteVPCRouterParam) {
+					err := funcs.VPCRouterDhcpServerDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterDhcpServerDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1763,10 +2319,28 @@ func vpcRouterDhcpStaticMappingInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterDhcpStaticMappingInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterDhcpStaticMappingInfoTargets(ctx, vpcRouterDhcpStaticMappingInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterDhcpStaticMappingInfo(ctx, vpcRouterDhcpStaticMappingInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterDhcpStaticMappingInfoParam.SetId(id)
+				go func(p *params.DhcpStaticMappingInfoVPCRouterParam) {
+					err := funcs.VPCRouterDhcpStaticMappingInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterDhcpStaticMappingInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1808,21 +2382,39 @@ func vpcRouterDhcpStaticMappingAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterDhcpStaticMappingAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterDhcpStaticMappingAddTargets(ctx, vpcRouterDhcpStaticMappingAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterDhcpStaticMappingAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("dhcp-static-mapping-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("dhcp-static-mapping-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterDhcpStaticMappingAdd(ctx, vpcRouterDhcpStaticMappingAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterDhcpStaticMappingAddParam.SetId(id)
+				go func(p *params.DhcpStaticMappingAddVPCRouterParam) {
+					err := funcs.VPCRouterDhcpStaticMappingAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterDhcpStaticMappingAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1860,21 +2452,39 @@ func vpcRouterDhcpStaticMappingUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterDhcpStaticMappingUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterDhcpStaticMappingUpdateTargets(ctx, vpcRouterDhcpStaticMappingUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterDhcpStaticMappingUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("dhcp-static-mapping-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("dhcp-static-mapping-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterDhcpStaticMappingUpdate(ctx, vpcRouterDhcpStaticMappingUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterDhcpStaticMappingUpdateParam.SetId(id)
+				go func(p *params.DhcpStaticMappingUpdateVPCRouterParam) {
+					err := funcs.VPCRouterDhcpStaticMappingUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterDhcpStaticMappingUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1913,21 +2523,39 @@ func vpcRouterDhcpStaticMappingDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterDhcpStaticMappingDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterDhcpStaticMappingDeleteTargets(ctx, vpcRouterDhcpStaticMappingDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterDhcpStaticMappingDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("dhcp-static-mapping-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("dhcp-static-mapping-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterDhcpStaticMappingDelete(ctx, vpcRouterDhcpStaticMappingDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterDhcpStaticMappingDeleteParam.SetId(id)
+				go func(p *params.DhcpStaticMappingDeleteVPCRouterParam) {
+					err := funcs.VPCRouterDhcpStaticMappingDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterDhcpStaticMappingDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1964,10 +2592,28 @@ func vpcRouterPptpServerInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterPptpServerInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterPptpServerInfoTargets(ctx, vpcRouterPptpServerInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterPptpServerInfo(ctx, vpcRouterPptpServerInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterPptpServerInfoParam.SetId(id)
+				go func(p *params.PptpServerInfoVPCRouterParam) {
+					err := funcs.VPCRouterPptpServerInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterPptpServerInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2009,21 +2655,39 @@ func vpcRouterPptpServerUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterPptpServerUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterPptpServerUpdateTargets(ctx, vpcRouterPptpServerUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterPptpServerUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("pptp-server-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("pptp-server-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterPptpServerUpdate(ctx, vpcRouterPptpServerUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterPptpServerUpdateParam.SetId(id)
+				go func(p *params.PptpServerUpdateVPCRouterParam) {
+					err := funcs.VPCRouterPptpServerUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterPptpServerUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2062,10 +2726,28 @@ func vpcRouterL2TPServerInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterL2TPServerInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterL2TPServerInfoTargets(ctx, vpcRouterL2TPServerInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterL2TPServerInfo(ctx, vpcRouterL2TPServerInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterL2TPServerInfoParam.SetId(id)
+				go func(p *params.L2TPServerInfoVPCRouterParam) {
+					err := funcs.VPCRouterL2TPServerInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterL2TPServerInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2107,21 +2789,39 @@ func vpcRouterL2TPServerUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterL2TPServerUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterL2TPServerUpdateTargets(ctx, vpcRouterL2TPServerUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterL2TPServerUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("l2tp-server-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("l2tp-server-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterL2TPServerUpdate(ctx, vpcRouterL2TPServerUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterL2TPServerUpdateParam.SetId(id)
+				go func(p *params.L2TPServerUpdateVPCRouterParam) {
+					err := funcs.VPCRouterL2TPServerUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterL2TPServerUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2161,10 +2861,28 @@ func vpcRouterUserInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterUserInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterUserInfoTargets(ctx, vpcRouterUserInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterUserInfo(ctx, vpcRouterUserInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterUserInfoParam.SetId(id)
+				go func(p *params.UserInfoVPCRouterParam) {
+					err := funcs.VPCRouterUserInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterUserInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2206,21 +2924,39 @@ func vpcRouterUserAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterUserAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterUserAddTargets(ctx, vpcRouterUserAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterUserAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("user-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("user-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterUserAdd(ctx, vpcRouterUserAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterUserAddParam.SetId(id)
+				go func(p *params.UserAddVPCRouterParam) {
+					err := funcs.VPCRouterUserAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterUserAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2258,21 +2994,39 @@ func vpcRouterUserUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterUserUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterUserUpdateTargets(ctx, vpcRouterUserUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterUserUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("user-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("user-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterUserUpdate(ctx, vpcRouterUserUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterUserUpdateParam.SetId(id)
+				go func(p *params.UserUpdateVPCRouterParam) {
+					err := funcs.VPCRouterUserUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterUserUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2311,21 +3065,39 @@ func vpcRouterUserDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterUserDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterUserDeleteTargets(ctx, vpcRouterUserDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterUserDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("user-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("user-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterUserDelete(ctx, vpcRouterUserDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterUserDeleteParam.SetId(id)
+				go func(p *params.UserDeleteVPCRouterParam) {
+					err := funcs.VPCRouterUserDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterUserDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2362,10 +3134,28 @@ func vpcRouterSiteToSiteVPNInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterSiteToSiteVPNInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterSiteToSiteVPNInfoTargets(ctx, vpcRouterSiteToSiteVPNInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterSiteToSiteVPNInfo(ctx, vpcRouterSiteToSiteVPNInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterSiteToSiteVPNInfoParam.SetId(id)
+				go func(p *params.SiteToSiteVPNInfoVPCRouterParam) {
+					err := funcs.VPCRouterSiteToSiteVPNInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterSiteToSiteVPNInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2407,21 +3197,39 @@ func vpcRouterSiteToSiteVPNAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterSiteToSiteVPNAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterSiteToSiteVPNAddTargets(ctx, vpcRouterSiteToSiteVPNAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterSiteToSiteVPNAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("site-to-site-vpn-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("site-to-site-vpn-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterSiteToSiteVPNAdd(ctx, vpcRouterSiteToSiteVPNAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterSiteToSiteVPNAddParam.SetId(id)
+				go func(p *params.SiteToSiteVPNAddVPCRouterParam) {
+					err := funcs.VPCRouterSiteToSiteVPNAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterSiteToSiteVPNAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2462,21 +3270,39 @@ func vpcRouterSiteToSiteVPNUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterSiteToSiteVPNUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterSiteToSiteVPNUpdateTargets(ctx, vpcRouterSiteToSiteVPNUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterSiteToSiteVPNUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("site-to-site-vpn-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("site-to-site-vpn-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterSiteToSiteVPNUpdate(ctx, vpcRouterSiteToSiteVPNUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterSiteToSiteVPNUpdateParam.SetId(id)
+				go func(p *params.SiteToSiteVPNUpdateVPCRouterParam) {
+					err := funcs.VPCRouterSiteToSiteVPNUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterSiteToSiteVPNUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2518,21 +3344,39 @@ func vpcRouterSiteToSiteVPNDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterSiteToSiteVPNDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterSiteToSiteVPNDeleteTargets(ctx, vpcRouterSiteToSiteVPNDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterSiteToSiteVPNDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("site-to-site-vpn-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("site-to-site-vpn-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterSiteToSiteVPNDelete(ctx, vpcRouterSiteToSiteVPNDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterSiteToSiteVPNDeleteParam.SetId(id)
+				go func(p *params.SiteToSiteVPNDeleteVPCRouterParam) {
+					err := funcs.VPCRouterSiteToSiteVPNDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterSiteToSiteVPNDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2569,10 +3413,28 @@ func vpcRouterSiteToSiteVPNPeersCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterSiteToSiteVPNPeersParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterSiteToSiteVPNPeersTargets(ctx, vpcRouterSiteToSiteVPNPeersParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterSiteToSiteVPNPeers(ctx, vpcRouterSiteToSiteVPNPeersParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterSiteToSiteVPNPeersParam.SetId(id)
+				go func(p *params.SiteToSiteVPNPeersVPCRouterParam) {
+					err := funcs.VPCRouterSiteToSiteVPNPeers(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterSiteToSiteVPNPeersParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2614,10 +3476,28 @@ func vpcRouterStaticRouteInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterStaticRouteInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterStaticRouteInfoTargets(ctx, vpcRouterStaticRouteInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterStaticRouteInfo(ctx, vpcRouterStaticRouteInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterStaticRouteInfoParam.SetId(id)
+				go func(p *params.StaticRouteInfoVPCRouterParam) {
+					err := funcs.VPCRouterStaticRouteInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterStaticRouteInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2659,21 +3539,39 @@ func vpcRouterStaticRouteAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterStaticRouteAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterStaticRouteAddTargets(ctx, vpcRouterStaticRouteAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterStaticRouteAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("static-route-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("static-route-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterStaticRouteAdd(ctx, vpcRouterStaticRouteAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterStaticRouteAddParam.SetId(id)
+				go func(p *params.StaticRouteAddVPCRouterParam) {
+					err := funcs.VPCRouterStaticRouteAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterStaticRouteAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2711,21 +3609,39 @@ func vpcRouterStaticRouteUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterStaticRouteUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterStaticRouteUpdateTargets(ctx, vpcRouterStaticRouteUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterStaticRouteUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("static-route-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("static-route-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterStaticRouteUpdate(ctx, vpcRouterStaticRouteUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterStaticRouteUpdateParam.SetId(id)
+				go func(p *params.StaticRouteUpdateVPCRouterParam) {
+					err := funcs.VPCRouterStaticRouteUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterStaticRouteUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2764,21 +3680,39 @@ func vpcRouterStaticRouteDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterStaticRouteDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterStaticRouteDeleteTargets(ctx, vpcRouterStaticRouteDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !vpcRouterStaticRouteDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("static-route-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("static-route-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.VPCRouterStaticRouteDelete(ctx, vpcRouterStaticRouteDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterStaticRouteDeleteParam.SetId(id)
+				go func(p *params.StaticRouteDeleteVPCRouterParam) {
+					err := funcs.VPCRouterStaticRouteDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterStaticRouteDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2815,10 +3749,28 @@ func vpcRouterMonitorCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterMonitorParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterMonitorTargets(ctx, vpcRouterMonitorParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterMonitor(ctx, vpcRouterMonitorParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterMonitorParam.SetId(id)
+				go func(p *params.MonitorVPCRouterParam) {
+					err := funcs.VPCRouterMonitor(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterMonitorParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -2864,10 +3816,28 @@ func vpcRouterLogsCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterLogsParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findVPCRouterLogsTargets(ctx, vpcRouterLogsParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.VPCRouterLogs(ctx, vpcRouterLogsParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				vpcRouterLogsParam.SetId(id)
+				go func(p *params.LogsVPCRouterParam) {
+					err := funcs.VPCRouterLogs(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(vpcRouterLogsParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

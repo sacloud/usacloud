@@ -58,10 +58,8 @@ func productLicenseListCmd() *cobra.Command {
 				return generateSkeleton(ctx, productLicenseListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.ProductLicenseList(ctx, productLicenseListParam.ToV0())
+
 		},
 	}
 
@@ -106,21 +104,19 @@ func productLicenseReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, productLicenseReadParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !productLicenseReadParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.ProductLicenseRead(ctx, productLicenseReadParam.ToV0())
+
 		},
 	}
 

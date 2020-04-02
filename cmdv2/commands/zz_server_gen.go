@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func serverListCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.ServerList(ctx, serverListParam.ToV0())
+
 		},
 	}
 
@@ -107,21 +107,19 @@ func serverBuildCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverBuildParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !serverBuildParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("build", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("build", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.ServerBuild(ctx, serverBuildParam.ToV0())
+
 		},
 	}
 
@@ -204,10 +202,28 @@ func serverReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerReadTargets(ctx, serverReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ServerRead(ctx, serverReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverReadParam.SetId(id)
+				go func(p *params.ReadServerParam) {
+					err := funcs.ServerRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -249,21 +265,39 @@ func serverUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerUpdateTargets(ctx, serverUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerUpdate(ctx, serverUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverUpdateParam.SetId(id)
+				go func(p *params.UpdateServerParam) {
+					err := funcs.ServerUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -311,21 +345,39 @@ func serverDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerDeleteTargets(ctx, serverDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerDelete(ctx, serverDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverDeleteParam.SetId(id)
+				go func(p *params.DeleteServerParam) {
+					err := funcs.ServerDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -370,21 +422,39 @@ func serverPlanChangeCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverPlanChangeParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerPlanChangeTargets(ctx, serverPlanChangeParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverPlanChangeParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("plan-change", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("plan-change", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerPlanChange(ctx, serverPlanChangeParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverPlanChangeParam.SetId(id)
+				go func(p *params.PlanChangeServerParam) {
+					err := funcs.ServerPlanChange(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverPlanChangeParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -430,21 +500,39 @@ func serverBootCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverBootParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerBootTargets(ctx, serverBootParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverBootParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerBoot(ctx, serverBootParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverBootParam.SetId(id)
+				go func(p *params.BootServerParam) {
+					err := funcs.ServerBoot(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverBootParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -480,21 +568,39 @@ func serverShutdownCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverShutdownParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerShutdownTargets(ctx, serverShutdownParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverShutdownParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerShutdown(ctx, serverShutdownParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverShutdownParam.SetId(id)
+				go func(p *params.ShutdownServerParam) {
+					err := funcs.ServerShutdown(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverShutdownParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -530,21 +636,39 @@ func serverShutdownForceCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverShutdownForceParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerShutdownForceTargets(ctx, serverShutdownForceParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverShutdownForceParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerShutdownForce(ctx, serverShutdownForceParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverShutdownForceParam.SetId(id)
+				go func(p *params.ShutdownForceServerParam) {
+					err := funcs.ServerShutdownForce(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverShutdownForceParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -580,21 +704,39 @@ func serverResetCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverResetParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerResetTargets(ctx, serverResetParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverResetParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerReset(ctx, serverResetParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverResetParam.SetId(id)
+				go func(p *params.ResetServerParam) {
+					err := funcs.ServerReset(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverResetParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -630,10 +772,28 @@ func serverWaitForBootCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverWaitForBootParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerWaitForBootTargets(ctx, serverWaitForBootParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ServerWaitForBoot(ctx, serverWaitForBootParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverWaitForBootParam.SetId(id)
+				go func(p *params.WaitForBootServerParam) {
+					err := funcs.ServerWaitForBoot(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverWaitForBootParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -668,10 +828,28 @@ func serverWaitForDownCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverWaitForDownParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerWaitForDownTargets(ctx, serverWaitForDownParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ServerWaitForDown(ctx, serverWaitForDownParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverWaitForDownParam.SetId(id)
+				go func(p *params.WaitForDownServerParam) {
+					err := funcs.ServerWaitForDown(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverWaitForDownParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -706,10 +884,28 @@ func serverSSHCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverSSHParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerSSHTargets(ctx, serverSSHParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ServerSSH(ctx, serverSSHParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverSSHParam.SetId(id)
+				go func(p *params.SSHServerParam) {
+					err := funcs.ServerSSH(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverSSHParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -749,10 +945,28 @@ func serverSSHExecCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverSSHExecParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerSSHExecTargets(ctx, serverSSHExecParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ServerSSHExec(ctx, serverSSHExecParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverSSHExecParam.SetId(id)
+				go func(p *params.SSHExecServerParam) {
+					err := funcs.ServerSSHExec(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverSSHExecParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -791,21 +1005,19 @@ func serverScpCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverScpParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !serverScpParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("scp", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("scp", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.ServerScp(ctx, serverScpParam.ToV0())
+
 		},
 	}
 
@@ -845,10 +1057,28 @@ func serverVncCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverVncParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerVncTargets(ctx, serverVncParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ServerVnc(ctx, serverVncParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverVncParam.SetId(id)
+				go func(p *params.VncServerParam) {
+					err := funcs.ServerVnc(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverVncParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -884,10 +1114,28 @@ func serverVncInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverVncInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerVncInfoTargets(ctx, serverVncInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ServerVncInfo(ctx, serverVncInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverVncInfoParam.SetId(id)
+				go func(p *params.VncInfoServerParam) {
+					err := funcs.ServerVncInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverVncInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -930,21 +1178,39 @@ func serverVncSendCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverVncSendParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerVncSendTargets(ctx, serverVncSendParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverVncSendParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("vnc-send", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("vnc-send", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerVncSend(ctx, serverVncSendParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverVncSendParam.SetId(id)
+				go func(p *params.VncSendServerParam) {
+					err := funcs.ServerVncSend(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverVncSendParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -992,21 +1258,39 @@ func serverVncSnapshotCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverVncSnapshotParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerVncSnapshotTargets(ctx, serverVncSnapshotParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverVncSnapshotParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("vnc-snapshot", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("vnc-snapshot", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerVncSnapshot(ctx, serverVncSnapshotParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverVncSnapshotParam.SetId(id)
+				go func(p *params.VncSnapshotServerParam) {
+					err := funcs.ServerVncSnapshot(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverVncSnapshotParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1051,10 +1335,28 @@ func serverRemoteDesktopCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverRemoteDesktopParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerRemoteDesktopTargets(ctx, serverRemoteDesktopParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ServerRemoteDesktop(ctx, serverRemoteDesktopParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverRemoteDesktopParam.SetId(id)
+				go func(p *params.RemoteDesktopServerParam) {
+					err := funcs.ServerRemoteDesktop(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverRemoteDesktopParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1091,10 +1393,28 @@ func serverRemoteDesktopInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverRemoteDesktopInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerRemoteDesktopInfoTargets(ctx, serverRemoteDesktopInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ServerRemoteDesktopInfo(ctx, serverRemoteDesktopInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverRemoteDesktopInfoParam.SetId(id)
+				go func(p *params.RemoteDesktopInfoServerParam) {
+					err := funcs.ServerRemoteDesktopInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverRemoteDesktopInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1138,10 +1458,28 @@ func serverDiskInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverDiskInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerDiskInfoTargets(ctx, serverDiskInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ServerDiskInfo(ctx, serverDiskInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverDiskInfoParam.SetId(id)
+				go func(p *params.DiskInfoServerParam) {
+					err := funcs.ServerDiskInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverDiskInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1183,21 +1521,39 @@ func serverDiskConnectCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverDiskConnectParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerDiskConnectTargets(ctx, serverDiskConnectParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverDiskConnectParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("disk-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("disk-connect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerDiskConnect(ctx, serverDiskConnectParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverDiskConnectParam.SetId(id)
+				go func(p *params.DiskConnectServerParam) {
+					err := funcs.ServerDiskConnect(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverDiskConnectParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1234,21 +1590,39 @@ func serverDiskDisconnectCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverDiskDisconnectParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerDiskDisconnectTargets(ctx, serverDiskDisconnectParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverDiskDisconnectParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("disk-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("disk-disconnect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerDiskDisconnect(ctx, serverDiskDisconnectParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverDiskDisconnectParam.SetId(id)
+				go func(p *params.DiskDisconnectServerParam) {
+					err := funcs.ServerDiskDisconnect(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverDiskDisconnectParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1285,10 +1659,28 @@ func serverInterfaceInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverInterfaceInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerInterfaceInfoTargets(ctx, serverInterfaceInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ServerInterfaceInfo(ctx, serverInterfaceInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverInterfaceInfoParam.SetId(id)
+				go func(p *params.InterfaceInfoServerParam) {
+					err := funcs.ServerInterfaceInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverInterfaceInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1330,21 +1722,39 @@ func serverInterfaceAddForInternetCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverInterfaceAddForInternetParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerInterfaceAddForInternetTargets(ctx, serverInterfaceAddForInternetParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverInterfaceAddForInternetParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-add-for-internet", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("interface-add-for-internet", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerInterfaceAddForInternet(ctx, serverInterfaceAddForInternetParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverInterfaceAddForInternetParam.SetId(id)
+				go func(p *params.InterfaceAddForInternetServerParam) {
+					err := funcs.ServerInterfaceAddForInternet(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverInterfaceAddForInternetParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1381,21 +1791,39 @@ func serverInterfaceAddForRouterCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverInterfaceAddForRouterParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerInterfaceAddForRouterTargets(ctx, serverInterfaceAddForRouterParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverInterfaceAddForRouterParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-add-for-router", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("interface-add-for-router", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerInterfaceAddForRouter(ctx, serverInterfaceAddForRouterParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverInterfaceAddForRouterParam.SetId(id)
+				go func(p *params.InterfaceAddForRouterServerParam) {
+					err := funcs.ServerInterfaceAddForRouter(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverInterfaceAddForRouterParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1436,21 +1864,39 @@ func serverInterfaceAddForSwitchCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverInterfaceAddForSwitchParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerInterfaceAddForSwitchTargets(ctx, serverInterfaceAddForSwitchParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverInterfaceAddForSwitchParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-add-for-switch", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("interface-add-for-switch", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerInterfaceAddForSwitch(ctx, serverInterfaceAddForSwitchParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverInterfaceAddForSwitchParam.SetId(id)
+				go func(p *params.InterfaceAddForSwitchServerParam) {
+					err := funcs.ServerInterfaceAddForSwitch(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverInterfaceAddForSwitchParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1491,21 +1937,39 @@ func serverInterfaceAddDisconnectedCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverInterfaceAddDisconnectedParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerInterfaceAddDisconnectedTargets(ctx, serverInterfaceAddDisconnectedParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverInterfaceAddDisconnectedParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-add-disconnected", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("interface-add-disconnected", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerInterfaceAddDisconnected(ctx, serverInterfaceAddDisconnectedParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverInterfaceAddDisconnectedParam.SetId(id)
+				go func(p *params.InterfaceAddDisconnectedServerParam) {
+					err := funcs.ServerInterfaceAddDisconnected(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverInterfaceAddDisconnectedParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1541,10 +2005,28 @@ func serverISOInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverISOInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerISOInfoTargets(ctx, serverISOInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ServerISOInfo(ctx, serverISOInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverISOInfoParam.SetId(id)
+				go func(p *params.ISOInfoServerParam) {
+					err := funcs.ServerISOInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverISOInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1586,21 +2068,39 @@ func serverISOInsertCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverISOInsertParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerISOInsertTargets(ctx, serverISOInsertParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverISOInsertParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("iso-insert", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("iso-insert", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerISOInsert(ctx, serverISOInsertParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverISOInsertParam.SetId(id)
+				go func(p *params.ISOInsertServerParam) {
+					err := funcs.ServerISOInsert(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverISOInsertParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1643,21 +2143,39 @@ func serverISOEjectCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverISOEjectParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerISOEjectTargets(ctx, serverISOEjectParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !serverISOEjectParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("iso-eject", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("iso-eject", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.ServerISOEject(ctx, serverISOEjectParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverISOEjectParam.SetId(id)
+				go func(p *params.ISOEjectServerParam) {
+					err := funcs.ServerISOEject(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverISOEjectParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1693,10 +2211,28 @@ func serverMonitorCPUCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverMonitorCPUParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerMonitorCPUTargets(ctx, serverMonitorCPUParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ServerMonitorCPU(ctx, serverMonitorCPUParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverMonitorCPUParam.SetId(id)
+				go func(p *params.MonitorCPUServerParam) {
+					err := funcs.ServerMonitorCPU(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverMonitorCPUParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1741,10 +2277,28 @@ func serverMonitorNicCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverMonitorNicParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerMonitorNicTargets(ctx, serverMonitorNicParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ServerMonitorNic(ctx, serverMonitorNicParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverMonitorNicParam.SetId(id)
+				go func(p *params.MonitorNicServerParam) {
+					err := funcs.ServerMonitorNic(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverMonitorNicParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1790,10 +2344,28 @@ func serverMonitorDiskCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverMonitorDiskParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findServerMonitorDiskTargets(ctx, serverMonitorDiskParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.ServerMonitorDisk(ctx, serverMonitorDiskParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				serverMonitorDiskParam.SetId(id)
+				go func(p *params.MonitorDiskServerParam) {
+					err := funcs.ServerMonitorDisk(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(serverMonitorDiskParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1839,10 +2411,8 @@ func serverMaintenanceInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverMaintenanceInfoParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.ServerMaintenanceInfo(ctx, serverMaintenanceInfoParam.ToV0())
+
 		},
 	}
 

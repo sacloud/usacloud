@@ -54,10 +54,8 @@ func selfInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, selfInfoParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.SelfInfo(ctx, selfInfoParam.ToV0())
+
 		},
 	}
 

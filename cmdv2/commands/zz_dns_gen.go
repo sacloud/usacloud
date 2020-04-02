@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func dnsListCmd() *cobra.Command {
 				return generateSkeleton(ctx, dnsListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.DNSList(ctx, dnsListParam.ToV0())
+
 		},
 	}
 
@@ -107,10 +107,28 @@ func dnsRecordInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, dnsRecordInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDNSRecordInfoTargets(ctx, dnsRecordInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DNSRecordInfo(ctx, dnsRecordInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				dnsRecordInfoParam.SetId(id)
+				go func(p *params.RecordInfoDNSParam) {
+					err := funcs.DNSRecordInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(dnsRecordInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -154,21 +172,39 @@ func dnsRecordBulkUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, dnsRecordBulkUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDNSRecordBulkUpdateTargets(ctx, dnsRecordBulkUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !dnsRecordBulkUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("record-bulk-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("record-bulk-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DNSRecordBulkUpdate(ctx, dnsRecordBulkUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				dnsRecordBulkUpdateParam.SetId(id)
+				go func(p *params.RecordBulkUpdateDNSParam) {
+					err := funcs.DNSRecordBulkUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(dnsRecordBulkUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -213,21 +249,19 @@ func dnsCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, dnsCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !dnsCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.DNSCreate(ctx, dnsCreateParam.ToV0())
+
 		},
 	}
 
@@ -272,21 +306,39 @@ func dnsRecordAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, dnsRecordAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDNSRecordAddTargets(ctx, dnsRecordAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !dnsRecordAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("record-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("record-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DNSRecordAdd(ctx, dnsRecordAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				dnsRecordAddParam.SetId(id)
+				go func(p *params.RecordAddDNSParam) {
+					err := funcs.DNSRecordAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(dnsRecordAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -338,10 +390,28 @@ func dnsReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, dnsReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDNSReadTargets(ctx, dnsReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DNSRead(ctx, dnsReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				dnsReadParam.SetId(id)
+				go func(p *params.ReadDNSParam) {
+					err := funcs.DNSRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(dnsReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -383,21 +453,39 @@ func dnsRecordUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, dnsRecordUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDNSRecordUpdateTargets(ctx, dnsRecordUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !dnsRecordUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("record-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("record-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DNSRecordUpdate(ctx, dnsRecordUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				dnsRecordUpdateParam.SetId(id)
+				go func(p *params.RecordUpdateDNSParam) {
+					err := funcs.DNSRecordUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(dnsRecordUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -450,21 +538,39 @@ func dnsRecordDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, dnsRecordDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDNSRecordDeleteTargets(ctx, dnsRecordDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !dnsRecordDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete record", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete record", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DNSRecordDelete(ctx, dnsRecordDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				dnsRecordDeleteParam.SetId(id)
+				go func(p *params.RecordDeleteDNSParam) {
+					err := funcs.DNSRecordDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(dnsRecordDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -508,21 +614,39 @@ func dnsUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, dnsUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDNSUpdateTargets(ctx, dnsUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !dnsUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DNSUpdate(ctx, dnsUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				dnsUpdateParam.SetId(id)
+				go func(p *params.UpdateDNSParam) {
+					err := funcs.DNSUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(dnsUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -568,21 +692,39 @@ func dnsDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, dnsDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDNSDeleteTargets(ctx, dnsDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !dnsDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DNSDelete(ctx, dnsDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				dnsDeleteParam.SetId(id)
+				go func(p *params.DeleteDNSParam) {
+					err := funcs.DNSDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(dnsDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

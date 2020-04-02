@@ -18,8 +18,10 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -57,10 +59,8 @@ func webAccelListCmd() *cobra.Command {
 				return generateSkeleton(ctx, webAccelListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.WebAccelList(ctx, webAccelListParam.ToV0())
+
 		},
 	}
 
@@ -100,10 +100,28 @@ func webAccelReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, webAccelReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findWebAccelReadTargets(ctx, webAccelReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.WebAccelRead(ctx, webAccelReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				webAccelReadParam.SetId(id)
+				go func(p *params.ReadWebAccelParam) {
+					err := funcs.WebAccelRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(webAccelReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -145,10 +163,28 @@ func webAccelCertificateInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, webAccelCertificateInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findWebAccelCertificateInfoTargets(ctx, webAccelCertificateInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.WebAccelCertificateInfo(ctx, webAccelCertificateInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				webAccelCertificateInfoParam.SetId(id)
+				go func(p *params.CertificateInfoWebAccelParam) {
+					err := funcs.WebAccelCertificateInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(webAccelCertificateInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -190,21 +226,39 @@ func webAccelCertificateNewCmd() *cobra.Command {
 				return generateSkeleton(ctx, webAccelCertificateNewParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findWebAccelCertificateNewTargets(ctx, webAccelCertificateNewParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !webAccelCertificateNewParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("certificate-new", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("certificate-new", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.WebAccelCertificateNew(ctx, webAccelCertificateNewParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				webAccelCertificateNewParam.SetId(id)
+				go func(p *params.CertificateNewWebAccelParam) {
+					err := funcs.WebAccelCertificateNew(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(webAccelCertificateNewParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -251,21 +305,39 @@ func webAccelCertificateUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, webAccelCertificateUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findWebAccelCertificateUpdateTargets(ctx, webAccelCertificateUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !webAccelCertificateUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("certificate-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("certificate-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.WebAccelCertificateUpdate(ctx, webAccelCertificateUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				webAccelCertificateUpdateParam.SetId(id)
+				go func(p *params.CertificateUpdateWebAccelParam) {
+					err := funcs.WebAccelCertificateUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(webAccelCertificateUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -312,21 +384,19 @@ func webAccelDeleteCacheCmd() *cobra.Command {
 				return generateSkeleton(ctx, webAccelDeleteCacheParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !webAccelDeleteCacheParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete-cache", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete-cache", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.WebAccelDeleteCache(ctx, webAccelDeleteCacheParam.ToV0())
+
 		},
 	}
 

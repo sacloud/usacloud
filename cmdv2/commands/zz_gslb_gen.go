@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func gslbListCmd() *cobra.Command {
 				return generateSkeleton(ctx, gslbListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.GSLBList(ctx, gslbListParam.ToV0())
+
 		},
 	}
 
@@ -107,10 +107,28 @@ func gslbServerInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, gslbServerInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findGSLBServerInfoTargets(ctx, gslbServerInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.GSLBServerInfo(ctx, gslbServerInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				gslbServerInfoParam.SetId(id)
+				go func(p *params.ServerInfoGSLBParam) {
+					err := funcs.GSLBServerInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(gslbServerInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -152,21 +170,19 @@ func gslbCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, gslbCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !gslbCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.GSLBCreate(ctx, gslbCreateParam.ToV0())
+
 		},
 	}
 
@@ -219,21 +235,39 @@ func gslbServerAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, gslbServerAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findGSLBServerAddTargets(ctx, gslbServerAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !gslbServerAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("server-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("server-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.GSLBServerAdd(ctx, gslbServerAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				gslbServerAddParam.SetId(id)
+				go func(p *params.ServerAddGSLBParam) {
+					err := funcs.GSLBServerAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(gslbServerAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -279,10 +313,28 @@ func gslbReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, gslbReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findGSLBReadTargets(ctx, gslbReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.GSLBRead(ctx, gslbReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				gslbReadParam.SetId(id)
+				go func(p *params.ReadGSLBParam) {
+					err := funcs.GSLBRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(gslbReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -324,21 +376,39 @@ func gslbServerUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, gslbServerUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findGSLBServerUpdateTargets(ctx, gslbServerUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !gslbServerUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("server-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("server-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.GSLBServerUpdate(ctx, gslbServerUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				gslbServerUpdateParam.SetId(id)
+				go func(p *params.ServerUpdateGSLBParam) {
+					err := funcs.GSLBServerUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(gslbServerUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -385,21 +455,39 @@ func gslbServerDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, gslbServerDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findGSLBServerDeleteTargets(ctx, gslbServerDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !gslbServerDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete server", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete server", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.GSLBServerDelete(ctx, gslbServerDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				gslbServerDeleteParam.SetId(id)
+				go func(p *params.ServerDeleteGSLBParam) {
+					err := funcs.GSLBServerDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(gslbServerDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -443,21 +531,39 @@ func gslbUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, gslbUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findGSLBUpdateTargets(ctx, gslbUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !gslbUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.GSLBUpdate(ctx, gslbUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				gslbUpdateParam.SetId(id)
+				go func(p *params.UpdateGSLBParam) {
+					err := funcs.GSLBUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(gslbUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -512,21 +618,39 @@ func gslbDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, gslbDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findGSLBDeleteTargets(ctx, gslbDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !gslbDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.GSLBDelete(ctx, gslbDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				gslbDeleteParam.SetId(id)
+				go func(p *params.DeleteGSLBParam) {
+					err := funcs.GSLBDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(gslbDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

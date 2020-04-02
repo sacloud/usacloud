@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func privateHostListCmd() *cobra.Command {
 				return generateSkeleton(ctx, privateHostListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.PrivateHostList(ctx, privateHostListParam.ToV0())
+
 		},
 	}
 
@@ -107,21 +107,19 @@ func privateHostCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, privateHostCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !privateHostCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.PrivateHostCreate(ctx, privateHostCreateParam.ToV0())
+
 		},
 	}
 
@@ -166,10 +164,28 @@ func privateHostReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, privateHostReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findPrivateHostReadTargets(ctx, privateHostReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.PrivateHostRead(ctx, privateHostReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				privateHostReadParam.SetId(id)
+				go func(p *params.ReadPrivateHostParam) {
+					err := funcs.PrivateHostRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(privateHostReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -211,21 +227,39 @@ func privateHostUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, privateHostUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findPrivateHostUpdateTargets(ctx, privateHostUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !privateHostUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.PrivateHostUpdate(ctx, privateHostUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				privateHostUpdateParam.SetId(id)
+				go func(p *params.UpdatePrivateHostParam) {
+					err := funcs.PrivateHostUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(privateHostUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -272,21 +306,39 @@ func privateHostDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, privateHostDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findPrivateHostDeleteTargets(ctx, privateHostDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !privateHostDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.PrivateHostDelete(ctx, privateHostDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				privateHostDeleteParam.SetId(id)
+				go func(p *params.DeletePrivateHostParam) {
+					err := funcs.PrivateHostDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(privateHostDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -329,10 +381,28 @@ func privateHostServerInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, privateHostServerInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findPrivateHostServerInfoTargets(ctx, privateHostServerInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.PrivateHostServerInfo(ctx, privateHostServerInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				privateHostServerInfoParam.SetId(id)
+				go func(p *params.ServerInfoPrivateHostParam) {
+					err := funcs.PrivateHostServerInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(privateHostServerInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -374,21 +444,39 @@ func privateHostServerAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, privateHostServerAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findPrivateHostServerAddTargets(ctx, privateHostServerAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !privateHostServerAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("server-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("server-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.PrivateHostServerAdd(ctx, privateHostServerAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				privateHostServerAddParam.SetId(id)
+				go func(p *params.ServerAddPrivateHostParam) {
+					err := funcs.PrivateHostServerAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(privateHostServerAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -432,21 +520,39 @@ func privateHostServerDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, privateHostServerDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findPrivateHostServerDeleteTargets(ctx, privateHostServerDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !privateHostServerDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("server-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("server-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.PrivateHostServerDelete(ctx, privateHostServerDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				privateHostServerDeleteParam.SetId(id)
+				go func(p *params.ServerDeletePrivateHostParam) {
+					err := funcs.PrivateHostServerDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(privateHostServerDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

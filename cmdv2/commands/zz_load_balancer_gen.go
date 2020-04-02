@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func loadBalancerListCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.LoadBalancerList(ctx, loadBalancerListParam.ToV0())
+
 		},
 	}
 
@@ -107,21 +107,19 @@ func loadBalancerCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !loadBalancerCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.LoadBalancerCreate(ctx, loadBalancerCreateParam.ToV0())
+
 		},
 	}
 
@@ -174,10 +172,28 @@ func loadBalancerReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerReadTargets(ctx, loadBalancerReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.LoadBalancerRead(ctx, loadBalancerReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerReadParam.SetId(id)
+				go func(p *params.ReadLoadBalancerParam) {
+					err := funcs.LoadBalancerRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -219,21 +235,39 @@ func loadBalancerUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerUpdateTargets(ctx, loadBalancerUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !loadBalancerUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.LoadBalancerUpdate(ctx, loadBalancerUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerUpdateParam.SetId(id)
+				go func(p *params.UpdateLoadBalancerParam) {
+					err := funcs.LoadBalancerUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -280,21 +314,39 @@ func loadBalancerDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerDeleteTargets(ctx, loadBalancerDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !loadBalancerDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.LoadBalancerDelete(ctx, loadBalancerDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerDeleteParam.SetId(id)
+				go func(p *params.DeleteLoadBalancerParam) {
+					err := funcs.LoadBalancerDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -338,21 +390,39 @@ func loadBalancerBootCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerBootParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerBootTargets(ctx, loadBalancerBootParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !loadBalancerBootParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.LoadBalancerBoot(ctx, loadBalancerBootParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerBootParam.SetId(id)
+				go func(p *params.BootLoadBalancerParam) {
+					err := funcs.LoadBalancerBoot(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerBootParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -388,21 +458,39 @@ func loadBalancerShutdownCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerShutdownParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerShutdownTargets(ctx, loadBalancerShutdownParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !loadBalancerShutdownParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.LoadBalancerShutdown(ctx, loadBalancerShutdownParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerShutdownParam.SetId(id)
+				go func(p *params.ShutdownLoadBalancerParam) {
+					err := funcs.LoadBalancerShutdown(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerShutdownParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -438,21 +526,39 @@ func loadBalancerShutdownForceCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerShutdownForceParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerShutdownForceTargets(ctx, loadBalancerShutdownForceParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !loadBalancerShutdownForceParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.LoadBalancerShutdownForce(ctx, loadBalancerShutdownForceParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerShutdownForceParam.SetId(id)
+				go func(p *params.ShutdownForceLoadBalancerParam) {
+					err := funcs.LoadBalancerShutdownForce(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerShutdownForceParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -488,21 +594,39 @@ func loadBalancerResetCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerResetParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerResetTargets(ctx, loadBalancerResetParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !loadBalancerResetParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.LoadBalancerReset(ctx, loadBalancerResetParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerResetParam.SetId(id)
+				go func(p *params.ResetLoadBalancerParam) {
+					err := funcs.LoadBalancerReset(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerResetParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -538,10 +662,28 @@ func loadBalancerWaitForBootCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerWaitForBootParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerWaitForBootTargets(ctx, loadBalancerWaitForBootParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.LoadBalancerWaitForBoot(ctx, loadBalancerWaitForBootParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerWaitForBootParam.SetId(id)
+				go func(p *params.WaitForBootLoadBalancerParam) {
+					err := funcs.LoadBalancerWaitForBoot(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerWaitForBootParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -576,10 +718,28 @@ func loadBalancerWaitForDownCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerWaitForDownParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerWaitForDownTargets(ctx, loadBalancerWaitForDownParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.LoadBalancerWaitForDown(ctx, loadBalancerWaitForDownParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerWaitForDownParam.SetId(id)
+				go func(p *params.WaitForDownLoadBalancerParam) {
+					err := funcs.LoadBalancerWaitForDown(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerWaitForDownParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -614,10 +774,28 @@ func loadBalancerVipInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerVipInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerVipInfoTargets(ctx, loadBalancerVipInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.LoadBalancerVipInfo(ctx, loadBalancerVipInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerVipInfoParam.SetId(id)
+				go func(p *params.VipInfoLoadBalancerParam) {
+					err := funcs.LoadBalancerVipInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerVipInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -659,21 +837,39 @@ func loadBalancerVipAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerVipAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerVipAddTargets(ctx, loadBalancerVipAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !loadBalancerVipAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("vip-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("vip-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.LoadBalancerVipAdd(ctx, loadBalancerVipAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerVipAddParam.SetId(id)
+				go func(p *params.VipAddLoadBalancerParam) {
+					err := funcs.LoadBalancerVipAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerVipAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -714,21 +910,39 @@ func loadBalancerVipUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerVipUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerVipUpdateTargets(ctx, loadBalancerVipUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !loadBalancerVipUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("vip-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("vip-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.LoadBalancerVipUpdate(ctx, loadBalancerVipUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerVipUpdateParam.SetId(id)
+				go func(p *params.VipUpdateLoadBalancerParam) {
+					err := funcs.LoadBalancerVipUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerVipUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -770,21 +984,39 @@ func loadBalancerVipDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerVipDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerVipDeleteTargets(ctx, loadBalancerVipDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !loadBalancerVipDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("vip-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("vip-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.LoadBalancerVipDelete(ctx, loadBalancerVipDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerVipDeleteParam.SetId(id)
+				go func(p *params.VipDeleteLoadBalancerParam) {
+					err := funcs.LoadBalancerVipDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerVipDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -821,10 +1053,28 @@ func loadBalancerServerInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerServerInfoParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerServerInfoTargets(ctx, loadBalancerServerInfoParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.LoadBalancerServerInfo(ctx, loadBalancerServerInfoParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerServerInfoParam.SetId(id)
+				go func(p *params.ServerInfoLoadBalancerParam) {
+					err := funcs.LoadBalancerServerInfo(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerServerInfoParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -869,21 +1119,39 @@ func loadBalancerServerAddCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerServerAddParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerServerAddTargets(ctx, loadBalancerServerAddParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !loadBalancerServerAddParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("server-add", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("server-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.LoadBalancerServerAdd(ctx, loadBalancerServerAddParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerServerAddParam.SetId(id)
+				go func(p *params.ServerAddLoadBalancerParam) {
+					err := funcs.LoadBalancerServerAdd(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerServerAddParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -927,21 +1195,39 @@ func loadBalancerServerUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerServerUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerServerUpdateTargets(ctx, loadBalancerServerUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !loadBalancerServerUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("server-update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("server-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.LoadBalancerServerUpdate(ctx, loadBalancerServerUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerServerUpdateParam.SetId(id)
+				go func(p *params.ServerUpdateLoadBalancerParam) {
+					err := funcs.LoadBalancerServerUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerServerUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -985,21 +1271,39 @@ func loadBalancerServerDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerServerDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerServerDeleteTargets(ctx, loadBalancerServerDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !loadBalancerServerDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("server-delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("server-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.LoadBalancerServerDelete(ctx, loadBalancerServerDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerServerDeleteParam.SetId(id)
+				go func(p *params.ServerDeleteLoadBalancerParam) {
+					err := funcs.LoadBalancerServerDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerServerDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -1039,10 +1343,28 @@ func loadBalancerMonitorCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerMonitorParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findLoadBalancerMonitorTargets(ctx, loadBalancerMonitorParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.LoadBalancerMonitor(ctx, loadBalancerMonitorParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				loadBalancerMonitorParam.SetId(id)
+				go func(p *params.MonitorLoadBalancerParam) {
+					err := funcs.LoadBalancerMonitor(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(loadBalancerMonitorParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

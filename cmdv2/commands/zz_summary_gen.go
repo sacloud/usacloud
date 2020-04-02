@@ -54,10 +54,8 @@ func summaryShowCmd() *cobra.Command {
 				return generateSkeleton(ctx, summaryShowParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.SummaryShow(ctx, summaryShowParam.ToV0())
+
 		},
 	}
 

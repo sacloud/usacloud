@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func simpleMonitorListCmd() *cobra.Command {
 				return generateSkeleton(ctx, simpleMonitorListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.SimpleMonitorList(ctx, simpleMonitorListParam.ToV0())
+
 		},
 	}
 
@@ -108,21 +108,19 @@ func simpleMonitorCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, simpleMonitorCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !simpleMonitorCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.SimpleMonitorCreate(ctx, simpleMonitorCreateParam.ToV0())
+
 		},
 	}
 
@@ -184,10 +182,28 @@ func simpleMonitorReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, simpleMonitorReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSimpleMonitorReadTargets(ctx, simpleMonitorReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.SimpleMonitorRead(ctx, simpleMonitorReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simpleMonitorReadParam.SetId(id)
+				go func(p *params.ReadSimpleMonitorParam) {
+					err := funcs.SimpleMonitorRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simpleMonitorReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -229,21 +245,39 @@ func simpleMonitorUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, simpleMonitorUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSimpleMonitorUpdateTargets(ctx, simpleMonitorUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !simpleMonitorUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SimpleMonitorUpdate(ctx, simpleMonitorUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simpleMonitorUpdateParam.SetId(id)
+				go func(p *params.UpdateSimpleMonitorParam) {
+					err := funcs.SimpleMonitorUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simpleMonitorUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -306,21 +340,39 @@ func simpleMonitorDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, simpleMonitorDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSimpleMonitorDeleteTargets(ctx, simpleMonitorDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !simpleMonitorDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SimpleMonitorDelete(ctx, simpleMonitorDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simpleMonitorDeleteParam.SetId(id)
+				go func(p *params.DeleteSimpleMonitorParam) {
+					err := funcs.SimpleMonitorDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simpleMonitorDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -363,10 +415,28 @@ func simpleMonitorHealthCmd() *cobra.Command {
 				return generateSkeleton(ctx, simpleMonitorHealthParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSimpleMonitorHealthTargets(ctx, simpleMonitorHealthParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.SimpleMonitorHealth(ctx, simpleMonitorHealthParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				simpleMonitorHealthParam.SetId(id)
+				go func(p *params.HealthSimpleMonitorParam) {
+					err := funcs.SimpleMonitorHealth(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(simpleMonitorHealthParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

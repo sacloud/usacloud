@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func switchListCmd() *cobra.Command {
 				return generateSkeleton(ctx, switchListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.SwitchList(ctx, switchListParam.ToV0())
+
 		},
 	}
 
@@ -107,21 +107,19 @@ func switchCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, switchCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !switchCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.SwitchCreate(ctx, switchCreateParam.ToV0())
+
 		},
 	}
 
@@ -166,10 +164,28 @@ func switchReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, switchReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSwitchReadTargets(ctx, switchReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.SwitchRead(ctx, switchReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				switchReadParam.SetId(id)
+				go func(p *params.ReadSwitchParam) {
+					err := funcs.SwitchRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(switchReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -211,21 +227,39 @@ func switchUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, switchUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSwitchUpdateTargets(ctx, switchUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !switchUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SwitchUpdate(ctx, switchUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				switchUpdateParam.SetId(id)
+				go func(p *params.UpdateSwitchParam) {
+					err := funcs.SwitchUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(switchUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -272,21 +306,39 @@ func switchDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, switchDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSwitchDeleteTargets(ctx, switchDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !switchDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SwitchDelete(ctx, switchDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				switchDeleteParam.SetId(id)
+				go func(p *params.DeleteSwitchParam) {
+					err := funcs.SwitchDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(switchDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -329,21 +381,39 @@ func switchBridgeConnectCmd() *cobra.Command {
 				return generateSkeleton(ctx, switchBridgeConnectParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSwitchBridgeConnectTargets(ctx, switchBridgeConnectParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !switchBridgeConnectParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("bridge-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("bridge-connect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SwitchBridgeConnect(ctx, switchBridgeConnectParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				switchBridgeConnectParam.SetId(id)
+				go func(p *params.BridgeConnectSwitchParam) {
+					err := funcs.SwitchBridgeConnect(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(switchBridgeConnectParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -380,21 +450,39 @@ func switchBridgeDisconnectCmd() *cobra.Command {
 				return generateSkeleton(ctx, switchBridgeDisconnectParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findSwitchBridgeDisconnectTargets(ctx, switchBridgeDisconnectParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !switchBridgeDisconnectParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("bridge-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("bridge-disconnect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.SwitchBridgeDisconnect(ctx, switchBridgeDisconnectParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				switchBridgeDisconnectParam.SetId(id)
+				go func(p *params.BridgeDisconnectSwitchParam) {
+					err := funcs.SwitchBridgeDisconnect(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(switchBridgeDisconnectParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

@@ -58,10 +58,8 @@ func zoneListCmd() *cobra.Command {
 				return generateSkeleton(ctx, zoneListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.ZoneList(ctx, zoneListParam.ToV0())
+
 		},
 	}
 
@@ -106,21 +104,19 @@ func zoneReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, zoneReadParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !zoneReadParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.ZoneRead(ctx, zoneReadParam.ToV0())
+
 		},
 	}
 

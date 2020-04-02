@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func bridgeListCmd() *cobra.Command {
 				return generateSkeleton(ctx, bridgeListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.BridgeList(ctx, bridgeListParam.ToV0())
+
 		},
 	}
 
@@ -106,21 +106,19 @@ func bridgeCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, bridgeCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !bridgeCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.BridgeCreate(ctx, bridgeCreateParam.ToV0())
+
 		},
 	}
 
@@ -163,10 +161,28 @@ func bridgeReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, bridgeReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findBridgeReadTargets(ctx, bridgeReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.BridgeRead(ctx, bridgeReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				bridgeReadParam.SetId(id)
+				go func(p *params.ReadBridgeParam) {
+					err := funcs.BridgeRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(bridgeReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -207,21 +223,39 @@ func bridgeUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, bridgeUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findBridgeUpdateTargets(ctx, bridgeUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !bridgeUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.BridgeUpdate(ctx, bridgeUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				bridgeUpdateParam.SetId(id)
+				go func(p *params.UpdateBridgeParam) {
+					err := funcs.BridgeUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(bridgeUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -265,21 +299,39 @@ func bridgeDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, bridgeDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findBridgeDeleteTargets(ctx, bridgeDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !bridgeDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.BridgeDelete(ctx, bridgeDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				bridgeDeleteParam.SetId(id)
+				go func(p *params.DeleteBridgeParam) {
+					err := funcs.BridgeDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(bridgeDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

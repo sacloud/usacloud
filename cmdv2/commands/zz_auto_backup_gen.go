@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func autoBackupListCmd() *cobra.Command {
 				return generateSkeleton(ctx, autoBackupListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.AutoBackupList(ctx, autoBackupListParam.ToV0())
+
 		},
 	}
 
@@ -107,21 +107,19 @@ func autoBackupCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, autoBackupCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !autoBackupCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.AutoBackupCreate(ctx, autoBackupCreateParam.ToV0())
+
 		},
 	}
 
@@ -169,10 +167,28 @@ func autoBackupReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, autoBackupReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findAutoBackupReadTargets(ctx, autoBackupReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.AutoBackupRead(ctx, autoBackupReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				autoBackupReadParam.SetId(id)
+				go func(p *params.ReadAutoBackupParam) {
+					err := funcs.AutoBackupRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(autoBackupReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -214,21 +230,39 @@ func autoBackupUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, autoBackupUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findAutoBackupUpdateTargets(ctx, autoBackupUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !autoBackupUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.AutoBackupUpdate(ctx, autoBackupUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				autoBackupUpdateParam.SetId(id)
+				go func(p *params.UpdateAutoBackupParam) {
+					err := funcs.AutoBackupUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(autoBackupUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -277,21 +311,39 @@ func autoBackupDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, autoBackupDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findAutoBackupDeleteTargets(ctx, autoBackupDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !autoBackupDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.AutoBackupDelete(ctx, autoBackupDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				autoBackupDeleteParam.SetId(id)
+				go func(p *params.DeleteAutoBackupParam) {
+					err := funcs.AutoBackupDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(autoBackupDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

@@ -18,9 +18,11 @@ package commands
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
@@ -58,10 +60,8 @@ func diskListCmd() *cobra.Command {
 				return generateSkeleton(ctx, diskListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.DiskList(ctx, diskListParam.ToV0())
+
 		},
 	}
 
@@ -111,21 +111,19 @@ func diskCreateCmd() *cobra.Command {
 				return generateSkeleton(ctx, diskCreateParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !diskCreateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.DiskCreate(ctx, diskCreateParam.ToV0())
+
 		},
 	}
 
@@ -176,10 +174,28 @@ func diskReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, diskReadParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDiskReadTargets(ctx, diskReadParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DiskRead(ctx, diskReadParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				diskReadParam.SetId(id)
+				go func(p *params.ReadDiskParam) {
+					err := funcs.DiskRead(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(diskReadParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -221,21 +237,39 @@ func diskUpdateCmd() *cobra.Command {
 				return generateSkeleton(ctx, diskUpdateParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDiskUpdateTargets(ctx, diskUpdateParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !diskUpdateParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DiskUpdate(ctx, diskUpdateParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				diskUpdateParam.SetId(id)
+				go func(p *params.UpdateDiskParam) {
+					err := funcs.DiskUpdate(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(diskUpdateParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -283,21 +317,39 @@ func diskDeleteCmd() *cobra.Command {
 				return generateSkeleton(ctx, diskDeleteParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDiskDeleteTargets(ctx, diskDeleteParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !diskDeleteParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DiskDelete(ctx, diskDeleteParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				diskDeleteParam.SetId(id)
+				go func(p *params.DeleteDiskParam) {
+					err := funcs.DiskDelete(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(diskDeleteParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -340,21 +392,39 @@ func diskEditCmd() *cobra.Command {
 				return generateSkeleton(ctx, diskEditParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDiskEditTargets(ctx, diskEditParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !diskEditParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("edit", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("edit", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DiskEdit(ctx, diskEditParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				diskEditParam.SetId(id)
+				go func(p *params.EditDiskParam) {
+					err := funcs.DiskEdit(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(diskEditParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -405,21 +475,39 @@ func diskResizePartitionCmd() *cobra.Command {
 				return generateSkeleton(ctx, diskResizePartitionParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDiskResizePartitionTargets(ctx, diskResizePartitionParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !diskResizePartitionParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("resize-partition", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("resize-partition", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DiskResizePartition(ctx, diskResizePartitionParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				diskResizePartitionParam.SetId(id)
+				go func(p *params.ResizePartitionDiskParam) {
+					err := funcs.DiskResizePartition(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(diskResizePartitionParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -462,21 +550,39 @@ func diskReinstallFromArchiveCmd() *cobra.Command {
 				return generateSkeleton(ctx, diskReinstallFromArchiveParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDiskReinstallFromArchiveTargets(ctx, diskReinstallFromArchiveParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !diskReinstallFromArchiveParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("re-install from archive", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("re-install from archive", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DiskReinstallFromArchive(ctx, diskReinstallFromArchiveParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				diskReinstallFromArchiveParam.SetId(id)
+				go func(p *params.ReinstallFromArchiveDiskParam) {
+					err := funcs.DiskReinstallFromArchive(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(diskReinstallFromArchiveParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -514,21 +620,39 @@ func diskReinstallFromDiskCmd() *cobra.Command {
 				return generateSkeleton(ctx, diskReinstallFromDiskParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDiskReinstallFromDiskTargets(ctx, diskReinstallFromDiskParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !diskReinstallFromDiskParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("re-install from disk", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("re-install from disk", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DiskReinstallFromDisk(ctx, diskReinstallFromDiskParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				diskReinstallFromDiskParam.SetId(id)
+				go func(p *params.ReinstallFromDiskDiskParam) {
+					err := funcs.DiskReinstallFromDisk(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(diskReinstallFromDiskParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -566,21 +690,39 @@ func diskReinstallToBlankCmd() *cobra.Command {
 				return generateSkeleton(ctx, diskReinstallToBlankParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDiskReinstallToBlankTargets(ctx, diskReinstallToBlankParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !diskReinstallToBlankParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("re-install to blank", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("re-install to blank", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DiskReinstallToBlank(ctx, diskReinstallToBlankParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				diskReinstallToBlankParam.SetId(id)
+				go func(p *params.ReinstallToBlankDiskParam) {
+					err := funcs.DiskReinstallToBlank(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(diskReinstallToBlankParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -617,21 +759,39 @@ func diskServerConnectCmd() *cobra.Command {
 				return generateSkeleton(ctx, diskServerConnectParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDiskServerConnectTargets(ctx, diskServerConnectParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !diskServerConnectParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("server-connect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("server-connect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DiskServerConnect(ctx, diskServerConnectParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				diskServerConnectParam.SetId(id)
+				go func(p *params.ServerConnectDiskParam) {
+					err := funcs.DiskServerConnect(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(diskServerConnectParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -668,21 +828,39 @@ func diskServerDisconnectCmd() *cobra.Command {
 				return generateSkeleton(ctx, diskServerDisconnectParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDiskServerDisconnectTargets(ctx, diskServerDisconnectParam)
+			if err != nil {
+				return err
+			}
 
 			// confirm
 			if !diskServerDisconnectParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("server-disconnect", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("server-disconnect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
-			return funcs.DiskServerDisconnect(ctx, diskServerDisconnectParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				diskServerDisconnectParam.SetId(id)
+				go func(p *params.ServerDisconnectDiskParam) {
+					err := funcs.DiskServerDisconnect(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(diskServerDisconnectParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -718,10 +896,28 @@ func diskMonitorCmd() *cobra.Command {
 				return generateSkeleton(ctx, diskMonitorParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDiskMonitorTargets(ctx, diskMonitorParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DiskMonitor(ctx, diskMonitorParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				diskMonitorParam.SetId(id)
+				go func(p *params.MonitorDiskParam) {
+					err := funcs.DiskMonitor(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(diskMonitorParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 
@@ -766,10 +962,28 @@ func diskWaitForCopyCmd() *cobra.Command {
 				return generateSkeleton(ctx, diskWaitForCopyParam)
 			}
 
-			// TODO implements ID parameter handling
+			// parse ID or Name arguments
+			ids, err := findDiskWaitForCopyTargets(ctx, diskWaitForCopyParam)
+			if err != nil {
+				return err
+			}
 
-			// Run
-			return funcs.DiskWaitForCopy(ctx, diskWaitForCopyParam.ToV0())
+			var wg sync.WaitGroup
+			var errs []error
+			for _, id := range ids {
+				wg.Add(1)
+				diskWaitForCopyParam.SetId(id)
+				go func(p *params.WaitForCopyDiskParam) {
+					err := funcs.DiskWaitForCopy(ctx, p.ToV0())
+					if err != nil {
+						errs = append(errs, err)
+					}
+					wg.Done()
+				}(diskWaitForCopyParam)
+			}
+			wg.Wait()
+			return command.FlattenErrors(errs)
+
 		},
 	}
 

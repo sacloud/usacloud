@@ -58,10 +58,8 @@ func productInternetListCmd() *cobra.Command {
 				return generateSkeleton(ctx, productInternetListParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.ProductInternetList(ctx, productInternetListParam.ToV0())
+
 		},
 	}
 
@@ -106,21 +104,19 @@ func productInternetReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, productInternetReadParam)
 			}
 
-			// TODO implements ID parameter handling
-
 			// confirm
 			if !productInternetReadParam.Assumeyes {
 				if !utils.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out()) // TODO idハンドリング
+				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
 			}
 
-			// Run
 			return funcs.ProductInternetRead(ctx, productInternetReadParam.ToV0())
+
 		},
 	}
 

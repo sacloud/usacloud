@@ -54,10 +54,8 @@ func authStatusShowCmd() *cobra.Command {
 				return generateSkeleton(ctx, authStatusShowParam)
 			}
 
-			// TODO implements ID parameter handling
-
-			// Run
 			return funcs.AuthStatusShow(ctx, authStatusShowParam.ToV0())
+
 		},
 	}
 
