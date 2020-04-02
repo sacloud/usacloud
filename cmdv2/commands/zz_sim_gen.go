@@ -56,6 +56,9 @@ func simListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if simListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simListParam)
 			}
@@ -102,6 +105,9 @@ func simCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if simCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simCreateParam)
@@ -165,6 +171,9 @@ func simReadCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if simReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simReadParam)
 			}
@@ -227,6 +236,9 @@ func simUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if simUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simUpdateParam)
@@ -307,6 +319,9 @@ func simDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if simDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simDeleteParam)
 			}
@@ -376,6 +391,9 @@ func simCarrierInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if simCarrierInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simCarrierInfoParam)
 			}
@@ -438,6 +456,9 @@ func simCarrierUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if simCarrierUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simCarrierUpdateParam)
@@ -508,6 +529,9 @@ func simActivateCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if simActivateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simActivateParam)
 			}
@@ -576,6 +600,9 @@ func simDeactivateCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if simDeactivateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simDeactivateParam)
 			}
@@ -643,6 +670,9 @@ func simImeiLockCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if simImeiLockParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simImeiLockParam)
@@ -713,6 +743,9 @@ func simIpAddCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if simIpAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simIpAddParam)
 			}
@@ -782,6 +815,9 @@ func simImeiUnlockCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if simImeiUnlockParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simImeiUnlockParam)
 			}
@@ -849,6 +885,9 @@ func simIpDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if simIpDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simIpDeleteParam)
@@ -918,6 +957,9 @@ func simLogsCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if simLogsParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simLogsParam)
 			}
@@ -982,6 +1024,9 @@ func simMonitorCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if simMonitorParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simMonitorParam)

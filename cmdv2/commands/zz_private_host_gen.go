@@ -56,6 +56,9 @@ func privateHostListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if privateHostListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, privateHostListParam)
 			}
@@ -102,6 +105,9 @@ func privateHostCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if privateHostCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, privateHostCreateParam)
@@ -159,6 +165,9 @@ func privateHostReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if privateHostReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, privateHostReadParam)
@@ -222,6 +231,9 @@ func privateHostUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if privateHostUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, privateHostUpdateParam)
@@ -302,6 +314,9 @@ func privateHostDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if privateHostDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, privateHostDeleteParam)
 			}
@@ -377,6 +392,9 @@ func privateHostServerInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if privateHostServerInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, privateHostServerInfoParam)
 			}
@@ -439,6 +457,9 @@ func privateHostServerAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if privateHostServerAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, privateHostServerAddParam)
@@ -515,6 +536,9 @@ func privateHostServerDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if privateHostServerDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, privateHostServerDeleteParam)

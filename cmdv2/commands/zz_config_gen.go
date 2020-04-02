@@ -53,6 +53,9 @@ func configCurrentCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if configCurrentParam.GenerateSkeleton {
 				return generateSkeleton(ctx, configCurrentParam)
 			}
@@ -86,6 +89,9 @@ func configDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if configDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, configDeleteParam)
@@ -133,6 +139,9 @@ func configEditCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if configEditParam.GenerateSkeleton {
 				return generateSkeleton(ctx, configEditParam)
 			}
@@ -171,6 +180,9 @@ func configListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if configListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, configListParam)
 			}
@@ -204,6 +216,9 @@ func configMigrateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if configMigrateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, configMigrateParam)
@@ -239,6 +254,9 @@ func configShowCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if configShowParam.GenerateSkeleton {
 				return generateSkeleton(ctx, configShowParam)
 			}
@@ -272,6 +290,9 @@ func configUseCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if configUseParam.GenerateSkeleton {
 				return generateSkeleton(ctx, configUseParam)

@@ -56,6 +56,9 @@ func nfsListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if nfsListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, nfsListParam)
 			}
@@ -102,6 +105,9 @@ func nfsCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if nfsCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, nfsCreateParam)
@@ -166,6 +172,9 @@ func nfsReadCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if nfsReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, nfsReadParam)
 			}
@@ -228,6 +237,9 @@ func nfsUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if nfsUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, nfsUpdateParam)
@@ -308,6 +320,9 @@ func nfsDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if nfsDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, nfsDeleteParam)
 			}
@@ -384,6 +399,9 @@ func nfsBootCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if nfsBootParam.GenerateSkeleton {
 				return generateSkeleton(ctx, nfsBootParam)
 			}
@@ -451,6 +469,9 @@ func nfsShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if nfsShutdownParam.GenerateSkeleton {
 				return generateSkeleton(ctx, nfsShutdownParam)
@@ -520,6 +541,9 @@ func nfsShutdownForceCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if nfsShutdownForceParam.GenerateSkeleton {
 				return generateSkeleton(ctx, nfsShutdownForceParam)
 			}
@@ -587,6 +611,9 @@ func nfsResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if nfsResetParam.GenerateSkeleton {
 				return generateSkeleton(ctx, nfsResetParam)
@@ -656,6 +683,9 @@ func nfsWaitForBootCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if nfsWaitForBootParam.GenerateSkeleton {
 				return generateSkeleton(ctx, nfsWaitForBootParam)
 			}
@@ -712,6 +742,9 @@ func nfsWaitForDownCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if nfsWaitForDownParam.GenerateSkeleton {
 				return generateSkeleton(ctx, nfsWaitForDownParam)
 			}
@@ -767,6 +800,9 @@ func nfsMonitorNicCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if nfsMonitorNicParam.GenerateSkeleton {
 				return generateSkeleton(ctx, nfsMonitorNicParam)
@@ -833,6 +869,9 @@ func nfsMonitorFreeDiskSizeCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if nfsMonitorFreeDiskSizeParam.GenerateSkeleton {
 				return generateSkeleton(ctx, nfsMonitorFreeDiskSizeParam)

@@ -50,6 +50,9 @@ func summaryShowCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if summaryShowParam.GenerateSkeleton {
 				return generateSkeleton(ctx, summaryShowParam)
 			}

@@ -56,6 +56,9 @@ func startupScriptListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if startupScriptListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, startupScriptListParam)
 			}
@@ -104,6 +107,9 @@ func startupScriptCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if startupScriptCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, startupScriptCreateParam)
@@ -163,6 +169,9 @@ func startupScriptReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if startupScriptReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, startupScriptReadParam)
@@ -226,6 +235,9 @@ func startupScriptUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if startupScriptUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, startupScriptUpdateParam)
@@ -307,6 +319,9 @@ func startupScriptDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if startupScriptDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, startupScriptDeleteParam)

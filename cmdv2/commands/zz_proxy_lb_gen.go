@@ -56,6 +56,9 @@ func proxyLBListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if proxyLBListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBListParam)
 			}
@@ -102,6 +105,9 @@ func proxyLBCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if proxyLBCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBCreateParam)
@@ -169,6 +175,9 @@ func proxyLBReadCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if proxyLBReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBReadParam)
 			}
@@ -231,6 +240,9 @@ func proxyLBUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if proxyLBUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBUpdateParam)
@@ -319,6 +331,9 @@ func proxyLBDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if proxyLBDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBDeleteParam)
 			}
@@ -393,6 +408,9 @@ func proxyLBPlanChangeCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if proxyLBPlanChangeParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBPlanChangeParam)
@@ -470,6 +488,9 @@ func proxyLBBindPortInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if proxyLBBindPortInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBBindPortInfoParam)
 			}
@@ -532,6 +553,9 @@ func proxyLBBindPortAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if proxyLBBindPortAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBBindPortAddParam)
@@ -611,6 +635,9 @@ func proxyLBBindPortUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if proxyLBBindPortUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBBindPortUpdateParam)
@@ -692,6 +719,9 @@ func proxyLBBindPortDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if proxyLBBindPortDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBBindPortDeleteParam)
 			}
@@ -768,6 +798,9 @@ func proxyLBResponseHeaderInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if proxyLBResponseHeaderInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBResponseHeaderInfoParam)
 			}
@@ -831,6 +864,9 @@ func proxyLBResponseHeaderAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if proxyLBResponseHeaderAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBResponseHeaderAddParam)
@@ -909,6 +945,9 @@ func proxyLBResponseHeaderUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if proxyLBResponseHeaderUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBResponseHeaderUpdateParam)
@@ -989,6 +1028,9 @@ func proxyLBResponseHeaderDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if proxyLBResponseHeaderDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBResponseHeaderDeleteParam)
 			}
@@ -1066,6 +1108,9 @@ func proxyLBACMEInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if proxyLBACMEInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBACMEInfoParam)
 			}
@@ -1128,6 +1173,9 @@ func proxyLBACMESettingCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if proxyLBACMESettingParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBACMESettingParam)
@@ -1207,6 +1255,9 @@ func proxyLBACMERenewCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if proxyLBACMERenewParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBACMERenewParam)
 			}
@@ -1275,6 +1326,9 @@ func proxyLBServerInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if proxyLBServerInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBServerInfoParam)
 			}
@@ -1337,6 +1391,9 @@ func proxyLBServerAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if proxyLBServerAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBServerAddParam)
@@ -1415,6 +1472,9 @@ func proxyLBServerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if proxyLBServerUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBServerUpdateParam)
@@ -1495,6 +1555,9 @@ func proxyLBServerDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if proxyLBServerDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBServerDeleteParam)
 			}
@@ -1571,6 +1634,9 @@ func proxyLBCertificateInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if proxyLBCertificateInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBCertificateInfoParam)
 			}
@@ -1633,6 +1699,9 @@ func proxyLBCertificateAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if proxyLBCertificateAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBCertificateAddParam)
@@ -1712,6 +1781,9 @@ func proxyLBCertificateUpdateCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if proxyLBCertificateUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBCertificateUpdateParam)
 			}
@@ -1790,6 +1862,9 @@ func proxyLBCertificateDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if proxyLBCertificateDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBCertificateDeleteParam)
 			}
@@ -1864,6 +1939,9 @@ func proxyLBMonitorCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if proxyLBMonitorParam.GenerateSkeleton {
 				return generateSkeleton(ctx, proxyLBMonitorParam)

@@ -50,6 +50,9 @@ func selfInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if selfInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, selfInfoParam)
 			}

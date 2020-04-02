@@ -56,6 +56,9 @@ func mobileGatewayListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewayListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayListParam)
 			}
@@ -102,6 +105,9 @@ func mobileGatewayCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if mobileGatewayCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayCreateParam)
@@ -160,6 +166,9 @@ func mobileGatewayReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if mobileGatewayReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayReadParam)
@@ -223,6 +232,9 @@ func mobileGatewayUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if mobileGatewayUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayUpdateParam)
@@ -304,6 +316,9 @@ func mobileGatewayDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewayDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayDeleteParam)
 			}
@@ -380,6 +395,9 @@ func mobileGatewayBootCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewayBootParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayBootParam)
 			}
@@ -447,6 +465,9 @@ func mobileGatewayShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if mobileGatewayShutdownParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayShutdownParam)
@@ -516,6 +537,9 @@ func mobileGatewayShutdownForceCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewayShutdownForceParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayShutdownForceParam)
 			}
@@ -583,6 +607,9 @@ func mobileGatewayResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if mobileGatewayResetParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayResetParam)
@@ -652,6 +679,9 @@ func mobileGatewayWaitForBootCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewayWaitForBootParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayWaitForBootParam)
 			}
@@ -708,6 +738,9 @@ func mobileGatewayWaitForDownCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewayWaitForDownParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayWaitForDownParam)
 			}
@@ -763,6 +796,9 @@ func mobileGatewayInterfaceInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if mobileGatewayInterfaceInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayInterfaceInfoParam)
@@ -826,6 +862,9 @@ func mobileGatewayInterfaceConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if mobileGatewayInterfaceConnectParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayInterfaceConnectParam)
@@ -898,6 +937,9 @@ func mobileGatewayInterfaceUpdateCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewayInterfaceUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayInterfaceUpdateParam)
 			}
@@ -968,6 +1010,9 @@ func mobileGatewayInterfaceDisconnectCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewayInterfaceDisconnectParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayInterfaceDisconnectParam)
 			}
@@ -1036,6 +1081,9 @@ func mobileGatewayTrafficControlInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewayTrafficControlInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayTrafficControlInfoParam)
 			}
@@ -1098,6 +1146,9 @@ func mobileGatewayTrafficControlEnableCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if mobileGatewayTrafficControlEnableParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayTrafficControlEnableParam)
@@ -1172,6 +1223,9 @@ func mobileGatewayTrafficControlUpdateCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewayTrafficControlUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayTrafficControlUpdateParam)
 			}
@@ -1245,6 +1299,9 @@ func mobileGatewayTrafficControlDisableCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewayTrafficControlDisableParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayTrafficControlDisableParam)
 			}
@@ -1313,6 +1370,9 @@ func mobileGatewayStaticRouteInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewayStaticRouteInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayStaticRouteInfoParam)
 			}
@@ -1375,6 +1435,9 @@ func mobileGatewayStaticRouteAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if mobileGatewayStaticRouteAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayStaticRouteAddParam)
@@ -1445,6 +1508,9 @@ func mobileGatewayStaticRouteUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if mobileGatewayStaticRouteUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayStaticRouteUpdateParam)
@@ -1517,6 +1583,9 @@ func mobileGatewayStaticRouteDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewayStaticRouteDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayStaticRouteDeleteParam)
 			}
@@ -1586,6 +1655,9 @@ func mobileGatewaySIMInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewaySIMInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewaySIMInfoParam)
 			}
@@ -1648,6 +1720,9 @@ func mobileGatewaySIMAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if mobileGatewaySIMAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewaySIMAddParam)
@@ -1719,6 +1794,9 @@ func mobileGatewaySIMUpdateCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewaySIMUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewaySIMUpdateParam)
 			}
@@ -1789,6 +1867,9 @@ func mobileGatewaySIMDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewaySIMDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewaySIMDeleteParam)
 			}
@@ -1858,6 +1939,9 @@ func mobileGatewaySIMRouteInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewaySIMRouteInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewaySIMRouteInfoParam)
 			}
@@ -1920,6 +2004,9 @@ func mobileGatewaySIMRouteAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if mobileGatewaySIMRouteAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewaySIMRouteAddParam)
@@ -1990,6 +2077,9 @@ func mobileGatewaySIMRouteUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if mobileGatewaySIMRouteUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewaySIMRouteUpdateParam)
@@ -2062,6 +2152,9 @@ func mobileGatewaySIMRouteDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if mobileGatewaySIMRouteDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewaySIMRouteDeleteParam)
 			}
@@ -2130,6 +2223,9 @@ func mobileGatewayDNSUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if mobileGatewayDNSUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayDNSUpdateParam)
@@ -2200,6 +2296,9 @@ func mobileGatewayLogsCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if mobileGatewayLogsParam.GenerateSkeleton {
 				return generateSkeleton(ctx, mobileGatewayLogsParam)

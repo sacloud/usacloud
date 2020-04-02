@@ -56,6 +56,9 @@ func internetListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if internetListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, internetListParam)
 			}
@@ -102,6 +105,9 @@ func internetCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if internetCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, internetCreateParam)
@@ -161,6 +167,9 @@ func internetReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if internetReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, internetReadParam)
@@ -224,6 +233,9 @@ func internetUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if internetUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, internetUpdateParam)
@@ -305,6 +317,9 @@ func internetDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if internetDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, internetDeleteParam)
 			}
@@ -379,6 +394,9 @@ func internetUpdateBandwidthCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if internetUpdateBandwidthParam.GenerateSkeleton {
 				return generateSkeleton(ctx, internetUpdateBandwidthParam)
@@ -456,6 +474,9 @@ func internetSubnetInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if internetSubnetInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, internetSubnetInfoParam)
 			}
@@ -518,6 +539,9 @@ func internetSubnetAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if internetSubnetAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, internetSubnetAddParam)
@@ -596,6 +620,9 @@ func internetSubnetDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if internetSubnetDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, internetSubnetDeleteParam)
 			}
@@ -664,6 +691,9 @@ func internetSubnetUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if internetSubnetUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, internetSubnetUpdateParam)
@@ -742,6 +772,9 @@ func internetIPv6InfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if internetIPv6InfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, internetIPv6InfoParam)
 			}
@@ -804,6 +837,9 @@ func internetIPv6EnableCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if internetIPv6EnableParam.GenerateSkeleton {
 				return generateSkeleton(ctx, internetIPv6EnableParam)
@@ -880,6 +916,9 @@ func internetIPv6DisableCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if internetIPv6DisableParam.GenerateSkeleton {
 				return generateSkeleton(ctx, internetIPv6DisableParam)
 			}
@@ -947,6 +986,9 @@ func internetMonitorCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if internetMonitorParam.GenerateSkeleton {
 				return generateSkeleton(ctx, internetMonitorParam)

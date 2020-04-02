@@ -56,6 +56,9 @@ func gslbListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if gslbListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, gslbListParam)
 			}
@@ -102,6 +105,9 @@ func gslbServerInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if gslbServerInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, gslbServerInfoParam)
@@ -165,6 +171,9 @@ func gslbCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if gslbCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, gslbCreateParam)
@@ -230,6 +239,9 @@ func gslbServerAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if gslbServerAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, gslbServerAddParam)
@@ -309,6 +321,9 @@ func gslbReadCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if gslbReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, gslbReadParam)
 			}
@@ -371,6 +386,9 @@ func gslbServerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if gslbServerUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, gslbServerUpdateParam)
@@ -451,6 +469,9 @@ func gslbServerDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if gslbServerDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, gslbServerDeleteParam)
 			}
@@ -526,6 +547,9 @@ func gslbUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if gslbUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, gslbUpdateParam)
@@ -613,6 +637,9 @@ func gslbDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if gslbDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, gslbDeleteParam)

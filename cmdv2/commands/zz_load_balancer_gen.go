@@ -56,6 +56,9 @@ func loadBalancerListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if loadBalancerListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerListParam)
 			}
@@ -102,6 +105,9 @@ func loadBalancerCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if loadBalancerCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerCreateParam)
@@ -168,6 +174,9 @@ func loadBalancerReadCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if loadBalancerReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerReadParam)
 			}
@@ -230,6 +239,9 @@ func loadBalancerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if loadBalancerUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerUpdateParam)
@@ -310,6 +322,9 @@ func loadBalancerDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if loadBalancerDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerDeleteParam)
 			}
@@ -386,6 +401,9 @@ func loadBalancerBootCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if loadBalancerBootParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerBootParam)
 			}
@@ -453,6 +471,9 @@ func loadBalancerShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if loadBalancerShutdownParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerShutdownParam)
@@ -522,6 +543,9 @@ func loadBalancerShutdownForceCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if loadBalancerShutdownForceParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerShutdownForceParam)
 			}
@@ -589,6 +613,9 @@ func loadBalancerResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if loadBalancerResetParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerResetParam)
@@ -658,6 +685,9 @@ func loadBalancerWaitForBootCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if loadBalancerWaitForBootParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerWaitForBootParam)
 			}
@@ -714,6 +744,9 @@ func loadBalancerWaitForDownCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if loadBalancerWaitForDownParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerWaitForDownParam)
 			}
@@ -769,6 +802,9 @@ func loadBalancerVipInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if loadBalancerVipInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerVipInfoParam)
@@ -832,6 +868,9 @@ func loadBalancerVipAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if loadBalancerVipAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerVipAddParam)
@@ -905,6 +944,9 @@ func loadBalancerVipUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if loadBalancerVipUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerVipUpdateParam)
@@ -980,6 +1022,9 @@ func loadBalancerVipDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if loadBalancerVipDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerVipDeleteParam)
 			}
@@ -1049,6 +1094,9 @@ func loadBalancerServerInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if loadBalancerServerInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerServerInfoParam)
 			}
@@ -1114,6 +1162,9 @@ func loadBalancerServerAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if loadBalancerServerAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerServerAddParam)
@@ -1191,6 +1242,9 @@ func loadBalancerServerUpdateCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if loadBalancerServerUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerServerUpdateParam)
 			}
@@ -1267,6 +1321,9 @@ func loadBalancerServerDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if loadBalancerServerDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerServerDeleteParam)
 			}
@@ -1338,6 +1395,9 @@ func loadBalancerMonitorCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if loadBalancerMonitorParam.GenerateSkeleton {
 				return generateSkeleton(ctx, loadBalancerMonitorParam)

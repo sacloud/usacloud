@@ -56,6 +56,9 @@ func interfaceListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if interfaceListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, interfaceListParam)
 			}
@@ -101,6 +104,9 @@ func interfacePacketFilterConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if interfacePacketFilterConnectParam.GenerateSkeleton {
 				return generateSkeleton(ctx, interfacePacketFilterConnectParam)
@@ -170,6 +176,9 @@ func interfaceCreateCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if interfaceCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, interfaceCreateParam)
 			}
@@ -223,6 +232,9 @@ func interfacePacketFilterDisconnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if interfacePacketFilterDisconnectParam.GenerateSkeleton {
 				return generateSkeleton(ctx, interfacePacketFilterDisconnectParam)
@@ -292,6 +304,9 @@ func interfaceReadCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if interfaceReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, interfaceReadParam)
 			}
@@ -353,6 +368,9 @@ func interfaceUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if interfaceUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, interfaceUpdateParam)
@@ -428,6 +446,9 @@ func interfaceDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if interfaceDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, interfaceDeleteParam)

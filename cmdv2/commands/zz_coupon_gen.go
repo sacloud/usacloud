@@ -50,6 +50,9 @@ func couponListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if couponListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, couponListParam)
 			}

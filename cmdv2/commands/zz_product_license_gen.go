@@ -54,6 +54,9 @@ func productLicenseListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if productLicenseListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, productLicenseListParam)
 			}
@@ -99,6 +102,9 @@ func productLicenseReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if productLicenseReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, productLicenseReadParam)

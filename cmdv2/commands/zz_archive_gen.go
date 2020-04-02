@@ -56,6 +56,9 @@ func archiveListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if archiveListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, archiveListParam)
 			}
@@ -105,6 +108,9 @@ func archiveCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if archiveCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, archiveCreateParam)
@@ -166,6 +172,9 @@ func archiveReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if archiveReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, archiveReadParam)
@@ -229,6 +238,9 @@ func archiveUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if archiveUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, archiveUpdateParam)
@@ -309,6 +321,9 @@ func archiveDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if archiveDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, archiveDeleteParam)
 			}
@@ -383,6 +398,9 @@ func archiveUploadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if archiveUploadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, archiveUploadParam)
@@ -460,6 +478,9 @@ func archiveDownloadCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if archiveDownloadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, archiveDownloadParam)
 			}
@@ -528,6 +549,9 @@ func archiveFTPOpenCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if archiveFTPOpenParam.GenerateSkeleton {
 				return generateSkeleton(ctx, archiveFTPOpenParam)
@@ -604,6 +628,9 @@ func archiveFTPCloseCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if archiveFTPCloseParam.GenerateSkeleton {
 				return generateSkeleton(ctx, archiveFTPCloseParam)
 			}
@@ -671,6 +698,9 @@ func archiveWaitForCopyCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if archiveWaitForCopyParam.GenerateSkeleton {
 				return generateSkeleton(ctx, archiveWaitForCopyParam)

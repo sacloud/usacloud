@@ -54,6 +54,9 @@ func productInternetListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if productInternetListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, productInternetListParam)
 			}
@@ -99,6 +102,9 @@ func productInternetReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if productInternetReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, productInternetReadParam)

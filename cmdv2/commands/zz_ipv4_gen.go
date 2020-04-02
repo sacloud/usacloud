@@ -54,6 +54,9 @@ func ipv4ListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if ipv4ListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, ipv4ListParam)
 			}
@@ -99,6 +102,9 @@ func ipv4PtrAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if ipv4PtrAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, ipv4PtrAddParam)
@@ -154,6 +160,9 @@ func ipv4PtrReadCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if ipv4PtrReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, ipv4PtrReadParam)
 			}
@@ -194,6 +203,9 @@ func ipv4PtrUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if ipv4PtrUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, ipv4PtrUpdateParam)
@@ -248,6 +260,9 @@ func ipv4PtrDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if ipv4PtrDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, ipv4PtrDeleteParam)

@@ -56,6 +56,9 @@ func switchListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if switchListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, switchListParam)
 			}
@@ -102,6 +105,9 @@ func switchCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if switchCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, switchCreateParam)
@@ -159,6 +165,9 @@ func switchReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if switchReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, switchReadParam)
@@ -222,6 +231,9 @@ func switchUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if switchUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, switchUpdateParam)
@@ -302,6 +314,9 @@ func switchDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if switchDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, switchDeleteParam)
 			}
@@ -377,6 +392,9 @@ func switchBridgeConnectCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if switchBridgeConnectParam.GenerateSkeleton {
 				return generateSkeleton(ctx, switchBridgeConnectParam)
 			}
@@ -445,6 +463,9 @@ func switchBridgeDisconnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if switchBridgeDisconnectParam.GenerateSkeleton {
 				return generateSkeleton(ctx, switchBridgeDisconnectParam)

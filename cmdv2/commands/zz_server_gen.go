@@ -56,6 +56,9 @@ func serverListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverListParam)
 			}
@@ -102,6 +105,9 @@ func serverBuildCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if serverBuildParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverBuildParam)
@@ -198,6 +204,9 @@ func serverReadCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverReadParam)
 			}
@@ -260,6 +269,9 @@ func serverUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if serverUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverUpdateParam)
@@ -341,6 +353,9 @@ func serverDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverDeleteParam)
 			}
@@ -417,6 +432,9 @@ func serverPlanChangeCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if serverPlanChangeParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverPlanChangeParam)
@@ -496,6 +514,9 @@ func serverBootCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverBootParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverBootParam)
 			}
@@ -563,6 +584,9 @@ func serverShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if serverShutdownParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverShutdownParam)
@@ -632,6 +656,9 @@ func serverShutdownForceCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverShutdownForceParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverShutdownForceParam)
 			}
@@ -699,6 +726,9 @@ func serverResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if serverResetParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverResetParam)
@@ -768,6 +798,9 @@ func serverWaitForBootCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverWaitForBootParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverWaitForBootParam)
 			}
@@ -824,6 +857,9 @@ func serverWaitForDownCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverWaitForDownParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverWaitForDownParam)
 			}
@@ -879,6 +915,9 @@ func serverSSHCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if serverSSHParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverSSHParam)
@@ -941,6 +980,9 @@ func serverSSHExecCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverSSHExecParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverSSHExecParam)
 			}
@@ -1001,6 +1043,9 @@ func serverScpCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverScpParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverScpParam)
 			}
@@ -1052,6 +1097,9 @@ func serverVncCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if serverVncParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverVncParam)
@@ -1109,6 +1157,9 @@ func serverVncInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if serverVncInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverVncInfoParam)
@@ -1173,6 +1224,9 @@ func serverVncSendCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if serverVncSendParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverVncSendParam)
@@ -1254,6 +1308,9 @@ func serverVncSnapshotCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverVncSnapshotParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverVncSnapshotParam)
 			}
@@ -1331,6 +1388,9 @@ func serverRemoteDesktopCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverRemoteDesktopParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverRemoteDesktopParam)
 			}
@@ -1388,6 +1448,9 @@ func serverRemoteDesktopInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if serverRemoteDesktopInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverRemoteDesktopInfoParam)
@@ -1454,6 +1517,9 @@ func serverDiskInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverDiskInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverDiskInfoParam)
 			}
@@ -1516,6 +1582,9 @@ func serverDiskConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if serverDiskConnectParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverDiskConnectParam)
@@ -1586,6 +1655,9 @@ func serverDiskDisconnectCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverDiskDisconnectParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverDiskDisconnectParam)
 			}
@@ -1655,6 +1727,9 @@ func serverInterfaceInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverInterfaceInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverInterfaceInfoParam)
 			}
@@ -1717,6 +1792,9 @@ func serverInterfaceAddForInternetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if serverInterfaceAddForInternetParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverInterfaceAddForInternetParam)
@@ -1786,6 +1864,9 @@ func serverInterfaceAddForRouterCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if serverInterfaceAddForRouterParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverInterfaceAddForRouterParam)
@@ -1860,6 +1941,9 @@ func serverInterfaceAddForSwitchCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverInterfaceAddForSwitchParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverInterfaceAddForSwitchParam)
 			}
@@ -1933,6 +2017,9 @@ func serverInterfaceAddDisconnectedCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverInterfaceAddDisconnectedParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverInterfaceAddDisconnectedParam)
 			}
@@ -2001,6 +2088,9 @@ func serverISOInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverISOInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverISOInfoParam)
 			}
@@ -2063,6 +2153,9 @@ func serverISOInsertCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if serverISOInsertParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverISOInsertParam)
@@ -2139,6 +2232,9 @@ func serverISOEjectCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverISOEjectParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverISOEjectParam)
 			}
@@ -2207,6 +2303,9 @@ func serverMonitorCPUCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverMonitorCPUParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverMonitorCPUParam)
 			}
@@ -2272,6 +2371,9 @@ func serverMonitorNicCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if serverMonitorNicParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverMonitorNicParam)
@@ -2340,6 +2442,9 @@ func serverMonitorDiskCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if serverMonitorDiskParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverMonitorDiskParam)
 			}
@@ -2406,6 +2511,9 @@ func serverMaintenanceInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if serverMaintenanceInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, serverMaintenanceInfoParam)

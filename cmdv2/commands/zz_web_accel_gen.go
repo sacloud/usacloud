@@ -55,6 +55,9 @@ func webAccelListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if webAccelListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, webAccelListParam)
 			}
@@ -95,6 +98,9 @@ func webAccelReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if webAccelReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, webAccelReadParam)
@@ -159,6 +165,9 @@ func webAccelCertificateInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if webAccelCertificateInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, webAccelCertificateInfoParam)
 			}
@@ -221,6 +230,9 @@ func webAccelCertificateNewCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if webAccelCertificateNewParam.GenerateSkeleton {
 				return generateSkeleton(ctx, webAccelCertificateNewParam)
@@ -301,6 +313,9 @@ func webAccelCertificateUpdateCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if webAccelCertificateUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, webAccelCertificateUpdateParam)
 			}
@@ -379,6 +394,9 @@ func webAccelDeleteCacheCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if webAccelDeleteCacheParam.GenerateSkeleton {
 				return generateSkeleton(ctx, webAccelDeleteCacheParam)

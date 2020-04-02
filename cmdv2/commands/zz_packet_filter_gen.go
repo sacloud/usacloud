@@ -56,6 +56,9 @@ func packetFilterListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if packetFilterListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, packetFilterListParam)
 			}
@@ -101,6 +104,9 @@ func packetFilterCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if packetFilterCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, packetFilterCreateParam)
@@ -156,6 +162,9 @@ func packetFilterReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if packetFilterReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, packetFilterReadParam)
@@ -218,6 +227,9 @@ func packetFilterUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if packetFilterUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, packetFilterUpdateParam)
@@ -295,6 +307,9 @@ func packetFilterDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if packetFilterDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, packetFilterDeleteParam)
 			}
@@ -369,6 +384,9 @@ func packetFilterRuleInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if packetFilterRuleInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, packetFilterRuleInfoParam)
 			}
@@ -430,6 +448,9 @@ func packetFilterRuleAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if packetFilterRuleAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, packetFilterRuleAddParam)
@@ -512,6 +533,9 @@ func packetFilterRuleUpdateCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if packetFilterRuleUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, packetFilterRuleUpdateParam)
 			}
@@ -593,6 +617,9 @@ func packetFilterRuleDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if packetFilterRuleDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, packetFilterRuleDeleteParam)
 			}
@@ -668,6 +695,9 @@ func packetFilterInterfaceConnectCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if packetFilterInterfaceConnectParam.GenerateSkeleton {
 				return generateSkeleton(ctx, packetFilterInterfaceConnectParam)
 			}
@@ -735,6 +765,9 @@ func packetFilterInterfaceDisconnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if packetFilterInterfaceDisconnectParam.GenerateSkeleton {
 				return generateSkeleton(ctx, packetFilterInterfaceDisconnectParam)

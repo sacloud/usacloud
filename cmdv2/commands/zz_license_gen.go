@@ -56,6 +56,9 @@ func licenseListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if licenseListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, licenseListParam)
 			}
@@ -101,6 +104,9 @@ func licenseCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if licenseCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, licenseCreateParam)
@@ -156,6 +162,9 @@ func licenseReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if licenseReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, licenseReadParam)
@@ -218,6 +227,9 @@ func licenseUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if licenseUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, licenseUpdateParam)
@@ -293,6 +305,9 @@ func licenseDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if licenseDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, licenseDeleteParam)

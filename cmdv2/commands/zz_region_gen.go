@@ -54,6 +54,9 @@ func regionListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if regionListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, regionListParam)
 			}
@@ -99,6 +102,9 @@ func regionReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if regionReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, regionReadParam)

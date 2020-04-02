@@ -110,6 +110,9 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("{{.ExperimentWarning}}")
+
 			if {{ .InputParameterVariable }}.GenerateSkeleton {
 				return generateSkeleton(ctx, {{ .InputParameterVariable }})
 			}

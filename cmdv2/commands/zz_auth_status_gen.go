@@ -50,6 +50,9 @@ func authStatusShowCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if authStatusShowParam.GenerateSkeleton {
 				return generateSkeleton(ctx, authStatusShowParam)
 			}

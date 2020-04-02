@@ -54,6 +54,9 @@ func productServerListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if productServerListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, productServerListParam)
 			}
@@ -99,6 +102,9 @@ func productServerReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if productServerReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, productServerReadParam)

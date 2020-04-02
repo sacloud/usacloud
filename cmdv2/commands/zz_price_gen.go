@@ -51,6 +51,9 @@ func priceListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if priceListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, priceListParam)
 			}

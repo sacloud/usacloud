@@ -56,6 +56,9 @@ func autoBackupListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if autoBackupListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, autoBackupListParam)
 			}
@@ -102,6 +105,9 @@ func autoBackupCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if autoBackupCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, autoBackupCreateParam)
@@ -162,6 +168,9 @@ func autoBackupReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if autoBackupReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, autoBackupReadParam)
@@ -225,6 +234,9 @@ func autoBackupUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if autoBackupUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, autoBackupUpdateParam)
@@ -306,6 +318,9 @@ func autoBackupDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if autoBackupDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, autoBackupDeleteParam)

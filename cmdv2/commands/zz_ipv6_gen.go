@@ -54,6 +54,9 @@ func ipv6ListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if ipv6ListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, ipv6ListParam)
 			}
@@ -101,6 +104,9 @@ func ipv6PtrAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if ipv6PtrAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, ipv6PtrAddParam)
@@ -156,6 +162,9 @@ func ipv6PtrReadCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if ipv6PtrReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, ipv6PtrReadParam)
 			}
@@ -196,6 +205,9 @@ func ipv6PtrUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if ipv6PtrUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, ipv6PtrUpdateParam)
@@ -250,6 +262,9 @@ func ipv6PtrDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if ipv6PtrDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, ipv6PtrDeleteParam)

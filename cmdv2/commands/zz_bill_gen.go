@@ -50,6 +50,9 @@ func billCsvCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if billCsvParam.GenerateSkeleton {
 				return generateSkeleton(ctx, billCsvParam)
 			}
@@ -86,6 +89,9 @@ func billListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if billListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, billListParam)

@@ -56,6 +56,9 @@ func iconListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if iconListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, iconListParam)
 			}
@@ -103,6 +106,9 @@ func iconCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if iconCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, iconCreateParam)
@@ -159,6 +165,9 @@ func iconReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if iconReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, iconReadParam)
@@ -222,6 +231,9 @@ func iconUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if iconUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, iconUpdateParam)
@@ -299,6 +311,9 @@ func iconDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if iconDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, iconDeleteParam)

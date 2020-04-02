@@ -56,6 +56,9 @@ func bridgeListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if bridgeListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, bridgeListParam)
 			}
@@ -101,6 +104,9 @@ func bridgeCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if bridgeCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, bridgeCreateParam)
@@ -156,6 +162,9 @@ func bridgeReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if bridgeReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, bridgeReadParam)
@@ -218,6 +227,9 @@ func bridgeUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if bridgeUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, bridgeUpdateParam)
@@ -294,6 +306,9 @@ func bridgeDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if bridgeDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, bridgeDeleteParam)

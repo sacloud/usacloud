@@ -56,6 +56,9 @@ func vpcRouterListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterListParam)
 			}
@@ -102,6 +105,9 @@ func vpcRouterCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterCreateParam)
@@ -168,6 +174,9 @@ func vpcRouterReadCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterReadParam)
 			}
@@ -230,6 +239,9 @@ func vpcRouterUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterUpdateParam)
@@ -312,6 +324,9 @@ func vpcRouterDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterDeleteParam)
 			}
@@ -388,6 +403,9 @@ func vpcRouterBootCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterBootParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterBootParam)
 			}
@@ -455,6 +473,9 @@ func vpcRouterShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterShutdownParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterShutdownParam)
@@ -524,6 +545,9 @@ func vpcRouterShutdownForceCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterShutdownForceParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterShutdownForceParam)
 			}
@@ -591,6 +615,9 @@ func vpcRouterResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterResetParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterResetParam)
@@ -660,6 +687,9 @@ func vpcRouterWaitForBootCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterWaitForBootParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterWaitForBootParam)
 			}
@@ -716,6 +746,9 @@ func vpcRouterWaitForDownCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterWaitForDownParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterWaitForDownParam)
 			}
@@ -771,6 +804,9 @@ func vpcRouterEnableInternetConnectionCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterEnableInternetConnectionParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterEnableInternetConnectionParam)
@@ -840,6 +876,9 @@ func vpcRouterDisableInternetConnectionCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterDisableInternetConnectionParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterDisableInternetConnectionParam)
 			}
@@ -908,6 +947,9 @@ func vpcRouterInterfaceInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterInterfaceInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterInterfaceInfoParam)
 			}
@@ -970,6 +1012,9 @@ func vpcRouterInterfaceConnectCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterInterfaceConnectParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterInterfaceConnectParam)
@@ -1045,6 +1090,9 @@ func vpcRouterInterfaceUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterInterfaceUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterInterfaceUpdateParam)
@@ -1122,6 +1170,9 @@ func vpcRouterInterfaceDisconnectCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterInterfaceDisconnectParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterInterfaceDisconnectParam)
 			}
@@ -1192,6 +1243,9 @@ func vpcRouterStaticNatInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterStaticNatInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterStaticNatInfoParam)
 			}
@@ -1254,6 +1308,9 @@ func vpcRouterStaticNatAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterStaticNatAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterStaticNatAddParam)
@@ -1325,6 +1382,9 @@ func vpcRouterStaticNatUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterStaticNatUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterStaticNatUpdateParam)
@@ -1398,6 +1458,9 @@ func vpcRouterStaticNatDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterStaticNatDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterStaticNatDeleteParam)
 			}
@@ -1467,6 +1530,9 @@ func vpcRouterPortForwardingInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterPortForwardingInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterPortForwardingInfoParam)
 			}
@@ -1529,6 +1595,9 @@ func vpcRouterPortForwardingAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterPortForwardingAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterPortForwardingAddParam)
@@ -1602,6 +1671,9 @@ func vpcRouterPortForwardingUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterPortForwardingUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterPortForwardingUpdateParam)
@@ -1677,6 +1749,9 @@ func vpcRouterPortForwardingDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterPortForwardingDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterPortForwardingDeleteParam)
 			}
@@ -1746,6 +1821,9 @@ func vpcRouterFirewallInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterFirewallInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterFirewallInfoParam)
 			}
@@ -1810,6 +1888,9 @@ func vpcRouterFirewallAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterFirewallAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterFirewallAddParam)
@@ -1888,6 +1969,9 @@ func vpcRouterFirewallUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterFirewallUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterFirewallUpdateParam)
@@ -1968,6 +2052,9 @@ func vpcRouterFirewallDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterFirewallDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterFirewallDeleteParam)
 			}
@@ -2039,6 +2126,9 @@ func vpcRouterDhcpServerInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterDhcpServerInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterDhcpServerInfoParam)
 			}
@@ -2101,6 +2191,9 @@ func vpcRouterDhcpServerAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterDhcpServerAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterDhcpServerAddParam)
@@ -2174,6 +2267,9 @@ func vpcRouterDhcpServerUpdateCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterDhcpServerUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterDhcpServerUpdateParam)
 			}
@@ -2246,6 +2342,9 @@ func vpcRouterDhcpServerDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterDhcpServerDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterDhcpServerDeleteParam)
 			}
@@ -2315,6 +2414,9 @@ func vpcRouterDhcpStaticMappingInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterDhcpStaticMappingInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterDhcpStaticMappingInfoParam)
 			}
@@ -2377,6 +2479,9 @@ func vpcRouterDhcpStaticMappingAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterDhcpStaticMappingAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterDhcpStaticMappingAddParam)
@@ -2447,6 +2552,9 @@ func vpcRouterDhcpStaticMappingUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterDhcpStaticMappingUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterDhcpStaticMappingUpdateParam)
@@ -2519,6 +2627,9 @@ func vpcRouterDhcpStaticMappingDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterDhcpStaticMappingDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterDhcpStaticMappingDeleteParam)
 			}
@@ -2588,6 +2699,9 @@ func vpcRouterPptpServerInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterPptpServerInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterPptpServerInfoParam)
 			}
@@ -2650,6 +2764,9 @@ func vpcRouterPptpServerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterPptpServerUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterPptpServerUpdateParam)
@@ -2722,6 +2839,9 @@ func vpcRouterL2TPServerInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterL2TPServerInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterL2TPServerInfoParam)
 			}
@@ -2784,6 +2904,9 @@ func vpcRouterL2TPServerUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterL2TPServerUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterL2TPServerUpdateParam)
@@ -2857,6 +2980,9 @@ func vpcRouterUserInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterUserInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterUserInfoParam)
 			}
@@ -2919,6 +3045,9 @@ func vpcRouterUserAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterUserAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterUserAddParam)
@@ -2989,6 +3118,9 @@ func vpcRouterUserUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterUserUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterUserUpdateParam)
@@ -3061,6 +3193,9 @@ func vpcRouterUserDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterUserDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterUserDeleteParam)
 			}
@@ -3130,6 +3265,9 @@ func vpcRouterSiteToSiteVPNInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterSiteToSiteVPNInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterSiteToSiteVPNInfoParam)
 			}
@@ -3192,6 +3330,9 @@ func vpcRouterSiteToSiteVPNAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterSiteToSiteVPNAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterSiteToSiteVPNAddParam)
@@ -3265,6 +3406,9 @@ func vpcRouterSiteToSiteVPNUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterSiteToSiteVPNUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterSiteToSiteVPNUpdateParam)
@@ -3340,6 +3484,9 @@ func vpcRouterSiteToSiteVPNDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterSiteToSiteVPNDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterSiteToSiteVPNDeleteParam)
 			}
@@ -3409,6 +3556,9 @@ func vpcRouterSiteToSiteVPNPeersCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterSiteToSiteVPNPeersParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterSiteToSiteVPNPeersParam)
 			}
@@ -3472,6 +3622,9 @@ func vpcRouterStaticRouteInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterStaticRouteInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterStaticRouteInfoParam)
 			}
@@ -3534,6 +3687,9 @@ func vpcRouterStaticRouteAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterStaticRouteAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterStaticRouteAddParam)
@@ -3604,6 +3760,9 @@ func vpcRouterStaticRouteUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterStaticRouteUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterStaticRouteUpdateParam)
@@ -3676,6 +3835,9 @@ func vpcRouterStaticRouteDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterStaticRouteDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterStaticRouteDeleteParam)
 			}
@@ -3745,6 +3907,9 @@ func vpcRouterMonitorCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if vpcRouterMonitorParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterMonitorParam)
 			}
@@ -3811,6 +3976,9 @@ func vpcRouterLogsCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if vpcRouterLogsParam.GenerateSkeleton {
 				return generateSkeleton(ctx, vpcRouterLogsParam)

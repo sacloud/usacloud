@@ -53,6 +53,9 @@ func objectStorageListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if objectStorageListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, objectStorageListParam)
 			}
@@ -96,6 +99,9 @@ func objectStoragePutCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if objectStoragePutParam.GenerateSkeleton {
 				return generateSkeleton(ctx, objectStoragePutParam)
@@ -148,6 +154,9 @@ func objectStorageGetCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if objectStorageGetParam.GenerateSkeleton {
 				return generateSkeleton(ctx, objectStorageGetParam)
 			}
@@ -185,6 +194,9 @@ func objectStorageDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if objectStorageDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, objectStorageDeleteParam)

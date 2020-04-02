@@ -54,6 +54,9 @@ func zoneListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if zoneListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, zoneListParam)
 			}
@@ -99,6 +102,9 @@ func zoneReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if zoneReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, zoneReadParam)

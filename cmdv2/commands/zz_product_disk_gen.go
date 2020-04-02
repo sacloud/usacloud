@@ -54,6 +54,9 @@ func productDiskListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if productDiskListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, productDiskListParam)
 			}
@@ -99,6 +102,9 @@ func productDiskReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if productDiskReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, productDiskReadParam)

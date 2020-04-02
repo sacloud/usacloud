@@ -56,6 +56,9 @@ func databaseListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if databaseListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseListParam)
 			}
@@ -102,6 +105,9 @@ func databaseCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if databaseCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseCreateParam)
@@ -175,6 +181,9 @@ func databaseReadCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if databaseReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseReadParam)
 			}
@@ -237,6 +246,9 @@ func databaseUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if databaseUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseUpdateParam)
@@ -326,6 +338,9 @@ func databaseDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if databaseDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseDeleteParam)
 			}
@@ -402,6 +417,9 @@ func databaseBootCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if databaseBootParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseBootParam)
 			}
@@ -469,6 +487,9 @@ func databaseShutdownCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if databaseShutdownParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseShutdownParam)
@@ -538,6 +559,9 @@ func databaseShutdownForceCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if databaseShutdownForceParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseShutdownForceParam)
 			}
@@ -605,6 +629,9 @@ func databaseResetCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if databaseResetParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseResetParam)
@@ -674,6 +701,9 @@ func databaseWaitForBootCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if databaseWaitForBootParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseWaitForBootParam)
 			}
@@ -730,6 +760,9 @@ func databaseWaitForDownCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if databaseWaitForDownParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseWaitForDownParam)
 			}
@@ -785,6 +818,9 @@ func databaseBackupInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if databaseBackupInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseBackupInfoParam)
@@ -848,6 +884,9 @@ func databaseBackupCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if databaseBackupCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseBackupCreateParam)
@@ -922,6 +961,9 @@ func databaseBackupRestoreCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if databaseBackupRestoreParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseBackupRestoreParam)
@@ -998,6 +1040,9 @@ func databaseBackupLockCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if databaseBackupLockParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseBackupLockParam)
 			}
@@ -1072,6 +1117,9 @@ func databaseBackupUnlockCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if databaseBackupUnlockParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseBackupUnlockParam)
@@ -1148,6 +1196,9 @@ func databaseBackupRemoveCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if databaseBackupRemoveParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseBackupRemoveParam)
 			}
@@ -1222,6 +1273,9 @@ func databaseCloneCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if databaseCloneParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseCloneParam)
@@ -1313,6 +1367,9 @@ func databaseReplicaCreateCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if databaseReplicaCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseReplicaCreateParam)
 			}
@@ -1395,6 +1452,9 @@ func databaseMonitorCPUCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if databaseMonitorCPUParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseMonitorCPUParam)
 			}
@@ -1460,6 +1520,9 @@ func databaseMonitorMemoryCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if databaseMonitorMemoryParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseMonitorMemoryParam)
@@ -1527,6 +1590,9 @@ func databaseMonitorNicCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if databaseMonitorNicParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseMonitorNicParam)
 			}
@@ -1592,6 +1658,9 @@ func databaseMonitorSystemDiskCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if databaseMonitorSystemDiskParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseMonitorSystemDiskParam)
@@ -1659,6 +1728,9 @@ func databaseMonitorBackupDiskCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if databaseMonitorBackupDiskParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseMonitorBackupDiskParam)
 			}
@@ -1724,6 +1796,9 @@ func databaseMonitorSystemDiskSizeCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if databaseMonitorSystemDiskSizeParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseMonitorSystemDiskSizeParam)
@@ -1791,6 +1866,9 @@ func databaseMonitorBackupDiskSizeCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if databaseMonitorBackupDiskSizeParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseMonitorBackupDiskSizeParam)
 			}
@@ -1856,6 +1934,9 @@ func databaseLogsCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if databaseLogsParam.GenerateSkeleton {
 				return generateSkeleton(ctx, databaseLogsParam)

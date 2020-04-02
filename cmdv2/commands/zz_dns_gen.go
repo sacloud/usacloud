@@ -56,6 +56,9 @@ func dnsListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if dnsListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, dnsListParam)
 			}
@@ -102,6 +105,9 @@ func dnsRecordInfoCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if dnsRecordInfoParam.GenerateSkeleton {
 				return generateSkeleton(ctx, dnsRecordInfoParam)
@@ -167,6 +173,9 @@ func dnsRecordBulkUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if dnsRecordBulkUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, dnsRecordBulkUpdateParam)
@@ -245,6 +254,9 @@ func dnsCreateCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if dnsCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, dnsCreateParam)
 			}
@@ -301,6 +313,9 @@ func dnsRecordAddCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if dnsRecordAddParam.GenerateSkeleton {
 				return generateSkeleton(ctx, dnsRecordAddParam)
@@ -386,6 +401,9 @@ func dnsReadCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if dnsReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, dnsReadParam)
 			}
@@ -448,6 +466,9 @@ func dnsRecordUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if dnsRecordUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, dnsRecordUpdateParam)
@@ -534,6 +555,9 @@ func dnsRecordDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if dnsRecordDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, dnsRecordDeleteParam)
 			}
@@ -609,6 +633,9 @@ func dnsUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if dnsUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, dnsUpdateParam)
@@ -687,6 +714,9 @@ func dnsDeleteCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if dnsDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, dnsDeleteParam)

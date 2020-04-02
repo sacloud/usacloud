@@ -56,6 +56,9 @@ func isoImageListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if isoImageListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, isoImageListParam)
 			}
@@ -103,6 +106,9 @@ func isoImageCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if isoImageCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, isoImageCreateParam)
@@ -162,6 +168,9 @@ func isoImageReadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if isoImageReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, isoImageReadParam)
@@ -225,6 +234,9 @@ func isoImageUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if isoImageUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, isoImageUpdateParam)
@@ -305,6 +317,9 @@ func isoImageDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if isoImageDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, isoImageDeleteParam)
 			}
@@ -379,6 +394,9 @@ func isoImageUploadCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if isoImageUploadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, isoImageUploadParam)
@@ -456,6 +474,9 @@ func isoImageDownloadCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if isoImageDownloadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, isoImageDownloadParam)
 			}
@@ -524,6 +545,9 @@ func isoImageFTPOpenCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if isoImageFTPOpenParam.GenerateSkeleton {
 				return generateSkeleton(ctx, isoImageFTPOpenParam)
@@ -599,6 +623,9 @@ func isoImageFTPCloseCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if isoImageFTPCloseParam.GenerateSkeleton {
 				return generateSkeleton(ctx, isoImageFTPCloseParam)

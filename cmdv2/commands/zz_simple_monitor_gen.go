@@ -56,6 +56,9 @@ func simpleMonitorListCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if simpleMonitorListParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simpleMonitorListParam)
 			}
@@ -103,6 +106,9 @@ func simpleMonitorCreateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if simpleMonitorCreateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simpleMonitorCreateParam)
@@ -178,6 +184,9 @@ func simpleMonitorReadCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if simpleMonitorReadParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simpleMonitorReadParam)
 			}
@@ -240,6 +249,9 @@ func simpleMonitorUpdateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if simpleMonitorUpdateParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simpleMonitorUpdateParam)
@@ -336,6 +348,9 @@ func simpleMonitorDeleteCmd() *cobra.Command {
 				return err
 			}
 
+			// Experiment warning
+			ctx.PrintWarning("")
+
 			if simpleMonitorDeleteParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simpleMonitorDeleteParam)
 			}
@@ -410,6 +425,9 @@ func simpleMonitorHealthCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+
+			// Experiment warning
+			ctx.PrintWarning("")
 
 			if simpleMonitorHealthParam.GenerateSkeleton {
 				return generateSkeleton(ctx, simpleMonitorHealthParam)

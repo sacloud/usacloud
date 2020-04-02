@@ -23,6 +23,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/fatih/color"
+
 	"github.com/sacloud/libsacloud/api"
 
 	"github.com/spf13/pflag"
@@ -53,6 +55,7 @@ type Context interface {
 	GetAPIClient() *api.Client
 	NArgs() int
 	IsSet(name string) bool
+	PrintWarning(warn string)
 }
 
 type cliContext struct {
@@ -291,4 +294,16 @@ func (c *cliContext) NArgs() int {
 
 func (c *cliContext) Args() []string {
 	return c.args
+}
+
+func (c *cliContext) PrintWarning(warn string) {
+	if warn == "" {
+		return
+	}
+	if c.option.NoColor {
+		fmt.Fprintf(c.IO().Err(), "[WARN] %s\n", warn)
+	} else {
+		out := color.New(color.FgYellow)
+		out.Fprintf(c.IO().Err(), "[WARN] %s\n", warn)
+	}
 }
