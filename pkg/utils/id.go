@@ -14,14 +14,29 @@
 
 package utils
 
-func FirstNonEmptyString(values ...string) string {
-	if len(values) == 0 {
-		return ""
-	}
-	for _, v := range values {
-		if v != "" {
-			return v
+import "github.com/sacloud/libsacloud/sacloud"
+
+func UniqIDs(elements []sacloud.ID) []sacloud.ID {
+	encountered := map[sacloud.ID]bool{}
+	result := []sacloud.ID{}
+	for v := range elements {
+		if !encountered[elements[v]] {
+			encountered[elements[v]] = true
+			result = append(result, elements[v])
 		}
 	}
-	return values[len(values)-1]
+	return result
+}
+
+// StringIDs sacloud.IDスライスを文字列のスライスに変換する
+func StringIDs(ids []sacloud.ID) []string {
+	var strIDs []string
+
+	for _, v := range ids {
+		if v != 0 {
+			strIDs = append(strIDs, v.String())
+		}
+	}
+
+	return strIDs
 }

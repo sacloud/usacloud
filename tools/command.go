@@ -17,6 +17,8 @@ package tools
 import (
 	"fmt"
 
+	"github.com/sacloud/usacloud/pkg/utils"
+
 	"github.com/sacloud/usacloud/schema"
 )
 
@@ -126,4 +128,24 @@ func (c *Command) RequireID() bool {
 
 func (c *Command) SingleArgToIdParam() bool {
 	return c.Command.Type.IsNeedIDOnlyType()
+}
+
+func (c *Command) MultipleArgToIdParams() bool {
+	return c.RequireID() && !c.SingleArgToIdParam()
+}
+
+func (c *Command) ArgToIdFunc() string {
+	return fmt.Sprintf("find%s%sTargets", ToCamelCaseName(c.Resource.Name), ToCamelCaseName(c.Name))
+}
+
+func (c *Command) TargetAPIName() string {
+	return utils.FirstNonEmptyString(c.AltResource, c.Resource.AltResource, ToCamelCaseName(c.Resource.Name))
+}
+
+func (c *Command) FindResultFieldName() string {
+	return utils.FirstNonEmptyString(c.ListResultFieldName, c.Resource.ListResultFieldName, ToCamelCaseName(c.Resource.Name)+"s")
+}
+
+func (c *Command) RequireSingleID() bool {
+	return c.Type.IsNeedSingleIDType()
 }

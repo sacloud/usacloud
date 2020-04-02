@@ -12,16 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package utils
+package commands
 
-func FirstNonEmptyString(values ...string) string {
-	if len(values) == 0 {
-		return ""
+func hasTags(target interface{}, tags []string) bool {
+	type tagHandler interface {
+		HasTag(target string) bool
 	}
-	for _, v := range values {
-		if v != "" {
-			return v
+
+	tagHolder, ok := target.(tagHandler)
+	if !ok {
+		return false
+	}
+
+	// 完全一致 + AND条件
+	res := true
+	for _, p := range tags {
+		if !tagHolder.HasTag(p) {
+			res = false
+			break
 		}
 	}
-	return values[len(values)-1]
+	return res
 }

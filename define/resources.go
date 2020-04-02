@@ -18,6 +18,7 @@
 //go:generate go run ../tools/gen-input-v2-models/main.go
 //go:generate go run ../tools/gen-cli-v2-commands/main.go
 //go:generate go run ../tools/gen-command-funcs/main.go
+//go:generate go run ../tools/gen-resource-finder/main.go
 package define
 
 import "github.com/sacloud/usacloud/schema"
