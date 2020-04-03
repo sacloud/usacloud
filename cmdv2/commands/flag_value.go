@@ -20,6 +20,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 )
 
+// TODO v0との互換性維持用、あとでv1向けに修正する
 type idValue sacloud.ID
 
 func newIDValue(val sacloud.ID, p *sacloud.ID) *idValue {
@@ -40,6 +41,7 @@ func (v *idValue) Type() string {
 	return "sacloud.ID"
 }
 
+// TODO v0との互換性維持用、あとでv1向けに修正する
 type idSliceValue []sacloud.ID
 
 func newIDSliceValue(val []sacloud.ID, p *[]sacloud.ID) *idSliceValue {

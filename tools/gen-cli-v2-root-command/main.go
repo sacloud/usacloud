@@ -41,7 +41,7 @@ func main() {
 	log.SetFlags(0)
 	log.SetPrefix("gen-cli-v2-root-command: ")
 
-	filePath := filepath.Join(destination, "zz_root_init_gen.go")
+	filePath := filepath.Join(destination, "root_init_gen.go")
 	fileFullPath := filepath.Join(ctx.Gopath(), filePath)
 
 	src, err := generateSource()

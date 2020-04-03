@@ -166,21 +166,21 @@ func objectStorageDeleteFlagOrder(cmd *cobra.Command) []*flagSet {
 	var sets []*flagSet
 	{
 		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("operation", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("recursive"))
+		sets = append(sets, &flagSet{
+			title: "Operation options",
+			flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("auth", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("access-key"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("secret-key"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("bucket"))
 		sets = append(sets, &flagSet{
 			title: "Auth options",
-			flags: fs,
-		})
-	}
-	{
-		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("operation", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("recursive"))
-		sets = append(sets, &flagSet{
-			title: "Operation options",
 			flags: fs,
 		})
 	}

@@ -27,14 +27,6 @@ func validateRequired(fieldName string, object interface{}) []error {
 	return command.ValidateRequired(fieldName, object)
 }
 
-func validateBetween(fieldName string, object interface{}, min int, max int) []error {
-	return command.ValidateBetween(fieldName, object, min, max)
-}
-
 func validateOutputOption(o output.Option) []error {
 	return command.ValidateOutputOption(o)
-}
-
-func validateInputOption(o command.InputOption) []error {
-	return command.ValidateInputOption(o)
 }

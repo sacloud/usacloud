@@ -50,7 +50,7 @@ type Context interface {
 
 	Args() []string
 
-	// v0の互換性維持のための実装
+	// TODO v0との互換性維持用、あとで消す
 	GetOutput() output.Output
 	GetAPIClient() *api.Client
 	NArgs() int
@@ -257,10 +257,7 @@ func getOutputWriter(io IO, rawFormatter interface{}) output.Output {
 	}
 }
 
-/*
- * 以下はusacloud v0との互換性維持のための実装
- */
-
+// TODO v0との互換性維持用、あとで消す
 func getChangeHandler(parameter interface{}) changeHandler {
 	if v, ok := parameter.(changeHandler); ok {
 		return v
@@ -268,10 +265,12 @@ func getChangeHandler(parameter interface{}) changeHandler {
 	return nil
 }
 
+// TODO v0との互換性維持用、あとで消す
 func (c *cliContext) GetOutput() output.Output {
 	return c.output
 }
 
+// TODO v0との互換性維持用、あとで消す
 func (c *cliContext) GetAPIClient() *api.Client {
 	c.v1ClientOnce.Do(func() {
 		o := c.Option()
@@ -284,10 +283,12 @@ func (c *cliContext) GetAPIClient() *api.Client {
 	return c.v1Client
 }
 
+// TODO v0との互換性維持用、あとで消す
 func (c *cliContext) IsSet(name string) bool {
 	return c.changeHandler.Changed(name)
 }
 
+// TODO v0との互換性維持用、あとで消す
 func (c *cliContext) NArgs() int {
 	return len(c.args)
 }
@@ -296,6 +297,7 @@ func (c *cliContext) Args() []string {
 	return c.args
 }
 
+// TODO v0との互換性維持用、実装する場所を再考
 func (c *cliContext) PrintWarning(warn string) {
 	if warn == "" {
 		return

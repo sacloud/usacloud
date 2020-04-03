@@ -20,12 +20,11 @@ import (
 	"io"
 )
 
-type skeletonFiller interface {
-	fillValueToSkeleton()
-}
-
 func writeSkeleton(in interface{}, writer io.Writer) error {
-	if fill, ok := in.(skeletonFiller); ok {
+	type skeleton interface {
+		fillValueToSkeleton()
+	}
+	if fill, ok := in.(skeleton); ok {
 		fill.fillValueToSkeleton()
 	}
 

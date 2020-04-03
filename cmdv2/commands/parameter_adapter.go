@@ -15,9 +15,6 @@
 package commands
 
 import (
-	"strconv"
-	"strings"
-
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/spf13/pflag"
 )
@@ -59,25 +56,7 @@ func (p *paramsAdapter) Int64(name string) (int64, error) {
 }
 
 func (p *paramsAdapter) Int64Slice(name string) ([]int64, error) {
-	f := p.flags.Lookup(name)
-	if f == nil {
-		return []int64{}, nil
-	}
-	val := strings.Trim(f.Value.String(), "[]")
-	if len(val) == 0 {
-		return []int64{}, nil
-	}
-	ss := strings.Split(val, ",")
-	out := make([]int64, len(ss))
-	for i, d := range ss {
-		var err error
-		out[i], err = strconv.ParseInt(d, 10, 64)
-		if err != nil {
-			return nil, err
-		}
-
-	}
-	return out, nil
+	return p.flags.GetInt64Slice(name)
 }
 
 func (p *paramsAdapter) ID(name string) (types.ID, error) {

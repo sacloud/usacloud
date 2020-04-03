@@ -30,11 +30,9 @@ import (
 
 // CLIOptions CLIオプション
 type CLIOptions struct {
+	profile.ConfigValue
 	// Profile プロファイル名
 	Profile string
-
-	profile.ConfigValue
-
 	// DefaultOutputType デフォルトアウトプットタイプ
 	DefaultOutputType string
 	// NoColor ANSIエスケープシーケンスによる色つけを無効化
@@ -47,28 +45,22 @@ func initGlobalFlags(flags *pflag.FlagSet) {
 	initDebugFlags(flags)
 }
 
-func initCredentialFlags(flags *pflag.FlagSet) {
-	fs := pflag.NewFlagSet("Credentials", pflag.ExitOnError)
+func initCredentialFlags(fs *pflag.FlagSet) {
 	fs.StringP("profile", "", "default", "the name of saved credentials")
 	fs.StringP("token", "", "", "the API token used when calling SAKURA Cloud API")
 	fs.StringP("secret", "", "", "the API secret used when calling SAKURA Cloud API")
 	fs.StringP("zone", "", "", "target zone name")
 	fs.StringSliceP("zones", "", []string{}, "permitted zone names")
-	flags.AddFlagSet(fs)
 }
 
-func initOutputFlags(flags *pflag.FlagSet) {
-	fs := pflag.NewFlagSet("Output", pflag.ExitOnError)
+func initOutputFlags(fs *pflag.FlagSet) {
 	fs.BoolP("no-color", "", false, "disable ANSI color output")
-	flags.AddFlagSet(fs)
 }
 
-func initDebugFlags(flags *pflag.FlagSet) {
-	fs := pflag.NewFlagSet("Debug", pflag.ExitOnError)
+func initDebugFlags(fs *pflag.FlagSet) {
 	fs.StringP("trace", "", "", "enable trace logs for API calling")
 	fs.BoolP("fake", "", false, "enable fake API driver")
 	fs.StringP("fake-store", "", "", "path to file store used by the fake API driver")
-	flags.AddFlagSet(fs)
 }
 
 func initCLIOptions(flags *pflag.FlagSet, io IO) (*CLIOptions, error) {
