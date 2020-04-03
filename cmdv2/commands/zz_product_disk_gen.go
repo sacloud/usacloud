@@ -84,6 +84,7 @@ func productDiskListCmd() *cobra.Command {
 	fs.StringVarP(&productDiskListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&productDiskListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&productDiskListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	setFlagsUsage(cmd, buildFlagsUsage(productDiskListFlagOrder(cmd)))
 	return cmd
 }
 
@@ -141,6 +142,7 @@ func productDiskReadCmd() *cobra.Command {
 	fs.StringVarP(&productDiskReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&productDiskReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &productDiskReadParam.Id), "id", "", "set resource ID")
+	setFlagsUsage(cmd, buildFlagsUsage(productDiskReadFlagOrder(cmd)))
 	return cmd
 }
 

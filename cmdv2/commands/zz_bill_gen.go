@@ -71,6 +71,7 @@ func billCsvCmd() *cobra.Command {
 	fs.BoolVarP(&billCsvParam.NoHeader, "no-header", "", false, "set output header flag")
 	fs.StringVarP(&billCsvParam.BillOutput, "bill-output", "", "", "set bill-detail output path")
 	fs.VarP(newIDValue(0, &billCsvParam.BillId), "bill-id", "", "set bill ID")
+	setFlagsUsage(cmd, buildFlagsUsage(billCsvFlagOrder(cmd)))
 	return cmd
 }
 
@@ -117,6 +118,7 @@ func billListCmd() *cobra.Command {
 	fs.StringVarP(&billListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&billListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&billListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	setFlagsUsage(cmd, buildFlagsUsage(billListFlagOrder(cmd)))
 	return cmd
 }
 

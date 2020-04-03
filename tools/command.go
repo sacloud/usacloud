@@ -16,6 +16,8 @@ package tools
 
 import (
 	"fmt"
+	"sort"
+	"strings"
 
 	"github.com/sacloud/usacloud/pkg/utils"
 
@@ -26,10 +28,11 @@ import (
 type Command struct {
 	*schema.Command
 
-	Name     string
-	Resource *Resource
-	Category *schema.Category
-	Params   []*Parameter
+	Name              string
+	Resource          *Resource
+	Category          *schema.Category
+	Params            []*Parameter
+	CategorizedParams []*CategorizedParameters
 }
 
 func NewCommand(name string, command *schema.Command, category *schema.Category, resource *Resource) *Command {
@@ -45,7 +48,30 @@ func NewCommand(name string, command *schema.Command, category *schema.Category,
 	}
 
 	c.Params = params
+	c.buildCategorizedParams()
 	return c
+}
+
+func (c *Command) buildCategorizedParams() {
+	m := map[string]*CategorizedParameters{}
+	for _, p := range c.Params {
+		c := p.Category
+		cp, ok := m[c.Key]
+		if !ok {
+			cp = &CategorizedParameters{
+				Category: c,
+			}
+		}
+		cp.Params = append(cp.Params, p)
+		m[c.Key] = cp
+	}
+	c.CategorizedParams = []*CategorizedParameters{}
+	for _, cat := range m {
+		c.CategorizedParams = append(c.CategorizedParams, cat)
+	}
+	sort.Slice(c.CategorizedParams, func(i, j int) bool {
+		return c.CategorizedParams[i].Order < c.CategorizedParams[j].Order
+	})
 }
 
 func (c *Command) ExperimentWarning() string {
@@ -136,6 +162,18 @@ func (c *Command) MultipleArgToIdParams() bool {
 
 func (c *Command) ArgToIdFunc() string {
 	return fmt.Sprintf("find%s%sTargets", ToCamelCaseName(c.Resource.Name), ToCamelCaseName(c.Name))
+}
+
+func (c *Command) FlagOrderFunc() string {
+	return fmt.Sprintf("%s%sFlagOrder", ToCamelWithFirstLower(c.Resource.Name), ToCamelCaseName(c.Name))
+}
+
+func (c *Command) CategoryNames() string {
+	var names []string
+	for _, cat := range c.CategorizedParams {
+		names = append(names, cat.DisplayName)
+	}
+	return fmt.Sprintf(`[]string{"%s"}`, strings.Join(names, `", "`))
 }
 
 func (c *Command) TargetAPIName() string {

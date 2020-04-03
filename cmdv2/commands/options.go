@@ -20,14 +20,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/sacloud/usacloud/pkg/utils"
-
 	"github.com/sacloud/libsacloud/v2/sacloud"
-
-	"github.com/sacloud/usacloud/define"
-	"github.com/sacloud/usacloud/pkg/validation"
-
 	"github.com/sacloud/libsacloud/v2/sacloud/profile"
+	"github.com/sacloud/usacloud/define"
+	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/validation"
 	"github.com/spf13/pflag"
 )
 

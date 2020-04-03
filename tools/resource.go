@@ -71,6 +71,10 @@ func (r *Resource) CLIResourceFinderSourceFileName() string {
 	return fmt.Sprintf("zz_%s_finder_gen.go", ToSnakeCaseName(r.Name))
 }
 
+func (r *Resource) CLIFlagOrderSourceFileName() string {
+	return fmt.Sprintf("zz_%s_flag_order_gen.go", ToSnakeCaseName(r.Name))
+}
+
 func (r *Resource) ParameterSourceFileName() string {
 	return fmt.Sprintf("zz_%s_gen.go", ToSnakeCaseName(r.Name))
 }
